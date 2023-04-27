@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 const ContactList = () => {
   let { authTokens } = useContext(AuthContext);
   let [contactList, setContactList] = useState([]);
+  
   const params = useParams();
   useEffect(() => {
     getContactList();
@@ -28,7 +29,14 @@ const ContactList = () => {
   };
   return (
     <div>
-      <h2>You are looking at: {contactList.list_name}</h2>
+      <h2>{contactList.list_name}</h2>
+      <hr></hr>
+      <h2>
+        Click here to add contacts to the list{" "}
+        <Link to={`/create_contact/${contactList.id}`}>+</Link>
+      </h2>
+      <hr></hr>
+      <h2>Contacts:</h2>
     </div>
   );
 };

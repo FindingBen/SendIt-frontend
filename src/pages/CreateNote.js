@@ -3,7 +3,6 @@ import AuthContext from "../context/AuthContext";
 
 const CreateNote = () => {
   let { authTokens, user } = useContext(AuthContext);
-  console.log("USER", user);
   let createNotes = async (e) => {
     e.preventDefault();
     let response = await fetch("http://127.0.0.1:8000/api/create_notes/", {

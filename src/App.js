@@ -8,6 +8,7 @@ import {
 import { AuthProvider } from "./context/AuthContext";
 import ContactLists from "./pages/ContactLists";
 import ContactList from "./pages/ContactList";
+import CreateContact from "./pages/CreateContact";
 import CreateNote from "./pages/CreateNote";
 import LoginPage from "./pages/LoginPage";
 import Header from "./components/Header";
@@ -32,6 +33,10 @@ function App() {
             <Route
               path="/contact_list/:id"
               element={<ContactList></ContactList>}
+            />
+            <Route
+              path="/create_contact/:id"
+              element={<CreateContact></CreateContact>}
             />
           </Routes>
         </AuthProvider>

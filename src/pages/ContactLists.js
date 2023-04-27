@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 const ContactList = () => {
@@ -19,6 +19,7 @@ const ContactList = () => {
       },
     });
     let data = await response.json();
+    console.log(data);
     if (response.status === 200) {
       setContactList(data);
     }
