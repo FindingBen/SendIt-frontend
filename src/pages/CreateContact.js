@@ -49,25 +49,38 @@ const CreateContact = () => {
         }),
       }
     );
-    let data = await response.json();
-    console.log(data);
-    if (response.status === 200) {
-      console.log("Success");
+
+    if (response.status === 200 || 201) {
       navigate(`/contact_list/${params.id}`);
     }
   };
 
   return (
-    <div>
-      <h2>Add contact</h2>
-      <form onSubmit={addContact}>
-        <input name="first_name" type="text" placeholder="First name" />
-        <input name="last_name" type="text" placeholder="Last name" />
-        <input name="phone_number" type="number" placeholder="Phone number" />
-        <input name="email" placeholder="Email" />
-        <input type="submit" />
-      </form>
-    </div>
+    <section className="vh-100 w-100">
+      <div className="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div className="row">
+            <div className="col-12">
+              <h2>Add contact</h2>
+              <hr></hr>
+            </div>
+            <div className="col">
+              <form onSubmit={addContact}>
+                <input name="first_name" type="text" placeholder="First name" />
+                <input name="last_name" type="text" placeholder="Last name" />
+                <input
+                  name="phone_number"
+                  type="number"
+                  placeholder="Phone number"
+                />
+                <input name="email" placeholder="Email" />
+                <input type="submit" />
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
