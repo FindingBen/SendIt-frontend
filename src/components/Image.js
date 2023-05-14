@@ -6,12 +6,17 @@ import MessageView from "../pages/MessageView";
 import IFrame from "./IFrame";
 import jwt_decode from "jwt-decode";
 
-const Image = ({ onStateChange, componentChange }) => {
+const Image = ({
+  onStateChange,
+  componentChange,
+  handleImages,
+  listImages,
+}) => {
   const [showComponent, setShowComponent] = useState(true);
   const [active, setActive] = useState(true);
-  const [image, setImage] = useState();
-  const [images, setImages] = useState();
-  const [lastImage, setLastImage] = useState(null);
+  const [imageList, setImageList] = useState([listImages]);
+  const [images, setImages] = useState([]);
+  const [lastImage, setLastImage] = useState();
   const [imageSrc, setImageSrc] = useState("");
   const [cancel, setCancel] = useState(false);
   const iframe = document.getElementById("myFrame");
@@ -31,39 +36,45 @@ const Image = ({ onStateChange, componentChange }) => {
   //   );
 
   useEffect(() => {
-    iframe.contentWindow.postMessage({ authTokens, user }, "*");
-    if (lastImage) {
-      ReactDOM.render(
-        <ImgList imageUrls={lastImage}></ImgList>,
-        iframe.contentWindow.document.getElementById("myList")
-      );
-    }
-  }, [lastImage]);
+    iframe.contentWindow.postMessage({ images }, "*");
+    //setImageList(images);
+    console.log(listImages);
+    ReactDOM.render(
+      <li>
+        {listImages?.map((image, index) => (
+          <ImgList key={index} imageUrl={image} />
+        ))}
+      </li>,
+      iframe.contentWindow.document.getElementById("myList")
+    );
+  }, [imageList, images]);
 
   function handleImageUpload(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
-    setImage(file);
+
     reader.onload = (event) => {
       setImageSrc(event.target.result);
       const newImage = event.target.result;
       setLastImage(newImage);
+      setImages((prevImages) => [...prevImages, newImage]);
+      handleImages((prevImages) => [...prevImages, newImage]);
     };
 
     reader.readAsDataURL(file);
   }
 
   function saveImg(event) {
-    const newImage = imageSrc;
-    setImageSrc("");
-    setLastImage(newImage);
-    setImages((prevImages) => [...prevImages, newImage]);
+    // const newImage = imageSrc;
+    // setLastImage(newImage);
+    // setImages([...images, newImage]);
+
     iframe.contentWindow.postMessage({ authTokens, user }, "*");
     //ReactDOM.render(<MessageView imageProp={image} />, iframe);
     setAuthTokens(user);
     setShowComponent(Boolean(event.target.value));
     setActive(Boolean(!event.target.value));
-
+    //handleImages((prevImages) => [...prevImages, images]);
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
   }
@@ -90,7 +101,9 @@ const Image = ({ onStateChange, componentChange }) => {
         class="form-control"
         id="image"
       />
-      {<ImgList imageUrl={imageSrc} />}
+      {images?.map((image, index) => (
+        <ImgList key={index} imageUrl={image} />
+      ))}
       <button type="button" value={false} onClick={saveImg}>
         Save
       </button>

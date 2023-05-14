@@ -21,7 +21,7 @@ const MessageView = ({ imageProp, textProp }) => {
   useEffect(() => {
     setImage(imageProp);
 
-    createDraft();
+    //createDraft();
     const receiveMessage = (event) => {
       const { authTokens, user } = event.data;
       setAuthTokens(authTokens);
@@ -33,22 +33,22 @@ const MessageView = ({ imageProp, textProp }) => {
     };
   }, [imageProp, textProp]);
 
-  let createDraft = async (e) => {
-    //e.preventDefault();
-    const formData = new FormData();
-    formData.append("body", text);
-    formData.append("image", imageProp);
-    formData.append("users", user.user_id);
-    let response = await fetch("http://127.0.0.1:8000/api/create_draft/", {
-      method: "POST",
-      headers: {
-        // "Content-Type": "multipart/form-data",
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-      body: formData,
-    });
-    let data = await response.json();
-  };
+  // let createDraft = async (e) => {
+  //   //e.preventDefault();
+  //   const formData = new FormData();
+  //   formData.append("body", text);
+  //   formData.append("image", imageProp);
+  //   formData.append("users", user.user_id);
+  //   let response = await fetch("http://127.0.0.1:8000/api/create_draft/", {
+  //     method: "POST",
+  //     headers: {
+  //       // "Content-Type": "multipart/form-data",
+  //       Authorization: "Bearer " + String(authTokens.access),
+  //     },
+  //     body: formData,
+  //   });
+  //   let data = await response.json();
+  // };
 
   return (
     <section className="vh-100">

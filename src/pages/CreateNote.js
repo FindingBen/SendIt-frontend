@@ -19,11 +19,11 @@ const CreateNote = () => {
   const [active, setActive] = useState(false);
   const [activeT, setActiveT] = useState(false);
   const [items, setItems] = useState();
+  const [images, setImages] = useState([]);
 
   const imageEL = <ImgList imageUrl={""}></ImgList>;
-
   const textEl = <Text></Text>;
-
+  console.log(images);
   const handleClickImage = (e) => {
     e.preventDefault();
     setActive(!active);
@@ -72,6 +72,10 @@ const CreateNote = () => {
     setActive(active);
   };
 
+  const handleImages = (images) => {
+    setImages(images);
+  };
+
   const handleComponentChange = (showComponent) => {
     setShowComponent(showComponent);
   };
@@ -100,8 +104,10 @@ const CreateNote = () => {
                   showComponent &&
                   active && (
                     <Image
+                      handleImages={handleImages}
                       onStateChange={handleChildStateChange}
                       componentChange={handleComponentChange}
+                      listImages={images}
                     ></Image>
                   )
                 )}
