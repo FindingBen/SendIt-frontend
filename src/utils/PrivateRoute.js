@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate, Outlet } from "react-router-dom";
 import HomePage from "../pages/HomePage";
-import CreateNote from "../pages/CreateNote";
+
 import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 

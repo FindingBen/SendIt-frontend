@@ -9,10 +9,10 @@ import { AuthProvider } from "./context/AuthContext";
 import ContactLists from "./pages/ContactLists";
 import ContactList from "./pages/ContactList";
 import CreateContact from "./pages/CreateContact";
-import CreateNote from "./pages/CreateNote";
+import CreateMessage from "./pages/CreateMessage";
 import LoginPage from "./pages/LoginPage";
 import Header from "./components/Header";
-import IFrame from "./components/IFrame";
+import EditMessage from "./pages/EditMessage";
 import Image from "./components/Image";
 import RegisterPage from "./pages/RegisterPage";
 import PrivateRoute from "./utils/PrivateRoute";
@@ -36,9 +36,9 @@ function App() {
               <Route
                 path="/create_note"
                 element={
-                  <CreateNote>
+                  <CreateMessage>
                     <Image></Image>
-                  </CreateNote>
+                  </CreateMessage>
                 }
               />
               <Route
@@ -52,6 +52,10 @@ function App() {
               <Route
                 path="/create_contact/:id"
                 element={<CreateContact></CreateContact>}
+              />
+              <Route
+                path="/edit_message/:id"
+                element={<EditMessage></EditMessage>}
               />
             </Route>
           </Routes>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import CreateNote from "../pages/CreateNote";
+import CreateNote from "../pages/CreateMessage";
 import ImgList from "./ImgList";
 import ReactDOM, { createPortal } from "react-dom";
 import MessageView from "../pages/MessageView";
@@ -11,12 +11,15 @@ const Image = ({
   componentChange,
   handleImages,
   listImages,
+  handleFiles,
+  elementList,
 }) => {
   const [showComponent, setShowComponent] = useState(true);
   const [active, setActive] = useState(true);
   const [imageList, setImageList] = useState([listImages]);
   const [images, setImages] = useState([]);
   const [lastImage, setLastImage] = useState();
+  const [file, setFile] = useState();
   const [imageSrc, setImageSrc] = useState("");
   const [cancel, setCancel] = useState(false);
   const iframe = document.getElementById("myFrame");
@@ -37,26 +40,30 @@ const Image = ({
 
   useEffect(() => {
     iframe.contentWindow.postMessage({ images }, "*");
-    //setImageList(images);
     console.log(listImages);
-    ReactDOM.render(
-      <li>
-        {listImages?.map((image, index) => (
-          <ImgList key={index} imageUrl={image} />
-        ))}
-      </li>,
-      iframe.contentWindow.document.getElementById("myList")
-    );
-  }, [imageList, images]);
+    if (listImages && listImages.length > 0) {
+      ReactDOM.render(
+        listImages.map((image, index) => (
+          <li>
+            <ImgList key={index} imageUrl={image} />
+          </li>
+        )),
+        iframe.contentWindow.document.getElementById("myList")
+      );
+    } else {
+      <ImgList key={0} imageUrl={imageSrc} />;
+    }
+  }, [listImages]);
 
   function handleImageUpload(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
-
+    handleFiles(file);
+    setFile(file);
     reader.onload = (event) => {
       setImageSrc(event.target.result);
       const newImage = event.target.result;
-      setLastImage(newImage);
+      //setLastImage(newImage);
       setImages((prevImages) => [...prevImages, newImage]);
       handleImages((prevImages) => [...prevImages, newImage]);
     };
@@ -64,11 +71,31 @@ const Image = ({
     reader.readAsDataURL(file);
   }
 
+  let addImageElement = async (e) => {
+    const formData = new FormData();
+    //formData.append("text", texts);
+    formData.append("image", file);
+    formData.append("element_type", "Img");
+    formData.append("users", user.user_id);
+    let response = await fetch("http://127.0.0.1:8000/api/create_element/", {
+      method: "POST",
+      headers: {
+        //'Content-Type':'application/json',
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: formData,
+    });
+    let data = await response.json();
+    if(response.status===200){
+      elementList((prevElement) => [...prevElement, data])
+    }
+  };
+
   function saveImg(event) {
     // const newImage = imageSrc;
     // setLastImage(newImage);
     // setImages([...images, newImage]);
-
+    addImageElement();
     iframe.contentWindow.postMessage({ authTokens, user }, "*");
     //ReactDOM.render(<MessageView imageProp={image} />, iframe);
     setAuthTokens(user);

@@ -51,7 +51,7 @@ const HomePage = () => {
                       {/* <div class="text-muted">john.doe@gmail.com</div> */}
                     </div>
                     {/* <span class="badge rounded-pill badge-success">Active</span> */}
-                    <a href="">Edit</a>
+                    <a href={`/edit_message/${note.id}`}>Edit</a>
                   </li>
                 ))}
               </ul>
