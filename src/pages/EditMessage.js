@@ -3,6 +3,7 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import "../css/CreationMessage.css";
 import "../css/RootIframe.css";
+import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
 import { AiFillPicture } from "react-icons/ai";
 import Image from "../components/Image";
 import Text from "../components/Text";
@@ -128,7 +129,7 @@ const EditMessage = () => {
               <hr></hr>
             </div>
             <div className="col">
-              <ul className="list-group list-group-light">
+              <MDBListGroup style={{ minWidthL: "22rem" }}>
                 {!showComponent && !active ? (
                   <li
                     onClick={handleClickImage}
@@ -169,26 +170,30 @@ const EditMessage = () => {
                     ></Text>
                   )
                 )}
-              </ul>
+              </MDBListGroup>
             </div>
             <div className="col">
               <div class="smartphone">
                 <IFrame>
-                  <ul id="myList">
+                  <MDBListGroup
+                    style={{ minWidthL: "22rem" }}
+                    light
+                    id="myList"
+                  >
                     {elements?.map((item, index) => (
-                      <li key={index}>
-                        {item.element_type == "Img"
-                          ? (
-                              <img
-                                height="150px"
-                                src={`${BASE_URL + item.image}`}
-                                alt="Italian Trulli"
-                              ></img>
-                            ) || item.element_type == "text"
-                          : item.text}
-                      </li>
+                      <MDBListGroupItem id="elItem" key={index}>
+                        {item.element_type == "Img" ? (
+                          (
+                            <ImgList
+                              imageUrl={`${BASE_URL + item.image}`}
+                            ></ImgList>
+                          ) || item.element_type == "text"
+                        ) : (
+                          <TextComponent textValue={item.text}></TextComponent>
+                        )}
+                      </MDBListGroupItem>
                     ))}
-                  </ul>
+                  </MDBListGroup>
                 </IFrame>
               </div>
             </div>

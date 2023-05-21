@@ -16,9 +16,8 @@ const Image = ({
 }) => {
   const [showComponent, setShowComponent] = useState(true);
   const [active, setActive] = useState(true);
-  const [imageList, setImageList] = useState([listImages]);
+  // const [imageList, setImageList] = useState([listImages]);
   const [images, setImages] = useState([]);
-  const [lastImage, setLastImage] = useState();
   const [file, setFile] = useState();
   const [imageSrc, setImageSrc] = useState("");
   const [cancel, setCancel] = useState(false);
@@ -33,37 +32,28 @@ const Image = ({
       ? jwt_decode(localStorage.getItem("authTokens"))
       : null
   );
-  //   ReactDOM.render(
-  //     <ImgList imageUrl={imageSrc}></ImgList>,
-  //     iframe.contentWindow.document.getElementById("myList")
-  //   );
 
   useEffect(() => {
     iframe.contentWindow.postMessage({ images }, "*");
-    console.log(listImages);
-    if (listImages && listImages.length > 0) {
-      ReactDOM.render(
-        listImages.map((image, index) => (
-          <li>
-            <ImgList key={index} imageUrl={image} />
-          </li>
-        )),
-        iframe.contentWindow.document.getElementById("myList")
-      );
-    } else {
-      <ImgList key={0} imageUrl={imageSrc} />;
-    }
-  }, [listImages]);
+    // if (!cancel) {
+    //   ReactDOM.render(
+    //     <li>
+    //       <ImgList imageUrl={images} />
+    //     </li>,
+    //     iframe.contentWindow.document.getElementById("myList")
+    //   );
+    // }
+  }, [images]);
 
   function handleImageUpload(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
     handleFiles(file);
     setFile(file);
+
     reader.onload = (event) => {
       setImageSrc(event.target.result);
       const newImage = event.target.result;
-      //setLastImage(newImage);
       setImages((prevImages) => [...prevImages, newImage]);
       handleImages((prevImages) => [...prevImages, newImage]);
     };
@@ -73,7 +63,6 @@ const Image = ({
 
   let addImageElement = async (e) => {
     const formData = new FormData();
-    //formData.append("text", texts);
     formData.append("image", file);
     formData.append("element_type", "Img");
     formData.append("users", user.user_id);
@@ -86,8 +75,8 @@ const Image = ({
       body: formData,
     });
     let data = await response.json();
-    if(response.status===200){
-      elementList((prevElement) => [...prevElement, data])
+    if (response.status === 200) {
+      elementList((prevElement) => [...prevElement, data]);
     }
   };
 
@@ -96,6 +85,7 @@ const Image = ({
     // setLastImage(newImage);
     // setImages([...images, newImage]);
     addImageElement();
+    setCancel(true);
     iframe.contentWindow.postMessage({ authTokens, user }, "*");
     //ReactDOM.render(<MessageView imageProp={image} />, iframe);
     setAuthTokens(user);
@@ -131,10 +121,21 @@ const Image = ({
       {images?.map((image, index) => (
         <ImgList key={index} imageUrl={image} />
       ))}
-      <button type="button" value={false} onClick={saveImg}>
+      <button
+        type="button"
+        className="btn btn-dark"
+        value={false}
+        onClick={saveImg}
+      >
         Save
       </button>
-      <button type="button" id="cancel" value={false} onClick={handleCancel}>
+      <button
+        type="button"
+        id="cancel"
+        className="btn btn-danger"
+        value={false}
+        onClick={handleCancel}
+      >
         Cancel
       </button>
     </div>

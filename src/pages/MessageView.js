@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import jwt_decode from "jwt-decode";
 
-const MessageView = ({ imageProp, textProp }) => {
+const MessageView = ({ imageProp, textProp, elements }) => {
   const [image, setImage] = useState(imageProp);
   const [text, setText] = useState(textProp);
   let [authTokens, setAuthTokens] = useState(() =>
@@ -17,7 +17,7 @@ const MessageView = ({ imageProp, textProp }) => {
   );
   //let { authTokens, user } = useContext(AuthContext) ?? {};
   //create an api that calls draft function from backend
-
+  console.log(elements);
   useEffect(() => {
     setImage(imageProp);
 
@@ -50,17 +50,7 @@ const MessageView = ({ imageProp, textProp }) => {
   //   let data = await response.json();
   // };
 
-  return (
-    <section className="vh-100">
-      <div className="container-fluid h-custom">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div>
-            <h2>Test</h2>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  return <section className="vh-100"></section>;
 };
 
 export default MessageView;

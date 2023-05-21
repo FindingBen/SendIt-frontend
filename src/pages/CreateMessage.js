@@ -8,10 +8,12 @@ import Image from "../components/Image";
 import Text from "../components/Text";
 import TextComponent from "../components/TextComponent";
 import ImgList from "../components/ImgList";
+import MessageView from "./MessageView";
 import IFrame from "../components/IFrame";
-
+import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
 import ReactDOM, { createPortal } from "react-dom";
 import { useEffect } from "react";
+import { render } from "@testing-library/react";
 
 const CreateNote = () => {
   let { authTokens, user } = useContext(AuthContext);
@@ -19,47 +21,39 @@ const CreateNote = () => {
   const [showComponent, setShowComponent] = useState(false);
   const [active, setActive] = useState(false);
   const [activeT, setActiveT] = useState(false);
-  const [items, setItems] = useState();
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
   const [texts, setTexts] = useState([]);
   const [elementsList, setElementsList] = useState([]);
-  console.log(items);
-  const imageEL = <ImgList imageUrl={""}></ImgList>;
-  const textEl = <TextComponent></TextComponent>;
 
   const handleClickImage = (e) => {
     e.preventDefault();
     setActive(!active);
     setShowComponent(!showComponent);
-    const iframe = document.getElementById("myFrame");
-    const container = iframe.contentWindow.document.createElement("div");
-    iframe.contentWindow.document.body.appendChild(container);
+    // const iframe = document.getElementById("myFrame");
+    // const container = iframe.contentWindow.document.createElement("div");
+    // iframe.contentWindow.document.body.appendChild(container);
     // ReactDOM.render(imageEL, container, () => {
-    //   // const list = iframe.contentWindow.document.getElementById("myList");
-    //   // const newItem = document.createElement("li");
-    //   // newItem.appendChild(container.firstChild);
-    //   // list.appendChild(newItem);
+    //   const list = iframe.contentWindow.document.getElementById("myList");
+    //   const newItem = document.createElement("li");
+    //   newItem.appendChild(container.firstChild);
+    //   list.appendChild(newItem);
     // });
   };
 
-  elementsList.map((element) => {
-    console.log(JSON.stringify(element));
-  });
-  console.log(file);
   const handleClickText = (e) => {
     e.preventDefault();
     setActiveT(!activeT);
     setShowComponent(!showComponent);
-    const iframe = document.getElementById("myFrame");
-    const container = iframe.contentWindow.document.createElement("div");
-    iframe.contentWindow.document.body.appendChild(container);
-    ReactDOM.render(textEl, container, () => {
-      const list = iframe.contentWindow.document.getElementById("myList");
-      const newItem = document.createElement("li");
-      newItem.appendChild(container.firstChild);
-      list.appendChild(newItem);
-    });
+    //const iframe = document.getElementById("myFrame");
+    // const container = iframe.contentWindow.document.createElement("div");
+    // iframe.contentWindow.document.body.appendChild(container);
+    // ReactDOM.render(textEl, container, () => {
+    //   const list = iframe.contentWindow.document.getElementById("myList");
+    //   const newItem = document.createElement("li");
+    //   newItem.appendChild(container.firstChild);
+    //   list.appendChild(newItem);
+    // });
   };
 
   let createNotes = async (e) => {
@@ -87,6 +81,7 @@ const CreateNote = () => {
       console.log("WRONG", data);
     }
   };
+  console.log(elementsList);
   const handleElements = (elementsList) => {
     setElementsList(elementsList);
   };
@@ -98,13 +93,17 @@ const CreateNote = () => {
   const handleTextStateChange = (activeT) => {
     setActiveT(activeT);
   };
-
+  //For displaying images on iframe
   const handleImages = (images) => {
     setImages(images);
   };
-
+  //for creating a message object because it needs a file type not img src
   const handleFiles = (file) => {
     setFiles(file);
+  };
+
+  const handleText = (texts) => {
+    setTexts(texts);
   };
 
   const handleComponentChange = (showComponent) => {
@@ -121,16 +120,16 @@ const CreateNote = () => {
               <hr></hr>
             </div>
             <div className="col">
-              <ul className="list-group list-group-light">
+              <MDBListGroup style={{ minWidthL: "22rem" }}>
                 {!showComponent && !active ? (
-                  <li
+                  <MDBListGroupItem
                     onClick={handleClickImage}
                     name="liClick"
                     className="list-group-item d-flex justify-content-between align-items-center"
                   >
                     <AiFillPicture></AiFillPicture>
                     Add image
-                  </li>
+                  </MDBListGroupItem>
                 ) : (
                   showComponent &&
                   active && (
@@ -146,33 +145,52 @@ const CreateNote = () => {
                 )}
                 <hr></hr>
                 {!showComponent && !activeT ? (
-                  <li
+                  <MDBListGroupItem
                     onClick={handleClickText}
                     name="liClick"
                     className="list-group-item d-flex justify-content-between align-items-center"
                   >
                     <AiFillPicture></AiFillPicture>
                     Add Text
-                  </li>
+                  </MDBListGroupItem>
                 ) : (
                   showComponent &&
                   activeT && (
                     <Text
+                      handleText={handleText}
                       onStateChange={handleTextStateChange}
                       componentChange={handleComponentChange}
+                      elementList={handleElements}
+                      listTexts={texts}
                     ></Text>
                   )
                 )}
-              </ul>
+              </MDBListGroup>
             </div>
             <div className="col">
               <div class="smartphone">
                 <IFrame>
-                  <ul id="myList">
-                    {/* {items?.map((item, index) => (
-                      <li key={index}>{item}</li>
-                    ))} */}
-                  </ul>
+                  <MDBListGroup
+                    style={{ minWidthL: "22rem" }}
+                    light
+                    id="myList"
+                  >
+                    {elementsList &&
+                      elementsList?.map((item, index) => (
+                        <MDBListGroupItem id="elItem" key={index}>
+                          {item.element.element_type === "Img" ? (
+                            <ImgList
+                              imageUrl={`${item.element.image}`}
+                              //alt="Italian Trulli"
+                            ></ImgList>
+                          ) : (
+                            <TextComponent
+                              textValue={item.element.text}
+                            ></TextComponent>
+                          )}
+                        </MDBListGroupItem>
+                      ))}
+                  </MDBListGroup>
                 </IFrame>
               </div>
             </div>

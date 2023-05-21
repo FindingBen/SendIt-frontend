@@ -7,7 +7,7 @@ const ImgList = ({ imageUrl }) => {
     setImageSrc(imageUrl);
   }, [imageUrl]);
 
-  return <img key={imageUrl} src={`${imageSrc}`} width="260" />;
+  return <img key={imageUrl} src={`${imageSrc}`} width="300" />;
 };
 
 export default ImgList;

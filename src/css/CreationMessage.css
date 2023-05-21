@@ -55,3 +55,11 @@ width: 100%;
   padding-left: 52%;
   padding-top: 2%;
 }
+
+#myList {
+  list-style-type: none;
+}
+
+#elItem{
+  padding-left: 4px;
+}

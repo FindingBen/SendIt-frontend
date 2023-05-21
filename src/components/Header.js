@@ -17,13 +17,17 @@ const Header = () => {
       <hr />
       <ul class="nav nav-pills flex-column mb-auto">
         <li>
-          <Link className="nav-link" aria-current="page" to="/">
+          <Link className="nav-link text-white" aria-current="page" to="/">
             Home
           </Link>
         </li>
         {user ? (
           <li>
-            <Link className="nav-link" aria-current="page" to="/create_note">
+            <Link
+              className="nav-link text-white"
+              aria-current="page"
+              to="/create_note"
+            >
               Create note
             </Link>
           </li>
@@ -31,8 +35,12 @@ const Header = () => {
           <li></li>
         )}
         {user ? (
-          <li>
-            <Link className="nav-link" aria-current="page" to="/contact_lists/">
+          <li className="nav-item">
+            <Link
+              className="nav-link text-white"
+              aria-current="page"
+              to="/contact_lists/"
+            >
               Contact lists
             </Link>
           </li>
@@ -41,7 +49,11 @@ const Header = () => {
         )}
         {user ? (
           <li class="nav-item">
-            <h3 className="nav-link" aria-current="page" onClick={logoutUser}>
+            <h3
+              className="nav-link text-white"
+              aria-current="page"
+              onClick={logoutUser}
+            >
               Logout
             </h3>
           </li>
