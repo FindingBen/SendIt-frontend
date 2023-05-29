@@ -1,9 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-
+import jwt_decode from "jwt-decode";
+import {
+  selectCurrentUser,
+  selectCurrentToken,
+} from "../features/auth/authSlice";
+import { useSelector } from "react-redux";
 const CreateContact = () => {
-  let { authTokens, user } = useContext(AuthContext);
+  const token = useSelector(selectCurrentToken);
+  const user = useSelector(selectCurrentUser);
+  // let { authTokens, user } = useContext(AuthContext);
   let [contactList, setContactList] = useState([]);
   const params = useParams();
   const navigate = useNavigate();
@@ -19,7 +26,7 @@ const CreateContact = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
+          Authorization: "Bearer " + String(token),
         },
       }
     );
@@ -37,18 +44,20 @@ const CreateContact = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
+          Authorization: "Bearer " + String(token),
         },
         body: JSON.stringify({
           first_name: e.target.first_name.value,
           last_name: e.target.last_name.value,
           phone_number: e.target.phone_number.value,
           email: e.target.email.value,
-          user: user.user_id,
+          user: user,
           contact_list: contactList.id,
         }),
       }
     );
+    let data = await response.json();
+    console.log(data);
 
     if (response.status === 200 || 201) {
       navigate(`/contact_list/${params.id}`);

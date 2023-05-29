@@ -1,3 +1,13 @@
 #paginationBtn{
     margin-right: 5px;
 }
+
+
+#listItem{
+    width: 65%;
+
+}
+
+#ulItem{
+    align-items: center;
+}

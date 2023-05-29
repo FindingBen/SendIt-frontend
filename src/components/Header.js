@@ -1,23 +1,36 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import jwt_decode from "jwt-decode";
+import {
+  selectCurrentUser,
+  selectCurrentToken,
+  logOut,
+} from "../features/auth/authSlice";
 import { Link } from "react-router-dom";
+
 import AuthContext from "../context/AuthContext";
 
 const Header = () => {
-  let { user, logoutUser } = useContext(AuthContext);
+  // let { user, logoutUser } = useContext(AuthContext);
+  const [userData, setUser] = useState(null);
+  const user = useSelector(selectCurrentUser);
+  const token = useSelector(selectCurrentToken);
+  const dispatch = useDispatch();
+  const handleLogout = () => dispatch(logOut(user, token));
 
   return (
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
+    <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
       <a
         href="/"
-        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+        className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
       >
-        <svg class="bi me-2" width="40" height="32"></svg>
-        <span class="fs-4">SendIt</span>
+        <svg className="bi me-2" width="40" height="32"></svg>
+        <span className="fs-4">SendIt</span>
       </a>
       <hr />
-      <ul class="nav nav-pills flex-column mb-auto">
+      <ul className="nav nav-pills flex-column mb-auto">
         <li>
-          <Link className="nav-link text-white" aria-current="page" to="/">
+          <Link className="nav-link text-white" aria-current="page" to="/home">
             Home
           </Link>
         </li>
@@ -52,7 +65,7 @@ const Header = () => {
             <h3
               className="nav-link text-white"
               aria-current="page"
-              onClick={logoutUser}
+              onClick={handleLogout}
             >
               Logout
             </h3>
@@ -70,7 +83,6 @@ const Header = () => {
           height="32"
           class="rounded-circle me-2"
         />
-        <strong>{user ? user.username : <li></li>}</strong>
       </div>
     </div>
   );

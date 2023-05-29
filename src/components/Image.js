@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import CreateNote from "../pages/CreateMessage";
 import ImgList from "./ImgList";
 import ReactDOM, { createPortal } from "react-dom";
-import MessageView from "../pages/MessageView";
-import IFrame from "./IFrame";
+import { useSelector, useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
-
+import {
+  selectCurrentUser,
+  selectCurrentToken,
+  logOut,
+} from "../features/auth/authSlice";
 const Image = ({
   onStateChange,
   componentChange,
@@ -16,33 +18,26 @@ const Image = ({
 }) => {
   const [showComponent, setShowComponent] = useState(true);
   const [active, setActive] = useState(true);
-  // const [imageList, setImageList] = useState([listImages]);
   const [images, setImages] = useState([]);
   const [file, setFile] = useState();
   const [imageSrc, setImageSrc] = useState("");
   const [cancel, setCancel] = useState(false);
   const iframe = document.getElementById("myFrame");
+  const user = useSelector(selectCurrentUser);
+  const token = useSelector(selectCurrentToken);
+  const [userData, setUserData] = useState();
+  const dispatch = useDispatch();
   const [authTokens, setAuthTokens] = useState(() =>
     localStorage.getItem("authTokens")
       ? JSON.parse(localStorage.getItem("authTokens"))
       : null
   );
-  const [user, setUser] = useState(() =>
-    localStorage.getItem("authTokens")
-      ? jwt_decode(localStorage.getItem("authTokens"))
-      : null
-  );
+  const userState = localStorage.getItem("authTokens")
+    ? jwt_decode(localStorage.getItem("authTokens"))
+    : null;
 
   useEffect(() => {
     iframe.contentWindow.postMessage({ images }, "*");
-    // if (!cancel) {
-    //   ReactDOM.render(
-    //     <li>
-    //       <ImgList imageUrl={images} />
-    //     </li>,
-    //     iframe.contentWindow.document.getElementById("myList")
-    //   );
-    // }
   }, [images]);
 
   function handleImageUpload(event) {
@@ -65,12 +60,12 @@ const Image = ({
     const formData = new FormData();
     formData.append("image", file);
     formData.append("element_type", "Img");
-    formData.append("users", user.user_id);
+    formData.append("users", user);
     let response = await fetch("http://127.0.0.1:8000/api/create_element/", {
       method: "POST",
       headers: {
         //'Content-Type':'application/json',
-        Authorization: "Bearer " + String(authTokens.access),
+        Authorization: "Bearer " + String(token),
       },
       body: formData,
     });
@@ -81,17 +76,14 @@ const Image = ({
   };
 
   function saveImg(event) {
-    // const newImage = imageSrc;
-    // setLastImage(newImage);
-    // setImages([...images, newImage]);
     addImageElement();
     setCancel(true);
-    iframe.contentWindow.postMessage({ authTokens, user }, "*");
-    //ReactDOM.render(<MessageView imageProp={image} />, iframe);
-    setAuthTokens(user);
+    iframe.contentWindow.postMessage({ token, user }, "*");
+
+    // setAuthTokens(user);
     setShowComponent(Boolean(event.target.value));
     setActive(Boolean(!event.target.value));
-    //handleImages((prevImages) => [...prevImages, images]);
+
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
   }

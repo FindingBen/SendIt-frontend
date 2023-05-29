@@ -1,11 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import {
+  selectCurrentUser,
+  selectCurrentToken,
+} from "../features/auth/authSlice";
+import { useSelector } from "react-redux";
 
 const ContactList = () => {
-  let { authTokens } = useContext(AuthContext);
+  // let { authTokens } = useContext(AuthContext);
   let [contacts, setContacts] = useState([]);
-
+  const token = useSelector(selectCurrentToken);
   const params = useParams();
   useEffect(() => {
     getContacts();
@@ -18,7 +23,7 @@ const ContactList = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
+          Authorization: "Bearer " + String(token),
         },
       }
     );

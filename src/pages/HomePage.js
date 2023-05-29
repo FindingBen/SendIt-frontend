@@ -1,20 +1,36 @@
 import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import "../css/EditMessage.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCouch, faFileImport } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCouch,
+  faFileImport,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   MDBListGroup,
   MDBListGroupItem,
   MDBTypography,
 } from "mdb-react-ui-kit";
+import "../css/Home.css";
+import {
+  selectCurrentUser,
+  selectCurrentToken,
+  logOut,
+} from "../features/auth/authSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const HomePage = () => {
   let [notes, setNotes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  let { authTokens, logout } = useContext(AuthContext);
+  const token = useSelector(selectCurrentToken);
+  const user = useSelector(selectCurrentUser);
 
+  const dispatch = useDispatch();
+  const handleLogout = () => dispatch(logOut(user, token));
+  // let { authTokens, logout } = useContext(AuthContext);
+  const params = useParams();
   useEffect(() => {
     getNotes();
   }, []);
@@ -24,6 +40,8 @@ const HomePage = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+  console.log("USER", user);
+  console.log("TOKEN", token);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedItems = notes.slice(startIndex, endIndex);
@@ -32,31 +50,37 @@ const HomePage = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + String(authTokens.access),
+        Authorization: "Bearer " + String(token),
       },
     });
     let data = await response.json();
-    console.log(data);
+
     if (response.status === 200) {
       setNotes(data);
     } else if (response.statusText === "Unauthorized") {
-      logout();
+      dispatch(logOut(user, token));
     }
   };
 
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
-        <div class="row d-flex justify-content-center align-items-center h-100">
+        <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
             <div className="col-12">
               <MDBTypography variant="h1">Your messages</MDBTypography>
             </div>
-            <div className="col-12">
-              <h2>Col</h2>
-            </div>
+          </div>
+          <div className="row border border-dark">
+            {/* <div class="col-sm border border-dark">One of three columns</div>
+            <div class="col-sm border border-dark">One of three columns</div>
+            <div class="col-sm border border-dark">One of three columns</div> */}
+            <h2>Statistics and analysis TBD</h2>
+          </div>
+          <div className="row">
+            <hr></hr>
             <div className="col">
-              <MDBListGroup>
+              <MDBListGroup id="ulItem">
                 {displayedItems.map((note) => (
                   <MDBListGroupItem
                     key={note.id}
@@ -66,28 +90,28 @@ const HomePage = () => {
                     className="px-1 mb-4 rounded-3"
                   >
                     <div>
-                      <div class="fw-bold">SMS</div>
+                      <div className="fw-bold">SMS</div>
                     </div>
 
                     <Link
                       type="button"
-                      class="btn btn-primary"
+                      className="btn btn-primary"
                       // data-mdb-ripple-color="dark"
                       to={`/edit_message/${note.id}`}
                     >
-                      <i class="fas fa-eye"></i>
+                      <i className="fas fa-eye"></i>
                     </Link>
 
                     <Link
                       type="button"
-                      class="btn btn-danger"
-                      // data-mdb-ripple-color="dark"
+                      className="btn btn-danger"
+                      to={`/delete_message/${note.id}`}
                     >
-                      <FontAwesomeIcon icon={faCouch} />
+                      <FontAwesomeIcon icon={faTrash} />
                     </Link>
                     <Link
                       type="button"
-                      class="btn btn-outline-success"
+                      className="btn btn-outline-success"
                       // data-mdb-ripple-color="dark"
                     >
                       <FontAwesomeIcon icon={faFileImport} />
@@ -104,7 +128,7 @@ const HomePage = () => {
                   ).map((page) => (
                     <button
                       type="button"
-                      class="btn btn-outline-secondary"
+                      className="btn btn-outline-secondary"
                       data-mdb-ripple-color="dark"
                       key={page}
                       id="paginationBtn"

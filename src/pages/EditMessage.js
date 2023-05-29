@@ -10,11 +10,16 @@ import Text from "../components/Text";
 import TextComponent from "../components/TextComponent";
 import ImgList from "../components/ImgList";
 import IFrame from "../components/IFrame";
-import ReactDOM, { createPortal } from "react-dom";
 import { useEffect } from "react";
+import {
+  selectCurrentUser,
+  selectCurrentToken,
+} from "../features/auth/authSlice";
+import { useSelector } from "react-redux";
+import jwtDecode from "jwt-decode";
 
 const EditMessage = () => {
-  let { authTokens, user } = useContext(AuthContext);
+  // let { authTokens, user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showComponent, setShowComponent] = useState(false);
   const [active, setActive] = useState(false);
@@ -23,43 +28,30 @@ const EditMessage = () => {
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
   const [texts, setTexts] = useState([]);
-  const [elements, setElements] = useState();
-  const imageEL = <ImgList imageUrl={""}></ImgList>;
-  const textEl = <TextComponent></TextComponent>;
+  const [elements, setElements] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const token = useSelector(selectCurrentToken);
+  const user = useSelector(selectCurrentUser);
+
+
   let BASE_URL = "http://127.0.0.1:8000";
   const params = useParams();
   useEffect(() => {
-    messageView();
+
+    setTimeout(() => messageView(), 2000);
+    setIsLoaded(true);
   }, []);
   console.log(elements);
   const handleClickImage = (e) => {
     e.preventDefault();
     setActive(!active);
     setShowComponent(!showComponent);
-    const iframe = document.getElementById("myFrame");
-    const container = iframe.contentWindow.document.createElement("div");
-    iframe.contentWindow.document.body.appendChild(container);
-    // ReactDOM.render(imageEL, container, () => {
-    //   // const list = iframe.contentWindow.document.getElementById("myList");
-    //   // const newItem = document.createElement("li");
-    //   // newItem.appendChild(container.firstChild);
-    //   // list.appendChild(newItem);
-    // });
   };
 
   const handleClickText = (e) => {
     e.preventDefault();
     setActiveT(!activeT);
     setShowComponent(!showComponent);
-    const iframe = document.getElementById("myFrame");
-    const container = iframe.contentWindow.document.createElement("div");
-    iframe.contentWindow.document.body.appendChild(container);
-    ReactDOM.render(textEl, container, () => {
-      const list = iframe.contentWindow.document.getElementById("myList");
-      const newItem = document.createElement("li");
-      newItem.appendChild(container.firstChild);
-      list.appendChild(newItem);
-    });
   };
 
   let messageView = async () => {
@@ -69,7 +61,7 @@ const EditMessage = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
+          Authorization: "Bearer " + String(token),
         },
       }
     );
@@ -77,29 +69,34 @@ const EditMessage = () => {
     setElements(data.element_list);
   };
 
-  //   let editMessage = async (e) => {
-  //     e.preventDefault();
-  //     const formData = new FormData();
-  //     formData.append("text", texts);
-  //     formData.append("image", file);
-  //     formData.append("users", user.user_id);
-  //     let response = await fetch(
-  //       `http://127.0.0.1:8000/api/message_view/${params}/`,
-  //       {
-  //         method: "PUT",
-  //         headers: {
-  //           //"Content-Type": "application/json",
-  //           Authorization: "Bearer " + String(authTokens.access),
-  //         },
-  //         body: formData,
-  //       }
-  //     );
-  //     let data = await response.json();
-  //     console.log(data);
-  //     if (response.status === 200) {
-  //       navigate("*");
-  //     }
+  // let editMessage = async (e) => {
+  //   e.preventDefault();
+  //   const requestData = {
+  //     element_list: elements,
   //   };
+  //   console.log(elements);
+  //   let response = await fetch(
+  //     `http://127.0.0.1:8000/api/message_view_edit/${params.id}/`,
+  //     {
+  //       method: "PUT",
+  //       headers: {
+  //         //"Content-Type": "application/json",
+  //         Authorization: "Bearer " + String(authTokens.access),
+  //       },
+  //       body: JSON.stringify(requestData),
+  //     }
+  //   );
+  //   let data = await response.json();
+  //   console.log(data);
+  //   if (response.status === 200) {
+  //     navigate("*");
+  //   }
+  // };
+
+  const handleElements = (element) => {
+    setElements(element);
+  };
+
   const handleChildStateChange = (active) => {
     setActive(active);
   };
@@ -116,6 +113,10 @@ const EditMessage = () => {
     setFiles(file);
   };
 
+  const handleText = (texts) => {
+    setTexts(texts);
+  };
+
   const handleComponentChange = (showComponent) => {
     setShowComponent(showComponent);
   };
@@ -125,7 +126,7 @@ const EditMessage = () => {
         <div class="row d-flex justify-content-center align-items-center h-100">
           <div class="row">
             <div className="col-12">
-              <h2>Edit message</h2>
+              <h2>View and Edit message</h2>
               <hr></hr>
             </div>
             <div className="col">
@@ -148,6 +149,7 @@ const EditMessage = () => {
                       onStateChange={handleChildStateChange}
                       componentChange={handleComponentChange}
                       listImages={images}
+                      elementList={handleElements}
                     ></Image>
                   )
                 )}
@@ -165,8 +167,11 @@ const EditMessage = () => {
                   showComponent &&
                   activeT && (
                     <Text
+                      handleText={handleText}
                       onStateChange={handleTextStateChange}
                       componentChange={handleComponentChange}
+                      elementList={handleElements}
+                      listTexts={texts}
                     ></Text>
                   )
                 )}
@@ -175,32 +180,45 @@ const EditMessage = () => {
             <div className="col">
               <div class="smartphone">
                 <IFrame>
-                  <MDBListGroup
-                    style={{ minWidthL: "22rem" }}
-                    light
-                    id="myList"
-                  >
-                    {elements?.map((item, index) => (
-                      <MDBListGroupItem id="elItem" key={index}>
-                        {item.element_type == "Img" ? (
-                          (
-                            <ImgList
-                              imageUrl={`${BASE_URL + item.image}`}
-                            ></ImgList>
-                          ) || item.element_type == "text"
-                        ) : (
-                          <TextComponent textValue={item.text}></TextComponent>
-                        )}
-                      </MDBListGroupItem>
-                    ))}
-                  </MDBListGroup>
+                  {!isLoaded ? (
+                    /* Render the loading circle or spinner */
+                    <div className="spinner-border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  ) : (
+                    <MDBListGroup
+                      style={{ minWidthL: "22rem" }}
+                      light
+                      id="myList"
+                    >
+                      {elements?.map((item, index) => (
+                        <MDBListGroupItem id="elItem" key={index}>
+                          {item.element_type == "Img" ? (
+                            (
+                              <ImgList
+                                imageUrl={`${BASE_URL + item.image}`}
+                              ></ImgList>
+                            ) || item.element_type == "text"
+                          ) : (
+                            <TextComponent
+                              textValue={item.text}
+                            ></TextComponent>
+                          )}
+                        </MDBListGroupItem>
+                      ))}
+                    </MDBListGroup>
+                  )}
                 </IFrame>
               </div>
             </div>
           </div>
           <div className="row">
             <div id="buttonHolder" className="col">
-              <button type="submit" className="btn btn-dark">
+              <button
+                type="submit"
+                // onClick={editMessage}
+                className="btn btn-dark"
+              >
                 Edit message
               </button>
             </div>
