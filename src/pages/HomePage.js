@@ -40,8 +40,7 @@ const HomePage = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  console.log("USER", user);
-  console.log("TOKEN", token);
+
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedItems = notes.slice(startIndex, endIndex);

@@ -9,7 +9,7 @@ import Text from "../components/Text";
 import TextComponent from "../components/TextComponent";
 import ImgList from "../components/ImgList";
 import Header from "../components/Header";
-import ModalComponent from "../components/ModalComponent";
+
 import IFrame from "../components/IFrame";
 import jwt_decode from "jwt-decode";
 import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
@@ -18,7 +18,9 @@ import {
   selectCurrentUser,
   selectCurrentToken,
 } from "../features/auth/authSlice";
+import { setState } from "../features/modal/formReducer";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const CreateNote = ({ handleNavigation }) => {
   // let { authTokens, user } = useContext(AuthContext);
@@ -33,9 +35,17 @@ const CreateNote = ({ handleNavigation }) => {
   const params = useParams();
   const [isDirty, setIsDirty] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
+  const dispatch = useDispatch();
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
+  //const modal = useSelector(setModalState);
+  useEffect(() => {
+    if (elementsList.length > 0) {
+      dispatch(setState({ isDirty: true }));
+    } else {
+      dispatch(setState({ isDirty: false }));
+    }
+  }, [elementsList]);
 
   const handleClickImage = (e) => {
     e.preventDefault();

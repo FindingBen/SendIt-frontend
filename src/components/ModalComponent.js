@@ -1,12 +1,31 @@
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { selectFormState, setState } from "../features/modal/formReducer";
+import {
+  setModalState,
+  selectModalState,
+} from "../features/modal/modalReducer";
+import { useSelector, useDispatch } from "react-redux";
 
-function ModalComponent({ showModal }) {
+function ModalComponent({ confirmLeave, showModal }) {
   const [show, setShow] = useState(showModal);
+  const dispatch = useDispatch();
+  const handleClose = () => {
+    confirmLeave();
+    setShow(false);
+    dispatch(setModalState({ show: false }));
+    dispatch(setState({ isDirty: false }));
+  };
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleStay = () => {
+    setShow(false);
+    dispatch(setModalState({ show: false }));
+  };
+
+  const handleShow = () => {
+    setShow(true);
+  };
 
   useEffect(() => {
     if (showModal) {
@@ -30,14 +49,15 @@ function ModalComponent({ showModal }) {
           <Modal.Title>Modal title</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          I will not close if you click outside me. Don not even try to press
-          escape key.
+          You have some unsaved data, do you wish to navigate?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Yes
           </Button>
-          <Button variant="primary">Understood</Button>
+          <Button variant="primary" onClick={handleStay}>
+            Stay
+          </Button>
         </Modal.Footer>
       </Modal>
     </>

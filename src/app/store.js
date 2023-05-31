@@ -1,25 +1,31 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { apiSlice } from "./api/apiSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "../features/auth/authSlice";
 import thunk from "redux-thunk";
+import storageSession from "reduxjs-toolkit-persist/lib/storage/session";
+import formReducer from "../features/modal/formReducer";
+import modalReducer from "../features/modal/modalReducer";
 
 const persistConfig = {
   key: "root",
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, authReducer);
+const rootReducer = combineReducers({
+  auth: persistReducer(persistConfig, authReducer),
+  formState: formReducer,
+  modalState: modalReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    [apiSlice.reducerPath]: apiSlice.reducer,
-    auth: persistedReducer,
-  },
+  reducer: persistedReducer,
   middleware: [thunk, apiSlice.middleware],
   devTools: true,
 });
-console.log(store.middleware);
+
 export const persistor = persistStore(store);
 export default store;

@@ -1,22 +1,66 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import jwt_decode from "jwt-decode";
+
 import {
   selectCurrentUser,
   selectCurrentToken,
   logOut,
 } from "../features/auth/authSlice";
-import { Link } from "react-router-dom";
-
-import AuthContext from "../context/AuthContext";
+import { selectFormState, setState } from "../features/modal/formReducer";
+import {
+  setModalState,
+  selectModalState,
+} from "../features/modal/modalReducer";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import ModalComponent from "../components/ModalComponent";
 
 const Header = () => {
-  // let { user, logoutUser } = useContext(AuthContext);
-  const [userData, setUser] = useState(null);
   const user = useSelector(selectCurrentUser);
   const token = useSelector(selectCurrentToken);
+  const isDirtyState = useSelector(selectFormState);
+  const showModal = useSelector(selectModalState);
+  const location = useLocation();
+  const isDirtyRef = useRef(false);
   const dispatch = useDispatch();
   const handleLogout = () => dispatch(logOut(user, token));
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isDirtyState) {
+      isDirtyRef.current = true;
+    } else {
+      isDirtyRef.current = false;
+    }
+  }, [isDirtyState, showModal]);
+
+  useEffect(() => {
+    const unblock = () => {
+      if (isDirtyRef.current) {
+        dispatch(setModalState({ show: true }));
+        return false; // Block navigation
+      }
+    };
+
+    window.onbeforeunload = unblock;
+
+    return () => {
+      window.onbeforeunload = null;
+    };
+  }, [dispatch]);
+
+  const handleNavigate = (e) => {
+    if (isDirtyRef.current) {
+      dispatch(setModalState({ show: true }));
+      e.preventDefault(); // Prevent navigation
+    } else {
+      dispatch(setModalState({ show: false }));
+      handleConfirmNavigation(e.target.pathname); // Pass the clicked path
+    }
+  };
+  const handleConfirmNavigation = (path) => {
+    dispatch(setModalState({ show: false }));
+    navigate(location.pathname);
+    console.log(location.pathname); // Navigate after confirmation
+  };
 
   return (
     <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
@@ -30,7 +74,12 @@ const Header = () => {
       <hr />
       <ul className="nav nav-pills flex-column mb-auto">
         <li>
-          <Link className="nav-link text-white" aria-current="page" to="/home">
+          <Link
+            onClick={handleNavigate}
+            className="nav-link text-white"
+            aria-current="page"
+            to="/home"
+          >
             Home
           </Link>
         </li>
@@ -50,6 +99,7 @@ const Header = () => {
         {user ? (
           <li className="nav-item">
             <Link
+              onClick={handleNavigate}
               className="nav-link text-white"
               aria-current="page"
               to="/contact_lists/"
@@ -84,6 +134,10 @@ const Header = () => {
           class="rounded-circle me-2"
         />
       </div>
+      <ModalComponent
+        confirmLeave={handleConfirmNavigation}
+        showModal={showModal}
+      ></ModalComponent>
     </div>
   );
 };

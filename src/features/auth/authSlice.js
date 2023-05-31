@@ -22,7 +22,7 @@ const authSlice = createSlice({
     },
   },
 });
-console.log(authSlice);
+
 export const { setCredentials, logOut, registerUser } = authSlice.actions;
 
 export default authSlice.reducer;
