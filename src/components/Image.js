@@ -2,7 +2,9 @@ import React, { useState, useEffect, useContext } from "react";
 import ImgList from "./ImgList";
 import ReactDOM, { createPortal } from "react-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { ElementContext } from "../context/ElementContext";
 import jwt_decode from "jwt-decode";
+import { ImageEditorComponent } from "@syncfusion/ej2-react-image-editor";
 import {
   selectCurrentUser,
   selectCurrentToken,
@@ -15,7 +17,9 @@ const Image = ({
   listImages,
   handleFiles,
   elementList,
+  contextList,
 }) => {
+  const { createElement, deleteElement } = useContext(ElementContext);
   const [showComponent, setShowComponent] = useState(true);
   const [active, setActive] = useState(true);
   const [images, setImages] = useState([]);
@@ -35,7 +39,7 @@ const Image = ({
   const userState = localStorage.getItem("authTokens")
     ? jwt_decode(localStorage.getItem("authTokens"))
     : null;
-
+  const BASE_URL = "http://127.0.0.1:8000/media/";
   useEffect(() => {
     iframe.contentWindow.postMessage({ images }, "*");
   }, [images]);
@@ -55,6 +59,24 @@ const Image = ({
 
     reader.readAsDataURL(file);
   }
+  console.log(file);
+  let addImageElContext = async (e) => {
+    const formData = new FormData();
+    const imageContext = {
+      image: URL.createObjectURL(file),
+      element_type: "Img",
+      users: user,
+      file: file,
+    };
+    const data = {
+      image: file,
+      element_type: "Img",
+      users: user,
+    };
+    createElement(imageContext);
+    contextList((prevElement) => [...prevElement, imageContext]);
+    //elementList((prevElement) => [...prevElement, data]);
+  };
 
   let addImageElement = async (e) => {
     const formData = new FormData();
@@ -71,12 +93,13 @@ const Image = ({
     });
     let data = await response.json();
     if (response.status === 200) {
-      elementList((prevElement) => [...prevElement, data]);
+      //elementList((prevElement) => [...prevElement, data]);
     }
   };
 
   function saveImg(event) {
-    addImageElement();
+    //addImageElement();
+    addImageElContext();
     setCancel(true);
     iframe.contentWindow.postMessage({ token, user }, "*");
 
@@ -113,6 +136,7 @@ const Image = ({
       {images?.map((image, index) => (
         <ImgList key={index} imageUrl={image} />
       ))}
+      {/* <ImageEditorComponent></ImageEditorComponent> */}
       <button
         type="button"
         className="btn btn-dark"

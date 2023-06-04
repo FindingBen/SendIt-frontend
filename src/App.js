@@ -21,41 +21,45 @@ import DeleteMessage from "./pages/DeleteMessage";
 import Login from "./features/auth/Login";
 import HomePage from "./pages/HomePage";
 import Header from "./components/Header";
+import { ElementProvider } from "./context/ElementContext";
 function App() {
   return (
     <div>
       <div className="App" style={({ height: "100vh" }, { display: "flex" })}>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            {/* <Route path="*" element={<PrivateRoute></PrivateRoute>} /> */}
-            <Route path="register" element={<RegisterPage />} />
-            <Route path="login" element={<Login></Login>} />
-            <Route element={<PrivateRoute />}>
-              <Route path="home" element={<HomePage />} />
-              <Route path="create_note" element={<CreateMessage />} />
-              <Route
-                path="/contact_lists"
-                element={<ContactLists></ContactLists>}
-              />
-              <Route
-                path="/contact_list/:id"
-                element={<ContactList></ContactList>}
-              />
-              <Route
-                path="/create_contact/:id"
-                element={<CreateContact></CreateContact>}
-              />
-              <Route
-                path="/edit_message/:id"
-                element={<EditMessage></EditMessage>}
-              />
-              <Route
-                path="/delete_message/:id"
-                element={<DeleteMessage></DeleteMessage>}
-              ></Route>
+        <ElementProvider>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              {/* <Route path="*" element={<PrivateRoute></PrivateRoute>} /> */}
+              <Route path="register" element={<RegisterPage />} />
+              <Route path="login" element={<Login></Login>} />
+
+              <Route element={<PrivateRoute />}>
+                <Route path="home" element={<HomePage />} />
+                <Route path="create_note" element={<CreateMessage />} />
+                <Route
+                  path="/contact_lists"
+                  element={<ContactLists></ContactLists>}
+                />
+                <Route
+                  path="/contact_list/:id"
+                  element={<ContactList></ContactList>}
+                />
+                <Route
+                  path="/create_contact/:id"
+                  element={<CreateContact></CreateContact>}
+                />
+                <Route
+                  path="/edit_message/:id"
+                  element={<EditMessage></EditMessage>}
+                />
+                <Route
+                  path="/delete_message/:id"
+                  element={<DeleteMessage></DeleteMessage>}
+                ></Route>
+              </Route>
             </Route>
-          </Route>
-        </Routes>
+          </Routes>
+        </ElementProvider>
       </div>
     </div>
   );

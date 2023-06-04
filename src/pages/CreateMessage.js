@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
-import { useNavigate, useParams, useBeforeUnload } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import "../css/CreationMessage.css";
 import "../css/RootIframe.css";
 import { AiFillPicture } from "react-icons/ai";
@@ -8,22 +7,27 @@ import Image from "../components/Image";
 import Text from "../components/Text";
 import TextComponent from "../components/TextComponent";
 import ImgList from "../components/ImgList";
-import Header from "../components/Header";
-
 import IFrame from "../components/IFrame";
-import jwt_decode from "jwt-decode";
 import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
-import { useEffect } from "react";
 import {
   selectCurrentUser,
   selectCurrentToken,
 } from "../features/auth/authSlice";
+import modalReducer, {
+  selectModalCall,
+  setOpenModal,
+} from "../features/modal/modalReducer";
+
+
 import { setState } from "../features/modal/formReducer";
+import { setList, selectListState } from "../features/elements/elementReducer";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { ElementContext } from "../context/ElementContext";
 
-const CreateNote = ({ handleNavigation }) => {
-  // let { authTokens, user } = useContext(AuthContext);
+const CreateNote = () => {
+  const { createElement, deleteElement, contextObject } =
+    useContext(ElementContext);
   const navigate = useNavigate();
   const [showComponent, setShowComponent] = useState(false);
   const [active, setActive] = useState(false);
@@ -32,20 +36,23 @@ const CreateNote = ({ handleNavigation }) => {
   const [file, setFiles] = useState([]);
   const [texts, setTexts] = useState([]);
   const [elementsList, setElementsList] = useState([]);
-  const params = useParams();
+  const [elementContextList, setElementsContextList] = useState([]);
   const [isDirty, setIsDirty] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
-  //const modal = useSelector(setModalState);
+  const modal_state = useSelector(selectModalCall);
+  const list_state = useSelector(selectListState);
+  const [clicked, setClicked] = useState(false);
+
   useEffect(() => {
-    if (elementsList.length > 0) {
+    if (elementContextList.length > 0) {
       dispatch(setState({ isDirty: true }));
     } else {
       dispatch(setState({ isDirty: false }));
     }
-  }, [elementsList]);
+    dispatch(setOpenModal({ open: false }));
+  }, [elementContextList, elementsList, modal_state, list_state]);
 
   const handleClickImage = (e) => {
     e.preventDefault();
@@ -58,34 +65,77 @@ const CreateNote = ({ handleNavigation }) => {
     setActiveT(!activeT);
     setShowComponent(!showComponent);
   };
-
   let createNotes = async (e) => {
     e.preventDefault();
-    const requestData = {
-      element_list: elementsList,
-      users: user,
-    };
 
-    let response = await fetch("http://127.0.0.1:8000/api/create_notes/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(token),
-      },
-      body: JSON.stringify(requestData),
-    });
+    if (elementsList.length > 0) {
+      const requestData = {
+        element_list: elementsList,
+        users: user,
+      };
 
-    let data = await response.json();
+      let response = await fetch("http://127.0.0.1:8000/api/create_notes/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(token),
+        },
+        body: JSON.stringify(requestData),
+      });
 
-    if (response.status === 200) {
-      navigate("/home");
-    } else {
-      console.log("WRONG", data);
+      let data = await response.json();
+
+      if (response.status === 200) {
+        setClicked(false);
+        dispatch(setState({ isDirty: false }));
+        navigate("/home");
+      } else {
+        console.log("WRONG", data);
+      }
     }
+  };
+  console.log(elementsList);
+  let addElement = async () => {
+    dispatch(setList({ populated: true }));
+    await Promise.all(
+      elementContextList?.map(async (elementContext) => {
+        const formData = new FormData();
+        if (elementContext.element_type === "Text") {
+          formData.append("text", elementContext.text);
+        } else {
+          formData.append("image", elementContext.file);
+        }
+        formData.append("element_type", elementContext.element_type);
+        formData.append("users", elementContext.users);
+
+        let response = await fetch(
+          "http://127.0.0.1:8000/api/create_element/",
+          {
+            method: "POST",
+            headers: {
+              //'Content-Type':'application/json',
+              Authorization: "Bearer " + String(token),
+            },
+            body: formData,
+          }
+        );
+
+        let data = await response.json();
+
+        if (response.status === 200) {
+          setElementsList((prevElement) => [...prevElement, data]);
+        }
+      })
+    );
   };
 
   const handleElements = (elementsList) => {
     setElementsList(elementsList);
+    setIsDirty(true);
+  };
+
+  const handleContextEl = (elementContextList) => {
+    setElementsContextList(elementContextList);
     setIsDirty(true);
   };
 
@@ -113,20 +163,9 @@ const CreateNote = ({ handleNavigation }) => {
     setShowComponent(showComponent);
   };
 
-  const handleModal = (showModal) => {
-    setShowModal(showModal);
-  };
-
-  let deleteElement = async () => {
-    elementsList?.map((element) =>
-      fetch(`http://127.0.0.1:8000/api/delete_element/${element.id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-      })
-    );
+  const handleClickElement = (e) => {
+    addElement(e);
+    setClicked(true);
   };
 
   return (
@@ -159,6 +198,7 @@ const CreateNote = ({ handleNavigation }) => {
                       componentChange={handleComponentChange}
                       listImages={images}
                       elementList={handleElements}
+                      contextList={handleContextEl}
                     ></Image>
                   )
                 )}
@@ -181,6 +221,7 @@ const CreateNote = ({ handleNavigation }) => {
                       componentChange={handleComponentChange}
                       elementList={handleElements}
                       listTexts={texts}
+                      contextList={handleContextEl}
                     ></Text>
                   )
                 )}
@@ -194,17 +235,17 @@ const CreateNote = ({ handleNavigation }) => {
                     light
                     id="myList"
                   >
-                    {elementsList &&
-                      elementsList?.map((item, index) => (
+                    {elementContextList &&
+                      elementContextList?.map((item, index) => (
                         <MDBListGroupItem id="elItem" key={index}>
-                          {item.element.element_type === "Img" ? (
+                          {item.element_type === "Img" ? (
                             <ImgList
-                              imageUrl={`${item.element.image}`}
+                              imageUrl={`${item.image}`}
                               //alt="Italian Trulli"
                             ></ImgList>
                           ) : (
                             <TextComponent
-                              textValue={item.element.text}
+                              textValue={item.text}
                             ></TextComponent>
                           )}
                         </MDBListGroupItem>
@@ -216,13 +257,23 @@ const CreateNote = ({ handleNavigation }) => {
           </div>
           <div className="row">
             <div id="buttonHolder" className="col">
-              <button
-                type="submit"
-                onClick={createNotes}
-                className="btn btn-dark"
-              >
-                Create message
-              </button>
+              {clicked ? (
+                <button
+                  type="submit"
+                  onClick={createNotes}
+                  className="btn btn-success"
+                >
+                  Create message
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  onClick={handleClickElement}
+                  className="btn btn-dark"
+                >
+                  Save message
+                </button>
+              )}
             </div>
           </div>
         </div>

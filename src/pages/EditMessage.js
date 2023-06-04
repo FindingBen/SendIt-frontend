@@ -15,7 +15,8 @@ import {
   selectCurrentUser,
   selectCurrentToken,
 } from "../features/auth/authSlice";
-import { useSelector } from "react-redux";
+import modalReducer, { setModalState } from "../features/modal/modalReducer";
+import { useSelector, useDispatch } from "react-redux";
 import jwtDecode from "jwt-decode";
 
 const EditMessage = () => {
@@ -32,14 +33,13 @@ const EditMessage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
-
-
+  const dispatch = useDispatch();
   let BASE_URL = "http://127.0.0.1:8000";
   const params = useParams();
   useEffect(() => {
-
     setTimeout(() => messageView(), 2000);
     setIsLoaded(true);
+    dispatch(setModalState({ show: false }));
   }, []);
   console.log(elements);
   const handleClickImage = (e) => {

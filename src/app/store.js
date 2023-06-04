@@ -7,6 +7,7 @@ import thunk from "redux-thunk";
 import storageSession from "reduxjs-toolkit-persist/lib/storage/session";
 import formReducer from "../features/modal/formReducer";
 import modalReducer from "../features/modal/modalReducer";
+import elementReducer from "../features/elements/elementReducer";
 
 const persistConfig = {
   key: "root",
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   auth: persistReducer(persistConfig, authReducer),
   formState: formReducer,
   modalState: modalReducer,
+  elementState: elementReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

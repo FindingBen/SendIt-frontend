@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import TextComponent from "../components/TextComponent";
 import ReactDOM, { createPortal } from "react-dom";
 import ReactQuill from "react-quill";
+import { ElementContext } from "../context/ElementContext";
 import "react-quill/dist/quill.snow.css";
 import { useSelector, useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
@@ -38,7 +39,9 @@ const Text = ({
   handleText,
   elementList,
   listTexts,
+  contextList,
 }) => {
+  const { createElement, deleteElement } = useContext(ElementContext);
   const [active, setActive] = useState(true);
   const [cancel, setCancel] = useState(false);
   const [texts, setTexts] = useState([]);
@@ -47,16 +50,6 @@ const Text = ({
   const iframe = document.getElementById("myFrame");
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
-  // const [authTokens, setAuthTokens] = useState(() =>
-  //   localStorage.getItem("authTokens")
-  //     ? JSON.parse(localStorage.getItem("authTokens"))
-  //     : null
-  // );
-  // const [user, setUser] = useState(() =>
-  //   localStorage.getItem("authTokens")
-  //     ? jwt_decode(localStorage.getItem("authTokens"))
-  //     : null
-  // );
 
   useEffect(() => {
     iframe.contentWindow.postMessage({ texts }, "*");
@@ -65,6 +58,17 @@ const Text = ({
   function handleTextFunc(event) {
     setText(event.target.value);
   }
+
+  const addTextObjContext = () => {
+    const dataText = {
+      text: text,
+      element_type: "Text",
+      users: user,
+    };
+    createElement(dataText);
+    contextList((prevElement) => [...prevElement, dataText]);
+    // elementList((prevElement) => [...prevElement, dataText]);
+  };
 
   let addTextElement = async (e) => {
     const formData = new FormData();
@@ -93,7 +97,7 @@ const Text = ({
     setActive(Boolean(!event.target.value));
     handleText((prevText) => [...prevText, text]);
     setTexts((prevText) => [...prevText, text]);
-    addTextElement();
+    addTextObjContext();
 
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));

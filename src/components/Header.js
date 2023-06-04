@@ -13,8 +13,10 @@ import {
 } from "../features/modal/modalReducer";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
+import { useState } from "react";
 
 const Header = () => {
+  const [clickedPath, setClickedPath] = useState();
   const user = useSelector(selectCurrentUser);
   const token = useSelector(selectCurrentToken);
   const isDirtyState = useSelector(selectFormState);
@@ -48,18 +50,21 @@ const Header = () => {
   }, [dispatch]);
 
   const handleNavigate = (e) => {
+    const clickedPath = e.target.pathname;
+    setClickedPath(clickedPath);
+    console.log(clickedPath);
     if (isDirtyRef.current) {
       dispatch(setModalState({ show: true }));
       e.preventDefault(); // Prevent navigation
     } else {
       dispatch(setModalState({ show: false }));
-      handleConfirmNavigation(e.target.pathname); // Pass the clicked path
+      //handleConfirmNavigation(clickedPath);
+      // Pass the clicked path
     }
   };
-  const handleConfirmNavigation = (path) => {
+  const handleConfirmNavigation = (e) => {
     dispatch(setModalState({ show: false }));
-    navigate(location.pathname);
-    console.log(location.pathname); // Navigate after confirmation
+    navigate(clickedPath);
   };
 
   return (
