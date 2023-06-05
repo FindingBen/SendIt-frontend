@@ -4,6 +4,7 @@ import ReactDOM, { createPortal } from "react-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { ElementContext } from "../context/ElementContext";
 import jwt_decode from "jwt-decode";
+import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
 import { ImageEditorComponent } from "@syncfusion/ej2-react-image-editor";
 import {
   selectCurrentUser,
@@ -30,7 +31,9 @@ const Image = ({
   const user = useSelector(selectCurrentUser);
   const token = useSelector(selectCurrentToken);
   const [userData, setUserData] = useState();
+  const [isMounted, setIsMounted] = useState(true);
   const dispatch = useDispatch();
+  const iframeEl = document.getElementById("myFrame");
   const [authTokens, setAuthTokens] = useState(() =>
     localStorage.getItem("authTokens")
       ? JSON.parse(localStorage.getItem("authTokens"))
@@ -43,6 +46,48 @@ const Image = ({
   useEffect(() => {
     iframe.contentWindow.postMessage({ images }, "*");
   }, [images]);
+
+  useEffect(() => {
+    if (iframeEl) {
+      const iframeDocument = iframeEl.contentDocument;
+      if (iframeDocument) {
+        const listContainer = iframeDocument.getElementById("myList");
+        setTimeout(() => {
+          ReactDOM.render(<ImgList imageUrl={imageSrc} />, listContainer);
+        }, 10);
+      }
+    }
+  }, [imageSrc, iframeEl]);
+
+  useEffect(() => {
+    setIsMounted(true);
+
+    return () => {
+      setIsMounted(false);
+      setImages([]);
+      if (isMounted && iframeEl) {
+        const iframeDocument = iframeEl.contentDocument;
+        if (iframeDocument) {
+          const listContainer = iframeDocument.getElementById("myList");
+          setTimeout(() => {
+            if (listContainer) {
+              ReactDOM.render(
+                <MDBListGroupItem>{imageSrc}</MDBListGroupItem>,
+                listContainer
+              );
+            }
+
+            // if (listContainer && listContainer.lastElementChild) {
+            //   listContainer.removeChild(listContainer.lastElementChild);
+            //   // listContainer.current.lastChild.scrollIntoView({
+            //   //   behavior: "smooth",
+            //   // });
+            // }
+          }, 10);
+        }
+      }
+    };
+  }, []);
 
   function handleImageUpload(event) {
     const file = event.target.files[0];

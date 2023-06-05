@@ -48,7 +48,7 @@ const Text = ({
   const [text, setText] = useState([]);
   const [showComponent, setShowComponent] = useState(true);
   const iframeEl = document.getElementById("myFrame");
-
+  const [isMounted, setIsMounted] = useState(true);
   const user = useSelector(selectCurrentUser);
   const [textList, setTextList] = useState([]);
 
@@ -65,23 +65,29 @@ const Text = ({
   }, [text, iframeEl]);
 
   useEffect(() => {
+    setIsMounted(true);
+
     return () => {
-      // Cleanup function
+      setIsMounted(false);
       setText([]);
-      if (iframeEl) {
+      if (isMounted && iframeEl) {
         const iframeDocument = iframeEl.contentDocument;
         if (iframeDocument) {
           const listContainer = iframeDocument.getElementById("myList");
           setTimeout(() => {
-            ReactDOM.render(
-              <MDBListGroupItem>
-                {/* {textList?.map((item, index) => (
-                  <TextComponent key={index} textValue={item} />
-                ))} */}
-                {text}
-              </MDBListGroupItem>,
-              listContainer
-            );
+            if (listContainer) {
+              ReactDOM.render(
+                <MDBListGroupItem>{text}</MDBListGroupItem>,
+                listContainer
+              );
+            }
+
+            // if (listContainer && listContainer.lastElementChild) {
+            //   listContainer.removeChild(listContainer.lastElementChild);
+            //   // listContainer.current.lastChild.scrollIntoView({
+            //   //   behavior: "smooth",
+            //   // });
+            // }
           }, 10);
         }
       }
@@ -109,7 +115,7 @@ const Text = ({
     // handleText((prevText) => [...prevText, text]);
     //setTexts((prevText) => [...prevText, text]);
     addTextObjContext();
-    setText("");
+
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
   }
