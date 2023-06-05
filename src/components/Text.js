@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import TextComponent from "../components/TextComponent";
+import List from "./List";
 import ReactDOM, { createPortal } from "react-dom";
 import ReactQuill from "react-quill";
 import { ElementContext } from "../context/ElementContext";
 import "react-quill/dist/quill.snow.css";
 import { useSelector, useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
+import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
 import {
   selectCurrentUser,
   selectCurrentToken,
@@ -38,26 +40,59 @@ const Text = ({
   componentChange,
   handleText,
   elementList,
-  listTexts,
+  listEl,
   contextList,
 }) => {
   const { createElement, deleteElement } = useContext(ElementContext);
   const [active, setActive] = useState(true);
-  const [cancel, setCancel] = useState(false);
-  const [texts, setTexts] = useState([]);
-  const [text, setText] = useState();
+  const [text, setText] = useState([]);
   const [showComponent, setShowComponent] = useState(true);
-  const iframe = document.getElementById("myFrame");
-  const token = useSelector(selectCurrentToken);
+  const iframeEl = document.getElementById("myFrame");
+
   const user = useSelector(selectCurrentUser);
+  const [textList, setTextList] = useState([])
+
 
   useEffect(() => {
-    iframe.contentWindow.postMessage({ texts }, "*");
-  }, [listTexts]);
+    if (iframeEl) {
+      const iframeDocument = iframeEl.contentDocument;
+      if (iframeDocument) {
+        const listContainer = iframeDocument.getElementById("myList");
+        setTimeout(() => {
+          console.log("TEST")
+          ReactDOM.render(
+            <MDBListGroupItem>
+              {/* {textList?.map((item, index) => (
+                <TextComponent key={index} textValue={item} />
+              ))} */}
+              {text}
+            </MDBListGroupItem>,
+            listContainer
+          );
+        }, 10);
+      }
+    }
+  }, [text, iframeEl]);
+
+  // useEffect(() => {
+    
+  //   return () => {
+  //     // Cleanup function
+  //     setText([])
+
+  //   //   ReactDOM.render(<MDBListGroupItem id="elItem">
+  //   //   <TextComponent textValue={text} />
+  //   // </MDBListGroupItem>,iframe.contentDocument.getElementById("myList")); 
+  //   };
+  // }, []);
+
+
 
   function handleTextFunc(event) {
-    setText(event.target.value);
+    setText(event)
+    listEl((prevEl) => [...prevEl, event])
   }
+
 
   const addTextObjContext = () => {
     const dataText = {
@@ -67,47 +102,27 @@ const Text = ({
     };
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
-    // elementList((prevElement) => [...prevElement, dataText]);
+
   };
 
-  let addTextElement = async (e) => {
-    const formData = new FormData();
-    formData.append("text", text);
-    formData.append("element_type", "Text");
-    formData.append("users", user);
-    let response = await fetch("http://127.0.0.1:8000/api/create_element/", {
-      method: "POST",
-      headers: {
-        //'Content-Type':'application/json',
-        Authorization: "Bearer " + String(token),
-      },
-      body: formData,
-    });
-    let data = await response.json();
-    if (response.status === 200) {
-      elementList((prevElement) => [...prevElement, data]);
-    }
-  };
 
   function saveTxt(event) {
-    iframe.contentWindow.postMessage({ token, user }, "*");
-    //ReactDOM.render(<MessageView imageProp={image} />, iframe);
-    // setAuthTokens(user);
+
+    
+
     setShowComponent(Boolean(event.target.value));
     setActive(Boolean(!event.target.value));
-    handleText((prevText) => [...prevText, text]);
-    setTexts((prevText) => [...prevText, text]);
+    // handleText((prevText) => [...prevText, text]);
+    //setTexts((prevText) => [...prevText, text]);
     addTextObjContext();
-
+    setText('');
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
   }
 
   function handleCancel(event) {
-    setCancel(true);
     setShowComponent(Boolean(event.target.value));
     setActive(Boolean(!event.target.value));
-
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
   }
@@ -117,7 +132,7 @@ const Text = ({
         className="editor-input"
         theme="snow"
         value={text}
-        onChange={setText}
+        onChange={handleTextFunc}
         modules={modules}
       />
       <button

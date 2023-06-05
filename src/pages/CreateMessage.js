@@ -17,8 +17,8 @@ import modalReducer, {
   selectModalCall,
   setOpenModal,
 } from "../features/modal/modalReducer";
-
-
+import List from "../components/List";
+import ReactDOM from 'react-dom'; 
 import { setState } from "../features/modal/formReducer";
 import { setList, selectListState } from "../features/elements/elementReducer";
 import { useSelector } from "react-redux";
@@ -34,7 +34,7 @@ const CreateNote = () => {
   const [activeT, setActiveT] = useState(false);
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
-  const [texts, setTexts] = useState([]);
+  const [displayElItem, setDisplayItems] = useState([]);
   const [elementsList, setElementsList] = useState([]);
   const [elementContextList, setElementsContextList] = useState([]);
   const [isDirty, setIsDirty] = useState(false);
@@ -52,7 +52,11 @@ const CreateNote = () => {
       dispatch(setState({ isDirty: false }));
     }
     dispatch(setOpenModal({ open: false }));
-  }, [elementContextList, elementsList, modal_state, list_state]);
+
+
+
+
+  }, [elementContextList, elementsList, modal_state]);
 
   const handleClickImage = (e) => {
     e.preventDefault();
@@ -94,7 +98,7 @@ const CreateNote = () => {
       }
     }
   };
-  console.log(elementsList);
+
   let addElement = async () => {
     dispatch(setList({ populated: true }));
     await Promise.all(
@@ -155,9 +159,9 @@ const CreateNote = () => {
     setFiles(file);
   };
 
-  const handleText = (texts) => {
-    setTexts(texts);
-  };
+  const displayElements = (displayElItem) =>{
+    setDisplayItems(displayElItem)
+  }
 
   const handleComponentChange = (showComponent) => {
     setShowComponent(showComponent);
@@ -167,7 +171,7 @@ const CreateNote = () => {
     addElement(e);
     setClicked(true);
   };
-
+  console.log(displayElItem)
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
@@ -216,11 +220,11 @@ const CreateNote = () => {
                   showComponent &&
                   activeT && (
                     <Text
-                      handleText={handleText}
+                     // handleText={handleText}
                       onStateChange={handleTextStateChange}
                       componentChange={handleComponentChange}
                       elementList={handleElements}
-                      listTexts={texts}
+                      listEl={displayElements}
                       contextList={handleContextEl}
                     ></Text>
                   )
@@ -230,27 +234,7 @@ const CreateNote = () => {
             <div className="col">
               <div class="smartphone">
                 <IFrame>
-                  <MDBListGroup
-                    style={{ minWidthL: "22rem" }}
-                    light
-                    id="myList"
-                  >
-                    {elementContextList &&
-                      elementContextList?.map((item, index) => (
-                        <MDBListGroupItem id="elItem" key={index}>
-                          {item.element_type === "Img" ? (
-                            <ImgList
-                              imageUrl={`${item.image}`}
-                              //alt="Italian Trulli"
-                            ></ImgList>
-                          ) : (
-                            <TextComponent
-                              textValue={item.text}
-                            ></TextComponent>
-                          )}
-                        </MDBListGroupItem>
-                      ))}
-                  </MDBListGroup>
+                <List children={elementContextList} />
                 </IFrame>
               </div>
             </div>
@@ -281,5 +265,7 @@ const CreateNote = () => {
     </section>
   );
 };
+
+
 
 export default CreateNote;

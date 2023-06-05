@@ -18,7 +18,6 @@ const IFrame = ({ children }) => {
   // let { authTokens, user } = useContext(AuthContext);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoad(false), 2000);
 
     const handleIframeLoad = () => {
       const iframeContent = contentRef?.contentWindow?.document;
