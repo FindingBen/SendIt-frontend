@@ -50,8 +50,7 @@ const Text = ({
   const iframeEl = document.getElementById("myFrame");
 
   const user = useSelector(selectCurrentUser);
-  const [textList, setTextList] = useState([])
-
+  const [textList, setTextList] = useState([]);
 
   useEffect(() => {
     if (iframeEl) {
@@ -59,32 +58,21 @@ const Text = ({
       if (iframeDocument) {
         const listContainer = iframeDocument.getElementById("myList");
         setTimeout(() => {
-  
-          ReactDOM.render(
-            <MDBListGroupItem>
-              {/* {textList?.map((item, index) => (
-                <TextComponent key={index} textValue={item} />
-              ))} */}
-              <TextComponent textValue={text} />
-            </MDBListGroupItem>,
-            listContainer
-          );
+          ReactDOM.render(<TextComponent textValue={text} />, listContainer);
         }, 10);
       }
     }
   }, [text, iframeEl]);
 
   useEffect(() => {
-    
     return () => {
       // Cleanup function
-      setText([])
+      setText([]);
       if (iframeEl) {
         const iframeDocument = iframeEl.contentDocument;
         if (iframeDocument) {
           const listContainer = iframeDocument.getElementById("myList");
           setTimeout(() => {
-    
             ReactDOM.render(
               <MDBListGroupItem>
                 {/* {textList?.map((item, index) => (
@@ -100,13 +88,10 @@ const Text = ({
     };
   }, []);
 
-
-
   function handleTextFunc(event) {
-    setText(event)
-    listEl((prevEl) => [...prevEl, event])
+    setText(event);
+    listEl((prevEl) => [...prevEl, event]);
   }
-
 
   const addTextObjContext = () => {
     const dataText = {
@@ -116,20 +101,15 @@ const Text = ({
     };
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
-
   };
 
-
   function saveTxt(event) {
-
-    
-
     setShowComponent(Boolean(event.target.value));
     setActive(Boolean(!event.target.value));
     // handleText((prevText) => [...prevText, text]);
     //setTexts((prevText) => [...prevText, text]);
     addTextObjContext();
-    setText('');
+    setText("");
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
   }
