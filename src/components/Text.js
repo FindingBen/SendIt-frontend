@@ -59,13 +59,13 @@ const Text = ({
       if (iframeDocument) {
         const listContainer = iframeDocument.getElementById("myList");
         setTimeout(() => {
-          console.log("TEST")
+  
           ReactDOM.render(
             <MDBListGroupItem>
               {/* {textList?.map((item, index) => (
                 <TextComponent key={index} textValue={item} />
               ))} */}
-              {text}
+              <TextComponent textValue={text} />
             </MDBListGroupItem>,
             listContainer
           );
@@ -74,17 +74,31 @@ const Text = ({
     }
   }, [text, iframeEl]);
 
-  // useEffect(() => {
+  useEffect(() => {
     
-  //   return () => {
-  //     // Cleanup function
-  //     setText([])
-
-  //   //   ReactDOM.render(<MDBListGroupItem id="elItem">
-  //   //   <TextComponent textValue={text} />
-  //   // </MDBListGroupItem>,iframe.contentDocument.getElementById("myList")); 
-  //   };
-  // }, []);
+    return () => {
+      // Cleanup function
+      setText([])
+      if (iframeEl) {
+        const iframeDocument = iframeEl.contentDocument;
+        if (iframeDocument) {
+          const listContainer = iframeDocument.getElementById("myList");
+          setTimeout(() => {
+    
+            ReactDOM.render(
+              <MDBListGroupItem>
+                {/* {textList?.map((item, index) => (
+                  <TextComponent key={index} textValue={item} />
+                ))} */}
+                {text}
+              </MDBListGroupItem>,
+              listContainer
+            );
+          }, 10);
+        }
+      }
+    };
+  }, []);
 
 
 

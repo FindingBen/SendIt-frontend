@@ -10,7 +10,7 @@ const List = ({children,element}) => {
         setItems(children);
       }, [children]);
 
-      console.log(children)
+      console.log(items)
   return (
     
       <MDBListGroup
