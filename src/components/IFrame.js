@@ -11,30 +11,39 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 const IFrame = ({ children }) => {
   const [contentRef, setContentRef] = useState(null);
-  const [load, setLoad] = useState(false);
+  const [load, setLoad] = useState(true);
   //const [user, setUser] = useState();
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
   // let { authTokens, user } = useContext(AuthContext);
 
   useEffect(() => {
+    // const handleIframeLoad = () => {
+    //   const iframeContent = contentRef?.contentWindow?.document;
+    //   if (iframeContent) {
+    //     const root = iframeContent.getElementById("root");
+    //     if (root && root.parentNode) {
+    //       root.parentNode.removeChild(root);
+    //     }
+    //   }
+    //   //setLoad(false);
+    // };
 
-    const handleIframeLoad = () => {
-      const iframeContent = contentRef?.contentWindow?.document;
-      if (iframeContent) {
-        const root = iframeContent.getElementById("root");
-        if (root && root.parentNode) {
-          root.parentNode.removeChild(root);
-        }
-      }
-      setLoad(false);
-    };
     const iframeElement = contentRef?.contentWindow;
-    if (iframeElement) {
-      iframeElement.addEventListener("load", handleIframeLoad);
-    }
-  }, [contentRef]);
+    // if (iframeElement) {
+    //   iframeElement.addEventListener("load", handleIframeLoad);
+    // }
 
+    const timeoutId = setTimeout(() => {
+      setLoad(false);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timeoutId);
+      //iframeElement.removeEventListener("load", handleIframeLoad);
+    };
+  }, [contentRef]);
+  console.log(load);
   return (
     <div id="iFrameDiv">
       {load ? (
