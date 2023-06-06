@@ -3,6 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import "../css/CreationMessage.css";
 import "../css/RootIframe.css";
 import { AiFillPicture } from "react-icons/ai";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faStop,faFont
+} from "@fortawesome/free-solid-svg-icons";
 import Image from "../components/Image";
 import Text from "../components/Text";
 import Button from "../components/Button";
@@ -223,7 +227,7 @@ const CreateNote = () => {
                     name="liClick"
                     className="list-group-item d-flex justify-content-between align-items-center"
                   >
-                    <AiFillPicture></AiFillPicture>
+                    <FontAwesomeIcon icon={faFont} />
                     Add Text
                   </MDBListGroupItem>
                 ) : (
@@ -245,7 +249,7 @@ const CreateNote = () => {
                     name="liClick"
                     className="list-group-item d-flex justify-content-between align-items-center"
                   >
-                    <AiFillPicture></AiFillPicture>
+                    <FontAwesomeIcon icon={faStop} />
                     Add button
                   </MDBListGroupItem>
                 ) : (
