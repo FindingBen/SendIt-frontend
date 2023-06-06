@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 import {
     selectCurrentUser,
   } from "../features/auth/authSlice";
-const Button = (  onStateChange,
-  componentChange,  contextList) => {
+const Button = (  {onStateChange,
+  componentChange,  contextList}) => {
     const { createElement, deleteElement } = useContext(ElementContext);
     const [active, setActive] = useState(true);
     const [text, setText] = useState([]);
