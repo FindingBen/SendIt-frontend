@@ -20,28 +20,29 @@ import { useSelector, useDispatch } from "react-redux";
 import jwtDecode from "jwt-decode";
 
 const EditMessage = () => {
-  // let { authTokens, user } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const [showComponent, setShowComponent] = useState(false);
   const [active, setActive] = useState(false);
   const [activeT, setActiveT] = useState(false);
-  const [items, setItems] = useState();
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
   const [texts, setTexts] = useState([]);
   const [elements, setElements] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
   let BASE_URL = "http://127.0.0.1:8000";
   const params = useParams();
+
   useEffect(() => {
-    setTimeout(() => messageView(), 2000);
-    setIsLoaded(true);
+    // setTimeout(() => messageView(), 2000);
+    // loadElements()
+    messageView()
     dispatch(setModalState({ show: false }));
-  }, []);
-  console.log(elements);
+  }, [isLoaded]);
+ 
   const handleClickImage = (e) => {
     e.preventDefault();
     setActive(!active);
@@ -67,6 +68,7 @@ const EditMessage = () => {
     );
     let data = await response.json();
     setElements(data.element_list);
+    setIsLoaded(false)
   };
 
   // let editMessage = async (e) => {
@@ -180,9 +182,9 @@ const EditMessage = () => {
             <div className="col">
               <div class="smartphone">
                 <IFrame>
-                  {!isLoaded ? (
+                  {isLoaded ? (
                     /* Render the loading circle or spinner */
-                    <div className="spinner-border" role="status">
+                    <div className="spinner-grow" role="status">
                       <span className="visually-hidden">Loading...</span>
                     </div>
                   ) : (

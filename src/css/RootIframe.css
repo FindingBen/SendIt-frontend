@@ -11,4 +11,10 @@
 
   #iFrameDiv{
     height: 100%;
+    background-color: white;
   }
+
+#loader{
+  margin-right: 55px;
+  background-color: aquamarine;
+}

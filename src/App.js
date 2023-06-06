@@ -5,22 +5,17 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
 import ContactLists from "./pages/ContactLists";
 import ContactList from "./pages/ContactList";
 import CreateContact from "./pages/CreateContact";
 import CreateMessage from "./pages/CreateMessage";
-import LoginPage from "./pages/LoginPage";
 import EditMessage from "./pages/EditMessage";
-import Image from "./components/Image";
 import RegisterPage from "./pages/RegisterPage";
 import PrivateRoute from "./utils/PrivateRoute";
-import MessageView from "./pages/MessageView";
 import Layout from "./components/Layout";
 import DeleteMessage from "./pages/DeleteMessage";
 import Login from "./features/auth/Login";
 import HomePage from "./pages/HomePage";
-import Header from "./components/Header";
 import { ElementProvider } from "./context/ElementContext";
 function App() {
   return (

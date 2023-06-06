@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import AuthContext from "../context/AuthContext";
-import jwt_decode from "jwt-decode";
+import React, { useState, useEffect } from "react";
 import {
   selectCurrentUser,
   selectCurrentToken,

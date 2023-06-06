@@ -1,58 +1,52 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { createPortal } from "react-dom";
-import MessageView from "../pages/MessageView";
 import "../css/RootIframe.css";
-import AuthContext from "../context/AuthContext";
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-  logOut,
-} from "../features/auth/authSlice";
-import { useSelector, useDispatch } from "react-redux";
+
 const IFrame = ({ children }) => {
   const [contentRef, setContentRef] = useState(null);
-  const [load, setLoad] = useState(false);
-  //const [user, setUser] = useState();
-  const token = useSelector(selectCurrentToken);
-  const user = useSelector(selectCurrentUser);
-  // let { authTokens, user } = useContext(AuthContext);
+  const [load, setLoad] = useState(true);
+  const iframeEl = document.getElementById("myFrame");
 
   useEffect(() => {
-
     const handleIframeLoad = () => {
       const iframeContent = contentRef?.contentWindow?.document;
       if (iframeContent) {
         const root = iframeContent.getElementById("root");
-        if (root && root.parentNode) {
-          root.parentNode.removeChild(root);
+        if (root) {
+          root.style.display = "block"; // Show the root element
+          setLoad(false)// Set loading to false once content is loaded
         }
+       
       }
-      setLoad(false);
     };
+   
     const iframeElement = contentRef?.contentWindow;
     if (iframeElement) {
       iframeElement.addEventListener("load", handleIframeLoad);
     }
+
+    return () => {
+      if (iframeElement) {
+        iframeElement.removeEventListener("load", handleIframeLoad);
+      }
+    };
   }, [contentRef]);
 
   return (
     <div id="iFrameDiv">
-      {load ? (
-        /* Render the loading circle or spinner */
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      ) : (
-        /* Render the children once the iframe has finished loading */
         <iframe
+        title="iframe"
           id="myFrame"
           src="http://localhost:3000/message_view"
           ref={setContentRef}
         >
-          {contentRef &&
+          {load? ( <div className="spinner-border" id="loader" role="status">
+          <span>Loading...</span>
+        </div>): contentRef &&
             createPortal(children, contentRef?.contentWindow?.document?.body)}
+          
         </iframe>
-      )}
+    
     </div>
   );
 };
