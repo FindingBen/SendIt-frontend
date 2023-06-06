@@ -3,10 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import "../css/CreationMessage.css";
 import "../css/RootIframe.css";
 import { AiFillPicture } from "react-icons/ai";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faStop,faFont
+} from "@fortawesome/free-solid-svg-icons";
 import Image from "../components/Image";
 import Text from "../components/Text";
-import TextComponent from "../components/TextComponent";
-import ImgList from "../components/ImgList";
+import Button from "../components/Button";
 import IFrame from "../components/IFrame";
 import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
 import {
@@ -32,6 +35,7 @@ const CreateNote = () => {
   const [showComponent, setShowComponent] = useState(false);
   const [active, setActive] = useState(false);
   const [activeT, setActiveT] = useState(false);
+  const [activeB, setActiveB] = useState(false);
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
   const [displayElItem, setDisplayItems] = useState([]);
@@ -67,6 +71,12 @@ const CreateNote = () => {
   const handleClickText = (e) => {
     e.preventDefault();
     setActiveT(!activeT);
+    setShowComponent(!showComponent);
+  };
+
+  const handleClickButton = (e) => {
+    e.preventDefault();
+    setActiveB(!activeB);
     setShowComponent(!showComponent);
   };
   let createNotes = async (e) => {
@@ -150,6 +160,10 @@ const CreateNote = () => {
   const handleTextStateChange = (activeT) => {
     setActiveT(activeT);
   };
+
+  const handleButtonStateChange = (activeB) => {
+    setActiveB(activeB);
+  };
   //For displaying images on iframe
   const handleImages = (images) => {
     setImages(images);
@@ -171,7 +185,7 @@ const CreateNote = () => {
     addElement(e);
     setClicked(true);
   };
-  console.log(displayElItem)
+
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
@@ -213,20 +227,40 @@ const CreateNote = () => {
                     name="liClick"
                     className="list-group-item d-flex justify-content-between align-items-center"
                   >
-                    <AiFillPicture></AiFillPicture>
+                    <FontAwesomeIcon icon={faFont} />
                     Add Text
                   </MDBListGroupItem>
                 ) : (
                   showComponent &&
                   activeT && (
                     <Text
-                     // handleText={handleText}
                       onStateChange={handleTextStateChange}
                       componentChange={handleComponentChange}
                       elementList={handleElements}
                       listEl={displayElements}
                       contextList={handleContextEl}
                     ></Text>
+                  )
+                )}
+                <hr></hr>
+                {!showComponent && !activeB ? (
+                  <MDBListGroupItem
+                    onClick={handleClickButton}
+                    name="liClick"
+                    className="list-group-item d-flex justify-content-between align-items-center"
+                  >
+                    <FontAwesomeIcon icon={faStop} />
+                    Add button
+                  </MDBListGroupItem>
+                ) : (
+                  showComponent &&
+                  activeB && (
+                    <Button
+                      onStateChange={handleButtonStateChange}
+                      componentChange={handleComponentChange}
+                      // elementList={handleElements}
+                      // contextList={handleContextEl}
+                    ></Button>
                   )
                 )}
               </MDBListGroup>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import "../css/EditMessage.css";
+import { CSSTransition } from "react-transition-group";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -79,6 +80,11 @@ const HomePage = () => {
           <div className="row">
             <hr></hr>
             <div className="col">
+              <CSSTransition in={displayedItems}
+          timeout={400}
+          classNames="list-transition"
+          unmountOnExit
+          appear>
               <MDBListGroup id="ulItem">
                 {displayedItems.map((note) => (
                   <MDBListGroupItem
@@ -119,6 +125,8 @@ const HomePage = () => {
                 ))}
                 <hr></hr>
               </MDBListGroup>
+              </CSSTransition>
+              
               {totalPages > 1 && (
                 <div>
                   {Array.from(
