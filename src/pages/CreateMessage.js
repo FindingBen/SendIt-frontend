@@ -4,9 +4,7 @@ import "../css/CreationMessage.css";
 import "../css/RootIframe.css";
 import { AiFillPicture } from "react-icons/ai";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faStop,faFont
-} from "@fortawesome/free-solid-svg-icons";
+import { faStop, faFont } from "@fortawesome/free-solid-svg-icons";
 import Image from "../components/Image";
 import Text from "../components/Text";
 import Button from "../components/Button";
@@ -21,7 +19,7 @@ import modalReducer, {
   setOpenModal,
 } from "../features/modal/modalReducer";
 import List from "../components/List";
-import ReactDOM from 'react-dom'; 
+import ReactDOM from "react-dom";
 import { setState } from "../features/modal/formReducer";
 import { setList, selectListState } from "../features/elements/elementReducer";
 import { useSelector } from "react-redux";
@@ -56,10 +54,6 @@ const CreateNote = () => {
       dispatch(setState({ isDirty: false }));
     }
     dispatch(setOpenModal({ open: false }));
-
-
-
-
   }, [elementContextList, elementsList, modal_state]);
 
   const handleClickImage = (e) => {
@@ -116,8 +110,10 @@ const CreateNote = () => {
         const formData = new FormData();
         if (elementContext.element_type === "Text") {
           formData.append("text", elementContext.text);
-        } else {
+        } else if (elementContext.element_type === "Img") {
           formData.append("image", elementContext.file);
+        } else if (elementContext.element_type === "Button") {
+          formData.append("button_title", elementContext.button_title);
         }
         formData.append("element_type", elementContext.element_type);
         formData.append("users", elementContext.users);
@@ -135,7 +131,7 @@ const CreateNote = () => {
         );
 
         let data = await response.json();
-
+        console.log(data);
         if (response.status === 200) {
           setElementsList((prevElement) => [...prevElement, data]);
         }
@@ -173,9 +169,9 @@ const CreateNote = () => {
     setFiles(file);
   };
 
-  const displayElements = (displayElItem) =>{
-    setDisplayItems(displayElItem)
-  }
+  const displayElements = (displayElItem) => {
+    setDisplayItems(displayElItem);
+  };
 
   const handleComponentChange = (showComponent) => {
     setShowComponent(showComponent);
@@ -258,8 +254,8 @@ const CreateNote = () => {
                     <Button
                       onStateChange={handleButtonStateChange}
                       componentChange={handleComponentChange}
-                      // elementList={handleElements}
-                      // contextList={handleContextEl}
+                      elementList={handleElements}
+                      contextList={handleContextEl}
                     ></Button>
                   )
                 )}
@@ -268,7 +264,7 @@ const CreateNote = () => {
             <div className="col">
               <div class="smartphone">
                 <IFrame>
-                <List children={elementContextList} />
+                  <List children={elementContextList} />
                 </IFrame>
               </div>
             </div>
@@ -299,7 +295,5 @@ const CreateNote = () => {
     </section>
   );
 };
-
-
 
 export default CreateNote;

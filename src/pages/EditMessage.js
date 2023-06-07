@@ -18,9 +18,9 @@ import {
 import modalReducer, { setModalState } from "../features/modal/modalReducer";
 import { useSelector, useDispatch } from "react-redux";
 import jwtDecode from "jwt-decode";
+import ButtonComponent from "../components/ButtonComponent";
 
 const EditMessage = () => {
-
   const navigate = useNavigate();
   const [showComponent, setShowComponent] = useState(false);
   const [active, setActive] = useState(false);
@@ -39,10 +39,10 @@ const EditMessage = () => {
   useEffect(() => {
     // setTimeout(() => messageView(), 2000);
     // loadElements()
-    messageView()
+    messageView();
     dispatch(setModalState({ show: false }));
   }, [isLoaded]);
- 
+  console.log(elements);
   const handleClickImage = (e) => {
     e.preventDefault();
     setActive(!active);
@@ -68,7 +68,7 @@ const EditMessage = () => {
     );
     let data = await response.json();
     setElements(data.element_list);
-    setIsLoaded(false)
+    setIsLoaded(false);
   };
 
   // let editMessage = async (e) => {
@@ -195,17 +195,13 @@ const EditMessage = () => {
                     >
                       {elements?.map((item, index) => (
                         <MDBListGroupItem id="elItem" key={index}>
-                          {item.element_type == "Img" ? (
-                            (
-                              <ImgList
-                                imageUrl={`${BASE_URL + item.image}`}
-                              ></ImgList>
-                            ) || item.element_type == "text"
-                          ) : (
-                            <TextComponent
-                              textValue={item.text}
-                            ></TextComponent>
-                          )}
+                          {item.element_type === "Img" ? (
+                            <ImgList imageUrl={`${BASE_URL + item.image}`} />
+                          ) : item.element_type === "text" ? (
+                            <TextComponent textValue={item.text} />
+                          ) : item.element_type === "Button" ? (
+                            <ButtonComponent textValue={item.text} />
+                          ) : null}
                         </MDBListGroupItem>
                       ))}
                     </MDBListGroup>
