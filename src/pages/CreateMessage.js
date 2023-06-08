@@ -123,7 +123,7 @@ const CreateNote = () => {
         } else if (elementContext.element_type === "Text") {
           formData.append("text", elementContext.text);
         } else if (elementContext.element_type === "Button") {
-          formData.append("Button", elementContext.button_title);
+          formData.append("button_title", elementContext.button_title);
         }
         formData.append("element_type", elementContext.element_type);
         formData.append("users", elementContext.users);

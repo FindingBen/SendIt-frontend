@@ -79,6 +79,7 @@ const Button = ({
       element_type: "Button",
       users: user,
     };
+    console.log(dataText);
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
   };
