@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+
 import "../css/CreationMessage.css";
 import "../css/RootIframe.css";
 import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
@@ -9,6 +9,10 @@ import Image from "../components/Image";
 import Text from "../components/Text";
 import TextComponent from "../components/TextComponent";
 import ImgList from "../components/ImgList";
+import Button from "../components/Button";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStop, faFont } from "@fortawesome/free-solid-svg-icons";
 import IFrame from "../components/IFrame";
 import { useEffect } from "react";
 import {
@@ -25,13 +29,17 @@ const EditMessage = () => {
   const [showComponent, setShowComponent] = useState(false);
   const [active, setActive] = useState(false);
   const [activeT, setActiveT] = useState(false);
+  const [activeB, setActiveB] = useState(false);
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
   const [texts, setTexts] = useState([]);
+  const [displayElItem, setDisplayItems] = useState([]);
   const [elements, setElements] = useState([]);
+  const [elementContextList, setElementsContextList] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
+  const [isDirty, setIsDirty] = useState(false);
   const dispatch = useDispatch();
   let BASE_URL = "http://127.0.0.1:8000";
   const params = useParams();
@@ -55,6 +63,12 @@ const EditMessage = () => {
     setShowComponent(!showComponent);
   };
 
+  const handleClickButton = (e) => {
+    e.preventDefault();
+    setActiveB(!activeB);
+    setShowComponent(!showComponent);
+  };
+
   let messageView = async () => {
     let response = await fetch(
       `http://127.0.0.1:8000/api/message_view/${params.id}/`,
@@ -71,29 +85,29 @@ const EditMessage = () => {
     setIsLoaded(false);
   };
 
-  // let editMessage = async (e) => {
-  //   e.preventDefault();
-  //   const requestData = {
-  //     element_list: elements,
-  //   };
-  //   console.log(elements);
-  //   let response = await fetch(
-  //     `http://127.0.0.1:8000/api/message_view_edit/${params.id}/`,
-  //     {
-  //       method: "PUT",
-  //       headers: {
-  //         //"Content-Type": "application/json",
-  //         Authorization: "Bearer " + String(authTokens.access),
-  //       },
-  //       body: JSON.stringify(requestData),
-  //     }
-  //   );
-  //   let data = await response.json();
-  //   console.log(data);
-  //   if (response.status === 200) {
-  //     navigate("*");
-  //   }
-  // };
+  let editMessage = async (e) => {
+    e.preventDefault();
+    const requestData = {
+      element_list: elements,
+    };
+    console.log(elements);
+    let response = await fetch(
+      `http://127.0.0.1:8000/api/message_view_edit/${params.id}/`,
+      {
+        method: "PUT",
+        headers: {
+          //"Content-Type": "application/json",
+          Authorization: "Bearer " + String(token),
+        },
+        body: JSON.stringify(requestData),
+      }
+    );
+    let data = await response.json();
+    console.log(data);
+    if (response.status === 200) {
+      navigate("*");
+    }
+  };
 
   const handleElements = (element) => {
     setElements(element);
@@ -115,8 +129,21 @@ const EditMessage = () => {
     setFiles(file);
   };
 
+  const displayElements = (displayElItem) => {
+    setDisplayItems((prevItems) => [...prevItems, displayElItem]);
+  };
+
+  const handleContextEl = (elementContextList) => {
+    setElementsContextList(elementContextList);
+    setIsDirty(true);
+  };
+
   const handleText = (texts) => {
     setTexts(texts);
+  };
+
+  const handleButtonStateChange = (activeB) => {
+    setActiveB(activeB);
   };
 
   const handleComponentChange = (showComponent) => {
@@ -134,14 +161,14 @@ const EditMessage = () => {
             <div className="col">
               <MDBListGroup style={{ minWidthL: "22rem" }}>
                 {!showComponent && !active ? (
-                  <li
+                  <MDBListGroupItem
                     onClick={handleClickImage}
                     name="liClick"
                     className="list-group-item d-flex justify-content-between align-items-center"
                   >
                     <AiFillPicture></AiFillPicture>
                     Add image
-                  </li>
+                  </MDBListGroupItem>
                 ) : (
                   showComponent &&
                   active && (
@@ -151,30 +178,52 @@ const EditMessage = () => {
                       onStateChange={handleChildStateChange}
                       componentChange={handleComponentChange}
                       listImages={images}
-                      elementList={handleElements}
+                      //elementList={handleElements}
+                      contextList={handleContextEl}
                     ></Image>
                   )
                 )}
                 <hr></hr>
                 {!showComponent && !activeT ? (
-                  <li
+                  <MDBListGroupItem
                     onClick={handleClickText}
                     name="liClick"
                     className="list-group-item d-flex justify-content-between align-items-center"
                   >
-                    <AiFillPicture></AiFillPicture>
+                    <FontAwesomeIcon icon={faFont} />
                     Add Text
-                  </li>
+                  </MDBListGroupItem>
                 ) : (
                   showComponent &&
                   activeT && (
                     <Text
-                      handleText={handleText}
                       onStateChange={handleTextStateChange}
                       componentChange={handleComponentChange}
-                      elementList={handleElements}
-                      listTexts={texts}
+                      //elementList={handleElements}
+                      listEl={displayElements}
+                      contextList={handleContextEl}
                     ></Text>
+                  )
+                )}
+                <hr></hr>
+                {!showComponent && !activeB ? (
+                  <MDBListGroupItem
+                    onClick={handleClickButton}
+                    name="liClick"
+                    className="list-group-item d-flex justify-content-between align-items-center"
+                  >
+                    <FontAwesomeIcon icon={faStop} />
+                    Add button
+                  </MDBListGroupItem>
+                ) : (
+                  showComponent &&
+                  activeB && (
+                    <Button
+                      onStateChange={handleButtonStateChange}
+                      componentChange={handleComponentChange}
+                      //elementList={handleElements}
+                      contextList={handleContextEl}
+                    ></Button>
                   )
                 )}
               </MDBListGroup>
@@ -216,7 +265,7 @@ const EditMessage = () => {
             <div id="buttonHolder" className="col">
               <button
                 type="submit"
-                // onClick={editMessage}
+                onClick={editMessage}
                 className="btn btn-dark"
               >
                 Edit message

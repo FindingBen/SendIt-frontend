@@ -26,7 +26,10 @@ const Button = ({
       if (iframeDocument) {
         const listContainer = iframeDocument.getElementById("myList");
         setTimeout(() => {
-          ReactDOM.render(<ButtonComponent textValue={text} />, listContainer);
+          ReactDOM.render(
+            <ButtonComponent linkValue={link} textValue={text} />,
+            listContainer
+          );
         }, 10);
       }
     }
@@ -49,13 +52,6 @@ const Button = ({
                 listContainer
               );
             }
-
-            // if (listContainer && listContainer.lastElementChild) {
-            //   listContainer.removeChild(listContainer.lastElementChild);
-            //   // listContainer.current.lastChild.scrollIntoView({
-            //   //   behavior: "smooth",
-            //   // });
-            // }
           }, 10);
         }
       }
@@ -68,7 +64,8 @@ const Button = ({
   }
 
   function handleLinkButtonFunc(event) {
-    setLink(event);
+    console.log(event);
+    setLink(event.target.value);
     // listEl((prevEl) => [...prevEl, event]);
   }
 
