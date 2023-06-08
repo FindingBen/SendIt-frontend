@@ -42,7 +42,7 @@ const EditMessage = () => {
     messageView();
     dispatch(setModalState({ show: false }));
   }, [isLoaded]);
-  console.log(elements);
+
   const handleClickImage = (e) => {
     e.preventDefault();
     setActive(!active);
@@ -197,7 +197,9 @@ const EditMessage = () => {
                         <MDBListGroupItem id="elItem" key={index}>
                           {item.element_type === "Img" ? (
                             <ImgList imageUrl={`${BASE_URL + item.image}`} />
-                          ) : <TextComponent textValue={item.text} /> }
+                          ) : (
+                            <TextComponent textValue={item.text} />
+                          )}
                         </MDBListGroupItem>
                       ))}
                     </MDBListGroup>

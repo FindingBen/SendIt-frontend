@@ -44,8 +44,6 @@ const CreateNote = () => {
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
   const modal_state = useSelector(selectModalCall);
-  const list_state = useSelector(selectListState);
-  const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     if (elementContextList.length > 0) {
@@ -54,18 +52,7 @@ const CreateNote = () => {
       dispatch(setState({ isDirty: false }));
     }
     dispatch(setOpenModal({ open: false }));
-  }, [elementContextList, modal_state]);
-
-
-  useEffect(()=>{
-    return () =>{
-      setClicked(false)
-      setElementsContextList([]);
-      setElementsList([])
-      console.log("TEST")
-    }
-    
-  },[])
+  }, [elementContextList, elementsList, modal_state]);
 
   const handleClickImage = (e) => {
     e.preventDefault();
@@ -84,14 +71,18 @@ const CreateNote = () => {
     setActiveB(!activeB);
     setShowComponent(!showComponent);
   };
-  let createNotes = async (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    try {
+      const createdElements = await addElement(e); // Store the created elements in a variable
+      console.log("CREATEDEL", createdElements);
       const requestData = {
-        element_list: elementsList,
+        element_list: createdElements, // Map the created elements to their IDs
         users: user,
       };
-      console.log("SSSS",requestData)
+      console.log(createdElements);
       let response = await fetch("http://127.0.0.1:8000/api/create_notes/", {
         method: "POST",
         headers: {
@@ -102,27 +93,30 @@ const CreateNote = () => {
       });
 
       let data = await response.json();
-      console.log("CONTEXTDATA",elementContextList)
+
       if (response.status === 200) {
-console.log("DATA",data)
         dispatch(setState({ isDirty: false }));
         navigate("/home");
       } else {
-        console.log("WRONG", data);
+        console.log("Failed to create notes:", data);
       }
-    
-    setClicked(false);
-    console.log("Before API Call - elementsList:", elementsList);
+    } catch (error) {
+      console.log("Error creating elements and notes:", error);
+    }
   };
-  console.log("CONTEXT",elementContextList)
- let addElement = async (e) => {
-  e.preventDefault();
-  dispatch(setList({ populated: true }));
 
-  try {
-    const createElements = async () => {
+  const addElement = async (e) => {
+    e.preventDefault();
+    dispatch(setList({ populated: true }));
+
+    try {
+      const createdElements = [];
+
       for (const elementContext of elementContextList) {
         const formData = new FormData();
+
+        // Append the displayItems state to the elementContext
+        //elementContext.displayItems = displayItems;
 
         if (elementContext.element_type === "Img") {
           formData.append("image", elementContext.file);
@@ -133,7 +127,7 @@ console.log("DATA",data)
         }
         formData.append("element_type", elementContext.element_type);
         formData.append("users", elementContext.users);
-      
+
         let response = await fetch(
           "http://127.0.0.1:8000/api/create_element/",
           {
@@ -146,23 +140,25 @@ console.log("DATA",data)
         );
 
         let data = await response.json();
-          console.log(elementContext)
+        console.log(data);
         if (response.status === 200) {
-          setElementsList((prevElement) => [...prevElement, data]);
-          console.log(data)
+          createdElements.push(data);
         } else {
           console.log("Failed to create element:", elementContext);
+          return; // Return undefined to indicate a failure
         }
       }
-    };
 
-    await createElements();
-    setClicked(true);
-  } catch (error) {
-    console.log("Error creating elements:", error);
-  }
-};
-
+      setElementsList((prevElement) => prevElement.concat(createdElements));
+      createdElements.map((el) => {
+        console.log(el.element.id);
+      });
+      return createdElements; // Return the created elements from the function
+    } catch (error) {
+      console.log("Error creating elements:", error);
+      return; // Return undefined to indicate a failure
+    }
+  };
 
   const handleContextEl = (elementContextList) => {
     setElementsContextList(elementContextList);
@@ -190,13 +186,12 @@ console.log("DATA",data)
   };
 
   const displayElements = (displayElItem) => {
-    setDisplayItems(displayElItem);
+    setDisplayItems((prevItems) => [...prevItems, displayElItem]);
   };
 
   const handleComponentChange = (showComponent) => {
     setShowComponent(showComponent);
   };
-
 
   return (
     <section className="vh-100 w-100">
@@ -287,7 +282,7 @@ console.log("DATA",data)
           </div>
           <div className="row">
             <div id="buttonHolder" className="col">
-              {clicked ? (
+              {/* {clicked ? (
                 <button
                   type="submit"
                   onClick={createNotes}
@@ -303,7 +298,10 @@ console.log("DATA",data)
                 >
                   Save message
                 </button>
-              )}
+              )} */}
+              <button className="btn btn-dark" onClick={handleSubmit}>
+                Create
+              </button>
             </div>
           </div>
         </div>

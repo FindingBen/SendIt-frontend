@@ -8,11 +8,9 @@ const List = ({ children, element }) => {
 
   const BASE_URL = "http://127.0.0.1:8000";
   useEffect(() => {
-    console.log("Received children:", children);
     setItems(children);
   }, [children]);
 
-  console.log(items);
   return (
     <MDBListGroup style={{ minWidthL: "22rem" }} light id="myList">
       {items &&
