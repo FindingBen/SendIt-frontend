@@ -54,7 +54,18 @@ const CreateNote = () => {
       dispatch(setState({ isDirty: false }));
     }
     dispatch(setOpenModal({ open: false }));
-  }, [elementContextList, elementsList, modal_state]);
+  }, [elementContextList, modal_state]);
+
+
+  useEffect(()=>{
+    return () =>{
+      setClicked(false)
+      setElementsContextList([]);
+      setElementsList([])
+      console.log("TEST")
+    }
+    
+  },[])
 
   const handleClickImage = (e) => {
     e.preventDefault();
@@ -76,12 +87,11 @@ const CreateNote = () => {
   let createNotes = async (e) => {
     e.preventDefault();
 
-    if (elementsList.length > 0) {
       const requestData = {
         element_list: elementsList,
         users: user,
       };
-
+      console.log("SSSS",requestData)
       let response = await fetch("http://127.0.0.1:8000/api/create_notes/", {
         method: "POST",
         headers: {
@@ -92,38 +102,43 @@ const CreateNote = () => {
       });
 
       let data = await response.json();
-
+      console.log("CONTEXTDATA",elementContextList)
       if (response.status === 200) {
-        setClicked(false);
+console.log("DATA",data)
         dispatch(setState({ isDirty: false }));
         navigate("/home");
       } else {
         console.log("WRONG", data);
       }
-    }
+    
+    setClicked(false);
+    console.log("Before API Call - elementsList:", elementsList);
   };
+  console.log("CONTEXT",elementContextList)
+ let addElement = async (e) => {
+  e.preventDefault();
+  dispatch(setList({ populated: true }));
 
-  let addElement = async () => {
-    dispatch(setList({ populated: true }));
-    await Promise.all(
-      elementContextList?.map(async (elementContext) => {
+  try {
+    const createElements = async () => {
+      for (const elementContext of elementContextList) {
         const formData = new FormData();
-        if (elementContext.element_type === "Text") {
-          formData.append("text", elementContext.text);
-        } else if (elementContext.element_type === "Img") {
+
+        if (elementContext.element_type === "Img") {
           formData.append("image", elementContext.file);
+        } else if (elementContext.element_type === "Text") {
+          formData.append("text", elementContext.text);
         } else if (elementContext.element_type === "Button") {
-          formData.append("button_title", elementContext.button_title);
+          formData.append("Button", elementContext.button_title);
         }
         formData.append("element_type", elementContext.element_type);
         formData.append("users", elementContext.users);
-
+      
         let response = await fetch(
           "http://127.0.0.1:8000/api/create_element/",
           {
             method: "POST",
             headers: {
-              //'Content-Type':'application/json',
               Authorization: "Bearer " + String(token),
             },
             body: formData,
@@ -131,18 +146,23 @@ const CreateNote = () => {
         );
 
         let data = await response.json();
-        console.log(data);
+          console.log(elementContext)
         if (response.status === 200) {
           setElementsList((prevElement) => [...prevElement, data]);
+          console.log(data)
+        } else {
+          console.log("Failed to create element:", elementContext);
         }
-      })
-    );
-  };
+      }
+    };
 
-  const handleElements = (elementsList) => {
-    setElementsList(elementsList);
-    setIsDirty(true);
-  };
+    await createElements();
+    setClicked(true);
+  } catch (error) {
+    console.log("Error creating elements:", error);
+  }
+};
+
 
   const handleContextEl = (elementContextList) => {
     setElementsContextList(elementContextList);
@@ -177,10 +197,6 @@ const CreateNote = () => {
     setShowComponent(showComponent);
   };
 
-  const handleClickElement = (e) => {
-    addElement(e);
-    setClicked(true);
-  };
 
   return (
     <section className="vh-100 w-100">
@@ -211,7 +227,7 @@ const CreateNote = () => {
                       onStateChange={handleChildStateChange}
                       componentChange={handleComponentChange}
                       listImages={images}
-                      elementList={handleElements}
+                      //elementList={handleElements}
                       contextList={handleContextEl}
                     ></Image>
                   )
@@ -232,7 +248,7 @@ const CreateNote = () => {
                     <Text
                       onStateChange={handleTextStateChange}
                       componentChange={handleComponentChange}
-                      elementList={handleElements}
+                      //elementList={handleElements}
                       listEl={displayElements}
                       contextList={handleContextEl}
                     ></Text>
@@ -254,7 +270,7 @@ const CreateNote = () => {
                     <Button
                       onStateChange={handleButtonStateChange}
                       componentChange={handleComponentChange}
-                      elementList={handleElements}
+                      //elementList={handleElements}
                       contextList={handleContextEl}
                     ></Button>
                   )
@@ -282,7 +298,7 @@ const CreateNote = () => {
               ) : (
                 <button
                   type="submit"
-                  onClick={handleClickElement}
+                  onClick={addElement}
                   className="btn btn-dark"
                 >
                   Save message

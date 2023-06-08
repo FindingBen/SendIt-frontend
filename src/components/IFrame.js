@@ -30,7 +30,7 @@ const IFrame = ({ children }) => {
       }
     };
   }, [contentRef]);
-  console.log(load);
+
   return (
     <div id="iFrameDiv">
       <iframe

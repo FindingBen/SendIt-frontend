@@ -5,10 +5,10 @@ import TextComponent from "./TextComponent";
 import ButtonComponent from "./ButtonComponent";
 const List = ({ children, element }) => {
   const [items, setItems] = useState([children]);
-  const [elementItem, setElementItems] = useState([]);
+
   const BASE_URL = "http://127.0.0.1:8000";
   useEffect(() => {
-    setElementItems(element);
+    console.log("Received children:", children);
     setItems(children);
   }, [children]);
 

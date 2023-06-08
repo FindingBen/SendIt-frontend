@@ -197,11 +197,7 @@ const EditMessage = () => {
                         <MDBListGroupItem id="elItem" key={index}>
                           {item.element_type === "Img" ? (
                             <ImgList imageUrl={`${BASE_URL + item.image}`} />
-                          ) : item.element_type === "text" ? (
-                            <TextComponent textValue={item.text} />
-                          ) : item.element_type === "Button" ? (
-                            <ButtonComponent textValue={item.text} />
-                          ) : null}
+                          ) : <TextComponent textValue={item.text} /> }
                         </MDBListGroupItem>
                       ))}
                     </MDBListGroup>
