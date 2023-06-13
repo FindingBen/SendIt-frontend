@@ -77,12 +77,11 @@ const CreateNote = () => {
 
     try {
       const createdElements = await addElement(e); // Store the created elements in a variable
-      console.log("CREATEDEL", createdElements);
       const requestData = {
         element_list: createdElements, // Map the created elements to their IDs
         users: user,
       };
-      console.log(createdElements);
+
       let response = await fetch("http://127.0.0.1:8000/api/create_notes/", {
         method: "POST",
         headers: {
@@ -151,9 +150,6 @@ const CreateNote = () => {
       }
 
       setElementsList((prevElement) => prevElement.concat(createdElements));
-      createdElements.map((el) => {
-        console.log(el.element.id);
-      });
       return createdElements; // Return the created elements from the function
     } catch (error) {
       console.log("Error creating elements:", error);

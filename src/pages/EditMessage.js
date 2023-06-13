@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
-
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { setState } from "../features/modal/formReducer";
 import "../css/CreationMessage.css";
 import "../css/RootIframe.css";
 import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
@@ -10,7 +10,7 @@ import Text from "../components/Text";
 import TextComponent from "../components/TextComponent";
 import ImgList from "../components/ImgList";
 import Button from "../components/Button";
-
+import { setList } from "../features/elements/elementReducer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStop, faFont } from "@fortawesome/free-solid-svg-icons";
 import IFrame from "../components/IFrame";
@@ -19,9 +19,8 @@ import {
   selectCurrentUser,
   selectCurrentToken,
 } from "../features/auth/authSlice";
-import modalReducer, { setModalState } from "../features/modal/modalReducer";
+import  { setModalState } from "../features/modal/modalReducer";
 import { useSelector, useDispatch } from "react-redux";
-import jwtDecode from "jwt-decode";
 import ButtonComponent from "../components/ButtonComponent";
 
 const EditMessage = () => {
@@ -45,8 +44,7 @@ const EditMessage = () => {
   const params = useParams();
 
   useEffect(() => {
-    // setTimeout(() => messageView(), 2000);
-    // loadElements()
+
     messageView();
     dispatch(setModalState({ show: false }));
   }, [isLoaded]);
@@ -84,28 +82,91 @@ const EditMessage = () => {
     setElements(data.element_list);
     setIsLoaded(false);
   };
-
-  let editMessage = async (e) => {
+  console.log(elements)
+  
+  const editMessage = async (e) => {
     e.preventDefault();
-    const requestData = {
-      element_list: elements,
-    };
-    console.log(elements);
-    let response = await fetch(
-      `http://127.0.0.1:8000/api/message_view_edit/${params.id}/`,
-      {
+
+    try {
+      const createdElements = await addElement(e); // Store the created elements in a variable
+      const requestData = {
+        element_list: createdElements, // Map the created elements to their IDs
+        users: user,
+      };
+
+      let response = await fetch(`http://127.0.0.1:8000/api/message_view_edit/${params.id}/`, {
         method: "PUT",
         headers: {
-          //"Content-Type": "application/json",
+          "Content-Type": "application/json",
           Authorization: "Bearer " + String(token),
         },
         body: JSON.stringify(requestData),
+      });
+
+      let data = await response.json();
+
+      if (response.status === 200) {
+        dispatch(setState({ isDirty: false }));
+        navigate("/home");
+      } else {
+        console.log("Failed to create notes:", data);
       }
-    );
-    let data = await response.json();
-    console.log(data);
-    if (response.status === 200) {
-      navigate("*");
+    } catch (error) {
+      console.log("Error creating elements and notes:", error);
+    }
+  };
+
+
+  const addElement = async (e) => {
+    e.preventDefault();
+    dispatch(setList({ populated: true }));
+
+    try {
+      const createdElements = [];
+
+      for (const elementContext of elementContextList) {
+        const formData = new FormData();
+
+        // Append the displayItems state to the elementContext
+        //elementContext.displayItems = displayItems;
+
+        if (elementContext.element_type === "Img") {
+          formData.append("image", elementContext.file);
+        } else if (elementContext.element_type === "Text") {
+          formData.append("text", elementContext.text);
+        } else if (elementContext.element_type === "Button") {
+          formData.append("button_title", elementContext.button_title);
+          formData.append("button_link", elementContext.button_link);
+        }
+        formData.append("element_type", elementContext.element_type);
+        formData.append("users", elementContext.users);
+
+        let response = await fetch(
+          "http://127.0.0.1:8000/api/create_element/",
+          {
+            method: "POST",
+            headers: {
+              Authorization: "Bearer " + String(token),
+            },
+            body: formData,
+          }
+        );
+
+        let data = await response.json();
+        console.log(data);
+        if (response.status === 200) {
+          createdElements.push(data.element);
+        } else {
+          console.log("Failed to create element:", elementContext);
+          return; // Return undefined to indicate a failure
+        }
+      }
+
+      setElements((prevElement) => prevElement.concat(createdElements));
+      return createdElements; // Return the created elements from the function
+    } catch (error) {
+      console.log("Error creating elements:", error);
+      return; // Return undefined to indicate a failure
     }
   };
 
