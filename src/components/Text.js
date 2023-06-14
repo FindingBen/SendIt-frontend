@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import TextComponent from "../components/TextComponent";
-import List from "./List";
-import ReactDOM, { createPortal } from "react-dom";
+import ReactDOM from "react-dom";
 import ReactQuill from "react-quill";
 import { ElementContext } from "../context/ElementContext";
 import "react-quill/dist/quill.snow.css";
-import { useSelector, useDispatch } from "react-redux";
-import jwt_decode from "jwt-decode";
-import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
+import { useSelector } from "react-redux";
+import {  MDBListGroupItem } from "mdb-react-ui-kit";
 import {
   selectCurrentUser,
-  selectCurrentToken,
-  logOut,
 } from "../features/auth/authSlice";
 const modules = {
   toolbar: [
@@ -38,10 +34,9 @@ const modules = {
 const Text = ({
   onStateChange,
   componentChange,
-  handleText,
-  elementList,
   listEl,
   contextList,
+  elementList
 }) => {
   const { createElement, deleteElement } = useContext(ElementContext);
   const [active, setActive] = useState(true);
@@ -50,9 +45,10 @@ const Text = ({
   const iframeEl = document.getElementById("myFrame");
   const [isMounted, setIsMounted] = useState(true);
   const user = useSelector(selectCurrentUser);
-  const [textList, setTextList] = useState([]);
+  const [elements, setElements] = useState(elementList)
 
   useEffect(() => {
+    console.log("STATELIST",elements)
     if (iframeEl) {
       const iframeDocument = iframeEl.contentDocument;
       if (iframeDocument) {
@@ -62,7 +58,7 @@ const Text = ({
         }, 10);
       }
     }
-  }, [text, iframeEl]);
+  }, [text, iframeEl,elementList]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -77,17 +73,12 @@ const Text = ({
           setTimeout(() => {
             if (listContainer) {
               ReactDOM.render(
-                <MDBListGroupItem>{text}</MDBListGroupItem>,
+                elementList?.map((element)=>{
+                  <MDBListGroupItem>{element}</MDBListGroupItem>
+                }),
                 listContainer
               );
             }
-
-            // if (listContainer && listContainer.lastElementChild) {
-            //   listContainer.removeChild(listContainer.lastElementChild);
-            //   // listContainer.current.lastChild.scrollIntoView({
-            //   //   behavior: "smooth",
-            //   // });
-            // }
           }, 10);
         }
       }
@@ -97,6 +88,7 @@ const Text = ({
   function handleTextFunc(event) {
     setText(event);
     listEl((prevEl) => [...prevEl, event]);
+   
   }
 
   const addTextObjContext = () => {
@@ -107,13 +99,12 @@ const Text = ({
     };
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
+    setElements((prevElement) => [...prevElement, dataText])
   };
 
   function saveTxt(event) {
     setShowComponent(Boolean(event.target.value));
     setActive(Boolean(!event.target.value));
-    // handleText((prevText) => [...prevText, text]);
-    //setTexts((prevText) => [...prevText, text]);
     addTextObjContext();
 
     componentChange(Boolean(!event.target.value));

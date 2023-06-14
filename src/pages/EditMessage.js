@@ -209,6 +209,11 @@ const EditMessage = () => {
   const handleComponentChange = (showComponent) => {
     setShowComponent(showComponent);
   };
+
+const handleElementState = (elements) =>{
+  setElements(elements)
+}
+console.log(elements)
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
@@ -238,7 +243,7 @@ const EditMessage = () => {
                       onStateChange={handleChildStateChange}
                       componentChange={handleComponentChange}
                       listImages={images}
-                      //elementList={handleElements}
+                      elementList={handleElementState}
                       contextList={handleContextEl}
                     ></Image>
                   )
@@ -259,7 +264,7 @@ const EditMessage = () => {
                     <Text
                       onStateChange={handleTextStateChange}
                       componentChange={handleComponentChange}
-                      //elementList={handleElements}
+                      elementList={elements}
                       listEl={displayElements}
                       contextList={handleContextEl}
                     ></Text>
@@ -281,7 +286,7 @@ const EditMessage = () => {
                     <Button
                       onStateChange={handleButtonStateChange}
                       componentChange={handleComponentChange}
-                      //elementList={handleElements}
+                      elementList={handleElementState}
                       contextList={handleContextEl}
                     ></Button>
                   )
