@@ -82,7 +82,6 @@ const EditMessage = () => {
     setElements(data.element_list);
     setIsLoaded(false);
   };
-  console.log(elements)
   
   const editMessage = async (e) => {
     e.preventDefault();
@@ -116,7 +115,7 @@ const EditMessage = () => {
     }
   };
 
-
+  console.log(elementContextList)
   const addElement = async (e) => {
     e.preventDefault();
     dispatch(setList({ populated: true }));
@@ -155,7 +154,7 @@ const EditMessage = () => {
         let data = await response.json();
         console.log(data);
         if (response.status === 200) {
-          createdElements.push(data.element);
+          createdElements.push(data);
         } else {
           console.log("Failed to create element:", elementContext);
           return; // Return undefined to indicate a failure
