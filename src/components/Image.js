@@ -1,26 +1,22 @@
 import React, { useState, useEffect, useContext } from "react";
 import ImgList from "./ImgList";
-import ReactDOM, { createPortal } from "react-dom";
-import { useSelector, useDispatch } from "react-redux";
+import ReactDOM from "react-dom";
+import { useSelector } from "react-redux";
 import { ElementContext } from "../context/ElementContext";
-import jwt_decode from "jwt-decode";
-import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
+import {MDBListGroupItem } from "mdb-react-ui-kit";
 import { ImageEditorComponent } from "@syncfusion/ej2-react-image-editor";
 import {
   selectCurrentUser,
   selectCurrentToken,
-  logOut,
 } from "../features/auth/authSlice";
 const Image = ({
   onStateChange,
   componentChange,
   handleImages,
-  listImages,
   handleFiles,
-  elementList,
   contextList,
 }) => {
-  const { createElement, deleteElement } = useContext(ElementContext);
+  const { createElement } = useContext(ElementContext);
   const [showComponent, setShowComponent] = useState(true);
   const [active, setActive] = useState(true);
   const [images, setImages] = useState([]);
@@ -30,19 +26,9 @@ const Image = ({
   const iframe = document.getElementById("myFrame");
   const user = useSelector(selectCurrentUser);
   const token = useSelector(selectCurrentToken);
-  const [userData, setUserData] = useState();
   const [isMounted, setIsMounted] = useState(true);
-  const dispatch = useDispatch();
   const iframeEl = document.getElementById("myFrame");
-  const [authTokens, setAuthTokens] = useState(() =>
-    localStorage.getItem("authTokens")
-      ? JSON.parse(localStorage.getItem("authTokens"))
-      : null
-  );
-  const userState = localStorage.getItem("authTokens")
-    ? jwt_decode(localStorage.getItem("authTokens"))
-    : null;
-  const BASE_URL = "http://127.0.0.1:8000/media/";
+ 
   useEffect(() => {
     iframe.contentWindow.postMessage({ images }, "*");
   }, [images]);
@@ -76,13 +62,6 @@ const Image = ({
                 listContainer
               );
             }
-
-            // if (listContainer && listContainer.lastElementChild) {
-            //   listContainer.removeChild(listContainer.lastElementChild);
-            //   // listContainer.current.lastChild.scrollIntoView({
-            //   //   behavior: "smooth",
-            //   // });
-            // }
           }, 10);
         }
       }
@@ -104,51 +83,23 @@ const Image = ({
 
     reader.readAsDataURL(file);
   }
-  console.log(file);
+
   let addImageElContext = async (e) => {
-    const formData = new FormData();
     const imageContext = {
       image: URL.createObjectURL(file),
       element_type: "Img",
       users: user,
       file: file,
     };
-    const data = {
-      image: file,
-      element_type: "Img",
-      users: user,
-    };
     createElement(imageContext);
     contextList((prevElement) => [...prevElement, imageContext]);
-    //elementList((prevElement) => [...prevElement, data]);
   };
 
-  let addImageElement = async (e) => {
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append("element_type", "Img");
-    formData.append("users", user);
-    let response = await fetch("http://127.0.0.1:8000/api/create_element/", {
-      method: "POST",
-      headers: {
-        //'Content-Type':'application/json',
-        Authorization: "Bearer " + String(token),
-      },
-      body: formData,
-    });
-    let data = await response.json();
-    if (response.status === 200) {
-      //elementList((prevElement) => [...prevElement, data]);
-    }
-  };
 
   function saveImg(event) {
-    //addImageElement();
     addImageElContext();
     setCancel(true);
     iframe.contentWindow.postMessage({ token, user }, "*");
-
-    // setAuthTokens(user);
     setShowComponent(Boolean(event.target.value));
     setActive(Boolean(!event.target.value));
 
@@ -181,7 +132,7 @@ const Image = ({
       {images?.map((image, index) => (
         <ImgList key={index} imageUrl={image} />
       ))}
-      {/* <ImageEditorComponent></ImageEditorComponent> */}
+
       <button
         type="button"
         className="btn btn-dark"
