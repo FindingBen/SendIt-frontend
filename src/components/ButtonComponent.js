@@ -8,7 +8,7 @@ const ButtonComponent = ({ textValue, linkValue }) => {
     setText(textValue);
     setLink(linkValue);
   }, [textValue, linkValue]);
-  console.log(link);
+
   return (
     <a href={link}>
       <button type="button" class="btn btn-dark">

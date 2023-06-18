@@ -16,6 +16,7 @@ const Image = ({
   handleFiles,
   contextList,
   elementList,
+  listEl,
 }) => {
   const { createElement } = useContext(ElementContext);
   const [showComponent, setShowComponent] = useState(true);
@@ -29,7 +30,7 @@ const Image = ({
   const token = useSelector(selectCurrentToken);
   const [isMounted, setIsMounted] = useState(true);
   const iframeEl = document.getElementById("myFrame");
-
+  const [isCreated, setIsCreated] = useState(listEl);
   useEffect(() => {
     iframe.contentWindow.postMessage({ images }, "*");
   }, [images]);
@@ -41,7 +42,11 @@ const Image = ({
         const listContainer = iframeDocument.getElementById("myList");
         const lastListItem = listContainer.lastChild;
         setTimeout(() => {
-          ReactDOM.render(<ImgList imageUrl={imageSrc} />, lastListItem);
+          if (!isCreated) {
+            ReactDOM.render(<ImgList imageUrl={imageSrc} />, lastListItem);
+          } else {
+            ReactDOM.render(<ImgList imageUrl={imageSrc} />, listContainer);
+          }
         }, 10);
       }
     }
@@ -59,9 +64,15 @@ const Image = ({
           const listContainer = iframeDocument.getElementById("myList");
           const lastListItem = listContainer.lastChild;
           setTimeout(() => {
-            ReactDOM.render(<></>, lastListItem);
+            if (!isCreated) {
+              ReactDOM.render(<></>, lastListItem);
+            } else {
+              ReactDOM.render(
+                <MDBListGroupItem></MDBListGroupItem>,
+                listContainer
+              );
+            }
           }, 10);
-          const tempItem = iframeDocument.getElementById("temp");
         }
       }
     };
@@ -98,7 +109,7 @@ const Image = ({
   function saveImg(event) {
     addImageElContext();
     setCancel(true);
-    iframe.contentWindow.postMessage({ token, user }, "*");
+    //iframe.contentWindow.postMessage({ token, user }, "*");
     setShowComponent(Boolean(event.target.value));
     setActive(Boolean(!event.target.value));
 
@@ -109,17 +120,19 @@ const Image = ({
       if (iframeDocument) {
         const listContainer = iframeDocument.getElementById("myList");
 
-        if (listContainer) {
-          const listItems = Array.from(listContainer.children);
-          listItems.forEach((listItem) => {
-            // Perform your operations on each list item
-            // For example, check if the element is empty
-            if (listItem.innerHTML.trim() === "") {
-              // The element is empty
-              // Perform your logic here
-              listContainer.removeChild(listItem);
-            }
-          });
+        if (!isCreated) {
+          if (listContainer) {
+            const listItems = Array.from(listContainer.children);
+            listItems.forEach((listItem) => {
+              // Perform your operations on each list item
+              // For example, check if the element is empty
+              if (listItem.innerHTML.trim() === "") {
+                // The element is empty
+                // Perform your logic here
+                listContainer.removeChild(listItem);
+              }
+            });
+          }
         }
       }
     }
@@ -137,17 +150,19 @@ const Image = ({
       if (iframeDocument) {
         const listContainer = iframeDocument.getElementById("myList");
 
-        if (listContainer) {
-          const listItems = Array.from(listContainer.children);
-          listItems.forEach((listItem) => {
-            // Perform your operations on each list item
-            // For example, check if the element is empty
-            if (listItem.innerHTML.trim() === "") {
-              // The element is empty
-              // Perform your logic here
-              listContainer.removeChild(listItem);
-            }
-          });
+        if (!isCreated) {
+          if (listContainer) {
+            const listItems = Array.from(listContainer.children);
+            listItems.forEach((listItem) => {
+              // Perform your operations on each list item
+              // For example, check if the element is empty
+              if (listItem.innerHTML.trim() === "") {
+                // The element is empty
+                // Perform your logic here
+                listContainer.removeChild(listItem);
+              }
+            });
+          }
         }
       }
     }

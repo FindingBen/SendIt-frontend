@@ -39,6 +39,7 @@ const EditMessage = () => {
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
   const [isDirty, setIsDirty] = useState(false);
+  const [isCreate, setIsCreate] = useState(false);
   const dispatch = useDispatch();
   let BASE_URL = "http://127.0.0.1:8000";
   const params = useParams();
@@ -225,9 +226,9 @@ const EditMessage = () => {
     setFiles(file);
   };
 
-  const displayElements = (displayElItem) => {
-    setDisplayItems((prevItems) => [...prevItems, displayElItem]);
-  };
+  // const displayElements = (displayElItem) => {
+  //   setDisplayItems((prevItems) => [...prevItems, displayElItem]);
+  // };
 
   const handleContextEl = (elementContextList) => {
     setElementsContextList(elementContextList);
@@ -245,7 +246,7 @@ const EditMessage = () => {
   const handleElementState = (elements) => {
     setElements(elements);
   };
-  console.log(elements);
+
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
@@ -275,6 +276,7 @@ const EditMessage = () => {
                       onStateChange={handleChildStateChange}
                       componentChange={handleComponentChange}
                       listImages={images}
+                      listEl={isCreate}
                       elementList={handleElementState}
                       contextList={handleContextEl}
                     ></Image>
@@ -296,7 +298,7 @@ const EditMessage = () => {
                     <Text
                       onStateChange={handleTextStateChange}
                       componentChange={handleComponentChange}
-                      //elList={elements}
+                      listEl={isCreate}
                       elementList={handleElementState}
                       contextList={handleContextEl}
                     ></Text>
@@ -320,6 +322,7 @@ const EditMessage = () => {
                       componentChange={handleComponentChange}
                       elementList={handleElementState}
                       contextList={handleContextEl}
+                      listEl={isCreate}
                     ></Button>
                   )
                 )}

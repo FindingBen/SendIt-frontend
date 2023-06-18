@@ -10,6 +10,7 @@ const Button = ({
   componentChange,
   contextList,
   elementList,
+  listEl,
 }) => {
   const { createElement, deleteElement } = useContext(ElementContext);
   const [active, setActive] = useState(true);
@@ -19,28 +20,35 @@ const Button = ({
   const iframeEl = document.getElementById("myFrame");
   const [isMounted, setIsMounted] = useState(true);
   const user = useSelector(selectCurrentUser);
-  const [elements, setElements] = useState([elementList]);
+  //const [elements, setElements] = useState([elementList]);
+  const [isCreated, setIsCreated] = useState(listEl);
   useEffect(() => {
-    if (iframeEl) {
-      const iframeDocument = iframeEl.contentDocument;
-      if (iframeDocument) {
-        const listContainer = iframeDocument.getElementById("myList");
-        const lastListItem = listContainer.lastChild;
-        setTimeout(() => {
+    console.log(listEl);
+    const iframeDocument = iframeEl.contentDocument;
+    if (iframeDocument) {
+      const listContainer = iframeDocument.getElementById("myList");
+      const lastListItem = listContainer.lastChild;
+      setTimeout(() => {
+        if (!isCreated) {
           ReactDOM.render(
             <ButtonComponent textValue={text} linkValue={link} />,
             lastListItem
           );
-        }, 10);
-      }
+        } else {
+          ReactDOM.render(
+            <ButtonComponent textValue={text} linkValue={link} />,
+            listContainer
+          );
+        }
+      }, 10);
     }
-  }, [text, link, iframeEl, elements]);
+  }, [text, link, iframeEl]);
 
   useEffect(() => {
     setIsMounted(true);
 
     return () => {
-      setIsMounted(false);
+      //setIsMounted(false);
       setText([]);
       setLink([]);
       if (isMounted && iframeEl) {
@@ -49,9 +57,15 @@ const Button = ({
           const listContainer = iframeDocument.getElementById("myList");
           const lastListItem = listContainer.lastChild;
           setTimeout(() => {
-            ReactDOM.render(<></>, lastListItem);
+            if (!isCreated) {
+              ReactDOM.render(<></>, lastListItem);
+            } else {
+              ReactDOM.render(
+                <MDBListGroupItem></MDBListGroupItem>,
+                listContainer
+              );
+            }
           }, 10);
-          const tempItem = iframeDocument.getElementById("temp");
         }
       }
     };
@@ -63,7 +77,6 @@ const Button = ({
   }
 
   function handleLinkButtonFunc(event) {
-    console.log(event);
     setLink(event.target.value);
     // listEl((prevEl) => [...prevEl, event]);
   }
@@ -75,7 +88,7 @@ const Button = ({
       element_type: "Button",
       users: user,
     };
-    console.log(dataText);
+
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
     elementList((prevElement) => [...prevElement, dataText]);
@@ -93,17 +106,19 @@ const Button = ({
       if (iframeDocument) {
         const listContainer = iframeDocument.getElementById("myList");
 
-        if (listContainer) {
-          const listItems = Array.from(listContainer.children);
-          listItems.forEach((listItem) => {
-            // Perform your operations on each list item
-            // For example, check if the element is empty
-            if (listItem.innerHTML.trim() === "") {
-              // The element is empty
-              // Perform your logic here
-              listContainer.removeChild(listItem);
-            }
-          });
+        if (!isCreated) {
+          if (listContainer) {
+            const listItems = Array.from(listContainer.children);
+            listItems.forEach((listItem) => {
+              // Perform your operations on each list item
+              // For example, check if the element is empty
+              if (listItem.innerHTML.trim() === "") {
+                // The element is empty
+                // Perform your logic here
+                listContainer.removeChild(listItem);
+              }
+            });
+          }
         }
       }
     }
@@ -119,14 +134,37 @@ const Button = ({
       if (iframeDocument) {
         const listContainer = iframeDocument.getElementById("myList");
 
-        if (listContainer) {
+        if (!isCreated) {
+          if (listContainer) {
+            const listItems = Array.from(listContainer.children);
+            listItems.forEach((listItem) => {
+              // Perform your operations on each list item
+              // For example, check if the element is empty
+              if (listItem.innerHTML.trim() === "") {
+                // The element is empty
+                // Perform your logic here
+                listContainer.removeChild(listItem);
+              }
+            });
+          }
+        }
+      }
+    }
+  }
+
+  function handleSaveAndCancel(event) {
+    setShowComponent(Boolean(event.target.value));
+    setActive(Boolean(!event.target.value));
+    componentChange(Boolean(!event.target.value));
+    onStateChange(Boolean(!event.target.value));
+    if (iframeEl) {
+      const iframeDocument = iframeEl.contentDocument;
+      if (iframeDocument) {
+        const listContainer = iframeDocument.getElementById("myList");
+        if (!isCreated && listContainer) {
           const listItems = Array.from(listContainer.children);
           listItems.forEach((listItem) => {
-            // Perform your operations on each list item
-            // For example, check if the element is empty
             if (listItem.innerHTML.trim() === "") {
-              // The element is empty
-              // Perform your logic here
               listContainer.removeChild(listItem);
             }
           });
@@ -134,6 +172,25 @@ const Button = ({
       }
     }
   }
+
+  // // Update the button onClick handlers to use the combined function
+  // <button
+  //   type="button"
+  //   className="btn btn-dark"
+  //   value={false}
+  //   onClick={handleSaveAndCancel}
+  // >
+  //   Save
+  // </button>
+  // <button
+  //   type="button"
+  //   className="btn btn-danger"
+  //   id="cancel"
+  //   value={false}
+  //   onClick={handleSaveAndCancel}
+  // >
+  //   Cancel
+  // </button>
 
   return (
     <div>

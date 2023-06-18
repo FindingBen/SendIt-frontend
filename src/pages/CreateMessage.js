@@ -40,6 +40,7 @@ const CreateNote = () => {
   const [elementsList, setElementsList] = useState([]);
   const [elementContextList, setElementsContextList] = useState([]);
   const [isDirty, setIsDirty] = useState(false);
+  const [isCreate, setIsCreate] = useState(true);
   const dispatch = useDispatch();
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
@@ -219,7 +220,8 @@ const CreateNote = () => {
                       onStateChange={handleChildStateChange}
                       componentChange={handleComponentChange}
                       listImages={images}
-                      //elementList={handleElements}
+                      elementList={displayElements}
+                      listEl={isCreate}
                       contextList={handleContextEl}
                     ></Image>
                   )
@@ -241,7 +243,7 @@ const CreateNote = () => {
                       onStateChange={handleTextStateChange}
                       componentChange={handleComponentChange}
                       elementList={displayElements}
-                      listEl={displayElements}
+                      listEl={isCreate}
                       contextList={handleContextEl}
                     ></Text>
                   )
@@ -262,8 +264,9 @@ const CreateNote = () => {
                     <Button
                       onStateChange={handleButtonStateChange}
                       componentChange={handleComponentChange}
-                      //elementList={handleElements}
+                      listEl={isCreate}
                       contextList={handleContextEl}
+                      elementList={displayElements}
                     ></Button>
                   )
                 )}

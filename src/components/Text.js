@@ -30,7 +30,13 @@ const modules = {
   ],
 };
 
-const Text = ({ onStateChange, componentChange, elementList, contextList }) => {
+const Text = ({
+  onStateChange,
+  componentChange,
+  elementList,
+  contextList,
+  listEl,
+}) => {
   const { createElement, deleteElement } = useContext(ElementContext);
   const [active, setActive] = useState(true);
   const [text, setText] = useState([]);
@@ -38,27 +44,30 @@ const Text = ({ onStateChange, componentChange, elementList, contextList }) => {
   const iframeEl = document.getElementById("myFrame");
   const [isMounted, setIsMounted] = useState(true);
   const user = useSelector(selectCurrentUser);
-  const [elements, setElements] = useState([elementList]);
-
+  //const [elements, setElements] = useState([elementList]);
+  const [isCreated, setIsCreated] = useState(listEl);
   useEffect(() => {
-    console.log("STATELIST", elements);
     if (iframeEl) {
       const iframeDocument = iframeEl.contentDocument;
       if (iframeDocument) {
         const listContainer = iframeDocument.getElementById("myList");
         const lastListItem = listContainer.lastChild;
         setTimeout(() => {
-          ReactDOM.render(<TextComponent textValue={text} />, lastListItem);
+          if (!isCreated) {
+            ReactDOM.render(<TextComponent textValue={text} />, lastListItem);
+          } else {
+            ReactDOM.render(<TextComponent textValue={text} />, listContainer);
+          }
         }, 10);
       }
     }
-  }, [text, iframeEl, elements]);
+  }, [text, iframeEl]);
 
   useEffect(() => {
     setIsMounted(true);
 
     return () => {
-      setIsMounted(false);
+      //setIsMounted(false);
       setText([]);
       if (isMounted && iframeEl) {
         const iframeDocument = iframeEl.contentDocument;
@@ -66,9 +75,15 @@ const Text = ({ onStateChange, componentChange, elementList, contextList }) => {
           const listContainer = iframeDocument.getElementById("myList");
           const lastListItem = listContainer.lastChild;
           setTimeout(() => {
-            ReactDOM.render(<></>, lastListItem);
+            if (!isCreated) {
+              ReactDOM.render(<></>, lastListItem);
+            } else {
+              ReactDOM.render(
+                <MDBListGroupItem></MDBListGroupItem>,
+                listContainer
+              );
+            }
           }, 10);
-          const tempItem = iframeDocument.getElementById("temp");
         }
       }
     };
@@ -87,7 +102,7 @@ const Text = ({ onStateChange, componentChange, elementList, contextList }) => {
     };
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
-    setElements((prevElement) => [...prevElement, dataText]);
+    //setElements((prevElement) => [...prevElement, dataText]);
     elementList((prevElement) => [...prevElement, dataText]);
   };
 
@@ -103,17 +118,19 @@ const Text = ({ onStateChange, componentChange, elementList, contextList }) => {
       if (iframeDocument) {
         const listContainer = iframeDocument.getElementById("myList");
 
-        if (listContainer) {
-          const listItems = Array.from(listContainer.children);
-          listItems.forEach((listItem) => {
-            // Perform your operations on each list item
-            // For example, check if the element is empty
-            if (listItem.innerHTML.trim() === "") {
-              // The element is empty
-              // Perform your logic here
-              listContainer.removeChild(listItem);
-            }
-          });
+        if (!isCreated) {
+          if (listContainer) {
+            const listItems = Array.from(listContainer.children);
+            listItems.forEach((listItem) => {
+              // Perform your operations on each list item
+              // For example, check if the element is empty
+              if (listItem.innerHTML.trim() === "") {
+                // The element is empty
+                // Perform your logic here
+                listContainer.removeChild(listItem);
+              }
+            });
+          }
         }
       }
     }
@@ -129,17 +146,19 @@ const Text = ({ onStateChange, componentChange, elementList, contextList }) => {
       if (iframeDocument) {
         const listContainer = iframeDocument.getElementById("myList");
 
-        if (listContainer) {
-          const listItems = Array.from(listContainer.children);
-          listItems.forEach((listItem) => {
-            // Perform your operations on each list item
-            // For example, check if the element is empty
-            if (listItem.innerHTML.trim() === "") {
-              // The element is empty
-              // Perform your logic here
-              listContainer.removeChild(listItem);
-            }
-          });
+        if (!isCreated) {
+          if (listContainer) {
+            const listItems = Array.from(listContainer.children);
+            listItems.forEach((listItem) => {
+              // Perform your operations on each list item
+              // For example, check if the element is empty
+              if (listItem.innerHTML.trim() === "") {
+                // The element is empty
+                // Perform your logic here
+                listContainer.removeChild(listItem);
+              }
+            });
+          }
         }
       }
     }
