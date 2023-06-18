@@ -240,7 +240,7 @@ const CreateNote = () => {
                     <Text
                       onStateChange={handleTextStateChange}
                       componentChange={handleComponentChange}
-                      //elementList={handleElements}
+                      elementList={displayElements}
                       listEl={displayElements}
                       contextList={handleContextEl}
                     ></Text>

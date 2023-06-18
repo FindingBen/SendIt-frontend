@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { createPortal } from "react-dom";
+import ReactDOM, { createPortal } from "react-dom";
 import "../css/RootIframe.css";
 
 const IFrame = ({ children }) => {
@@ -45,7 +45,7 @@ const IFrame = ({ children }) => {
           </div>
         ) : (
           contentRef &&
-          createPortal(children, contentRef?.contentWindow?.document?.body)
+          ReactDOM.render(children, contentRef?.contentWindow?.document?.body)
         )}
       </iframe>
     </div>

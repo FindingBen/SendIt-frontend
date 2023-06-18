@@ -19,7 +19,7 @@ import {
   selectCurrentUser,
   selectCurrentToken,
 } from "../features/auth/authSlice";
-import  { setModalState } from "../features/modal/modalReducer";
+import { setModalState } from "../features/modal/modalReducer";
 import { useSelector, useDispatch } from "react-redux";
 import ButtonComponent from "../components/ButtonComponent";
 
@@ -42,10 +42,11 @@ const EditMessage = () => {
   const dispatch = useDispatch();
   let BASE_URL = "http://127.0.0.1:8000";
   const params = useParams();
+  const iframeEl = document.getElementById("myFrame");
 
   useEffect(() => {
-
     messageView();
+
     dispatch(setModalState({ show: false }));
   }, [isLoaded]);
 
@@ -53,18 +54,50 @@ const EditMessage = () => {
     e.preventDefault();
     setActive(!active);
     setShowComponent(!showComponent);
+    addEmptyListItem();
   };
 
   const handleClickText = (e) => {
     e.preventDefault();
     setActiveT(!activeT);
     setShowComponent(!showComponent);
+    addEmptyListItem();
   };
 
   const handleClickButton = (e) => {
     e.preventDefault();
     setActiveB(!activeB);
     setShowComponent(!showComponent);
+    addEmptyListItem();
+  };
+
+  const addEmptyListItem = () => {
+    if (iframeEl) {
+      const iframeDocument = iframeEl.contentDocument;
+      if (iframeDocument) {
+        const listContainer = iframeDocument.getElementById("myList");
+        if (listContainer) {
+          const newItem = document.createElement("li");
+          newItem.className = "list-group-item";
+          newItem.id = "temp";
+          listContainer.appendChild(newItem);
+        }
+      }
+    }
+  };
+
+  const removeEmptyListItem = () => {
+    if (iframeEl) {
+      const iframeDocument = iframeEl.contentDocument;
+      if (iframeDocument) {
+        const listContainer = iframeDocument.getElementById("myList");
+
+        const tempItem = iframeDocument.getElementById("temp");
+        if (tempItem) {
+          listContainer.removeChild(tempItem);
+        }
+      }
+    }
   };
 
   let messageView = async () => {
@@ -82,7 +115,7 @@ const EditMessage = () => {
     setElements(data.element_list);
     setIsLoaded(false);
   };
-  
+
   const editMessage = async (e) => {
     e.preventDefault();
 
@@ -93,14 +126,17 @@ const EditMessage = () => {
         users: user,
       };
 
-      let response = await fetch(`http://127.0.0.1:8000/api/message_view_edit/${params.id}/`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-        body: JSON.stringify(requestData),
-      });
+      let response = await fetch(
+        `http://127.0.0.1:8000/api/message_view_edit/${params.id}/`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(token),
+          },
+          body: JSON.stringify(requestData),
+        }
+      );
 
       let data = await response.json();
 
@@ -115,7 +151,7 @@ const EditMessage = () => {
     }
   };
 
-  console.log(elementContextList)
+  console.log(elementContextList);
   const addElement = async (e) => {
     e.preventDefault();
     dispatch(setList({ populated: true }));
@@ -161,7 +197,7 @@ const EditMessage = () => {
         }
       }
 
-      setElements((prevElement) => prevElement.concat(createdElements));
+      setElements((prevElement) => [...prevElement, ...createdElements]);
       return createdElements; // Return the created elements from the function
     } catch (error) {
       console.log("Error creating elements:", error);
@@ -198,10 +234,6 @@ const EditMessage = () => {
     setIsDirty(true);
   };
 
-  const handleText = (texts) => {
-    setTexts(texts);
-  };
-
   const handleButtonStateChange = (activeB) => {
     setActiveB(activeB);
   };
@@ -210,10 +242,10 @@ const EditMessage = () => {
     setShowComponent(showComponent);
   };
 
-const handleElementState = (elements) =>{
-  setElements(elements)
-}
-console.log(elements)
+  const handleElementState = (elements) => {
+    setElements(elements);
+  };
+  console.log(elements);
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
@@ -264,8 +296,8 @@ console.log(elements)
                     <Text
                       onStateChange={handleTextStateChange}
                       componentChange={handleComponentChange}
-                      elementList={elements}
-                      listEl={displayElements}
+                      //elList={elements}
+                      elementList={handleElementState}
                       contextList={handleContextEl}
                     ></Text>
                   )

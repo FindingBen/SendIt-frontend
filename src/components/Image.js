@@ -3,7 +3,7 @@ import ImgList from "./ImgList";
 import ReactDOM from "react-dom";
 import { useSelector } from "react-redux";
 import { ElementContext } from "../context/ElementContext";
-import {MDBListGroupItem } from "mdb-react-ui-kit";
+import { MDBListGroupItem } from "mdb-react-ui-kit";
 import { ImageEditorComponent } from "@syncfusion/ej2-react-image-editor";
 import {
   selectCurrentUser,
@@ -15,6 +15,7 @@ const Image = ({
   handleImages,
   handleFiles,
   contextList,
+  elementList,
 }) => {
   const { createElement } = useContext(ElementContext);
   const [showComponent, setShowComponent] = useState(true);
@@ -28,7 +29,7 @@ const Image = ({
   const token = useSelector(selectCurrentToken);
   const [isMounted, setIsMounted] = useState(true);
   const iframeEl = document.getElementById("myFrame");
- 
+
   useEffect(() => {
     iframe.contentWindow.postMessage({ images }, "*");
   }, [images]);
@@ -38,8 +39,9 @@ const Image = ({
       const iframeDocument = iframeEl.contentDocument;
       if (iframeDocument) {
         const listContainer = iframeDocument.getElementById("myList");
+        const lastListItem = listContainer.lastChild;
         setTimeout(() => {
-          ReactDOM.render(<ImgList imageUrl={imageSrc} />, listContainer);
+          ReactDOM.render(<ImgList imageUrl={imageSrc} />, lastListItem);
         }, 10);
       }
     }
@@ -49,20 +51,17 @@ const Image = ({
     setIsMounted(true);
 
     return () => {
-      setIsMounted(false);
+      //setIsMounted(false);
       setImages([]);
       if (isMounted && iframeEl) {
         const iframeDocument = iframeEl.contentDocument;
         if (iframeDocument) {
           const listContainer = iframeDocument.getElementById("myList");
+          const lastListItem = listContainer.lastChild;
           setTimeout(() => {
-            if (listContainer) {
-              ReactDOM.render(
-                <MDBListGroupItem>{imageSrc}</MDBListGroupItem>,
-                listContainer
-              );
-            }
+            ReactDOM.render(<></>, lastListItem);
           }, 10);
+          const tempItem = iframeDocument.getElementById("temp");
         }
       }
     };
@@ -93,8 +92,8 @@ const Image = ({
     };
     createElement(imageContext);
     contextList((prevElement) => [...prevElement, imageContext]);
+    elementList((prevElement) => [...prevElement, imageContext]);
   };
-
 
   function saveImg(event) {
     addImageElContext();
@@ -105,6 +104,25 @@ const Image = ({
 
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
+    if (isMounted && iframeEl) {
+      const iframeDocument = iframeEl.contentDocument;
+      if (iframeDocument) {
+        const listContainer = iframeDocument.getElementById("myList");
+
+        if (listContainer) {
+          const listItems = Array.from(listContainer.children);
+          listItems.forEach((listItem) => {
+            // Perform your operations on each list item
+            // For example, check if the element is empty
+            if (listItem.innerHTML.trim() === "") {
+              // The element is empty
+              // Perform your logic here
+              listContainer.removeChild(listItem);
+            }
+          });
+        }
+      }
+    }
   }
 
   function handleCancel(event) {
@@ -114,6 +132,25 @@ const Image = ({
 
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
+    if (isMounted && iframeEl) {
+      const iframeDocument = iframeEl.contentDocument;
+      if (iframeDocument) {
+        const listContainer = iframeDocument.getElementById("myList");
+
+        if (listContainer) {
+          const listItems = Array.from(listContainer.children);
+          listItems.forEach((listItem) => {
+            // Perform your operations on each list item
+            // For example, check if the element is empty
+            if (listItem.innerHTML.trim() === "") {
+              // The element is empty
+              // Perform your logic here
+              listContainer.removeChild(listItem);
+            }
+          });
+        }
+      }
+    }
   }
 
   return (
@@ -132,7 +169,6 @@ const Image = ({
       {images?.map((image, index) => (
         <ImgList key={index} imageUrl={image} />
       ))}
-
       <button
         type="button"
         className="btn btn-dark"

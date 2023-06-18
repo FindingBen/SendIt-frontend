@@ -19,21 +19,22 @@ const Button = ({
   const iframeEl = document.getElementById("myFrame");
   const [isMounted, setIsMounted] = useState(true);
   const user = useSelector(selectCurrentUser);
-
+  const [elements, setElements] = useState([elementList]);
   useEffect(() => {
     if (iframeEl) {
       const iframeDocument = iframeEl.contentDocument;
       if (iframeDocument) {
         const listContainer = iframeDocument.getElementById("myList");
+        const lastListItem = listContainer.lastChild;
         setTimeout(() => {
           ReactDOM.render(
-            <ButtonComponent linkValue={link} textValue={text} />,
-            listContainer
+            <ButtonComponent textValue={text} linkValue={link} />,
+            lastListItem
           );
         }, 10);
       }
     }
-  }, [text, link, iframeEl]);
+  }, [text, link, iframeEl, elements]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -41,18 +42,16 @@ const Button = ({
     return () => {
       setIsMounted(false);
       setText([]);
+      setLink([]);
       if (isMounted && iframeEl) {
         const iframeDocument = iframeEl.contentDocument;
         if (iframeDocument) {
           const listContainer = iframeDocument.getElementById("myList");
+          const lastListItem = listContainer.lastChild;
           setTimeout(() => {
-            if (listContainer) {
-              ReactDOM.render(
-                <MDBListGroupItem>{text}</MDBListGroupItem>,
-                listContainer
-              );
-            }
+            ReactDOM.render(<></>, lastListItem);
           }, 10);
+          const tempItem = iframeDocument.getElementById("temp");
         }
       }
     };
@@ -79,17 +78,35 @@ const Button = ({
     console.log(dataText);
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
+    elementList((prevElement) => [...prevElement, dataText]);
   };
 
   function saveBtn(event) {
     setShowComponent(Boolean(event.target.value));
     setActive(Boolean(!event.target.value));
-    // handleText((prevText) => [...prevText, text]);
-    //setTexts((prevText) => [...prevText, text]);
-    //addTextObjContext();
+
     addButtonObjContext();
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
+    if (isMounted && iframeEl) {
+      const iframeDocument = iframeEl.contentDocument;
+      if (iframeDocument) {
+        const listContainer = iframeDocument.getElementById("myList");
+
+        if (listContainer) {
+          const listItems = Array.from(listContainer.children);
+          listItems.forEach((listItem) => {
+            // Perform your operations on each list item
+            // For example, check if the element is empty
+            if (listItem.innerHTML.trim() === "") {
+              // The element is empty
+              // Perform your logic here
+              listContainer.removeChild(listItem);
+            }
+          });
+        }
+      }
+    }
   }
 
   function handleCancel(event) {
@@ -97,6 +114,25 @@ const Button = ({
     setActive(Boolean(!event.target.value));
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
+    if (isMounted && iframeEl) {
+      const iframeDocument = iframeEl.contentDocument;
+      if (iframeDocument) {
+        const listContainer = iframeDocument.getElementById("myList");
+
+        if (listContainer) {
+          const listItems = Array.from(listContainer.children);
+          listItems.forEach((listItem) => {
+            // Perform your operations on each list item
+            // For example, check if the element is empty
+            if (listItem.innerHTML.trim() === "") {
+              // The element is empty
+              // Perform your logic here
+              listContainer.removeChild(listItem);
+            }
+          });
+        }
+      }
+    }
   }
 
   return (

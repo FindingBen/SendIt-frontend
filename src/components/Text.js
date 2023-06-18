@@ -4,11 +4,10 @@ import ReactDOM from "react-dom";
 import ReactQuill from "react-quill";
 import { ElementContext } from "../context/ElementContext";
 import "react-quill/dist/quill.snow.css";
+import { createPortal } from "react-dom";
 import { useSelector } from "react-redux";
-import {  MDBListGroupItem } from "mdb-react-ui-kit";
-import {
-  selectCurrentUser,
-} from "../features/auth/authSlice";
+import { MDBListGroupItem } from "mdb-react-ui-kit";
+import { selectCurrentUser } from "../features/auth/authSlice";
 const modules = {
   toolbar: [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -31,13 +30,7 @@ const modules = {
   ],
 };
 
-const Text = ({
-  onStateChange,
-  componentChange,
-  listEl,
-  contextList,
-  elementList
-}) => {
+const Text = ({ onStateChange, componentChange, elementList, contextList }) => {
   const { createElement, deleteElement } = useContext(ElementContext);
   const [active, setActive] = useState(true);
   const [text, setText] = useState([]);
@@ -45,20 +38,21 @@ const Text = ({
   const iframeEl = document.getElementById("myFrame");
   const [isMounted, setIsMounted] = useState(true);
   const user = useSelector(selectCurrentUser);
-  const [elements, setElements] = useState(elementList)
+  const [elements, setElements] = useState([elementList]);
 
   useEffect(() => {
-    console.log("STATELIST",elements)
+    console.log("STATELIST", elements);
     if (iframeEl) {
       const iframeDocument = iframeEl.contentDocument;
       if (iframeDocument) {
         const listContainer = iframeDocument.getElementById("myList");
+        const lastListItem = listContainer.lastChild;
         setTimeout(() => {
-          ReactDOM.render(<TextComponent textValue={text} />, listContainer);
+          ReactDOM.render(<TextComponent textValue={text} />, lastListItem);
         }, 10);
       }
     }
-  }, [text, iframeEl,elementList]);
+  }, [text, iframeEl, elements]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -70,16 +64,11 @@ const Text = ({
         const iframeDocument = iframeEl.contentDocument;
         if (iframeDocument) {
           const listContainer = iframeDocument.getElementById("myList");
+          const lastListItem = listContainer.lastChild;
           setTimeout(() => {
-            if (listContainer) {
-              ReactDOM.render(
-                elementList?.map((element)=>{
-                  <MDBListGroupItem>{element}</MDBListGroupItem>
-                }),
-                listContainer
-              );
-            }
+            ReactDOM.render(<></>, lastListItem);
           }, 10);
+          const tempItem = iframeDocument.getElementById("temp");
         }
       }
     };
@@ -87,8 +76,7 @@ const Text = ({
 
   function handleTextFunc(event) {
     setText(event);
-    listEl((prevEl) => [...prevEl, event]);
-   
+    //listEl((prevEl) => [...prevEl, event]);
   }
 
   const addTextObjContext = () => {
@@ -99,7 +87,8 @@ const Text = ({
     };
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
-    setElements((prevElement) => [...prevElement, dataText])
+    setElements((prevElement) => [...prevElement, dataText]);
+    elementList((prevElement) => [...prevElement, dataText]);
   };
 
   function saveTxt(event) {
@@ -109,6 +98,25 @@ const Text = ({
 
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
+    if (isMounted && iframeEl) {
+      const iframeDocument = iframeEl.contentDocument;
+      if (iframeDocument) {
+        const listContainer = iframeDocument.getElementById("myList");
+
+        if (listContainer) {
+          const listItems = Array.from(listContainer.children);
+          listItems.forEach((listItem) => {
+            // Perform your operations on each list item
+            // For example, check if the element is empty
+            if (listItem.innerHTML.trim() === "") {
+              // The element is empty
+              // Perform your logic here
+              listContainer.removeChild(listItem);
+            }
+          });
+        }
+      }
+    }
   }
 
   function handleCancel(event) {
@@ -116,6 +124,25 @@ const Text = ({
     setActive(Boolean(!event.target.value));
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
+    if (isMounted && iframeEl) {
+      const iframeDocument = iframeEl.contentDocument;
+      if (iframeDocument) {
+        const listContainer = iframeDocument.getElementById("myList");
+
+        if (listContainer) {
+          const listItems = Array.from(listContainer.children);
+          listItems.forEach((listItem) => {
+            // Perform your operations on each list item
+            // For example, check if the element is empty
+            if (listItem.innerHTML.trim() === "") {
+              // The element is empty
+              // Perform your logic here
+              listContainer.removeChild(listItem);
+            }
+          });
+        }
+      }
+    }
   }
   return (
     <div>
