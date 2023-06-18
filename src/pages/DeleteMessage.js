@@ -46,7 +46,7 @@ const DeleteMessage = () => {
                 type="button"
                 class="btn btn-outline-danger btn-rounded"
                 data-mdb-ripple-color="dark"
-                to={"*"}
+                to={"/home"}
               >
                 No
               </Link>

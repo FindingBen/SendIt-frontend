@@ -9,6 +9,7 @@ import Image from "../components/Image";
 import Text from "../components/Text";
 import TextComponent from "../components/TextComponent";
 import ImgList from "../components/ImgList";
+import List from "../components/List";
 import Button from "../components/Button";
 import { setList } from "../features/elements/elementReducer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -337,25 +338,7 @@ const EditMessage = () => {
                       <span className="visually-hidden">Loading...</span>
                     </div>
                   ) : (
-                    <MDBListGroup
-                      style={{ minWidthL: "22rem" }}
-                      light
-                      id="myList"
-                    >
-                      {elements?.map((item, index) => (
-                        <MDBListGroupItem id="elItem" key={index}>
-                          {item.element_type === "Img" ? (
-                            <ImgList imageUrl={`${BASE_URL + item.image}`} />
-                          ) : item.element_type === "Text" ? (
-                            <TextComponent textValue={item.text} />
-                          ) : item.element_type === "Button" ? (
-                            <ButtonComponent textValue={item.button_title} />
-                          ) : (
-                            <></>
-                          )}
-                        </MDBListGroupItem>
-                      ))}
-                    </MDBListGroup>
+                    <List children={elements}></List>
                   )}
                 </IFrame>
               </div>
