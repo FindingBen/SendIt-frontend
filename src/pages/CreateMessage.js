@@ -41,9 +41,11 @@ const CreateNote = () => {
   const [elementContextList, setElementsContextList] = useState([]);
   const [isDirty, setIsDirty] = useState(false);
   const [isCreate, setIsCreate] = useState(true);
+  const [align, setAlign] = useState();
   const dispatch = useDispatch();
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
+
   const modal_state = useSelector(selectModalCall);
 
   useEffect(() => {
@@ -122,6 +124,7 @@ const CreateNote = () => {
           formData.append("image", elementContext.file);
         } else if (elementContext.element_type === "Text") {
           formData.append("text", elementContext.text);
+          formData.append("alignment", elementContext.alignment);
         } else if (elementContext.element_type === "Button") {
           formData.append("button_title", elementContext.button_title);
           formData.append("button_link", elementContext.button_link);
@@ -191,6 +194,10 @@ const CreateNote = () => {
     setShowComponent(showComponent);
   };
 
+  const setAlignemnt = (align) => {
+    setAlign(align);
+  };
+
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
@@ -245,6 +252,7 @@ const CreateNote = () => {
                       elementList={displayElements}
                       listEl={isCreate}
                       contextList={handleContextEl}
+                      getAlignment={setAlignemnt}
                     ></Text>
                   )
                 )}
@@ -282,23 +290,6 @@ const CreateNote = () => {
           </div>
           <div className="row">
             <div id="buttonHolder" className="col">
-              {/* {clicked ? (
-                <button
-                  type="submit"
-                  onClick={createNotes}
-                  className="btn btn-success"
-                >
-                  Create message
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  onClick={addElement}
-                  className="btn btn-dark"
-                >
-                  Save message
-                </button>
-              )} */}
               <button className="btn btn-dark" onClick={handleSubmit}>
                 Create
               </button>

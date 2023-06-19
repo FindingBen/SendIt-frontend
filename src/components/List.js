@@ -3,14 +3,16 @@ import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
 import ImgList from "./ImgList";
 import TextComponent from "./TextComponent";
 import ButtonComponent from "./ButtonComponent";
-const List = ({ children, element }) => {
+const List = ({ children, alignment }) => {
   const [items, setItems] = useState([children]);
 
   const BASE_URL = "http://127.0.0.1:8000";
   useEffect(() => {
     setItems(children);
   }, [children]);
-
+  items?.map((item) => {
+    console.log(`"${item.alignment}"`);
+  });
   return (
     <MDBListGroup style={{ minWidthL: "22rem" }} light id="myList">
       {items &&
@@ -22,7 +24,10 @@ const List = ({ children, element }) => {
                 //alt="Italian Trulli"
               ></ImgList>
             ) : (
-              <TextComponent textValue={item.text}></TextComponent>
+              <TextComponent
+                textValue={item.text}
+                alignment={item.alignment}
+              ></TextComponent>
             )}
 
             {item.element_type === "Button" ? (

@@ -171,6 +171,7 @@ const EditMessage = () => {
           formData.append("image", elementContext.file);
         } else if (elementContext.element_type === "Text") {
           formData.append("text", elementContext.text);
+          formData.append("alignment", elementContext.alignment);
         } else if (elementContext.element_type === "Button") {
           formData.append("button_title", elementContext.button_title);
           formData.append("button_link", elementContext.button_link);
