@@ -6,12 +6,12 @@ import {
   selectCurrentToken,
   logOut,
 } from "../features/auth/authSlice";
-import { selectFormState, setState } from "../features/modal/formReducer";
+import { selectFormState } from "../features/modal/formReducer";
 import {
   setModalState,
   selectModalState,
 } from "../features/modal/modalReducer";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
 import { useState } from "react";
 
@@ -21,7 +21,6 @@ const Header = () => {
   const token = useSelector(selectCurrentToken);
   const isDirtyState = useSelector(selectFormState);
   const showModal = useSelector(selectModalState);
-  const location = useLocation();
   const isDirtyRef = useRef(false);
   const dispatch = useDispatch();
   const handleLogout = () => dispatch(logOut(user, token));

@@ -10,9 +10,7 @@ const List = ({ children, alignment }) => {
   useEffect(() => {
     setItems(children);
   }, [children]);
-  items?.map((item) => {
-    console.log(`"${item.alignment}"`);
-  });
+ 
   return (
     <MDBListGroup style={{ minWidthL: "22rem" }} light id="myList">
   {items &&

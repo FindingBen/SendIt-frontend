@@ -1,18 +1,18 @@
 import { useState, useEffect, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { selectFormState, setState } from "../features/modal/formReducer";
+import {  setState } from "../features/modal/formReducer";
 import {
   setModalState,
   setOpenModal,
-  selectModalState,
+
 } from "../features/modal/modalReducer";
-import { useSelector, useDispatch } from "react-redux";
+import {  useDispatch } from "react-redux";
 import { ElementContext } from "../context/ElementContext";
 function ModalComponent({ confirmLeave, showModal }) {
   const [show, setShow] = useState(showModal);
   const dispatch = useDispatch();
-  const { createElement, deleteElement } = useContext(ElementContext);
+  const { deleteElement } = useContext(ElementContext);
   const handleClose = (e) => {
     confirmLeave();
     dispatch(setOpenModal({ open: true }));

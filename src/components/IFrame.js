@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import ReactDOM, { createPortal } from "react-dom";
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 import "../css/RootIframe.css";
 
 const IFrame = ({ children }) => {
   const [contentRef, setContentRef] = useState(null);
   const [load, setLoad] = useState(true);
-  const iframeEl = document.getElementById("myFrame");
+
 
   useEffect(() => {
     const handleIframeLoad = () => {

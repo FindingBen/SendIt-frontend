@@ -23,7 +23,7 @@ const Button = ({
   //const [elements, setElements] = useState([elementList]);
   const [isCreated, setIsCreated] = useState(listEl);
   useEffect(() => {
-    console.log(listEl);
+
     const iframeDocument = iframeEl.contentDocument;
     if (iframeDocument) {
       const listContainer = iframeDocument.getElementById("myList");
@@ -48,7 +48,7 @@ const Button = ({
     setIsMounted(true);
 
     return () => {
-      //setIsMounted(false);
+
       setText([]);
       setLink([]);
       if (isMounted && iframeEl) {
@@ -73,12 +73,12 @@ const Button = ({
 
   function handleTextButtonFunc(event) {
     setText(event.target.value);
-    // listEl((prevEl) => [...prevEl, event]);
+
   }
 
   function handleLinkButtonFunc(event) {
     setLink(event.target.value);
-    // listEl((prevEl) => [...prevEl, event]);
+
   }
 
   const addButtonObjContext = () => {

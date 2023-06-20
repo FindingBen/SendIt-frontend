@@ -7,7 +7,7 @@ import { MDBListGroupItem } from "mdb-react-ui-kit";
 import { ImageEditorComponent } from "@syncfusion/ej2-react-image-editor";
 import {
   selectCurrentUser,
-  selectCurrentToken,
+
 } from "../features/auth/authSlice";
 const Image = ({
   onStateChange,
@@ -27,7 +27,7 @@ const Image = ({
   const [cancel, setCancel] = useState(false);
   const iframe = document.getElementById("myFrame");
   const user = useSelector(selectCurrentUser);
-  const token = useSelector(selectCurrentToken);
+
   const [isMounted, setIsMounted] = useState(true);
   const iframeEl = document.getElementById("myFrame");
   const [isCreated, setIsCreated] = useState(listEl);
@@ -109,7 +109,6 @@ const Image = ({
   function saveImg(event) {
     addImageElContext();
     setCancel(true);
-    //iframe.contentWindow.postMessage({ token, user }, "*");
     setShowComponent(Boolean(event.target.value));
     setActive(Boolean(!event.target.value));
 
