@@ -15,29 +15,28 @@ const List = ({ children, alignment }) => {
   });
   return (
     <MDBListGroup style={{ minWidthL: "22rem" }} light id="myList">
-      {items &&
-        items?.map((item, index) => (
-          <MDBListGroupItem id="elItem" key={index}>
-            {item.element_type === "Img" ? (
-              <ImgList
-                imageUrl={`${item.image}`}
-                //alt="Italian Trulli"
-              ></ImgList>
-            ) : (
-              <TextComponent
-                textValue={item.text}
-                alignment={item.alignment}
-              ></TextComponent>
-            )}
+  {items &&
+    items?.map((item, index) => (
+      <MDBListGroupItem id="elItem" key={index}>
+        {item.element_type === "Img" ? (
+          item.image.startsWith('blob') ? (
+            <ImgList imageUrl={item.image} />
+          ) : (
+            <ImgList imageUrl={`${BASE_URL}${item.image}`} />
+          )
+        ) : (
+          <TextComponent textValue={item.text} alignment={item.alignment} />
+        )}
 
-            {item.element_type === "Button" ? (
-              <ButtonComponent textValue={item.button_title}></ButtonComponent>
-            ) : (
-              <></>
-            )}
-          </MDBListGroupItem>
-        ))}
-    </MDBListGroup>
+        {item.element_type === "Button" ? (
+          <ButtonComponent textValue={item.button_title} />
+        ) : (
+          <></>
+        )}
+      </MDBListGroupItem>
+    ))}
+</MDBListGroup>
+
   );
 };
 

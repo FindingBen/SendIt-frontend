@@ -197,7 +197,7 @@ const CreateNote = () => {
   const setAlignemnt = (align) => {
     setAlign(align);
   };
-
+  console.log(elementContextList)
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">

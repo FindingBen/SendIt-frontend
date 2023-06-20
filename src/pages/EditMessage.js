@@ -248,7 +248,7 @@ const EditMessage = () => {
   const handleElementState = (elements) => {
     setElements(elements);
   };
-
+  console.log(elements)
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">

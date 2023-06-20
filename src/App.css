@@ -26,3 +26,7 @@ color: aliceblue;
     transform: rotate(360deg);
   }
 }
+
+ul li:hover {
+  background-color: lightblue;
+}
