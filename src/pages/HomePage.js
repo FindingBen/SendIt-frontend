@@ -30,7 +30,7 @@ const HomePage = () => {
 
   const dispatch = useDispatch();
   const handleLogout = () => dispatch(logOut(user, token));
-  // let { authTokens, logout } = useContext(AuthContext);
+
   const params = useParams();
   useEffect(() => {
     getNotes();
@@ -98,7 +98,7 @@ const HomePage = () => {
                       <div className="fw-bold">SMS</div>
                     </div>
 
-                    <Link
+                    <Link 
                       type="button"
                       className="btn btn-primary"
                       // data-mdb-ripple-color="dark"

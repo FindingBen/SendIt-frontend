@@ -16,19 +16,24 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-console.log(result.meta.response.status)
-  if (result.meta.response.status === 401) {
-    console.log("sending refresh token");
-    // send refresh token to get new access token
-    const refreshResult = await baseQuery("/refresh", api, extraOptions);
-    console.log(refreshResult);
-    if (refreshResult?.data) {
+
+  if (result.error && result.error.status === 401) {
+    // Access token expired, try to refresh it
+    console.log("Sending refresh token");
+    const refreshResult = await baseQuery(
+      "api/token/refresh/",
+      api,
+      extraOptions
+    );
+
+    if (refreshResult.data) {
       const user = api.getState().auth.user;
-      // store the new token
+      // Store the new token
       api.dispatch(setCredentials({ ...refreshResult.data, user }));
-      // retry the original query with new access token
+      // Retry the original query with the new access token
       result = await baseQuery(args, api, extraOptions);
     } else {
+      // Refresh token failed or expired, log out the user
       api.dispatch(logOut());
     }
   }
