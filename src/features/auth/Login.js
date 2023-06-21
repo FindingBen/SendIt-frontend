@@ -37,7 +37,8 @@ const Login = () => {
       dispatch(setCredentials({ ...userData.data, user }));
       setUser("");
       setPwd("");
-      console.log(userData);
+
+      localStorage.setItem("tokens", userData.data.refresh);
       navigate("/home");
     } catch (err) {
       if (!err?.originalStatus) {

@@ -5,26 +5,35 @@ import {
   selectCurrentUser,
   selectCurrentToken,
 } from "../features/auth/authSlice";
+import useAxiosInstance from "../utils/axiosInstance";
 import { useSelector } from "react-redux";
 const ContactList = () => {
+  const axiosInstance = useAxiosInstance();
   let [contactList, setContactList] = useState([]);
-  // let { authTokens } = useContext(AuthContext);
+
   const token = useSelector(selectCurrentToken);
   useEffect(() => {
     getContactLists();
   }, []);
 
   let getContactLists = async () => {
-    let response = await fetch("http://127.0.0.1:8000/api/contact_lists/", {
+    // let response = await fetch("http://127.0.0.1:8000/api/contact_lists/", {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: "Bearer " + String(token),
+    //   },
+    // });
+    //let data = await response.json();
+    let response = await axiosInstance.get("/contact_lists/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + String(token),
       },
     });
-    let data = await response.json();
     if (response.status === 200) {
-      setContactList(data);
+      setContactList(response.data);
     }
   };
 
