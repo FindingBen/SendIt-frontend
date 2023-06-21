@@ -1,54 +1,72 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import dayjs from "dayjs";
-import { selectCurrentToken, logOut } from "../features/auth/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { selectCurrentToken, setCredentials } from "../features/auth/authSlice";
+import store from "../app/store";
 
-const token = useSelector(selectCurrentToken);
+const useAxiosInstance = () => {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) =>state.auth.user)
+  console.log(jwt_decode(token))
+  const createAxiosInstance = (token) => {
+    console.log(token)
+    const instance = axios.create({
+      baseURL: "http://127.0.0.1:8000/api/",
+    });
+  
+    // Set the authorization header
+    instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  
+    return instance;
+  };
 
-const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/",
-  withCredentials: true,
-});
+  const axiosInstance = createAxiosInstance(token);
+  
+  axiosInstance.interceptors.request.use(async (req) => {
 
-api.interceptors.request.use(
-  async (config) => {
-    const get_token = token; // Replace with your token retrieval logic
-    if (get_token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    if (!token) {
+      const currentToken = token
+      req.headers.Authorization = `Bearer ${currentToken}`;
+      console.log(currentToken)
     }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
 
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    if (error.response && error.response.status === 401) {
-      const originalRequest = error.config;
-      if (!originalRequest._retry) {
-        originalRequest._retry = true;
-        const refreshToken = getRefreshTokenFromStore(); // Replace with your refresh token retrieval logic
-        if (refreshToken) {
-          try {
-            const refreshResponse = await api.post("token/refresh/", {
-              refresh: refreshToken,
-            });
-            const { access: newAccessToken } = refreshResponse.data;
-            saveTokenToStore(newAccessToken); // Replace with your token storage logic
-            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-            return api(originalRequest);
-          } catch (refreshError) {
-            // Handle refresh token request error
-            logoutUser(); // Replace with your logout logic
-          }
-        } else {
-          logoutUser(); // Replace with your logout logic
+  
+    const isExpired = dayjs.unix(jwt_decode(token).exp).diff(dayjs()) < 1;
+    const getRefreshToken = localStorage.getItem('refresh')
+    console.log(getRefreshToken)
+
+    if (!isExpired) return req;
+
+    try {
+      const response = await axios.post(
+        `http://127.0.0.1:8000/api/token/refresh/`,
+        {
+          refresh: getRefreshToken,
         }
-      } else {
-        logoutUser(); // Replace with your logout logic
-      }
+        
+      );
+      
+    console.log('Token refreshed:', response.data);
+
+      const newToken = response.data.access;
+      console.log(newToken)
+      // Update the axios instance with the new token
+      createAxiosInstance(newToken);
+
+      req.headers.Authorization = `Bearer ${newToken}`;
+      dispatch(setCredentials({ ...response.data,  user }));
+      
+      return req;
+    } catch (error) {
+      // Handle refresh token request error
+      // dispatch(logOut()); // Replace with your logout logic
+      throw error;
     }
-    return Promise.reject(error);
-  }
-);
+  });
+
+  return axiosInstance;
+};
+
+export default useAxiosInstance;
