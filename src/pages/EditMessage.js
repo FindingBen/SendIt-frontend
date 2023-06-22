@@ -7,8 +7,6 @@ import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
 import { AiFillPicture } from "react-icons/ai";
 import Image from "../components/Image";
 import Text from "../components/Text";
-import TextComponent from "../components/TextComponent";
-import ImgList from "../components/ImgList";
 import List from "../components/List";
 import Button from "../components/Button";
 import { setList } from "../features/elements/elementReducer";
@@ -22,7 +20,7 @@ import {
 } from "../features/auth/authSlice";
 import { setModalState } from "../features/modal/modalReducer";
 import { useSelector, useDispatch } from "react-redux";
-import ButtonComponent from "../components/ButtonComponent";
+import useAxiosInstance from "../utils/axiosInstance";
 
 const EditMessage = () => {
   const navigate = useNavigate();
@@ -41,6 +39,7 @@ const EditMessage = () => {
   const user = useSelector(selectCurrentUser);
   const [isDirty, setIsDirty] = useState(false);
   const [isCreate, setIsCreate] = useState(false);
+  const axiosInstance = useAxiosInstance()
   const dispatch = useDispatch();
   let BASE_URL = "http://127.0.0.1:8000";
   const params = useParams();
@@ -88,22 +87,8 @@ const EditMessage = () => {
     }
   };
 
-  const removeEmptyListItem = () => {
-    if (iframeEl) {
-      const iframeDocument = iframeEl.contentDocument;
-      if (iframeDocument) {
-        const listContainer = iframeDocument.getElementById("myList");
-
-        const tempItem = iframeDocument.getElementById("temp");
-        if (tempItem) {
-          listContainer.removeChild(tempItem);
-        }
-      }
-    }
-  };
-
   let messageView = async () => {
-    let response = await fetch(
+    let response = await axiosInstance.get(
       `http://127.0.0.1:8000/api/message_view/${params.id}/`,
       {
         method: "GET",
@@ -113,8 +98,8 @@ const EditMessage = () => {
         },
       }
     );
-    let data = await response.json();
-    setElements(data.element_list);
+    //let data = await response.json();
+    setElements(response.data.element_list);
     setIsLoaded(false);
   };
 
@@ -128,25 +113,23 @@ const EditMessage = () => {
         users: user,
       };
 
-      let response = await fetch(
+      let response = await axiosInstance.put(
         `http://127.0.0.1:8000/api/message_view_edit/${params.id}/`,
+        requestData,
         {
-          method: "PUT",
           headers: {
-            "Content-Type": "application/json",
             Authorization: "Bearer " + String(token),
           },
-          body: JSON.stringify(requestData),
         }
       );
 
-      let data = await response.json();
-
+      //let data = await response.json();
+        console.log(response)
       if (response.status === 200) {
         dispatch(setState({ isDirty: false }));
         navigate("/home");
       } else {
-        console.log("Failed to create notes:", data);
+        console.log("Failed to create notes:", response.data);
       }
     } catch (error) {
       console.log("Error creating elements and notes:", error);
@@ -179,21 +162,20 @@ const EditMessage = () => {
         formData.append("element_type", elementContext.element_type);
         formData.append("users", elementContext.users);
 
-        let response = await fetch(
+        let response = await axiosInstance.post(
           "http://127.0.0.1:8000/api/create_element/",
+          formData,
           {
-            method: "POST",
             headers: {
               Authorization: "Bearer " + String(token),
             },
-            body: formData,
           }
         );
 
-        let data = await response.json();
-        console.log(data);
+        // let data = await response.json();
+        // console.log(data);
         if (response.status === 200) {
-          createdElements.push(data);
+          createdElements.push(response.data);
         } else {
           console.log("Failed to create element:", elementContext);
           return; // Return undefined to indicate a failure

@@ -25,7 +25,7 @@ import { setList, selectListState } from "../features/elements/elementReducer";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { ElementContext } from "../context/ElementContext";
-
+import useAxiosInstance from "../utils/axiosInstance";
 const CreateNote = () => {
   const { createElement, deleteElement, contextObject } =
     useContext(ElementContext);
@@ -45,7 +45,7 @@ const CreateNote = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
-
+  const axiosInstance = useAxiosInstance()
   const modal_state = useSelector(selectModalCall);
 
   useEffect(() => {
@@ -79,28 +79,27 @@ const CreateNote = () => {
     e.preventDefault();
 
     try {
-      const createdElements = await addElement(e); // Store the created elements in a variable
+      const createdElements = await addElement(e); 
       const requestData = {
         element_list: createdElements, // Map the created elements to their IDs
         users: user,
       };
 
-      let response = await fetch("http://127.0.0.1:8000/api/create_notes/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-        body: JSON.stringify(requestData),
-      });
-
-      let data = await response.json();
+      let response = await axiosInstance.post("http://127.0.0.1:8000/api/create_notes/", 
+      requestData,
+      {
+        headers:{
+          Authorization: 'Bearer ' + String(token)
+        }
+      }
+       
+      );
 
       if (response.status === 200) {
         dispatch(setState({ isDirty: false }));
         navigate("/home");
       } else {
-        console.log("Failed to create notes:", data);
+        console.log("Failed to create notes:", response.data);
       }
     } catch (error) {
       console.log("Error creating elements and notes:", error);
@@ -117,8 +116,7 @@ const CreateNote = () => {
       for (const elementContext of elementContextList) {
         const formData = new FormData();
 
-        // Append the displayItems state to the elementContext
-        //elementContext.displayItems = displayItems;
+
 
         if (elementContext.element_type === "Img") {
           formData.append("image", elementContext.file);
@@ -132,21 +130,20 @@ const CreateNote = () => {
         formData.append("element_type", elementContext.element_type);
         formData.append("users", elementContext.users);
 
-        let response = await fetch(
+        let response = await axiosInstance.post(
           "http://127.0.0.1:8000/api/create_element/",
+          formData,
           {
-            method: "POST",
             headers: {
               Authorization: "Bearer " + String(token),
             },
-            body: formData,
           }
         );
 
-        let data = await response.json();
-        console.log(data);
+        //let data = await response.json();
+        console.log(response.data);
         if (response.status === 200) {
-          createdElements.push(data);
+          createdElements.push(response.data);
         } else {
           console.log("Failed to create element:", elementContext);
           return; // Return undefined to indicate a failure

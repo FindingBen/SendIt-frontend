@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import useAxiosInstance from "../utils/axiosInstance";
 import jwt_decode from "jwt-decode";
 import {
   selectCurrentUser,
@@ -14,13 +14,14 @@ const CreateContact = () => {
   let [contactList, setContactList] = useState([]);
   const params = useParams();
   const navigate = useNavigate();
+  const axiosInstance = useAxiosInstance();
   useEffect(() => {
-    addContact();
+  
     getContactList();
   }, []);
 
   let getContactList = async () => {
-    let response = await fetch(
+    let response = await axiosInstance.get(
       `http://127.0.0.1:8000/api/contact_list/${params.id}/`,
       {
         method: "GET",
@@ -30,35 +31,35 @@ const CreateContact = () => {
         },
       }
     );
-    let data = await response.json();
+    
+   // let data = await response.json();
     if (response.status === 200) {
-      setContactList(data);
+      setContactList(response.data);
     }
   };
 
-  let addContact = async (e) => {
-    e.preventDefault();
-    let response = await fetch(
+  const addContact = async (e) => {
+    e.preventDefault()
+    let response = await axiosInstance.post(
       `http://127.0.0.1:8000/api/create_contact/${params.id}/`,
       {
-        method: "POST",
+        first_name: e.target.first_name.value,
+        last_name: e.target.last_name.value,
+        phone_number: e.target.phone_number.value,
+        email: e.target.email.value,
+        user: user,
+        contact_list: contactList.id,
+      },
+      {
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + String(token),
         },
-        body: JSON.stringify({
-          first_name: e.target.first_name.value,
-          last_name: e.target.last_name.value,
-          phone_number: e.target.phone_number.value,
-          email: e.target.email.value,
-          user: user,
-          contact_list: contactList.id,
-        }),
       }
     );
-    let data = await response.json();
-    console.log(data);
 
+
+    console.log(response)
     if (response.status === 200 || 201) {
       navigate(`/contact_list/${params.id}`);
     }
@@ -74,8 +75,9 @@ const CreateContact = () => {
               <hr></hr>
             </div>
             <div className="col">
-              <form onSubmit={addContact}>
-                <input name="first_name" type="text" placeholder="First name" />
+             
+                <form onSubmit={addContact}>
+                <input name="first_name" type="text" placeholder="First name"/>
                 <input name="last_name" type="text" placeholder="Last name" />
                 <input
                   name="phone_number"
@@ -83,8 +85,9 @@ const CreateContact = () => {
                   placeholder="Phone number"
                 />
                 <input name="email" placeholder="Email" />
-                <input type="submit" />
-              </form>
+                <button type="submit">Create</button>
+                </form>
+              
             </div>
           </div>
         </div>
