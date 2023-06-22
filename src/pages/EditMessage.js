@@ -123,8 +123,7 @@ const EditMessage = () => {
         }
       );
 
-      //let data = await response.json();
-        console.log(response)
+
       if (response.status === 200) {
         dispatch(setState({ isDirty: false }));
         navigate("/home");
@@ -136,7 +135,7 @@ const EditMessage = () => {
     }
   };
 
-  console.log(elementContextList);
+
   const addElement = async (e) => {
     e.preventDefault();
     dispatch(setList({ populated: true }));
@@ -147,8 +146,6 @@ const EditMessage = () => {
       for (const elementContext of elementContextList) {
         const formData = new FormData();
 
-        // Append the displayItems state to the elementContext
-        //elementContext.displayItems = displayItems;
 
         if (elementContext.element_type === "Img") {
           formData.append("image", elementContext.file);
@@ -172,8 +169,7 @@ const EditMessage = () => {
           }
         );
 
-        // let data = await response.json();
-        // console.log(data);
+
         if (response.status === 200) {
           createdElements.push(response.data);
         } else {
@@ -190,9 +186,6 @@ const EditMessage = () => {
     }
   };
 
-  const handleElements = (element) => {
-    setElements(element);
-  };
 
   const handleChildStateChange = (active) => {
     setActive(active);
@@ -210,9 +203,7 @@ const EditMessage = () => {
     setFiles(file);
   };
 
-  // const displayElements = (displayElItem) => {
-  //   setDisplayItems((prevItems) => [...prevItems, displayElItem]);
-  // };
+
 
   const handleContextEl = (elementContextList) => {
     setElementsContextList(elementContextList);
@@ -230,7 +221,7 @@ const EditMessage = () => {
   const handleElementState = (elements) => {
     setElements(elements);
   };
-  console.log(elements)
+
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">

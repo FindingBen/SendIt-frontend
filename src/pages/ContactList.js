@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import {
-  selectCurrentUser,
   selectCurrentToken,
 } from "../features/auth/authSlice";
 import { useSelector } from "react-redux";
@@ -27,7 +26,7 @@ const ContactList = () => {
         },
       }
     );
-    //let data = await response.json();
+
     if (response.status === 200) {
       setContacts(response.data);
     }

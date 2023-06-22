@@ -1,8 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, {  useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+
 import {
-  selectCurrentUser,
   selectCurrentToken,
 } from "../features/auth/authSlice";
 import useAxiosInstance from "../utils/axiosInstance";
@@ -17,14 +16,7 @@ const ContactList = () => {
   }, []);
 
   let getContactLists = async () => {
-    // let response = await fetch("http://127.0.0.1:8000/api/contact_lists/", {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: "Bearer " + String(token),
-    //   },
-    // });
-    //let data = await response.json();
+
     let response = await axiosInstance.get("/contact_lists/", {
       method: "GET",
       headers: {
