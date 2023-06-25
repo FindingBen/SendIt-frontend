@@ -55,7 +55,7 @@ const HomePage = () => {
     //     Authorization: "Bearer " + String(token),
     //   },
     // });
-    let response = await axiosInstance.get("/notes/")
+    let response = await axiosInstance.get("/notes/");
     //let data = await response.json();
 
     if (response.status === 200) {
@@ -122,6 +122,7 @@ const HomePage = () => {
                       <Link
                         type="button"
                         className="btn btn-outline-success"
+                        to={`/sms_editor/${note.id}`}
                         // data-mdb-ripple-color="dark"
                       >
                         <FontAwesomeIcon icon={faFileImport} />
