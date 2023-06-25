@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import useAxiosInstance from "../utils/axiosInstance";
 import {
-  selectCurrentUser,
   selectCurrentToken,
 } from "../features/auth/authSlice";
 import { useSelector } from "react-redux";
 
 const ContactList = () => {
-  // let { authTokens } = useContext(AuthContext);
+  const axiosInstance = useAxiosInstance();
   let [contacts, setContacts] = useState([]);
   const token = useSelector(selectCurrentToken);
   const params = useParams();
@@ -17,7 +16,7 @@ const ContactList = () => {
   }, []);
 
   let getContacts = async () => {
-    let response = await fetch(
+    let response = await axiosInstance.get(
       `http://127.0.0.1:8000/api/contact_list/${params.id}/`,
       {
         method: "GET",
@@ -27,9 +26,9 @@ const ContactList = () => {
         },
       }
     );
-    let data = await response.json();
+
     if (response.status === 200) {
-      setContacts(data);
+      setContacts(response.data);
     }
   };
   return (

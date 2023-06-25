@@ -1,32 +1,26 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-} from "../features/auth/authSlice";
-import { useSelector } from "react-redux";
+import useAxiosInstance from "../utils/axiosInstance";
+
 const DeleteMessage = () => {
-  const token = useSelector(selectCurrentToken);
-  // let { authTokens } = useContext(AuthContext);
+  const axiosInstance = useAxiosInstance()
+
   const params = useParams();
   const navigate = useNavigate();
   let deleteMessage = async (e) => {
-    let response = await fetch(
-      `http://127.0.0.1:8000/api/delete_message/${params.id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
+    e.preventDefault();
+    try {
+      let response = await axiosInstance.delete(
+        `http://127.0.0.1:8000/api/delete_message/${params.id}`
+      );
+      if (response.status === 200) {
+        navigate("/home");
       }
-    );
-    let data = await response.json();
-    if (response.status === 200) {
-      navigate("/home");
+    } catch (error) {
+      console.log("Error deleting message:", error);
     }
   };
+  
   return (
     <section className="vh-100  w-100">
       <div className="container-fluid h-custom">
