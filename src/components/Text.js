@@ -199,23 +199,27 @@ const Text = ({
         onChange={handleTextFunc}
         modules={modules}
       />
-      <button
-        type="button"
-        className="btn btn-dark"
-        value={false}
-        onClick={saveTxt}
-      >
-        Save
-      </button>
-      <button
-        type="button"
-        className="btn btn-danger"
-        id="cancel"
-        value={false}
-        onClick={handleCancel}
-      >
-        Cancel
-      </button>
+      <div className="mt-3">
+        <button
+          type="button"
+          className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+          value={false}
+          onClick={saveTxt}
+          style={{ marginRight: "10px" }}
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          className="bg-red-800 hover:bg-red-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+          id="cancel"
+          value={false}
+          onClick={handleCancel}
+          style={{ marginRight: "10px" }}
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   );
 };

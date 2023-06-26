@@ -5,10 +5,7 @@ import { useSelector } from "react-redux";
 import { ElementContext } from "../context/ElementContext";
 import { MDBListGroupItem } from "mdb-react-ui-kit";
 import { ImageEditorComponent } from "@syncfusion/ej2-react-image-editor";
-import {
-  selectCurrentUser,
-
-} from "../features/auth/authSlice";
+import { selectCurrentUser } from "../features/auth/authSlice";
 const Image = ({
   onStateChange,
   componentChange,
@@ -169,37 +166,43 @@ const Image = ({
 
   return (
     <div>
-      Upload image
-      <label class="form-label" for="customFile">
-        Default file input example
+      <label
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        for="file_input"
+      >
+        Upload file
       </label>
       <input
         type="file"
         accept="image/*"
         onChange={handleImageUpload}
-        class="form-control"
+        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
         id="image"
       />
       {images?.map((image, index) => (
         <ImgList key={index} imageUrl={image} />
       ))}
-      <button
-        type="button"
-        className="btn btn-dark"
-        value={false}
-        onClick={saveImg}
-      >
-        Save
-      </button>
-      <button
-        type="button"
-        id="cancel"
-        className="btn btn-danger"
-        value={false}
-        onClick={handleCancel}
-      >
-        Cancel
-      </button>
+      <div className="mt-2">
+        <button
+          type="button"
+          className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+          value={false}
+          onClick={saveImg}
+          style={{ marginRight: "10px" }}
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          id="cancel"
+          className="bg-red-800 hover:bg-red-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+          value={false}
+          onClick={handleCancel}
+          style={{ marginRight: "10px" }}
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   );
 };

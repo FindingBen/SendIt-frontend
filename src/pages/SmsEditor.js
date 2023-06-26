@@ -70,7 +70,7 @@ const SmsEditor = () => {
       <div className="container-fluid h-custom">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
-            <h2>SMS EDITOR</h2>
+            <h1 className="text-3xl font-bold mb-4">Sms editor</h1>
             <div class="md-form">
               <label for="form1">From</label>
               <input type="text" name="from" class="form-control" />
@@ -95,7 +95,7 @@ const SmsEditor = () => {
                 onClick={sendSms}
                 type="submit"
                 color="dark"
-                class="btn btn-primary"
+                className="btn btn-dark"
               >
                 Send
               </button>

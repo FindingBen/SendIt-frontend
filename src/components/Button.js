@@ -23,7 +23,6 @@ const Button = ({
   //const [elements, setElements] = useState([elementList]);
   const [isCreated, setIsCreated] = useState(listEl);
   useEffect(() => {
-
     const iframeDocument = iframeEl.contentDocument;
     if (iframeDocument) {
       const listContainer = iframeDocument.getElementById("myList");
@@ -48,7 +47,6 @@ const Button = ({
     setIsMounted(true);
 
     return () => {
-
       setText([]);
       setLink([]);
       if (isMounted && iframeEl) {
@@ -73,12 +71,10 @@ const Button = ({
 
   function handleTextButtonFunc(event) {
     setText(event.target.value);
-
   }
 
   function handleLinkButtonFunc(event) {
     setLink(event.target.value);
-
   }
 
   const addButtonObjContext = () => {
@@ -194,28 +190,49 @@ const Button = ({
 
   return (
     <div>
-      <h2>Insert information to your button</h2>
-      <span>Button title</span>
-      <input onChange={handleTextButtonFunc} type="text" />
-      <span>Button link</span>
-      <input onChange={handleLinkButtonFunc} type="text" />
-      <button
-        type="button"
-        className="btn btn-dark"
-        value={false}
-        onClick={saveBtn}
+      <label
+        for="first_name"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
-        Save
-      </button>
-      <button
-        type="button"
-        className="btn btn-danger"
-        id="cancel"
-        value={false}
-        onClick={handleCancel}
+        Button text display
+      </label>
+      <input
+        onChange={handleTextButtonFunc}
+        type="text"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      />
+      <label
+        for="first_name"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
-        Cancel
-      </button>
+        Insert link
+      </label>
+      <input
+        onChange={handleLinkButtonFunc}
+        type="text"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      />
+      <div className="mt-3">
+        <button
+          type="button"
+          className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+          value={false}
+          onClick={saveBtn}
+          style={{ marginRight: "10px" }}
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          className="bg-red-800 hover:bg-red-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+          id="cancel"
+          value={false}
+          onClick={handleCancel}
+          style={{ marginRight: "10px" }}
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   );
 };

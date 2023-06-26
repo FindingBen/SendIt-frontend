@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
-import {
-  selectCurrentToken,
-} from "../features/auth/authSlice";
+import { selectCurrentToken } from "../features/auth/authSlice";
 import { useSelector } from "react-redux";
 
 const ContactList = () => {
@@ -36,9 +34,14 @@ const ContactList = () => {
       <div className="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
-            <div className="col-12">
-              <h2>Contact list</h2>
-              <Link to={`/create_contact/${params.id}`}>Add contacts +</Link>
+            <div className="col-12 mb-5">
+              <h1 className="text-3xl font-bold mb-4">List of recepients</h1>
+              <Link
+                className="btn btn-dark"
+                to={`/create_contact/${params.id}`}
+              >
+                Add contacts +
+              </Link>
             </div>
             <div className="col">
               <ul class="list-group list-group-light">

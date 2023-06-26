@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-background-color: #668d9f;
+background-color: #d8dee2;
 }
 
 .h2{
@@ -27,6 +27,6 @@ color: aliceblue;
   }
 }
 
-ul li:hover {
+/* ul li:hover {
   background-color: lightblue;
-}
+} */

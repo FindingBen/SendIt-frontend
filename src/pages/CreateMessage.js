@@ -45,7 +45,7 @@ const CreateNote = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
-  const axiosInstance = useAxiosInstance()
+  const axiosInstance = useAxiosInstance();
   const modal_state = useSelector(selectModalCall);
 
   useEffect(() => {
@@ -79,20 +79,20 @@ const CreateNote = () => {
     e.preventDefault();
 
     try {
-      const createdElements = await addElement(e); 
+      const createdElements = await addElement(e);
       const requestData = {
         element_list: createdElements, // Map the created elements to their IDs
         users: user,
       };
 
-      let response = await axiosInstance.post("http://127.0.0.1:8000/api/create_notes/", 
-      requestData,
-      {
-        headers:{
-          Authorization: 'Bearer ' + String(token)
+      let response = await axiosInstance.post(
+        "http://127.0.0.1:8000/api/create_notes/",
+        requestData,
+        {
+          headers: {
+            Authorization: "Bearer " + String(token),
+          },
         }
-      }
-       
       );
 
       if (response.status === 200) {
@@ -115,8 +115,6 @@ const CreateNote = () => {
 
       for (const elementContext of elementContextList) {
         const formData = new FormData();
-
-
 
         if (elementContext.element_type === "Img") {
           formData.append("image", elementContext.file);
@@ -194,88 +192,95 @@ const CreateNote = () => {
   const setAlignemnt = (align) => {
     setAlign(align);
   };
-  console.log(elementContextList)
+  console.log(elementContextList);
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
-            <div className="col-12">
-              <h2>Add message</h2>
+            <div className="col-12 mb-5">
+              <h1 className="text-3xl font-bold mb-4">
+                Create your ad content
+              </h1>
               <hr></hr>
             </div>
             <div className="col">
-              <MDBListGroup style={{ minWidthL: "22rem" }}>
-                {!showComponent && !active ? (
-                  <MDBListGroupItem
-                    onClick={handleClickImage}
-                    name="liClick"
-                    className="list-group-item d-flex justify-content-between align-items-center"
-                  >
-                    <AiFillPicture></AiFillPicture>
-                    Add image
-                  </MDBListGroupItem>
-                ) : (
-                  showComponent &&
-                  active && (
-                    <Image
-                      handleFiles={handleFiles}
-                      handleImages={handleImages}
-                      onStateChange={handleChildStateChange}
-                      componentChange={handleComponentChange}
-                      listImages={images}
-                      elementList={displayElements}
-                      listEl={isCreate}
-                      contextList={handleContextEl}
-                    ></Image>
-                  )
-                )}
-                <hr></hr>
-                {!showComponent && !activeT ? (
-                  <MDBListGroupItem
-                    onClick={handleClickText}
-                    name="liClick"
-                    className="list-group-item d-flex justify-content-between align-items-center"
-                  >
-                    <FontAwesomeIcon icon={faFont} />
-                    Add Text
-                  </MDBListGroupItem>
-                ) : (
-                  showComponent &&
-                  activeT && (
-                    <Text
-                      onStateChange={handleTextStateChange}
-                      componentChange={handleComponentChange}
-                      elementList={displayElements}
-                      listEl={isCreate}
-                      contextList={handleContextEl}
-                      getAlignment={setAlignemnt}
-                    ></Text>
-                  )
-                )}
-                <hr></hr>
-                {!showComponent && !activeB ? (
-                  <MDBListGroupItem
-                    onClick={handleClickButton}
-                    name="liClick"
-                    className="list-group-item d-flex justify-content-between align-items-center"
-                  >
-                    <FontAwesomeIcon icon={faStop} />
-                    Add button
-                  </MDBListGroupItem>
-                ) : (
-                  showComponent &&
-                  activeB && (
-                    <Button
-                      onStateChange={handleButtonStateChange}
-                      componentChange={handleComponentChange}
-                      listEl={isCreate}
-                      contextList={handleContextEl}
-                      elementList={displayElements}
-                    ></Button>
-                  )
-                )}
-              </MDBListGroup>
+              <div
+                className="static bg-indigo-400 rounded-lg p-10"
+                style={{ width: "97%" }}
+              >
+                <MDBListGroup style={{ minWidthL: "22rem" }}>
+                  {!showComponent && !active ? (
+                    <MDBListGroupItem
+                      onClick={handleClickImage}
+                      name="liClick"
+                      className="list-group-item d-flex justify-content-between align-items-center mb-3"
+                    >
+                      <AiFillPicture></AiFillPicture>
+                      Add image
+                    </MDBListGroupItem>
+                  ) : (
+                    showComponent &&
+                    active && (
+                      <Image
+                        handleFiles={handleFiles}
+                        handleImages={handleImages}
+                        onStateChange={handleChildStateChange}
+                        componentChange={handleComponentChange}
+                        listImages={images}
+                        elementList={displayElements}
+                        listEl={isCreate}
+                        contextList={handleContextEl}
+                      ></Image>
+                    )
+                  )}
+                  <hr></hr>
+                  {!showComponent && !activeT ? (
+                    <MDBListGroupItem
+                      onClick={handleClickText}
+                      name="liClick"
+                      className="list-group-item d-flex justify-content-between align-items-center mb-3"
+                    >
+                      <FontAwesomeIcon icon={faFont} />
+                      Add Text
+                    </MDBListGroupItem>
+                  ) : (
+                    showComponent &&
+                    activeT && (
+                      <Text
+                        onStateChange={handleTextStateChange}
+                        componentChange={handleComponentChange}
+                        elementList={displayElements}
+                        listEl={isCreate}
+                        contextList={handleContextEl}
+                        getAlignment={setAlignemnt}
+                      ></Text>
+                    )
+                  )}
+                  <hr></hr>
+                  {!showComponent && !activeB ? (
+                    <MDBListGroupItem
+                      onClick={handleClickButton}
+                      name="liClick"
+                      className="list-group-item d-flex justify-content-between align-items-center "
+                    >
+                      <FontAwesomeIcon icon={faStop} />
+                      Add button
+                    </MDBListGroupItem>
+                  ) : (
+                    showComponent &&
+                    activeB && (
+                      <Button
+                        onStateChange={handleButtonStateChange}
+                        componentChange={handleComponentChange}
+                        listEl={isCreate}
+                        contextList={handleContextEl}
+                        elementList={displayElements}
+                      ></Button>
+                    )
+                  )}
+                </MDBListGroup>
+              </div>
             </div>
             <div className="col">
               <div class="smartphone">
@@ -287,7 +292,10 @@ const CreateNote = () => {
           </div>
           <div className="row">
             <div id="buttonHolder" className="col">
-              <button className="btn btn-dark" onClick={handleSubmit}>
+              <button
+                className="bg-gray-900 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+                onClick={handleSubmit}
+              >
                 Create
               </button>
             </div>
