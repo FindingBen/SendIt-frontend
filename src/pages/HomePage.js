@@ -90,15 +90,13 @@ const HomePage = () => {
                 unmountOnExit
                 appear
               >
-                <MDBListGroup id="ulItem">
+                <ul id="ulItem">
                   {displayedItems.map((note) => (
-                    <MDBListGroupItem
+                    <li
                       key={note.id}
                       noBorders
-                      color="dark"
-                      id="listItem"
-                      className="px-1 mb-4 rounded-3"
                     >
+                      <div>
                       <div>
                         <div className="fw-bold">SMS</div>
                       </div>
@@ -126,10 +124,12 @@ const HomePage = () => {
                       >
                         <FontAwesomeIcon icon={faFileImport} />
                       </Link>
-                    </MDBListGroupItem>
+                      </div>
+                      <hr></hr>
+                    </li>
                   ))}
-                  <hr></hr>
-                </MDBListGroup>
+                  
+                </ul>
               </CSSTransition>
 
               {totalPages > 1 && (
