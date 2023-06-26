@@ -71,7 +71,7 @@ const HomePage = () => {
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
             <div className="col-12">
-              <MDBTypography variant="h1">Your messages</MDBTypography>
+              <h1 className="text-3xl font-bold">Your messages</h1>
             </div>
           </div>
           <div className="row border border-dark">

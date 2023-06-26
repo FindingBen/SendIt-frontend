@@ -67,6 +67,72 @@ const Header = () => {
   };
 
   return (
+    
+    //   <nav
+    //   id="sidenav-3"
+    //   class="fixed left-0 top-0 z-[1035] h-screen w-60 -translate-x-full overflow-hidden bg-zinc-800 shadow-[0_4px_12px_0_rgba(0,0,0,0.07),_0_2px_4px_rgba(0,0,0,0.05)] data-[te-sidenav-hidden='false']:translate-x-0"
+    //   data-te-sidenav-init
+    //   data-te-sidenav-hidden="false"
+    //   data-te-sidenav-color="white">
+    //   <ul class="relative m-0 list-none px-[0.2rem]" data-te-sidenav-menu-ref>
+    //     <li class="relative">
+          
+    //     </li>
+    //     <li class="relative">
+    //     <Link
+    //         onClick={handleNavigate}
+    //         className="flex h-6 cursor-pointer items-center truncate rounded-[5px] py-4 pl-[3.4rem] pr-6 text-[0.78rem] text-gray-300 outline-none transition duration-300 ease-linear hover:bg-white/10 hover:outline-none focus:bg-white/10 focus:outline-none active:bg-white/10 active:outline-none data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none"
+    //         aria-current="page"
+    //         to="/home"
+    //       >
+    //         Home
+    //       </Link>
+         
+    //     </li>
+    //          {user ? (
+    //       <li>
+    //         <Link
+    //           className="flex h-6 cursor-pointer items-center truncate rounded-[5px] py-4 pl-[3.4rem] pr-6 text-[0.78rem] text-gray-300 outline-none transition duration-300 ease-linear hover:bg-white/10 hover:outline-none focus:bg-white/10 focus:outline-none active:bg-white/10 active:outline-none data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none"
+    //           aria-current="page"
+    //           to="/create_note"
+    //         >
+    //           Create Content
+    //         </Link>
+    //       </li>
+    //     ) : (
+    //       <li></li>
+    //     )}
+    //     {user ? (
+    //       <li className="nav-item">
+    //         <Link
+    //           onClick={handleNavigate}
+    //           className="flex h-6 cursor-pointer items-center truncate rounded-[5px] py-4 pl-[3.4rem] pr-6 text-[0.78rem] text-gray-300 outline-none transition duration-300 ease-linear hover:bg-white/10 hover:outline-none focus:bg-white/10 focus:outline-none active:bg-white/10 active:outline-none data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none"
+    //           aria-current="page"
+    //           to="/contact_lists/"
+    //         >
+    //           Contact lists
+    //         </Link>
+    //       </li>
+    //     ) : (
+    //       <li></li>
+    //     )}
+    //     {user ? (
+    //       <li class="nav-item">
+    //         <h3
+    //           className="flex h-6 cursor-pointer items-center truncate rounded-[5px] py-4 pl-[3.4rem] pr-6 text-[0.78rem] text-gray-300 outline-none transition duration-300 ease-linear hover:bg-white/10 hover:outline-none focus:bg-white/10 focus:outline-none active:bg-white/10 active:outline-none data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none"
+    //           aria-current="page"
+    //           onClick={handleLogout}
+    //         >
+    //           Logout
+    //         </h3>
+    //       </li>
+    //     ) : (
+    //       <li></li>
+    //     )}
+    //   </ul>
+    // </nav>
+ 
+
     <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark">
       <a
         href="/"
@@ -80,7 +146,7 @@ const Header = () => {
         <li>
           <Link
             onClick={handleNavigate}
-            className="nav-link text-white"
+            className="flex h-6 cursor-pointer items-center truncate rounded-[5px] py-4 pl-[3.4rem] pr-6 text-[0.78rem] text-gray-300 outline-none transition duration-300 ease-linear hover:bg-white/10 hover:outline-none focus:bg-white/10 focus:outline-none active:bg-white/10 active:outline-none data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none"
             aria-current="page"
             to="/home"
           >
@@ -90,7 +156,7 @@ const Header = () => {
         {user ? (
           <li>
             <Link
-              className="nav-link text-white"
+              className="flex h-6 cursor-pointer items-center truncate rounded-[5px] py-4 pl-[3.4rem] pr-6 text-[0.78rem] text-gray-300 outline-none transition duration-300 ease-linear hover:bg-white/10 hover:outline-none focus:bg-white/10 focus:outline-none active:bg-white/10 active:outline-none data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none"
               aria-current="page"
               to="/create_note"
             >
@@ -101,10 +167,10 @@ const Header = () => {
           <li></li>
         )}
         {user ? (
-          <li className="nav-item">
+          <li>
             <Link
               onClick={handleNavigate}
-              className="nav-link text-white"
+              className="flex h-6 cursor-pointer items-center truncate rounded-[5px] py-4 pl-[3.4rem] pr-6 text-[0.78rem] text-gray-300 outline-none transition duration-300 ease-linear hover:bg-white/10 hover:outline-none focus:bg-white/10 focus:outline-none active:bg-white/10 active:outline-none data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none"
               aria-current="page"
               to="/contact_lists/"
             >
@@ -117,7 +183,7 @@ const Header = () => {
         {user ? (
           <li class="nav-item">
             <h3
-              className="nav-link text-white"
+              className="flex h-6 cursor-pointer items-center truncate rounded-[5px] py-4 pl-[3.4rem] pr-6 text-[0.78rem] text-gray-300 outline-none transition duration-300 ease-linear hover:bg-white/10 hover:outline-none focus:bg-white/10 focus:outline-none active:bg-white/10 active:outline-none data-[te-sidenav-state-focus]:outline-none motion-reduce:transition-none"
               aria-current="page"
               onClick={handleLogout}
             >
