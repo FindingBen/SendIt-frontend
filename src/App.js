@@ -16,6 +16,7 @@ import Layout from "./components/Layout";
 import DeleteMessage from "./pages/DeleteMessage";
 import Login from "./features/auth/Login";
 import HomePage from "./pages/HomePage";
+import SmsEditor from "./pages/SmsEditor";
 import { ElementProvider } from "./context/ElementContext";
 function App() {
   return (
@@ -46,6 +47,10 @@ function App() {
                 <Route
                   path="/edit_message/:id"
                   element={<EditMessage></EditMessage>}
+                />
+                <Route
+                  path="/sms_editor/:id"
+                  element={<SmsEditor></SmsEditor>}
                 />
                 <Route
                   path="/delete_message/:id"
