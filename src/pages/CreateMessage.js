@@ -192,7 +192,16 @@ const CreateNote = () => {
   const setAlignemnt = (align) => {
     setAlign(align);
   };
+
+  const handleClicked = (element) => {
+    console.log(element);
+    setElementsContextList((prevItems) =>
+      prevItems.filter((item) => item.id !== element)
+    );
+  };
+
   console.log(elementContextList);
+
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
@@ -285,7 +294,7 @@ const CreateNote = () => {
             <div className="col">
               <div class="smartphone">
                 <IFrame>
-                  <List children={elementContextList} />
+                  <List children={elementContextList} clicked={handleClicked} />
                 </IFrame>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { setState } from "../features/modal/formReducer";
 import "../css/CreationMessage.css";
@@ -21,6 +21,7 @@ import {
 import { setModalState } from "../features/modal/modalReducer";
 import { useSelector, useDispatch } from "react-redux";
 import useAxiosInstance from "../utils/axiosInstance";
+import { ElementContext } from "../context/ElementContext";
 
 const EditMessage = () => {
   const navigate = useNavigate();
@@ -33,18 +34,20 @@ const EditMessage = () => {
   const [texts, setTexts] = useState([]);
   const [displayElItem, setDisplayItems] = useState([]);
   const [elements, setElements] = useState([]);
+  const { createElement, deleteElement } = useContext(ElementContext);
   const [elementContextList, setElementsContextList] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
   const [isDirty, setIsDirty] = useState(false);
+  const [toDelete, setToDelete] = useState([]);
   const [isCreate, setIsCreate] = useState(false);
   const axiosInstance = useAxiosInstance();
   const dispatch = useDispatch();
   let BASE_URL = "http://127.0.0.1:8000";
   const params = useParams();
   const iframeEl = document.getElementById("myFrame");
-
+  const [getId, setId] = useState();
   useEffect(() => {
     messageView();
 
@@ -88,6 +91,7 @@ const EditMessage = () => {
   };
 
   let messageView = async () => {
+    setId(params.id);
     let response = await axiosInstance.get(
       `http://127.0.0.1:8000/api/message_view/${params.id}/`,
       {
@@ -103,11 +107,36 @@ const EditMessage = () => {
     setIsLoaded(false);
   };
 
+  const deleteElements = async (e) => {
+    e.preventDefault();
+    try {
+      await Promise.all(
+        toDelete?.map(async (elementObj) => {
+          try {
+            const response = await axiosInstance.delete(
+              `http://localhost:8000/api/delete_element/${elementObj.id}/`
+            );
+            if (response.status === 200) {
+              console.log("Success");
+            }
+          } catch (error) {
+            console.log("Error deleting element:", error);
+          }
+        })
+      );
+    } catch (error) {
+      console.log("Error deleting elements:", error);
+    }
+  };
+
   const editMessage = async (e) => {
     e.preventDefault();
-
+    if (toDelete.length > 0) {
+      await deleteElements(e);
+    }
     try {
       const createdElements = await addElement(e); // Store the created elements in a variable
+      console.log(createdElements);
       const requestData = {
         element_list: createdElements, // Map the created elements to their IDs
         users: user,
@@ -168,6 +197,7 @@ const EditMessage = () => {
 
         if (response.status === 200) {
           createdElements.push(response.data);
+          console.log(response);
         } else {
           console.log("Failed to create element:", elementContext);
           return; // Return undefined to indicate a failure
@@ -215,6 +245,19 @@ const EditMessage = () => {
     setElements(elements);
   };
 
+  const handleClicked = (element) => {
+    console.log(element);
+    deleteElement(element);
+    console.log("TEST");
+    //setElements((prevItems) => prevItems.filter((item) => item.id !== element));
+    setToDelete((prevItems) => [...prevItems, element]);
+    setElementsContextList((prevItems) =>
+      prevItems.filter((item) => item !== element)
+    );
+    setElements((prevItems) => prevItems.filter((item) => item !== element));
+  };
+
+  console.log(elements);
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
@@ -303,14 +346,14 @@ const EditMessage = () => {
             </div>
             <div className="col">
               <div class="smartphone">
-                <IFrame>
+                <IFrame idPass={getId}>
                   {isLoaded ? (
                     /* Render the loading circle or spinner */
                     <div className="spinner-grow" role="status">
                       <span className="visually-hidden">Loading...</span>
                     </div>
                   ) : (
-                    <List children={elements}></List>
+                    <List children={elements} clicked={handleClicked}></List>
                   )}
                 </IFrame>
               </div>

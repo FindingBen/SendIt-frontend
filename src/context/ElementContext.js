@@ -6,12 +6,15 @@ const ElementProvider = ({ children }) => {
   const [contextObject, setContextObject] = useState([]);
 
   const createElement = (elementData) => {
-    console.log(elementData);
     setContextObject((prevObjcontext) => [...prevObjcontext, elementData]);
   };
 
-  const deleteElement = () => {
-    setContextObject([]);
+  const deleteElement = (item) => {
+    console.log("work?");
+    console.log(item);
+    setContextObject((prevObjcontext) =>
+      prevObjcontext.filter((prevItem) => prevItem !== item)
+    );
   };
 
   return (

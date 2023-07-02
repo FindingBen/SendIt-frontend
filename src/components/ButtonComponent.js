@@ -14,7 +14,7 @@ const ButtonComponent = ({ textValue, linkValue }) => {
       <button
         type="button"
         className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-        style={{ width: "295px" }}
+        style={{ width: "288px" }}
       >
         <h3>{text}</h3>
       </button>

@@ -14,6 +14,7 @@ const Image = ({
   contextList,
   elementList,
   listEl,
+  clicked,
 }) => {
   const { createElement } = useContext(ElementContext);
   const [showComponent, setShowComponent] = useState(true);
@@ -28,9 +29,9 @@ const Image = ({
   const [isMounted, setIsMounted] = useState(true);
   const iframeEl = document.getElementById("myFrame");
   const [isCreated, setIsCreated] = useState(listEl);
-  useEffect(() => {
-    iframe.contentWindow.postMessage({ images }, "*");
-  }, [images]);
+  // useEffect(() => {
+  //   iframe.contentWindow.postMessage({ images }, "*");
+  // }, [images]);
 
   useEffect(() => {
     if (iframeEl) {
@@ -179,9 +180,9 @@ const Image = ({
         class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
         id="image"
       />
-      {images?.map((image, index) => (
+      {/* {images?.map((image, index) => (
         <ImgList key={index} imageUrl={image} />
-      ))}
+      ))} */}
       <div className="mt-2">
         <button
           type="button"

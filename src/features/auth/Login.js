@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MDBInput, MDBBtn, MDBTypography } from "mdb-react-ui-kit";
+import { MDBInput, MDBTypography } from "mdb-react-ui-kit";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
 import { useLoginMutation } from "./authApiSlice";
@@ -73,7 +73,7 @@ const Login = () => {
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
               <form onSubmit={handleSubmit}>
                 <div class="divider d-flex align-items-center my-4">
-                  <MDBTypography variant="h2">Login</MDBTypography>
+                  <h1 className="text-3xl font-bold mb-4">Login</h1>
                 </div>
 
                 <div class="form-outline mb-4">
@@ -103,9 +103,12 @@ const Login = () => {
                 </div>
 
                 <div class="text-center text-lg-start mt-4 pt-2">
-                  <MDBBtn type="submit" color="dark" class="btn btn-primary">
+                  <button
+                    type="submit"
+                    className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+                  >
                     Login
-                  </MDBBtn>
+                  </button>
                   <p class="small fw-bold mt-2 pt-1 mb-0">
                     Don't have an account?{" "}
                     <Link to="/register" className="link-danger">

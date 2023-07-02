@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import "../css/RootIframe.css";
 
-const IFrame = ({ children }) => {
+const IFrame = ({ children, idPass }) => {
   const [contentRef, setContentRef] = useState(null);
   const [load, setLoad] = useState(true);
-
 
   useEffect(() => {
     const handleIframeLoad = () => {
@@ -36,7 +35,7 @@ const IFrame = ({ children }) => {
       <iframe
         title="iframe"
         id="myFrame"
-        src="http://localhost:3000/message_view"
+        src={`http://localhost:3000/message_view/${idPass}`}
         ref={setContentRef}
       >
         {load ? (

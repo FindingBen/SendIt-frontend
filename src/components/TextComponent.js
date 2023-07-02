@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import "../css/CreationMessage.css";
 const TextComponent = ({ textValue, alignment }) => {
   const [text, setText] = useState(textValue);
   const [align, setAlign] = useState(alignment);
@@ -13,7 +13,7 @@ const TextComponent = ({ textValue, alignment }) => {
       return "left";
     }
   };
-  console.log(align);
+
   useEffect(() => {
     setText(textValue);
     setAlign(alignment);
@@ -21,10 +21,15 @@ const TextComponent = ({ textValue, alignment }) => {
   }, [textValue, alignment]);
 
   return (
-    <p
-      dangerouslySetInnerHTML={{ __html: text }}
-      style={{ textAlign: align }}
-    ></p>
+    <div>
+      <p
+        dangerouslySetInnerHTML={{ __html: text }}
+        style={{ textAlign: align }}
+      ></p>
+      <div className="image__overlay">
+        <div className="image__title">Click to remove</div>
+      </div>
+    </div>
   );
 };
 

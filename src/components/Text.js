@@ -48,7 +48,7 @@ const Text = ({
   const [align, setAlign] = useState();
   const [isCreated, setIsCreated] = useState(listEl);
   useEffect(() => {
-    console.log(modules.toolbar[4]);
+
     if (iframeEl) {
       const iframeDocument = iframeEl.contentDocument;
       if (iframeDocument) {
@@ -107,7 +107,7 @@ const Text = ({
     setText(event);
     setAlign(event);
     getAlignmentClass(event);
-    console.log(align);
+  
   }
 
   const getAlignmentClass = () => {

@@ -13,7 +13,7 @@ const MessageView = ({ imageProp, textProp, elements }) => {
 
   useEffect(() => {
     setImage(imageProp);
-
+    console.log("TESEMEEEEE");
     //createDraft();
     const receiveMessage = (event) => {
       const { token, user } = event.data;
@@ -26,7 +26,7 @@ const MessageView = ({ imageProp, textProp, elements }) => {
     };
   }, [imageProp, textProp]);
 
-  return <section className="vh-100"></section>;
+  return <section className="vh-100">SSSS</section>;
 };
 
 export default MessageView;

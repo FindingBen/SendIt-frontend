@@ -95,7 +95,7 @@ const SmsEditor = () => {
                 onClick={sendSms}
                 type="submit"
                 color="dark"
-                className="btn btn-dark"
+                className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
               >
                 Send
               </button>

@@ -92,7 +92,7 @@ const Header = () => {
           <Link
             onClick={handleNavigate}
             to="/home"
-            class="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+            class="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-200"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +111,7 @@ const Header = () => {
           <li className="mb-3">
             <Link
               to="/create_note/"
-              class="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              class="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-700"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -139,7 +139,7 @@ const Header = () => {
             <Link
               onClick={handleNavigate}
               to="/contact_lists/"
-              class="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              class="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-700"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -166,7 +166,7 @@ const Header = () => {
           <li className="mb-3">
             <hr></hr>
             <h3
-              class="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+              class="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-700"
               aria-current="page"
               onClick={handleLogout}
             >
@@ -193,7 +193,7 @@ const Header = () => {
         )}
       </ul>
       <hr />
-      <div className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+      <div className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-700">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
