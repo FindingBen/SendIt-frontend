@@ -11,7 +11,7 @@ function ModalComponent({ confirmLeave, showModal }) {
   const { deleteElement } = useContext(ElementContext);
   const handleClose = (e) => {
     confirmLeave();
-    dispatch(setOpenModal({ open: true }));
+    dispatch(setOpenModal({ open: false }));
     dispatch(setModalState({ show: false }));
     dispatch(setState({ isDirty: false }));
     setShow(false);

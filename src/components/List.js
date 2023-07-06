@@ -20,7 +20,12 @@ const List = ({ children, alignment, clicked }) => {
   };
 
   return (
-    <MDBListGroup style={{ minWidthL: "22rem" }} light id="myList">
+    <MDBListGroup
+      className="mt-4"
+      style={{ minWidthL: "22rem" }}
+      light
+      id="myList"
+    >
       {items &&
         items?.map((item, index) => (
           <MDBListGroupItem

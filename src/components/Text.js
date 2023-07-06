@@ -48,12 +48,11 @@ const Text = ({
   const [align, setAlign] = useState();
   const [isCreated, setIsCreated] = useState(listEl);
   useEffect(() => {
-
     if (iframeEl) {
-      const iframeDocument = iframeEl.contentDocument;
+      const iframeDocument = iframeEl?.contentDocument;
       if (iframeDocument) {
-        const listContainer = iframeDocument.getElementById("myList");
-        const lastListItem = listContainer.lastChild;
+        const listContainer = iframeDocument?.getElementById("myList");
+        const lastListItem = listContainer?.lastChild;
         setTimeout(() => {
           if (!isCreated) {
             ReactDOM.render(
@@ -84,10 +83,10 @@ const Text = ({
       //setIsMounted(false);
       setText([]);
       if (isMounted && iframeEl) {
-        const iframeDocument = iframeEl.contentDocument;
+        const iframeDocument = iframeEl?.contentDocument;
         if (iframeDocument) {
-          const listContainer = iframeDocument.getElementById("myList");
-          const lastListItem = listContainer.lastChild;
+          const listContainer = iframeDocument?.getElementById("myList");
+          const lastListItem = listContainer?.lastChild;
           setTimeout(() => {
             if (!isCreated) {
               ReactDOM.render(<></>, lastListItem);
@@ -107,7 +106,6 @@ const Text = ({
     setText(event);
     setAlign(event);
     getAlignmentClass(event);
-  
   }
 
   const getAlignmentClass = () => {
@@ -141,20 +139,20 @@ const Text = ({
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
     if (isMounted && iframeEl) {
-      const iframeDocument = iframeEl.contentDocument;
+      const iframeDocument = iframeEl?.contentDocument;
       if (iframeDocument) {
-        const listContainer = iframeDocument.getElementById("myList");
+        const listContainer = iframeDocument?.getElementById("myList");
 
         if (!isCreated) {
           if (listContainer) {
-            const listItems = Array.from(listContainer.children);
-            listItems.forEach((listItem) => {
+            const listItems = Array.from(listContainer?.children);
+            listItems?.forEach((listItem) => {
               // Perform your operations on each list item
               // For example, check if the element is empty
               if (listItem.innerHTML.trim() === "") {
                 // The element is empty
                 // Perform your logic here
-                listContainer.removeChild(listItem);
+                listContainer?.removeChild(listItem);
               }
             });
           }
@@ -169,20 +167,20 @@ const Text = ({
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
     if (isMounted && iframeEl) {
-      const iframeDocument = iframeEl.contentDocument;
+      const iframeDocument = iframeEl?.contentDocument;
       if (iframeDocument) {
-        const listContainer = iframeDocument.getElementById("myList");
+        const listContainer = iframeDocument?.getElementById("myList");
 
         if (!isCreated) {
           if (listContainer) {
-            const listItems = Array.from(listContainer.children);
-            listItems.forEach((listItem) => {
+            const listItems = Array.from(listContainer?.children);
+            listItems?.forEach((listItem) => {
               // Perform your operations on each list item
               // For example, check if the element is empty
               if (listItem.innerHTML.trim() === "") {
                 // The element is empty
                 // Perform your logic here
-                listContainer.removeChild(listItem);
+                listContainer?.removeChild(listItem);
               }
             });
           }

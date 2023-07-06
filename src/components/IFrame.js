@@ -10,7 +10,7 @@ const IFrame = ({ children, idPass }) => {
     const handleIframeLoad = () => {
       const iframeContent = contentRef?.contentWindow?.document;
       if (iframeContent) {
-        const root = iframeContent.getElementById("root");
+        const root = iframeContent?.getElementById("root");
         if (root) {
           root.style.display = "block"; // Show the root element
           setLoad(false); // Set loading to false once content is loaded
@@ -20,12 +20,12 @@ const IFrame = ({ children, idPass }) => {
 
     const iframeElement = contentRef?.contentWindow;
     if (iframeElement) {
-      iframeElement.addEventListener("load", handleIframeLoad);
+      iframeElement?.addEventListener("load", handleIframeLoad);
     }
 
     return () => {
       if (iframeElement) {
-        iframeElement.removeEventListener("load", handleIframeLoad);
+        iframeElement?.removeEventListener("load", handleIframeLoad);
       }
     };
   }, [contentRef]);

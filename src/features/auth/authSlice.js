@@ -10,11 +10,14 @@ const authSlice = createSlice({
       state.token = access;
     },
     registerUser: (state, action) => {
-      const { username, password, email } = action.payload;
+      const { username, first_name, last_name, email, password } =
+        action.payload;
       console.log(state);
       state.username = username;
-      state.password = password;
+      state.first_name = first_name;
+      state.last_name = last_name;
       state.email = email;
+      state.password = password;
     },
     logOut: (state, action) => {
       return null;

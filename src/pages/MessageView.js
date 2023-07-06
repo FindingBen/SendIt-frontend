@@ -5,28 +5,45 @@ import {
   logOut,
 } from "../features/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
-const MessageView = ({ imageProp, textProp, elements }) => {
-  const [image, setImage] = useState(imageProp);
-  const [text, setText] = useState(textProp);
-  const [user, setUser] = useState();
+import { useParams } from "react-router-dom";
+import List from "../components/List";
+import useAxiosInstance from "../utils/axiosInstance";
+const MessageView = ({ imageProp, textProp }) => {
+  const [elements, setElements] = useState([]);
+  const [isLoaded, setIsLoaded] = useState();
+  const [getId, setId] = useState();
+  const params = useParams();
+  const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
-
   useEffect(() => {
-    setImage(imageProp);
-    console.log("TESEMEEEEE");
-    //createDraft();
-    const receiveMessage = (event) => {
-      const { token, user } = event.data;
+    messageView();
+  }, []);
 
-      setUser(user);
-    };
-    window.addEventListener("message", receiveMessage);
-    return () => {
-      window.removeEventListener("message", receiveMessage);
-    };
-  }, [imageProp, textProp]);
+  let messageView = async () => {
+    setId(params.id);
+    try {
+      let response = await axiosInstance.get(
+        `http://127.0.0.1:8000/api/message_view/${params.id}/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(token),
+          },
+        }
+      );
+      setElements(response?.data?.element_list);
+      setIsLoaded(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  return <section className="vh-100">SSSS</section>;
+  return (
+    <section className="vh-100 mt-2">
+      <List children={elements}></List>
+    </section>
+  );
 };
 
 export default MessageView;

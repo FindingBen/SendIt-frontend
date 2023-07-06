@@ -53,7 +53,7 @@ const Button = ({
         const iframeDocument = iframeEl.contentDocument;
         if (iframeDocument) {
           const listContainer = iframeDocument.getElementById("myList");
-          const lastListItem = listContainer.lastChild;
+          const lastListItem = listContainer?.lastChild;
           setTimeout(() => {
             if (!isCreated) {
               ReactDOM.render(<></>, lastListItem);
@@ -104,14 +104,14 @@ const Button = ({
 
         if (!isCreated) {
           if (listContainer) {
-            const listItems = Array.from(listContainer.children);
+            const listItems = Array.from(listContainer?.children);
             listItems.forEach((listItem) => {
               // Perform your operations on each list item
               // For example, check if the element is empty
               if (listItem.innerHTML.trim() === "") {
                 // The element is empty
                 // Perform your logic here
-                listContainer.removeChild(listItem);
+                listContainer?.removeChild(listItem);
               }
             });
           }

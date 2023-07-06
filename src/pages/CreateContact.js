@@ -20,46 +20,54 @@ const CreateContact = () => {
   }, []);
 
   let getContactList = async () => {
-    let response = await axiosInstance.get(
-      `http://127.0.0.1:8000/api/contact_list/${params.id}/`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-      }
-    );
+    try {
+      let response = await axiosInstance.get(
+        `http://127.0.0.1:8000/api/contact_list/${params.id}/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(token),
+          },
+        }
+      );
 
-    // let data = await response.json();
-    if (response.status === 200) {
-      setContactList(response.data);
+      // let data = await response.json();
+      if (response.status === 200) {
+        setContactList(response.data);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   const addContact = async (e) => {
     e.preventDefault();
-    let response = await axiosInstance.post(
-      `http://127.0.0.1:8000/api/create_contact/${params.id}/`,
-      {
-        first_name: e.target.first_name.value,
-        last_name: e.target.last_name.value,
-        phone_number: e.target.phone_number.value,
-        email: e.target.email.value,
-        user: user,
-        contact_list: contactList.id,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
+    try {
+      let response = await axiosInstance.post(
+        `http://127.0.0.1:8000/api/create_contact/${params.id}/`,
+        {
+          first_name: e.target.first_name.value,
+          last_name: e.target.last_name.value,
+          phone_number: e.target.phone_number.value,
+          email: e.target.email.value,
+          user: user,
+          contact_list: contactList.id,
         },
-      }
-    );
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(token),
+          },
+        }
+      );
 
-    console.log(response);
-    if (response.status === 200 || 201) {
-      navigate(`/contact_list/${params.id}`);
+      console.log(response);
+      if (response.status === 200 || 201) {
+        navigate(`/contact_list/${params.id}`);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 

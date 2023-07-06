@@ -14,19 +14,23 @@ const ContactList = () => {
   }, []);
 
   let getContacts = async () => {
-    let response = await axiosInstance.get(
-      `http://127.0.0.1:8000/api/contact_list/${params.id}/`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-      }
-    );
+    try {
+      let response = await axiosInstance.get(
+        `http://127.0.0.1:8000/api/contact_list/${params.id}/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(token),
+          },
+        }
+      );
 
-    if (response.status === 200) {
-      setContacts(response.data);
+      if (response.status === 200) {
+        setContacts(response.data);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
   return (

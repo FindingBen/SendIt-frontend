@@ -1,8 +1,67 @@
-import React, { useContext } from "react";
-import AuthContext from "../context/AuthContext";
+import React, { useRef, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { MDBInput, MDBTypography } from "mdb-react-ui-kit";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../features/auth/authSlice";
+import { useRegisterMutation } from "../features/auth/authApiSlice";
+import jwt_decode from "jwt-decode";
 
 const RegisterPage = () => {
-  let { register } = useContext(AuthContext);
+  const userRef = useRef();
+  const errRef = useRef();
+  const [email, setEmail] = useState("");
+  const [username, setUser] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPass] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const navigate = useNavigate();
+
+  const [register, { isLoading }] = useRegisterMutation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    userRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    setErrMsg("");
+  }, [username, email, firstName, lastName]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const userData = await register({
+        email,
+        username,
+        firstName,
+        lastName,
+        password,
+      });
+      console.log(userData);
+      dispatch(registerUser(userData));
+      navigate("/home");
+    } catch (err) {
+      if (!err?.originalStatus) {
+        // isLoading: true until timeout occurs
+        setErrMsg("No Server Response");
+      } else if (err.originalStatus === 400) {
+        setErrMsg("Missing Username or Password");
+      } else if (err.originalStatus === 401) {
+        setErrMsg("Unauthorized");
+      } else {
+        setErrMsg("Login Failed");
+      }
+      errRef.current.focus();
+    }
+  };
+  const handleEmail = (e) => setEmail(e.target.value);
+  const handleUserInput = (e) => setUser(e.target.value);
+  const handleFirstName = (e) => setFirstName(e.target.value);
+  const handleLastName = (e) => setLastName(e.target.value);
+  const handlePassword = (e) => setPass(e.target.value);
+
   return (
     <div>
       <section class="vh-100">
@@ -16,36 +75,60 @@ const RegisterPage = () => {
               />
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-              <form onSubmit={register}>
+              <form onSubmit={handleSubmit}>
                 <div class="divider d-flex align-items-center my-4">
-                  <h2 class="text-center fw-bold mx-3 mb-0">Register</h2>
+                  <h2 class="text-3xl font-bold mb-4">Register</h2>
                 </div>
 
                 <div class="form-outline mb-4">
                   <input
                     type="text"
                     name="username"
-                    class="form-control form-control-lg"
+                    className="bg-gray-800 hover:bg-green-400 mt-1 text-white font-bold px-4 border border-blue-700 rounded w-full"
                     placeholder="Enter a username"
+                    onChange={handleUserInput}
+                  />
+                </div>
+                <div class="form-outline mb-4">
+                  <input
+                    type="email"
+                    id="email"
+                    className="bg-gray-800 hover:bg-green-400 mt-1 text-white font-bold px-4 border border-blue-700 rounded w-full"
+                    placeholder="john.doe@company.com"
+                    onChange={handleEmail}
                   />
                 </div>
                 <div class="form-outline mb-4">
                   <input
                     type="text"
-                    name="email"
-                    class="form-control form-control-lg"
-                    placeholder="Enter an email address"
+                    name="first_name"
+                    className="bg-gray-800 hover:bg-green-400 mt-1 text-white font-bold px-4 border border-blue-700 rounded w-full"
+                    placeholder="Enter your first name"
+                    onChange={handleFirstName}
                   />
                 </div>
-                <div class="form-outline mb-3">
+                <div class="form-outline mb-4">
+                  <input
+                    type="text"
+                    name="last_name"
+                    className="bg-gray-800 hover:bg-green-400 mt-1 text-white font-bold px-4 border border-blue-700 rounded w-full"
+                    placeholder="Enter your last name"
+                    onChange={handleLastName}
+                  />
+                </div>
+                <div class="form-outline mb-4">
                   <input
                     type="password"
                     name="password"
-                    class="form-control form-control-lg"
-                    placeholder="Enter password"
+                    className="bg-gray-800 hover:bg-green-400 mt-1 text-white font-bold px-4 border border-blue-700 rounded w-full"
+                    placeholder="Enter your password"
+                    onChange={handlePassword}
                   />
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg">
+                <button
+                  className="bg-gray-800 hover:bg-green-400 mt-2 text-white font-bold py-2 px-4 border border-blue-700 rounded w-30"
+                  type="submit"
+                >
                   Register
                 </button>
               </form>

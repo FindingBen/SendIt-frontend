@@ -35,10 +35,10 @@ const Image = ({
 
   useEffect(() => {
     if (iframeEl) {
-      const iframeDocument = iframeEl.contentDocument;
+      const iframeDocument = iframeEl?.contentDocument;
       if (iframeDocument) {
-        const listContainer = iframeDocument.getElementById("myList");
-        const lastListItem = listContainer.lastChild;
+        const listContainer = iframeDocument?.getElementById("myList");
+        const lastListItem = listContainer?.lastChild;
         setTimeout(() => {
           if (!isCreated) {
             ReactDOM.render(<ImgList imageUrl={imageSrc} />, lastListItem);
@@ -57,10 +57,10 @@ const Image = ({
       //setIsMounted(false);
       setImages([]);
       if (isMounted && iframeEl) {
-        const iframeDocument = iframeEl.contentDocument;
+        const iframeDocument = iframeEl?.contentDocument;
         if (iframeDocument) {
-          const listContainer = iframeDocument.getElementById("myList");
-          const lastListItem = listContainer.lastChild;
+          const listContainer = iframeDocument?.getElementById("myList");
+          const lastListItem = listContainer?.lastChild;
           setTimeout(() => {
             if (!isCreated) {
               ReactDOM.render(<></>, lastListItem);
@@ -113,20 +113,20 @@ const Image = ({
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
     if (isMounted && iframeEl) {
-      const iframeDocument = iframeEl.contentDocument;
+      const iframeDocument = iframeEl?.contentDocument;
       if (iframeDocument) {
-        const listContainer = iframeDocument.getElementById("myList");
+        const listContainer = iframeDocument?.getElementById("myList");
 
         if (!isCreated) {
           if (listContainer) {
-            const listItems = Array.from(listContainer.children);
-            listItems.forEach((listItem) => {
+            const listItems = Array.from(listContainer?.children);
+            listItems?.forEach((listItem) => {
               // Perform your operations on each list item
               // For example, check if the element is empty
               if (listItem.innerHTML.trim() === "") {
                 // The element is empty
                 // Perform your logic here
-                listContainer.removeChild(listItem);
+                listContainer?.removeChild(listItem);
               }
             });
           }
@@ -143,20 +143,20 @@ const Image = ({
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
     if (isMounted && iframeEl) {
-      const iframeDocument = iframeEl.contentDocument;
+      const iframeDocument = iframeEl?.contentDocument;
       if (iframeDocument) {
-        const listContainer = iframeDocument.getElementById("myList");
+        const listContainer = iframeDocument?.getElementById("myList");
 
         if (!isCreated) {
           if (listContainer) {
-            const listItems = Array.from(listContainer.children);
-            listItems.forEach((listItem) => {
+            const listItems = Array.from(listContainer?.children);
+            listItems?.forEach((listItem) => {
               // Perform your operations on each list item
               // For example, check if the element is empty
               if (listItem.innerHTML.trim() === "") {
                 // The element is empty
                 // Perform your logic here
-                listContainer.removeChild(listItem);
+                listContainer?.removeChild(listItem);
               }
             });
           }

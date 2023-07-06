@@ -194,9 +194,10 @@ const CreateNote = () => {
   };
 
   const handleClicked = (element) => {
-    console.log(element);
+    deleteElement(element);
+
     setElementsContextList((prevItems) =>
-      prevItems.filter((item) => item.id !== element)
+      prevItems.filter((item) => item !== element)
     );
   };
 
@@ -215,7 +216,7 @@ const CreateNote = () => {
             </div>
             <div className="col">
               <div
-                className="static bg-indigo-400 rounded-lg p-10"
+                className="static bg-indigo-400 rounded-lg p-10 shadow-2xl"
                 style={{ width: "97%" }}
               >
                 <MDBListGroup style={{ minWidthL: "22rem" }}>
@@ -291,11 +292,22 @@ const CreateNote = () => {
                 </MDBListGroup>
               </div>
             </div>
+
             <div className="col">
-              <div class="smartphone">
-                <IFrame>
-                  <List children={elementContextList} clicked={handleClicked} />
-                </IFrame>
+              <div class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
+                <div class="w-[148px] h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
+                <div class="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
+                <div class="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
+                <div class="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
+                <div class="rounded-[2rem] overflow-hidden w-[270px] h-[572px] bg-white dark:bg-gray-800">
+                  <IFrame>
+                    <List
+                      className="mt-3"
+                      children={elementContextList}
+                      clicked={handleClicked}
+                    />
+                  </IFrame>
+                </div>
               </div>
             </div>
           </div>

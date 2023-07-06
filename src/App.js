@@ -18,6 +18,12 @@ import Login from "./features/auth/Login";
 import HomePage from "./pages/HomePage";
 import SmsEditor from "./pages/SmsEditor";
 import { ElementProvider } from "./context/ElementContext";
+import MessageView from "./pages/MessageView";
+import UserPage from "./pages/UserPage";
+import PackagePlan from "./pages/PackagePlan";
+import PasswordReset from "./utils/PasswordReset";
+import PasswordResetConfirm from "./utils/PasswordResetConfirm";
+
 function App() {
   return (
     <div>
@@ -28,7 +34,14 @@ function App() {
               {/* <Route path="*" element={<PrivateRoute></PrivateRoute>} /> */}
               <Route path="register" element={<RegisterPage />} />
               <Route path="login" element={<Login></Login>} />
-
+              <Route
+                path="reset_password"
+                element={<PasswordReset></PasswordReset>}
+              />
+              <Route
+                path="reset_password_confirm/:uid/:token"
+                element={<PasswordResetConfirm></PasswordResetConfirm>}
+              />
               <Route element={<PrivateRoute />}>
                 <Route path="home" element={<HomePage />} />
                 <Route path="create_note" element={<CreateMessage />} />
@@ -49,8 +62,20 @@ function App() {
                   element={<EditMessage></EditMessage>}
                 />
                 <Route
+                  path="/message_view/:id"
+                  element={<MessageView></MessageView>}
+                ></Route>
+                <Route
                   path="/sms_editor/:id"
                   element={<SmsEditor></SmsEditor>}
+                />
+                <Route
+                  path="/account_settings/:id"
+                  element={<UserPage></UserPage>}
+                />
+                <Route
+                  path="/package_plan/"
+                  element={<PackagePlan></PackagePlan>}
                 />
                 <Route
                   path="/delete_message/:id"

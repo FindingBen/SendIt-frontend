@@ -14,15 +14,19 @@ const ContactList = () => {
   }, []);
 
   let getContactLists = async () => {
-    let response = await axiosInstance.get("/contact_lists/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(token),
-      },
-    });
-    if (response.status === 200) {
-      setContactList(response.data);
+    try {
+      let response = await axiosInstance.get("/contact_lists/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(token),
+        },
+      });
+      if (response.status === 200) {
+        setContactList(response.data);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -37,13 +41,9 @@ const ContactList = () => {
             <div class="col-12">
               <ul id="ulItem">
                 {contactList.map((conList) => (
-                  <li
-                    key={conList.id}
-                    noBorders
-                    className="mb-3 dark:hover:bg-gray-400"
-                  >
-                    <div className="bg-gray-400 rounded-lg">
-                      <div className="static">
+                  <li key={conList.id} className="mb-3 dark:hover:bg-gray-400">
+                    <div className="bg-gray-800 rounded-lg">
+                      <div className="static" style={{ height: "50px" }}>
                         <div
                           className="inline-block text-1xl font-bold mb-4"
                           style={{

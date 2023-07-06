@@ -76,30 +76,36 @@ const Login = () => {
                   <h1 className="text-3xl font-bold mb-4">Login</h1>
                 </div>
 
-                <div class="form-outline mb-4">
-                  <MDBInput
+                <div
+                  className="form-outline mb-4"
+                  style={{ paddingRight: "130px" }}
+                >
+                  <input
                     type="text"
                     name="username"
-                    class="form-control form-control-lg"
+                    className="bg-gray-800 hover:bg-green-400 mt-1 text-white font-bold py-2 px-4 border border-blue-700 rounded w-full"
                     placeholder="Enter a username"
                     onChange={handleUserInput}
                   />
                 </div>
 
-                <div class="form-outline mb-3">
-                  <MDBInput
+                <div
+                  class="form-outline mb-3"
+                  style={{ paddingRight: "130px" }}
+                >
+                  <input
                     type="password"
                     name="password"
-                    class="form-control form-control-lg"
+                    className="bg-gray-800 hover:bg-green-400 mt-1 text-white font-bold px-4 border border-blue-700 rounded w-full"
                     placeholder="Enter password"
                     onChange={handlePwdInput}
                   />
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center">
-                  <a href="#!" class="text-body">
+                  <Link to="/reset_password" class="text-body">
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
 
                 <div class="text-center text-lg-start mt-4 pt-2">
