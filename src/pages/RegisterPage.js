@@ -64,23 +64,23 @@ const RegisterPage = () => {
 
   return (
     <div>
-      <section class="vh-100">
-        <div class="container-fluid h-custom">
-          <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-md-9 col-lg-6 col-xl-5">
+      <section className="vh-100">
+        <div className="container-fluid h-custom">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col-md-9 col-lg-6 col-xl-5">
               <img
                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                class="img-fluid"
+                className="img-fluid"
                 alt="Sample image"
               />
             </div>
-            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+            <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
               <form onSubmit={handleSubmit}>
-                <div class="divider d-flex align-items-center my-4">
-                  <h2 class="text-3xl font-bold mb-4">Register</h2>
+                <div className="divider d-flex align-items-center my-4">
+                  <h2 className="text-3xl font-bold mb-4">Register</h2>
                 </div>
 
-                <div class="form-outline mb-4">
+                <div className="form-outline mb-4">
                   <input
                     type="text"
                     name="username"
@@ -89,7 +89,7 @@ const RegisterPage = () => {
                     onChange={handleUserInput}
                   />
                 </div>
-                <div class="form-outline mb-4">
+                <div className="form-outline mb-4">
                   <input
                     type="email"
                     id="email"
@@ -98,7 +98,7 @@ const RegisterPage = () => {
                     onChange={handleEmail}
                   />
                 </div>
-                <div class="form-outline mb-4">
+                <div className="form-outline mb-4">
                   <input
                     type="text"
                     name="first_name"
@@ -107,7 +107,7 @@ const RegisterPage = () => {
                     onChange={handleFirstName}
                   />
                 </div>
-                <div class="form-outline mb-4">
+                <div className="form-outline mb-4">
                   <input
                     type="text"
                     name="last_name"
@@ -116,7 +116,7 @@ const RegisterPage = () => {
                     onChange={handleLastName}
                   />
                 </div>
-                <div class="form-outline mb-4">
+                <div className="form-outline mb-4">
                   <input
                     type="password"
                     name="password"

@@ -44,6 +44,7 @@ const UserPage = () => {
     console.log(response.data);
     if (response.status === 200) {
       setUser(response.data);
+      setUsername(response.data?.username);
     } else {
       localStorage.removeItem("tokens");
       navigate("/login");
@@ -114,11 +115,11 @@ const UserPage = () => {
               <h1 className="text-3xl font-bold mb-4">Account information</h1>
               <hr></hr>
             </div>
-            <div class="grid gap-3 w-50 mt-4" style={{ marginLeft: "25%" }}>
+            <div className="grid gap-3 w-50 mt-4" style={{ marginLeft: "25%" }}>
               <div>
                 <label
                   for="first_name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   First name
                 </label>
@@ -126,14 +127,14 @@ const UserPage = () => {
                   type="text"
                   id="first_name"
                   className="bg-gray-800 hover:bg-green-400 mt-1 text-white py-2 px-4 border border-blue-700 rounded w-full"
-                  value={user?.username}
+                  value={username?.username}
                   onChange={handleUser}
                 />
               </div>
               <div>
                 <label
                   for="last_name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Last name
                 </label>
@@ -145,10 +146,10 @@ const UserPage = () => {
                 />
               </div>
 
-              <div class="mb-6">
+              <div className="mb-6">
                 <label
                   for="email"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Email address
                 </label>

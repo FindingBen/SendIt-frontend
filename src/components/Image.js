@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, memo } from "react";
 import ImgList from "./ImgList";
 import ReactDOM from "react-dom";
 import { useSelector } from "react-redux";
@@ -6,6 +6,8 @@ import { ElementContext } from "../context/ElementContext";
 import { MDBListGroupItem } from "mdb-react-ui-kit";
 import { ImageEditorComponent } from "@syncfusion/ej2-react-image-editor";
 import { selectCurrentUser } from "../features/auth/authSlice";
+import { Browser } from "@syncfusion/ej2-base";
+
 const Image = ({
   onStateChange,
   componentChange,
@@ -168,21 +170,23 @@ const Image = ({
   return (
     <div>
       <label
-        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         for="file_input"
       >
         Upload file
       </label>
+      {/* <ImageEditorComponent
+        //onChange={handleImageUpload}
+        created={imageEditorCreated}
+      ></ImageEditorComponent> */}
       <input
         type="file"
         accept="image/*"
         onChange={handleImageUpload}
-        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+        className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
         id="image"
       />
-      {/* {images?.map((image, index) => (
-        <ImgList key={index} imageUrl={image} />
-      ))} */}
+
       <div className="mt-2">
         <button
           type="button"
@@ -208,4 +212,4 @@ const Image = ({
   );
 };
 
-export default Image;
+export default memo(Image);

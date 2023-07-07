@@ -30,13 +30,6 @@ const useAxiosInstance = () => {
 
   const axiosInstanceRef = useRef(createAxiosInstance(token));
 
-  // useEffect(() => {
-  //   axiosInstanceRef.current = createAxiosInstance(token);
-  //   // axiosInstanceRef.current.defaults.headers.common[
-  //   //   "Authorization"
-  //   // ] = `Bearer ${token}`;
-  // }, [token]);
-
   axiosInstanceRef.current.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${token}`;
@@ -52,7 +45,6 @@ const useAxiosInstance = () => {
 
     const isExpired = dayjs.unix(jwt_decode(token).exp).diff(dayjs()) < 1;
     const getRefreshToken = localStorage.getItem("tokens");
-    console.log(getRefreshToken);
 
     if (!isExpired) return req;
 
@@ -64,7 +56,6 @@ const useAxiosInstance = () => {
         }
       );
       localStorage.setItem("tokens", response.data.refresh);
-      console.log("Token refreshed:", response.data);
 
       const newToken = response.data.access;
 

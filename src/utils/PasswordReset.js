@@ -34,9 +34,9 @@ const PasswordReset = () => {
   };
 
   return (
-    <section class="vh-100">
-      <div class="container-fluid h-custom">
-        <div class="row d-flex justify-content-center align-items-center h-100">
+    <section className="vh-100">
+      <div className="container-fluid h-custom">
+        <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-12">
             <h1 className="text-2xl font-bold mb-4">Enter your email</h1>
             <hr></hr>

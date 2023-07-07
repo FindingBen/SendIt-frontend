@@ -71,21 +71,21 @@ const SmsEditor = () => {
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
             <h1 className="text-3xl font-bold mb-4">Sms editor</h1>
-            <div class="md-form">
+            <div className="md-form">
               <label for="form1">From</label>
-              <input type="text" name="from" class="form-control" />
+              <input type="text" name="from" className="form-control" />
             </div>
 
-            <div class="md-form">
+            <div className="md-form">
               <label for="form1">Contact list</label>
-              <input type="text" name="contactList" class="form-control" />
+              <input type="text" name="contactList" className="form-control" />
             </div>
             <br></br>
-            <div class="form-group purple-border">
+            <div className="form-group purple-border">
               <label for="exampleFormControlTextarea4">Text message</label>
               <textarea
                 onChange={handleSms}
-                class="form-control"
+                className="form-control"
                 id="exampleFormControlTextarea4"
                 rows="3"
                 name="text_message"

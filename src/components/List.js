@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, memo } from "react";
 import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
 import ImgList from "./ImgList";
 import TextComponent from "./TextComponent";
@@ -55,4 +55,4 @@ const List = ({ children, alignment, clicked }) => {
   );
 };
 
-export default List;
+export default memo(List);

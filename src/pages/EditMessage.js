@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { setState } from "../features/modal/formReducer";
 import "../css/CreationMessage.css";
@@ -14,11 +14,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStop, faFont } from "@fortawesome/free-solid-svg-icons";
 import IFrame from "../components/IFrame";
 import { useEffect } from "react";
+import modalReducer, {
+  selectModalCall,
+  setOpenModal,
+} from "../features/modal/modalReducer";
 import {
   selectCurrentUser,
   selectCurrentToken,
 } from "../features/auth/authSlice";
 import { setModalState } from "../features/modal/modalReducer";
+import {
+  selectEditPageState,
+  setEditPage,
+} from "../features/elements/editPageReducer";
 import { useSelector, useDispatch } from "react-redux";
 import useAxiosInstance from "../utils/axiosInstance";
 import { ElementContext } from "../context/ElementContext";
@@ -31,8 +39,6 @@ const EditMessage = () => {
   const [activeB, setActiveB] = useState(false);
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
-  const [texts, setTexts] = useState([]);
-  const [displayElItem, setDisplayItems] = useState([]);
   const [elements, setElements] = useState([]);
   const { createElement, deleteElement } = useContext(ElementContext);
   const [elementContextList, setElementsContextList] = useState([]);
@@ -42,17 +48,25 @@ const EditMessage = () => {
   const [isDirty, setIsDirty] = useState(false);
   const [toDelete, setToDelete] = useState([]);
   const [isCreate, setIsCreate] = useState(false);
+  const [isPopulated, setIsPopulated] = useState(false);
   const axiosInstance = useAxiosInstance();
+  const modal_state = useSelector(selectModalCall);
+  const isFormDirt = useSelector(selectEditPageState);
   const dispatch = useDispatch();
-  let BASE_URL = "http://127.0.0.1:8000";
   const params = useParams();
-  const iframeEl = document.getElementById("myFrame");
+  const iframeEl = document?.getElementById("myFrame");
   const [getId, setId] = useState();
+
   useEffect(() => {
     messageView();
-
+    if (isFormDirt) {
+      dispatch(setState({ isDirty: true }));
+    } else {
+      dispatch(setState({ isDirty: false }));
+    }
+    dispatch(setOpenModal({ open: false }));
     dispatch(setModalState({ show: false }));
-  }, [isLoaded]);
+  }, [modal_state, isFormDirt]);
 
   const handleClickImage = (e) => {
     e.preventDefault();
@@ -60,7 +74,7 @@ const EditMessage = () => {
     setShowComponent(!showComponent);
     addEmptyListItem();
   };
-
+  console.log(isPopulated);
   const handleClickText = (e) => {
     e.preventDefault();
     setActiveT(!activeT);
@@ -74,17 +88,17 @@ const EditMessage = () => {
     setShowComponent(!showComponent);
     addEmptyListItem();
   };
-
+  console.log(elementContextList);
   const addEmptyListItem = () => {
     if (iframeEl) {
-      const iframeDocument = iframeEl.contentDocument;
+      const iframeDocument = iframeEl?.contentDocument;
       if (iframeDocument) {
-        const listContainer = iframeDocument.getElementById("myList");
+        const listContainer = iframeDocument?.getElementById("myList");
         if (listContainer) {
-          const newItem = document.createElement("li");
+          const newItem = document?.createElement("li");
           newItem.className = "list-group-item";
           newItem.id = "temp";
-          listContainer.appendChild(newItem);
+          listContainer?.appendChild(newItem);
         }
       }
     }
@@ -154,6 +168,7 @@ const EditMessage = () => {
 
       if (response.status === 200) {
         dispatch(setState({ isDirty: false }));
+        dispatch(setEditPage({ isEditFormDirty: false }));
         navigate("/home");
       } else {
         console.log("Failed to create notes:", response.data);
@@ -231,6 +246,7 @@ const EditMessage = () => {
   const handleContextEl = (elementContextList) => {
     setElementsContextList(elementContextList);
     setIsDirty(true);
+    dispatch(setEditPage({ isEditFormDirty: true }));
   };
 
   const handleButtonStateChange = (activeB) => {
@@ -246,10 +262,8 @@ const EditMessage = () => {
   };
 
   const handleClicked = (element) => {
-    console.log(element);
     deleteElement(element);
-    console.log("TEST");
-    //setElements((prevItems) => prevItems.filter((item) => item.id !== element));
+
     setToDelete((prevItems) => [...prevItems, element]);
     setElementsContextList((prevItems) =>
       prevItems.filter((item) => item !== element)
@@ -257,12 +271,11 @@ const EditMessage = () => {
     setElements((prevItems) => prevItems.filter((item) => item !== element));
   };
 
-  console.log(elements);
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="row">
+        <div className="row d-flex justify-content-center align-items-center h-100">
+          <div className="row">
             <div className="col-12 mb-5">
               <h1 className="text-3xl font-bold mb-4">View and edit</h1>
               <hr></hr>
@@ -346,12 +359,12 @@ const EditMessage = () => {
             </div>
             <div className="col">
               <div className="col">
-                <div class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
-                  <div class="w-[148px] h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
-                  <div class="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
-                  <div class="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
-                  <div class="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
-                  <div class="rounded-[2rem] overflow-hidden w-[270px] h-[572px] bg-white dark:bg-gray-800">
+                <div className="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
+                  <div className="w-[148px] h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
+                  <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
+                  <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
+                  <div className="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
+                  <div className="rounded-[2rem] overflow-hidden w-[270px] h-[572px] bg-white dark:bg-gray-800">
                     <IFrame idPass={getId}>
                       {isLoaded ? (
                         /* Render the loading circle or spinner */
@@ -387,4 +400,4 @@ const EditMessage = () => {
   );
 };
 
-export default EditMessage;
+export default memo(EditMessage);

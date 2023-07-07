@@ -36,7 +36,7 @@ const ContactList = () => {
   return (
     <section className="vh-100  w-100">
       <div className="container-fluid h-custom">
-        <div class="row d-flex justify-content-center align-items-center h-100">
+        <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
             <div className="col-12 mb-5">
               <h1 className="text-3xl font-bold mb-4">List of recepients</h1>
@@ -48,17 +48,17 @@ const ContactList = () => {
               </Link>
             </div>
             <div className="col">
-              <ul class="list-group list-group-light">
+              <ul className="list-group list-group-light">
                 {contacts.map((conList) => (
                   <li
                     key={conList.id}
-                    class="list-group-item d-flex justify-content-between align-items-center"
+                    className="list-group-item d-flex justify-content-between align-items-center"
                   >
                     <div>
-                      <div class="fw-bold">{conList.first_name}</div>
-                      <div class="text-muted">{conList.email}</div>
+                      <div className="fw-bold">{conList.first_name}</div>
+                      <div className="text-muted">{conList.email}</div>
                     </div>
-                    {/* <span class="badge rounded-pill badge-success">Active</span> */}
+                    {/* <span className="badge rounded-pill badge-success">Active</span> */}
                   </li>
                 ))}
               </ul>

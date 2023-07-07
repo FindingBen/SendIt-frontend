@@ -24,7 +24,7 @@ const DeleteMessage = () => {
   return (
     <section className="vh-100  w-100">
       <div className="container-fluid h-custom">
-        <div class="row d-flex justify-content-center align-items-center h-100">
+        <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
             <div className="col-12">
               <h1 className="text-3xl font-bold mb-4">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, memo } from "react";
 import TextComponent from "../components/TextComponent";
 import ReactDOM from "react-dom";
 import ReactQuill from "react-quill";
@@ -55,23 +55,23 @@ const Text = ({
         const lastListItem = listContainer?.lastChild;
         setTimeout(() => {
           if (!isCreated) {
-            ReactDOM.render(
+            ReactDOM?.render(
               <TextComponent
                 textValue={text}
-                alignment={getAlignmentClass(align)}
+                alignment={getAlignmentclassName(align)}
               />,
               lastListItem
             );
           } else {
-            ReactDOM.render(
+            ReactDOM?.render(
               <TextComponent
                 textValue={text}
-                alignment={getAlignmentClass(align)}
+                alignment={getAlignmentclassName(align)}
               />,
               listContainer
             );
           }
-        }, 10);
+        }, 5);
       }
     }
   }, [text, iframeEl]);
@@ -96,7 +96,7 @@ const Text = ({
                 listContainer
               );
             }
-          }, 10);
+          }, 5);
         }
       }
     };
@@ -105,10 +105,10 @@ const Text = ({
   function handleTextFunc(event) {
     setText(event);
     setAlign(event);
-    getAlignmentClass(event);
+    getAlignmentclassName(event);
   }
 
-  const getAlignmentClass = () => {
+  const getAlignmentclassName = () => {
     if (align && align.includes("ql-align-center")) {
       return "center";
     } else if (align && align.includes("ql-align-right")) {
@@ -121,7 +121,7 @@ const Text = ({
   const addTextObjContext = () => {
     const dataText = {
       text: text,
-      alignment: getAlignmentClass(),
+      alignment: getAlignmentclassName(),
       element_type: "Text",
       users: user,
     };
@@ -222,4 +222,4 @@ const Text = ({
   );
 };
 
-export default Text;
+export default memo(Text);

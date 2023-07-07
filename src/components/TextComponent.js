@@ -4,7 +4,7 @@ const TextComponent = ({ textValue, alignment }) => {
   const [text, setText] = useState(textValue);
   const [align, setAlign] = useState(alignment);
 
-  const getAlignmentClass = () => {
+  const getAlignmentclassName = () => {
     if (align && align.includes("ql-align-center")) {
       return "center";
     } else if (align && align.includes("ql-align-right")) {
@@ -17,7 +17,7 @@ const TextComponent = ({ textValue, alignment }) => {
   useEffect(() => {
     setText(textValue);
     setAlign(alignment);
-    getAlignmentClass(align);
+    getAlignmentclassName(align);
   }, [textValue, alignment]);
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, memo } from "react";
 import ReactDOM from "react-dom";
 import { ElementContext } from "../context/ElementContext";
 import ButtonComponent from "./ButtonComponent";
@@ -192,7 +192,7 @@ const Button = ({
     <div>
       <label
         for="first_name"
-        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
         Button text display
       </label>
@@ -203,7 +203,7 @@ const Button = ({
       />
       <label
         for="first_name"
-        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
         Insert link
       </label>
@@ -237,4 +237,4 @@ const Button = ({
   );
 };
 
-export default Button;
+export default memo(Button);

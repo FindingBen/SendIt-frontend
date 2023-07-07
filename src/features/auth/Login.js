@@ -47,11 +47,12 @@ const Login = () => {
       } else if (err.originalStatus === 400) {
         setErrMsg("Missing Username or Password");
       } else if (err.originalStatus === 401) {
+        console.log("ss");
         setErrMsg("Unauthorized");
       } else {
         setErrMsg("Login Failed");
       }
-      errRef.current.focus();
+      errRef.current?.focus();
     }
   };
 
@@ -60,19 +61,19 @@ const Login = () => {
 
   return (
     <div>
-      <section class="vh-100">
-        <div class="container-fluid h-custom">
-          <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-md-9 col-lg-6 col-xl-5">
+      <section className="vh-100">
+        <div className="container-fluid h-custom">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col-md-9 col-lg-6 col-xl-5">
               <img
                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                class="img-fluid"
+                className="img-fluid"
                 alt="Sample image"
               />
             </div>
-            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+            <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
               <form onSubmit={handleSubmit}>
-                <div class="divider d-flex align-items-center my-4">
+                <div className="divider d-flex align-items-center my-4">
                   <h1 className="text-3xl font-bold mb-4">Login</h1>
                 </div>
 
@@ -90,7 +91,7 @@ const Login = () => {
                 </div>
 
                 <div
-                  class="form-outline mb-3"
+                  className="form-outline mb-3"
                   style={{ paddingRight: "130px" }}
                 >
                   <input
@@ -102,20 +103,20 @@ const Login = () => {
                   />
                 </div>
 
-                <div class="d-flex justify-content-between align-items-center">
-                  <Link to="/reset_password" class="text-body">
+                <div className="d-flex justify-content-between align-items-center">
+                  <Link to="/reset_password" className="text-body">
                     Forgot password?
                   </Link>
                 </div>
 
-                <div class="text-center text-lg-start mt-4 pt-2">
+                <div className="text-center text-lg-start mt-4 pt-2">
                   <button
                     type="submit"
                     className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
                   >
                     Login
                   </button>
-                  <p class="small fw-bold mt-2 pt-1 mb-0">
+                  <p className="small fw-bold mt-2 pt-1 mb-0">
                     Don't have an account?{" "}
                     <Link to="/register" className="link-danger">
                       Register

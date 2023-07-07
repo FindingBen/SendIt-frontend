@@ -38,9 +38,9 @@ const PasswordResetConfirm = () => {
   };
 
   return (
-    <section class="vh-100">
-      <div class="container-fluid h-custom">
-        <div class="row d-flex justify-content-center align-items-center h-100">
+    <section className="vh-100">
+      <div className="container-fluid h-custom">
+        <div className="row d-flex justify-content-center align-items-center h-100">
           <h2 className="text-2xl font-bold mb-4">Enter your new password</h2>
           <div>
             <input
