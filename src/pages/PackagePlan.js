@@ -14,12 +14,13 @@ const PackagePlan = () => {
   const params = useParams();
   const navigate = useNavigate();
   const token = useSelector(selectCurrentToken);
+  const user = useSelector(selectCurrentUser);
   const [packagePlan, setPackage] = useState([]);
 
   useEffect(() => {
     getPackages();
   }, []);
-
+  console.log(user);
   let getPackages = async () => {
     try {
       let response = await axiosInstance.get(
@@ -34,10 +35,36 @@ const PackagePlan = () => {
       );
 
       if (response.status === 200) {
-        setPackage(response.data);
+        let filteredPackages = response.data.filter((item) => item.id !== 4);
+        setPackage(filteredPackages);
+
+        //setElements((prevItems) => prevItems.filter((item) => item !== element));
       }
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  let buyPackage = async (id) => {
+    console.log(id);
+    const formData = {};
+    //e.preventDefault();
+    let response = await axiosInstance.put(
+      `http://localhost:8000/api/package_purchase/${user}/`,
+      {
+        package_plan: id,
+      },
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(token),
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      navigate("/home");
     }
   };
 
@@ -69,6 +96,7 @@ const PackagePlan = () => {
 
                           <button
                             type="button"
+                            onClick={() => buyPackage(plan.id)}
                             className="inline-block w-full rounded bg-primary-100 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
                             data-te-ripple-init
                             data-te-ripple-color="light"

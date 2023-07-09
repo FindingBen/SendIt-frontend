@@ -8,6 +8,7 @@ import {
 } from "../features/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import useAxiosInstance from "../utils/axiosInstance";
+import jwtDecode from "jwt-decode";
 
 const SmsEditor = () => {
   const axiosInstance = useAxiosInstance();
@@ -27,7 +28,7 @@ const SmsEditor = () => {
     setSmsText(e.target.value);
     console.log(e.target.value);
   };
-
+  console.log(jwtDecode(token));
   const getMessage = async () => {
     try {
       const response = await axiosInstance.get(

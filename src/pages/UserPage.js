@@ -13,9 +13,16 @@ const UserPage = () => {
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
   const [username, setUsername] = useState();
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    email: "",
+  });
   const [oldPassword, setOldPassword] = useState();
   const [newPassword, setNewPassword] = useState();
+  const [newName, setNewName] = useState();
+  const [newLastName, setNewLastName] = useState();
   const params = useParams();
   const navigate = useNavigate();
 
@@ -29,6 +36,10 @@ const UserPage = () => {
   const handleOldPass = (e) => setOldPassword(e.target.value);
 
   const handleNewPass = (e) => setNewPassword(e.target.value);
+
+  const handleNewName = (e) => setNewName(e.target.value);
+
+  const handleNewLastName = (e) => setNewLastName(e.target.value);
 
   let getUser = async () => {
     let response = await axiosInstance.get(
@@ -44,7 +55,6 @@ const UserPage = () => {
     console.log(response.data);
     if (response.status === 200) {
       setUser(response.data);
-      setUsername(response.data?.username);
     } else {
       localStorage.removeItem("tokens");
       navigate("/login");
@@ -55,27 +65,25 @@ const UserPage = () => {
     e.preventDefault();
     const formData = {
       username: username,
+      first_name: newName,
+      last_name: newLastName,
     };
-    console.log(formData);
-    try {
-      let response = await axiosInstance.put(
-        `http://127.0.0.1:8000/api/update_user/${params.id}/`,
-        formData,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(token),
-          },
-        }
-      );
-      console.log(response);
-      if (response.status === 200) {
-        console.log("success");
-        navigate("/home");
+
+    let response = await axiosInstance.put(
+      `http://127.0.0.1:8000/api/update_user/${params.id}/`,
+      formData,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(token),
+        },
       }
-    } catch {
-      console.log("error");
+    );
+    console.log(response);
+    if (response.status === 200) {
+      console.log("success");
+      navigate("/home");
     }
   };
 
@@ -127,8 +135,8 @@ const UserPage = () => {
                   type="text"
                   id="first_name"
                   className="bg-gray-800 hover:bg-green-400 mt-1 text-white py-2 px-4 border border-blue-700 rounded w-full"
-                  value={username?.username}
-                  onChange={handleUser}
+                  value={newName}
+                  onChange={handleNewName}
                 />
               </div>
               <div>
@@ -143,9 +151,26 @@ const UserPage = () => {
                   id="last_name"
                   className="bg-gray-800 hover:bg-green-400 mt-1 text-white font-bold py-2 px-4 border border-blue-700 rounded w-full"
                   placeholder="Doe"
+                  value={newLastName}
+                  onChange={handleNewLastName}
                 />
               </div>
-
+              <div>
+                <label
+                  for="last_name"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Username
+                </label>
+                <input
+                  type="text"
+                  id="last_name"
+                  className="bg-gray-800 hover:bg-green-400 mt-1 text-white font-bold py-2 px-4 border border-blue-700 rounded w-full"
+                  placeholder="Doe"
+                  value={username}
+                  onChange={handleUser}
+                />
+              </div>
               <div className="mb-6">
                 <label
                   for="email"

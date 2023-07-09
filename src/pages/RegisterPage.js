@@ -11,8 +11,8 @@ const RegisterPage = () => {
   const errRef = useRef();
   const [email, setEmail] = useState("");
   const [username, setUser] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
   const [password, setPass] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const RegisterPage = () => {
 
   useEffect(() => {
     setErrMsg("");
-  }, [username, email, firstName, lastName]);
+  }, [username, email, first_name, last_name]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,8 +35,8 @@ const RegisterPage = () => {
       const userData = await register({
         email,
         username,
-        firstName,
-        lastName,
+        first_name,
+        last_name,
         password,
       });
       console.log(userData);
