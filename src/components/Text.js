@@ -50,28 +50,32 @@ const Text = ({
   useEffect(() => {
     if (iframeEl) {
       const iframeDocument = iframeEl?.contentDocument;
-      if (iframeDocument) {
-        const listContainer = iframeDocument?.getElementById("myList");
-        const lastListItem = listContainer?.lastChild;
-        setTimeout(() => {
-          if (!isCreated) {
-            ReactDOM?.render(
-              <TextComponent
-                textValue={text}
-                alignment={getAlignmentclassName(align)}
-              />,
-              lastListItem
-            );
-          } else {
-            ReactDOM?.render(
-              <TextComponent
-                textValue={text}
-                alignment={getAlignmentclassName(align)}
-              />,
-              listContainer
-            );
-          }
-        }, 5);
+      try {
+        if (iframeDocument) {
+          const listContainer = iframeDocument?.getElementById("myList");
+          const lastListItem = listContainer?.lastChild;
+          setTimeout(() => {
+            if (!isCreated) {
+              ReactDOM?.render(
+                <TextComponent
+                  textValue={text}
+                  alignment={getAlignmentclassName(align)}
+                />,
+                lastListItem
+              );
+            } else {
+              ReactDOM?.render(
+                <TextComponent
+                  textValue={text}
+                  alignment={getAlignmentclassName(align)}
+                />,
+                listContainer
+              );
+            }
+          }, 5);
+        }
+      } catch (error) {
+        console.error(error);
       }
     }
   }, [text, iframeEl]);
@@ -82,22 +86,26 @@ const Text = ({
     return () => {
       //setIsMounted(false);
       setText([]);
-      if (isMounted && iframeEl) {
-        const iframeDocument = iframeEl?.contentDocument;
-        if (iframeDocument) {
-          const listContainer = iframeDocument?.getElementById("myList");
-          const lastListItem = listContainer?.lastChild;
-          setTimeout(() => {
-            if (!isCreated) {
-              ReactDOM.render(<></>, lastListItem);
-            } else {
-              ReactDOM.render(
-                <MDBListGroupItem></MDBListGroupItem>,
-                listContainer
-              );
-            }
-          }, 5);
+      try {
+        if (isMounted && iframeEl) {
+          const iframeDocument = iframeEl?.contentDocument;
+          if (iframeDocument) {
+            const listContainer = iframeDocument?.getElementById("myList");
+            const lastListItem = listContainer?.lastChild;
+            setTimeout(() => {
+              if (!isCreated) {
+                ReactDOM.render(<></>, lastListItem);
+              } else {
+                ReactDOM.render(
+                  <MDBListGroupItem></MDBListGroupItem>,
+                  listContainer
+                );
+              }
+            }, 5);
+          }
         }
+      } catch (error) {
+        console.error(error);
       }
     };
   }, []);

@@ -58,7 +58,7 @@ const EditMessage = () => {
   const [getId, setId] = useState();
 
   useEffect(() => {
-    messageView();
+    //messageView();
     if (isFormDirt) {
       dispatch(setState({ isDirty: true }));
     } else {
@@ -67,6 +67,10 @@ const EditMessage = () => {
     dispatch(setOpenModal({ open: false }));
     dispatch(setModalState({ show: false }));
   }, [modal_state, isFormDirt]);
+
+  useEffect(() => {
+    messageView();
+  }, []);
 
   const handleClickImage = (e) => {
     e.preventDefault();

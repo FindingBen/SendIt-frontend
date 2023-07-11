@@ -10,11 +10,12 @@ import List from "../components/List";
 import useAxiosInstance from "../utils/axiosInstance";
 const MessageView = ({ imageProp, textProp }) => {
   const [elements, setElements] = useState([]);
-  const [isLoaded, setIsLoaded] = useState();
+  const [isLoaded, setIsLoaded] = useState(true);
   const [getId, setId] = useState();
   const params = useParams();
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
+
   useEffect(() => {
     messageView();
   }, []);
@@ -41,9 +42,16 @@ const MessageView = ({ imageProp, textProp }) => {
 
   return (
     <section className="vh-100 mt-2">
+      {/* {!isLoaded ? (
+        <div className="spinner-border" id="loader" role="status">
+          <span>Loading...</span>
+        </div>
+      ) : (
+        <List children={elements}></List>
+      )} */}
       <List children={elements}></List>
     </section>
   );
 };
 
-export default memo(MessageView);
+export default MessageView;

@@ -56,11 +56,13 @@ const HomePage = () => {
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
             <div className="col-12">
-              <h1 className="text-3xl font-bold mb-4">Overall statistics</h1>
+              <h1 className="text-3xl font-bold mb-4 text-gray-800">
+                Overall statistics
+              </h1>
             </div>
           </div>
           <div
-            className="static bg-indigo-400 rounded-lg p-3 shadow-xl"
+            className="static bg-gray-800 rounded-lg p-3 shadow-xl"
             style={{ width: "97%" }}
           >
             <div
@@ -92,7 +94,9 @@ const HomePage = () => {
             </div>
           </div>
           <div className="row mt-5">
-            <h1 className="text-2xl font-bold mb-4">Sms messages</h1>
+            <h1 className="text-2xl font-bold mb-4 text-gray-800">
+              Message contents
+            </h1>
             <div className="col">
               {!notes ? (
                 <div>LOL</div>

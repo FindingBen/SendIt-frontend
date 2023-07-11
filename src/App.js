@@ -20,6 +20,7 @@ import SmsEditor from "./pages/SmsEditor";
 import { ElementProvider } from "./context/ElementContext";
 import MessageView from "./pages/MessageView";
 import UserPage from "./pages/UserPage";
+import CreateList from "./pages/CreateList";
 import PackagePlan from "./pages/PackagePlan";
 import PasswordReset from "./utils/PasswordReset";
 import PasswordResetConfirm from "./utils/PasswordResetConfirm";
@@ -39,6 +40,10 @@ function App() {
                 element={<PasswordReset></PasswordReset>}
               />
               <Route
+                path="/message_view/:id"
+                element={<MessageView></MessageView>}
+              ></Route>
+              <Route
                 path="reset_password_confirm/:uid/:token"
                 element={<PasswordResetConfirm></PasswordResetConfirm>}
               />
@@ -49,6 +54,10 @@ function App() {
                   path="/contact_lists"
                   element={<ContactLists></ContactLists>}
                 />
+                 <Route
+                path="/create_list/"
+                element={<CreateList></CreateList>}
+              ></Route>
                 <Route
                   path="/contact_list/:id"
                   element={<ContactList></ContactList>}
@@ -61,10 +70,7 @@ function App() {
                   path="/edit_message/:id"
                   element={<EditMessage></EditMessage>}
                 />
-                <Route
-                  path="/message_view/:id"
-                  element={<MessageView></MessageView>}
-                ></Route>
+
                 <Route
                   path="/sms_editor/:id"
                   element={<SmsEditor></SmsEditor>}

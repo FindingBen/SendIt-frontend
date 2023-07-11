@@ -28,7 +28,7 @@ const IFrame = ({ children, idPass }) => {
         iframeElement?.removeEventListener("load", handleIframeLoad);
       }
     };
-  }, [contentRef]);
+  }, [contentRef, load]);
 
   return (
     <div id="iFrameDiv">

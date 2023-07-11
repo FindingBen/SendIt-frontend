@@ -207,7 +207,7 @@ const CreateNote = () => {
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
             <div className="col-12 mb-5">
-              <h1 className="text-3xl font-bold mb-4">
+              <h1 className="text-3xl font-bold mb-4 text-gray-800">
                 Create your ad content
               </h1>
               <hr></hr>

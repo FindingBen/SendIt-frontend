@@ -13,22 +13,47 @@ import jwtDecode from "jwt-decode";
 const SmsEditor = () => {
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
-  const user = useSelector(selectCurrentUser);
+  const userId = useSelector(selectCurrentUser);
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [message, setMessage] = useState();
   const [smsText, setSmsText] = useState();
+  const [user, setUser] = useState();
 
   useEffect(() => {
     getMessage();
+    getUser();
   }, []);
 
   const handleSms = (e) => {
     setSmsText(e.target.value);
     console.log(e.target.value);
   };
-  console.log(jwtDecode(token));
+  let getUser = async () => {
+    try {
+      let response = await axiosInstance.get(
+        `http://127.0.0.1:8000/api/user_account/${userId}/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(token),
+          },
+        }
+      );
+      console.log(response.data);
+      if (response.status === 200) {
+        setUser(response.data);
+      } else {
+        localStorage.removeItem("tokens");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const getMessage = async () => {
     try {
       const response = await axiosInstance.get(
@@ -47,22 +72,28 @@ const SmsEditor = () => {
 
   const sendSms = async (e) => {
     e.preventDefault();
-    let response = await axiosInstance.post(
-      "http://localhost:8000/sms/sms-send/",
-      {
-        sender: "ME",
-        sms_text: smsText,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
+    try {
+      if (user.sms_count > 0) {
+        let response = await axiosInstance.post(
+          "http://localhost:8000/sms/sms-send/",
+          {
+            user: userId,
+            sender: "ME",
+            sms_text: smsText,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + String(token),
+            },
+          }
+        );
+        if (response.status === 200 || 201) {
+          navigate(`/home`);
+        }
       }
-    );
-    console.log(response);
-    if (response.status === 200 || 201) {
-      navigate(`/home`);
+    } catch (error) {
+      console.log(error);
     }
   };
 

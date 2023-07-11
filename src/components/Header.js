@@ -10,6 +10,7 @@ import {
   setModalState,
   selectModalState,
 } from "../features/modal/modalReducer";
+import { setEditPage } from "../features/elements/editPageReducer";
 import { Link, useNavigate } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
 import { useState } from "react";
@@ -66,6 +67,7 @@ const Header = () => {
     console.log(clickedPath);
     navigate(clickedPath);
     setClickedPath("");
+    dispatch(setEditPage({ isEditFormDirty: false }));
   };
 
   return (
