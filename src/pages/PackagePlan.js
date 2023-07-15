@@ -6,8 +6,9 @@ import {
 } from "../features/auth/authSlice";
 import jwtDecode from "jwt-decode";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
+import SuccessPayment from "./SuccessPayment";
 
 const PackagePlan = () => {
   const axiosInstance = useAxiosInstance();
@@ -16,11 +17,13 @@ const PackagePlan = () => {
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
   const [packagePlan, setPackage] = useState([]);
-
+  const location = useLocation();
   useEffect(() => {
+    const values = location.search;
+    console.log(values);
     getPackages();
   }, []);
-  console.log(user);
+
   let getPackages = async () => {
     try {
       let response = await axiosInstance.get(
@@ -45,6 +48,28 @@ const PackagePlan = () => {
     }
   };
 
+  let stripeCheckout = async (name_product) => {
+    let response = await axiosInstance.post(
+      "http://localhost:8000/api/stripe/stripe_checkout_session",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(token),
+        },
+        name_product,
+        user,
+      }
+    );
+    if (response.status === 200) {
+      //let data = await response.json();
+      console.log(response);
+      window.location.replace(response.data.url); // Log the response data
+    } else {
+      console.error("Error creating Stripe Checkout session");
+    }
+  };
+
   let buyPackage = async (id) => {
     console.log(id);
     const formData = {};
@@ -64,10 +89,10 @@ const PackagePlan = () => {
     );
 
     if (response.status === 200) {
-      navigate("/home");
+      //navigate("/home");
     }
   };
-  console.log(packagePlan);
+
   return (
     <section className="vh-100  w-100">
       <div className="container-fluid h-custom">
@@ -95,10 +120,13 @@ const PackagePlan = () => {
 
                         <button
                           type="button"
-                          onClick={() => buyPackage(packagePlan[0]?.id)}
+                          onClick={() =>
+                            stripeCheckout(packagePlan[0]?.plan_type)
+                          }
                           className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-800 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
                           data-te-ripple-init
                           data-te-ripple-color="light"
+                          value={0}
                         >
                           Buy
                         </button>
@@ -176,7 +204,9 @@ const PackagePlan = () => {
 
                         <button
                           type="button"
-                          onClick={() => buyPackage(packagePlan[1]?.id)}
+                          onClick={() =>
+                            stripeCheckout(packagePlan[1]?.plan_type)
+                          }
                           className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
                           data-te-ripple-init
                           data-te-ripple-color="light"
@@ -291,7 +321,9 @@ const PackagePlan = () => {
 
                         <button
                           type="button"
-                          onClick={() => buyPackage(packagePlan[2]?.id)}
+                          onClick={() =>
+                            stripeCheckout(packagePlan[2]?.plan_type)
+                          }
                           className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
                           data-te-ripple-init
                           data-te-ripple-color="light"

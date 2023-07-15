@@ -71,7 +71,8 @@ const useAxiosInstance = () => {
       return req;
     } catch (error) {
       // Handle refresh token request error
-      // dispatch(logOut()); // Replace with your logout logic
+      localStorage.removeItem("tokens");
+      dispatch(logOut()); // Replace with your logout logic
       throw error;
     }
   });

@@ -25,12 +25,19 @@ import PackagePlan from "./pages/PackagePlan";
 import PasswordReset from "./utils/PasswordReset";
 import PasswordResetConfirm from "./utils/PasswordResetConfirm";
 
+import SuccessPayment from "./pages/SuccessPayment";
+import CancelPayment from "./pages/CancelPayment";
+
 function App() {
   return (
     <div>
       <div className="App" style={({ height: "100vh" }, { display: "flex" })}>
         <ElementProvider>
           <Routes>
+            <Route
+              path="/message_view/:id"
+              element={<MessageView></MessageView>}
+            ></Route>
             <Route path="/" element={<Layout />}>
               {/* <Route path="*" element={<PrivateRoute></PrivateRoute>} /> */}
               <Route path="register" element={<RegisterPage />} />
@@ -39,10 +46,7 @@ function App() {
                 path="reset_password"
                 element={<PasswordReset></PasswordReset>}
               />
-              <Route
-                path="/message_view/:id"
-                element={<MessageView></MessageView>}
-              ></Route>
+
               <Route
                 path="reset_password_confirm/:uid/:token"
                 element={<PasswordResetConfirm></PasswordResetConfirm>}
@@ -54,10 +58,10 @@ function App() {
                   path="/contact_lists"
                   element={<ContactLists></ContactLists>}
                 />
-                 <Route
-                path="/create_list/"
-                element={<CreateList></CreateList>}
-              ></Route>
+                <Route
+                  path="/create_list/"
+                  element={<CreateList></CreateList>}
+                ></Route>
                 <Route
                   path="/contact_list/:id"
                   element={<ContactList></ContactList>}
@@ -86,6 +90,14 @@ function App() {
                 <Route
                   path="/delete_message/:id"
                   element={<DeleteMessage></DeleteMessage>}
+                ></Route>
+                <Route
+                  path="/stripe/"
+                  element={<SuccessPayment></SuccessPayment>}
+                ></Route>
+                <Route
+                  path="/stripe_cancel/"
+                  element={<CancelPayment></CancelPayment>}
                 ></Route>
               </Route>
             </Route>

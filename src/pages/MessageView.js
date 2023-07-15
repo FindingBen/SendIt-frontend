@@ -22,22 +22,16 @@ const MessageView = ({ imageProp, textProp }) => {
 
   let messageView = async () => {
     setId(params.id);
-    try {
-      let response = await axiosInstance.get(
-        `http://127.0.0.1:8000/api/message_view/${params.id}/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(token),
-          },
-        }
-      );
-      setElements(response?.data?.element_list);
-      setIsLoaded(false);
-    } catch (error) {
-      console.error(error);
-    }
+
+    let response = await fetch(
+      `http://127.0.0.1:8000/api/message_view/${params.id}/`
+    );
+
+    const data = await response.json();
+    setElements(data?.element_list);
+    setIsLoaded(false);
+    console.log(response);
+    console.log(elements);
   };
 
   return (
