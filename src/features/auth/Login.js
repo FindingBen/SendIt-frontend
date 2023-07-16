@@ -62,16 +62,25 @@ const Login = () => {
   return (
     <div>
       <section className="vh-100">
-        <div className="container-fluid h-custom">
-          <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-md-9 col-lg-6 col-xl-5">
+        <div className="container-fluid h-100">
+          <div className="row h-100">
+            <div className="col-lg-7">
               <img
-                src={require("../../assets/IMG_2444.jpg")}
+                src={require("../../assets/psEdit.jpg")}
                 className="img-fluid"
                 alt="Sample image"
+                style={{
+                  objectFit: "fill",
+                  width: "100%",
+                  height: "100%",
+                  marginLeft: "-12px",
+                }}
               />
             </div>
-            <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+            <div
+              className="col-md-8 col-lg-6 col-xl-4 offset-xl-1"
+              style={{ marginTop: "18%" }}
+            >
               <form onSubmit={handleSubmit}>
                 <div className="divider d-flex align-items-center my-4">
                   <h1 className="text-3xl font-bold mb-4">Login</h1>

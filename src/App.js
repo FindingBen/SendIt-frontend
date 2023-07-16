@@ -38,10 +38,9 @@ function App() {
               path="/message_view/:id"
               element={<MessageView></MessageView>}
             ></Route>
+            <Route path="register" element={<RegisterPage />} />
+            <Route path="login" element={<Login></Login>} />
             <Route path="/" element={<Layout />}>
-              {/* <Route path="*" element={<PrivateRoute></PrivateRoute>} /> */}
-              <Route path="register" element={<RegisterPage />} />
-              <Route path="login" element={<Login></Login>} />
               <Route
                 path="reset_password"
                 element={<PasswordReset></PasswordReset>}

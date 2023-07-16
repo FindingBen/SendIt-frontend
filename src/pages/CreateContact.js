@@ -51,7 +51,6 @@ const CreateContact = () => {
           last_name: e.target.last_name.value,
           phone_number: e.target.phone_number.value,
           email: e.target.email.value,
-          user: user,
           contact_list: contactList.id,
         },
         {

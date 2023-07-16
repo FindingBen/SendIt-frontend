@@ -4,10 +4,12 @@ import { useParams, Link } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import { selectCurrentToken } from "../features/auth/authSlice";
 import { useSelector } from "react-redux";
+import CsvModal from "../features/modal/CsvModal";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
   let [contacts, setContacts] = useState([]);
+  const [show, setShow] = useState(false);
   const token = useSelector(selectCurrentToken);
   const params = useParams();
   const navigate = useNavigate();
@@ -46,7 +48,11 @@ const ContactList = () => {
       }
     } catch (error) {}
   };
-  console.log(contacts);
+
+  const handleModal = (e) => {
+    setShow(true);
+  };
+
   return (
     <section className="vh-100  w-100">
       <div className="container-fluid h-custom">
@@ -60,6 +66,9 @@ const ContactList = () => {
               >
                 Add contacts +
               </Link>
+              <button className="btn btn-dark" onClick={handleModal}>
+                upload contacts +
+              </button>
             </div>
             <div className="col">
               <ul className="list-group list-group-light">
@@ -108,6 +117,7 @@ const ContactList = () => {
               </ul>
             </div>
           </div>
+          <CsvModal showModal={show} onClose={() => setShow(false)}></CsvModal>
         </div>
       </div>
     </section>
