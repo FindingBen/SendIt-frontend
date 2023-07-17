@@ -62,7 +62,7 @@ const HomePage = () => {
             </div>
           </div>
           <div
-            className="static bg-gray-800 rounded-lg p-3 shadow-xl"
+            className="static bg-gray-50 rounded-lg p-3 shadow-xl"
             style={{ width: "97%" }}
           >
             <div
