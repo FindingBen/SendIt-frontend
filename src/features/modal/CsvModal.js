@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const CsvModal = ({ showModal, onClose }) => {
   const [show, setShowModal] = useState(showModal);
-  const allowedExtensions = ["csv"];
+  const allowedExtensions = ["csv",'xlsx'];
   const [file, setFile] = useState("");
   const [error, setError] = useState("");
   const params = useParams();
@@ -28,7 +28,9 @@ const CsvModal = ({ showModal, onClose }) => {
       // included in the allowed extensions
       // we show the error
       const fileExtension = inputFile?.type.split("/")[1];
+      console.log(fileExtension)
       if (!allowedExtensions.includes(fileExtension)) {
+        console.log('test')
         setError("Please input a csv file");
         return;
       }

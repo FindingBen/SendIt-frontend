@@ -47,7 +47,7 @@ const Header = () => {
       window.onbeforeunload = null;
     };
   }, []);
-  console.log(clickedPath);
+
   const handleNavigate = (e) => {
     const path = e.currentTarget.getAttribute("href");
 
