@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import ContactLists from "./pages/ContactLists";
 import ContactList from "./pages/ContactList";
-import CreateContact from "./pages/CreateContact";
 import CreateMessage from "./pages/CreateMessage";
 import EditMessage from "./pages/EditMessage";
 import RegisterPage from "./pages/RegisterPage";
@@ -65,10 +64,7 @@ function App() {
                   path="/contact_list/:id"
                   element={<ContactList></ContactList>}
                 />
-                <Route
-                  path="/create_contact/:id"
-                  element={<CreateContact></CreateContact>}
-                />
+
                 <Route
                   path="/edit_message/:id"
                   element={<EditMessage></EditMessage>}

@@ -104,13 +104,13 @@ const HomePage = () => {
                 <ul id="ulItem">
                   {displayedItems?.map((note) => (
                     <li key={note.id} className="mb-3 dark:hover:bg-gray-400">
-                      <div className="bg-gray-800 rounded-lg">
+                      <div className="bg-gray-600 rounded-lg">
                         <div
                           className="static"
                           style={{ height: "45px", alignItems: "center" }}
                         >
                           <div
-                            className="inline-block text-1xl font-bold mb-4"
+                            className="inline-block text-1xl mb-4 text-gray-50"
                             style={{
                               float: "left",
                               marginTop: "10px",

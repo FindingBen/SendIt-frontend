@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  selectCurrentUser,
   selectCurrentToken,
   logOut,
 } from "../features/auth/authSlice";
@@ -8,7 +7,7 @@ import jwtDecode from "jwt-decode";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
-import ChangePass from "../components/ChangePass";
+import PasswordChange from "../utils/PasswordChange";
 
 const UserPage = () => {
   const axiosInstance = useAxiosInstance();
@@ -168,7 +167,7 @@ const UserPage = () => {
                 Change
               </button>
               <hr></hr>
-              <ChangePass></ChangePass>
+              <PasswordChange></PasswordChange>
             </div>
           </div>
         </div>

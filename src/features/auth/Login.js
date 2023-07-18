@@ -22,7 +22,8 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    setErrMsg("");
+    //setErrMsg("");
+    setTimeout(() => setErrMsg(""), 5);
   }, [username, password]);
 
   const handleSubmit = async (e) => {
@@ -47,7 +48,6 @@ const Login = () => {
       } else if (err.originalStatus === 400) {
         setErrMsg("Missing Username or Password");
       } else if (err.originalStatus === 401) {
-        console.log("ss");
         setErrMsg("Unauthorized");
       } else {
         setErrMsg("Login Failed");
@@ -133,6 +133,12 @@ const Login = () => {
                   </p>
                 </div>
               </form>
+              <div
+                class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                role="alert"
+              >
+                <span class="font-medium">{errMsg}!</span>
+              </div>
             </div>
           </div>
         </div>

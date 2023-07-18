@@ -5,17 +5,19 @@ import useAxiosInstance from "../utils/axiosInstance";
 import { selectCurrentToken } from "../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import CsvModal from "../features/modal/CsvModal";
-
+import AddContactModal from "../features/modal/AddContactModal";
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
-  let [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState([]);
+  const [showCsv, setShowCsv] = useState(false);
   const [show, setShow] = useState(false);
   const token = useSelector(selectCurrentToken);
   const params = useParams();
   const navigate = useNavigate();
+
   useEffect(() => {
     getContacts();
-  }, [contacts]);
+  }, []);
 
   let getContacts = async () => {
     try {
@@ -44,13 +46,22 @@ const ContactList = () => {
         `http://localhost:8000/api/delete_recipient/${id}/`
       );
       if (response.status === 200) {
+        setContacts(contacts.filter((contact) => contact.id !== id));
         console.log("deleted!");
       }
     } catch (error) {}
   };
 
+  const handleCsvModal = (e) => {
+    setShowCsv(true);
+  };
+
   const handleModal = (e) => {
     setShow(true);
+  };
+
+  const handleNewContact = (contact) => {
+    setContacts(contact);
   };
 
   return (
@@ -61,20 +72,26 @@ const ContactList = () => {
             <div className="col-12 mb-5">
               <h1 className="text-3xl font-bold mb-4">List of recepients</h1>
               <div>
-              <Link
-                className="btn btn-dark"
-                to={`/create_contact/${params.id}`}
-              >
-                Add contacts +
-              </Link>
-              
-              <button className="btn btn-dark" onClick={handleModal}>
-              
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
-</svg>
+                <button className="btn btn-dark" onClick={handleModal}>
+                  Add contacts +
+                </button>
 
-              </button>
+                <button className="btn btn-dark" onClick={handleCsvModal}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
             <div className="col">
@@ -199,96 +216,18 @@ const ContactList = () => {
                   </tbody>
                 </table>
               </div>
-              {/* <table className="table-auto hover:table-fixed">
-                <thead>
-                  <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Phone number</th>
-                    <th>Email</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {contacts.map((conList) => {
-                    return (
-                      <tr key={conList.id}>
-                        <td>{conList.first_name}</td>
-                        <td>{conList.last_name}</td>
-                        <td>{conList.phone_number}</td>
-                        <td>{conList.email}</td>
-                        <button
-                          type="button"
-                          onClick={() => deleteContact(conList.id)}
-                          style={{ marginRight: "10px" }}
-                          // data-mdb-ripple-color="dark"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            strokeWidth="1.5"
-                            stroke="currentColor"
-                            className="w-6 h-6 fill-red-500"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                            />
-                          </svg>
-                        </button>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table> */}
-
-              {/* <ul className="list-group list-group-light">
-                {contacts.map((conList) => (
-                  <div
-                    style={{ marginLeft: "24%" }}
-                    key={conList.id}
-                    class="w-50 flex items-center space-x-4 rounded-md border-solid border-1 bg-gray-100 mb-2"
-                  >
-                    <div class="flex-shrink-0" style={{ marginLeft: "10px" }}>
-                      <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                        {conList.first_name}
-                      </p>
-                      <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                        {conList.email}
-                      </p>
-                      <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                        {conList.phone_number}
-                      </p>
-                    </div>
-                    <div class="flex-1 min-w-0"></div>
-                    <div class="inline-flex items-center text-base font-semibold text-gray-500 dark:text-white">
-                      <button
-                        type="button"
-                        onClick={() => deleteContact(conList.id)}
-                        style={{ marginRight: "10px" }}
-                        // data-mdb-ripple-color="dark"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-6 h-6 fill-red-500"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </ul> */}
             </div>
           </div>
-          <CsvModal showModal={show} onClose={() => setShow(false)}></CsvModal>
+          <CsvModal
+            newContacts={handleNewContact}
+            showModalCsv={showCsv}
+            onClose={() => setShowCsv(false)}
+          />
+          <AddContactModal
+            newContacts={handleNewContact}
+            showModal={show}
+            onClose={() => setShow(false)}
+          />
         </div>
       </div>
     </section>

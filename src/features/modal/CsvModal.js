@@ -5,17 +5,17 @@ import { useSelector } from "react-redux";
 import Papa from "papaparse";
 import { useNavigate, useParams } from "react-router-dom";
 
-const CsvModal = ({ showModal, onClose }) => {
-  const [show, setShowModal] = useState(showModal);
-  const allowedExtensions = ["csv",'xlsx'];
+const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
+  const [show, setShowModal] = useState(showModalCsv);
+  const allowedExtensions = ["csv", "xlsx"];
   const [file, setFile] = useState("");
   const [error, setError] = useState("");
   const params = useParams();
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
   useEffect(() => {
-    setShowModal(showModal);
-  }, [showModal]);
+    setShowModal(showModalCsv);
+  }, [showModalCsv]);
 
   const handleCsvFile = async (e) => {
     setError("");
@@ -28,9 +28,9 @@ const CsvModal = ({ showModal, onClose }) => {
       // included in the allowed extensions
       // we show the error
       const fileExtension = inputFile?.type.split("/")[1];
-      console.log(fileExtension)
+      console.log(fileExtension);
       if (!allowedExtensions.includes(fileExtension)) {
-        console.log('test')
+        console.log("test");
         setError("Please input a csv file");
         return;
       }
@@ -83,6 +83,11 @@ const CsvModal = ({ showModal, onClose }) => {
             },
           }
         );
+
+        if (response.status === 200 || 201) {
+          //console.log(response.data);
+          newContacts((prevContacts) => [...prevContacts, response.data]);
+        }
         console.log("Response:", response);
       } catch (error) {
         console.log(error);
