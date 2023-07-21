@@ -12,12 +12,17 @@ const SuccessPayment = () => {
   const axiosInstance = useAxiosInstance();
   const location = useLocation();
   const token = useSelector(selectCurrentToken);
+  const [refresh, setRefresh] = useState()
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const sessionId = params.get("session_id");
 
     if (sessionId) {
       paymentSuccessfull(sessionId);
+    }
+
+    if(!token){
+      setRefresh(localStorage.getItem('tokens'))
     }
   }, [location.search]);
   console.log(token);

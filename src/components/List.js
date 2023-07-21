@@ -31,8 +31,8 @@ const List = ({ children, alignment, clicked }) => {
           <MDBListGroupItem
             id="elItem"
             key={item.id}
-            className="hover:bg-blue-300"
-            onClick={() => toDelete(item)}
+            //className="hover:bg-blue-300"
+            //onClick={() => toDelete(item)}
           >
             {item.element_type === "Img" ? (
               item.image.startsWith("blob") ? (

@@ -63,7 +63,7 @@ const SmsEditor = () => {
       if (response.status === 200) {
         setMessage(response.data);
       } else if (response.statusText === "Unauthorized") {
-        dispatch(logOut(user, token));
+        dispatch(logOut());
       }
     } catch (error) {
       console.log(error);

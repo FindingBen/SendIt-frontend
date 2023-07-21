@@ -33,7 +33,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       // Retry the original query with the new access token
 
       result = await baseQuery(args, api, extraOptions);
-      console.log("SS", result);
+
     } else {
       // Refresh t  oken failed or expired, log out the user
 

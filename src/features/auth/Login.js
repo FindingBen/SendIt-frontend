@@ -79,7 +79,7 @@ const Login = () => {
                 }}
               />
             </div>
-            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1  d-flex align-items-center justify-content-center">
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1  d-flex align-items-center justify-content-center mb-10">
               <div style={{ width: "75%" }}>
                 <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
                   <div>
@@ -97,6 +97,7 @@ const Login = () => {
                               type="text"
                               class="peer placeholder-transparent h-10 w-full border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
                               placeholder="Username"
+                              onChange={handleUserInput}
                             />
                             <label
                               for="email"
@@ -113,6 +114,7 @@ const Login = () => {
                               type="password"
                               class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
                               placeholder="Password"
+                              onChange={handlePwdInput}
                             />
                             <label
                               for="password"
@@ -128,7 +130,21 @@ const Login = () => {
                           </div>
                         </div>
                       </form>
+                      
                     </div>
+                    <div className="d-flex align-items-center" style={{marginLeft:'30%'}}>
+                  <Link to="/reset_password" className="text-body">
+                    Forgot password?
+                  </Link>
+                </div>
+                <hr></hr>
+                    <p className="small fw-bold mt-2 pt-1 mb-0">
+                      
+                    Don't have an account?{" "}
+                    <Link to="/register" className="link-danger">
+                      Register
+                    </Link>
+                  </p>
                   </div>
                 </div>
               </div>

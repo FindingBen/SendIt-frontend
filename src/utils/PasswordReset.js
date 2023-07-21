@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useAxiosInstance from "./axiosInstance";
 import { useNavigate, useParams } from "react-router-dom";
 
+
 const PasswordReset = () => {
   const axiosInstance = useAxiosInstance();
   const [email, setEmail] = useState();
@@ -22,13 +23,14 @@ const PasswordReset = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+
         },
-        body: JSON.stringify(formData),
+        body:JSON.stringify(formData),
       }
     );
-
+      console.log("reset",response)
     if (response.status === 200 || response.status === 204) {
-      setTimeout(() => navigate("/login"), 5);
+      //setTimeout(() => navigate("/login"), 5);
       setSent(true);
     }
   };

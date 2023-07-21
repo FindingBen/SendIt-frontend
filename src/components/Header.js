@@ -24,7 +24,7 @@ const Header = () => {
   const isDirtyRef = useRef(false);
   const dispatch = useDispatch();
   const handleLogout = () => {
-    dispatch(logOut(user, token));
+    dispatch(logOut());
     localStorage.removeItem("tokens");
   };
   const navigate = useNavigate();
