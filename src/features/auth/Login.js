@@ -22,8 +22,7 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    //setErrMsg("");
-    setTimeout(() => setErrMsg(""), 5);
+    setErrMsg("");
   }, [username, password]);
 
   const handleSubmit = async (e) => {
@@ -34,17 +33,20 @@ const Login = () => {
         username,
         password,
       });
-      const user = jwt_decode(userData.data.access).user_id;
-      dispatch(setCredentials({ ...userData.data, user }));
+      const user = jwt_decode(userData?.data?.access).user_id;
+
+      dispatch(setCredentials({ ...userData?.data, user }));
       setUser("");
       setPwd("");
 
       localStorage.setItem("tokens", userData.data.refresh);
       navigate("/home");
     } catch (err) {
+      console.log("errrrr", err);
       if (!err?.originalStatus) {
+        localStorage.removeItem("tokens");
         // isLoading: true until timeout occurs
-        setErrMsg("No Server Response");
+        setErrMsg("Wrong username or password!");
       } else if (err.originalStatus === 400) {
         setErrMsg("Missing Username or Password");
       } else if (err.originalStatus === 401) {
@@ -77,7 +79,62 @@ const Login = () => {
                 }}
               />
             </div>
-            <div
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1  d-flex align-items-center justify-content-center">
+              <div style={{ width: "75%" }}>
+                <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+                  <div>
+                    <div>
+                      <h1 class="text-2xl font-semibold">Login</h1>
+                    </div>
+                    <div class="divide-y divide-gray-200">
+                      <form onSubmit={handleSubmit}>
+                        <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                          <div class="relative">
+                            {errMsg && <p className="text-red-700">{errMsg}</p>}
+                            <input
+                              autocomplete="off"
+                              name="username"
+                              type="text"
+                              class="peer placeholder-transparent h-10 w-full border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
+                              placeholder="Username"
+                            />
+                            <label
+                              for="email"
+                              class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
+                            >
+                              Username
+                            </label>
+                          </div>
+                          <div class="relative">
+                            <input
+                              autocomplete="off"
+                              id="password"
+                              name="password"
+                              type="password"
+                              class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
+                              placeholder="Password"
+                            />
+                            <label
+                              for="password"
+                              class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
+                            >
+                              Password
+                            </label>
+                          </div>
+                          <div class="relative">
+                            <button class="bg-blue-500 text-white rounded-md px-2 py-1">
+                              Submit
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* <div
               className="col-md-8 col-lg-6 col-xl-4 offset-xl-1"
               style={{ marginTop: "18%" }}
             >
@@ -90,6 +147,7 @@ const Login = () => {
                   className="form-outline mb-4"
                   style={{ paddingRight: "130px" }}
                 >
+                  {errMsg && <p className="text-red-700">{errMsg}</p>}
                   <input
                     type="text"
                     name="username"
@@ -133,13 +191,7 @@ const Login = () => {
                   </p>
                 </div>
               </form>
-              <div
-                class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-                role="alert"
-              >
-                <span class="font-medium">{errMsg}!</span>
-              </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

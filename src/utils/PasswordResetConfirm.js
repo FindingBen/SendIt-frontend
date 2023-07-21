@@ -38,11 +38,24 @@ const PasswordResetConfirm = () => {
   };
 
   return (
-    <section className="vh-100">
-      <div className="container-fluid h-custom">
+    <section className="vh-100 w-100">
+      <div className="container-fluid mt-10">
         <div className="row d-flex justify-content-center align-items-center h-100">
-          <h2 className="text-2xl font-bold mb-4">Enter your new password</h2>
-          <div>
+          <img
+            src={require("../assets/IMG_2444.jpg")}
+            className="img-fluid"
+            alt="Sample image"
+            style={{
+              objectFit: "fill",
+              width: "15%",
+              height: "15%",
+              marginLeft: "-12px",
+            }}
+          />
+          <h2 className="text-2xl font-bold mb-4 mt-5">
+            Enter your new password
+          </h2>
+          <div style={{ paddingLeft: "30%", paddingRight: "30%" }}>
             <input
               type="password"
               className="bg-gray-800 hover:bg-green-400 mt-1 text-white py-2 px-4 border border-blue-700 rounded w-full"

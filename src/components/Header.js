@@ -23,7 +23,10 @@ const Header = () => {
   const showModal = useSelector(selectModalState);
   const isDirtyRef = useRef(false);
   const dispatch = useDispatch();
-  const handleLogout = () => dispatch(logOut(user, token));
+  const handleLogout = () => {
+    dispatch(logOut(user, token));
+    localStorage.removeItem("tokens");
+  };
   const navigate = useNavigate();
   useEffect(() => {
     if (isDirtyState) {
@@ -52,7 +55,7 @@ const Header = () => {
     const path = e.currentTarget.getAttribute("href");
 
     setClickedPath(path);
-    console.log(path);
+
     if (isDirtyRef.current) {
       dispatch(setModalState({ show: true }));
       e.preventDefault(); // Prevent navigation
@@ -64,7 +67,7 @@ const Header = () => {
   };
   const handleConfirmNavigation = () => {
     dispatch(setModalState({ show: false }));
-    console.log(clickedPath);
+
     navigate(clickedPath);
     setClickedPath("");
     dispatch(setEditPage({ isEditFormDirty: false }));

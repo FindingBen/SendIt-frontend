@@ -15,6 +15,7 @@ const RegisterPage = () => {
   const [last_name, setLastName] = useState("");
   const [password, setPass] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [errMsgPass, setErrMsgPass] = useState("");
   const navigate = useNavigate();
 
   const [register, { isLoading }] = useRegisterMutation();
@@ -26,6 +27,7 @@ const RegisterPage = () => {
 
   useEffect(() => {
     setErrMsg("");
+    setErrMsgPass("");
   }, [username, email, first_name, last_name]);
 
   const handleSubmit = async (e) => {
@@ -41,18 +43,27 @@ const RegisterPage = () => {
       });
       console.log(userData);
       dispatch(registerUser(userData));
-      navigate("/home");
-    } catch (err) {
-      if (!err?.originalStatus) {
-        // isLoading: true until timeout occurs
-        setErrMsg("No Server Response");
-      } else if (err.originalStatus === 400) {
-        setErrMsg("Missing Username or Password");
-      } else if (err.originalStatus === 401) {
+
+      // Check if userData contains an error
+      if (userData?.error?.status === 400) {
+        if (userData?.error?.data?.username) {
+          setErrMsg(userData.error.data.username);
+        } else if (userData?.error?.data?.password) {
+          setErrMsgPass(userData.error.data.password);
+        }
+        //setErrMsg("Missing Username or Password");
+      } else if (userData?.error?.status === 401) {
         setErrMsg("Unauthorized");
       } else {
-        setErrMsg("Login Failed");
+        // No error, proceed with successful registration
+        console.log(userData);
+        dispatch(registerUser(userData));
+        navigate("/home");
       }
+    } catch (err) {
+      console.log("AA");
+      console.log(err);
+
       errRef.current.focus();
     }
   };
@@ -65,21 +76,30 @@ const RegisterPage = () => {
   return (
     <div>
       <section className="vh-100">
-        <div className="container-fluid h-custom">
-          <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-md-9 col-lg-6 col-xl-5">
+        <div className="container-fluid h-100">
+          <div className="row h-100">
+            <div className="col-lg-7">
               <img
-                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                src={require("../assets/psEdit.jpg")}
                 className="img-fluid"
                 alt="Sample image"
+                style={{
+                  objectFit: "fill",
+                  width: "100%",
+                  height: "100%",
+                  marginLeft: "-12px",
+                }}
               />
             </div>
-            <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+            <div
+              className="col-md-8 col-lg-6 col-xl-4 offset-xl-1"
+              style={{ marginTop: "18%" }}
+            >
               <form onSubmit={handleSubmit}>
                 <div className="divider d-flex align-items-center my-4">
                   <h2 className="text-3xl font-bold mb-4">Register</h2>
                 </div>
-
+                {errMsg && <p className="text-red-700">{errMsg}</p>}
                 <div className="form-outline mb-4">
                   <input
                     type="text"
@@ -117,6 +137,7 @@ const RegisterPage = () => {
                   />
                 </div>
                 <div className="form-outline mb-4">
+                  {errMsgPass && <p className="text-red-700">{errMsgPass}</p>}
                   <input
                     type="password"
                     name="password"

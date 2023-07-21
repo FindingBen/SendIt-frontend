@@ -9,14 +9,14 @@ const baseQuery = fetchBaseQuery({
     if (token) {
       headers.set("Authorization:", `Bearer ${token}`);
     }
-    console.log(token);
+
     return headers;
   },
 });
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-
+  console.log(api, extraOptions);
   if (result.error && result.error.status === 401) {
     // Access token expired, try to refresh it
     console.log("Sending refresh token");
@@ -31,11 +31,16 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       // Store the new token
       api.dispatch(setCredentials({ ...refreshResult.data, user }));
       // Retry the original query with the new access token
+
       result = await baseQuery(args, api, extraOptions);
+      console.log("SS", result);
     } else {
-      // Refresh token failed or expired, log out the user
+      // Refresh t  oken failed or expired, log out the user
+
       api.dispatch(logOut());
+      localStorage.removeItem("tokens");
     }
+    console.log(result);
   }
 
   return result;

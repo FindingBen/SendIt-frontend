@@ -39,16 +39,16 @@ function App() {
             ></Route>
             <Route path="register" element={<RegisterPage />} />
             <Route path="login" element={<Login></Login>} />
-            <Route path="/" element={<Layout />}>
-              <Route
-                path="reset_password"
-                element={<PasswordReset></PasswordReset>}
-              />
+            <Route
+              path="reset_password"
+              element={<PasswordReset></PasswordReset>}
+            />
 
-              <Route
-                path="reset_password_confirm/:uid/:token"
-                element={<PasswordResetConfirm></PasswordResetConfirm>}
-              />
+            <Route
+              path="reset_password_confirm/:uid/:token"
+              element={<PasswordResetConfirm></PasswordResetConfirm>}
+            />
+            <Route path="/" element={<Layout />}>
               <Route element={<PrivateRoute />}>
                 <Route path="home" element={<HomePage />} />
                 <Route path="create_note" element={<CreateMessage />} />
