@@ -15,7 +15,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  auth: persistReducer(persistConfig, authReducer),
+  auth: authReducer,
   formState: formReducer,
   modalState: modalReducer,
   elementState: elementReducer,
@@ -31,4 +31,3 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-
