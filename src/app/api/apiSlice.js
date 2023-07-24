@@ -3,7 +3,7 @@ import { setCredentials, logOut } from "../../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
   //baseUrl: "http://localhost:8000/",
-  baseUrl: "https://sendit-backend-production.up.railway.app/"
+  baseUrl: "https://sendit-backend-production.up.railway.app/",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
