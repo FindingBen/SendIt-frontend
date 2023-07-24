@@ -11,7 +11,7 @@ const DeleteMessage = () => {
     e.preventDefault();
     try {
       let response = await axiosInstance.delete(
-        `http://127.0.0.1:8000/api/delete_message/${params.id}`
+        `/api/delete_message/${params.id}`
       );
       if (response.status === 200) {
         navigate("/home");

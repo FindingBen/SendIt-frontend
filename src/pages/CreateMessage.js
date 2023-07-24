@@ -86,7 +86,7 @@ const CreateNote = () => {
       };
 
       let response = await axiosInstance.post(
-        "http://127.0.0.1:8000/api/create_notes/",
+        "/api/create_notes/",
         requestData,
         {
           headers: {
@@ -129,7 +129,7 @@ const CreateNote = () => {
         formData.append("users", elementContext.users);
 
         let response = await axiosInstance.post(
-          "http://127.0.0.1:8000/api/create_element/",
+          "/api/create_element/",
           formData,
           {
             headers: {

@@ -23,9 +23,7 @@ const MessageView = ({ imageProp, textProp }) => {
   let messageView = async () => {
     setId(params.id);
 
-    let response = await fetch(
-      `http://127.0.0.1:8000/api/message_view/${params.id}/`
-    );
+    let response = await fetch(`/api/message_view/${params.id}/`);
 
     const data = await response.json();
     setElements(data?.element_list);

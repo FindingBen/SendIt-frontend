@@ -19,16 +19,13 @@ const PasswordResetConfirm = () => {
       token: token,
       new_password: pass,
     };
-    let response = await fetch(
-      `http://localhost:8000/auth/users/reset_password_confirm/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      }
-    );
+    let response = await fetch(`/auth/users/reset_password_confirm/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
     console.log(response);
     if (response.status === 204) {
       console.log("success");

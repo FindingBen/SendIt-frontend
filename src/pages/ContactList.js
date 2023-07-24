@@ -34,7 +34,7 @@ const ContactList = () => {
   let getContacts = async () => {
     try {
       let response = await axiosInstance.get(
-        `http://127.0.0.1:8000/api/contact_list/${params.id}/`,
+        `/api/contact_list/${params.id}/`,
         {
           method: "GET",
           headers: {
@@ -54,9 +54,7 @@ const ContactList = () => {
 
   let deleteContact = async (id) => {
     try {
-      let response = await axiosInstance.delete(
-        `http://localhost:8000/api/delete_recipient/${id}/`
-      );
+      let response = await axiosInstance.delete(`/api/delete_recipient/${id}/`);
       if (response.status === 200) {
         setContacts(contacts.filter((contact) => contact.id !== id));
         console.log("deleted!");

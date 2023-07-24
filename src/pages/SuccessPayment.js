@@ -26,7 +26,7 @@ const SuccessPayment = () => {
   const paymentSuccessfull = async (sessionId) => {
     try {
       let response = await axiosInstance.get(
-        `http://localhost:8000/api/stripe/payment_successfull/${sessionId}`,
+        `/stripe/payment_successfull/${sessionId}`,
         {
           method: "GET",
           headers: {

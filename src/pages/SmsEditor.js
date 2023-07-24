@@ -32,16 +32,13 @@ const SmsEditor = () => {
   };
   let getUser = async () => {
     try {
-      let response = await axiosInstance.get(
-        `http://127.0.0.1:8000/api/user_account/${userId}/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(token),
-          },
-        }
-      );
+      let response = await axiosInstance.get(`/api/user_account/${userId}/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(token),
+        },
+      });
       console.log(response.data);
       if (response.status === 200) {
         setUser(response.data);
@@ -56,9 +53,7 @@ const SmsEditor = () => {
 
   const getMessage = async () => {
     try {
-      const response = await axiosInstance.get(
-        `http://localhost:8000/sms/sms-editor/${params.id}`
-      );
+      const response = await axiosInstance.get(`/sms/sms-editor/${params.id}`);
       console.log(response);
       if (response.status === 200) {
         setMessage(response.data);
@@ -75,7 +70,7 @@ const SmsEditor = () => {
     try {
       if (user.sms_count > 0) {
         let response = await axiosInstance.post(
-          "http://localhost:8000/sms/sms-send/",
+          "/sms/sms-send/",
           {
             user: userId,
             sender: "ME",

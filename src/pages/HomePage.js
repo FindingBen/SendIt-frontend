@@ -38,7 +38,7 @@ const HomePage = () => {
 
   let getNotes = async () => {
     try {
-      let response = await axiosInstance.get("/notes/");
+      let response = await axiosInstance.get("/api/notes/");
 
       if (response.status === 200) {
         setNotes(response?.data);

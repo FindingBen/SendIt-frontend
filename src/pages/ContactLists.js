@@ -15,7 +15,7 @@ const ContactList = () => {
 
   let getContactLists = async () => {
     try {
-      let response = await axiosInstance.get("/contact_lists/", {
+      let response = await axiosInstance.get("/api/contact_lists/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

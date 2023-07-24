@@ -25,7 +25,7 @@ const CreateList = () => {
     };
     try {
       let response = await axiosInstance.post(
-        `http://localhost:8000/api/create_list/${user}`,
+        `/api/create_list/${user}`,
         formData,
         {
           headers: {

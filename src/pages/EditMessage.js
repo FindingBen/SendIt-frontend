@@ -110,16 +110,13 @@ const EditMessage = () => {
 
   let messageView = async () => {
     setId(params.id);
-    let response = await axiosInstance.get(
-      `http://127.0.0.1:8000/api/message_view/${params.id}/`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-      }
-    );
+    let response = await axiosInstance.get(`/api/message_view/${params.id}/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(token),
+      },
+    });
     //let data = await response.json();
     setElements(response.data.element_list);
     setIsLoaded(false);
@@ -132,7 +129,7 @@ const EditMessage = () => {
         toDelete?.map(async (elementObj) => {
           try {
             const response = await axiosInstance.delete(
-              `http://localhost:8000/api/delete_element/${elementObj.id}/`
+              `/api/delete_element/${elementObj.id}/`
             );
             if (response.status === 200) {
               console.log("Success");
@@ -161,7 +158,7 @@ const EditMessage = () => {
       };
 
       let response = await axiosInstance.put(
-        `http://127.0.0.1:8000/api/message_view_edit/${params.id}/`,
+        `/api/message_view_edit/${params.id}/`,
         requestData,
         {
           headers: {
@@ -204,15 +201,11 @@ const EditMessage = () => {
         formData.append("element_type", elementContext.element_type);
         formData.append("users", elementContext.users);
 
-        let response = await axiosInstance.post(
-          "http://127.0.0.1:8000/api/create_element/",
-          formData,
-          {
-            headers: {
-              Authorization: "Bearer " + String(token),
-            },
-          }
-        );
+        let response = await axiosInstance.post("/create_element/", formData, {
+          headers: {
+            Authorization: "Bearer " + String(token),
+          },
+        });
 
         if (response.status === 200) {
           createdElements.push(response.data);

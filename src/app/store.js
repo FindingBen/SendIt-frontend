@@ -27,7 +27,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: [thunk, apiSlice.middleware],
-  devTools: true,
+  devTools: false,
 });
 
 export const persistor = persistStore(store);
