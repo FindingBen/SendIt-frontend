@@ -201,11 +201,15 @@ const EditMessage = () => {
         formData.append("element_type", elementContext.element_type);
         formData.append("users", elementContext.users);
 
-        let response = await axiosInstance.post("/create_element/", formData, {
-          headers: {
-            Authorization: "Bearer " + String(token),
-          },
-        });
+        let response = await axiosInstance.post(
+          "/api/create_element/",
+          formData,
+          {
+            headers: {
+              Authorization: "Bearer " + String(token),
+            },
+          }
+        );
 
         if (response.status === 200) {
           createdElements.push(response.data);

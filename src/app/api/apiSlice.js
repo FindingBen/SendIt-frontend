@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logOut } from "../../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://sendit-frontend-production.up.railway.app/",
+  //baseUrl: "http://localhost:8000/",
+  baseUrl: "https://sendit-backend-production.up.railway.app/"
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
