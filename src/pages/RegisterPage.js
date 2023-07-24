@@ -173,6 +173,7 @@ const RegisterPage = () => {
               placeholder="email"
             />
           </div>
+          {errMsgPass && <p className="text-red-700">{errMsgPass}</p>}
           <div class="flex items-center border-2 py-2 px-3 rounded-2xl">
             <svg
               xmlns="http://www.w3.org/2000/svg"
