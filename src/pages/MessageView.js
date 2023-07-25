@@ -23,13 +23,17 @@ const MessageView = ({ imageProp, textProp }) => {
   let messageView = async () => {
     setId(params.id);
 
-    let response = await fetch(`api/message_view/${params.id}/`);
-
+    let response = await fetch(
+      `https://stingray-app-9825w.ondigitalocean.app/api/message_view/${params.id}/`,
+      {
+        method: "GET",
+      }
+    );
+    //console.log(response);
     const data = await response.json();
+    console.log(data);
     setElements(data?.element_list);
     setIsLoaded(false);
-    console.log(response);
-    console.log(elements);
   };
 
   return (
