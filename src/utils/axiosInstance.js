@@ -21,7 +21,7 @@ const useAxiosInstance = () => {
   console.log(token);
   const createAxiosInstance = (token) => {
     const instance = axios.create({
-      baseURL: "http://127.0.0.1:8000/",
+      baseURL: "https://stingray-app-9825w.ondigitalocean.app/",
     });
 
     // Set the authorization header
