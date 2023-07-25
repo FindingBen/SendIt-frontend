@@ -7,11 +7,12 @@ import { ElementContext } from "../context/ElementContext";
 const List = ({ children, alignment, clicked }) => {
   const [items, setItems] = useState([children]);
   const [forDelete, setForDelete] = useState([]);
-  const BASE_URL = "http://127.0.0.1:8000";
+  //const BASE_URL = "http://127.0.0.1:8000";
+  const BASE_URL = "https://stingray-app-9825w.ondigitalocean.app";
   //const { deleteElement, contextObject } = useContext(ElementContext);
   useEffect(() => {
     setItems(children);
-  }, [children]);
+  }, [children, items]);
 
   const toDelete = (item) => {
     setItems((prevItems) => prevItems.filter((prevItem) => prevItem !== item));

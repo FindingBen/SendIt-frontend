@@ -12,7 +12,7 @@ import Button from "../components/Button";
 import { setList } from "../features/elements/elementReducer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStop, faFont } from "@fortawesome/free-solid-svg-icons";
-import IFrame from "../components/IFrame";
+//import IFrame from "../components/IFrame";
 import { useEffect } from "react";
 import modalReducer, {
   selectModalCall,
@@ -54,7 +54,7 @@ const EditMessage = () => {
   const isFormDirt = useSelector(selectEditPageState);
   const dispatch = useDispatch();
   const params = useParams();
-  const iframeEl = document?.getElementById("myFrame");
+  const container = document?.getElementById("myList");
   const [getId, setId] = useState();
 
   useEffect(() => {
@@ -94,17 +94,11 @@ const EditMessage = () => {
   };
   console.log(elementContextList);
   const addEmptyListItem = () => {
-    if (iframeEl) {
-      const iframeDocument = iframeEl?.contentDocument;
-      if (iframeDocument) {
-        const listContainer = iframeDocument?.getElementById("myList");
-        if (listContainer) {
-          const newItem = document?.createElement("li");
-          newItem.className = "list-group-item";
-          newItem.id = "temp";
-          listContainer?.appendChild(newItem);
-        }
-      }
+    if (container) {
+      const newItem = document?.createElement("li");
+      newItem.className = "list-group-item";
+      newItem.id = "temp";
+      container?.appendChild(newItem);
     }
   };
 
@@ -366,19 +360,11 @@ const EditMessage = () => {
                   <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
                   <div className="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
                   <div className="rounded-[2rem] overflow-hidden w-[270px] h-[572px] bg-white dark:bg-gray-800">
-                    <IFrame idPass={getId}>
-                      {isLoaded ? (
-                        /* Render the loading circle or spinner */
-                        <div className="spinner-grow" role="status">
-                          <span className="visually-hidden">Loading...</span>
-                        </div>
-                      ) : (
-                        <List
-                          children={elements}
-                          clicked={handleClicked}
-                        ></List>
-                      )}
-                    </IFrame>
+                    <List
+                      id="myList"
+                      children={elements}
+                      clicked={handleClicked}
+                    ></List>
                   </div>
                 </div>
               </div>

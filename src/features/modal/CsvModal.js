@@ -68,7 +68,7 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
     for (const contact of parsedData) {
       try {
         let response = await axiosInstance.post(
-          `http://127.0.0.1:8000/api/create_contact/${params.id}/`,
+          `/api/create_contact/${params.id}/`,
           {
             first_name: contact.first_name,
             last_name: contact.last_name,

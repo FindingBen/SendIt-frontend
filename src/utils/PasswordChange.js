@@ -30,18 +30,15 @@ const PasswordChange = () => {
   };
 
   let passChange = async () => {
-    let response = await axiosInstance.post(
-      "http://localhost:8000/auth/users/set_password/",
-      {
-        new_password: newPass,
-        re_new_password: reNewPass,
-        current_password: oldPass,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-      }
-    );
+    let response = await axiosInstance.post("/auth/users/set_password/", {
+      new_password: newPass,
+      re_new_password: reNewPass,
+      current_password: oldPass,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(token),
+      },
+    });
     console.log(response);
   };
 

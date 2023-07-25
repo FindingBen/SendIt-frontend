@@ -39,7 +39,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
     e.preventDefault();
     try {
       let response = await axiosInstance.post(
-        `http://127.0.0.1:8000/api/create_contact/${params.id}/`,
+        `/api/create_contact/${params.id}/`,
         {
           first_name: firstName,
           last_name: lastName,

@@ -17,16 +17,14 @@ const Button = ({
   const [text, setText] = useState();
   const [link, setLink] = useState();
   const [showComponent, setShowComponent] = useState(true);
-  const iframeEl = document.getElementById("myFrame");
+  const container = document.getElementById("myList");
   const [isMounted, setIsMounted] = useState(true);
   const user = useSelector(selectCurrentUser);
-  //const [elements, setElements] = useState([elementList]);
+
   const [isCreated, setIsCreated] = useState(listEl);
   useEffect(() => {
-    const iframeDocument = iframeEl.contentDocument;
-    if (iframeDocument) {
-      const listContainer = iframeDocument.getElementById("myList");
-      const lastListItem = listContainer.lastChild;
+    if (container) {
+      const lastListItem = container.lastChild;
       setTimeout(() => {
         if (!isCreated) {
           ReactDOM.render(
@@ -36,12 +34,12 @@ const Button = ({
         } else {
           ReactDOM.render(
             <ButtonComponent textValue={text} linkValue={link} />,
-            listContainer
+            container
           );
         }
       }, 10);
     }
-  }, [text, link, iframeEl]);
+  }, [text, link, container]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -49,22 +47,15 @@ const Button = ({
     return () => {
       setText([]);
       setLink([]);
-      if (isMounted && iframeEl) {
-        const iframeDocument = iframeEl.contentDocument;
-        if (iframeDocument) {
-          const listContainer = iframeDocument.getElementById("myList");
-          const lastListItem = listContainer?.lastChild;
-          setTimeout(() => {
-            if (!isCreated) {
-              ReactDOM.render(<></>, lastListItem);
-            } else {
-              ReactDOM.render(
-                <MDBListGroupItem></MDBListGroupItem>,
-                listContainer
-              );
-            }
-          }, 10);
-        }
+      if (isMounted && container) {
+        const lastListItem = container?.lastChild;
+        setTimeout(() => {
+          if (!isCreated) {
+            ReactDOM.render(<></>, lastListItem);
+          } else {
+            ReactDOM.render(<MDBListGroupItem></MDBListGroupItem>, container);
+          }
+        }, 10);
       }
     };
   }, []);
@@ -97,25 +88,18 @@ const Button = ({
     addButtonObjContext();
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
-    if (isMounted && iframeEl) {
-      const iframeDocument = iframeEl.contentDocument;
-      if (iframeDocument) {
-        const listContainer = iframeDocument.getElementById("myList");
-
-        if (!isCreated) {
-          if (listContainer) {
-            const listItems = Array.from(listContainer?.children);
-            listItems.forEach((listItem) => {
-              // Perform your operations on each list item
-              // For example, check if the element is empty
-              if (listItem.innerHTML.trim() === "") {
-                // The element is empty
-                // Perform your logic here
-                listContainer?.removeChild(listItem);
-              }
-            });
+    if (isMounted && container) {
+      if (!isCreated) {
+        const listItems = Array.from(container?.children);
+        listItems.forEach((listItem) => {
+          // Perform your operations on each list item
+          // For example, check if the element is empty
+          if (listItem.innerHTML.trim() === "") {
+            // The element is empty
+            // Perform your logic here
+            container?.removeChild(listItem);
           }
-        }
+        });
       }
     }
   }
@@ -125,25 +109,18 @@ const Button = ({
     setActive(Boolean(!event.target.value));
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
-    if (isMounted && iframeEl) {
-      const iframeDocument = iframeEl.contentDocument;
-      if (iframeDocument) {
-        const listContainer = iframeDocument.getElementById("myList");
-
-        if (!isCreated) {
-          if (listContainer) {
-            const listItems = Array.from(listContainer.children);
-            listItems.forEach((listItem) => {
-              // Perform your operations on each list item
-              // For example, check if the element is empty
-              if (listItem.innerHTML.trim() === "") {
-                // The element is empty
-                // Perform your logic here
-                listContainer.removeChild(listItem);
-              }
-            });
+    if (isMounted && container) {
+      if (!isCreated) {
+        const listItems = Array.from(container.children);
+        listItems.forEach((listItem) => {
+          // Perform your operations on each list item
+          // For example, check if the element is empty
+          if (listItem.innerHTML.trim() === "") {
+            // The element is empty
+            // Perform your logic here
+            container.removeChild(listItem);
           }
-        }
+        });
       }
     }
   }
@@ -153,18 +130,14 @@ const Button = ({
     setActive(Boolean(!event.target.value));
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
-    if (iframeEl) {
-      const iframeDocument = iframeEl.contentDocument;
-      if (iframeDocument) {
-        const listContainer = iframeDocument.getElementById("myList");
-        if (!isCreated && listContainer) {
-          const listItems = Array.from(listContainer.children);
-          listItems.forEach((listItem) => {
-            if (listItem.innerHTML.trim() === "") {
-              listContainer.removeChild(listItem);
-            }
-          });
-        }
+    if (container) {
+      if (!isCreated) {
+        const listItems = Array.from(container.children);
+        listItems.forEach((listItem) => {
+          if (listItem.innerHTML.trim() === "") {
+            container.removeChild(listItem);
+          }
+        });
       }
     }
   }
