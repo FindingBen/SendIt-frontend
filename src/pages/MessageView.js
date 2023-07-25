@@ -23,10 +23,10 @@ const MessageView = ({ imageProp, textProp }) => {
   let messageView = async () => {
     setId(params.id);
 
-    let response = await fetch(`/api/message_view/${params.id}/`);
+    let response = await axiosInstance.get(`api/message_view/${params.id}/`);
 
-    const data = await response.json();
-    setElements(data?.element_list);
+    //const data = await response.json();
+    setElements(response.data?.element_list);
     setIsLoaded(false);
     console.log(response);
     console.log(elements);
