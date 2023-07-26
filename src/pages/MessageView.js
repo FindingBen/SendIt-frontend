@@ -17,7 +17,8 @@ const MessageView = ({ imageProp, textProp }) => {
   const params = useParams();
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
-
+  const BASE_URL = "https://stingray-app-9825w.ondigitalocean.app";
+  //const BASE_URL = "http://localhost:8000";
   useEffect(() => {
     messageView();
   }, []);
@@ -25,12 +26,9 @@ const MessageView = ({ imageProp, textProp }) => {
   let messageView = async () => {
     setId(params.id);
     //https://stingray-app-9825w.ondigitalocean.app
-    let response = await fetch(
-      `https://stingray-app-9825w.ondigitalocean.app/api/message_view/${params.id}/`,
-      {
-        method: "GET",
-      }
-    );
+    let response = await fetch(`${BASE_URL}/api/message_view/${params.id}/`, {
+      method: "GET",
+    });
     //console.log(response);
     const data = await response.json();
     console.log(data);

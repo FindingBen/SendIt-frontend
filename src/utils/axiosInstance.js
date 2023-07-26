@@ -14,14 +14,16 @@ const useAxiosInstance = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectCurrentToken);
   const user = useSelector((state) => state.auth.user);
+  const baseURL = "https://stingray-app-9825w.ondigitalocean.app/";
+  //const baseURL = "http://localhost:8000/";
   //const authData = JSON.parse(useSelector((state) => state.auth));
   //console.log(authData)
   //const user = authData.user;
   // const token = authData.token;
-  console.log(token);
+
   const createAxiosInstance = (token) => {
     const instance = axios.create({
-      baseURL: "https://stingray-app-9825w.ondigitalocean.app/",
+      baseURL: baseURL,
       //baseURL: "http://localhost:8000/",
     });
 
@@ -55,12 +57,9 @@ const useAxiosInstance = () => {
     if (!isExpired) return req;
 
     try {
-      const response = await axios.post(
-        `http://127.0.0.1:8000/api/token/refresh/`,
-        {
-          refresh: getRefreshToken,
-        }
-      );
+      const response = await axios.post(`${baseURL}/api/token/refresh/`, {
+        refresh: getRefreshToken,
+      });
       localStorage.setItem("tokens", response.data.refresh);
 
       const newToken = response.data.access;

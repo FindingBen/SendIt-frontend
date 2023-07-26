@@ -30,13 +30,19 @@ import CancelPayment from "./pages/CancelPayment";
 function App() {
   return (
     <div>
+      <Routes>
+        <Route
+          path="/message_view/:id"
+          element={<MessageView></MessageView>}
+        ></Route>
+      </Routes>
       <div className="App" style={({ height: "100vh" }, { display: "flex" })}>
         <ElementProvider>
           <Routes>
-            <Route
+            {/* <Route
               path="/message_view/:id"
               element={<MessageView></MessageView>}
-            ></Route>
+            ></Route> */}
             <Route path="register" element={<RegisterPage />} />
             <Route path="login" element={<Login></Login>} />
             <Route
