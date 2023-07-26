@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, memo } from "react";
 import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
 import ImgList from "./ImgList";
 import TextComponent from "./TextComponent";
+import "../css/List.css";
 import ButtonComponent from "./ButtonComponent";
 import { ElementContext } from "../context/ElementContext";
 const List = ({ children, alignment, clicked }) => {
@@ -22,7 +23,7 @@ const List = ({ children, alignment, clicked }) => {
 
   return (
     <MDBListGroup
-      className="mt-4"
+      className="my-scroll-list"
       style={{ minWidthL: "22rem" }}
       light
       id="myList"

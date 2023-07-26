@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import List from "../components/List";
 import useAxiosInstance from "../utils/axiosInstance";
+import "../css/List.css";
+import "../css/MessageView.css";
 const MessageView = ({ imageProp, textProp }) => {
   const [elements, setElements] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
@@ -22,7 +24,7 @@ const MessageView = ({ imageProp, textProp }) => {
 
   let messageView = async () => {
     setId(params.id);
-
+    //https://stingray-app-9825w.ondigitalocean.app
     let response = await fetch(
       `https://stingray-app-9825w.ondigitalocean.app/api/message_view/${params.id}/`,
       {
@@ -37,15 +39,12 @@ const MessageView = ({ imageProp, textProp }) => {
   };
 
   return (
-    <section className="vh-100 mt-2">
-      {/* {!isLoaded ? (
-        <div className="spinner-border" id="loader" role="status">
-          <span>Loading...</span>
-        </div>
-      ) : (
-        <List children={elements}></List>
-      )} */}
-      <List children={elements}></List>
+    <section className="vh-100 mt-2" id="view">
+      <List
+        children={elements}
+        className="my-scroll-list"
+        style={{ width: "100%" }}
+      ></List>
     </section>
   );
 };

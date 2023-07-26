@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../css/CreationMessage.css";
 import "../css/RootIframe.css";
+import "../css/List.css";
 import { AiFillPicture } from "react-icons/ai";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStop, faFont } from "@fortawesome/free-solid-svg-icons";
@@ -303,7 +304,7 @@ const CreateNote = () => {
                 >
                   <List
                     id="myList"
-                    className="mt-3"
+                    className="my-scroll-list"
                     children={elementContextList}
                     clicked={handleClicked}
                   />

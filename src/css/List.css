@@ -1,0 +1,4 @@
+.my-scroll-list {
+    max-height: 100%; /* Set the maximum height of the list */
+    overflow-y: auto; /* Enable vertical scrolling if the content overflows */
+  }

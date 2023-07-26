@@ -362,6 +362,7 @@ const EditMessage = () => {
                   <div className="rounded-[2rem] overflow-hidden w-[270px] h-[572px] bg-white dark:bg-gray-800">
                     <List
                       id="myList"
+                      className="my-scroll-list"
                       children={elements}
                       clicked={handleClicked}
                     ></List>
