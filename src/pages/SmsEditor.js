@@ -27,8 +27,8 @@ const SmsEditor = () => {
   const [user, setUser] = useState();
   const textComponentRef = useRef(null);
   //const BASE_URL = "http://localhost:8000/";
-  const BASE_URL = "https://stingray-app-9825w.ondigitalocean.app/";
-  const linkURLBase = `${BASE_URL}/api/message_view/${params.id}`;
+  const BASE_URL = "https://stingray-app-9825w.ondigitalocean.app";
+  const linkURLBase = `${BASE_URL}/message_view/${params.id}`;
 
   useEffect(() => {
     setErrorMessage("");
