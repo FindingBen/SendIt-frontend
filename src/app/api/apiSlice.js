@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logOut } from "../../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:8000/",
-  //baseUrl: "https://stingray-app-9825w.ondigitalocean.app/",
+  //baseUrl: "http://localhost:8000/",
+  baseUrl: "https://stingray-app-9825w.ondigitalocean.app/",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
