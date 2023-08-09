@@ -26,16 +26,13 @@ const PackagePlan = () => {
 
   let getPackages = async () => {
     try {
-      let response = await axiosInstance.get(
-        "http://127.0.0.1:8000/api/package_plan/",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(token),
-          },
-        }
-      );
+      let response = await axiosInstance.get("/api/package_plan/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(token),
+        },
+      });
 
       if (response.status === 200) {
         let filteredPackages = response.data.filter((item) => item.id !== 4);
@@ -49,18 +46,15 @@ const PackagePlan = () => {
   };
 
   let stripeCheckout = async (name_product) => {
-    let response = await axiosInstance.post(
-      "http://localhost:8000/api/stripe/stripe_checkout_session",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-        name_product,
-        user,
-      }
-    );
+    let response = await axiosInstance.post("/stripe/stripe_checkout_session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(token),
+      },
+      name_product,
+      user,
+    });
     if (response.status === 200) {
       //let data = await response.json();
       console.log(response);
@@ -75,7 +69,7 @@ const PackagePlan = () => {
     const formData = {};
     //e.preventDefault();
     let response = await axiosInstance.put(
-      `http://localhost:8000/api/package_purchase/${user}/`,
+      `/api/package_purchase/${user}/`,
       {
         package_plan: id,
       },

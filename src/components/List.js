@@ -2,16 +2,18 @@ import React, { useState, useEffect, useContext, memo } from "react";
 import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
 import ImgList from "./ImgList";
 import TextComponent from "./TextComponent";
+import "../css/List.css";
 import ButtonComponent from "./ButtonComponent";
 import { ElementContext } from "../context/ElementContext";
 const List = ({ children, alignment, clicked }) => {
   const [items, setItems] = useState([children]);
   const [forDelete, setForDelete] = useState([]);
-  const BASE_URL = "http://127.0.0.1:8000";
+  //const BASE_URL = "http://127.0.0.1:8000";
+  const BASE_URL = "https://stingray-app-9825w.ondigitalocean.app";
   //const { deleteElement, contextObject } = useContext(ElementContext);
   useEffect(() => {
     setItems(children);
-  }, [children]);
+  }, [children, items]);
 
   const toDelete = (item) => {
     setItems((prevItems) => prevItems.filter((prevItem) => prevItem !== item));
@@ -21,7 +23,7 @@ const List = ({ children, alignment, clicked }) => {
 
   return (
     <MDBListGroup
-      className="mt-4"
+      className="my-scroll-list"
       style={{ minWidthL: "22rem" }}
       light
       id="myList"
@@ -31,8 +33,8 @@ const List = ({ children, alignment, clicked }) => {
           <MDBListGroupItem
             id="elItem"
             key={item.id}
-            className="hover:bg-blue-300"
-            onClick={() => toDelete(item)}
+            //className="hover:bg-blue-300"
+            //onClick={() => toDelete(item)}
           >
             {item.element_type === "Img" ? (
               item.image.startsWith("blob") ? (

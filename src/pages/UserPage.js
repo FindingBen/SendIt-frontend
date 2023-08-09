@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-  logOut,
-} from "../features/auth/authSlice";
+import { selectCurrentToken, logOut } from "../features/auth/authSlice";
 import jwtDecode from "jwt-decode";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
-import ChangePass from "../components/ChangePass";
+import PasswordChange from "../utils/PasswordChange";
 
 const UserPage = () => {
   const axiosInstance = useAxiosInstance();
@@ -39,7 +35,7 @@ const UserPage = () => {
   let getUser = async () => {
     try {
       let response = await axiosInstance.get(
-        `http://127.0.0.1:8000/api/user_account/${params.id}/`,
+        `/api/user_account/${params.id}/`,
         {
           method: "GET",
           headers: {
@@ -69,7 +65,7 @@ const UserPage = () => {
     };
 
     let response = await axiosInstance.put(
-      `http://127.0.0.1:8000/api/update_user/${params.id}/`,
+      `/api/update_user/${params.id}/`,
       formData,
       {
         method: "PUT",
@@ -109,7 +105,7 @@ const UserPage = () => {
                   type="text"
                   id="first_name"
                   className="bg-gray-800 hover:bg-green-400 mt-1 text-white py-2 px-4 border border-blue-700 rounded w-full"
-                  value={user?.first_name}
+                  value={newName}
                   onChange={handleNewName}
                 />
               </div>
@@ -125,7 +121,7 @@ const UserPage = () => {
                   id="last_name"
                   className="bg-gray-800 hover:bg-green-400 mt-1 text-white font-bold py-2 px-4 border border-blue-700 rounded w-full"
                   placeholder="Doe"
-                  value={user?.last_name}
+                  value={newLastName}
                   onChange={handleNewLastName}
                 />
               </div>
@@ -142,6 +138,7 @@ const UserPage = () => {
                   className="bg-gray-800 hover:bg-green-400 mt-1 text-white font-bold py-2 px-4 border border-blue-700 rounded w-full"
                   placeholder="Doe"
                   value={user?.username}
+                  disabled
                   onChange={handleUser}
                 />
               </div>
@@ -168,7 +165,7 @@ const UserPage = () => {
                 Change
               </button>
               <hr></hr>
-              <ChangePass></ChangePass>
+              <PasswordChange></PasswordChange>
             </div>
           </div>
         </div>

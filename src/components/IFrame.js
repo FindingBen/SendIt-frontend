@@ -36,6 +36,7 @@ const IFrame = ({ children, idPass }) => {
         title="iframe"
         id="myFrame"
         src={`http://localhost:3000/message_view/${idPass}`}
+        //src={`https://sendit-frontend-production.up.railway.app/message_view/${idPass}`}
         ref={setContentRef}
       >
         {load ? (

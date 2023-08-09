@@ -10,9 +10,6 @@ const ImgList = ({ imageUrl }) => {
   return (
     <div>
       <img key={imageUrl} src={`${imageSrc}`} width="300" />
-      <div className="image__overlay">
-        <div className="image__title">Click to remove</div>
-      </div>
     </div>
   );
 };

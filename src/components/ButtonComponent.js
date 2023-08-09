@@ -10,7 +10,7 @@ const ButtonComponent = ({ textValue, linkValue }) => {
   }, [textValue, linkValue]);
 
   return (
-    <a href={link}>
+    <Link to={link}>
       <button
         type="button"
         className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
@@ -18,7 +18,7 @@ const ButtonComponent = ({ textValue, linkValue }) => {
       >
         <h3>{text}</h3>
       </button>
-    </a>
+    </Link>
   );
 };
 

@@ -2,21 +2,22 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logOut } from "../../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://127.0.0.1:8000/",
+  //baseUrl: "http://localhost:8000/",
+  baseUrl: "https://stingray-app-9825w.ondigitalocean.app/",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
     if (token) {
       headers.set("Authorization:", `Bearer ${token}`);
     }
-    console.log(token);
+
     return headers;
   },
 });
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-
+  console.log(api, extraOptions);
   if (result.error && result.error.status === 401) {
     // Access token expired, try to refresh it
     console.log("Sending refresh token");
@@ -31,11 +32,15 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       // Store the new token
       api.dispatch(setCredentials({ ...refreshResult.data, user }));
       // Retry the original query with the new access token
+
       result = await baseQuery(args, api, extraOptions);
     } else {
-      // Refresh token failed or expired, log out the user
+      // Refresh t  oken failed or expired, log out the user
+
       api.dispatch(logOut());
+      localStorage.removeItem("tokens");
     }
+    console.log(result);
   }
 
   return result;

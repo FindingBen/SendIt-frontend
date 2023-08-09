@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import List from "../components/List";
 import useAxiosInstance from "../utils/axiosInstance";
+import "../css/List.css";
+import "../css/MessageView.css";
 const MessageView = ({ imageProp, textProp }) => {
   const [elements, setElements] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
@@ -15,35 +17,32 @@ const MessageView = ({ imageProp, textProp }) => {
   const params = useParams();
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
-
+  const BASE_URL = "https://stingray-app-9825w.ondigitalocean.app";
+  //const BASE_URL = "http://localhost:8000";
   useEffect(() => {
     messageView();
   }, []);
 
   let messageView = async () => {
     setId(params.id);
-
-    let response = await fetch(
-      `http://127.0.0.1:8000/api/message_view/${params.id}/`
-    );
-
+    //https://stingray-app-9825w.ondigitalocean.app
+    let response = await fetch(`${BASE_URL}/api/message_view/${params.id}/`, {
+      method: "GET",
+    });
+    //console.log(response);
     const data = await response.json();
+    console.log(data);
     setElements(data?.element_list);
     setIsLoaded(false);
-    console.log(response);
-    console.log(elements);
   };
 
   return (
-    <section className="vh-100 mt-2">
-      {/* {!isLoaded ? (
-        <div className="spinner-border" id="loader" role="status">
-          <span>Loading...</span>
-        </div>
-      ) : (
-        <List children={elements}></List>
-      )} */}
-      <List children={elements}></List>
+    <section className="vh-100 mt-2" id="view">
+      <List
+        children={elements}
+        className="my-scroll-list"
+        style={{ width: "100%" }}
+      ></List>
     </section>
   );
 };

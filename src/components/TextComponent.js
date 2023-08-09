@@ -26,9 +26,6 @@ const TextComponent = ({ textValue, alignment }) => {
         dangerouslySetInnerHTML={{ __html: text }}
         style={{ textAlign: align }}
       ></p>
-      <div className="image__overlay">
-        <div className="image__title">Click to remove</div>
-      </div>
     </div>
   );
 };

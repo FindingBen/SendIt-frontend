@@ -14,10 +14,17 @@ const useAxiosInstance = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectCurrentToken);
   const user = useSelector((state) => state.auth.user);
+  const baseURL = "https://stingray-app-9825w.ondigitalocean.app/";
+  //const baseURL = "http://localhost:8000/";
+  //const authData = JSON.parse(useSelector((state) => state.auth));
+  //console.log(authData)
+  //const user = authData.user;
+  // const token = authData.token;
 
   const createAxiosInstance = (token) => {
     const instance = axios.create({
-      baseURL: "http://127.0.0.1:8000/api/",
+      baseURL: baseURL,
+      //baseURL: "http://localhost:8000/",
     });
 
     // Set the authorization header
@@ -29,14 +36,15 @@ const useAxiosInstance = () => {
   };
 
   const axiosInstanceRef = useRef(createAxiosInstance(token));
-
+  console.log(axiosInstanceRef);
   axiosInstanceRef.current.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${token}`;
 
   axiosInstanceRef.current.interceptors.request.use(async (req) => {
     if (!token) {
-      dispatch(logOut(user, token));
+      dispatch(logOut());
+      console.log("IS IT LOGGGED OUT!!!!!");
       localStorage.removeItem("tokens");
       // Handle the case where the token is not available
       // e.g., redirect the user to the login page
@@ -49,12 +57,9 @@ const useAxiosInstance = () => {
     if (!isExpired) return req;
 
     try {
-      const response = await axios.post(
-        `http://127.0.0.1:8000/api/token/refresh/`,
-        {
-          refresh: getRefreshToken,
-        }
-      );
+      const response = await axios.post(`${baseURL}/api/token/refresh/`, {
+        refresh: getRefreshToken,
+      });
       localStorage.setItem("tokens", response.data.refresh);
 
       const newToken = response.data.access;

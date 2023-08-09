@@ -15,7 +15,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  auth: persistReducer(persistConfig, authReducer),
+  auth: authReducer,
   formState: formReducer,
   modalState: modalReducer,
   elementState: elementReducer,
@@ -27,8 +27,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: [thunk, apiSlice.middleware],
-  devTools: true,
+  devTools: false,
 });
 
 export const persistor = persistStore(store);
-export default store;

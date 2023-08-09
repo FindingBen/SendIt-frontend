@@ -12,7 +12,7 @@ import Button from "../components/Button";
 import { setList } from "../features/elements/elementReducer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStop, faFont } from "@fortawesome/free-solid-svg-icons";
-import IFrame from "../components/IFrame";
+//import IFrame from "../components/IFrame";
 import { useEffect } from "react";
 import modalReducer, {
   selectModalCall,
@@ -54,7 +54,7 @@ const EditMessage = () => {
   const isFormDirt = useSelector(selectEditPageState);
   const dispatch = useDispatch();
   const params = useParams();
-  const iframeEl = document?.getElementById("myFrame");
+  const container = document?.getElementById("myList");
   const [getId, setId] = useState();
 
   useEffect(() => {
@@ -94,32 +94,23 @@ const EditMessage = () => {
   };
   console.log(elementContextList);
   const addEmptyListItem = () => {
-    if (iframeEl) {
-      const iframeDocument = iframeEl?.contentDocument;
-      if (iframeDocument) {
-        const listContainer = iframeDocument?.getElementById("myList");
-        if (listContainer) {
-          const newItem = document?.createElement("li");
-          newItem.className = "list-group-item";
-          newItem.id = "temp";
-          listContainer?.appendChild(newItem);
-        }
-      }
+    if (container) {
+      const newItem = document?.createElement("li");
+      newItem.className = "list-group-item";
+      newItem.id = "temp";
+      container?.appendChild(newItem);
     }
   };
 
   let messageView = async () => {
     setId(params.id);
-    let response = await axiosInstance.get(
-      `http://127.0.0.1:8000/api/message_view/${params.id}/`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-      }
-    );
+    let response = await axiosInstance.get(`/api/message_view/${params.id}/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(token),
+      },
+    });
     //let data = await response.json();
     setElements(response.data.element_list);
     setIsLoaded(false);
@@ -132,7 +123,7 @@ const EditMessage = () => {
         toDelete?.map(async (elementObj) => {
           try {
             const response = await axiosInstance.delete(
-              `http://localhost:8000/api/delete_element/${elementObj.id}/`
+              `/api/delete_element/${elementObj.id}/`
             );
             if (response.status === 200) {
               console.log("Success");
@@ -161,7 +152,7 @@ const EditMessage = () => {
       };
 
       let response = await axiosInstance.put(
-        `http://127.0.0.1:8000/api/message_view_edit/${params.id}/`,
+        `/api/message_view_edit/${params.id}/`,
         requestData,
         {
           headers: {
@@ -205,7 +196,7 @@ const EditMessage = () => {
         formData.append("users", elementContext.users);
 
         let response = await axiosInstance.post(
-          "http://127.0.0.1:8000/api/create_element/",
+          "/api/create_element/",
           formData,
           {
             headers: {
@@ -369,19 +360,12 @@ const EditMessage = () => {
                   <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
                   <div className="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
                   <div className="rounded-[2rem] overflow-hidden w-[270px] h-[572px] bg-white dark:bg-gray-800">
-                    <IFrame idPass={getId}>
-                      {isLoaded ? (
-                        /* Render the loading circle or spinner */
-                        <div className="spinner-grow" role="status">
-                          <span className="visually-hidden">Loading...</span>
-                        </div>
-                      ) : (
-                        <List
-                          children={elements}
-                          clicked={handleClicked}
-                        ></List>
-                      )}
-                    </IFrame>
+                    <List
+                      id="myList"
+                      className="my-scroll-list"
+                      children={elements}
+                      clicked={handleClicked}
+                    ></List>
                   </div>
                 </div>
               </div>

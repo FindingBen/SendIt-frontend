@@ -2,13 +2,14 @@ import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../css/CreationMessage.css";
 import "../css/RootIframe.css";
+import "../css/List.css";
 import { AiFillPicture } from "react-icons/ai";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStop, faFont } from "@fortawesome/free-solid-svg-icons";
 import Image from "../components/Image";
 import Text from "../components/Text";
 import Button from "../components/Button";
-import IFrame from "../components/IFrame";
+//import IFrame from "../components/IFrame";
 import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
 import {
   selectCurrentUser,
@@ -86,7 +87,7 @@ const CreateNote = () => {
       };
 
       let response = await axiosInstance.post(
-        "http://127.0.0.1:8000/api/create_notes/",
+        "/api/create_notes/",
         requestData,
         {
           headers: {
@@ -129,7 +130,7 @@ const CreateNote = () => {
         formData.append("users", elementContext.users);
 
         let response = await axiosInstance.post(
-          "http://127.0.0.1:8000/api/create_element/",
+          "/api/create_element/",
           formData,
           {
             headers: {
@@ -297,14 +298,16 @@ const CreateNote = () => {
                 <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
                 <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
                 <div className="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
-                <div className="rounded-[2rem] overflow-hidden w-[270px] h-[572px] bg-white dark:bg-gray-800">
-                  <IFrame>
-                    <List
-                      className="mt-3"
-                      children={elementContextList}
-                      clicked={handleClicked}
-                    />
-                  </IFrame>
+                <div
+                  className="rounded-[2rem] overflow-hidden w-[270px] h-[572px] bg-white dark:bg-gray-800"
+                  id="screen"
+                >
+                  <List
+                    id="myList"
+                    className="my-scroll-list"
+                    children={elementContextList}
+                    clicked={handleClicked}
+                  />
                 </div>
               </div>
             </div>

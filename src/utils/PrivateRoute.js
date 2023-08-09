@@ -19,6 +19,7 @@ const PrivateRoute = () => {
   //   </Routes>
   // );
   const token = useSelector(selectCurrentToken);
+
   const location = useLocation();
 
   return token ? (

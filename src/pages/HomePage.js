@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-
-import "../css/EditMessage.css";
 import { Link, useParams } from "react-router-dom";
 import "../css/Home.css";
 import {
@@ -38,7 +36,7 @@ const HomePage = () => {
 
   let getNotes = async () => {
     try {
-      let response = await axiosInstance.get("/notes/");
+      let response = await axiosInstance.get("/api/notes/");
 
       if (response.status === 200) {
         setNotes(response?.data);
@@ -62,7 +60,7 @@ const HomePage = () => {
             </div>
           </div>
           <div
-            className="static bg-gray-800 rounded-lg p-3 shadow-xl"
+            className="static bg-gray-50 rounded-lg p-3 shadow-xl"
             style={{ width: "97%" }}
           >
             <div
@@ -104,13 +102,13 @@ const HomePage = () => {
                 <ul id="ulItem">
                   {displayedItems?.map((note) => (
                     <li key={note.id} className="mb-3 dark:hover:bg-gray-400">
-                      <div className="bg-gray-800 rounded-lg">
+                      <div className="bg-gray-600 rounded-lg">
                         <div
                           className="static"
                           style={{ height: "45px", alignItems: "center" }}
                         >
                           <div
-                            className="inline-block text-1xl font-bold mb-4"
+                            className="inline-block text-1xl mb-4 text-gray-50"
                             style={{
                               float: "left",
                               marginTop: "10px",

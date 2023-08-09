@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import ContactLists from "./pages/ContactLists";
 import ContactList from "./pages/ContactList";
-import CreateContact from "./pages/CreateContact";
 import CreateMessage from "./pages/CreateMessage";
 import EditMessage from "./pages/EditMessage";
 import RegisterPage from "./pages/RegisterPage";
@@ -31,26 +30,31 @@ import CancelPayment from "./pages/CancelPayment";
 function App() {
   return (
     <div>
+      <Routes>
+        <Route
+          path="/message_view/:id"
+          element={<MessageView></MessageView>}
+        ></Route>
+      </Routes>
       <div className="App" style={({ height: "100vh" }, { display: "flex" })}>
         <ElementProvider>
           <Routes>
-            <Route
+            {/* <Route
               path="/message_view/:id"
               element={<MessageView></MessageView>}
-            ></Route>
-            <Route path="/" element={<Layout />}>
-              {/* <Route path="*" element={<PrivateRoute></PrivateRoute>} /> */}
-              <Route path="register" element={<RegisterPage />} />
-              <Route path="login" element={<Login></Login>} />
-              <Route
-                path="reset_password"
-                element={<PasswordReset></PasswordReset>}
-              />
+            ></Route> */}
+            <Route path="register" element={<RegisterPage />} />
+            <Route path="login" element={<Login></Login>} />
+            <Route
+              path="reset_password"
+              element={<PasswordReset></PasswordReset>}
+            />
 
-              <Route
-                path="reset_password_confirm/:uid/:token"
-                element={<PasswordResetConfirm></PasswordResetConfirm>}
-              />
+            <Route
+              path="reset_password_confirm/:uid/:token"
+              element={<PasswordResetConfirm></PasswordResetConfirm>}
+            />
+            <Route path="/" element={<Layout />}>
               <Route element={<PrivateRoute />}>
                 <Route path="home" element={<HomePage />} />
                 <Route path="create_note" element={<CreateMessage />} />
@@ -66,10 +70,7 @@ function App() {
                   path="/contact_list/:id"
                   element={<ContactList></ContactList>}
                 />
-                <Route
-                  path="/create_contact/:id"
-                  element={<CreateContact></CreateContact>}
-                />
+
                 <Route
                   path="/edit_message/:id"
                   element={<EditMessage></EditMessage>}
