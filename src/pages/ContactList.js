@@ -80,8 +80,10 @@ const ContactList = () => {
       <div className="container-fluid h-custom">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
-            <div className="col-12 mb-5">
-              <h1 className="text-3xl font-bold mb-4">List of recepients</h1>
+            <div className="col-12 mb-5 mt-3">
+              <h1 className="text-3xl mb-4 text-gray-300">
+                List of recepients
+              </h1>
               <div>
                 <button className="btn btn-dark" onClick={handleModal}>
                   Add contacts +
@@ -106,13 +108,13 @@ const ContactList = () => {
               </div>
             </div>
             <div className="col">
-              <div class="overflow-hidden rounded-lg border border-gray-200 shadow-md m-5">
-                <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
-                  <thead class="bg-gray-50">
+              <div class="overflow-hidden rounded-lg border border-gray-200 m-5">
+                <table class="w-full bg-white text-left text-sm text-gray-200">
+                  <thead class="bg-gray-50 text-gray-200">
                     <tr>
                       <th
                         scope="col"
-                        class="px-6 py-4 font-medium text-gray-900"
+                        class="px-6 py-4 font-medium text-gray-200"
                       >
                         First name
                       </th>
@@ -145,23 +147,31 @@ const ContactList = () => {
                       <tr class="hover:bg-gray-50" key={rowData.id}>
                         <th class="flex gap-3 px-6 py-4 font-normal text-gray-900">
                           <div class="text-sm">
-                            <div class="font-medium text-gray-700">
+                            <div class="font-medium text-gray-200">
                               {rowData.first_name}
                             </div>
                             {/* <div class="text-gray-400">jobs@sailboatui.com</div> */}
                           </div>
                         </th>
                         <td class="text-sm">
-                          <div class="font-medium text-gray-700">
+                          <div class="font-medium text-gray-200">
                             {rowData.last_name}
                           </div>
                         </td>
-                        <td class="px-6 py-4">{rowData.phone_number}</td>
                         <td class="px-6 py-4">
-                          <div class="flex gap-2">{rowData.email}</div>
+                          <div class="font-medium text-gray-200">
+                            {rowData.phone_number}
+                          </div>
                         </td>
                         <td class="px-6 py-4">
-                          <div class="flex justify-end gap-4">
+                          <div class="flex gap-2">
+                            <div class="font-medium text-gray-200">
+                              {rowData.email}
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-6 py-4">
+                          <div class="flex justify-end gap-4 text-red-400">
                             <button
                               type="button"
                               onClick={() => deleteContact(rowData.id)}

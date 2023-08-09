@@ -208,15 +208,15 @@ const CreateNote = () => {
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
             <div className="col-12 mb-5">
-              <h1 className="text-3xl font-bold mb-4 text-gray-800">
+              <h1 className="text-3xl font-bold mb-4 text-gray-300">
                 Create your ad content
               </h1>
               <hr></hr>
             </div>
             <div className="col">
               <div
-                className="static bg-indigo-400 rounded-lg p-10 shadow-2xl"
-                style={{ width: "97%" }}
+                className="static rounded-lg p-10"
+                style={{ width: "97%", backgroundColor: "#3d3e40" }}
               >
                 <MDBListGroup style={{ minWidthL: "22rem" }}>
                   {!showComponent && !active ? (

@@ -23,8 +23,9 @@ const Button = ({
 
   const [isCreated, setIsCreated] = useState(listEl);
   useEffect(() => {
-    if (container) {
-      const lastListItem = container.lastChild;
+    try {
+      const container = document.getElementById("myList");
+      const lastListItem = container?.lastChild;
       setTimeout(() => {
         if (!isCreated) {
           ReactDOM.render(
@@ -37,7 +38,9 @@ const Button = ({
             container
           );
         }
-      }, 10);
+      }, 5);
+    } catch (error) {
+      console.log(error);
     }
   }, [text, link, container]);
 
@@ -47,7 +50,8 @@ const Button = ({
     return () => {
       setText([]);
       setLink([]);
-      if (isMounted && container) {
+      try {
+        const container = document.getElementById("myList");
         const lastListItem = container?.lastChild;
         setTimeout(() => {
           if (!isCreated) {
@@ -55,7 +59,9 @@ const Button = ({
           } else {
             ReactDOM.render(<MDBListGroupItem></MDBListGroupItem>, container);
           }
-        }, 10);
+        }, 5);
+      } catch (error) {
+        console.log(error);
       }
     };
   }, []);
@@ -88,7 +94,8 @@ const Button = ({
     addButtonObjContext();
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
-    if (isMounted && container) {
+    if (isMounted) {
+      const container = document.getElementById("myList");
       if (!isCreated) {
         const listItems = Array.from(container?.children);
         listItems.forEach((listItem) => {
@@ -109,16 +116,17 @@ const Button = ({
     setActive(Boolean(!event.target.value));
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
-    if (isMounted && container) {
+    if (isMounted) {
+      const container = document.getElementById("myList");
       if (!isCreated) {
-        const listItems = Array.from(container.children);
-        listItems.forEach((listItem) => {
+        const listItems = Array.from(container?.children);
+        listItems?.forEach((listItem) => {
           // Perform your operations on each list item
           // For example, check if the element is empty
           if (listItem.innerHTML.trim() === "") {
             // The element is empty
             // Perform your logic here
-            container.removeChild(listItem);
+            container?.removeChild(listItem);
           }
         });
       }

@@ -35,10 +35,8 @@ const ContactList = () => {
       <div className="container-fluid h-custom">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
-            <div className="col-12 mb-5 mt-2">
-              <h1 className="text-3xl font-bold text-gray-800">
-                Contact lists
-              </h1>
+            <div className="col-12 mb-5 mt-3">
+              <h1 className="text-3xl text-gray-300">Contact lists</h1>
             </div>
             <hr></hr>
             <div className="col-12 mt-3">
@@ -49,14 +47,15 @@ const ContactList = () => {
                       key={conList.id}
                       className="mb-3 dark:hover:bg-gray-400"
                     >
-                      <div className="bg-gray-800 rounded-lg">
+                      <div className="bg-gray-600 rounded-lg">
                         <div className="static" style={{ height: "50px" }}>
                           <div
-                            className="inline-block text-1xl font-bold mb-4"
+                            className="inline-block text-1xl mb-4"
                             style={{
                               float: "left",
                               marginTop: "10px",
                               marginLeft: "4px",
+                              color: "white",
                             }}
                           >
                             {conList.list_name}

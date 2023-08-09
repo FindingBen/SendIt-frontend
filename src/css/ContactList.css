@@ -10,9 +10,45 @@
   margin: 0 5px;
   padding: 5px;
   border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #ccc;
 }
 
 .pagination li.active {
-  background-color: #007bff;
-  color: #fff;
+  background-color: #ececec;
+  color: #63898b;
 }
+
+
+	tr td:nth-child(n+5),
+	tr th:nth-child(n+5) {
+		
+        background-color: #3d3e40;
+        color: rgb(139, 168, 190);
+	}
+
+
+	tr td:nth-child(1),
+	tr th:nth-child(1) {
+		color: rgb(139, 168, 190);
+        background-color: #3d3e40;
+	}
+
+    tr td:nth-child(2),
+	tr th:nth-child(2) {
+    color: rgb(139, 168, 190);
+        background-color: #3d3e40;
+	}
+
+    tr td:nth-child(3),
+	tr th:nth-child(3) {
+    color: rgb(139, 168, 190);
+        background-color: #3d3e40;
+	}
+
+    tr td:nth-child(4),
+	tr th:nth-child(4) {
+    color: rgb(139, 168, 190);
+        background-color: #3d3e40;
+        
+	}

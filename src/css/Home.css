@@ -12,3 +12,53 @@
     list-style-type: none;
     align-items: center;
 }
+
+
+.table {
+	border-spacing: 0 15px;
+    --bs-table-border-color:var(--bs-table-border-color);
+    
+}
+
+i{
+	font-size: 1rem !important;
+}
+
+.table tr {
+	border-radius: 0px;
+    background-color: #2e2e30;
+}
+
+	tr td:nth-child(n+5),
+	tr th:nth-child(n+5) {
+		
+        background-color: #3d3e40;
+        color: rgb(120, 129, 136);
+	}
+
+	tr td:nth-child(1),
+	tr th:nth-child(1) {
+		color: rgb(120, 129, 136);
+        background-color: #3d3e40;
+	}
+
+    tr td:nth-child(2),
+	tr th:nth-child(2) {
+		color: rgb(120, 129, 136);
+        background-color: #3d3e40;
+	}
+
+    tr td:nth-child(3),
+	tr th:nth-child(3) {
+		color: rgb(120, 129, 136);
+        background-color: #3d3e40;
+	}
+
+    tr td:nth-child(4),
+	tr th:nth-child(4) {
+		color: rgb(120, 129, 136);
+        background-color: #3d3e40;
+        
+	}
+
+

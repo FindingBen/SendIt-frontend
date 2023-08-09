@@ -52,7 +52,7 @@ const Text = ({
     try {
       const listContainer = document.getElementById("myList");
       const lastListItem = listContainer?.lastChild;
-      console.log(listContainer);
+
       setTimeout(() => {
         if (!isCreated) {
           ReactDOM?.render(
@@ -189,6 +189,7 @@ const Text = ({
       <ReactQuill
         className="editor-input"
         theme="snow"
+        style={{ background: "white" }}
         value={text}
         onChange={handleTextFunc}
         modules={modules}
