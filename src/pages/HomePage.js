@@ -11,7 +11,7 @@ import useAxiosInstance from "../utils/axiosInstance";
 import DeleteMessageModal from "../features/modal/DeleteMessageModal";
 import ReactGA from "react-ga";
 
-const TRACKING_ID = "";
+const TRACKING_ID = "G-FPHE42LL46";
 ReactGA.initialize(TRACKING_ID);
 
 const HomePage = () => {
@@ -39,6 +39,7 @@ const HomePage = () => {
   const displayedItems = notes.slice(startIndex, endIndex);
 
   let getNotes = async () => {
+    ReactGA.event({'category':'TestHome','action:':'submit','label':'home'})
     try {
       let response = await axiosInstance.get("/api/notes/");
 
