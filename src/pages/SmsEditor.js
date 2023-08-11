@@ -131,52 +131,76 @@ const SmsEditor = () => {
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
             <div className="col-12 mb-5">
-              <h1 className="text-3xl font-bold mb-4 text-gray-800">
+              <h1 className="text-3xl font-bold mb-4 mt-3 text-gray-300">
                 Sms configuration
               </h1>
               <hr></hr>
             </div>
             <div className="col">
-              <div className="md-form mt-2">
-                <label for="form1">From</label>
-                <input type="text" name="from" className="form-control" />
-              </div>
+              <div
+                class="border-solid border-1 border-gray-500 rounded"
+                style={{
+                  backgroundColor: "#3d3e40",
+                  paddingLeft: "20px",
+                  paddingRight: "20px",
+                  paddingBottom: "20px",
+                }}
+              >
+                <div className="md-form mt-2 text-gray-300">
+                  <label for="form1">From</label>
+                  <input type="text" name="from" className="form-control" />
+                </div>
 
-              <div className="md-form">
-                <label for="form1">Contact list</label>
-                <input
-                  type="text"
-                  name="contactList"
-                  className="form-control"
-                />
-              </div>
-              <br></br>
-              <div className="form-group purple-border">
-                <label for="exampleFormControlTextarea4">Text message</label>
-
-                <textarea
-                  id="smsTextArea"
-                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Write your thoughts here..."
-                  onChange={handleSms}
-                  value={smsText}
-                ></textarea>
-                <button
-                  onClick={handleAddLink}
-                  value={linkURLBase}
-                  className="bg-blue-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded mb-5"
-                >
-                  Add link
-                </button>
+                <div className="md-form text-gray-300">
+                  <label for="form1">Contact list</label>
+                  <input
+                    type="text"
+                    name="contactList"
+                    className="form-control"
+                  />
+                </div>
                 <br></br>
-                <button
-                  onClick={sendSms}
-                  type="submit"
-                  color="dark"
-                  className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-                >
-                  Send
-                </button>
+                <div className="form-group purple-border text-gray-300">
+                  <label for="exampleFormControlTextarea4">Text message</label>
+
+                  <textarea
+                    id="smsTextArea"
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Write your thoughts here..."
+                    onChange={handleSms}
+                    value={smsText}
+                  ></textarea>
+                  <button
+                    onClick={handleAddLink}
+                    value={linkURLBase}
+                    style={{ alignContent: "flex-end" }}
+                    className="bg-blue-800 hover:bg-blue-400 text-white font-bold py-1 px-3 border border-gray-600 rounded mb-3 mt-2 justify-end"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-6 h-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+                      />
+                    </svg>
+                  </button>
+                  <br></br>
+                  <button
+                    onClick={sendSms}
+                    type="submit"
+                    color="dark"
+                    className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+                  >
+                    Send
+                  </button>
+                </div>
               </div>
               {errorMessage && (
                 <div

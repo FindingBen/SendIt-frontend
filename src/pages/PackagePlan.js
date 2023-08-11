@@ -94,7 +94,7 @@ const PackagePlan = () => {
           <div className="row">
             <div className="container my-10 mx-auto md:px-6">
               <section className="mb-10">
-                <h2 className="mb-6 text-center text-3xl font-bold text-gray-800">
+                <h2 className="mb-6 text-center text-3xl font-bold text-gray-300">
                   Pricing
                 </h2>
                 <hr></hr>

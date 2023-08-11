@@ -64,14 +64,14 @@ const HomePage = () => {
             </div>
           </div>
           <div
-            className="static rounded-lg p-3"
+            className="static rounded-lg p-3 border-1 border-gray-600"
             style={{
               width: "97%",
               backgroundColor: "#3d3e40",
             }}
           >
             <div
-              className="inline-block max-w-sm p-4"
+              className="inline-block max-w-sm p-4 "
               style={{ marginLeft: "12px", borderRight: "1px solid grey" }}
             >
               <h5 className="mb-2 text-2xl tracking-tight text-white dark:text-white">
@@ -105,7 +105,7 @@ const HomePage = () => {
                 <div>LOL</div>
               ) : (
                 <div
-                  class="items-center justify-center rounded-lg mb-3"
+                  class="items-center justify-center rounded-lg mb-3 border-1 border-gray-600"
                   style={{ backgroundColor: "#3d3e40" }}
                 >
                   <div class="col-span-12">
@@ -114,10 +114,10 @@ const HomePage = () => {
                         <thead class="bg-gray-300 text-white">
                           <tr>
                             <th class="p-3">Type</th>
-                            <th class="p-3 text-left">Create at</th>
-                            <th class="p-3 text-left">Analytics</th>
-                            <th class="p-3 text-left">Status</th>
-                            <th class="p-3 text-left">Action</th>
+                            <th class="p-3">Create at</th>
+                            <th class="p-3">Analytics</th>
+                            <th class="p-3">Status</th>
+                            <th class="p-3">Action</th>
                           </tr>
                         </thead>
 
@@ -125,16 +125,14 @@ const HomePage = () => {
                           {displayedItems?.map((message) => (
                             <tr class="bg-gray-200">
                               <td class="p-3">
-                                <div class="flex align-items-center">
-                                  <div class="ml-3">
-                                    <div class="font-medium text-gray-200">
-                                      Sms
-                                    </div>
+                                <div class="ml-3">
+                                  <div class="font-medium text-gray-200">
+                                    Sms
                                   </div>
                                 </div>
                               </td>
                               <td class="p-3">
-                                <div className="font-medium text-gray-200">
+                                <div className="font-medium text-gray-200 text-center">
                                   {message.created_at}
                                 </div>
                               </td>

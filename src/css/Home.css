@@ -17,12 +17,13 @@
 .table {
 	border-spacing: 0 15px;
     --bs-table-border-color:var(--bs-table-border-color);
-    
 }
 
 i{
 	font-size: 1rem !important;
 }
+
+
 
 .table tr {
 	border-radius: 0px;

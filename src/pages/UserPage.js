@@ -88,7 +88,7 @@ const UserPage = () => {
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row">
             <div className="col-12 m">
-              <h1 className="text-3xl font-bold mb-4 mt-2">
+              <h1 className="text-3xl font-bold mb-4 mt-2 text-gray-300 mt-3">
                 Account information
               </h1>
               <hr></hr>
@@ -97,14 +97,14 @@ const UserPage = () => {
               <div>
                 <label
                   for="first_name"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-300 dark:text-white"
                 >
                   First name
                 </label>
                 <input
                   type="text"
                   id="first_name"
-                  className="bg-gray-800 hover:bg-green-400 mt-1 text-white py-2 px-4 border border-blue-700 rounded w-full"
+                  className="bg-gray-300 hover:bg-gray-50 mt-1 text-white border border-gray-300 rounded w-full"
                   value={newName}
                   onChange={handleNewName}
                 />
@@ -112,14 +112,14 @@ const UserPage = () => {
               <div>
                 <label
                   for="last_name"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-300 dark:text-white"
                 >
                   Last name
                 </label>
                 <input
                   type="text"
                   id="last_name"
-                  className="bg-gray-800 hover:bg-green-400 mt-1 text-white font-bold py-2 px-4 border border-blue-700 rounded w-full"
+                  className="bg-gray-300 hover:bg-gray-50 mt-1 text-white font-bold py-2 px-4 border border-blue-700 rounded w-full"
                   placeholder="Doe"
                   value={newLastName}
                   onChange={handleNewLastName}
@@ -128,14 +128,14 @@ const UserPage = () => {
               <div>
                 <label
                   for="last_name"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-300 dark:text-white"
                 >
                   Username
                 </label>
                 <input
                   type="text"
                   id="last_name"
-                  className="bg-gray-800 hover:bg-green-400 mt-1 text-white font-bold py-2 px-4 border border-blue-700 rounded w-full"
+                  className="bg-gray-300 hover:bg-gray-50 mt-1 text-dark font-bold py-2 px-4 border border-blue-700 rounded w-full"
                   placeholder="Doe"
                   value={user?.username}
                   disabled
@@ -145,12 +145,12 @@ const UserPage = () => {
               <div className="mb-6">
                 <label
                   for="email"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-300 dark:text-white"
                 >
                   Email address
                 </label>
                 <input
-                  className="bg-gray-800 hover:bg-green-400 mt-1 text-white py-2 px-4 border border-blue-700 rounded w-full"
+                  className="bg-gray-300 hover:bg-gray-50 mt-1 text-dark py-2 px-4 border border-blue-700 rounded w-full"
                   type="email"
                   value={user?.email}
                   disabled

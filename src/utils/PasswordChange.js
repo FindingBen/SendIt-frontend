@@ -47,31 +47,33 @@ const PasswordChange = () => {
       <div className="container-fluid h-custom">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-12">
-            <h1 className="text-2xl font-bold mb-4">Change your password</h1>
+            <h1 className="text-2xl font-bold mb-4 text-gray-300">
+              Change your password
+            </h1>
             <hr></hr>
           </div>
           <div className="row">
             <div>
               <input
                 type="password"
-                className="bg-gray-800 hover:bg-green-400 mt-1 text-white py-2 px-4 border border-blue-700 rounded w-full"
+                className="bg-gray-300 hover:bg-gray-50 text-white py-2 px-4 border border-blue-700 rounded w-full"
                 placeholder="Enter your new password"
                 onChange={handleNewPass}
               ></input>
               <input
                 type="password"
-                className="bg-gray-800 hover:bg-green-400 mt-1 text-white py-2 px-4 border border-blue-700 rounded w-full"
+                className="bg-gray-300 hover:bg-gray-50 mt-3 text-white py-2 px-4 border border-blue-700 rounded w-full"
                 placeholder="Re-enter your new password"
                 onChange={handleReNewPass}
               ></input>
               <input
                 type="password"
-                className="bg-gray-800 hover:bg-green-400 mt-1 text-white py-2 px-4 border border-blue-700 rounded w-full"
+                className="bg-gray-300 hover:bg-gray-50 mt-3 text-white py-2 px-4 border border-blue-700 rounded w-full"
                 placeholder="Enter your old password"
                 onChange={handleOldPass}
               ></input>
               <button
-                className="bg-sky-800 hover:bg-green-400 mt-1 text-white font-bold py-2 px-4 border border-blue-700 rounded w-25"
+                className="bg-sky-800 hover:bg-green-400 mt-3 text-white font-bold py-2 px-4 border border-blue-700 rounded w-25"
                 onClick={passChange}
               >
                 Reset
