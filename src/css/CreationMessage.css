@@ -60,10 +60,22 @@ width: 100%;
   list-style-type: none;
 }
 
-#elItem{
+.list-group-light {
+  --mdb-list-group-light-item-py: 1rem;
+  padding-left: 4px;
+  margin-top: 10px;
+  width: 100%;
+  /* --mdb-list-group-light-item-border: 2px solid whitesmoke; */
+  /* --mdb-list-group-light-item-border-width: 2px; */
+  /* --mdb-list-group-light-active-border-radius: 0.5rem; */
+  /* --mdb-list-group-light-active-bg: #dfe7f6; */
+  /* --mdb-list-group-light-active-color: #2c58a0; */
+}
+
+/* #elItem{
   padding-left: 4px;
   width: 100%;
-}
+} */
 
 .image__overlay{
 position: absolute;

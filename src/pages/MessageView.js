@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import List from "../components/List";
 import useAxiosInstance from "../utils/axiosInstance";
+import { isMobile, isTablet, isDesktop } from "react-device-detect";
 import "../css/List.css";
 import "../css/MessageView.css";
 const MessageView = ({ imageProp, textProp }) => {

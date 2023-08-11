@@ -30,9 +30,10 @@ const List = ({ children, alignment, clicked }) => {
     >
       {items &&
         items?.map((item, index) => (
-          <MDBListGroupItem
+          <li
             id="elItem"
             key={item.id}
+            className="list-group-light"
             //className="hover:bg-blue-300"
             //onClick={() => toDelete(item)}
           >
@@ -51,7 +52,7 @@ const List = ({ children, alignment, clicked }) => {
             ) : (
               <></>
             )}
-          </MDBListGroupItem>
+          </li>
         ))}
     </MDBListGroup>
   );
