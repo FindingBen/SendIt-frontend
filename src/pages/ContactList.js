@@ -8,6 +8,7 @@ import CsvModal from "../features/modal/CsvModal";
 import AddContactModal from "../features/modal/AddContactModal";
 import ReactPaginate from "react-paginate";
 import "../css/ContactList.css";
+import useAnalyticsEventTracker from "../utils/useAnalyticsEventTracker";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
@@ -19,7 +20,7 @@ const ContactList = () => {
   const params = useParams();
   const navigate = useNavigate();
   const rowsPerPage = 8;
-
+  const gaEventTracker = useAnalyticsEventTracker("Add contact");
   useEffect(() => {
     getContacts();
   }, []);
@@ -87,6 +88,12 @@ const ContactList = () => {
               <div>
                 <button className="btn btn-dark" onClick={handleModal}>
                   Add contacts +
+                </button>
+                <button
+                  className="btn btn-dark"
+                  onClick={() => gaEventTracker("track")}
+                >
+                  Track
                 </button>
 
                 <button className="btn btn-dark" onClick={handleCsvModal}>
