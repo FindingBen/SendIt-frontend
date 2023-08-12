@@ -1,10 +1,6 @@
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
 import ContactLists from "./pages/ContactLists";
 import ContactList from "./pages/ContactList";
 import CreateMessage from "./pages/CreateMessage";
@@ -31,6 +27,10 @@ const TRACKING_ID = "G-FPHE42LL46";
 ReactGA.initialize(TRACKING_ID, { debug: true });
 
 function App() {
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname);
+  }, []);
+
   return (
     <div>
       <Routes>
