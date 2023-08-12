@@ -23,9 +23,12 @@ import CreateList from "./pages/CreateList";
 import PackagePlan from "./pages/PackagePlan";
 import PasswordReset from "./utils/PasswordReset";
 import PasswordResetConfirm from "./utils/PasswordResetConfirm";
-
+import ReactGA from "react-ga";
 import SuccessPayment from "./pages/SuccessPayment";
 import CancelPayment from "./pages/CancelPayment";
+
+const TRACKING_ID = "G-FPHE42LL46";
+ReactGA.initialize(TRACKING_ID, { debug: true });
 
 function App() {
   return (

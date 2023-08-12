@@ -21,6 +21,7 @@ const ContactList = () => {
   const navigate = useNavigate();
   const rowsPerPage = 8;
   const gaEventTracker = useAnalyticsEventTracker("Add contact");
+  console.log(gaEventTracker);
   useEffect(() => {
     getContacts();
   }, []);
@@ -89,12 +90,12 @@ const ContactList = () => {
                 <button className="btn btn-dark" onClick={handleModal}>
                   Add contacts +
                 </button>
-                <button
+                <a
                   className="btn btn-dark"
                   onClick={() => gaEventTracker("track")}
                 >
                   Track
-                </button>
+                </a>
 
                 <button className="btn btn-dark" onClick={handleCsvModal}>
                   <svg

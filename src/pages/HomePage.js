@@ -11,8 +11,7 @@ import useAxiosInstance from "../utils/axiosInstance";
 import DeleteMessageModal from "../features/modal/DeleteMessageModal";
 import ReactGA from "react-ga";
 
-const TRACKING_ID = "G-FPHE42LL46";
-ReactGA.initialize(TRACKING_ID);
+
 
 const HomePage = () => {
   const axiosInstance = useAxiosInstance();
