@@ -22,6 +22,7 @@ import PasswordResetConfirm from "./utils/PasswordResetConfirm";
 import ReactGA from "react-ga";
 import SuccessPayment from "./pages/SuccessPayment";
 import CancelPayment from "./pages/CancelPayment";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 const TRACKING_ID = "G-FPHE42LL46";
 ReactGA.initialize(TRACKING_ID, { debug: true });
@@ -50,6 +51,7 @@ function App() {
               path="/message_view/:id"
               element={<MessageView></MessageView>}
             ></Route> */}
+
             <Route path="register" element={<RegisterPage />} />
             <Route path="login" element={<Login></Login>} />
             <Route
@@ -63,6 +65,7 @@ function App() {
             />
             <Route path="/" element={<Layout />}>
               <Route element={<PrivateRoute />}>
+                <Route path="analytics" element={<AnalyticsPage />} />
                 <Route path="home" element={<HomePage />} />
                 <Route path="create_note" element={<CreateMessage />} />
                 <Route

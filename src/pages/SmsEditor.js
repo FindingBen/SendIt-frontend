@@ -14,7 +14,7 @@ import "react-quill/dist/quill.snow.css";
 import "../css/Sms.css";
 import TextComponent from "../components/TextComponent";
 import TrackLink from "../utils/TrackLink";
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const SmsEditor = () => {
   const axiosInstance = useAxiosInstance();
@@ -35,7 +35,7 @@ const SmsEditor = () => {
 
   useEffect(() => {
     setErrorMessage("");
-    
+
     try {
       if (textComponentRef.current) {
         setTimeout(() => {
@@ -69,7 +69,6 @@ const SmsEditor = () => {
     setSmsText(e.target.value);
   };
 
-
   const sendSms = async (e) => {
     e.preventDefault();
     try {
@@ -101,14 +100,25 @@ const SmsEditor = () => {
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
         <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="row">
-            <div className="col-12 mb-5">
-              <h1 className="text-3xl font-bold mb-4 mt-3 text-gray-300">
-                Sms configuration
-              </h1>
-              <hr></hr>
+          <div className="row" style={{ paddingLeft: "2.5%" }}>
+            <div
+              className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
+              style={{ backgroundColor: "#3d3e40", width: "95%" }}
+            >
+              <div className="row">
+                <div className="col">
+                  <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left">
+                    Sms editor
+                  </h1>
+                </div>
+                <div className="col">
+                  <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right">
+                    Sms credit count: 0
+                  </h1>
+                </div>
+              </div>
             </div>
-            <div className="col">
+            <div className="col mt-3" style={{ paddingLeft: "0%" }}>
               <div
                 class="border-solid border-1 border-gray-500 rounded"
                 style={{
@@ -118,26 +128,30 @@ const SmsEditor = () => {
                   paddingBottom: "20px",
                 }}
               >
-                <div className="md-form mt-2 text-gray-300">
+                <div className="md-form mt-2 text-gray-100">
                   <label for="form1">From</label>
-                  <input type="text" name="from" className="form-control" />
+                  <input
+                    type="text"
+                    name="from"
+                    className="form-control bg-gray-400 text-gray-50 rounded-lg"
+                  />
                 </div>
 
-                <div className="md-form text-gray-300">
+                <div className="md-form text-gray-100 mt-2">
                   <label for="form1">Contact list</label>
                   <input
                     type="text"
                     name="contactList"
-                    className="form-control"
+                    className="form-control bg-gray-400 text-gray-50 rounded-lg"
                   />
                 </div>
                 <br></br>
-                <div className="form-group purple-border text-gray-300">
+                <div className="form-group purple-border text-gray-100 rounded-lg">
                   <label for="exampleFormControlTextarea4">Text message</label>
 
                   <textarea
                     id="smsTextArea"
-                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="block p-2.5 w-full text-sm text-gray-50 bg-gray-500 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Write your thoughts here..."
                     onChange={handleSms}
                     value={smsText}
@@ -184,7 +198,7 @@ const SmsEditor = () => {
                 </div>
               )}
             </div>
-            <div className="col">
+            <div className="col mt-3">
               <div className="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-500 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl ">
                 <div className="w-[148px] h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
                 <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>

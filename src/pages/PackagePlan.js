@@ -91,384 +91,390 @@ const PackagePlan = () => {
     <section className="vh-100  w-100">
       <div className="container-fluid h-custom">
         <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="row">
-            <div className="container my-10 mx-auto md:px-6">
-              <section className="mb-10">
-                <h2 className="mb-6 text-center text-3xl font-bold text-gray-300">
-                  Pricing
-                </h2>
-                <hr></hr>
-                <div className="grid gap-6 lg:grid-cols-3 lg:gap-x-8 mt-3">
-                  <div key={packagePlan[0]?.id} className="mb-6 lg:mb-0">
-                    <div className="block w-full text-sm text-gray-50 border border-gray-300 rounded-lg cursor-pointer bg-gray-800 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                      <div className="border-b-2 border-neutral-100 border-opacity-100 p-6 text-center dark:border-opacity-40">
-                        <p className="mb-4 text-sm uppercase">
-                          <strong>{packagePlan[0]?.plan_type}</strong>
-                        </p>
-                        <h3 className="mb-6 text-3xl">
-                          <strong>$ {packagePlan[0]?.price}</strong>
-                          <small className="text-base text-neutral-500 dark:text-neutral-300">
-                            /month
-                          </small>
-                        </h3>
+          <div className="row" style={{ paddingLeft: "2.5%" }}>
+            <div
+              className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
+              style={{ backgroundColor: "#3d3e40", width: "95%" }}
+            >
+              <div className="row">
+                <div className="col">
+                  <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left">
+                    Package types
+                  </h1>
+                </div>
+                <div className="col">
+                  <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right">
+                    Sms credit count: 0
+                  </h1>
+                </div>
+              </div>
+            </div>
+            <div
+              className="grid gap-6 lg:grid-cols-3 lg:gap-x-8 mt-3"
+              style={{ width: "95%" }}
+            >
+              <div key={packagePlan[0]?.id} className="mb-6 lg:mb-0">
+                <div className="block w-full text-sm text-gray-50 border border-gray-300 rounded-lg cursor-pointer bg-gray-800 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                  <div className="border-b-2 border-neutral-100 border-opacity-100 p-6 text-center dark:border-opacity-40">
+                    <p className="mb-4 text-sm uppercase">
+                      <strong>{packagePlan[0]?.plan_type}</strong>
+                    </p>
+                    <h3 className="mb-6 text-3xl">
+                      <strong>$ {packagePlan[0]?.price}</strong>
+                      <small className="text-base text-neutral-500 dark:text-neutral-300">
+                        /month
+                      </small>
+                    </h3>
 
-                        <button
-                          type="button"
-                          onClick={() =>
-                            stripeCheckout(packagePlan[0]?.plan_type)
-                          }
-                          className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-800 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
-                          data-te-ripple-init
-                          data-te-ripple-color="light"
-                          value={0}
-                        >
-                          Buy
-                        </button>
-                      </div>
-                      <div className="p-6">
-                        <ol className="list-inside">
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[0]?.offer1}
-                          </li>
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[0]?.offer2}
-                          </li>
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            npm installation
-                          </li>
-                        </ol>
-                      </div>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => stripeCheckout(packagePlan[0]?.plan_type)}
+                      className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-800 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                      data-te-ripple-init
+                      data-te-ripple-color="light"
+                      value={0}
+                    >
+                      Buy
+                    </button>
                   </div>
-                  {/* <!---!> */}
-                  <div key={packagePlan[1]?.id} className="mb-6 lg:mb-0">
-                    <div className="block w-full text-sm text-gray-50 border border-gray-300 rounded-lg cursor-pointer bg-gray-800 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                      <div className="border-b-2 border-neutral-100 border-opacity-100 p-6 text-center dark:border-opacity-40">
-                        <p className="mb-4 text-sm uppercase">
-                          <strong>{packagePlan[1]?.plan_type}</strong>
-                        </p>
-                        <h3 className="mb-6 text-3xl">
-                          <strong>$ {packagePlan[1]?.price}</strong>
-                          <small className="text-base text-neutral-500 dark:text-neutral-300">
-                            /month
-                          </small>
-                        </h3>
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            stripeCheckout(packagePlan[1]?.plan_type)
-                          }
-                          className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
-                          data-te-ripple-init
-                          data-te-ripple-color="light"
+                  <div className="p-6">
+                    <ol className="list-inside">
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
                         >
-                          Buy
-                        </button>
-                      </div>
-                      <div className="p-6">
-                        <ol className="list-inside">
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[1]?.offer1}
-                          </li>
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[1]?.offer2}
-                          </li>
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[1]?.offer3}
-                          </li>
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[1]?.offer4}
-                          </li>
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[1]?.offer5}
-                          </li>
-                        </ol>
-                      </div>
-                    </div>
-                  </div>
-                  {/* .... */}
-                  <div key={packagePlan[2]?.id} className="mb-6 lg:mb-0">
-                    <div className="block w-full text-sm text-gray-50 border border-gray-300 rounded-lg cursor-pointer bg-gray-800 dark:text-white-500 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
-                      <div className="border-b-2 border-neutral-100 border-opacity-100 p-6 text-center dark:border-opacity-40">
-                        <p className="mb-4 text-sm uppercase">
-                          <strong>{packagePlan[2]?.plan_type}</strong>
-                        </p>
-                        <h3 className="mb-6 text-3xl">
-                          <strong>$ {packagePlan[2]?.price}</strong>
-                          <small className="text-base text-neutral-500 dark:text-neutral-300">
-                            /month
-                          </small>
-                        </h3>
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            stripeCheckout(packagePlan[2]?.plan_type)
-                          }
-                          className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
-                          data-te-ripple-init
-                          data-te-ripple-color="light"
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[0]?.offer1}
+                      </li>
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
                         >
-                          Buy
-                        </button>
-                      </div>
-                      <div className="p-6">
-                        <ol className="list-inside">
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[2]?.offer1}
-                          </li>
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[2]?.offer2}
-                          </li>
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[2]?.offer3}
-                          </li>
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[2]?.offer4}
-                          </li>
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[2]?.offer5}
-                          </li>
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[2]?.offer6}
-                          </li>
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[2]?.offer7}
-                          </li>
-                          <li className="mb-4 flex">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              strokeWidth="2"
-                              stroke="currentColor"
-                              className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12.75l6 6 9-13.5"
-                              />
-                            </svg>
-                            {packagePlan[2]?.offer8}
-                          </li>
-                        </ol>
-                      </div>
-                    </div>
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[0]?.offer2}
+                      </li>
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        npm installation
+                      </li>
+                    </ol>
                   </div>
                 </div>
-              </section>
+              </div>
+              {/* <!---!> */}
+              <div key={packagePlan[1]?.id} className="mb-6 lg:mb-0">
+                <div className="block w-full text-sm text-gray-50 border border-gray-300 rounded-lg cursor-pointer bg-gray-800 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                  <div className="border-b-2 border-neutral-100 border-opacity-100 p-6 text-center dark:border-opacity-40">
+                    <p className="mb-4 text-sm uppercase">
+                      <strong>{packagePlan[1]?.plan_type}</strong>
+                    </p>
+                    <h3 className="mb-6 text-3xl">
+                      <strong>$ {packagePlan[1]?.price}</strong>
+                      <small className="text-base text-neutral-500 dark:text-neutral-300">
+                        /month
+                      </small>
+                    </h3>
+
+                    <button
+                      type="button"
+                      onClick={() => stripeCheckout(packagePlan[1]?.plan_type)}
+                      className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                      data-te-ripple-init
+                      data-te-ripple-color="light"
+                    >
+                      Buy
+                    </button>
+                  </div>
+                  <div className="p-6">
+                    <ol className="list-inside">
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[1]?.offer1}
+                      </li>
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[1]?.offer2}
+                      </li>
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[1]?.offer3}
+                      </li>
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[1]?.offer4}
+                      </li>
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[1]?.offer5}
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+              {/* .... */}
+              <div key={packagePlan[2]?.id} className="mb-6 lg:mb-0">
+                <div className="block w-full text-sm text-gray-50 border border-gray-300 rounded-lg cursor-pointer bg-gray-800 dark:text-white-500 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400">
+                  <div className="border-b-2 border-neutral-100 border-opacity-100 p-6 text-center dark:border-opacity-40">
+                    <p className="mb-4 text-sm uppercase">
+                      <strong>{packagePlan[2]?.plan_type}</strong>
+                    </p>
+                    <h3 className="mb-6 text-3xl">
+                      <strong>$ {packagePlan[2]?.price}</strong>
+                      <small className="text-base text-neutral-500 dark:text-neutral-300">
+                        /month
+                      </small>
+                    </h3>
+
+                    <button
+                      type="button"
+                      onClick={() => stripeCheckout(packagePlan[2]?.plan_type)}
+                      className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                      data-te-ripple-init
+                      data-te-ripple-color="light"
+                    >
+                      Buy
+                    </button>
+                  </div>
+                  <div className="p-6">
+                    <ol className="list-inside">
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[2]?.offer1}
+                      </li>
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[2]?.offer2}
+                      </li>
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[2]?.offer3}
+                      </li>
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[2]?.offer4}
+                      </li>
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[2]?.offer5}
+                      </li>
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[2]?.offer6}
+                      </li>
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[2]?.offer7}
+                      </li>
+                      <li className="mb-4 flex">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                        {packagePlan[2]?.offer8}
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

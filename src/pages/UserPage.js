@@ -86,12 +86,23 @@ const UserPage = () => {
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
         <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="row">
-            <div className="col-12 m">
-              <h1 className="text-3xl font-bold mb-4 mt-2 text-gray-300 mt-3">
-                Account information
-              </h1>
-              <hr></hr>
+          <div className="row" style={{ paddingLeft: "2.5%" }}>
+            <div
+              className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
+              style={{ backgroundColor: "#3d3e40", width: "95%" }}
+            >
+              <div className="row">
+                <div className="col">
+                  <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left">
+                    Package types
+                  </h1>
+                </div>
+                <div className="col">
+                  <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right">
+                    Sms credit count: 0
+                  </h1>
+                </div>
+              </div>
             </div>
             <div className="grid gap-3 w-50 mt-4" style={{ marginLeft: "25%" }}>
               <div>

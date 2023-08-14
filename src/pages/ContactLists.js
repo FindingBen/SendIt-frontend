@@ -34,11 +34,24 @@ const ContactList = () => {
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
         <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="row">
-            <div className="col-12 mb-5 mt-3">
-              <h1 className="text-3xl text-gray-300">Contact lists</h1>
+          <div className="row" style={{ paddingLeft: "2.5%" }}>
+            <div
+              className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
+              style={{ backgroundColor: "#3d3e40", width: "95%" }}
+            >
+              <div className="row">
+                <div className="col">
+                  <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left">
+                    Contact lists
+                  </h1>
+                </div>
+                <div className="col">
+                  <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right">
+                    Sms credit count: 0
+                  </h1>
+                </div>
+              </div>
             </div>
-            <hr></hr>
             <div className="col-12 mt-3">
               {contactList.length > 0 ? (
                 <ul id="ulItem">

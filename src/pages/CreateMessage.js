@@ -206,17 +206,31 @@ const CreateNote = () => {
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
         <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="row">
-            <div className="col-12 mb-5">
-              <h1 className="text-3xl font-bold mb-4 text-gray-300">
-                Create your ad content
-              </h1>
-              <hr></hr>
+          <div className="row" style={{ paddingLeft: "2.5%" }}>
+            <div
+              className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
+              style={{ backgroundColor: "#3d3e40", width: "95%" }}
+            >
+              <div className="row">
+                <div className="col">
+                  <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left">
+                    Content creation
+                  </h1>
+                </div>
+                <div className="col">
+                  <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right">
+                    Sms credit count: 0
+                  </h1>
+                </div>
+              </div>
             </div>
-            <div className="col">
+            <div className="col mt-3" style={{ paddingLeft: "0%" }}>
               <div
-                className="static rounded-lg p-10"
-                style={{ width: "97%", backgroundColor: "#3d3e40" }}
+                className="static rounded-lg p-10 border-1 border-gray-600"
+                style={{
+                  width: "90%",
+                  backgroundColor: "#3d3e40",
+                }}
               >
                 <MDBListGroup style={{ minWidthL: "22rem" }}>
                   {!showComponent && !active ? (
@@ -293,7 +307,7 @@ const CreateNote = () => {
             </div>
 
             <div className="col">
-              <div className="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
+              <div className="relative mx-auto border-gray-800 mt-3 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
                 <div className="w-[148px] h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
                 <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
                 <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>

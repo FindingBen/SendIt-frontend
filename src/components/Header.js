@@ -75,8 +75,8 @@ const Header = () => {
 
   return (
     <div
-      className="d-flex flex-column flex-shrink-0 p-3 text-white bg-gray-700"
-      style={{ height: "100vh", backgroundColor: "#3d3e40" }}
+      className="d-flex flex-column flex-shrink-0 p-3 text-white bg-gray-700 border-solid border-1 border-gray-600 rounded mt-3"
+      style={{ height: "90vh", backgroundColor: "#3d3e40", marginLeft: "1%" }}
     >
       <a href="/" className="d-flex align-items-center mb-4 text-white">
         <svg className="bi me-2" width="40" height="32"></svg>
