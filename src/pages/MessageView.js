@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import List from "../components/List";
 import useAxiosInstance from "../utils/axiosInstance";
+import { isMobile, isTablet, isDesktop } from "react-device-detect";
+import ReactGA from "react-ga";
 import "../css/List.css";
 import "../css/MessageView.css";
 const MessageView = ({ imageProp, textProp }) => {
@@ -19,9 +21,19 @@ const MessageView = ({ imageProp, textProp }) => {
   const token = useSelector(selectCurrentToken);
   const BASE_URL = "https://stingray-app-9825w.ondigitalocean.app";
   //const BASE_URL = "http://localhost:8000";
+  const TRACKING_ID = "G-FPHE42LL46";
+  ReactGA.initialize(TRACKING_ID);
   useEffect(() => {
     messageView();
   }, []);
+
+  const trackClick = () => {
+    ReactGA.event({
+      category: "MessageContent",
+      "action:": "submit",
+      label: "button",
+    });
+  };
 
   let messageView = async () => {
     setId(params.id);
@@ -40,6 +52,7 @@ const MessageView = ({ imageProp, textProp }) => {
     <section className="vh-100 mt-2" id="view">
       <List
         children={elements}
+        onClick={trackClick}
         className="my-scroll-list"
         style={{ width: "100%" }}
       ></List>
