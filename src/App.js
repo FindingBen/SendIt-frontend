@@ -23,13 +23,17 @@ import ReactGA from "react-ga";
 import SuccessPayment from "./pages/SuccessPayment";
 import CancelPayment from "./pages/CancelPayment";
 
-const TRACKING_ID = "G-FPHE42LL46";
+const TRACKING_ID = "G-RZ6J50WZSE";
 ReactGA.initialize(TRACKING_ID, { debug: true });
 
 function App() {
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname);
-  }, []);
+  // useEffect(() => {
+  //   history.listen((location) => {
+  //     ReactGA.set({ page: location.pathname });
+  //     ReactGA.pageview(location.pathname)
+  //   }
+  // );
+  // }, []);
 
   return (
     <div>

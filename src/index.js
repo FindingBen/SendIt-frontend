@@ -12,7 +12,9 @@ import { registerLicense } from "@syncfusion/ej2-base";
 import App from "./App";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 
+
 if (process.env.NODE_ENV === "production") disableReactDevTools();
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
