@@ -31,7 +31,7 @@ const SmsEditor = () => {
   const textComponentRef = useRef(null);
   //const BASE_URL = "http://localhost:8000/";
   const BASE_URL = "https://sendit-frontend-production.up.railway.app";
-  const linkURLBase = `${BASE_URL}/message_view/${params.id}`;
+  const linkURLBase = `${BASE_URL}/message_view/twillioSSD/${params.id}`;
 
   useEffect(() => {
     setErrorMessage("");

@@ -39,7 +39,7 @@ function App() {
     <div>
       <Routes>
         <Route
-          path="/message_view/:id"
+          path="/message_view/twillioSSD/:id"
           element={<MessageView></MessageView>}
         ></Route>
       </Routes>
