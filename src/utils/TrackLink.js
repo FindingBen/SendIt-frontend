@@ -1,10 +1,14 @@
 import React from "react";
+import useAxiosInstance from "./axiosInstance";
 
 const TrackLink = ({ destinationUrl, trackingUrl }) => {
+
+    const axiosInstance = useAxiosInstance()
+
   const handleClick = async () => {
     // Log the click event on your backend (via API call)
     try {
-      const response = await fetch("/api/track-click", {
+      const response = await axiosInstance.post("/api/track-click", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

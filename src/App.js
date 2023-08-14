@@ -23,7 +23,7 @@ import ReactGA from "react-ga";
 import SuccessPayment from "./pages/SuccessPayment";
 import CancelPayment from "./pages/CancelPayment";
 
-const TRACKING_ID = "G-RZ6J50WZSE";
+const TRACKING_ID = "G-FPHE42LL46";
 ReactGA.initialize(TRACKING_ID, { debug: true });
 
 function App() {

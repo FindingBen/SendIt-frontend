@@ -13,6 +13,9 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../css/Sms.css";
 import TextComponent from "../components/TextComponent";
+import TrackLink from "../utils/TrackLink";
+import {v4 as uuidv4} from 'uuid';
+
 const SmsEditor = () => {
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
@@ -32,6 +35,7 @@ const SmsEditor = () => {
 
   useEffect(() => {
     setErrorMessage("");
+    
     try {
       if (textComponentRef.current) {
         setTimeout(() => {
@@ -47,12 +51,14 @@ const SmsEditor = () => {
   }, [smsText, textComponentRef]);
 
   const handleAddLink = (e) => {
+    const trackingUUID = uuidv4()
     const linkEmbed = `#Link`;
     const textarea = document.getElementById("smsTextArea");
     const startPos = textarea.selectionStart;
     const endPos = textarea.selectionEnd;
 
     setLinkURL(linkURLBase);
+    <TrackLink trackingUrl={trackingUUID} destinationUrl={linkURLBase}/>
     // Insert the link at the specified index
     setSmsText(
       smsText.substring(0, startPos) + linkEmbed + smsText.substring(endPos)
