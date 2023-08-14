@@ -92,7 +92,7 @@ const ContactList = () => {
                 </button>
                 <a
                   className="btn btn-dark"
-                  onClick={() => gaEventTracker("track")}
+                  href="http://www.w3.org/2000/svg"
                 >
                   Track
                 </a>
