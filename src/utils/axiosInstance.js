@@ -14,8 +14,8 @@ const useAxiosInstance = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectCurrentToken);
   const user = useSelector((state) => state.auth.user);
-  //const baseURL = "https://stingray-app-9825w.ondigitalocean.app/";
-  const baseURL = "http://localhost:8000/";
+  const baseURL = "https://stingray-app-9825w.ondigitalocean.app/";
+  //const baseURL = "http://localhost:8000/";
   //const authData = JSON.parse(useSelector((state) => state.auth));
   //console.log(authData)
   //const user = authData.user;

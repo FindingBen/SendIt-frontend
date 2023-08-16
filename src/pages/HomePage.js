@@ -144,7 +144,7 @@ const HomePage = () => {
                             </div>
                           </td>
                           <td class="p-3 font-bold ">
-                            <Link type="button" to={`/analytics`}>
+                            <Link type="button" to={`/analytics/${message.id}`}>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"

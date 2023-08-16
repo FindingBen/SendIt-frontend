@@ -40,7 +40,7 @@ function App() {
     <div>
       <Routes>
         <Route
-          path="/message_view/twillioSSD/:id"
+          path="/message_view/:id"
           element={<MessageView></MessageView>}
         ></Route>
       </Routes>
@@ -65,7 +65,7 @@ function App() {
             />
             <Route path="/" element={<Layout />}>
               <Route element={<PrivateRoute />}>
-                <Route path="analytics" element={<AnalyticsPage />} />
+                <Route path="analytics/:id" element={<AnalyticsPage />} />
                 <Route path="home" element={<HomePage />} />
                 <Route path="create_note" element={<CreateMessage />} />
                 <Route
