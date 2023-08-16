@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
-
-import runReport from "../utils/googleAnalyticsApi";
+import useAxiosInstance from "../utils/axiosInstance";
 
 const AnalyticsPage = () => {
+  const axiosInstance = useAxiosInstance();
   const [views, setViews] = useState();
 
   useEffect(() => {
-    //runReport();
+    getdataAnalytics();
   }, []);
 
+  const getdataAnalytics = async () => {
+    let response = await axiosInstance.get("api/get_analytcs/");
+    if (response.status === 200) {
+      setViews(response.data);
+    }
+  };
+  console.log(views.data[0].metric);
   return (
     <section className="vh-100  w-100">
       <div className="container-fluid h-custom">
@@ -43,7 +50,7 @@ const AnalyticsPage = () => {
                 <div class="self-center relative text-center">
                   <h2 className="text-3xl">Total sent</h2>
                 </div>
-                <h2 class="self-center text-3xl">602</h2>
+                <h2 class="self-center text-3xl">{views?.data[0].metric}</h2>
               </div>
               <div class="px-6">
                 <div class="relative">
