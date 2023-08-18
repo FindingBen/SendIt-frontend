@@ -8,19 +8,20 @@ const DeleteMessageModal = ({
   messageId,
   showModalDelete,
   onClose,
-  messages,
+  listUpdated,
+  setUpdated,
 }) => {
   const [show, setShowModal] = useState(showModalDelete);
-  const [messagesobj, setMessages] = useState(messages);
+  const [listUpdate, setListUpdate] = useState(listUpdated);
   const axiosInstance = useAxiosInstance();
   const params = useParams();
 
   useEffect(() => {
     setShowModal(showModalDelete);
   }, [showModalDelete]);
-
+  console.log(messageId);
   let deleteMessage = async (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     try {
       let response = await axiosInstance.delete(
         `/api/delete_message/${messageId}`
@@ -32,9 +33,14 @@ const DeleteMessageModal = ({
       console.log("Error deleting message:", error);
     }
   };
-
+  console.log(listUpdated);
   const closeModal = () => {
     onClose();
+  };
+
+  const setFunction = () => {
+    deleteMessage();
+    setUpdated();
   };
 
   return (
@@ -67,7 +73,7 @@ const DeleteMessageModal = ({
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={deleteMessage}
+                    onClick={setFunction}
                   >
                     Yes
                   </button>

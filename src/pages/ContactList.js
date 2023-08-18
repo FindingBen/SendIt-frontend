@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import { selectCurrentToken } from "../features/auth/authSlice";
 import { useSelector } from "react-redux";
@@ -8,7 +8,6 @@ import CsvModal from "../features/modal/CsvModal";
 import AddContactModal from "../features/modal/AddContactModal";
 import ReactPaginate from "react-paginate";
 import "../css/ContactList.css";
-import useAnalyticsEventTracker from "../utils/useAnalyticsEventTracker";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
@@ -20,8 +19,7 @@ const ContactList = () => {
   const params = useParams();
   const navigate = useNavigate();
   const rowsPerPage = 8;
-  const gaEventTracker = useAnalyticsEventTracker("Add contact");
-  console.log(gaEventTracker);
+
   useEffect(() => {
     getContacts();
   }, []);
@@ -119,7 +117,7 @@ const ContactList = () => {
                 </div>
                 <div className="col">
                   <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right">
-                    Sms credit count: 0
+                    Sms credit count: {}
                   </h1>
                 </div>
               </div>
@@ -129,7 +127,14 @@ const ContactList = () => {
               class="overflow-hidden rounded-lg border-1 border-gray-600 mt-3 mb-3"
               style={{ width: "95%" }}
             >
-              <table class="w-full bg-white text-left text-sm text-gray-200">
+              <table
+                class="w-full bg-white text-left text-sm text-gray-200"
+                style={{
+                  marginLeft: "-1.4%",
+                  width: "102.7%",
+                  paddingLeft: "10%",
+                }}
+              >
                 <thead class="bg-gray-50 text-gray-200">
                   <tr>
                     <th scope="col" class="px-6 py-4 font-medium text-gray-200">
@@ -150,10 +155,10 @@ const ContactList = () => {
                     ></th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                <tbody class="divide-y divide-gray-500 border-t border-gray-500">
                   {paginatedData.map((rowData) => (
                     <tr class="hover:bg-gray-50" key={rowData.id}>
-                      <th class="flex gap-3 px-6 py-4 font-normal text-gray-900">
+                      <th class="gap-3 px-6 py-4 font-normal text-gray-900">
                         <div class="text-sm">
                           <div class="font-medium text-gray-200">
                             {rowData.first_name}
@@ -172,7 +177,7 @@ const ContactList = () => {
                         </div>
                       </td>
                       <td class="px-6 py-4">
-                        <div class="flex gap-2">
+                        <div class="gap-2">
                           <div class="font-medium text-gray-200">
                             {rowData.email}
                           </div>

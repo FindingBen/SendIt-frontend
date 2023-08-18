@@ -25,7 +25,6 @@ const MessageView = ({ imageProp, textProp }) => {
     messageView();
   }, []);
 
-
   let messageView = async () => {
     setId(params.id);
     //https://stingray-app-9825w.ondigitalocean.app

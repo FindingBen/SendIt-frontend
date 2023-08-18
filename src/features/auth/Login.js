@@ -12,6 +12,7 @@ const Login = () => {
   const [username, setUser] = useState("");
   const [password, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const [login, { isLoading }] = useLoginMutation();
@@ -27,7 +28,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const userData = await login({
         username,
@@ -38,8 +39,9 @@ const Login = () => {
       dispatch(setCredentials({ ...userData?.data, user }));
       setUser("");
       setPwd("");
-
+      setLoading(false);
       localStorage.setItem("tokens", userData.data.refresh);
+
       navigate("/home");
     } catch (err) {
       console.log("errrrr", err);
@@ -62,86 +64,99 @@ const Login = () => {
   const handlePwdInput = (e) => setPwd(e.target.value);
 
   return (
-    <div class="h-screen md:flex">
-      <div class="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-gray-800 to-purple-700 i justify-around items-center hidden">
-        <div>
-          <img src={require("../../assets/psEdit.jpg")}></img>
-        </div>
-        {/* <div class="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
-        <div class="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
-        <div class="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
-        <div class="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div> */}
-      </div>
-      <div class="flex md:w-1/2 justify-center py-10 items-center bg-white">
-        <form class="bg-white" onSubmit={handleSubmit}>
-          <h1 class="text-gray-800 font-bold text-2xl mb-1">Login</h1>
-          <p class="text-sm font-normal text-gray-600 mb-7">
-            Enter your credentials to continue
-          </p>
-          {errMsg && <p className="text-red-700">{errMsg}</p>}
-          <div class="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 text-gray-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                clip-rule="evenodd"
-              />
-            </svg>
-            <input
-              class="pl-2 outline-none border-none"
-              type="text"
-              onChange={handleUserInput}
-              placeholder="Username"
-            />
-          </div>
+    <section class="flex flex-col justify-center antialiased bg-gray-700 text-gray-200 min-h-screen p-4 w-100">
+      <div class="h-full">
+        <div class="max-w-[360px] mx-auto mt-20 mb-5">
+          <div class="bg-white shadow-lg rounded-lg mt-9">
+            <header class="text-center px-5 pb-5">
+              <svg
+                class="inline-flex -mt-9 w-[72px] h-[72px] rounded-full border-4 border-white box-content shadow mb-3"
+                viewBox="0 0 72 72"
+              >
+                <path class="text-gray-700" d="M0 0h72v72H0z" />
+                <image
+                  href={require("../../assets/notext-png.png")}
+                  width="72"
+                  height="72"
+                />
+              </svg>
 
-          <div class="flex items-center border-2 py-2 px-3 rounded-2xl">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 text-gray-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                clip-rule="evenodd"
-              />
-            </svg>
-            <input
-              class="pl-2 outline-none border-none"
-              type="password"
-              onChange={handlePwdInput}
-              placeholder="Password"
-            />
+              <h3 class="text-xl font-bold text-gray-900 mb-1">Login</h3>
+              <div class="text-sm font-medium text-gray-500">
+                Enter your credentials below to continue
+              </div>
+            </header>
+            {errMsg && <p className="text-red-700">{errMsg}</p>}
+            <div class="bg-gray-100 mb-4 text-center px-5 py-6">
+              <form class="space-y-3" onSubmit={handleSubmit}>
+                <div class="shadow-sm rounded">
+                  <div class="flex-none">
+                    <input
+                      onChange={handleUserInput}
+                      name="username"
+                      class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
+                      type="text"
+                      placeholder="username"
+                    />
+                  </div>
+                </div>
+                <div class="shadow-sm rounded">
+                  <div class="flex-none">
+                    <input
+                      onChange={handlePwdInput}
+                      name="password"
+                      class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
+                      type="password"
+                      placeholder="password"
+                    />
+                  </div>
+                </div>
+                {loading ? (
+                  <div className="relative">
+                    <svg
+                      style={{ marginLeft: "45%" }}
+                      aria-hidden="true"
+                      className="w-8 h-8 mr-4 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 right-15"
+                      viewBox="0 0 100 101"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"
+                      />
+                    </svg>
+                  </div>
+                ) : (
+                  <button
+                    type="submit"
+                    class="font-semibold text-sm inline-flex items-center justify-center px-3 py-2 border border-transparent rounded leading-5 shadow transition duration-150 ease-in-out w-full bg-indigo-500 hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
+                  >
+                    Login
+                  </button>
+                )}
+              </form>
+            </div>
+            <span class="text-sm mt-3 hover:text-blue-500 cursor-pointer hover:bg-gray-300 round">
+              <Link to="/reset_password" className="text-body text-gray-300">
+                Forgot password?
+              </Link>
+            </span>
           </div>
-          <button
-            type="submit"
-            class="block w-full bg-indigo-600 mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
-          >
-            Login
-          </button>
-          <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer">
-            <Link to="/reset_password" className="text-body">
-              Forgot password?
-            </Link>
-          </span>
-          <hr></hr>
-          <p className="small fw-bold mt-2 pt-1 mb-0 mt-3">
-            Don't have an account?{" "}
-            <Link to="/register" className="link-danger">
-              Register
-            </Link>
-          </p>
-        </form>
+        </div>
+
+        <p className="small fw-bold mt-2 pt-1 mb-0 mt-3">
+          Don't have an account?{" "}
+          <Link to="/register" className="link-danger">
+            Register
+          </Link>
+        </p>
       </div>
-    </div>
-    
+    </section>
   );
 };
 

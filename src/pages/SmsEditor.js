@@ -50,19 +50,24 @@ const SmsEditor = () => {
     }
   }, [smsText, textComponentRef]);
 
-  const handleAddLink = (e) => {
-    //const trackingUUID = uuidv4()
+  const handleAddLink = () => {
     const linkEmbed = `#Link`;
     const textarea = document.getElementById("smsTextArea");
     const startPos = textarea.selectionStart;
     const endPos = textarea.selectionEnd;
 
     setLinkURL(linkURLBase);
-    //<TrackLink trackingUrl={trackingUUID} destinationUrl={linkURLBase}/>
-    // Insert the link at the specified index
-    setSmsText(
-      smsText.substring(0, startPos) + linkEmbed + smsText.substring(endPos)
-    );
+
+    // Ensure smsText is not null or undefined
+    if (typeof smsText === "string") {
+      // Insert the link at the specified index
+      setSmsText(
+        smsText.substring(0, startPos) + linkEmbed + smsText.substring(endPos)
+      );
+    } else {
+      // Handle the case where smsText is not a string (e.g., null, undefined)
+      setSmsText(linkEmbed);
+    }
   };
 
   const handleSms = (e) => {
@@ -79,6 +84,7 @@ const SmsEditor = () => {
           sender: "ME",
           sms_text: smsText,
           content_link: linkURL,
+          message: params.id,
         },
         {
           headers: {
@@ -90,6 +96,8 @@ const SmsEditor = () => {
       if (response.status === 200 || 201) {
         navigate(`/home`);
       }
+
+      console.log(response);
     } catch (error) {
       setErrorMessage(error.response.data.error);
       console.log(error);
