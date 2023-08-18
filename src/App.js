@@ -23,19 +23,12 @@ import ReactGA from "react-ga";
 import SuccessPayment from "./pages/SuccessPayment";
 import CancelPayment from "./pages/CancelPayment";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import CreateEmail from "./pages/CreateEmail";
 
 const TRACKING_ID = "G-FPHE42LL46";
 ReactGA.initialize(TRACKING_ID, { debug: true });
 
 function App() {
-  // useEffect(() => {
-  //   history.listen((location) => {
-  //     ReactGA.set({ page: location.pathname });
-  //     ReactGA.pageview(location.pathname)
-  //   }
-  // );
-  // }, []);
-
   return (
     <div>
       <Routes>
@@ -68,6 +61,7 @@ function App() {
                 <Route path="analytics/:id" element={<AnalyticsPage />} />
                 <Route path="home" element={<HomePage />} />
                 <Route path="create_note" element={<CreateMessage />} />
+                <Route path="create_email" element={<CreateEmail />} />
                 <Route
                   path="/contact_lists"
                   element={<ContactLists></ContactLists>}
