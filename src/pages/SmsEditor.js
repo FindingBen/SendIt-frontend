@@ -11,10 +11,13 @@ import { useSelector, useDispatch } from "react-redux";
 import useAxiosInstance from "../utils/axiosInstance";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import DropdownComponent from "../components/DropdownComponent";
 import "../css/Sms.css";
 import TextComponent from "../components/TextComponent";
 import TrackLink from "../utils/TrackLink";
 import { v4 as uuidv4 } from "uuid";
+import { Dropdown } from "flowbite-react";
+import { Select, Option } from "@material-tailwind/react";
 
 const SmsEditor = () => {
   const axiosInstance = useAxiosInstance();
@@ -25,9 +28,10 @@ const SmsEditor = () => {
   const dispatch = useDispatch();
   const [linkURL, setLinkURL] = useState("");
   const [message, setMessage] = useState();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [smsText, setSmsText] = useState([]);
-  const [user, setUser] = useState();
+  const [contactLists, setContactList] = useState([]);
   const textComponentRef = useRef(null);
   //const BASE_URL = "http://localhost:8000/";
   const BASE_URL = "https://sendit-frontend-production.up.railway.app";
@@ -35,7 +39,7 @@ const SmsEditor = () => {
 
   useEffect(() => {
     setErrorMessage("");
-
+    getContactLists();
     try {
       if (textComponentRef.current) {
         setTimeout(() => {
@@ -48,7 +52,7 @@ const SmsEditor = () => {
     } catch (error) {
       console.error(error);
     }
-  }, [smsText, textComponentRef]);
+  }, [smsText, textComponentRef, isDropdownOpen]);
 
   const handleAddLink = () => {
     const linkEmbed = `#Link`;
@@ -85,6 +89,7 @@ const SmsEditor = () => {
           sms_text: smsText,
           content_link: linkURL,
           message: params.id,
+          contact_list: 3,
         },
         {
           headers: {
@@ -103,7 +108,29 @@ const SmsEditor = () => {
       console.log(error);
     }
   };
-  console.log(smsText);
+
+  let getContactLists = async () => {
+    try {
+      let response = await axiosInstance.get("/api/contact_lists/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(token),
+        },
+      });
+      if (response.status === 200) {
+        setContactList(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(isDropdownOpen);
+  const handleChoice = (e) => {
+    console.log("test");
+    console.log(e.target.value);
+  };
+  console.log(contactLists);
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
@@ -128,7 +155,7 @@ const SmsEditor = () => {
             </div>
             <div className="col mt-3" style={{ paddingLeft: "0%" }}>
               <div
-                class="border-solid border-1 border-gray-500 rounded"
+                class="border-solid border-1 border-gray-600 rounded"
                 style={{
                   backgroundColor: "#3d3e40",
                   paddingLeft: "20px",
@@ -136,22 +163,41 @@ const SmsEditor = () => {
                   paddingBottom: "20px",
                 }}
               >
-                <div className="md-form mt-2 text-gray-100">
-                  <label for="form1">From</label>
-                  <input
-                    type="text"
-                    name="from"
-                    className="form-control bg-gray-400 text-gray-50 rounded-lg"
-                  />
+                <div className="row mt-4 text-gray-100">
+                  <div className="col">
+                    <label style={{ marginLeft: "0%" }} for="form1">
+                      From:
+                    </label>
+                  </div>
+                  <div className="col">
+                    <input
+                      style={{ marginLeft: "0%" }}
+                      type="text"
+                      name="from"
+                      className="form-control bg-gray-300 text-gray-50 rounded-lg"
+                    />
+                  </div>
                 </div>
 
-                <div className="md-form text-gray-100 mt-2">
-                  <label for="form1">Contact list</label>
-                  <input
-                    type="text"
-                    name="contactList"
-                    className="form-control bg-gray-400 text-gray-50 rounded-lg"
-                  />
+                <div className="text-gray-100 mt-2">
+                  <div className="row">
+                    <div className="col">
+                      <label for="form1">Select recipient list: </label>
+                    </div>
+                    <div className="col">
+                      <select
+                        style={{ width: "100%", marginLeft: "0%" }}
+                        className="bg-gray-300 text-gray-700 divide-y divide-gray-100 rounded-lg"
+                        onClick={handleChoice}
+                      >
+                        {contactLists?.map((item) => (
+                          <option key={item.id} className="text-gray-700">
+                            {item.list_name}.{item.id}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 <br></br>
                 <div className="form-group purple-border text-gray-100 rounded-lg">

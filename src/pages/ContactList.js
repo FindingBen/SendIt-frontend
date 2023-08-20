@@ -14,7 +14,7 @@ const ContactList = () => {
   const [contacts, setContacts] = useState([]);
   const [showCsv, setShowCsv] = useState(false);
   const [show, setShow] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const token = useSelector(selectCurrentToken);
   const params = useParams();
   const navigate = useNavigate();
@@ -23,14 +23,17 @@ const ContactList = () => {
   useEffect(() => {
     getContacts();
   }, []);
-
+  console.log(contacts);
+  console.log("TEST");
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
 
-  const offset = currentPage * rowsPerPage;
-  const paginatedData = contacts.slice(offset, offset + rowsPerPage);
+  const startIndex = currentPage * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const paginatedData = contacts.slice(startIndex, endIndex);
 
+  console.log(currentPage);
   let getContacts = async () => {
     try {
       let response = await axiosInstance.get(
@@ -73,8 +76,8 @@ const ContactList = () => {
   const handleNewContact = (contact) => {
     setContacts(contact);
   };
-  console.log("SS");
   console.log(paginatedData);
+
   return (
     <section className="vh-100  w-100">
       <div className="container-fluid h-custom">
@@ -214,8 +217,8 @@ const ContactList = () => {
             </div>
             <ReactPaginate
               pageCount={Math.ceil(contacts.length / rowsPerPage)}
-              pageRangeDisplayed={3} // Number of pages to display in the pagination control
-              marginPagesDisplayed={1} // Number of pages to display before and after the active page
+              pageRangeDisplayed={3}
+              marginPagesDisplayed={1}
               onPageChange={handlePageChange}
               containerClassName={"pagination"}
               activeClassName={"active"}

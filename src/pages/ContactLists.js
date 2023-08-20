@@ -57,7 +57,7 @@ const ContactList = () => {
                 return (
                   <div
                     key={conList.id}
-                    class="w-full max-w-md p-4 bg-gray-700 border border-gray-700 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
+                    class="w-full mb-3 max-w-md p-4 bg-gray-700 border border-gray-700 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
                   >
                     <div class="flex items-center justify-between mb-4">
                       <h5 class="text-xl font-bold leading-none text-gray-300 dark:text-white">
@@ -70,22 +70,28 @@ const ContactList = () => {
                         View all
                       </Link>
                     </div>
-                    <div className="inline">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="mt-9 w-[26px] h-[26px] rounded-full fill-gray-300 border-1 border-white box-content shadow mb-3"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                        />
-                      </svg>
-                      <p className="text-gray-300">20</p>
+                    <div className="row">
+                      <div className="col">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-[26px] h-[26px] rounded-full fill-gray-300 border-1 border-white box-content shadow mb-3"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                          />
+                        </svg>
+                      </div>
+                      <div className="col" style={{ marginRight: "76%" }}>
+                        <p className="text-gray-300">
+                          {conList.contact_lenght}
+                        </p>
+                      </div>
                     </div>
 
                     <div class="flow-root">
