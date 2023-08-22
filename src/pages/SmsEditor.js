@@ -11,13 +11,11 @@ import { useSelector, useDispatch } from "react-redux";
 import useAxiosInstance from "../utils/axiosInstance";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import DropdownComponent from "../components/DropdownComponent";
 import "../css/Sms.css";
 import TextComponent from "../components/TextComponent";
 import TrackLink from "../utils/TrackLink";
 import { v4 as uuidv4 } from "uuid";
-import { Dropdown } from "flowbite-react";
-import { Select, Option } from "@material-tailwind/react";
+
 
 const SmsEditor = () => {
   const axiosInstance = useAxiosInstance();

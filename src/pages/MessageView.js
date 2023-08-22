@@ -19,7 +19,8 @@ const MessageView = ({ imageProp, textProp }) => {
   const params = useParams();
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
-  const BASE_URL = config.url.BASE_URL;
+  //const BASE_URL = config.url.BASE_URL;
+  const BASE_URL = "https://stingray-app-9825w.ondigitalocean.app";
 
   useEffect(() => {
     messageView();
