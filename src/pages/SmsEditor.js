@@ -33,6 +33,7 @@ const SmsEditor = () => {
   const [smsText, setSmsText] = useState([]);
   const [contactLists, setContactList] = useState([]);
   const textComponentRef = useRef(null);
+  const [recipients, setRecipients] = useState();
   //const BASE_URL = "http://localhost:8000/";
   const BASE_URL = "https://sendit-frontend-production.up.railway.app";
   const linkURLBase = `${BASE_URL}/message_view/${params.id}`;
@@ -89,7 +90,7 @@ const SmsEditor = () => {
           sms_text: smsText,
           content_link: linkURL,
           message: params.id,
-          contact_list: 3,
+          contact_list: recipients,
         },
         {
           headers: {
@@ -125,10 +126,10 @@ const SmsEditor = () => {
       console.log(error);
     }
   };
-  console.log(isDropdownOpen);
+  console.log(recipients);
   const handleChoice = (e) => {
-    console.log("test");
-    console.log(e.target.value);
+    setRecipients(e.target.value);
+    console.log(e?.target?.value);
   };
   console.log(contactLists);
   return (
@@ -191,8 +192,12 @@ const SmsEditor = () => {
                         onClick={handleChoice}
                       >
                         {contactLists?.map((item) => (
-                          <option key={item.id} className="text-gray-700">
-                            {item.list_name}.{item.id}
+                          <option
+                            key={item.id}
+                            value={item.id}
+                            className="text-gray-700"
+                          >
+                            {item.list_name}
                           </option>
                         ))}
                       </select>

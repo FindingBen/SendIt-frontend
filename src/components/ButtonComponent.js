@@ -11,11 +11,11 @@ const ButtonComponent = ({ textValue, linkValue }) => {
 
   return (
     //<Link to={link}>
-    //<div className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded">
-    <a style={{ width: "230px" }} href={`${linkValue}`}>
-      <h3>{text}</h3>
-    </a>
-    //</div>
+    <div className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+      <a style={{ width: "230px" }} href={`${linkValue}`}>
+        <h3>{text}</h3>
+      </a>
+    </div>
     //</Link>
   );
 };

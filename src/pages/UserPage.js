@@ -81,7 +81,7 @@ const UserPage = () => {
       navigate("/home");
     }
   };
-
+  console.log(user);
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
@@ -94,12 +94,12 @@ const UserPage = () => {
               <div className="row">
                 <div className="col">
                   <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left">
-                    Package types
+                    Account settings
                   </h1>
                 </div>
                 <div className="col">
                   <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right">
-                    Sms credit count: 0
+                    Sms credit count: {user?.sms_count}
                   </h1>
                 </div>
               </div>

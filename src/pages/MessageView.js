@@ -9,7 +9,8 @@ import { useParams } from "react-router-dom";
 import List from "../components/List";
 import useAxiosInstance from "../utils/axiosInstance";
 import { isMobile, isTablet, isDesktop } from "react-device-detect";
-import "../css/List.css";
+import { config } from "../constants/Constants";
+
 import "../css/MessageView.css";
 const MessageView = ({ imageProp, textProp }) => {
   const [elements, setElements] = useState([]);
@@ -18,8 +19,7 @@ const MessageView = ({ imageProp, textProp }) => {
   const params = useParams();
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
-  const BASE_URL = "https://stingray-app-9825w.ondigitalocean.app";
-  //const BASE_URL = "http://localhost:8000";
+  const BASE_URL = config.url.BASE_URL;
 
   useEffect(() => {
     messageView();
@@ -40,11 +40,7 @@ const MessageView = ({ imageProp, textProp }) => {
 
   return (
     <section className="vh-100 mt-2" id="view">
-      <List
-        children={elements}
-        className="my-scroll-list"
-        style={{ width: "100%" }}
-      ></List>
+      <List children={elements} style={{ width: "100%" }}></List>
     </section>
   );
 };

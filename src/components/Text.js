@@ -91,10 +91,7 @@ const Text = ({
             if (!isCreated) {
               ReactDOM.render(<></>, lastListItem);
             } else {
-              ReactDOM.render(
-                <MDBListGroupItem></MDBListGroupItem>,
-                listContainer
-              );
+              ReactDOM.render(<li></li>, listContainer);
             }
           }, 5);
         }

@@ -133,7 +133,7 @@ const Header = () => {
                 />
               </svg>
 
-              <span className="ml-7">Create Content</span>
+              <span className="ml-7">Create Campaign</span>
             </Link>
           </li>
         ) : (

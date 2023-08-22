@@ -3,10 +3,7 @@ import ImgList from "./ImgList";
 import ReactDOM from "react-dom";
 import { useSelector } from "react-redux";
 import { ElementContext } from "../context/ElementContext";
-import { MDBListGroupItem } from "mdb-react-ui-kit";
-import { ImageEditorComponent } from "@syncfusion/ej2-react-image-editor";
 import { selectCurrentUser } from "../features/auth/authSlice";
-import { Browser } from "@syncfusion/ej2-base";
 
 const Image = ({
   onStateChange,
@@ -31,9 +28,6 @@ const Image = ({
   const [isMounted, setIsMounted] = useState(true);
   const container = document.getElementById("myList");
   const [isCreated, setIsCreated] = useState(listEl);
-  // useEffect(() => {
-  //   iframe.contentWindow.postMessage({ images }, "*");
-  // }, [images]);
 
   useEffect(() => {
     if (container) {
@@ -44,7 +38,7 @@ const Image = ({
         } else {
           ReactDOM.render(<ImgList imageUrl={imageSrc} />, container);
         }
-      }, 10);
+      }, 5);
     }
   }, [imageSrc, container]);
 
@@ -60,9 +54,9 @@ const Image = ({
           if (!isCreated) {
             ReactDOM.render(<></>, lastListItem);
           } else {
-            ReactDOM.render(<MDBListGroupItem></MDBListGroupItem>, container);
+            ReactDOM.render(<li></li>, container);
           }
-        }, 10);
+        }, 5);
       }
     };
   }, []);
@@ -128,17 +122,19 @@ const Image = ({
 
     componentChange(Boolean(!event.target.value));
     onStateChange(Boolean(!event.target.value));
-    if (isMounted && container) {
+    if (isMounted) {
+      const listContainer = document.getElementById("myList");
       if (!isCreated) {
-        if (container) {
-          const listItems = Array.from(container?.children);
+        if (listContainer) {
+          const listItems = Array.from(listContainer?.children);
           listItems?.forEach((listItem) => {
             // Perform your operations on each list item
             // For example, check if the element is empty
             if (listItem.innerHTML.trim() === "") {
+              console.log("EMPTYYYYY");
               // The element is empty
               // Perform your logic here
-              container?.removeChild(listItem);
+              listContainer?.removeChild(listItem);
             }
           });
         }

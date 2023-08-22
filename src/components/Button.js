@@ -57,7 +57,7 @@ const Button = ({
           if (!isCreated) {
             ReactDOM.render(<></>, lastListItem);
           } else {
-            ReactDOM.render(<MDBListGroupItem></MDBListGroupItem>, container);
+            ReactDOM.render(<li></li>, container);
           }
         }, 5);
       } catch (error) {

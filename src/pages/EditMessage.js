@@ -3,16 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { setState } from "../features/modal/formReducer";
 import "../css/CreationMessage.css";
 import "../css/RootIframe.css";
-import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
-import { AiFillPicture } from "react-icons/ai";
+
 import Image from "../components/Image";
 import Text from "../components/Text";
 import List from "../components/List";
 import Button from "../components/Button";
 import { setList } from "../features/elements/elementReducer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStop, faFont } from "@fortawesome/free-solid-svg-icons";
-//import IFrame from "../components/IFrame";
 import { useEffect } from "react";
 import modalReducer, {
   selectModalCall,
@@ -96,7 +92,7 @@ const EditMessage = () => {
   const addEmptyListItem = () => {
     if (container) {
       const newItem = document?.createElement("li");
-      newItem.className = "list-group-item";
+
       newItem.id = "temp";
       container?.appendChild(newItem);
     }
@@ -293,16 +289,29 @@ const EditMessage = () => {
                 className="static rounded-lg p-10 border-1 border-gray-600"
                 style={{ width: "90%", backgroundColor: "#3d3e40" }}
               >
-                <MDBListGroup style={{ minWidthL: "22rem" }}>
+                <div className="row" style={{ minWidthL: "22rem" }}>
                   {!showComponent && !active ? (
-                    <MDBListGroupItem
+                    <div
                       onClick={handleClickImage}
                       name="liClick"
-                      className="list-group-item d-flex justify-content-between align-items-center mb-3"
+                      className="mb-3 ml-3 border-gray-600 border-1 rounded hover:bg-gray-500 cursor-pointer"
                     >
-                      <AiFillPicture></AiFillPicture>
-                      Add image
-                    </MDBListGroupItem>
+                      <svg
+                        style={{ marginLeft: "12%" }}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-20 h-15 fill-gray-400"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                        />
+                      </svg>
+                    </div>
                   ) : (
                     showComponent &&
                     active && (
@@ -318,16 +327,29 @@ const EditMessage = () => {
                       ></Image>
                     )
                   )}
-                  <hr></hr>
+
                   {!showComponent && !activeT ? (
-                    <MDBListGroupItem
+                    <div
                       onClick={handleClickText}
                       name="liClick"
-                      className="list-group-item d-flex justify-content-between align-items-center mb-3"
+                      className="mb-3 ml-3 border-gray-600 border-1 rounded hover:bg-gray-500 cursor-pointer"
                     >
-                      <FontAwesomeIcon icon={faFont} />
-                      Add Text
-                    </MDBListGroupItem>
+                      <svg
+                        style={{ marginLeft: "12%" }}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-20 h-15 fill-gray-400"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
+                        />
+                      </svg>
+                    </div>
                   ) : (
                     showComponent &&
                     activeT && (
@@ -340,16 +362,34 @@ const EditMessage = () => {
                       ></Text>
                     )
                   )}
-                  <hr></hr>
+
                   {!showComponent && !activeB ? (
-                    <MDBListGroupItem
+                    <div
                       onClick={handleClickButton}
                       name="liClick"
-                      className="list-group-item d-flex justify-content-between align-items-center mb-3"
+                      className="mb-3 ml-3 border-gray-600 border-1 rounded hover:bg-gray-500 cursor-pointer"
                     >
-                      <FontAwesomeIcon icon={faStop} />
-                      Add button
-                    </MDBListGroupItem>
+                      <svg
+                        style={{ marginLeft: "12%" }}
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-20 h-15 fill-gray-400"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 019 14.437V9.564z"
+                        />
+                      </svg>
+                    </div>
                   ) : (
                     showComponent &&
                     activeB && (
@@ -362,7 +402,7 @@ const EditMessage = () => {
                       ></Button>
                     )
                   )}
-                </MDBListGroup>
+                </div>
               </div>
             </div>
             <div className="col">
@@ -372,7 +412,7 @@ const EditMessage = () => {
                   <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
                   <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
                   <div className="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
-                  <div className="rounded-[2rem] overflow-hidden w-[270px] h-[572px] bg-white dark:bg-gray-800">
+                  <div className="rounded-[2rem] overflow-hidden w-[270px] h-[572px] bg-gray-300 dark:bg-gray-800">
                     <List
                       id="myList"
                       className="my-scroll-list"
