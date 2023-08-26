@@ -16,7 +16,6 @@ import TextComponent from "../components/TextComponent";
 import TrackLink from "../utils/TrackLink";
 import { v4 as uuidv4 } from "uuid";
 
-
 const SmsEditor = () => {
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
@@ -37,8 +36,12 @@ const SmsEditor = () => {
   const linkURLBase = `${BASE_URL}/message_view/${params.id}`;
 
   useEffect(() => {
-    setErrorMessage("");
     getContactLists();
+  }, []);
+
+  useEffect(() => {
+    setErrorMessage("");
+
     try {
       if (textComponentRef.current) {
         setTimeout(() => {
@@ -124,12 +127,12 @@ const SmsEditor = () => {
       console.log(error);
     }
   };
-  console.log(recipients);
+
   const handleChoice = (e) => {
     setRecipients(e.target.value);
     console.log(e?.target?.value);
   };
-  console.log(contactLists);
+
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">

@@ -4,8 +4,8 @@ import { config } from "../../constants/Constants";
 
 const BASEURL = config.url.BASE_URL;
 const baseQuery = fetchBaseQuery({
-  //baseUrl: BASEURL,
-  baseUrl: "https://stingray-app-9825w.ondigitalocean.app/",
+  baseUrl: BASEURL,
+  //baseUrl: "https://stingray-app-9825w.ondigitalocean.app/",
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
