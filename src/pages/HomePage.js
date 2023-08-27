@@ -58,7 +58,7 @@ const HomePage = () => {
     setShow(true);
   };
 
-  console.log(notes[0]?.status);
+  console.log("node:", process.env.NODE_ENV);
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid h-custom">
