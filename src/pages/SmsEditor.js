@@ -38,7 +38,7 @@ const SmsEditor = () => {
   useEffect(() => {
     getContactLists();
   }, []);
-
+  console.log(recipients);
   useEffect(() => {
     setErrorMessage("");
 
