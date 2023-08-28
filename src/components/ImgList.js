@@ -9,7 +9,15 @@ const ImgList = ({ imageUrl }) => {
 
   return (
     <div>
-      <img key={imageUrl} src={`${imageSrc}`} width="300" />
+      {imageSrc ? (
+        <img key={imageUrl} src={`${imageSrc}`} width="260" />
+      ) : (
+        <img
+          class="h-auto max-w-lg rounded-lg"
+          width="260"
+          src={require("../../src/assets/sampleImage.jpg")}
+        />
+      )}
     </div>
   );
 };

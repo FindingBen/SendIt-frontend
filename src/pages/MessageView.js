@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 import List from "../components/List";
 import useAxiosInstance from "../utils/axiosInstance";
 import { isMobile, isTablet, isDesktop } from "react-device-detect";
-//import { config } from "../constants/Constants";
+import { config } from "../constants/Constants";
 
 import "../css/MessageView.css";
 const MessageView = ({ imageProp, textProp }) => {

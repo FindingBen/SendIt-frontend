@@ -18,7 +18,7 @@ const TextComponent = ({ textValue, alignment }) => {
     setText(textValue);
     setAlign(alignment);
     getAlignmentclassName(align);
-  }, [textValue, alignment]);
+  }, [textValue, alignment, text]);
 
   return (
     <div>
