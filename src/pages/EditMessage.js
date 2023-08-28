@@ -38,7 +38,7 @@ const EditMessage = () => {
   const [elements, setElements] = useState([]);
   const { createElement, deleteElement } = useContext(ElementContext);
   const [elementContextList, setElementsContextList] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
   const [isDirty, setIsDirty] = useState(false);
@@ -54,7 +54,7 @@ const EditMessage = () => {
   const [getId, setId] = useState();
 
   useEffect(() => {
-    //messageView();
+    setIsLoaded(true);
     if (isFormDirt) {
       dispatch(setState({ isDirty: true }));
     } else {
@@ -88,7 +88,7 @@ const EditMessage = () => {
     setShowComponent(!showComponent);
     addEmptyListItem();
   };
-  console.log(elementContextList);
+
   const addEmptyListItem = () => {
     if (container) {
       const newItem = document?.createElement("li");
@@ -107,9 +107,10 @@ const EditMessage = () => {
         Authorization: "Bearer " + String(token),
       },
     });
-    //let data = await response.json();
-    setElements(response.data.element_list);
-    setIsLoaded(false);
+    if (response.status === 200 || 201) {
+      setElements(response.data.element_list);
+      setIsLoaded(false);
+    }
   };
 
   const deleteElements = async (e) => {
@@ -413,12 +414,21 @@ const EditMessage = () => {
                   <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
                   <div className="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
                   <div className="rounded-[2rem] overflow-hidden w-[270px] h-[572px] bg-gray-300 dark:bg-gray-800">
-                    <List
-                      id="myList"
-                      className="my-scroll-list"
-                      children={elements}
-                      clicked={handleClicked}
-                    ></List>
+                    {!isLoaded ? (
+                      <List
+                        id="myList"
+                        className="my-scroll-list"
+                        children={elements}
+                        clicked={handleClicked}
+                      ></List>
+                    ) : (
+                      <List
+                        id="myList"
+                        className="my-scroll-list"
+                        children={elements}
+                        clicked={handleClicked}
+                      ></List>
+                    )}
                   </div>
                 </div>
               </div>

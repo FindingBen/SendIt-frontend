@@ -9,13 +9,13 @@ import {
 } from "../features/auth/authSlice";
 import { useRef, useEffect } from "react";
 import store from "../app/store";
-import { config } from "../constants/Constants";
+//import { config } from "../constants/Constants";
 const useAxiosInstance = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectCurrentToken);
   const user = useSelector((state) => state.auth.user);
-  //const baseURL = "https://stingray-app-9825w.ondigitalocean.app/";
-  const baseURL = config.url.BASE_URL;
+  const baseURL = "https://stingray-app-9825w.ondigitalocean.app/";
+  //const baseURL = config.url.BASE_URL;
   //const authData = JSON.parse(useSelector((state) => state.auth));
   //console.log(authData)
   //const user = authData.user;
