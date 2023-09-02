@@ -20,6 +20,7 @@ const MessageView = ({ imageProp, textProp }) => {
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
   //const BASE_URL = config.url.BASE_URL;
+
   const BASE_URL = "https://stingray-app-9825w.ondigitalocean.app";
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const MessageView = ({ imageProp, textProp }) => {
     });
     //console.log(response);
     const data = await response.json();
-    console.log(data);
+
     setElements(data?.element_list);
     setIsLoaded(false);
   };

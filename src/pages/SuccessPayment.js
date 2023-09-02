@@ -12,12 +12,12 @@ const SuccessPayment = () => {
   const axiosInstance = useAxiosInstance();
   const location = useLocation();
   const token = useSelector(selectCurrentToken);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState();
   const [errMessage, setErrMessage] = useState("");
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const sessionId = params.get("session_id");
-
+    console.log(sessionId);
     if (sessionId) {
       paymentSuccessfull(sessionId);
     }
@@ -42,6 +42,7 @@ const SuccessPayment = () => {
     } catch (error) {
       console.log(error.message);
       setErrMessage(error);
+      setIsSuccess(false);
     }
   };
 
@@ -50,13 +51,13 @@ const SuccessPayment = () => {
       <div className="container-fluid h-custom">
         <div className="row d-flex justify-content-center align-items-center h-100">
           {isSuccess ? (
-            <h2 className="mt-10 text-center text-3xl font-bold text-gray-800">
+            <h2 className="mt-10 text-center text-3xl font-bold text-gray-300">
               Payment successfull!<br></br>
               <h2>Enjoy sending</h2>
             </h2>
           ) : (
             <div>
-              <h2 className="mt-10 text-center text-3xl font-bold text-gray-800">
+              <h2 className="mt-10 text-center text-3xl font-bold text-gray-300">
                 Looks like there was an error during payment
               </h2>
               <div

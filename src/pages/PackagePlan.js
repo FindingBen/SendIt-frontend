@@ -14,6 +14,8 @@ const PackagePlan = () => {
   const axiosInstance = useAxiosInstance();
   const params = useParams();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingState, setLoadingStates] = useState({});
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
   const [packagePlan, setPackage] = useState([]);
@@ -36,6 +38,7 @@ const PackagePlan = () => {
 
       if (response.status === 200) {
         let filteredPackages = response.data.filter((item) => item.id !== 4);
+
         setPackage(filteredPackages);
 
         //setElements((prevItems) => prevItems.filter((item) => item !== element));
@@ -45,7 +48,12 @@ const PackagePlan = () => {
     }
   };
 
-  let stripeCheckout = async (name_product) => {
+  let stripeCheckout = async (name_product, id) => {
+    setLoadingStates((prevState) => ({
+      ...prevState,
+      [id]: true,
+    }));
+    setIsLoading(true);
     let response = await axiosInstance.post("/stripe/stripe_checkout_session", {
       method: "POST",
       headers: {
@@ -58,9 +66,16 @@ const PackagePlan = () => {
     if (response.status === 200) {
       //let data = await response.json();
       console.log(response);
+
+      setLoadingStates((prevState) => ({
+        ...prevState,
+        [id]: false,
+      }));
+
       window.location.replace(response.data.url); // Log the response data
     } else {
       console.error("Error creating Stripe Checkout session");
+      setIsLoading(false);
     }
   };
 
@@ -86,7 +101,7 @@ const PackagePlan = () => {
       //navigate("/home");
     }
   };
-
+  console.log(loadingState);
   return (
     <section className="vh-100  w-100">
       <div className="container-fluid h-custom">
@@ -128,13 +143,45 @@ const PackagePlan = () => {
 
                     <button
                       type="button"
-                      onClick={() => stripeCheckout(packagePlan[0]?.plan_type)}
+                      onClick={() =>
+                        stripeCheckout(
+                          packagePlan[0]?.plan_type,
+                          packagePlan[0]?.id
+                        )
+                      }
                       className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-800 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
                       data-te-ripple-init
                       data-te-ripple-color="light"
                       value={0}
+                      disabled={loadingState[packagePlan[0]?.id]}
                     >
-                      Buy
+                      {loadingState[packagePlan[0]?.id] ? (
+                        <>
+                          <svg
+                            className="w-5 h-5 animate-spin"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            ></circle>
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            ></path>
+                          </svg>
+                          <span className="ml-2">Loading...</span>
+                        </>
+                      ) : (
+                        "Buy"
+                      )}
                     </button>
                   </div>
                   <div className="p-6">
@@ -210,12 +257,37 @@ const PackagePlan = () => {
 
                     <button
                       type="button"
-                      onClick={() => stripeCheckout(packagePlan[1]?.plan_type)}
+                      onClick={() =>
+                        stripeCheckout(
+                          packagePlan[1]?.plan_type,
+                          packagePlan[1]?.id
+                        )
+                      }
                       className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
                       data-te-ripple-init
                       data-te-ripple-color="light"
+                      value={1}
+                      disabled={loadingState[packagePlan[1]?.id]}
                     >
-                      Buy
+                      {loadingState[packagePlan[1]?.id] ? (
+                        <>
+                          <svg
+                            className="w-5 h-5 animate-spin"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            ></path>
+                          </svg>
+                          <span className="ml-2">Loading...</span>
+                        </>
+                      ) : (
+                        "Buy"
+                      )}
                     </button>
                   </div>
                   <div className="p-6">
@@ -325,12 +397,45 @@ const PackagePlan = () => {
 
                     <button
                       type="button"
-                      onClick={() => stripeCheckout(packagePlan[2]?.plan_type)}
+                      onClick={() =>
+                        stripeCheckout(
+                          packagePlan[2]?.plan_type,
+                          packagePlan[2]?.id
+                        )
+                      }
                       className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
                       data-te-ripple-init
                       data-te-ripple-color="light"
+                      value={"2"}
+                      disabled={loadingState[packagePlan[2]?.id]}
                     >
-                      Buy
+                      {loadingState[packagePlan[2]?.id] ? (
+                        <>
+                          <svg
+                            className="w-5 h-5 animate-spin"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            ></circle>
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            ></path>
+                          </svg>
+                          <span className="ml-2">Loading...</span>
+                        </>
+                      ) : (
+                        "Buy"
+                      )}
                     </button>
                   </div>
                   <div className="p-6">
