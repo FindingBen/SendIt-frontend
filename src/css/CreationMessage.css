@@ -97,3 +97,44 @@ transition: opacity 0.25s;
 .image__overlay:hover{
   opacity: 1;
 }
+
+
+#secondDiv{
+  margin-left: 2.5%;
+}
+
+@media (max-width: 1440px) {
+	.custom-svg-w{
+    width: 100%;
+    padding-right: 15%;
+    margin-right: 20%;
+    
+  }
+
+  .custom-size{
+    height: 560px;
+    width: 265px;
+  }
+  #headingDiv{
+		width: 95%;
+		height: 70px;
+		
+	}
+  #secondDiv{
+		width: 95%;
+		height: 100%;
+    padding-left: 0%;
+	}
+  #screen{
+    height: 529px;
+    width: 237px;
+  }
+  #buttonHolder{
+    margin-right: 42px;
+  }
+  .text-custom{
+    font-size: 1.4rem;
+		line-height: 2rem;
+  }
+
+}

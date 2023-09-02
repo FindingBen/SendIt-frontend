@@ -19,6 +19,7 @@ const HomePage = () => {
   const user = useSelector(selectCurrentUser);
   const [listUpdated, setListUpdated] = useState(false);
   const [show, setShow] = useState(false);
+
   const [messageId, setMessageId] = useState();
   const dispatch = useDispatch();
   const handleLogout = () => dispatch(logOut(user, token));
@@ -27,6 +28,7 @@ const HomePage = () => {
     getNotes();
     setListUpdated(false);
   }, [listUpdated]);
+
 
   const itemsPerPage = 4;
   const totalPages = Math.ceil(notes.length / itemsPerPage);
@@ -52,36 +54,37 @@ const HomePage = () => {
       console.error(error);
     }
   };
-  console.log(listUpdated);
+
   const deleteMessage = (id) => {
     setMessageId(id);
     setShow(true);
   };
 
-  console.log(notes[0]?.status);
+
   return (
-    <section className="vh-100 w-100">
-      <div className="container-fluid h-custom">
-        <div className="row d-flex justify-content-center align-items-center h-100">
+    <section className="vh-100">
+      <div className="container-fluid">
+        <div className="row d-flex justify-content-center align-items-center" id="headingDiv">
           <div
+            id="secondDiv"
             className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
-            style={{ backgroundColor: "#3d3e40", width: "95%" }}
+            style={{ backgroundColor: "#3d3e40", width:'95%' }}
           >
             <div className="row">
               <div className="col">
-                <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left">
+                <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left" id="textContent">
                   Home dashboard
                 </h1>
               </div>
               <div className="col">
-                <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right">
+                <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right" id="textContent">
                   Sms credit count: 0
                 </h1>
               </div>
             </div>
           </div>
 
-          <div
+          {/* <div
             className="static rounded-lg p-3 border-1 border-gray-600 mt-3"
             style={{
               width: "95%",
@@ -115,13 +118,11 @@ const HomePage = () => {
               </h5>
               <p className="text-white">To be added...</p>
             </div>
-          </div>
+          </div> */}
 
           <h1 className="text-2xl mb-5 mt-5 text-gray-300">Message contents</h1>
 
-          {!notes ? (
-            <div>LOL</div>
-          ) : (
+         
             <div
               class="items-center justify-center rounded-lg mb-3 border-1 border-gray-600"
               style={{ backgroundColor: "#3d3e40", width: "95%" }}
@@ -300,7 +301,7 @@ const HomePage = () => {
                 />
               </div>
             </div>
-          )}
+         
 
           {totalPages > 1 && (
             <div>

@@ -52,3 +52,23 @@
         background-color: #3d3e40;
         
 	}
+
+    @media (max-width: 1440px) {
+        
+      #headingDiv{
+            width: 95%;
+            height: 70px;
+            
+        }
+      #secondDiv{
+            width: 95%;
+            height: 100%;
+        padding-left: 2.5%;
+        }
+      
+      .text-custom{
+        font-size: 1.4rem;
+            line-height: 2rem;
+      }
+    
+    }

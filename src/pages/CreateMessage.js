@@ -199,22 +199,23 @@ const CreateNote = () => {
   };
 
   return (
-    <section className="vh-100 w-100">
-      <div className="container-fluid h-custom">
+    <section className="vh-100">
+      <div className="container-fluid">
         <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="row" style={{ paddingLeft: "2.5%" }}>
+          <div className="row" id="secondDiv">
             <div
+            id="headingDiv"
               className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
-              style={{ backgroundColor: "#3d3e40", width: "95%" }}
+              style={{ backgroundColor: "#3d3e40", width:'95%' }}
             >
               <div className="row">
                 <div className="col">
-                  <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left">
+                  <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left text-custom">
                     Content creation
                   </h1>
                 </div>
                 <div className="col">
-                  <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right">
+                  <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right text-custom">
                     Sms credit count: 0
                   </h1>
                 </div>
@@ -243,7 +244,7 @@ const CreateNote = () => {
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="w-20 h-15 fill-gray-400"
+                        class="w-20 h-15 fill-gray-400 custom-svg-w"
                       >
                         <path
                           stroke-linecap="round"
@@ -282,7 +283,7 @@ const CreateNote = () => {
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="w-20 h-15 fill-gray-400"
+                        class="w-20 h-15 fill-gray-400 custom-svg-w"
                       >
                         <path
                           stroke-linecap="round"
@@ -319,7 +320,7 @@ const CreateNote = () => {
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="w-20 h-15 fill-gray-400"
+                        class="w-20 h-15 fill-gray-400 custom-svg-w"
                       >
                         <path
                           stroke-linecap="round"
@@ -350,8 +351,8 @@ const CreateNote = () => {
             </div>
 
             <div className="col">
-              <div className="relative mx-auto border-gray-800 mt-3 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
-                <div className="w-[148px] h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
+              <div className="custom-size relative mx-auto border-gray-800 mt-3 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
+                <div className="w-[128px] h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
                 <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
                 <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
                 <div className="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>

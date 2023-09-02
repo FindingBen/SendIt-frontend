@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../css/Home.css";
+import "../css/ContactList.css";
 import { selectCurrentToken } from "../features/auth/authSlice";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useSelector } from "react-redux";
@@ -31,22 +32,23 @@ const ContactList = () => {
   };
 
   return (
-    <section className="vh-100 w-100">
-      <div className="container-fluid h-custom">
+    <section className="vh-100">
+      <div className="container-fluid">
         <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="row" style={{ paddingLeft: "2.5%" }}>
+          <div className="row" id="secondDiv">
             <div
+            
               className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
               style={{ backgroundColor: "#3d3e40", width: "95%" }}
             >
               <div className="row">
                 <div className="col">
-                  <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left">
+                  <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left text-custom">
                     Contact lists
                   </h1>
                 </div>
                 <div className="col">
-                  <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right">
+                  <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right text-custom">
                     Sms credit count: 0
                   </h1>
                 </div>

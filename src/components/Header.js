@@ -14,6 +14,7 @@ import { setEditPage } from "../features/elements/editPageReducer";
 import { Link, useNavigate } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
 import { useState } from "react";
+import '../css/Header.css'
 
 const Header = () => {
   const [clickedPath, setClickedPath] = useState();
@@ -75,7 +76,7 @@ const Header = () => {
 
   return (
     <div
-      className="d-flex flex-column flex-shrink-0 p-3 text-white bg-gray-700 border-solid border-1 border-gray-600 rounded mt-3"
+      className="d-flex flex-column flex-shrink-0 p-3 text-white bg-gray-700 border-solid border-1 border-gray-600 rounded mt-3 h-custom"
       style={{ height: "90vh", backgroundColor: "#3d3e40", marginLeft: "1%" }}
     >
       <a href="/" className="d-flex align-items-center mb-4 text-white">
@@ -92,8 +93,8 @@ const Header = () => {
         </svg>
       </a>
       <hr />
-      <ul className="nav nav-pills flex-column mb-auto">
-        <li className="mb-3">
+      <ul id="navList" className="nav nav-pills flex-column mb-auto">
+        <li id="navItem" className="mb-3">
           <Link
             onClick={(e) => handleNavigate(e)}
             to="/home"
@@ -109,11 +110,11 @@ const Header = () => {
               <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
             </svg>
 
-            <span className="ml-7">Home</span>
+            <p className="ml-7">Home</p>
           </Link>
         </li>
         {user ? (
-          <li className="mb-3">
+          <li id="navItem" className="mb-3">
             <Link
               to="/create_note/"
               className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-700"
@@ -133,14 +134,14 @@ const Header = () => {
                 />
               </svg>
 
-              <span className="ml-7">Create Campaign</span>
+              <p className="ml-7">Create</p>
             </Link>
           </li>
         ) : (
-          <li></li>
+          <li id="navItem"></li>
         )}
         {user ? (
-          <li className="mb-3">
+          <li id="navItem" className="mb-3">
             <Link
               onClick={(e) => handleNavigate(e)}
               to="/contact_lists/"
@@ -161,14 +162,14 @@ const Header = () => {
                 />
               </svg>
 
-              <span className="ml-7">Contact lists</span>
+              <p className="ml-7">Contact lists</p>
             </Link>
           </li>
         ) : (
-          <li></li>
+          <li id="navItem"></li>
         )}
         {user ? (
-          <li className="mb-3">
+          <li id="navItem" className="mb-3">
             <Link
               onClick={(e) => handleNavigate(e)}
               to="/package_plan/"
@@ -189,14 +190,14 @@ const Header = () => {
                 />
               </svg>
 
-              <span className="ml-7">Package plan</span>
+              <p className="ml-7">Recharge</p>
             </Link>
           </li>
         ) : (
-          <li></li>
+          <li id="navItem"></li>
         )}
         {user ? (
-          <li className="mb-3">
+          <li id="navItem" className="mb-3">
             <hr></hr>
             <h3
               className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-700"
@@ -218,15 +219,16 @@ const Header = () => {
                 />
               </svg>
 
-              <span className="ml-7">Logout</span>
+              <p className="ml-7">Logout</p>
             </h3>
           </li>
         ) : (
-          <li></li>
+          <li id="navItem"></li>
         )}
       </ul>
       <hr />
       <Link
+      id="navItem"
         to={`/account_settings/${user}/`}
         onClick={(e) => handleNavigate(e)}
         className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-700"
@@ -243,7 +245,7 @@ const Header = () => {
             clipRule="evenodd"
           />
         </svg>
-        <span className="ml-7">Account</span>
+        <p className="ml-7">Account</p>
       </Link>
       <ModalComponent
         confirmLeave={handleConfirmNavigation}

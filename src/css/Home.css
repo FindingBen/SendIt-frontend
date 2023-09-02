@@ -63,3 +63,25 @@ i{
 	}
 
 
+@media (max-width: 1440px) {
+	#headingDiv{
+		
+		
+		
+	}
+	#secondDiv{
+		width: 95%;
+		height: 70px;
+		margin-right: 2.5%;
+	}
+	#textContent{
+		font-size: 1.4rem;
+		line-height: 2rem;
+		margin-left: 2%;
+	}
+	
+	#infoDiv{
+		width: 95%;
+		margin-right:0%;
+	}
+}
