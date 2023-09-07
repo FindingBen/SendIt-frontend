@@ -35,12 +35,11 @@ const ContactList = () => {
   };
 
   return (
-    <section className="vh-100">
+    <section className="vh-100 w-100">
       <div className="container-fluid">
-        <div className="row d-flex justify-content-center align-items-center h-100">
+        <div className="row d-flex justify-content-center align-items-center">
           <div className="row" id="secondDiv">
             <div
-            
               className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
               style={{ backgroundColor: "#3d3e40", width: "95%" }}
             >

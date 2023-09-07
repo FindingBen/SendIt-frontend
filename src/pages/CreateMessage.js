@@ -199,14 +199,14 @@ const CreateNote = () => {
   };
 
   return (
-    <section className="vh-100">
+    <section className="vh-100 w-full">
       <div className="container-fluid">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row" id="secondDiv">
             <div
-            id="headingDiv"
+              id="headingDiv"
               className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
-              style={{ backgroundColor: "#3d3e40", width:'95%' }}
+              style={{ backgroundColor: "#3d3e40", width: "95%" }}
             >
               <div className="row">
                 <div className="col">

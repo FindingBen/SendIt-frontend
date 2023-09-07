@@ -85,7 +85,7 @@ const ContactList = () => {
   console.log(paginatedData);
 
   return (
-    <section className="vh-100 w-100">
+    <section className="vh-100 w-full">
       <div className="container-fluid">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="row" style={{ paddingLeft: "2.5%" }}>

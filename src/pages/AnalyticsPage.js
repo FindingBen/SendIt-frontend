@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from "react";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useParams } from "react-router-dom";
+import ChartComponent from "../utils/chart/ChartComponent";
+import { ChartData } from "../utils/chart/ChartData";
+
 const AnalyticsPage = () => {
   const axiosInstance = useAxiosInstance();
   const [views, setViews] = useState();
+  const [date, setDate] = useState();
+  const [chartData, setChartData] = useState();
   const params = useParams();
-  console.log(views);
+
   useEffect(() => {
     getdataAnalytics();
   }, []);
-
+  console.log(views);
   const getdataAnalytics = async () => {
-    let response = await axiosInstance.get(`api/get_analytcs/${params.id}`);
-    if (response.status === 200) {
-      setViews(response.data);
+    try {
+      let response = await axiosInstance.get(`api/get_analytcs/${params.id}`);
+      if (response.status === 200) {
+        setViews(response.data);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -90,7 +99,7 @@ const AnalyticsPage = () => {
                         <div className="text-right">
                           <svg
                             aria-hidden="true"
-                            class="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                            class="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 ml-20"
                             viewBox="0 0 100 101"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +134,7 @@ const AnalyticsPage = () => {
                         <div role="status">
                           <svg
                             aria-hidden="true"
-                            class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                            class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 ml-20"
                             viewBox="0 0 100 101"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +169,7 @@ const AnalyticsPage = () => {
                         <div className="text-right">
                           <svg
                             aria-hidden="true"
-                            class="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                            class="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 ml-20"
                             viewBox="0 0 100 101"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
@@ -184,7 +193,7 @@ const AnalyticsPage = () => {
               </div>
             </div>
             <div
-              class="bg-gray-300 dark:bg-gray-800 text-gray-600 rounded-lg shadow-lg h-full mb-3"
+              class="bg-gray-300 dark:bg-gray-800 text-gray-600 rounded-lg shadow-lg h-full mb-3 ml-20"
               style={{ width: "30%", paddingBottom: "6%", marginLeft: "2%" }}
             >
               <div class="flex flex-row justify-between p-6">
@@ -234,7 +243,7 @@ const AnalyticsPage = () => {
                         <div className="text-right">
                           <svg
                             aria-hidden="true"
-                            class="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                            class="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 ml-20"
                             viewBox="0 0 100 101"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
@@ -269,7 +278,7 @@ const AnalyticsPage = () => {
                         <div role="status">
                           <svg
                             aria-hidden="true"
-                            class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                            class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 ml-20"
                             viewBox="0 0 100 101"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
@@ -304,7 +313,7 @@ const AnalyticsPage = () => {
                         <div className="text-right">
                           <svg
                             aria-hidden="true"
-                            class="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                            class="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 ml-20"
                             viewBox="0 0 100 101"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"
@@ -355,138 +364,10 @@ const AnalyticsPage = () => {
           <div className="row" style={{ paddingLeft: "2.5%" }}>
             <div className="col" style={{ paddingLeft: "0%" }}>
               <div
-                class="bg-gray-400 rounded-lg p-4 md:p-6"
+                class="bg-gray-300 rounded-lg p-4 md:p-6"
                 style={{ width: "50%", height: "100%" }}
               >
-                <div class="flex justify-between">
-                  <div>
-                    <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">
-                      32.4k
-                    </h5>
-                    <p class="text-base font-normal text-gray-500 dark:text-gray-400">
-                      Users this week
-                    </p>
-                  </div>
-                  <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
-                    12%
-                    <svg
-                      class="w-3 h-3 ml-1"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 10 14"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M5 13V1m0 0L1 5m4-4 4 4"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <div id="area-chart"></div>
-                <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
-                  <div class="flex justify-between items-center pt-5">
-                    <button
-                      id="dropdownDefaultButton"
-                      data-dropdown-toggle="lastDaysdropdown"
-                      data-dropdown-placement="bottom"
-                      class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
-                      type="button"
-                    >
-                      Last 7 days
-                      <svg
-                        class="w-2.5 m-2.5 ml-1.5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 10 6"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="m1 1 4 4 4-4"
-                        />
-                      </svg>
-                    </button>
-
-                    <div
-                      id="lastDaysdropdown"
-                      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-                    >
-                      <ul
-                        class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="dropdownDefaultButton"
-                      >
-                        <li>
-                          <a
-                            href="#"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >
-                            Yesterday
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >
-                            Today
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >
-                            Last 7 days
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >
-                            Last 30 days
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                          >
-                            Last 90 days
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <a
-                      href="#"
-                      class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
-                    >
-                      Users Report
-                      <svg
-                        class="w-2.5 h-2.5 ml-1.5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 6 10"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="m1 9 4-4-4-4"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
+                <ChartComponent chartData={views} />
               </div>
             </div>
           </div>

@@ -31,7 +31,6 @@ const HomePage = () => {
     setIsLoaded(true);
   }, [listUpdated]);
 
-
   const itemsPerPage = 4;
   const totalPages = Math.ceil(notes.length / itemsPerPage);
   const handlePageChange = (page) => {
@@ -63,28 +62,33 @@ const HomePage = () => {
     setShow(true);
   };
 
-<<<<<<< HEAD
-
-=======
   console.log("node:", process.env.NODE_ENV);
->>>>>>> cbe4c2f16622af9a7db6ac110b6064f80482163e
   return (
-    <section className="vh-100">
+    <section className="vh-100 w-100">
       <div className="container-fluid">
-        <div className="row d-flex justify-content-center align-items-center" id="headingDiv">
+        <div className="row d-flex justify-content-center align-items-center">
           <div
             id="secondDiv"
             className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
-            style={{ backgroundColor: "#3d3e40", width:'95%' }}
+            style={{
+              backgroundColor: "#3d3e40",
+              width: "95%",
+            }}
           >
             <div className="row">
               <div className="col">
-                <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left" id="textContent">
+                <h1
+                  className="text-3xl mb-2 mt-3 text-gray-300 text-left text-custom"
+                  // id="textContent"
+                >
                   Home dashboard
                 </h1>
               </div>
               <div className="col">
-                <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right" id="textContent">
+                <h1
+                  className="text-2xl mb-2 mt-3 text-gray-200 text-right text-custom"
+                  // id="textContent"
+                >
                   Sms credit count: 0
                 </h1>
               </div>
@@ -129,25 +133,6 @@ const HomePage = () => {
 
           <h1 className="text-2xl mb-5 mt-5 text-gray-300">Message contents</h1>
 
-<<<<<<< HEAD
-         
-            <div
-              class="items-center justify-center rounded-lg mb-3 border-1 border-gray-600"
-              style={{ backgroundColor: "#3d3e40", width: "95%" }}
-            >
-              <div class="col-span-12">
-                <div class="overflow-auto lg:overflow-visible">
-                  <table class="table text-gray-200 border-separate space-y-6 text-sm">
-                    <thead class="bg-gray-300 text-white">
-                      <tr>
-                        <th class="p-3">Type</th>
-                        <th class="p-3">Create at</th>
-                        <th class="p-3">Analytics</th>
-                        <th class="p-3">Status</th>
-                        <th class="p-3">Action</th>
-                      </tr>
-                    </thead>
-=======
           <div
             class="items-center justify-center rounded-lg mb-3 border-1 border-gray-600"
             style={{ backgroundColor: "#3d3e40", width: "95%" }}
@@ -164,7 +149,6 @@ const HomePage = () => {
                       <th class="p-3">Action</th>
                     </tr>
                   </thead>
->>>>>>> cbe4c2f16622af9a7db6ac110b6064f80482163e
 
                   {!isLoaded ? (
                     <tbody>
@@ -348,11 +332,7 @@ const HomePage = () => {
                 setUpdated={() => setListUpdated(true)}
               />
             </div>
-<<<<<<< HEAD
-         
-=======
           </div>
->>>>>>> cbe4c2f16622af9a7db6ac110b6064f80482163e
 
           {totalPages > 1 && (
             <div>
