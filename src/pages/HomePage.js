@@ -95,41 +95,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          {/* <div
-            className="static rounded-lg p-3 border-1 border-gray-600 mt-3"
-            style={{
-              width: "95%",
-              backgroundColor: "#3d3e40",
-            }}
-          >
-            <div
-              className="inline-block max-w-sm p-4 "
-              style={{ marginLeft: "12px", borderRight: "1px solid grey" }}
-            >
-              <h5 className="mb-2 text-2xl tracking-tight text-white dark:text-white">
-                Open rate in % for messages
-              </h5>
-              <p className="text-white">To be added...</p>
-            </div>
-            <div
-              className="inline-block max-w-sm p-4"
-              style={{ marginLeft: "12px", borderRight: "1px solid grey" }}
-            >
-              <h5 className="mb-2 text-2xl tracking-tight text-white dark:text-white">
-                Open rate in % for messages
-              </h5>
-              <p className="text-white">To be added...</p>
-            </div>
-            <div
-              className="inline-block max-w-sm p-4"
-              style={{ marginLeft: "12px" }}
-            >
-              <h5 className="mb-2 text-2xl  tracking-tight text-white dark:text-white">
-                Open rate in % for messages
-              </h5>
-              <p className="text-white">To be added...</p>
-            </div>
-          </div> */}
+         
 
           <h1 className="text-2xl mb-5 mt-5 text-gray-300">Message contents</h1>
 

@@ -3,23 +3,15 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
 
 function ChartComponent({ chartData }) {
   const [data, setData] = useState([]);
-  //   const data = [
-  //     { name: "Page A", uv: 400 },
-  //     { name: "Page B", uv: 300 },
-  //     { name: "Page C", uv: 200 },
-  //     { name: "Page D", uv: 100 },
-  //   ];
-
-  // Create the chart when chartRef becomes available
 
   useEffect(() => {
     // Extract information from chartData and transform it into the desired format
 
-    const transformedData = chartData?.data.map((dataPoint) => {
-      const { date, screen_views } = dataPoint;
+    const transformedData = chartData?.data.sorted_data.map((dataPoint) => {
+      const { date, screenViews } = dataPoint;
       return {
-        date,
-        screenViews: screen_views,
+        date: date,
+        screenViews: screenViews,
       };
     });
 

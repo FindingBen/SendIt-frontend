@@ -3,21 +3,69 @@ import useAxiosInstance from "../utils/axiosInstance";
 import { useParams } from "react-router-dom";
 import ChartComponent from "../utils/chart/ChartComponent";
 import { ChartData } from "../utils/chart/ChartData";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePickerComponent from "../components/DatePicker";
 
 const AnalyticsPage = () => {
   const axiosInstance = useAxiosInstance();
   const [views, setViews] = useState();
-  const [date, setDate] = useState();
+  const [sms, setSms] = useState();
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  const formattedStartDate = formatDate(yesterday);
+  const formattedEndDate = formatDate(today);
+
+  const [startDateValue, setStartDate] = useState(formattedStartDate);
+  const [endDateValue, setEndDate] = useState(formattedEndDate);
+
   const [chartData, setChartData] = useState();
   const params = useParams();
 
   useEffect(() => {
     getdataAnalytics();
-  }, []);
-  console.log(views);
+    getSms();
+  }, [startDateValue, endDateValue]);
+
+  function formatDate(inputDate) {
+    const date = new Date(inputDate);
+
+    // Get year, month, and day components
+    const year = date.getFullYear();
+    // JavaScript months are 0-based, so we add 1 to get the correct month.
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    // Create the formatted date string in the desired format (YYYY-MM-DD)
+    const formattedDate = `${year}-${month}-${day}`;
+
+    return formattedDate;
+  }
+
+  const handleStartDateChange = (date) => {
+    const formatedStartDate = formatDate(date);
+    setStartDate(formatedStartDate);
+  };
+
+  const handleEndDateChange = (date) => {
+    const formatedEndDate = formatDate(date);
+    setEndDate(formatedEndDate);
+  };
+
+  const getSms = async () => {
+    let response = await axiosInstance.get(`sms/sms/${params.id}`);
+    if (response.status === 200) {
+      setSms(response.data);
+    }
+  };
+
   const getdataAnalytics = async () => {
     try {
-      let response = await axiosInstance.get(`api/get_analytcs/${params.id}`);
+      let response = await axiosInstance.get(
+        `api/get_analytcs/${params.id}/?startDate=${startDateValue}&endDate=${endDateValue}`
+      );
       if (response.status === 200) {
         setViews(response.data);
       }
@@ -25,7 +73,7 @@ const AnalyticsPage = () => {
       console.log(error);
     }
   };
-
+  console.log(sms);
   return (
     <section className="vh-100  w-100">
       <div className="container-fluid">
@@ -43,7 +91,7 @@ const AnalyticsPage = () => {
                 </div>
                 <div className="col">
                   <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right">
-                    Sms credit count: 0
+                    Sms credit count:{" "}
                   </h1>
                 </div>
               </div>
@@ -58,7 +106,7 @@ const AnalyticsPage = () => {
                 </div>
                 {views ? (
                   <h2 class="self-center text-3xl">
-                    {views?.data[0]?.screen_views}
+                    {views?.data.sorted_total_data.screen_views_total}
                   </h2>
                 ) : (
                   <div role="status">
@@ -93,7 +141,7 @@ const AnalyticsPage = () => {
                     <div className="col">
                       {views ? (
                         <h2 class="text-right text-1xl">
-                          {views?.data[0]?.scrolled_percentage}
+                          {views?.data.sorted_total_data.scrolled_user_total}
                         </h2>
                       ) : (
                         <div className="text-right">
@@ -128,7 +176,8 @@ const AnalyticsPage = () => {
                     <div className="col">
                       {views ? (
                         <h2 class="text-right text-1xl">
-                          {views?.data[0]?.user_engagement_duration} secs
+                          {views?.data.sorted_total_data.user_engegment_total}{" "}
+                          secs
                         </h2>
                       ) : (
                         <div role="status">
@@ -163,7 +212,9 @@ const AnalyticsPage = () => {
                     <div className="col">
                       {views ? (
                         <h2 class="text-right text-1xl">
-                          {views?.data[0]?.engegement_rate * 100} %
+                          {views?.data.sorted_total_data.engegment_rate_total *
+                            100}{" "}
+                          %
                         </h2>
                       ) : (
                         <div className="text-right">
@@ -201,9 +252,7 @@ const AnalyticsPage = () => {
                   <h2 className="text-3xl">Total sends</h2>
                 </div>
                 {views ? (
-                  <h2 class="self-center text-3xl">
-                    {views?.data[0]?.screen_views}
-                  </h2>
+                  <h2 class="self-center text-3xl">{sms?.sms_sends}</h2>
                 ) : (
                   <div role="status">
                     <svg
@@ -231,13 +280,13 @@ const AnalyticsPage = () => {
                   <div className="row">
                     <div className="col">
                       <h2 className="text-left hover:text-indigo-500">
-                        Clicked rate
+                        Click rate
                       </h2>
                     </div>
                     <div className="col">
                       {views ? (
                         <h2 class="text-right text-1xl">
-                          {views?.data[0]?.scrolled_percentage}
+                          {sms?.click_number / sms?.sms_sends} %
                         </h2>
                       ) : (
                         <div className="text-right">
@@ -271,9 +320,7 @@ const AnalyticsPage = () => {
                     </div>
                     <div className="col">
                       {views ? (
-                        <h2 class="text-right text-1xl">
-                          {views?.data[0]?.user_engagement_duration} secs
-                        </h2>
+                        <h2 class="text-right text-1xl">tba secs</h2>
                       ) : (
                         <div role="status">
                           <svg
@@ -306,9 +353,7 @@ const AnalyticsPage = () => {
                     </div>
                     <div className="col">
                       {views ? (
-                        <h2 class="text-right text-1xl">
-                          {views?.data[0]?.engegement_rate * 100} %
-                        </h2>
+                        <h2 class="text-right text-1xl">tba</h2>
                       ) : (
                         <div className="text-right">
                           <svg
@@ -367,6 +412,16 @@ const AnalyticsPage = () => {
                 class="bg-gray-300 rounded-lg p-4 md:p-6"
                 style={{ width: "50%", height: "100%" }}
               >
+                <div class="relative max-w-sm mb-2">
+                  <p className="text-3xl mb-2 text-gray-600">
+                    User views over time
+                  </p>
+                  <DatePickerComponent
+                    style={{ marginRight: "2%" }}
+                    startDate={handleStartDateChange}
+                    endDate={handleEndDateChange}
+                  ></DatePickerComponent>
+                </div>
                 <ChartComponent chartData={views} />
               </div>
             </div>

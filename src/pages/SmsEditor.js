@@ -23,6 +23,7 @@ const SmsEditor = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [uniqueId, setUniqueId] = useState();
   const [linkURL, setLinkURL] = useState("");
   const [message, setMessage] = useState();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -34,11 +35,11 @@ const SmsEditor = () => {
   //const BASE_URL = "http://localhost:8000/";
   const BASE_URL = "https://sendit-frontend-production.up.railway.app";
   const linkURLBase = `${BASE_URL}/message_view/${params.id}`;
-
+  const uniqueLink = `http://localhost:8000/sms/sms/tracking/`;
   useEffect(() => {
     getContactLists();
   }, []);
-  console.log(recipients);
+
   useEffect(() => {
     setErrorMessage("");
 
@@ -55,6 +56,8 @@ const SmsEditor = () => {
       console.error(error);
     }
   }, [smsText, textComponentRef, isDropdownOpen]);
+
+  const uniqueLinkTracker = () => {};
 
   const handleAddLink = () => {
     const linkEmbed = `#Link`;
@@ -89,7 +92,7 @@ const SmsEditor = () => {
           user: userId,
           sender: "ME",
           sms_text: smsText,
-          content_link: linkURL,
+          content_link: uniqueLink,
           message: params.id,
           contact_list: recipients,
         },
