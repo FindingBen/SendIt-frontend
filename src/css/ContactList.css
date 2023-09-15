@@ -23,7 +23,7 @@
 	tr td:nth-child(n+5),
 	tr th:nth-child(n+5) {
 		
-        background-color: #3d3e40;
+        background-color: #111827;
         color: rgb(249, 249, 249);
 	}
 
@@ -31,25 +31,25 @@
 	tr td:nth-child(1),
 	tr th:nth-child(1) {
 		color: rgb(139, 168, 190);
-        background-color: #3d3e40;
+        background-color: #111827;
 	}
 
     tr td:nth-child(2),
 	tr th:nth-child(2) {
     color: rgb(139, 168, 190);
-        background-color: #3d3e40;
+        background-color: #111827;
 	}
 
     tr td:nth-child(3),
 	tr th:nth-child(3) {
     color: rgb(139, 168, 190);
-        background-color: #3d3e40;
+        background-color: #111827;
 	}
 
     tr td:nth-child(4),
 	tr th:nth-child(4) {
     color: rgb(139, 168, 190);
-        background-color: #3d3e40;
+        background-color: #111827;
         
 	}
 

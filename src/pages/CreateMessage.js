@@ -5,8 +5,6 @@ import "../css/RootIframe.css";
 import Image from "../components/Image";
 import Text from "../components/Text";
 import Button from "../components/Button";
-//import IFrame from "../components/IFrame";
-import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
 import {
   selectCurrentUser,
   selectCurrentToken,
@@ -16,7 +14,6 @@ import modalReducer, {
   setOpenModal,
 } from "../features/modal/modalReducer";
 import List from "../components/List";
-import ReactDOM from "react-dom";
 import { setState } from "../features/modal/formReducer";
 import { setList, selectListState } from "../features/elements/elementReducer";
 import { useSelector } from "react-redux";
@@ -199,34 +196,19 @@ const CreateNote = () => {
   };
 
   return (
-    <section className="vh-100 w-full">
-      <div className="container-fluid">
-        <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="row" id="secondDiv">
-            <div
-              id="headingDiv"
-              className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
-              style={{ backgroundColor: "#3d3e40", width: "95%" }}
-            >
-              <div className="row">
-                <div className="col">
-                  <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left text-custom">
-                    Content creation
-                  </h1>
-                </div>
-                <div className="col">
-                  <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right text-custom">
-                    Sms credit count: 0
-                  </h1>
-                </div>
-              </div>
-            </div>
+    <section className="min-h-screen flex-d w-100 items-center justify-center">
+      <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
+        <div className="flex-1 px-2 sm:px-0">
+          <div className="row">
+            <h3 class="text-3xl text-left font-extralight text-white/50">
+              Create content
+            </h3>
             <div className="col mt-3" style={{ paddingLeft: "0%" }}>
               <div
-                className="static rounded-lg p-10 border-1 border-gray-600"
+                className="static rounded-lg p-10"
                 style={{
                   width: "90%",
-                  backgroundColor: "#3d3e40",
+                  backgroundColor: "#1118274D",
                 }}
               >
                 <div className="row" style={{ minWidthL: "22rem" }}>
@@ -351,25 +333,62 @@ const CreateNote = () => {
             </div>
 
             <div className="col">
-              <div className="custom-size relative mx-auto border-gray-800 mt-3 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
-                <div className="w-[128px] h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
-                <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
-                <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
-                <div className="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
-                <div
-                  className="rounded-[2rem] overflow-hidden w-[270px] h-[572px] bg-gray-300 dark:bg-gray-800"
-                  id="screen"
-                >
-                  <List
-                    id="myList"
-                    children={elementContextList}
-                    clicked={handleClicked}
-                  />
+              <div class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2rem] h-[600px] w-[300px]">
+                <div class="mx-auto h-[612px] w-[320px] bg-black rounded-[60px] border-[14px] border-black relative overflow-hidden ring ring-gray-400 shadow-xl">
+                  <div class="absolute top-0 inset-x-0">
+                    <div class="mx-auto bg-black h-6 w-40 rounded-b-3xl"></div>
+                  </div>
+
+                  <div className="rounded-[2rem] overflow-hidden w-[295px] h-[612px] bg-gray-400 dark:bg-gray-800">
+                    <div class="relative">
+                      <div class="mr-5 mt-2 flex justify-end space-x-1">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-4 w-4 text-white"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                        </svg>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-4 w-4 text-white"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M17.778 8.222c-4.296-4.296-11.26-4.296-15.556 0A1 1 0 01.808 6.808c5.076-5.077 13.308-5.077 18.384 0a1 1 0 01-1.414 1.414zM14.95 11.05a7 7 0 00-9.9 0 1 1 0 01-1.414-1.414 9 9 0 0112.728 0 1 1 0 01-1.414 1.414zM12.12 13.88a3 3 0 00-4.242 0 1 1 0 01-1.415-1.415 5 5 0 017.072 0 1 1 0 01-1.415 1.415zM9 16a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                      <div class="h-0.5 w-10 mt-1.5 mr-7 bg-white rounded ml-auto"></div>
+                    </div>
+                    <List
+                      id="myList"
+                      children={elementContextList}
+                      clicked={handleClicked}
+                    />
+                  </div>
+                  <div class="absolute bottom-0 inset-x-0 h-20">
+                    <div class="px-10 flex justify-between"> </div>
+                    <div class="absolute bottom-1 inset-x-0">
+                      <div class="mx-auto h-1 w-28 rounded bg-white"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <button
+                style={{ marginLeft: "6%" }}
+                className="bg-gray-900 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded mt-5"
+                onClick={handleSubmit}
+              >
+                Create
+              </button>
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div id="buttonHolder" className="col">
               <button
                 className="bg-gray-900 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
@@ -378,7 +397,7 @@ const CreateNote = () => {
                 Create
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

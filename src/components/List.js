@@ -39,7 +39,7 @@ const List = ({ children, alignment, clicked }) => {
             style={{ marginBottom: "5%" }}
             id="elItem"
             key={item.id}
-
+            loading="lazy"
             //className="hover:bg-blue-300"
             //onClick={() => toDelete(item)}
           >
@@ -54,7 +54,10 @@ const List = ({ children, alignment, clicked }) => {
             )}
 
             {item.element_type === "Button" ? (
-              <ButtonComponent textValue={item.button_title} />
+              <ButtonComponent
+                textValue={item.button_title}
+                linkValue={item.button_link}
+              />
             ) : (
               <></>
             )}

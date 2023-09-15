@@ -15,7 +15,7 @@ const Button = ({
   const { createElement, deleteElement } = useContext(ElementContext);
   const [active, setActive] = useState(true);
   const [text, setText] = useState();
-  const [link, setLink] = useState();
+  const [link, setLink] = useState("");
   const [showComponent, setShowComponent] = useState(true);
   const container = document.getElementById("myList");
   const [isMounted, setIsMounted] = useState(true);
@@ -69,9 +69,9 @@ const Button = ({
   function handleTextButtonFunc(event) {
     setText(event.target.value);
   }
-
+  console.log(text, link);
   function handleLinkButtonFunc(event) {
-    setLink(event.target.value);
+    setLink(event);
   }
 
   const addButtonObjContext = () => {
@@ -190,7 +190,7 @@ const Button = ({
       </label>
       <input
         onChange={handleLinkButtonFunc}
-        type="text"
+        type="link"
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       />
       <div className="mt-3">

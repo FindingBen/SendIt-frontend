@@ -15,6 +15,7 @@ const ImgList = ({ imageUrl }) => {
         <img
           class="h-auto max-w-lg rounded-lg"
           width="260"
+          loading="lazy"
           src={require("../../src/assets/sampleImage.jpg")}
         />
       )}

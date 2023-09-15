@@ -64,44 +64,17 @@ const HomePage = () => {
 
   console.log("node:", process.env.NODE_ENV);
   return (
-    <section className="vh-100 w-100">
-      <div className="container-fluid">
-        <div className="row d-flex justify-content-center align-items-center">
-          <div
-            id="secondDiv"
-            className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
-            style={{
-              backgroundColor: "#3d3e40",
-              width: "95%",
-            }}
-          >
-            <div className="row">
-              <div className="col">
-                <h1
-                  className="text-3xl mb-2 mt-3 text-gray-300 text-left text-custom"
-                  // id="textContent"
-                >
-                  Home dashboard
-                </h1>
-              </div>
-              <div className="col">
-                <h1
-                  className="text-2xl mb-2 mt-3 text-gray-200 text-right text-custom"
-                  // id="textContent"
-                >
-                  Sms credit count: 0
-                </h1>
-              </div>
-            </div>
-          </div>
-
-         
-
+    <section className="min-h-screen flex-d w-100 items-center justify-center">
+      <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
+        <div className="flex-1 px-2 sm:px-0">
+          <h3 class="text-3xl font-extralight text-left text-white/50">
+            Home dashboard
+          </h3>
           <h1 className="text-2xl mb-5 mt-5 text-gray-300">Message contents</h1>
 
           <div
-            class="items-center justify-center rounded-lg mb-3 border-1 border-gray-600"
-            style={{ backgroundColor: "#3d3e40", width: "95%" }}
+            class="items-center justify-center rounded-lg mb-3"
+            style={{ backgroundColor: "#111827", width: "100%" }}
           >
             <div class="col-span-12">
               <div class="overflow-auto lg:overflow-visible">

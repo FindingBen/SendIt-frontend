@@ -38,7 +38,7 @@ const PasswordReset = () => {
   };
 
   return (
-    <section class="flex flex-col justify-center antialiased bg-gray-700 text-gray-200 min-h-screen p-4 w-100">
+    <section class="flex flex-col justify-center antialiased bg-darkBlue text-gray-200 min-h-screen p-4 w-100">
       <div class="h-full">
         <div class="max-w-[360px] mx-auto mt-20 mb-5">
           <div class="bg-white shadow-lg rounded-lg mt-9">
@@ -109,15 +109,17 @@ const PasswordReset = () => {
                 )}
               </div>
             ) : (
-              <div className="text-sm font-medium text-gray-500">
-                Email has been sent, if its valid you should recieve a message
-                with instructions
+              <div className="text-sm font-light text-gray-700 m-2">
+                <p className="m-2">
+                  Email has been sent, if its valid you should recieve a message
+                  with instructions
+                </p>
               </div>
             )}
           </div>
         </div>
         <span class="text-sm mt-3 hover:text-blue-500 cursor-pointer text-gray-200">
-          <Link to="/login" className="text-body text-gray-200">
+          <Link to="/login" className="text-gray-200">
             Back to login
           </Link>
         </span>

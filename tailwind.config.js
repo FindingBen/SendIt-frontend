@@ -26,7 +26,11 @@ module.exports = {
       "2xl": "1536px",
       // => @media (min-width: 1536px) { ... }
     },
-    extend: {},
+    extend: {
+      colors: {
+        darkBlue: "#1f2937",
+      },
+    },
   },
   plugins: [
     require("flowbite/plugin")({

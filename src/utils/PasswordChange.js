@@ -43,46 +43,54 @@ const PasswordChange = () => {
   };
 
   return (
-    <section className="vh-100">
-      <div className="container-fluid">
-        <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="col-12">
-            <h1 className="text-2xl font-bold mb-4 text-gray-300">
-              Change your password
-            </h1>
-            <hr></hr>
-          </div>
-          <div className="row">
-            <div>
-              <input
-                type="password"
-                className="bg-gray-300 hover:bg-gray-50 text-white py-2 px-4 border border-blue-700 rounded w-full"
-                placeholder="Enter your new password"
-                onChange={handleNewPass}
-              ></input>
-              <input
-                type="password"
-                className="bg-gray-300 hover:bg-gray-50 mt-3 text-white py-2 px-4 border border-blue-700 rounded w-full"
-                placeholder="Re-enter your new password"
-                onChange={handleReNewPass}
-              ></input>
-              <input
-                type="password"
-                className="bg-gray-300 hover:bg-gray-50 mt-3 text-white py-2 px-4 border border-blue-700 rounded w-full"
-                placeholder="Enter your old password"
-                onChange={handleOldPass}
-              ></input>
-              <button
-                className="bg-sky-800 hover:bg-green-400 mt-3 text-white font-bold py-2 px-4 border border-blue-700 rounded w-25"
-                onClick={passChange}
-              >
-                Reset
-              </button>
-            </div>
-          </div>
+    <div className="flex-1 px-2 sm:px-0">
+      <div className="flex-col">
+        <h3 class="text-2xl text-left font-extralight text-white/50">
+          Change password
+        </h3>
+
+        <div className="mt-3">
+          <label className="block mb-2 text-sm text-left font-medium text-gray-300 dark:text-white">
+            Enter old password
+          </label>
+          <input
+            type="password"
+            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 rounded w-100"
+            placeholder="Enter your old password"
+            onChange={handleOldPass}
+          ></input>
+        </div>
+        <div>
+          <label className="block mt-1 text-sm text-left font-medium text-gray-300 dark:text-white">
+            Enter new password
+          </label>
+          <input
+            type="password"
+            className="block bg-gray-500 hover:bg-gray-400 mt-1 text-light font-light py-2 px-4 rounded w-100"
+            placeholder="Enter your new password"
+            onChange={handleNewPass}
+          ></input>
+        </div>
+        <div>
+          <label className="block mt-1 text-sm text-left font-medium text-gray-300 dark:text-white">
+            Repeat new password
+          </label>
+          <input
+            type="password"
+            className="block bg-gray-500 hover:bg-gray-400 mt-1 text-light font-light py-2 px-4 rounded w-100"
+            placeholder="Re-enter your new password"
+            onChange={handleReNewPass}
+          ></input>
         </div>
       </div>
-    </section>
+      <button
+        style={{ marginRight: "80%" }}
+        className="bg-sky-800 left hover:bg-sky-400 mt-3 text-white font-light py-2 px-4 rounded w-32"
+        onClick={passChange}
+      >
+        Change
+      </button>
+    </div>
   );
 };
 

@@ -95,6 +95,7 @@ const SmsEditor = () => {
           content_link: uniqueLink,
           message: params.id,
           contact_list: recipients,
+          // is_sent: true,
         },
         {
           headers: {

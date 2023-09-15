@@ -14,7 +14,7 @@ import { setEditPage } from "../features/elements/editPageReducer";
 import { Link, useNavigate } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
 import { useState } from "react";
-import '../css/Header.css'
+import "../css/Header.css";
 
 const Header = () => {
   const [clickedPath, setClickedPath] = useState();
@@ -76,8 +76,8 @@ const Header = () => {
 
   return (
     <div
-      className="d-flex flex-column flex-shrink-0 p-3 text-white bg-gray-700 border-solid border-1 border-gray-600 rounded mt-3 h-custom"
-      style={{ height: "90vh", backgroundColor: "#3d3e40", marginLeft: "1%" }}
+      className="d-flex flex-column flex-shrink-0 p-3 text-white bg-gray-700 rounded mt-3 h-custom"
+      style={{ height: "90vh", backgroundColor: "#111827", marginLeft: "1%" }}
     >
       <a href="/" className="d-flex align-items-center mb-4 text-white">
         <svg className="bi me-2" width="40" height="32"></svg>
@@ -228,7 +228,7 @@ const Header = () => {
       </ul>
       <hr />
       <Link
-      id="navItem"
+        id="navItem"
         to={`/account_settings/${user}/`}
         onClick={(e) => handleNavigate(e)}
         className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-700"
