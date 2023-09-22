@@ -20,15 +20,21 @@ module.exports = {
       lg: "1440px",
       // => @media (min-width: 1024px) { ... }
 
-      xl: "1280px",
+      xl: "1536px",
       // => @media (min-width: 1280px) { ... }
 
-      "2xl": "1536px",
+      "2xl": "1736px",
       // => @media (min-width: 1536px) { ... }
     },
     extend: {
       colors: {
-        darkBlue: "#1f2937",
+        darkBlue: "#111827",
+        darkGray: "#1f2937",
+        darkestGray: "#1118274D",
+      },
+      fontFamily: {
+        sfPro: ["SF Pro"],
+        helv: ["helvetica"],
       },
     },
   },

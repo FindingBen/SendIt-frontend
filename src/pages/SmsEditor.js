@@ -13,8 +13,7 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../css/Sms.css";
 import TextComponent from "../components/TextComponent";
-import TrackLink from "../utils/TrackLink";
-import { v4 as uuidv4 } from "uuid";
+import iPhoneImage from "../../src/assets/iphone_bg.jpg";
 
 const SmsEditor = () => {
   const axiosInstance = useAxiosInstance();
@@ -138,147 +137,167 @@ const SmsEditor = () => {
   };
 
   return (
-    <section className="vh-100 w-100">
-      <div className="container-fluid">
-        <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="row" style={{ paddingLeft: "2.5%" }}>
-            <div
-              className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
-              style={{ backgroundColor: "#3d3e40", width: "95%" }}
-            >
-              <div className="row">
-                <div className="col">
-                  <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left">
-                    Sms editor
-                  </h1>
-                </div>
-                <div className="col">
-                  <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right">
-                    Sms credit count: 0
-                  </h1>
-                </div>
-              </div>
+    <section className="min-h-screen flex-d w-100 items-center justify-center">
+      <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
+        <div className="flex-1 px-2 sm:px-0">
+          <div className="row">
+            <div className="flex justify-between items-center mb-3">
+              <h3 class="text-3xl text-left font-extralight text-white/50">
+                Sms setttings
+              </h3>
             </div>
-            <div className="col mt-3" style={{ paddingLeft: "0%" }}>
-              <div
-                class="border-solid border-1 border-gray-600 rounded"
-                style={{
-                  backgroundColor: "#3d3e40",
-                  paddingLeft: "20px",
-                  paddingRight: "20px",
-                  paddingBottom: "20px",
-                }}
-              >
-                <div className="row mt-4 text-gray-100">
-                  <div className="col">
-                    <label style={{ marginLeft: "0%" }} for="form1">
+            <div className="grid grid-cols-2 bg-darkestGray rounded-md">
+              <div className="grid gap-2 border-r-2">
+                <div class="rounded p-10">
+                  <h3 class="text-2xl text-left font-extralight text-white/50 mb-4">
+                    Sms send
+                  </h3>
+                  <div>
+                    <label
+                      for="first_name"
+                      className="block mb-2 text-sm text-left font-medium text-gray-300 dark:text-white"
+                    >
                       From:
                     </label>
-                  </div>
-                  <div className="col">
+
                     <input
-                      style={{ marginLeft: "0%" }}
                       type="text"
                       name="from"
-                      className="form-control bg-gray-300 text-gray-50 rounded-lg"
+                      className="block bg-gray-300 hover:bg-gray-400 mt-1 text-light font-light py-2 px-4 rounded w-50"
                     />
                   </div>
-                </div>
 
-                <div className="text-gray-100 mt-2">
-                  <div className="row">
-                    <div className="col">
-                      <label for="form1">Select recipient list: </label>
-                    </div>
-                    <div className="col">
-                      <select
-                        style={{ width: "100%", marginLeft: "0%" }}
-                        className="bg-gray-300 text-gray-700 divide-y divide-gray-100 rounded-lg"
-                        onClick={handleChoice}
+                  <div>
+                    <label className="block mb-2 mt-4 text-sm text-left font-medium text-gray-300 dark:text-white">
+                      Select contact list:
+                    </label>
+
+                    <select
+                      className="block bg-gray-300 w-50 text-gray-700 divide-y divide-gray-100 rounded-lg"
+                      onClick={handleChoice}
+                    >
+                      <option value="" disabled selected>
+                        Choose your list
+                      </option>
+                      {contactLists?.map((item) => (
+                        <option
+                          key={item.id}
+                          value={item.id}
+                          className="text-gray-700"
+                        >
+                          {item.list_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <br></br>
+                  <div className="form-group purple-border text-gray-100 rounded-lg">
+                    <label className="block mb-2 text-sm text-left font-medium text-gray-300 dark:text-white">
+                      Sms text:
+                    </label>
+
+                    <textarea
+                      id="smsTextArea"
+                      className="block p-2.5 w-75 h-2/4 text-sm text-gray-50 bg-gray-400 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Write your sms here..."
+                      onChange={handleSms}
+                      value={smsText}
+                    ></textarea>
+
+                    <div className="grid grid-cols-2 gap-6 content-between">
+                      <button
+                        onClick={sendSms}
+                        type="submit"
+                        color="dark"
+                        className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-3 rounded w-28 h-3/4 mt-4"
                       >
-                        {contactLists?.map((item) => (
-                          <option
-                            key={item.id}
-                            value={item.id}
-                            className="text-gray-700"
-                          >
-                            {item.list_name}
-                          </option>
-                        ))}
-                      </select>
+                        Send
+                      </button>
+
+                      <button
+                        onClick={handleAddLink}
+                        value={linkURLBase}
+                        className="bg-blue-800 hover:bg-blue-400 text-white font-bold py-1 px-3 rounded mt-4 w-1/4 lg:ml-16 xl:ml-11"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-6 h-6"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+                          />
+                        </svg>
+                      </button>
                     </div>
                   </div>
                 </div>
-                <br></br>
-                <div className="form-group purple-border text-gray-100 rounded-lg">
-                  <label for="exampleFormControlTextarea4">Text message</label>
-
-                  <textarea
-                    id="smsTextArea"
-                    className="block p-2.5 w-full text-sm text-gray-50 bg-gray-500 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Write your thoughts here..."
-                    onChange={handleSms}
-                    value={smsText}
-                  ></textarea>
-                  <button
-                    onClick={handleAddLink}
-                    value={linkURLBase}
-                    style={{ alignContent: "flex-end" }}
-                    className="bg-blue-800 hover:bg-blue-400 text-white font-bold py-1 px-3 border border-gray-600 rounded mb-3 mt-2 justify-end"
+                {errorMessage && (
+                  <div
+                    class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 mt-2"
+                    role="alert"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="w-6 h-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-                      />
-                    </svg>
-                  </button>
-                  <br></br>
-                  <button
-                    onClick={sendSms}
-                    type="submit"
-                    color="dark"
-                    className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-                  >
-                    Send
-                  </button>
-                </div>
+                    <span class="font-medium">Sms send error!</span>{" "}
+                    {errorMessage}
+                  </div>
+                )}
               </div>
-              {errorMessage && (
-                <div
-                  class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 mt-2"
-                  role="alert"
-                >
-                  <span class="font-medium">Sms send error!</span>{" "}
-                  {errorMessage}
-                </div>
-              )}
-            </div>
-            <div className="col mt-3">
-              <div className="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-500 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl ">
-                <div className="w-[148px] h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
-                <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
-                <div className="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
-                <div className="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
-
-                <div
-                  className="rounded-[2rem] overflow-hidden w-[270px] h-[572px] bg-gray-500 dark:bg-gray-800"
-                  id="screen"
-                >
-                  <div className="yours message" style={{ marginTop: "25px" }}>
-                    <div className="message last">
-                      <TextComponent
-                        ref={textComponentRef}
-                        textValue={smsText}
-                      />
+              <div className="col mt-3 p-10">
+                <div class="relative mx-auto border-gray-200 dark:border-gray-800 bg-gray-200 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
+                  <div class="w-[148px] h-[18px] bg-gray-200 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
+                  <div class="h-[46px] w-[3px] bg-gray-200 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
+                  <div class="h-[46px] w-[3px] bg-gray-200 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
+                  <div class="h-[64px] w-[3px] bg-gray-200 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
+                  <div
+                    class="rounded-[2rem] overflow-hidden w-[272px] h-[572px] dark:bg-gray-800"
+                    style={{ backgroundImage: `url(${iPhoneImage})` }}
+                  >
+                    <div class="mr-5 mt-2 flex justify-end space-x-1">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4 text-gray-200"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                      </svg>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4 text-gray-200"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M17.778 8.222c-4.296-4.296-11.26-4.296-15.556 0A1 1 0 01.808 6.808c5.076-5.077 13.308-5.077 18.384 0a1 1 0 01-1.414 1.414zM14.95 11.05a7 7 0 00-9.9 0 1 1 0 01-1.414-1.414 9 9 0 0112.728 0 1 1 0 01-1.414 1.414zM12.12 13.88a3 3 0 00-4.242 0 1 1 0 01-1.415-1.415 5 5 0 017.072 0 1 1 0 01-1.415 1.415zM9 16a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </div>{" "}
+                    <div className="border-solid 1px h-20 my-48 mx-3 rounded-lg">
+                      <div className="bg-gray-200 opacity-90 flex flex-row border-none 1px h-7 rounded-t-lg">
+                        <img
+                          src={require("../../src/assets/message.png")}
+                          height={23}
+                          width={23}
+                          className="mx-1 my-auto"
+                        ></img>
+                        <h2 className="text-1xl my-1 opacity-80 font-medium text-gray-600 font-helv">
+                          MESSAGES
+                        </h2>
+                      </div>
+                      <div className="bg-gray-200 h-20 opacity-50 rounded-b-lg">
+                        <TextComponent
+                          className="text-gray-950"
+                          ref={textComponentRef}
+                          textValue={smsText}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

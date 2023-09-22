@@ -75,27 +75,38 @@ const AnalyticsPage = () => {
   };
 
   return (
-    <section className="vh-100  w-100">
-      <div className="container-fluid">
-        <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="row text-gray-300" style={{ paddingLeft: "2.5%" }}>
-            <div
-              className="border-solid border-1 border-gray-600 mt-3 mb-3 rounded h-20"
-              style={{ backgroundColor: "#3d3e40", width: "95%" }}
-            >
-              <div className="row">
-                <div className="col">
-                  <h1 className="text-3xl mb-2 mt-3 text-gray-300 text-left">
-                    Sms analytics
-                  </h1>
-                </div>
-                <div className="col">
-                  <h1 className="text-2xl mb-2 mt-3 text-gray-200 text-right">
-                    Sms credit count:{" "}
-                  </h1>
-                </div>
-              </div>
-            </div>
+    <section className="min-h-screen flex-d w-100 items-center justify-center">
+      <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
+        <div className="flex-1 px-2 sm:px-0">
+          <div className="flex justify-between items-center mb-3">
+            <h3 class="text-3xl font-extralight text-left text-white/50">
+              Analytics dashboard
+            </h3>
+            {/* <div class="inline-flex items-center space-x-2">
+              <button>
+                <a
+                  class="text-white/50 p-2 rounded-md hover:text-white smooth-hover"
+                  href="#"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                    />
+                  </svg>
+                </a>
+              </button>
+            </div> */}
+          </div>
+          <div className="row text-gray-300">
             <div
               class="bg-gray-300 dark:bg-gray-800 text-gray-600 rounded-lg shadow-lg h-full mb-4"
               style={{ width: "30%", paddingBottom: "6%" }}
@@ -406,7 +417,7 @@ const AnalyticsPage = () => {
               </div>
             </div>
           </div>
-          <div className="row" style={{ paddingLeft: "2.5%" }}>
+          <div className="row">
             <div className="col" style={{ paddingLeft: "0%" }}>
               <div
                 class="bg-gray-300 rounded-lg p-4 md:p-6"

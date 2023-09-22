@@ -1,47 +1,36 @@
 import React, { useState, useEffect } from "react";
+import {
+  selectCurrentToken,
+  selectCurrentUser,
+} from "../../features/auth/authSlice";
 import useAxiosInstance from "../../utils/axiosInstance";
-import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const DeleteMessageModal = ({
-  messageId,
-  showModalDelete,
-  onClose,
-  listUpdated,
-  setUpdated,
-}) => {
-  const [show, setShowModal] = useState(showModalDelete);
-  const [listUpdate, setListUpdate] = useState(listUpdated);
+const DeleteListModal = ({ showModal, onClose, contactListId, setUpdated }) => {
   const axiosInstance = useAxiosInstance();
-  const params = useParams();
+  const [show, setShowModal] = useState(showModal);
+  const [listId, setListId] = useState();
 
   useEffect(() => {
-    setShowModal(showModalDelete);
-  }, [showModalDelete]);
-  console.log(messageId);
-  console.log("s");
-  let deleteMessage = async (e) => {
-    //e.preventDefault();
-    try {
-      let response = await axiosInstance.delete(
-        `/api/delete_message/${messageId}`
-      );
-      if (response.status === 200) {
-        closeModal();
-      }
-    } catch (error) {
-      console.log("Error deleting message:", error);
+    setShowModal(showModal);
+    setListId(contactListId);
+  }, [showModal]);
+
+  let deleteList = async (e) => {
+    let response = await axiosInstance.delete(`/api/delete_list/${listId}`);
+    if (response.status === 200) {
+      closeModal();
     }
   };
-  console.log(listUpdated);
   const closeModal = () => {
     onClose();
   };
 
   const setFunction = () => {
-    deleteMessage();
+    deleteList();
     setUpdated();
   };
-
+  console.log(contactListId);
   return (
     <>
       {show ? (
@@ -52,12 +41,15 @@ const DeleteMessageModal = ({
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">Delete a message?</h3>
+                  <h3 className="text-3xl font-semibold">
+                    Delete contact list?
+                  </h3>
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                    You are about to delete the message, this cant be reversed!
+                    You are about to delete the contact list and all of your
+                    contacts inside of it, this cant be reversed!
                   </p>
                 </div>
                 {/*footer*/}
@@ -87,4 +79,4 @@ const DeleteMessageModal = ({
   );
 };
 
-export default DeleteMessageModal;
+export default DeleteListModal;

@@ -15,7 +15,7 @@
 }
 
 .pagination li.active {
-  background-color: #ececec;
+  background-color: #6B7280;
   color: #63898b;
 }
 
@@ -24,7 +24,7 @@
 	tr th:nth-child(n+5) {
 		
         background-color: #111827;
-        color: rgb(249, 249, 249);
+        color: rgb(139, 168, 190);
 	}
 
 
@@ -52,23 +52,3 @@
         background-color: #111827;
         
 	}
-
-    @media (max-width: 1440px) {
-        
-      #headingDiv{
-            width: 95%;
-            height: 70px;
-            
-        }
-      #secondDiv{
-            width: 95%;
-            height: 100%;
-        padding-left: 2.5%;
-        }
-      
-      .text-custom{
-        font-size: 1.4rem;
-            line-height: 2rem;
-      }
-    
-    }

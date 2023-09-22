@@ -1,47 +1,49 @@
 import React, { useState, useEffect } from "react";
+import {
+  selectCurrentToken,
+  selectCurrentUser,
+} from "../../features/auth/authSlice";
 import useAxiosInstance from "../../utils/axiosInstance";
-import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const DeleteMessageModal = ({
-  messageId,
-  showModalDelete,
-  onClose,
-  listUpdated,
-  setUpdated,
-}) => {
-  const [show, setShowModal] = useState(showModalDelete);
-  const [listUpdate, setListUpdate] = useState(listUpdated);
+
+const CreateListModal = ({ showModal, onClose }) => {
   const axiosInstance = useAxiosInstance();
-  const params = useParams();
+  const [show, setShowModal] = useState(showModal);
+  const token = useSelector(selectCurrentToken);
+  const user = useSelector(selectCurrentUser);
+  const [listName, setListName] = useState();
+
+  const handleListName = (e) => {
+    setListName(e.target.value);
+  };
 
   useEffect(() => {
-    setShowModal(showModalDelete);
-  }, [showModalDelete]);
-  console.log(messageId);
-  console.log("s");
-  let deleteMessage = async (e) => {
-    //e.preventDefault();
-    try {
-      let response = await axiosInstance.delete(
-        `/api/delete_message/${messageId}`
-      );
-      if (response.status === 200) {
-        closeModal();
+    setShowModal(showModal);
+  }, [showModal]);
+  console.log(listName);
+  const addList = async (e) => {
+    e.preventDefault();
+    let response = await axiosInstance.post(
+      `/api/create_list/${user}`,
+      {
+        list_name: listName,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(token),
+        },
       }
-    } catch (error) {
-      console.log("Error deleting message:", error);
+    );
+    if (response.status === 200 || 201) {
+      closeModal();
     }
   };
-  console.log(listUpdated);
+
   const closeModal = () => {
     onClose();
   };
-
-  const setFunction = () => {
-    deleteMessage();
-    setUpdated();
-  };
-
   return (
     <>
       {show ? (
@@ -52,13 +54,22 @@ const DeleteMessageModal = ({
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">Delete a message?</h3>
+                  <h3 className="text-3xl font-semibold">
+                    Add a new contact list
+                  </h3>
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                    You are about to delete the message, this cant be reversed!
+                    Simply enter the name for the list and click create.
                   </p>
+
+                  <input
+                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    name="text"
+                    placeholder="List name"
+                    onChange={handleListName}
+                  />
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
@@ -67,14 +78,14 @@ const DeleteMessageModal = ({
                     type="button"
                     onClick={closeModal}
                   >
-                    No
+                    Close
                   </button>
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={setFunction}
+                    onClick={addList}
                   >
-                    Yes
+                    Add
                   </button>
                 </div>
               </div>
@@ -87,4 +98,4 @@ const DeleteMessageModal = ({
   );
 };
 
-export default DeleteMessageModal;
+export default CreateListModal;

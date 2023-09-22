@@ -23,7 +23,6 @@ const HomePage = () => {
 
   const [messageId, setMessageId] = useState();
   const dispatch = useDispatch();
-  const handleLogout = () => dispatch(logOut(user, token));
 
   useEffect(() => {
     getNotes();
@@ -62,48 +61,87 @@ const HomePage = () => {
     setShow(true);
   };
 
-  console.log("node:", process.env.NODE_ENV);
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="flex-1 px-2 sm:px-0">
-          <h3 class="text-3xl font-extralight text-left text-white/50">
-            Home dashboard
-          </h3>
-          <h1 className="text-2xl mb-5 mt-5 text-gray-300">Message contents</h1>
+          <div className="flex justify-between items-center mb-3">
+            <h3 class="text-3xl font-extralight text-left text-white/50">
+              Home dashboard
+            </h3>
+            <div class="inline-flex items-center space-x-2">
+              <button>
+                <a
+                  class="text-white/50 p-2 rounded-md hover:text-white smooth-hover"
+                  href="#"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                    />
+                  </svg>
+                </a>
+              </button>
+            </div>
+          </div>
 
           <div
             class="items-center justify-center rounded-lg mb-3"
-            style={{ backgroundColor: "#111827", width: "100%" }}
+            style={{ width: "100%" }}
           >
             <div class="col-span-12">
               <div class="overflow-auto lg:overflow-visible">
-                <table class="table text-gray-200 border-separate space-y-6 text-sm">
-                  <thead class="bg-gray-300 text-white">
-                    <tr>
-                      <th class="p-3">Type</th>
-                      <th class="p-3">Create at</th>
-                      <th class="p-3">Analytics</th>
-                      <th class="p-3">Status</th>
-                      <th class="p-3">Action</th>
+                <table class="table text-gray-400 border-separate text-sm">
+                  <thead class="text-gray-500 border-none">
+                    <tr className="border-bottom-none">
+                      <th
+                        class="p-3 border-bottom-none"
+                        style={{ borderBottom: "none" }}
+                      >
+                        Type
+                      </th>
+                      <th class="p-3" style={{ borderBottom: "none" }}>
+                        Create at
+                      </th>
+                      <th class="p-3" style={{ borderBottom: "none" }}>
+                        Analytics
+                      </th>
+                      <th class="p-3" style={{ borderBottom: "none" }}>
+                        Status
+                      </th>
+                      <th class="p-3" style={{ borderBottom: "none" }}>
+                        Action
+                      </th>
                     </tr>
                   </thead>
 
                   {!isLoaded ? (
                     <tbody>
                       {displayedItems?.map((message) => (
-                        <tr class="bg-gray-200">
-                          <td class="p-3">
+                        <tr>
+                          <td class="p-3" style={{ borderBottom: "none" }}>
                             <div class="ml-3">
                               <div class="font-medium text-gray-200">Sms</div>
                             </div>
                           </td>
-                          <td class="p-3">
+                          <td class="p-3" style={{ borderBottom: "none" }}>
                             <div className="font-medium text-gray-200 text-center">
                               {message.created_at}
                             </div>
                           </td>
-                          <td class="p-3 font-bold ">
+                          <td
+                            class="p-3 font-bold"
+                            style={{ borderBottom: "none" }}
+                          >
                             {message.status == "Draft" ? (
                               <p>Unavailabe</p>
                             ) : (
@@ -129,7 +167,7 @@ const HomePage = () => {
                               </Link>
                             )}
                           </td>
-                          <td class="p-3">
+                          <td class="p-3" style={{ borderBottom: "none" }}>
                             {message.status == "Draft" ? (
                               <span class="bg-red-400 text-gray-50 rounded-md px-2">
                                 Draft
@@ -140,7 +178,7 @@ const HomePage = () => {
                               </span>
                             )}
                           </td>
-                          <td class="p-3">
+                          <td class="p-3" style={{ borderBottom: "none" }}>
                             <Link
                               className="hover:bg-sky-300 rounded"
                               type="button"

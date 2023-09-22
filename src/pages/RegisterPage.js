@@ -75,7 +75,7 @@ const RegisterPage = () => {
   const handlePassword = (e) => setPass(e.target.value);
 
   return (
-    <section class="flex flex-col justify-center antialiased bg-darkBlue text-gray-200 min-h-screen p-4 w-100">
+    <section class="flex flex-col justify-center antialiased bg-gray-700 text-gray-200 min-h-screen p-4 w-100">
       <div class="h-full">
         <div class="max-w-[360px] mx-auto mt-20 mb-5">
           <div class="bg-white shadow-lg rounded-lg mt-9">
