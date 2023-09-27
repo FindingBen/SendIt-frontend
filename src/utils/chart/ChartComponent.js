@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Label } from "recharts";
 
 function ChartComponent({ chartData }) {
   const [data, setData] = useState([]);
@@ -20,11 +20,34 @@ function ChartComponent({ chartData }) {
   }, [chartData]);
 
   return (
-    <LineChart width={600} height={300} data={data}>
-      <Line type="monotone" dataKey="screenViews" stroke="#8884d8" />
-      <CartesianGrid stroke="#ccc" />
-      <XAxis dataKey="date" />
-      <YAxis />
+    <LineChart
+      width={750}
+      height={300}
+      data={data}
+      margin={{
+        top: 3,
+        right: 5,
+        left: 5,
+      }}
+      className="w-100"
+    >
+      <Line type="monotone" dataKey="screenViews" stroke="#CAC4CF" />
+      <CartesianGrid
+        horizontal="true"
+        vertical="true"
+        stroke="#eee"
+        strokeDasharray="1"
+      />
+      <XAxis dataKey="date" label="Dates" />
+      <YAxis>
+        <Label
+          value="Views"
+          color="#CAC4CF"
+          angle={-90}
+          position="insideLeft"
+          style={{ textAnchor: "middle" }}
+        />
+      </YAxis>
     </LineChart>
   );
 }

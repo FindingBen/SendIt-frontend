@@ -28,7 +28,7 @@ const DatePickerComponent = ({ startDate, endDate }) => {
           onChange={handleStartDate}
           dateFormat="yyyy-MM-dd"
           placeholderText="Start date"
-          className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+          className="bg-grayWhite h-10 w-32 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
         ></DatePicker>
       </div>
       <span class="mx-4 text-gray-500">to</span>
@@ -38,7 +38,7 @@ const DatePickerComponent = ({ startDate, endDate }) => {
           onChange={handleEndDate}
           dateFormat="yyyy-MM-dd"
           placeholderText="End date"
-          className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+          className="bg-grayWhite h-10 w-32 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
         ></DatePicker>
       </div>
     </div>

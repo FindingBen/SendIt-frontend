@@ -279,14 +279,21 @@ const SmsEditor = () => {
                         />
                       </svg>
                     </div>{" "}
-                    <div className="border-solid 1px h-20 my-48 mx-3 rounded-lg">
-                      <div className="bg-gray-200 opacity-90 flex flex-row border-none 1px h-7 rounded-t-lg">
+                    <div className="relative border-solid 1px h-20 my-48 mx-3 rounded-lg">
+                      <div
+                        className="text-6xl text-white absolute inset-x-0"
+                        style={{ bottom: "232%" }}
+                      >
+                        9.41
+                      </div>
+                      <div className="bg-gray-200 opacity-95 flex flex-row border-none 1px h-7 rounded-t-lg">
                         <img
                           src={require("../../src/assets/message.png")}
                           height={23}
                           width={23}
                           className="mx-1 my-auto"
                         ></img>
+
                         <h2 className="text-1xl my-1 opacity-80 font-medium text-gray-600 font-helv">
                           MESSAGES
                         </h2>

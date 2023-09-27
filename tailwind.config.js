@@ -20,7 +20,7 @@ module.exports = {
       lg: "1440px",
       // => @media (min-width: 1024px) { ... }
 
-      xl: "1536px",
+      xl: "1535px",
       // => @media (min-width: 1280px) { ... }
 
       "2xl": "1736px",
@@ -31,6 +31,8 @@ module.exports = {
         darkBlue: "#111827",
         darkGray: "#1f2937",
         darkestGray: "#1118274D",
+        darkPurple: "#1D1A22",
+        grayWhite: "#CAC4CF",
       },
       fontFamily: {
         sfPro: ["SF Pro"],
