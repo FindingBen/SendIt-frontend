@@ -18,9 +18,10 @@ const MessageView = ({ imageProp, textProp }) => {
   const params = useParams();
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
-  const BASE_URL = config.url.BASE_URL;
+  //const BASE_URL = config.url.BASE_URL;
 
-  //const BASE_URL = "https://sendit-frontend-production.up.railway.app/message_view";
+  const BASE_URL =
+    "https://sendit-frontend-production.up.railway.app/message_view";
 
   useEffect(() => {
     messageView();
