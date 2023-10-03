@@ -6,8 +6,7 @@ import {
 import useAxiosInstance from "../../utils/axiosInstance";
 import { useSelector } from "react-redux";
 
-
-const CreateListModal = ({ showModal, onClose }) => {
+const CreateListModal = ({ showModal, onClose, newList }) => {
   const axiosInstance = useAxiosInstance();
   const [show, setShowModal] = useState(showModal);
   const token = useSelector(selectCurrentToken);
@@ -37,6 +36,7 @@ const CreateListModal = ({ showModal, onClose }) => {
       }
     );
     if (response.status === 200 || 201) {
+      newList((prevList) => [...prevList, response.data]);
       closeModal();
     }
   };

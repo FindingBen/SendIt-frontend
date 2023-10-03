@@ -173,7 +173,7 @@ const Button = ({
     <div>
       <label
         for="first_name"
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        className="block mb-2 text-sm font-light text-grayWhite dark:text-white"
       >
         Button text display
       </label>
@@ -184,7 +184,7 @@ const Button = ({
       />
       <label
         for="first_name"
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        className="block mb-2 mt-3 text-sm font-light text-grayWhite dark:text-white"
       >
         Insert link
       </label>

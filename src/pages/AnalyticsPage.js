@@ -55,9 +55,14 @@ const AnalyticsPage = () => {
   };
 
   const getSms = async () => {
-    let response = await axiosInstance.get(`sms/sms/${params.id}`);
+    try{
+      let response = await axiosInstance.get(`sms/sms/${params.id}`);
     if (response.status === 200) {
       setSms(response.data);
+    }
+    }
+    catch(e){
+      console.log(e)
     }
   };
 

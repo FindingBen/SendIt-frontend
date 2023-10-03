@@ -41,7 +41,6 @@ const HomePage = () => {
   const displayedItems = notes.slice(startIndex, endIndex);
 
   let getNotes = async () => {
-    ReactGA.event({ category: "TestHome", "action:": "submit", label: "home" });
     try {
       let response = await axiosInstance.get("/api/notes/");
 
@@ -71,9 +70,9 @@ const HomePage = () => {
             </h3>
             <div class="inline-flex items-center space-x-2">
               <button>
-                <a
+                <Link
                   class="text-white/50 p-2 rounded-md hover:text-white smooth-hover"
-                  href="#"
+                  to={"/create_note"}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +88,7 @@ const HomePage = () => {
                       d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
                     />
                   </svg>
-                </a>
+                </Link>
               </button>
             </div>
           </div>

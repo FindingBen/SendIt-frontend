@@ -116,19 +116,16 @@ const PackagePlan = () => {
             >
               <div
                 key={packagePlan[0]?.id}
-                className="mb-6 lg:mb-0"
+                className="mb-6 lg:mb-0 rounded-md"
                 style={{ backgroundColor: "#1118274D" }}
               >
-                <div className="block w-full text-sm text-gray-50 rounded-lg cursor-pointer dark:text-gray-400 focus:outline-none dark:placeholder-gray-400">
-                  <div className="border-b-2 border-neutral-100 border-opacity-100 p-6 text-center dark:border-opacity-40">
-                    <p className="mb-4 text-sm uppercase">
+                <div className="block w-full text-sm rounded-lg cursor-pointer dark:text-gray-400 focus:outline-none dark:placeholder-gray-400">
+                  <div className="border-b-2 border-grayWhite border-opacity-70 p-6 text-center dark:border-opacity-40">
+                    <p className="mb-4 text-2xl font-light uppercase text-grayWhite">
                       <strong>{packagePlan[0]?.plan_type}</strong>
                     </p>
-                    <h3 className="mb-6 text-3xl">
+                    <h3 className="mb-6 text-3xl text-white font-light">
                       <strong>$ {packagePlan[0]?.price}</strong>
-                      <small className="text-base text-neutral-500 dark:text-neutral-300">
-                        /month
-                      </small>
                     </h3>
 
                     <button
@@ -139,7 +136,7 @@ const PackagePlan = () => {
                           packagePlan[0]?.id
                         )
                       }
-                      className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-800 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                      className="inline-block w-50 rounded text-white bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-800 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
                       data-te-ripple-init
                       data-te-ripple-color="light"
                       value={0}
@@ -148,7 +145,7 @@ const PackagePlan = () => {
                       {loadingState[packagePlan[0]?.id] ? (
                         <>
                           <svg
-                            className="w-5 h-5 animate-spin"
+                            className="w-5 h-5 mx-auto animate-spin"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -167,14 +164,13 @@ const PackagePlan = () => {
                               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                             ></path>
                           </svg>
-                          <span className="ml-2">Loading...</span>
                         </>
                       ) : (
                         "Buy"
                       )}
                     </button>
                   </div>
-                  <div className="p-6">
+                  <div className="p-6 text-grayWhite">
                     <ol className="list-inside">
                       <li className="mb-4 flex">
                         <svg
@@ -234,19 +230,16 @@ const PackagePlan = () => {
               {/* <!---!> */}
               <div
                 key={packagePlan[1]?.id}
-                className="mb-6 lg:mb-0"
+                className="mb-6 lg:mb-0 rounded-md"
                 style={{ backgroundColor: "#1118274D" }}
               >
-                <div className="block w-full text-sm text-gray-50 rounded-lg cursor-pointer dark:placeholder-gray-400">
-                  <div className="border-b-2 border-neutral-100 border-opacity-100 p-6 text-center dark:border-opacity-40">
-                    <p className="mb-4 text-sm uppercase">
+                <div className="block w-full text-sm rounded-lg cursor-pointer dark:placeholder-gray-400">
+                  <div className="border-b-2 border-grayWhite border-opacity-70 p-6 text-center dark:border-opacity-40">
+                    <p className="mb-4 text-grayWhite text-2xl font-light uppercase">
                       <strong>{packagePlan[1]?.plan_type}</strong>
                     </p>
-                    <h3 className="mb-6 text-3xl">
+                    <h3 className="mb-6 text-3xl font-light text-white">
                       <strong>$ {packagePlan[1]?.price}</strong>
-                      <small className="text-base text-neutral-500 dark:text-neutral-300">
-                        /month
-                      </small>
                     </h3>
 
                     <button
@@ -257,7 +250,7 @@ const PackagePlan = () => {
                           packagePlan[1]?.id
                         )
                       }
-                      className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                      className="inline-block w-50 text-white rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
                       data-te-ripple-init
                       data-te-ripple-color="light"
                       value={1}
@@ -266,7 +259,7 @@ const PackagePlan = () => {
                       {loadingState[packagePlan[1]?.id] ? (
                         <>
                           <svg
-                            className="w-5 h-5 animate-spin"
+                            className="w-5 h-5 mx-auto animate-spin"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -277,14 +270,13 @@ const PackagePlan = () => {
                               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                             ></path>
                           </svg>
-                          <span className="ml-2">Loading...</span>
                         </>
                       ) : (
                         "Buy"
                       )}
                     </button>
                   </div>
-                  <div className="p-6">
+                  <div className="p-6 text-grayWhite">
                     <ol className="list-inside">
                       <li className="mb-4 flex">
                         <svg
@@ -378,19 +370,16 @@ const PackagePlan = () => {
               {/* .... */}
               <div
                 key={packagePlan[2]?.id}
-                className="mb-6 lg:mb-0"
+                className="mb-6 lg:mb-0 rounded-md"
                 style={{ backgroundColor: "#1118274D" }}
               >
-                <div className="block w-full text-sm text-gray-50 dark:placeholder-gray-400">
-                  <div className="border-b-2 border-neutral-100 border-opacity-100 p-6 text-center dark:border-opacity-40">
-                    <p className="mb-4 text-sm uppercase">
+                <div className="block w-full text-sm dark:placeholder-gray-400">
+                  <div className="border-b-2 border-grayWhite border-opacity-70 p-6 text-center dark:border-opacity-40">
+                    <p className="mb-4 text-2xl font-light text-grayWhite uppercase">
                       <strong>{packagePlan[2]?.plan_type}</strong>
                     </p>
-                    <h3 className="mb-6 text-3xl">
+                    <h3 className="mb-6 text-3xl font-light text-white">
                       <strong>$ {packagePlan[2]?.price}</strong>
-                      <small className="text-base text-neutral-500 dark:text-neutral-300">
-                        /month
-                      </small>
                     </h3>
 
                     <button
@@ -401,7 +390,7 @@ const PackagePlan = () => {
                           packagePlan[2]?.id
                         )
                       }
-                      className="inline-block w-50 rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                      className="inline-block w-50 rounded text-white bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
                       data-te-ripple-init
                       data-te-ripple-color="light"
                       value={"2"}
@@ -410,7 +399,7 @@ const PackagePlan = () => {
                       {loadingState[packagePlan[2]?.id] ? (
                         <>
                           <svg
-                            className="w-5 h-5 animate-spin"
+                            className="w-5 h-5 mx-auto animate-spin"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -429,14 +418,13 @@ const PackagePlan = () => {
                               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                             ></path>
                           </svg>
-                          <span className="ml-2">Loading...</span>
                         </>
                       ) : (
                         "Buy"
                       )}
                     </button>
                   </div>
-                  <div className="p-6">
+                  <div className="p-6 text-grayWhite">
                     <ol className="list-inside">
                       <li className="mb-4 flex">
                         <svg

@@ -17,11 +17,12 @@ const ContactList = () => {
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [listId, setListId] = useState();
+
   useEffect(() => {
     getContactLists();
     setIsLoading(true);
-  }, []);
-  console.log(listId);
+  }, [listUpdated]);
+
   let getContactLists = async () => {
     try {
       let response = await axiosInstance.get("/api/contact_lists/", {
@@ -48,6 +49,10 @@ const ContactList = () => {
   const deleteList = (id) => {
     setListId(id);
     setShowDelete(true);
+  };
+
+  const handleNewList = (contactList) => {
+    setContactList(contactList);
   };
 
   return (
@@ -158,7 +163,7 @@ const ContactList = () => {
                         alt="art"
                       />
                     </Link>
-                    <h4 class="text-white text-2xl font-bold capitalize text-center">
+                    <h4 class="text-grayWhite text-2xl font-light capitalize text-center">
                       {conList.list_name}
                     </h4>
                     <p class="text-white/50">
@@ -171,6 +176,7 @@ const ContactList = () => {
           </div>
         </div>
         <CreateListModal
+          newList={handleNewList}
           showModal={show}
           onClose={() => setShow(false)}
         ></CreateListModal>

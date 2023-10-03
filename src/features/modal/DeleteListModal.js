@@ -19,6 +19,7 @@ const DeleteListModal = ({ showModal, onClose, contactListId, setUpdated }) => {
   let deleteList = async (e) => {
     let response = await axiosInstance.delete(`/api/delete_list/${listId}`);
     if (response.status === 200) {
+      setUpdated();
       closeModal();
     }
   };
@@ -28,9 +29,8 @@ const DeleteListModal = ({ showModal, onClose, contactListId, setUpdated }) => {
 
   const setFunction = () => {
     deleteList();
-    setUpdated();
   };
-  console.log(contactListId);
+
   return (
     <>
       {show ? (

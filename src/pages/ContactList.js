@@ -81,7 +81,6 @@ const ContactList = () => {
   const handleNewContact = (contact) => {
     setContacts(contact);
   };
-  console.log(paginatedData);
 
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">

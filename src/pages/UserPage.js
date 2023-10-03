@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { selectCurrentToken, logOut } from "../features/auth/authSlice";
-import jwtDecode from "jwt-decode";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import PasswordChange from "../utils/PasswordChange";
+import jwtDecode from "jwt-decode";
 
 const UserPage = () => {
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
   const [username, setUsername] = useState();
-
+  const [packagePlan, setPackagePlan] = useState();
   const [newName, setNewName] = useState();
   const [newLastName, setNewLastName] = useState();
   const [user, setUser] = useState({
@@ -44,7 +44,7 @@ const UserPage = () => {
           },
         }
       );
-      console.log(response.data);
+
       if (response.status === 200) {
         setUser(response.data);
       } else {
@@ -81,7 +81,7 @@ const UserPage = () => {
       navigate("/home");
     }
   };
-  console.log(user);
+
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
@@ -103,7 +103,7 @@ const UserPage = () => {
                 <PasswordChange></PasswordChange>
               </div>
               <div
-                className="flex w-96 h-2/4 rounded-lg mt-3"
+                className="w-96 h-2/5 rounded-lg mt-3 flex flex-col"
                 style={{
                   backgroundColor: "#1118274D",
                 }}
@@ -111,6 +111,32 @@ const UserPage = () => {
                 <h3 class="text-2xl text-left font-extralight text-white/50 p-10">
                   Package information
                 </h3>
+                <div className="flex flex-row">
+                  <label
+                    for="first_name"
+                    className="ml-10 mr-2 text-sm text-left font-medium text-gray-300 dark:text-white"
+                  >
+                    Package type:
+                  </label>
+                  <span class="bg-yellow-400 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">
+                    {user?.package_plan?.plan_type}
+                  </span>
+                </div>
+                <div className="flex flex-row mt-2">
+                  <label
+                    for="first_name"
+                    className="ml-10 mr-2 text-sm text-left font-medium text-gray-300 dark:text-white"
+                  >
+                    Sms count: {user?.sms_count}
+                  </label>
+                </div>
+                <Link
+                  to="/package_plan/"
+                  className="bg-sky-800 hover:bg-sky-400 text-white font-light py-2 px-4 ml-10 mt-2 rounded w-25"
+                  type="submit"
+                >
+                  Update
+                </Link>
               </div>
             </div>
             <div

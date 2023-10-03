@@ -20,11 +20,16 @@ const TextComponent = ({ textValue, alignment }) => {
     getAlignmentclassName(align);
   }, [textValue, alignment, text]);
 
+  const textStyle = {
+    textAlign: align,
+    overflowWrap: "break-word", // Add this CSS property to break words when they overflow
+  };
+
   return (
-    <div>
+    <div className="mx-3">
       <p
         dangerouslySetInnerHTML={{ __html: text }}
-        style={{ textAlign: align }}
+        style={{ textAlign: align, overflowWrap: "break-word" }}
       ></p>
     </div>
   );

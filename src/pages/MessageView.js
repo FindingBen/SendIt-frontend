@@ -11,7 +11,6 @@ import useAxiosInstance from "../utils/axiosInstance";
 import { isMobile, isTablet, isDesktop } from "react-device-detect";
 import { config } from "../constants/Constants";
 
-import "../css/MessageView.css";
 const MessageView = ({ imageProp, textProp }) => {
   const [elements, setElements] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
@@ -19,14 +18,14 @@ const MessageView = ({ imageProp, textProp }) => {
   const params = useParams();
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
-  //const BASE_URL = config.url.BASE_URL;
+  const BASE_URL = config.url.BASE_URL;
 
-  const BASE_URL = "https://stingray-app-9825w.ondigitalocean.app";
+  //const BASE_URL = "https://sendit-frontend-production.up.railway.app/message_view";
 
   useEffect(() => {
     messageView();
   }, []);
-
+  console.log(elements);
   let messageView = async () => {
     setId(params.id);
     //https://stingray-app-9825w.ondigitalocean.app
@@ -41,8 +40,12 @@ const MessageView = ({ imageProp, textProp }) => {
   };
 
   return (
-    <section className="vh-100 mt-2" id="view">
-      <List children={elements} style={{ width: "100%" }}></List>
+    <section className="min-h-screen bg-slate-400 flex-d w-100 items-center justify-center">
+      <div className="flex flex-col items-stretch">
+        <div className="mx-4">
+          <List children={elements} style={{ width: "100%" }}></List>
+        </div>
+      </div>
     </section>
   );
 };
