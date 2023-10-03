@@ -32,9 +32,10 @@ const SmsEditor = () => {
   const textComponentRef = useRef(null);
   const [recipients, setRecipients] = useState();
   //const BASE_URL = "http://localhost:8000/";
+  const BASE = "https://stingray-app-9825w.ondigitalocean.app";
   const BASE_URL = "https://sendit-frontend-production.up.railway.app";
   const linkURLBase = `${BASE_URL}/message_view/${params.id}`;
-  const uniqueLink = `http://localhost:8000/sms/sms/tracking/`;
+  const uniqueLink = `${BASE}/sms/sms/tracking/`;
   useEffect(() => {
     getContactLists();
   }, []);
@@ -55,8 +56,6 @@ const SmsEditor = () => {
       console.error(error);
     }
   }, [smsText, textComponentRef, isDropdownOpen]);
-
-  const uniqueLinkTracker = () => {};
 
   const handleAddLink = () => {
     const linkEmbed = `#Link`;
@@ -81,7 +80,7 @@ const SmsEditor = () => {
   const handleSms = (e) => {
     setSmsText(e.target.value);
   };
-
+  console.log(linkURL);
   const sendSms = async (e) => {
     e.preventDefault();
     try {
@@ -91,7 +90,7 @@ const SmsEditor = () => {
           user: userId,
           sender: "ME",
           sms_text: smsText,
-          content_link: linkURL,
+          content_link: uniqueLink,
           message: params.id,
           contact_list: recipients,
           // is_sent: true,
