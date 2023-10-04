@@ -32,7 +32,7 @@ const SmsEditor = () => {
   const textComponentRef = useRef(null);
   const [recipients, setRecipients] = useState();
   //const BASE_URL = "http://localhost:8000/";
-  const BASE = "https://sendit-backend-production.up.railway.app/";
+  const BASE = "https://sendit-backend-production.up.railway.app";
   const BASE_URL = "https://sendit-frontend-production.up.railway.app";
   const linkURLBase = `${BASE_URL}/message_view/${params.id}`;
   const uniqueLink = `${BASE}/sms/sms/tracking/`;
