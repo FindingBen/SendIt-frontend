@@ -10,7 +10,8 @@ const List = ({ children, alignment, clicked }) => {
   const [forDelete, setForDelete] = useState([]);
   //const BASE_URL = "http://127.0.0.1:8000";
   //const BASE_URL = "https://stingray-app-9825w.ondigitalocean.app";
-  const BASE_URL = config.url.BASE_URL;
+  //const BASE_URL = config.url.BASE_URL;
+  const BASE_URL = "https://sendit-backend-production.up.railway.app";
   //const { deleteElement, contextObject } = useContext(ElementContext);
   useEffect(() => {
     setItems(children);
