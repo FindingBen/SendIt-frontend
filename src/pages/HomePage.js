@@ -29,7 +29,7 @@ const HomePage = () => {
     setListUpdated(false);
     setIsLoaded(true);
   }, [listUpdated]);
-  console.log(process.env.NODE_ENV);
+
   const itemsPerPage = 4;
   const totalPages = Math.ceil(notes.length / itemsPerPage);
   const handlePageChange = (page) => {
