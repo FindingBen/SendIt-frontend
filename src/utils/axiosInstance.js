@@ -14,7 +14,7 @@ const useAxiosInstance = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectCurrentToken);
   const user = useSelector((state) => state.auth.user);
-  const baseURL = "sendit-backend-production.up.railway.app/";
+  const baseURL = "sendit-backend-production.up.railway.app";
   //const baseURL = config.url.BASE_URL;
 
   const createAxiosInstance = (token) => {
@@ -40,7 +40,7 @@ const useAxiosInstance = () => {
   axiosInstanceRef.current.interceptors.request.use(async (req) => {
     if (!token) {
       dispatch(logOut());
-      console.log("IS IT LOGGGED OUT!!!!!");
+
       localStorage.removeItem("tokens");
       // Handle the case where the token is not available
       // e.g., redirect the user to the login page

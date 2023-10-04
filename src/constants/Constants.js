@@ -1,6 +1,6 @@
 const prod = {
   url: {
-    BASE_URL: "https://stingray-app-9825w.ondigitalocean.app",
+    //BASE_URL: "https://stingray-app-9825w.ondigitalocean.app",
     //BASE_URL: "http://localhost:8000/",
   },
 };
