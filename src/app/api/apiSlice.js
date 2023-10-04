@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logOut } from "../../features/auth/authSlice";
 import { config } from "../../constants/Constants";
 
-const BASEURL = "sendit-backend-production.up.railway.app";
+const BASEURL = "https://sendit-backend-production.up.railway.app/";
 //const BASEURL = config.url.BASE_URL;
 const baseQuery = fetchBaseQuery({
   baseUrl: BASEURL,

@@ -14,7 +14,7 @@ const useAxiosInstance = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectCurrentToken);
   const user = useSelector((state) => state.auth.user);
-  const baseURL = "sendit-backend-production.up.railway.app";
+  const baseURL = "https://sendit-backend-production.up.railway.app/";
   //const baseURL = config.url.BASE_URL;
 
   const createAxiosInstance = (token) => {
