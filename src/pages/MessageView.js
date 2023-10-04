@@ -20,13 +20,12 @@ const MessageView = ({ imageProp, textProp }) => {
   const token = useSelector(selectCurrentToken);
   //const BASE_URL = config.url.BASE_URL;
 
-  const BASE_URL =
-    "https://sendit-frontend-production.up.railway.app/message_view";
+  const BASE_URL = "https://sendit-backend-production.up.railway.app";
 
   useEffect(() => {
     messageView();
   }, []);
-  console.log(elements);
+
   let messageView = async () => {
     setId(params.id);
     //https://stingray-app-9825w.ondigitalocean.app
