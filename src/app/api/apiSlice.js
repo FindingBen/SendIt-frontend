@@ -4,6 +4,7 @@ import { config } from "../../constants/Constants";
 
 //const BASEURL = "https://sendit-backend-production.up.railway.app/";
 const BASEURL = config.url.BASE_URL;
+
 const baseQuery = fetchBaseQuery({
   baseUrl: BASEURL,
 
