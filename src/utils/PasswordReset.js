@@ -9,6 +9,9 @@ const PasswordReset = () => {
   const [errMsg, setErrMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const BASEURL = "https://sendit-backend-production.up.railway.app/"
+
+
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -20,7 +23,7 @@ const PasswordReset = () => {
       email: email,
     };
     let response = await fetch(
-      "http://localhost:8000/auth/users/reset_password/",
+      `${BASEURL}auth/users/reset_password/`,
       {
         method: "POST",
         headers: {

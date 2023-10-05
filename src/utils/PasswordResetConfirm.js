@@ -9,7 +9,8 @@ const PasswordResetConfirm = () => {
   const [errMsg, setErrMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const { uid, token } = useParams();
-  const BASE_URL = "http://localhost:8000";
+  //const BASE_URL = "http://localhost:8000";
+  const BASE_URL = "https://sendit-backend-production.up.railway.app";
   const navigate = useNavigate();
   const handlePass = (e) => {
     setPass(e.target.value);
