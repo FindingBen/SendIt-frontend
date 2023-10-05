@@ -47,13 +47,17 @@ const Login = () => {
       console.log("errrrr", err);
       if (!err?.originalStatus) {
         localStorage.removeItem("tokens");
+        setLoading(false);
         // isLoading: true until timeout occurs
         setErrMsg("Wrong username or password!");
       } else if (err.originalStatus === 400) {
+        setLoading(false);
         setErrMsg("Missing Username or Password");
       } else if (err.originalStatus === 401) {
+        setLoading(false);
         setErrMsg("Unauthorized");
       } else {
+        setLoading(false);
         setErrMsg("Login Failed");
       }
       errRef.current?.focus();
@@ -156,6 +160,9 @@ const Login = () => {
           </Link>
         </p>
       </div>
+      <p className="text-white opacity-60 font-light text-sm">
+        © 2023 by Sendperplane
+      </p>
     </section>
   );
 };

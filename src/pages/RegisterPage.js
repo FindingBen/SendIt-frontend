@@ -42,19 +42,22 @@ const RegisterPage = () => {
         last_name,
         password,
       });
-      console.log(userData);
+
       dispatch(registerUser(userData));
       setLoading(false);
       // Check if userData contains an error
       if (userData?.error?.status === 400) {
         if (userData?.error?.data?.username) {
           setErrMsg(userData.error.data.username);
+          setLoading(false);
         } else if (userData?.error?.data?.password) {
           setErrMsgPass(userData.error.data.password);
+          setLoading(false);
         }
         //setErrMsg("Missing Username or Password");
       } else if (userData?.error?.status === 401) {
         setErrMsg("Unauthorized");
+        setLoading(false);
       } else {
         // No error, proceed with successful registration
         console.log(userData);
@@ -62,7 +65,6 @@ const RegisterPage = () => {
         navigate("/home");
       }
     } catch (err) {
-      console.log("AA");
       console.log(err);
 
       errRef.current.focus();
@@ -75,7 +77,7 @@ const RegisterPage = () => {
   const handlePassword = (e) => setPass(e.target.value);
 
   return (
-    <section class="flex flex-col justify-center antialiased bg-gray-700 text-gray-200 min-h-screen p-4 w-100">
+    <section class="flex flex-col justify-center antialiased bg-darkBlue text-gray-200 min-h-screen p-4 w-100">
       <div class="h-full">
         <div class="max-w-[360px] mx-auto mt-20 mb-5">
           <div class="bg-white shadow-lg rounded-lg mt-9">
@@ -195,6 +197,9 @@ const RegisterPage = () => {
           </p>
         </div>
       </div>
+      <p className="text-white opacity-60 font-light text-sm">
+        © 2023 by Sendperplane
+      </p>
     </section>
   );
 };

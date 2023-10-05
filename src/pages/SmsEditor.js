@@ -9,11 +9,11 @@ import {
 } from "../features/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import useAxiosInstance from "../utils/axiosInstance";
-import ReactQuill, { Quill } from "react-quill";
-import "react-quill/dist/quill.snow.css";
+
 import "../css/Sms.css";
 import TextComponent from "../components/TextComponent";
 import iPhoneImage from "../../src/assets/iphone_bg.jpg";
+import SmsConfirmModal from "../features/modal/SmsConfirmModal";
 
 const SmsEditor = () => {
   const axiosInstance = useAxiosInstance();
@@ -22,9 +22,9 @@ const SmsEditor = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [uniqueId, setUniqueId] = useState();
+  const [show, setShow] = useState(false);
   const [linkURL, setLinkURL] = useState("");
-  const [message, setMessage] = useState();
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [smsText, setSmsText] = useState([]);
@@ -80,9 +80,8 @@ const SmsEditor = () => {
   const handleSms = (e) => {
     setSmsText(e.target.value);
   };
-  console.log(linkURL);
-  const sendSms = async (e) => {
-    e.preventDefault();
+
+  const sendSms = async () => {
     try {
       let response = await axiosInstance.post(
         "/sms/sms-send/",
@@ -134,7 +133,7 @@ const SmsEditor = () => {
     setRecipients(e.target.value);
     console.log(e?.target?.value);
   };
-
+ 
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
@@ -204,14 +203,25 @@ const SmsEditor = () => {
                     ></textarea>
 
                     <div className="grid grid-cols-2 gap-6 content-between">
-                      <button
-                        onClick={sendSms}
-                        type="submit"
-                        color="dark"
-                        className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-3 rounded w-28 h-3/4 mt-4"
-                      >
-                        Send
-                      </button>
+                      {recipients ? (
+                        <button
+                          onClick={() => setShow(true)}
+                          type="submit"
+                          color="dark"
+                          className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-3 rounded w-28 h-3/4 mt-4"
+                        >
+                          Send
+                        </button>
+                      ) : (
+                        <button
+                          disabled
+                          type="submit"
+                          color="dark"
+                          className="bg-gray-600 opacity-80 text-white font-bold py-2 px-3 rounded w-28 h-3/4 mt-4"
+                        >
+                          Send
+                        </button>
+                      )}
 
                       <button
                         onClick={handleAddLink}
@@ -308,6 +318,12 @@ const SmsEditor = () => {
                   </div>
                 </div>
               </div>
+              <SmsConfirmModal
+                // recipientNumber={}
+                sendConfirm={sendSms}
+                showModal={show}
+                onClose={() => setShow(false)}
+              ></SmsConfirmModal>
             </div>
           </div>
         </div>

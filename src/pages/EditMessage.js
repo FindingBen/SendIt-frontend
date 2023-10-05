@@ -278,7 +278,7 @@ const EditMessage = () => {
                     class="text-white/50 p-2 rounded-md hover:text-white smooth-hover flex flex-row"
                     href="#"
                   >
-                    <h2 className="text-2xl mx-2">Edit</h2>
+                    <h2 className="text-2xl mx-2">Save</h2>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -300,7 +300,7 @@ const EditMessage = () => {
             <div className="grid grid-cols-2 bg-darkestGray rounded-md">
               <div className="col border-r-2 flex flex-col p-10">
                 <h3 class="text-3xl text-center font-extralight text-white/50">
-                  Content
+                  Click and create Content
                 </h3>
                 <div className="rounded-lg p-10">
                   <div className="flex flex-col" style={{ minWidthL: "22rem" }}>
