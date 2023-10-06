@@ -58,7 +58,7 @@ const SmsEditor = () => {
   }, [smsText, textComponentRef, isDropdownOpen]);
 
   const handleAddLink = () => {
-    const linkEmbed = `#Link`;
+    const linkEmbed = ` #Link `;
     const textarea = document.getElementById("smsTextArea");
     const startPos = textarea.selectionStart;
     const endPos = textarea.selectionEnd;
@@ -133,7 +133,7 @@ const SmsEditor = () => {
     setRecipients(e.target.value);
     console.log(e?.target?.value);
   };
- 
+
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
@@ -208,7 +208,7 @@ const SmsEditor = () => {
                           onClick={() => setShow(true)}
                           type="submit"
                           color="dark"
-                          className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-3 rounded w-28 h-3/4 mt-4"
+                          className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-3 rounded w-28 h-14 mt-4"
                         >
                           Send
                         </button>
@@ -217,32 +217,37 @@ const SmsEditor = () => {
                           disabled
                           type="submit"
                           color="dark"
-                          className="bg-gray-600 opacity-80 text-white font-bold py-2 px-3 rounded w-28 h-3/4 mt-4"
+                          className="bg-gray-600 opacity-80 text-white font-bold py-2 px-3 rounded w-28 h-14 mt-4"
                         >
                           Send
                         </button>
                       )}
 
-                      <button
-                        onClick={handleAddLink}
-                        value={linkURLBase}
-                        className="bg-blue-800 hover:bg-blue-400 text-white font-bold py-1 px-3 rounded mt-4 w-1/4 lg:ml-16 xl:ml-11"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          class="w-6 h-6"
+                      <div className="bg-slate-500 w-50 h-14 mt-4 flex flex-row rounded-md">
+                        <p className="text-sm text-white my-auto mx-auto">
+                          Add link to your content
+                        </p>
+                        <button
+                          onClick={handleAddLink}
+                          value={linkURLBase}
+                          className="bg-blue-800 hover:bg-blue-400 text-white font-bold my-auto mr-2 rounded py-2 px-2 mt-2 w-1/4 lg:ml-16 xl:ml-11"
                         >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-                          />
-                        </svg>
-                      </button>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-6 h-6"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

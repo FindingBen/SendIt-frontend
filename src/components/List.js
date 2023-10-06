@@ -9,8 +9,8 @@ const List = ({ children, alignment, clicked }) => {
   const [items, setItems] = useState([children]);
   const [forDelete, setForDelete] = useState([]);
 
-  //const BASE_URL = config.url.BASE_URL;
-  const BASE_URL = "https://sendit-backend-production.up.railway.app";
+  const BASE_URL = config.url.BASE_URL;
+  //const BASE_URL = "https://sendit-backend-production.up.railway.app";
 
   useEffect(() => {
     setItems(children);

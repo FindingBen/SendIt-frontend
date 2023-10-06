@@ -71,7 +71,7 @@ const Button = ({
   }
   console.log(text, link);
   function handleLinkButtonFunc(event) {
-    setLink(event);
+    setLink(event.target.value);
   }
 
   const addButtonObjContext = () => {
