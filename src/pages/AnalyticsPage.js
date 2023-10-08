@@ -64,7 +64,7 @@ const AnalyticsPage = () => {
       console.log(e);
     }
   };
-
+  console.log(sms);
   const getdataAnalytics = async () => {
     try {
       let response = await axiosInstance.get(
@@ -498,11 +498,15 @@ const AnalyticsPage = () => {
                 <div className="flex flex-row justify-center">
                   <div className="h-40 w-36 border-r">
                     <p>Successfull</p>
-                    <h3 className="text-2xl text-green-500 mt-4">TBA</h3>
+                    <h3 className="text-2xl text-green-500 mt-4">
+                      {sms?.delivered}
+                    </h3>
                   </div>
                   <div className="h-40 w-36">
                     <p>Failed</p>
-                    <h3 className="text-2xl text-red-500 mt-4">TBA</h3>
+                    <h3 className="text-2xl text-red-500 mt-4">
+                      {sms?.not_delivered}
+                    </h3>
                   </div>
                 </div>
               </div>

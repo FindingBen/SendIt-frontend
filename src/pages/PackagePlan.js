@@ -54,6 +54,7 @@ const PackagePlan = () => {
       [id]: true,
     }));
     setIsLoading(true);
+    
     let response = await axiosInstance.post("/stripe/stripe_checkout_session", {
       method: "POST",
       headers: {
