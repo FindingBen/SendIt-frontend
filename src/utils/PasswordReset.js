@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import useAxiosInstance from "./axiosInstance";
 import { useNavigate, useParams, Link } from "react-router-dom";
+import { config } from "../constants/Constants";
 
 const PasswordReset = () => {
   const axiosInstance = useAxiosInstance();
+
   const [email, setEmail] = useState();
   const [sent, setSent] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const BASEURL = "https://sendit-backend-production.up.railway.app/"
-
+  const baseURL = config.url.BASE_URL;
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -22,16 +23,14 @@ const PasswordReset = () => {
     const formData = {
       email: email,
     };
-    let response = await fetch(
-      `${BASEURL}auth/users/reset_password/`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      }
-    );
+
+    let response = await fetch(`${baseURL}/auth/users/reset_password/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
     console.log("reset", response);
     if (response.status === 200 || response.status === 204) {
       //setTimeout(() => navigate("/login"), 5);
@@ -112,7 +111,7 @@ const PasswordReset = () => {
                 )}
               </div>
             ) : (
-              <div className="text-sm font-light text-gray-700 m-2">
+              <div className="text-sm font-light text-gray-700 m-2 mb-4">
                 <p className="m-2">
                   Email has been sent, if its valid you should recieve a message
                   with instructions

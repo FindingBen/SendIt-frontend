@@ -9,7 +9,7 @@ import {
 } from "../features/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import useAxiosInstance from "../utils/axiosInstance";
-
+import ScheduleSmsModal from "../features/modal/ScheduleSmsModal";
 import "../css/Sms.css";
 import TextComponent from "../components/TextComponent";
 import iPhoneImage from "../../src/assets/iphone_bg.jpg";
@@ -23,15 +23,16 @@ const SmsEditor = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [showSchedule, setShowSchedule] = useState(false);
   const [linkURL, setLinkURL] = useState("");
-
+  const [dateSchedule, setDateSchedule] = useState("2023-10-09 09:58:00");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [smsText, setSmsText] = useState([]);
   const [contactLists, setContactList] = useState([]);
   const textComponentRef = useRef(null);
   const [recipients, setRecipients] = useState();
-  //const BASE_URL = "http://localhost:8000/";
+
   const BASE = "https://sendit-backend-production.up.railway.app";
   const BASE_URL = "https://sendit-frontend-production.up.railway.app";
   const linkURLBase = `${BASE_URL}/message_view/${params.id}`;
@@ -109,6 +110,35 @@ const SmsEditor = () => {
     } catch (error) {
       setErrorMessage(error.response.data.error);
       console.log(error);
+    }
+  };
+
+  const scheduleSms = async () => {
+    try {
+      let response = await axiosInstance.post(
+        "/sms/sms-send-schedule/",
+        {
+          user: userId,
+          sender: "ME",
+          sms_text: smsText,
+          content_link: uniqueLink,
+          message: params.id,
+          contact_list: recipients,
+          scheduled_time: dateSchedule,
+          // is_sent: true,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(token),
+          },
+        }
+      );
+      if (response.status === 200 || 201) {
+        navigate(`/home`);
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -203,29 +233,49 @@ const SmsEditor = () => {
                     ></textarea>
 
                     <div className="grid grid-cols-2 gap-6 content-between">
-                      {recipients ? (
-                        <button
-                          onClick={() => setShow(true)}
-                          type="submit"
-                          color="dark"
-                          className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-3 rounded w-28 h-14 mt-4"
-                        >
-                          Send
-                        </button>
-                      ) : (
-                        <button
-                          disabled
-                          type="submit"
-                          color="dark"
-                          className="bg-gray-600 opacity-80 text-white font-bold py-2 px-3 rounded w-28 h-14 mt-4"
-                        >
-                          Send
-                        </button>
-                      )}
-
+                      <div className="flex flex-row">
+                        {recipients ? (
+                          <button
+                            onClick={() => setShow(true)}
+                            type="submit"
+                            color="dark"
+                            className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-3 rounded w-28 h-14 mt-4"
+                          >
+                            Send
+                          </button>
+                        ) : (
+                          <button
+                            disabled
+                            type="submit"
+                            color="dark"
+                            className="bg-gray-600 opacity-80 text-white font-bold py-2 px-3 rounded w-28 h-14 mt-4"
+                          >
+                            Send
+                          </button>
+                        )}
+                        {recipients ? (
+                          <button
+                            onClick={() => setShowSchedule(true)}
+                            type="submit"
+                            color="dark"
+                            className="bg-yellow-700 hover:bg-yellow-300 text-white font-bold py-2 px-3 rounded w-28 h-14 mt-4 ml-3"
+                          >
+                            Schedule
+                          </button>
+                        ) : (
+                          <button
+                            disabled
+                            type="submit"
+                            color="dark"
+                            className="bg-yellow-700 opacity-80 text-white font-bold py-2 px-3 rounded w-28 h-14 mt-4 ml-3"
+                          >
+                            Schedule
+                          </button>
+                        )}
+                      </div>
                       <div className="bg-slate-500 w-50 h-14 mt-4 flex flex-row rounded-md">
-                        <p className="text-sm text-white my-auto mx-auto">
-                          Add link to your content
+                        <p className="text-sm text-white my-auto ml-5">
+                          Link your content
                         </p>
                         <button
                           onClick={handleAddLink}
@@ -329,6 +379,11 @@ const SmsEditor = () => {
                 showModal={show}
                 onClose={() => setShow(false)}
               ></SmsConfirmModal>
+              <ScheduleSmsModal
+                //sendConfirm={sendSms}
+                showModal={showSchedule}
+                onClose={() => setShowSchedule(false)}
+              ></ScheduleSmsModal>
             </div>
           </div>
         </div>

@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
 import useAxiosInstance from "./axiosInstance";
 import { useNavigate, useParams } from "react-router-dom";
+import { config } from "../constants/Constants";
 
 const PasswordResetConfirm = () => {
   const axiosInstance = useAxiosInstance();
   const [pass, setPass] = useState();
-  const [sent, setSent] = useState(false);
+
   const [errMsg, setErrMsg] = useState("");
   const [loading, setLoading] = useState(false);
+  const [changed, setChanged] = useState(false);
   const { uid, token } = useParams();
-  //const BASE_URL = "http://localhost:8000";
-  const BASE_URL = "https://sendit-backend-production.up.railway.app";
+  const baseURL = config.url.BASE_URL;
   const navigate = useNavigate();
+
   const handlePass = (e) => {
     setPass(e.target.value);
   };
-  console.log(uid);
+
   let passReset = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -26,7 +28,7 @@ const PasswordResetConfirm = () => {
     };
 
     let response = await fetch(
-      `${BASE_URL}/auth/users/reset_password_confirm/`,
+      `${baseURL}/auth/users/reset_password_confirm/`,
       {
         method: "POST",
         headers: {
@@ -35,11 +37,10 @@ const PasswordResetConfirm = () => {
         body: JSON.stringify(formData),
       }
     );
-    console.log(response);
+
     if (response.status === 204) {
       setLoading(false);
-      setSent(true);
-      navigate("/login");
+      setChanged(true);
     } else if (response.status === 400) {
       setErrMsg("Please provide new password!");
       setLoading(false);
@@ -64,21 +65,37 @@ const PasswordResetConfirm = () => {
                 />
               </svg>
 
-              <h3 class="text-xl font-bold text-gray-900 mb-1">New password</h3>
-              <div class="text-sm font-medium text-gray-500">
-                Make sure you provide strong password!
-              </div>
+              {!changed ? (
+                <div>
+                  <h3 class="text-xl font-bold text-gray-900 mb-1">
+                    New password
+                  </h3>
+                  <div class="text-sm font-medium text-gray-500">
+                    Make sure you provide strong password!
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <h3 class="text-xl font-bold text-gray-900 mb-1">
+                    Password changed
+                  </h3>
+                  <div class="text-sm font-medium text-gray-500">
+                    You can close this page now.
+                  </div>
+                </div>
+              )}
             </header>
             {errMsg && <p className="text-red-700">{errMsg}</p>}
-            {!sent ? (
+
+            {!changed ? (
               <div class="bg-gray-100 mb-4 text-center px-5 py-6">
-                <div class="shadow-sm rounded">
+                <div class="rounded">
                   <div class="flex-none">
                     <input
                       onChange={handlePass}
                       name="username"
-                      class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
-                      type="text"
+                      class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 mb-4"
+                      type="password"
                       placeholder="Enter new password"
                     />
                   </div>
@@ -110,15 +127,12 @@ const PasswordResetConfirm = () => {
                     type="submit"
                     class="font-semibold text-sm inline-flex items-center justify-center px-3 py-2 border border-transparent rounded leading-5 shadow transition duration-150 ease-in-out w-full bg-indigo-500 hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
                   >
-                    Send
+                    Reset
                   </button>
                 )}
               </div>
             ) : (
-              <div className="text-sm font-medium text-gray-500">
-                Email has been sent, if its valid you should recieve a message
-                with instructions
-              </div>
+              <div class="bg-gray-100 mb-4 text-center px-5 py-6"></div>
             )}
           </div>
         </div>
