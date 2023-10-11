@@ -10,7 +10,6 @@ const ElementProvider = ({ children }) => {
   };
 
   const deleteElement = (item) => {
-    console.log("work?");
     console.log(item);
     setContextObject((prevObjcontext) =>
       prevObjcontext.filter((prevItem) => prevItem !== item)
