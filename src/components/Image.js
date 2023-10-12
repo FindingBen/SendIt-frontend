@@ -24,7 +24,7 @@ const Image = ({
   const [cancel, setCancel] = useState(false);
   const iframe = document.getElementById("myFrame");
   const user = useSelector(selectCurrentUser);
-
+  const uuidv4 = require("uuid");
   const [isMounted, setIsMounted] = useState(true);
   const container = document.getElementById("myList");
   const [isCreated, setIsCreated] = useState(listEl);
@@ -79,10 +79,13 @@ const Image = ({
 
   let addImageElContext = async (e) => {
     const imageContext = {
+      id: Math.floor(Math.random() * 100),
       image: URL.createObjectURL(file),
       element_type: "Img",
       users: user,
       file: file,
+      order: 0,
+      context: true,
     };
     createElement(imageContext);
     contextList((prevElement) => [...prevElement, imageContext]);

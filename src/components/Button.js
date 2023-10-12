@@ -20,7 +20,7 @@ const Button = ({
   const container = document.getElementById("myList");
   const [isMounted, setIsMounted] = useState(true);
   const user = useSelector(selectCurrentUser);
-
+  const uuidv4 = require("uuid");
   const [isCreated, setIsCreated] = useState(listEl);
   useEffect(() => {
     try {
@@ -76,10 +76,13 @@ const Button = ({
 
   const addButtonObjContext = () => {
     const dataText = {
+      id: Math.floor(Math.random() * 100),
       button_title: text,
       button_link: link,
       element_type: "Button",
       users: user,
+      order: 0,
+      context: true,
     };
 
     createElement(dataText);
