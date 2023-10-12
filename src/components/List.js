@@ -16,12 +16,24 @@ const List = ({ children, alignment, clicked, updatedList }) => {
   const [forDelete, setForDelete] = useState([]);
 
   const BASE_URL = config.url.BASE_URL;
-  //const BASE_URL = "https://sendit-backend-production.up.railway.app";
 
   useEffect(() => {
     setItems(children);
-  }, [children]);
+    if (JSON.stringify(itemsElements) !== JSON.stringify(children)) {
+      setItems(children);
 
+      // When children change, compute initial order values based on index
+      if (children && children.length > 0) {
+        const initialItems = children.map((item, index) => ({
+          ...item,
+          order: index,
+        }));
+        updatedList(initialItems);
+      }
+    }
+  }, [children, itemsElements]);
+
+  console.log("items::::", itemsElements);
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext
