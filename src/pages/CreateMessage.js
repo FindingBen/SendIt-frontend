@@ -207,6 +207,11 @@ const CreateNote = () => {
     );
   };
 
+  const updateElements = (element) => {
+    console.log("Updating...", element);
+    setElementsContextList(element);
+  };
+
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
@@ -407,30 +412,13 @@ const CreateNote = () => {
                       id="myList"
                       children={elementContextList}
                       clicked={handleClicked}
+                      updatedList={updateElements}
                     />
                   </div>
                 </div>
-
-                {/* <button
-                  style={{ marginLeft: "6%" }}
-                  className="bg-gray-900 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded mt-5"
-                  onClick={handleSubmit}
-                >
-                  Create
-                </button> */}
               </div>
             </div>
           </div>
-          {/* <div className="row">
-            <div id="buttonHolder" className="col">
-              <button
-                className="bg-gray-900 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-                onClick={handleSubmit}
-              >
-                Create
-              </button>
-            </div>
-          </div> */}
         </div>
       </div>
     </section>

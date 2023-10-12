@@ -531,13 +531,6 @@ const EditMessage = () => {
                     ></List>
                   </div>
                 </div>
-                {/* <button
-                  style={{ marginLeft: "6%" }}
-                  className="bg-gray-900 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded mt-5"
-                  onClick={{ editMessage }}
-                >
-                  Save
-                </button> */}
               </div>
             </div>
           </div>
