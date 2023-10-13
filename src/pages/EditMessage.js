@@ -26,6 +26,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import useAxiosInstance from "../utils/axiosInstance";
 import { ElementContext } from "../context/ElementContext";
+import { useRef } from "react";
 
 const EditMessage = () => {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ const EditMessage = () => {
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
   const [elements, setElements] = useState([]);
+  const [updatedEl, setUpdatedEl] = useState([]);
   const { createElement, deleteElement } = useContext(ElementContext);
   const [elementContextList, setElementsContextList] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -52,6 +54,7 @@ const EditMessage = () => {
   const params = useParams();
   const container = document?.getElementById("myList");
   const [getId, setId] = useState();
+  const [createdEl, setCreatedEl] = useState([]);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -64,6 +67,13 @@ const EditMessage = () => {
     dispatch(setModalState({ show: false }));
   }, [modal_state, isFormDirt]);
 
+  useEffect(() => {}, [elements]);
+
+  useEffect(() => {
+    updateElementsOrder();
+    console.log(elements);
+  }, [createdEl]);
+  console.log(createdEl);
   useEffect(() => {
     messageView();
   }, []);
@@ -74,7 +84,7 @@ const EditMessage = () => {
     setShowComponent(!showComponent);
     addEmptyListItem();
   };
-  console.log(isPopulated);
+
   const handleClickText = (e) => {
     e.preventDefault();
     setActiveT(!activeT);
@@ -108,7 +118,7 @@ const EditMessage = () => {
       },
     });
     if (response.status === 200 || 201) {
-      setElements(response.data.element_list);
+      setElements(response.data);
       setIsLoaded(false);
     }
   };
@@ -135,16 +145,60 @@ const EditMessage = () => {
     }
   };
 
-  const editMessage = async (e) => {
-    e.preventDefault();
-    if (toDelete.length > 0) {
-      await deleteElements(e);
+  const filterEl = async () => {
+    const condition = true; // Replace with the value you want to filter by
+
+    // Use the filter method to create a new array with filtered elements
+    const filteredElements = elements.filter(
+      (element) => element.context !== condition
+    );
+    //console.log("SSSSS", filteredElements);
+    setElements(filteredElements);
+    return filteredElements;
+  };
+
+  const updateElementsOrder = async () => {
+    //const filtered = await filterEl();
+    //console.log("inside update elements", updatedEl);
+    console.log("about to be updated", elements);
+    const elementsToUpdate = elements.filter((element) => !element.context);
+    for (const element of elementsToUpdate) {
+      try {
+        // Update the order property of the element
+        element.order = elements.findIndex((el) => el.id === element.id);
+
+        // Now you can make an API request to update the element with the new order value
+        const elementId = element.id;
+        const requestedData = { order: element.order };
+
+        // Make your API request here
+        await axiosInstance.put(
+          `/api/update_element/${elementId}/`,
+          requestedData
+        );
+
+        //console.log(`Element ${elementId} updated with order ${element.order}`);
+      } catch (error) {
+        // Handle the error if the update fails
+        console.error(`Failed to update element ${element.id}: ${error}`);
+      }
     }
+    console.log("updatedElements", elements);
+    return elements;
+  };
+
+  const editMessage = async (e) => {
     try {
-      const createdElements = await addElement(e); // Store the created elements in a variable
+      const createdElements = await addElement(e);
       console.log(createdElements);
+      //await updateElementsOrder(e);
+      if (createdElements.length > 0) {
+        await updateElementsOrder();
+      }
+
+      console.log("ELEMENTS", createdElements);
       const requestData = {
-        element_list: createdElements, // Map the created elements to their IDs
+        //element_list: elements, // Map the created elements to their IDs
         users: user,
       };
 
@@ -161,6 +215,7 @@ const EditMessage = () => {
       if (response.status === 200) {
         dispatch(setState({ isDirty: false }));
         dispatch(setEditPage({ isEditFormDirty: false }));
+
         navigate("/home");
       } else {
         console.log("Failed to create notes:", response.data);
@@ -170,16 +225,18 @@ const EditMessage = () => {
     }
   };
 
-  const addElement = async (e) => {
-    e.preventDefault();
+  const addElement = async () => {
     dispatch(setList({ populated: true }));
-
-    try {
-      const createdElements = [];
-
-      for (const elementContext of elementContextList) {
-        const formData = new FormData();
-
+    const createdElements = [];
+    console.log(elementContextList);
+    console.log(elements);
+    //try {
+    for (let i = 0; i < elements.length; i++) {
+      const elementContext = elements[i];
+      console.log(elementContext);
+      const formData = new FormData();
+      if ("context" in elementContext) {
+        console.log("IS IT????", elementContext.order);
         if (elementContext.element_type === "Img") {
           formData.append("image", elementContext.file);
         } else if (elementContext.element_type === "Text") {
@@ -191,7 +248,9 @@ const EditMessage = () => {
         }
         formData.append("element_type", elementContext.element_type);
         formData.append("users", elementContext.users);
-
+        formData.append("message", getId);
+        formData.append("order", elementContext.order);
+        console.log("count", i);
         let response = await axiosInstance.post(
           "/api/create_element/",
           formData,
@@ -203,20 +262,21 @@ const EditMessage = () => {
         );
 
         if (response.status === 200) {
-          createdElements.push(response.data);
+          createdElements.push(response.data.element);
+          //setCreatedEl(createdElements);
           console.log(response);
+          console.log(createdElements);
         } else {
           console.log("Failed to create element:", elementContext);
-          return; // Return undefined to indicate a failure
         }
       }
-
       setElements((prevElement) => [...prevElement, ...createdElements]);
-      return createdElements; // Return the created elements from the function
-    } catch (error) {
-      console.log("Error creating elements:", error);
-      return; // Return undefined to indicate a failure
     }
+    // } catch (error) {
+    //   console.log("Error creating elements:", error);
+    // }
+
+    return elements;
   };
 
   const handleChildStateChange = (active) => {
@@ -261,6 +321,11 @@ const EditMessage = () => {
       prevItems.filter((item) => item !== element)
     );
     setElements((prevItems) => prevItems.filter((item) => item !== element));
+  };
+
+  const updateElements = (element) => {
+    console.log("Updating...", element);
+    setElements(element);
   };
 
   return (
@@ -309,7 +374,7 @@ const EditMessage = () => {
                         style={{ width: "100%" }}
                         onClick={handleClickImage}
                         name="liClick"
-                        className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded hover:bg-gray-500 cursor-pointer"
+                        className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -350,7 +415,7 @@ const EditMessage = () => {
                         style={{ width: "100%" }}
                         onClick={handleClickText}
                         name="liClick"
-                        className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded hover:bg-gray-500 cursor-pointer"
+                        className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -388,7 +453,7 @@ const EditMessage = () => {
                         style={{ width: "100%" }}
                         onClick={handleClickButton}
                         name="liClick"
-                        className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded hover:bg-gray-500 cursor-pointer"
+                        className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -462,16 +527,10 @@ const EditMessage = () => {
                       className="my-scroll-list"
                       children={elements}
                       clicked={handleClicked}
+                      updatedList={updateElements}
                     ></List>
                   </div>
                 </div>
-                {/* <button
-                  style={{ marginLeft: "6%" }}
-                  className="bg-gray-900 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded mt-5"
-                  onClick={{ editMessage }}
-                >
-                  Save
-                </button> */}
               </div>
             </div>
           </div>

@@ -6,7 +6,7 @@ import {
 } from "../features/auth/authSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import List from "../components/List";
+import ViewList from "../components/ViewList";
 import useAxiosInstance from "../utils/axiosInstance";
 import { isMobile, isTablet, isDesktop } from "react-device-detect";
 import { config } from "../constants/Constants";
@@ -18,9 +18,9 @@ const MessageView = ({ imageProp, textProp }) => {
   const params = useParams();
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
-  //const BASE_URL = config.url.BASE_URL;
+  const BASE_URL = config.url.BASE_URL;
 
-  const BASE_URL = "https://sendit-backend-production.up.railway.app";
+  //const BASE_URL = "https://sendit-backend-production.up.railway.app";
 
   useEffect(() => {
     messageView();
@@ -35,7 +35,7 @@ const MessageView = ({ imageProp, textProp }) => {
     //console.log(response);
     const data = await response.json();
 
-    setElements(data?.element_list);
+    setElements(data);
     setIsLoaded(false);
   };
 
@@ -43,7 +43,7 @@ const MessageView = ({ imageProp, textProp }) => {
     <section className="min-h-screen bg-slate-400 flex-d w-100 items-center justify-center">
       <div className="flex flex-col items-stretch">
         <div className="mx-4">
-          <List children={elements} style={{ width: "100%" }}></List>
+          <ViewList children={elements} style={{ width: "100%" }}></ViewList>
         </div>
       </div>
     </section>

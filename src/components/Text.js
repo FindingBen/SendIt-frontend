@@ -46,6 +46,7 @@ const Text = ({
   const [isMounted, setIsMounted] = useState(true);
   const user = useSelector(selectCurrentUser);
   const [align, setAlign] = useState();
+  const uuidv4 = require("uuid");
   const [isCreated, setIsCreated] = useState(listEl);
 
   useEffect(() => {
@@ -119,10 +120,13 @@ const Text = ({
 
   const addTextObjContext = () => {
     const dataText = {
+      id: Math.floor(Math.random() * 100),
       text: text,
       alignment: getAlignmentclassName(),
       element_type: "Text",
       users: user,
+      order: 0,
+      context: true,
     };
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
