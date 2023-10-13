@@ -26,7 +26,7 @@ export function SortableItem(props) {
         id="elItem"
         key={props.itemObject.id}
         loading="lazy"
-        //className="hover:bg-blue-300"
+        className="hover:bg-blue-300 rounded-md mx-2 transition-colors"
         //onClick={() => toDelete(item)}
       >
         {props.itemObject.element_type === "Img" ? (

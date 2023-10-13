@@ -136,7 +136,7 @@ const ContactList = () => {
                 <div className="inline-flex space-x-2 items-center">
                   <div
                     key={conList.id}
-                    class="relative w-100 group bg-gray-900 py-3 sm:py-20 px-4 flex flex-col space-y-2 items-center rounded-md hover:bg-gray-900/80 hover:smooth-hover"
+                    class="relative w-100 group bg-gray-900 py-3 sm:py-20 px-4 flex flex-col space-y-2 items-center rounded-md transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-gray-900/80 duration-200"
                   >
                     <div className="mb-8 ml-48">
                       <button onClick={() => deleteList(conList.id)}>

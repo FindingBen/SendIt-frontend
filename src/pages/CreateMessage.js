@@ -258,7 +258,7 @@ const CreateNote = () => {
                         style={{ width: "100%" }}
                         onClick={handleClickImage}
                         name="liClick"
-                        className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded hover:bg-gray-500 cursor-pointer"
+                        className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -299,7 +299,7 @@ const CreateNote = () => {
                         style={{ width: "100%" }}
                         onClick={handleClickText}
                         name="liClick"
-                        className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded hover:bg-gray-500 cursor-pointer"
+                        className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -338,7 +338,7 @@ const CreateNote = () => {
                         style={{ width: "100%" }}
                         onClick={handleClickButton}
                         name="liClick"
-                        className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded hover:bg-gray-500 cursor-pointer"
+                        className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

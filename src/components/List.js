@@ -1,8 +1,4 @@
 import React, { useState, useEffect, useContext, memo } from "react";
-import { MDBListGroup, MDBListGroupItem } from "mdb-react-ui-kit";
-import ImgList from "./ImgList";
-import TextComponent from "./TextComponent";
-import ButtonComponent from "./ButtonComponent";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -15,7 +11,7 @@ const List = ({ children, alignment, clicked, updatedList }) => {
   const [itemsElements, setItems] = useState([children]);
   const [forDelete, setForDelete] = useState([]);
 
-  const BASE_URL = config.url.BASE_URL;
+
 
   useEffect(() => {
     setItems(children);
@@ -33,7 +29,7 @@ const List = ({ children, alignment, clicked, updatedList }) => {
     }
   }, [children, itemsElements]);
 
-  console.log("items::::", itemsElements);
+
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext
@@ -63,7 +59,7 @@ const List = ({ children, alignment, clicked, updatedList }) => {
           ...item,
           order: index,
         }));
-        console.log("LIST ITEMS", updatedItems);
+      
         updatedList(updatedItems);
         return newItems;
       });
