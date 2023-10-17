@@ -10,7 +10,13 @@ const ImgList = ({ imageUrl }) => {
   return (
     <div>
       {imageSrc ? (
-        <img key={imageUrl} src={`${imageSrc}`} width="260" />
+        <img
+          key={imageUrl}
+          src={`${imageSrc}`}
+          width="260"
+          height="300"
+          className="w-100"
+        />
       ) : (
         <img
           class="h-auto max-w-lg rounded-lg object-cover"

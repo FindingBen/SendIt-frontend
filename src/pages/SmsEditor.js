@@ -25,7 +25,7 @@ const SmsEditor = () => {
   const [show, setShow] = useState(false);
   const [showSchedule, setShowSchedule] = useState(false);
   const [linkURL, setLinkURL] = useState("");
-  const [dateSchedule, setDateSchedule] = useState("2023-10-09 09:58:00");
+  const [dateSchedule, setDateSchedule] = useState("2023-10-17 11:49:00");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [smsText, setSmsText] = useState([]);
@@ -125,7 +125,8 @@ const SmsEditor = () => {
           message: params.id,
           contact_list: recipients,
           scheduled_time: dateSchedule,
-          // is_sent: true,
+          scheduled: true,
+          is_sent: false,
         },
         {
           headers: {
@@ -191,7 +192,9 @@ const SmsEditor = () => {
                     <input
                       type="text"
                       name="from"
-                      className="block bg-gray-300 hover:bg-gray-400 mt-1 text-light font-light py-2 px-4 rounded w-50"
+                      disabled
+                      value={"(+1) 2012550867"}
+                      className="block bg-gray-600 mt-1 text-light font-light py-2 px-4 rounded w-50"
                     />
                   </div>
 
@@ -234,7 +237,7 @@ const SmsEditor = () => {
 
                     <div className="grid grid-cols-2 gap-6 content-between">
                       <div className="flex flex-row">
-                        {recipients ? (
+                        {recipients && smsText.length > 0 ? (
                           <button
                             onClick={() => setShow(true)}
                             type="submit"
@@ -253,7 +256,7 @@ const SmsEditor = () => {
                             Send
                           </button>
                         )}
-                        {recipients ? (
+                        {recipients && smsText.length > 0 ? (
                           <button
                             onClick={() => setShowSchedule(true)}
                             type="submit"
@@ -380,7 +383,7 @@ const SmsEditor = () => {
                 onClose={() => setShow(false)}
               ></SmsConfirmModal>
               <ScheduleSmsModal
-                //sendConfirm={sendSms}
+                sendConfirm={scheduleSms}
                 showModal={showSchedule}
                 onClose={() => setShowSchedule(false)}
               ></ScheduleSmsModal>

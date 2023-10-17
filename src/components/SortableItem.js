@@ -9,9 +9,9 @@ import { config } from "../constants/Constants";
 export function SortableItem(props) {
   // props.id
   // JavaScript
-  //const BASE_URL = config.url.BASE_URL;
-  const BASE_URL = "https://sendit-backend-production.up.railway.app";
-
+  const BASE_URL = config.url.BASE_URL;
+  //const BASE_URL = "https://sendit-backend-production.up.railway.app";
+  console.log(props);
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.itemObject.id });
 

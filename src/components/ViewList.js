@@ -13,7 +13,7 @@ const ViewList = ({ children }) => {
   }, [children]);
 
   return (
-    <ul>
+    <ul className="">
       {itemsElements &&
         itemsElements?.map((item, index) => (
           <li
