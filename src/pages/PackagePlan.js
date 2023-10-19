@@ -37,6 +37,7 @@ const PackagePlan = () => {
       });
 
       if (response.status === 200) {
+        console.log(response);
         let filteredPackages = response.data.filter((item) => item.id !== 1);
 
         setPackage(filteredPackages);
@@ -54,7 +55,7 @@ const PackagePlan = () => {
       [id]: true,
     }));
     setIsLoading(true);
-    
+
     let response = await axiosInstance.post("/stripe/stripe_checkout_session", {
       method: "POST",
       headers: {
@@ -102,7 +103,7 @@ const PackagePlan = () => {
       //navigate("/home");
     }
   };
-  console.log(loadingState);
+  console.log(packagePlan);
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
