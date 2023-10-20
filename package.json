@@ -39,7 +39,7 @@
     "react-apexcharts": "^1.4.1",
     "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.7.4",
-    "react-datepicker": "^4.17.0",
+    "react-datepicker": "^4.21.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-draft-wysiwyg": "^1.15.0",

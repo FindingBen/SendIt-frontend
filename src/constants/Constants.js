@@ -8,6 +8,7 @@ const prod = {
 const dev = {
   url: {
     //BASE_URL: "http://localhost:8000",
+    //BASE_URL:"http://localhost:8080"
     BASE_URL: "https://sendit-backend-production.up.railway.app",
   },
 };

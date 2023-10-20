@@ -93,6 +93,7 @@ const SmsEditor = () => {
           content_link: uniqueLink,
           message: params.id,
           contact_list: recipients,
+          scheduled: false,
           // is_sent: true,
         },
         {
