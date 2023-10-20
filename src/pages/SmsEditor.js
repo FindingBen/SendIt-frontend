@@ -25,7 +25,7 @@ const SmsEditor = () => {
   const [show, setShow] = useState(false);
   const [showSchedule, setShowSchedule] = useState(false);
   const [linkURL, setLinkURL] = useState("");
-  const [dateSchedule, setDateSchedule] = useState("2023-10-17 11:49:00");
+  const [dateSchedule, setDateSchedule] = useState("2023-10-17 19:12:00");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [smsText, setSmsText] = useState([]);
