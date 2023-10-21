@@ -2,15 +2,32 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { selectCurrentToken } from "../../features/auth/authSlice";
 import useAxiosInstance from "../../utils/axiosInstance";
-import { useSelector } from "react-redux";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import dayjs from "dayjs";
+import moment from "moment/moment";
 
-const ScheduleSmsModal = ({ showModal, onClose, sendConfirm }) => {
+const ScheduleSmsModal = ({
+  showModal,
+  onClose,
+  sendConfirm,
+  dateSchedule,
+}) => {
+  const today = new Date();
   const [show, setShowModal] = useState(showModal);
   const axiosInstance = useAxiosInstance();
+  const [dateValue, setDateValue] = useState(today);
 
   useEffect(() => {
     setShowModal(showModal);
-  }, [showModal]);
+  }, [showModal, dateValue]);
+
+  const handleDate = (date) => {
+    const newDate = new Date(date);
+    const formated = moment(newDate).format("YYYY-MM-DD HH:mm");
+    dateSchedule(formated);
+    console.log(formated);
+  };
 
   const closeModal = () => {
     onClose();
@@ -35,6 +52,18 @@ const ScheduleSmsModal = ({ showModal, onClose, sendConfirm }) => {
                   <p className="my-4 text-slate-500 text-lg leading-relaxed">
                     You are about to schedule the sms message to multiple phone
                     devices, choose date and time then press Send.
+                  </p>
+                  <DatePicker
+                    useWeekdaysShort={true}
+                    selected={dateValue}
+                    onChange={handleDate}
+                    dateFormat="yyyy-MM-dd"
+                    showTimeSelect
+                    placeholderText="Start date"
+                    className="bg-grayWhite h-10 w-32 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
+                  ></DatePicker>
+                  <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                    It will be scheduled for {dateValue[0]}
                   </p>
                 </div>
                 {/*footer*/}

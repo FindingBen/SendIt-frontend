@@ -25,7 +25,7 @@ const SmsEditor = () => {
   const [show, setShow] = useState(false);
   const [showSchedule, setShowSchedule] = useState(false);
   const [linkURL, setLinkURL] = useState("");
-  const [dateSchedule, setDateSchedule] = useState("2023-10-17 19:12:00");
+  const [dateSchedule, setDateSchedule] = useState();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [smsText, setSmsText] = useState([]);
@@ -164,6 +164,10 @@ const SmsEditor = () => {
   const handleChoice = (e) => {
     setRecipients(e.target.value);
     console.log(e?.target?.value);
+  };
+
+  const handleDate = (date) => {
+    setDateSchedule(date);
   };
 
   return (
@@ -386,6 +390,7 @@ const SmsEditor = () => {
               <ScheduleSmsModal
                 sendConfirm={scheduleSms}
                 showModal={showSchedule}
+                dateSchedule={handleDate}
                 onClose={() => setShowSchedule(false)}
               ></ScheduleSmsModal>
             </div>
