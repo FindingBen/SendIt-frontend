@@ -83,8 +83,8 @@ const UserPage = () => {
   };
 
   return (
-    <section className="min-h-screen flex-d w-100 items-center justify-center">
-      <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
+    <section className="h-screen flex-d w-100 items-center justify-center">
+      <div className="flex-1 flex flex-col lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="flex-1 px-2 sm:px-0">
           <div className="row">
             <h3 class="text-3xl text-left font-extralight text-white/50">
@@ -94,7 +94,7 @@ const UserPage = () => {
           <div className="flex gap-3">
             <div className="flex-col">
               <div
-                className="flex-initial w-96 h-4/5 rounded-lg p-10 mt-4"
+                className="flex-initial xl:w-full xl:h-4/5 rounded-lg p-10 mt-4"
                 style={{
                   backgroundColor: "#1118274D",
                 }}
@@ -103,12 +103,12 @@ const UserPage = () => {
                 <PasswordChange></PasswordChange>
               </div>
               <div
-                className="w-96 h-2/5 rounded-lg mt-3 flex flex-col"
+                className="xl:w-full h-2/6 xl:h-2/5 rounded-lg mt-3 flex flex-col"
                 style={{
                   backgroundColor: "#1118274D",
                 }}
               >
-                <h3 class="text-2xl text-left font-extralight text-white/50 p-10">
+                <h3 class="text-2xl text-left font-extralight text-white/50 p-4 xl:p-10">
                   Package information
                 </h3>
                 <div className="flex flex-row">
@@ -132,7 +132,7 @@ const UserPage = () => {
                 </div>
                 <Link
                   to="/package_plan/"
-                  className="bg-sky-800 hover:bg-sky-400 text-white font-light py-2 px-4 ml-10 mt-2 rounded w-25"
+                  className="bg-sky-800 hover:bg-sky-400 text-white font-sm xl:font-base font-light py-2 px-2 ml-10 mt-2 rounded w-25"
                   type="submit"
                 >
                   Update

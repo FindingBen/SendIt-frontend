@@ -51,9 +51,10 @@ const ChangePass = () => {
   return (
     <section className="vh-100 w-100">
       <div className="container-fluid">
-        <div className="row d-flex justify-content-center align-items-center h-100"></div>
         <div className="row">
-          <h2 className="text-2xl font-bold mb-4 mt-4">Change password</h2>
+          <h2 className="text-md xl:text-2xl font-bold mb-4 mt-2 xl:mt-4">
+            Change password
+          </h2>
           <input
             className="bg-gray-800 hover:bg-green-400 mt-2 text-white font-bold py-2 px-4 border border-blue-700 rounded"
             type="password"

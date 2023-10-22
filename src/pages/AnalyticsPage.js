@@ -88,7 +88,7 @@ const AnalyticsPage = () => {
             </h3>
           </div>
           <div className="flex flex-row">
-            <div className="bg-darkPurple h-28 w-60 xl:h-32 xl:w-60 rounded text-grayWhite mr-5">
+            <div className="bg-darkPurple h-24 w-44 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 text-sm xl:text-base">
               <h3 className="flex flex-row mx-3 my-3">
                 <p className="text-1xl font-extralight text-left">
                   Total views
@@ -119,7 +119,7 @@ const AnalyticsPage = () => {
                 </div>
               </h3>
               {views ? (
-                <h2 class="text-left mx-3 my-3 text-5xl">
+                <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl">
                   {views?.data.sorted_total_data.screen_views_total}
                 </h2>
               ) : (
@@ -144,7 +144,7 @@ const AnalyticsPage = () => {
                 </div>
               )}
             </div>
-            <div className="bg-darkPurple h-28 w-60 xl:h-32 xl:w-60 rounded text-grayWhite mr-5">
+            <div className="bg-darkPurple h-24 w-44 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 text-sm xl:text-base">
               <h3 className="flex flex-row mx-3 my-3">
                 <p className="text-1xl font-extralight text-left">
                   Total sends
@@ -175,7 +175,9 @@ const AnalyticsPage = () => {
                 </div>
               </h3>
               {views ? (
-                <h2 class="text-left mx-3 my-3 text-5xl">{sms?.sms_sends}</h2>
+                <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl">
+                  {sms?.sms_sends}
+                </h2>
               ) : (
                 <div role="status">
                   <svg
@@ -198,7 +200,7 @@ const AnalyticsPage = () => {
                 </div>
               )}
             </div>
-            <div className="bg-darkPurple h-28 w-60 xl:h-32 xl:w-60 rounded text-grayWhite mr-5">
+            <div className="bg-darkPurple h-24 w-44 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 text-sm xl:text-base">
               <h3 className="flex flex-row mx-3 my-3">
                 <p className="text-1xl font-extralight text-left">Click rate</p>
                 <svg
@@ -227,7 +229,7 @@ const AnalyticsPage = () => {
                 </div>
               </h3>
               {views ? (
-                <h2 class="text-left mx-3 my-3 text-5xl">
+                <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl">
                   {(sms?.click_number / sms?.sms_sends) * 100} %
                 </h2>
               ) : (
@@ -252,7 +254,7 @@ const AnalyticsPage = () => {
                 </div>
               )}
             </div>
-            <div className="bg-darkPurple h-28 w-60 xl:h-32 xl:w-60 rounded text-grayWhite mr-5">
+            <div className="bg-darkPurple h-24 w-44 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 text-sm xl:text-base">
               <h3 className="flex flex-row mx-3 my-3">
                 <p className="text-1xl font-extralight text-left">
                   Engagement rate
@@ -283,7 +285,7 @@ const AnalyticsPage = () => {
                 </div>
               </h3>
               {views ? (
-                <h2 class="text-left mx-3 my-3 text-5xl">
+                <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl">
                   {views?.data.sorted_total_data.engegment_rate_total * 100} %
                 </h2>
               ) : (
@@ -308,7 +310,7 @@ const AnalyticsPage = () => {
                 </div>
               )}
             </div>
-            <div className="bg-darkPurple h-28 w-60 xl:h-32 xl:w-60 rounded text-grayWhite mr-5">
+            <div className="bg-darkPurple h-24 w-44 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 text-sm xl:text-base">
               <h3 className="flex flex-row mx-3 my-3">
                 <p className="text-1xl font-extralight text-left">
                   User engagement
@@ -339,7 +341,7 @@ const AnalyticsPage = () => {
                 </div>
               </h3>
               {views ? (
-                <h2 class="text-left mx-3 my-3 text-5xl flex flex-row">
+                <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl flex flex-row">
                   {views?.data.sorted_total_data.user_engegment_total}{" "}
                   <p className="text-3xl ml-3 mt-1">sec</p>
                 </h2>
@@ -365,7 +367,7 @@ const AnalyticsPage = () => {
                 </div>
               )}
             </div>
-            <div className="bg-darkPurple h-28 w-60 xl:h-32 xl:w-60 rounded text-grayWhite mr-5">
+            <div className="bg-darkPurple h-24 w-44 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 text-sm xl:text-base">
               <h3 className="flex flex-row mx-3 my-3">
                 <p className="text-1xl font-extralight text-left">
                   Scrolled users
@@ -376,7 +378,7 @@ const AnalyticsPage = () => {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="w-5 h-5 ml-2"
+                  class="w-4 h-4 xl:w-5 xl:h-5 ml-2"
                   data-tooltip-target="tooltip-default"
                   type="button"
                 >
@@ -396,7 +398,7 @@ const AnalyticsPage = () => {
                 </div>
               </h3>
               {views ? (
-                <h2 class="text-left mx-3 my-3 text-5xl">
+                <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl">
                   {views?.data.sorted_total_data.scrolled_user_total}{" "}
                 </h2>
               ) : (
@@ -424,7 +426,7 @@ const AnalyticsPage = () => {
           </div>
 
           <div className="flex flex-row mt-3">
-            <div class="bg-darkPurple rounded-lg p-4 md:p-6 w-50 relative mr-5">
+            <div class="bg-darkPurple rounded-lg p-4 md:p-6 xl:w-50 relative mr-5">
               <div className="absolute top-4 right-10">
                 <DatePickerComponent
                   startDate={handleStartDateChange}
@@ -465,9 +467,9 @@ const AnalyticsPage = () => {
               <ChartComponent chartData={views} />
             </div>
             <div className="flex flex-col">
-              <div className="bg-darkPurple h-28 w-60 xl:h-60 xl:w-96 rounded text-grayWhite mr-5">
+              <div className="bg-darkPurple w-60 xl:h-44 xl:w-86 rounded text-grayWhite mr-5">
                 <h3 className="flex flex-row mx-3 my-3">
-                  <p className="text-1xl font-extralight text-left">
+                  <p className="text-md xl:text-1xl font-extralight text-left">
                     Sms send status
                   </p>
                   <svg
@@ -476,7 +478,7 @@ const AnalyticsPage = () => {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-5 h-5 ml-2"
+                    class="w-4 h-4 xl:w-5 xl:h-5 ml-2"
                     data-tooltip-target="tooltip-default"
                     type="button"
                   >
@@ -496,7 +498,7 @@ const AnalyticsPage = () => {
                   </div>
                 </h3>
                 <div className="flex flex-row justify-center">
-                  <div className="h-40 w-36 border-r">
+                  <div className="h-40 w-36 border-r-50">
                     <p>Successfull</p>
                     <h3 className="text-2xl text-green-500 mt-4">
                       {sms?.delivered}
@@ -510,7 +512,7 @@ const AnalyticsPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="bg-darkPurple h-28 w-60 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 mt-3">
+              <div className="bg-darkPurple h-24 w-44 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 text-sm xl:text-bas mt-3">
                 <h3 className="flex flex-row mx-3 my-3">
                   <p className="text-1xl font-extralight text-left">
                     Bounce rate
@@ -521,7 +523,7 @@ const AnalyticsPage = () => {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-5 h-5 ml-2"
+                    class="w-4 h-4 xl:w-5 xl:h-5 ml-2"
                     data-tooltip-target="tooltip-default"
                     type="button"
                   >
@@ -541,7 +543,7 @@ const AnalyticsPage = () => {
                   </div>
                 </h3>
                 {views ? (
-                  <h2 class="text-left mx-3 my-3 text-5xl">
+                  <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl">
                     {views?.data.sorted_total_data.bounceRate * 100} %
                   </h2>
                 ) : (

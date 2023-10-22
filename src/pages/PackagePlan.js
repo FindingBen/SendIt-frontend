@@ -112,461 +112,442 @@ const PackagePlan = () => {
             <h3 class="text-3xl text-left font-extralight text-white/50">
               Package plans
             </h3>
-            <div
-              className="grid gap-6 lg:grid-cols-3 lg:gap-x-8 mt-3"
-              style={{ width: "95%" }}
-            >
+            <div className="grid gap-6 lg:grid-cols-3 lg:gap-x-8 mt-3">
               <div
                 key={packagePlan[0]?.id}
-                className="mb-6 lg:mb-0 rounded-md"
-                style={{ backgroundColor: "#1118274D" }}
+                class="flex flex-col p-6 mx-auto max-w-lg text-center text-white bg-gray-900 rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 "
               >
-                <div className="block w-full text-sm rounded-lg cursor-pointer dark:text-gray-400 focus:outline-none dark:placeholder-gray-400">
-                  <div className="border-b-2 border-grayWhite border-opacity-70 p-6 text-center dark:border-opacity-40">
-                    <p className="mb-4 text-2xl font-light uppercase text-grayWhite">
-                      <strong>{packagePlan[0]?.plan_type}</strong>
-                    </p>
-                    <h3 className="mb-6 text-3xl text-white font-light">
-                      <strong>$ {packagePlan[0]?.price}</strong>
-                    </h3>
-
-                    <button
-                      type="button"
-                      onClick={() =>
-                        stripeCheckout(
-                          packagePlan[0]?.plan_type,
-                          packagePlan[0]?.id
-                        )
-                      }
-                      className="inline-block w-50 rounded text-white bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-800 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
-                      data-te-ripple-init
-                      data-te-ripple-color="light"
-                      value={0}
-                      disabled={loadingState[packagePlan[0]?.id]}
-                    >
-                      {loadingState[packagePlan[0]?.id] ? (
-                        <>
-                          <svg
-                            className="w-5 h-5 mx-auto animate-spin"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth="4"
-                            ></circle>
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                            ></path>
-                          </svg>
-                        </>
-                      ) : (
-                        "Buy"
-                      )}
-                    </button>
-                  </div>
-                  <div className="p-6 text-grayWhite">
-                    <ol className="list-inside">
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[0]?.offer1}
-                      </li>
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[0]?.offer2}
-                      </li>
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        npm installation
-                      </li>
-                    </ol>
-                  </div>
+                <h3 class="mb-4 text-2xl font-semibold">
+                  {packagePlan[0]?.plan_type}
+                </h3>
+                <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+                  Best option for personal use & for your project.
+                </p>
+                <div class="flex justify-center items-baseline my-8">
+                  <span class="mr-2 text-5xl font-extrabold">
+                    ${packagePlan[0]?.price}
+                  </span>
+                  <span class="text-gray-500 dark:text-gray-400">/month</span>
                 </div>
+
+                <ul role="list" class="mb-8 space-y-4 text-left">
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[0]?.offer1}</span>
+                  </li>
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[0]?.offer2}</span>
+                  </li>
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[0]?.offer3}</span>
+                  </li>
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[0]?.offer4}</span>
+                  </li>
+                  {/* <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    
+                  </li> */}
+                </ul>
+                <button
+                  type="button"
+                  onClick={() =>
+                    stripeCheckout(
+                      packagePlan[0]?.plan_type,
+                      packagePlan[0]?.id
+                    )
+                  }
+                  className="xl:w-50 text-white rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                  data-te-ripple-init
+                  data-te-ripple-color="light"
+                  value={0}
+                  disabled={loadingState[packagePlan[0]?.id]}
+                >
+                  {loadingState[packagePlan[0]?.id] ? (
+                    <>
+                      <svg
+                        className="w-5 h-5 mx-auto animate-spin"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                    </>
+                  ) : (
+                    "Buy"
+                  )}
+                </button>
               </div>
               {/* <!---!> */}
               <div
                 key={packagePlan[1]?.id}
-                className="mb-6 lg:mb-0 rounded-md"
-                style={{ backgroundColor: "#1118274D" }}
+                class="flex flex-col p-6 mx-auto max-w-lg text-center text-white bg-gray-900 rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 "
               >
-                <div className="block w-full text-sm rounded-lg cursor-pointer dark:placeholder-gray-400">
-                  <div className="border-b-2 border-grayWhite border-opacity-70 p-6 text-center dark:border-opacity-40">
-                    <p className="mb-4 text-grayWhite text-2xl font-light uppercase">
-                      <strong>{packagePlan[1]?.plan_type}</strong>
-                    </p>
-                    <h3 className="mb-6 text-3xl font-light text-white">
-                      <strong>$ {packagePlan[1]?.price}</strong>
-                    </h3>
-
-                    <button
-                      type="button"
-                      onClick={() =>
-                        stripeCheckout(
-                          packagePlan[1]?.plan_type,
-                          packagePlan[1]?.id
-                        )
-                      }
-                      className="inline-block w-50 text-white rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
-                      data-te-ripple-init
-                      data-te-ripple-color="light"
-                      value={1}
-                      disabled={loadingState[packagePlan[1]?.id]}
-                    >
-                      {loadingState[packagePlan[1]?.id] ? (
-                        <>
-                          <svg
-                            className="w-5 h-5 mx-auto animate-spin"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                            ></path>
-                          </svg>
-                        </>
-                      ) : (
-                        "Buy"
-                      )}
-                    </button>
-                  </div>
-                  <div className="p-6 text-grayWhite">
-                    <ol className="list-inside">
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[1]?.offer1}
-                      </li>
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[1]?.offer2}
-                      </li>
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[1]?.offer3}
-                      </li>
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[1]?.offer4}
-                      </li>
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[1]?.offer5}
-                      </li>
-                    </ol>
-                  </div>
+                <h3 class="mb-4 text-2xl font-semibold">
+                  {packagePlan[1]?.plan_type}
+                </h3>
+                <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+                  Most optimal for starter individuals and startups.
+                </p>
+                <div class="flex justify-center items-baseline my-8">
+                  <span class="mr-2 text-5xl font-extrabold">
+                    $ {packagePlan[1]?.price}
+                  </span>
+                  <span class="text-gray-500 dark:text-gray-400">/month</span>
                 </div>
+
+                <ul role="list" class="mb-8 space-y-4 text-left">
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span> {packagePlan[1]?.offer1}</span>
+                  </li>
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[1]?.offer1}</span>
+                  </li>
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[1]?.offer2}</span>
+                  </li>
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[1]?.offer3}</span>
+                  </li>
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[1]?.offer4}</span>
+                  </li>
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[1]?.offer5}</span>
+                  </li>
+                </ul>
+                <button
+                  type="button"
+                  onClick={() =>
+                    stripeCheckout(
+                      packagePlan[1]?.plan_type,
+                      packagePlan[1]?.id
+                    )
+                  }
+                  className="xl:w-50 text-white rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                  data-te-ripple-init
+                  data-te-ripple-color="light"
+                  value={1}
+                  disabled={loadingState[packagePlan[1]?.id]}
+                >
+                  {loadingState[packagePlan[1]?.id] ? (
+                    <>
+                      <svg
+                        className="w-5 h-5 mx-auto animate-spin"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                    </>
+                  ) : (
+                    "Buy"
+                  )}
+                </button>
               </div>
               {/* .... */}
               <div
                 key={packagePlan[2]?.id}
-                className="mb-6 lg:mb-0 rounded-md"
-                style={{ backgroundColor: "#1118274D" }}
+                class="flex flex-col p-6 mx-auto max-w-lg text-center text-white bg-gray-900 rounded-lg border border-gray-100 shadow dark:border-gray-600 xl:p-8 "
               >
-                <div className="block w-full text-sm dark:placeholder-gray-400">
-                  <div className="border-b-2 border-grayWhite border-opacity-70 p-6 text-center dark:border-opacity-40">
-                    <p className="mb-4 text-2xl font-light text-grayWhite uppercase">
-                      <strong>{packagePlan[2]?.plan_type}</strong>
-                    </p>
-                    <h3 className="mb-6 text-3xl font-light text-white">
-                      <strong>$ {packagePlan[2]?.price}</strong>
-                    </h3>
-
-                    <button
-                      type="button"
-                      onClick={() =>
-                        stripeCheckout(
-                          packagePlan[2]?.plan_type,
-                          packagePlan[2]?.id
-                        )
-                      }
-                      className="inline-block w-50 rounded text-white bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
-                      data-te-ripple-init
-                      data-te-ripple-color="light"
-                      value={"2"}
-                      disabled={loadingState[packagePlan[2]?.id]}
-                    >
-                      {loadingState[packagePlan[2]?.id] ? (
-                        <>
-                          <svg
-                            className="w-5 h-5 mx-auto animate-spin"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth="4"
-                            ></circle>
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                            ></path>
-                          </svg>
-                        </>
-                      ) : (
-                        "Buy"
-                      )}
-                    </button>
-                  </div>
-                  <div className="p-6 text-grayWhite">
-                    <ol className="list-inside">
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[2]?.offer1}
-                      </li>
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[2]?.offer2}
-                      </li>
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[2]?.offer3}
-                      </li>
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[2]?.offer4}
-                      </li>
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[2]?.offer5}
-                      </li>
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[2]?.offer6}
-                      </li>
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[2]?.offer7}
-                      </li>
-                      <li className="mb-4 flex">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="2"
-                          stroke="currentColor"
-                          className="mr-3 h-5 w-5 text-primary dark:text-primary-400"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4.5 12.75l6 6 9-13.5"
-                          />
-                        </svg>
-                        {packagePlan[2]?.offer8}
-                      </li>
-                    </ol>
-                  </div>
+                <h3 class="mb-4 text-2xl font-semibold">
+                  {packagePlan[2]?.plan_type}
+                </h3>
+                <p class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+                  Best option for business use and larger business scale.
+                </p>
+                <div class="flex justify-center items-baseline my-8">
+                  <span class="mr-2 text-5xl font-extrabold">
+                    ${packagePlan[2]?.price}
+                  </span>
+                  <span class="text-gray-500 dark:text-gray-400">/month</span>
                 </div>
+
+                <ul role="list" class="mb-8 space-y-4 text-left">
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[2]?.offer1}</span>
+                  </li>
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[2]?.offer2}</span>
+                  </li>
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>
+                      Team size:{" "}
+                      <span class="font-semibold">
+                        {packagePlan[2]?.offer3}
+                      </span>
+                    </span>
+                  </li>
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[2]?.offer4}</span>
+                  </li>
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[2]?.offer5}</span>
+                  </li>
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[2]?.offer6}</span>
+                  </li>
+                  <li class="flex items-center space-x-3">
+                    <svg
+                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <span>{packagePlan[2]?.offer7}</span>
+                  </li>
+                </ul>
+                <button
+                  type="button"
+                  onClick={() =>
+                    stripeCheckout(
+                      packagePlan[2]?.plan_type,
+                      packagePlan[2]?.id
+                    )
+                  }
+                  className="xl:w-50 text-white rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
+                  data-te-ripple-init
+                  data-te-ripple-color="light"
+                  value={1}
+                  disabled={loadingState[packagePlan[2]?.id]}
+                >
+                  {loadingState[packagePlan[2]?.id] ? (
+                    <>
+                      <svg
+                        className="w-5 h-5 mx-auto animate-spin"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                    </>
+                  ) : (
+                    "Buy"
+                  )}
+                </button>
               </div>
             </div>
           </div>

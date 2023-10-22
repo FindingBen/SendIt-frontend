@@ -43,7 +43,7 @@ const PasswordChange = () => {
   };
 
   return (
-    <div className="flex-1 px-2 sm:px-0">
+    <div className="flex-1 px-1 xl:px-2 sm:px-0">
       <div className="flex-col">
         <h3 class="text-2xl text-left font-extralight text-white/50">
           Change password
@@ -55,7 +55,7 @@ const PasswordChange = () => {
           </label>
           <input
             type="password"
-            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 rounded w-100"
+            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-2 rounded w-100 h-2/5 xl:h-full"
             placeholder="Enter your old password"
             onChange={handleOldPass}
           ></input>
@@ -66,7 +66,7 @@ const PasswordChange = () => {
           </label>
           <input
             type="password"
-            className="block bg-gray-500 hover:bg-gray-400 mt-1 text-light font-light py-2 px-4 rounded w-100"
+            className="block bg-gray-500 hover:bg-gray-400 mt-1 text-light font-light py-2 px-4 rounded w-100 h-2/5"
             placeholder="Enter your new password"
             onChange={handleNewPass}
           ></input>
@@ -77,7 +77,7 @@ const PasswordChange = () => {
           </label>
           <input
             type="password"
-            className="block bg-gray-500 hover:bg-gray-400 mt-1 text-light font-light py-2 px-4 rounded w-100"
+            className="block bg-gray-500 hover:bg-gray-400 mt-1 text-light font-light py-2 px-4 rounded w-100 h-2/5"
             placeholder="Re-enter your new password"
             onChange={handleReNewPass}
           ></input>

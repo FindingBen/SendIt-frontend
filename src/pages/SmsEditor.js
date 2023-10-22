@@ -247,7 +247,7 @@ const SmsEditor = () => {
                             onClick={() => setShow(true)}
                             type="submit"
                             color="dark"
-                            className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-3 rounded w-28 h-14 mt-4"
+                            className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:w-28 xl:h-14 xl:text-base mt-4"
                           >
                             Send
                           </button>
@@ -256,7 +256,7 @@ const SmsEditor = () => {
                             disabled
                             type="submit"
                             color="dark"
-                            className="bg-gray-600 opacity-80 text-white font-bold py-2 px-3 rounded w-28 h-14 mt-4"
+                            className="bg-gray-600 opacity-80 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:w-28 xl:h-14 xl:text-base mt-4"
                           >
                             Send
                           </button>
@@ -266,7 +266,7 @@ const SmsEditor = () => {
                             onClick={() => setShowSchedule(true)}
                             type="submit"
                             color="dark"
-                            className="bg-yellow-700 hover:bg-yellow-300 text-white font-bold py-2 px-3 rounded w-28 h-14 mt-4 ml-3"
+                            className="bg-yellow-700 hover:bg-yellow-300 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:w-28 xl:h-14 xl:text-base mt-4 ml-3"
                           >
                             Schedule
                           </button>
@@ -275,36 +275,55 @@ const SmsEditor = () => {
                             disabled
                             type="submit"
                             color="dark"
-                            className="bg-yellow-700 opacity-80 text-white font-bold py-2 px-3 rounded w-28 h-14 mt-4 ml-3"
+                            className="bg-yellow-700 opacity-80 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:w-28 xl:h-14 xl:text-base mt-4 ml-3"
                           >
                             Schedule
                           </button>
                         )}
-                      </div>
-                      <div className="bg-slate-500 w-50 h-14 mt-4 flex flex-row rounded-md">
-                        <p className="text-sm text-white my-auto ml-5">
-                          Link your content
-                        </p>
-                        <button
-                          onClick={handleAddLink}
-                          value={linkURLBase}
-                          className="bg-blue-800 hover:bg-blue-400 text-white font-bold my-auto mr-2 rounded py-2 px-2 mt-2 w-1/4 lg:ml-16 xl:ml-11"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-6 h-6"
+                        {recipients && smsText.length > 0 ? (
+                          <button
+                            onClick={handleAddLink}
+                            value={linkURLBase}
+                            className="bg-blue-800 hover:bg-blue-400 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:w-28 xl:h-14 xl:text-base mt-4 ml-44 xl:ml-72"
                           >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-                            />
-                          </svg>
-                        </button>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="w-6 h-6"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+                              />
+                            </svg>
+                          </button>
+                        ) : (
+                          <button
+                            onClick={handleAddLink}
+                            value={linkURLBase}
+                            disabled
+                            className="bg-gray-500 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:w-28 xl:h-14 xl:text-base mt-4 ml-44 xl:ml-72"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="w-6 h-6"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+                              />
+                            </svg>
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -320,13 +339,13 @@ const SmsEditor = () => {
                 )}
               </div>
               <div className="col mt-3 p-10">
-                <div class="relative mx-auto border-gray-200 dark:border-gray-800 bg-gray-200 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
-                  <div class="w-[148px] h-[18px] bg-gray-200 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
+                <div class="h-[500px] w-[250px] relative mx-auto border-gray-200 dark:border-gray-800 bg-gray-200 border-[14px] rounded-[2.5rem] xl:h-[600px] xl:w-[300px] shadow-xl">
+                  <div class="w-[108px] h-[10px] xl:w-[148px] xl:h-[18px] bg-gray-200 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
                   <div class="h-[46px] w-[3px] bg-gray-200 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
                   <div class="h-[46px] w-[3px] bg-gray-200 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
                   <div class="h-[64px] w-[3px] bg-gray-200 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
                   <div
-                    class="rounded-[2rem] overflow-hidden w-[272px] h-[572px] dark:bg-gray-800"
+                    class="w-[225px] h-[470px] rounded-[2rem] overflow-hidden xl:w-[272px] xl:h-[572px] dark:bg-gray-800"
                     style={{ backgroundImage: `url(${iPhoneImage})` }}
                   >
                     <div class="mr-5 mt-2 flex justify-end space-x-1">
@@ -361,8 +380,8 @@ const SmsEditor = () => {
                       <div className="bg-gray-200 opacity-95 flex flex-row border-none 1px h-7 rounded-t-lg">
                         <img
                           src={require("../../src/assets/message.png")}
-                          height={23}
-                          width={23}
+                          height={20}
+                          width={20}
                           className="mx-1 my-auto"
                         ></img>
 

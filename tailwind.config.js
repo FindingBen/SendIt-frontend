@@ -20,7 +20,7 @@ module.exports = {
       lg: "1440px",
       // => @media (min-width: 1024px) { ... }
 
-      xl: "1535px",
+      xl: "1537px",
       // => @media (min-width: 1280px) { ... }
 
       "2xl": "1736px",
@@ -37,6 +37,9 @@ module.exports = {
       fontFamily: {
         sfPro: ["SF Pro"],
         helv: ["helvetica"],
+      },
+      height: {
+        "90vh": "90vh",
       },
     },
   },

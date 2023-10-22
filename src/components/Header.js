@@ -75,21 +75,19 @@ const Header = () => {
   };
 
   return (
-    <div
-      className="d-flex flex-column flex-shrink-0 p-3 text-white bg-gray-700 rounded mt-3 h-custom"
-      style={{ height: "90vh", backgroundColor: "#111827", marginLeft: "1%" }}
-    >
-      <a href="/" className="d-flex align-items-center mb-4 text-white">
-        <svg className="bi me-2" width="40" height="32"></svg>
-        <svg fill="none" viewBox="0 0 60 60" className="w-30 h-30">
+    <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-darkBlue text-xs xl:text-base rounded ml-3 mt-3 xl:h-90vh w-36 xl:w-48">
+      <a href="/" className="mx-auto mb-4 xl:mb-4 text-white">
+        <svg
+          fill="none"
+          viewBox="0 0 60 60"
+          className="w-24 h-20 xl:w-30 xl:h-30"
+        >
           <image
-            xlinkHref={require("../assets/notext-png.png")}
-            x="0"
-            y="7"
-            width="50"
-            height="50"
+            xlinkHref={require("../assets/noBgLogo.png")}
+            className="w-16 h-20 xl:w-16 xl:h-30"
+            height={28}
+            width={20}
           />
-          <path strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </a>
       <hr />
@@ -98,7 +96,7 @@ const Header = () => {
           <Link
             onClick={(e) => handleNavigate(e)}
             to="/home"
-            className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-200"
+            className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-1f2937 dark:hover:bg-gray-200"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -110,14 +108,14 @@ const Header = () => {
               <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
             </svg>
 
-            <p className="ml-7">Home</p>
+            <p className="ml-5 xl:ml-7">Home</p>
           </Link>
         </li>
         {user ? (
           <li id="navItem" className="mb-3">
             <Link
               to="/create_note/"
-              className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-1f2937 dark:hover:bg-gray-700"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -134,7 +132,7 @@ const Header = () => {
                 />
               </svg>
 
-              <p className="ml-7">Create</p>
+              <p className="ml-5 xl:ml-7">Create</p>
             </Link>
           </li>
         ) : (
@@ -145,7 +143,7 @@ const Header = () => {
             <Link
               onClick={(e) => handleNavigate(e)}
               to="/contact_lists/"
-              className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-1f2937 dark:hover:bg-gray-700"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -162,7 +160,7 @@ const Header = () => {
                 />
               </svg>
 
-              <p className="ml-7">Contact lists</p>
+              <p className="ml-5 xl:ml-7">Recipient lists</p>
             </Link>
           </li>
         ) : (
@@ -173,7 +171,7 @@ const Header = () => {
             <Link
               onClick={(e) => handleNavigate(e)}
               to="/package_plan/"
-              className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-700"
+              className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-1f2937 dark:hover:bg-gray-700"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -190,7 +188,7 @@ const Header = () => {
                 />
               </svg>
 
-              <p className="ml-7">Recharge</p>
+              <p className="ml-5 xl:ml-7">Recharge</p>
             </Link>
           </li>
         ) : (
@@ -199,8 +197,8 @@ const Header = () => {
         {user ? (
           <li id="navItem" className="mb-3">
             <hr></hr>
-            <h3
-              className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-700"
+            <button
+              className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-1f2937 dark:hover:bg-gray-700"
               aria-current="page"
               onClick={handleLogout}
             >
@@ -219,8 +217,8 @@ const Header = () => {
                 />
               </svg>
 
-              <p className="ml-7">Logout</p>
-            </h3>
+              <p className="ml-5 xl:ml-7">Logout</p>
+            </button>
           </li>
         ) : (
           <li id="navItem"></li>
@@ -231,7 +229,7 @@ const Header = () => {
         id="navItem"
         to={`/account_settings/${user}/`}
         onClick={(e) => handleNavigate(e)}
-        className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-indigo-400 dark:hover:bg-gray-700"
+        className="flex items-center p-2 text-white-900 rounded-lg dark:text-white hover:bg-1f2937 dark:hover:bg-gray-700"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -245,7 +243,7 @@ const Header = () => {
             clipRule="evenodd"
           />
         </svg>
-        <p className="ml-7">Account</p>
+        <p className="ml-5 xl:ml-7">Account</p>
       </Link>
       <ModalComponent
         confirmLeave={handleConfirmNavigation}
