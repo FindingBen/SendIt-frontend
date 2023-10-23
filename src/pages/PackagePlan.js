@@ -55,7 +55,7 @@ const PackagePlan = () => {
       [id]: true,
     }));
     setIsLoading(true);
-
+    console.log(name_product, id);
     let response = await axiosInstance.post("/stripe/stripe_checkout_session", {
       method: "POST",
       headers: {
@@ -189,7 +189,7 @@ const PackagePlan = () => {
                         clip-rule="evenodd"
                       ></path>
                     </svg>
-                    <span>{packagePlan[0]?.offer4}</span>
+                    <span>{packagePlan[2]?.offer4}</span>
                   </li>
                   {/* <li class="flex items-center space-x-3">
                     <svg
@@ -218,7 +218,7 @@ const PackagePlan = () => {
                   className="xl:w-50 text-white rounded bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200"
                   data-te-ripple-init
                   data-te-ripple-color="light"
-                  value={0}
+                  value={2}
                   disabled={loadingState[packagePlan[0]?.id]}
                 >
                   {loadingState[packagePlan[0]?.id] ? (

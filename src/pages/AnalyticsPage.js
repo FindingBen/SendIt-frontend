@@ -88,7 +88,7 @@ const AnalyticsPage = () => {
             </h3>
           </div>
           <div className="flex flex-row">
-            <div className="bg-darkPurple h-24 w-44 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 text-sm xl:text-base">
+            <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-base">
               <h3 className="flex flex-row mx-3 my-3">
                 <p className="text-1xl font-extralight text-left">
                   Total views
@@ -144,7 +144,7 @@ const AnalyticsPage = () => {
                 </div>
               )}
             </div>
-            <div className="bg-darkPurple h-24 w-44 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 text-sm xl:text-base">
+            <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-base">
               <h3 className="flex flex-row mx-3 my-3">
                 <p className="text-1xl font-extralight text-left">
                   Total sends
@@ -200,7 +200,7 @@ const AnalyticsPage = () => {
                 </div>
               )}
             </div>
-            <div className="bg-darkPurple h-24 w-44 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 text-sm xl:text-base">
+            <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-base">
               <h3 className="flex flex-row mx-3 my-3">
                 <p className="text-1xl font-extralight text-left">Click rate</p>
                 <svg
@@ -254,7 +254,7 @@ const AnalyticsPage = () => {
                 </div>
               )}
             </div>
-            <div className="bg-darkPurple h-24 w-44 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 text-sm xl:text-base">
+            <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-base">
               <h3 className="flex flex-row mx-3 my-3">
                 <p className="text-1xl font-extralight text-left">
                   Engagement rate
@@ -310,7 +310,7 @@ const AnalyticsPage = () => {
                 </div>
               )}
             </div>
-            <div className="bg-darkPurple h-24 w-44 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 text-sm xl:text-base">
+            <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-base">
               <h3 className="flex flex-row mx-3 my-3">
                 <p className="text-1xl font-extralight text-left">
                   User engagement
@@ -367,7 +367,7 @@ const AnalyticsPage = () => {
                 </div>
               )}
             </div>
-            <div className="bg-darkPurple h-24 w-44 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 text-sm xl:text-base">
+            <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-base">
               <h3 className="flex flex-row mx-3 my-3">
                 <p className="text-1xl font-extralight text-left">
                   Scrolled users
@@ -426,7 +426,7 @@ const AnalyticsPage = () => {
           </div>
 
           <div className="flex flex-row mt-3">
-            <div class="bg-darkPurple rounded-lg p-4 md:p-6 xl:w-50 relative mr-5">
+            <div class="bg-darkBlue rounded-lg p-4 md:p-6 xl:w-50 relative mr-5">
               <div className="absolute top-4 right-10">
                 <DatePickerComponent
                   startDate={handleStartDateChange}
@@ -467,7 +467,7 @@ const AnalyticsPage = () => {
               <ChartComponent chartData={views} />
             </div>
             <div className="flex flex-col">
-              <div className="bg-darkPurple w-60 xl:h-44 xl:w-86 rounded text-grayWhite mr-5">
+              <div className="bg-darkBlue w-60 xl:h-44 xl:w-86 rounded text-white/50 mr-5">
                 <h3 className="flex flex-row mx-3 my-3">
                   <p className="text-md xl:text-1xl font-extralight text-left">
                     Sms send status
@@ -512,7 +512,7 @@ const AnalyticsPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="bg-darkPurple h-24 w-44 xl:h-32 xl:w-60 rounded text-grayWhite mr-5 text-sm xl:text-bas mt-3">
+              <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-bas mt-3">
                 <h3 className="flex flex-row mx-3 my-3">
                   <p className="text-1xl font-extralight text-left">
                     Bounce rate
