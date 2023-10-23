@@ -6,13 +6,18 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { SortableItem } from "./SortableItem";
-import { config } from "../constants/Constants";
+import {
+  selectCurrentUser,
+  selectCurrentToken,
+  logOut,
+} from "../features/auth/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import useAxiosInstance from "../../src/utils/axiosInstance";
+
 const List = ({ children, alignment, clicked, updatedList }) => {
   const [itemsElements, setItems] = useState([children]);
   const [forDelete, setForDelete] = useState([]);
-
-
-
+  const axiosInstance = useAxiosInstance();
   useEffect(() => {
     setItems(children);
     if (JSON.stringify(itemsElements) !== JSON.stringify(children)) {
@@ -29,6 +34,34 @@ const List = ({ children, alignment, clicked, updatedList }) => {
     }
   }, [children, itemsElements]);
 
+  console.log(itemsElements);
+
+  const toDelete = (id) => {
+    console.log(id);
+    const updatedItems = itemsElements.filter((item) => item.id !== id);
+
+    // Update the state with the filtered items
+    setItems(updatedItems);
+
+    // Call the updatedList function with the updated items
+    updatedList(updatedItems);
+
+    // Make the API request to delete the item
+    try {
+      axiosInstance
+        .delete(`/api/delete_element/${id}/`)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log("Success");
+          }
+        })
+        .catch((error) => {
+          console.log("Error deleting elements:", error);
+        });
+    } catch (error) {
+      console.log("Error making the API request:", error);
+    }
+  };
 
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -40,7 +73,15 @@ const List = ({ children, alignment, clicked, updatedList }) => {
         <ul className="flex flex-column" id="myList">
           {itemsElements &&
             itemsElements?.map((item, index) => (
-              <SortableItem key={item.id} id={item.id} itemObject={item} />
+              <li key={item.id} className="relative rounded-md mx-2">
+                <SortableItem key={item.id} id={item.id} itemObject={item} />
+                <span
+                  className="absolute top-0 right-2 cursor-pointer hover:bg-slate-400 rounded-md"
+                  onClick={() => toDelete(item.id)}
+                >
+                  X
+                </span>
+              </li>
             ))}
         </ul>
       </SortableContext>
@@ -50,7 +91,8 @@ const List = ({ children, alignment, clicked, updatedList }) => {
   function handleDragEnd(event) {
     const { active, over } = event;
 
-    if (active.id !== over.id) {
+    try {
+      //if (active.id !== over.id) {
       setItems((items) => {
         const activeIndex = items.findIndex((item) => item.id === active.id);
         const overIndex = items.findIndex((item) => item.id === over.id);
@@ -59,10 +101,13 @@ const List = ({ children, alignment, clicked, updatedList }) => {
           ...item,
           order: index,
         }));
-      
+
         updatedList(updatedItems);
         return newItems;
       });
+      // }
+    } catch (e) {
+      console.log(e);
     }
   }
 };

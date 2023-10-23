@@ -145,18 +145,6 @@ const EditMessage = () => {
     }
   };
 
-  const filterEl = async () => {
-    const condition = true; // Replace with the value you want to filter by
-
-    // Use the filter method to create a new array with filtered elements
-    const filteredElements = elements.filter(
-      (element) => element.context !== condition
-    );
-    //console.log("SSSSS", filteredElements);
-    setElements(filteredElements);
-    return filteredElements;
-  };
-
   const updateElementsOrder = async () => {
     //const filtered = await filterEl();
     //console.log("inside update elements", updatedEl);

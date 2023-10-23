@@ -7,11 +7,9 @@ import ButtonComponent from "./ButtonComponent";
 import { config } from "../constants/Constants";
 
 export function SortableItem(props) {
-  // props.id
-  // JavaScript
   const BASE_URL = config.url.BASE_URL;
   //const BASE_URL = "https://sendit-backend-production.up.railway.app";
-  console.log(props);
+
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.itemObject.id });
 
@@ -22,13 +20,12 @@ export function SortableItem(props) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <li
+      <div
         style={{ marginBottom: "5%" }}
         id="elItem"
         key={props.itemObject.id}
         loading="lazy"
-        className="hover:bg-blue-300 rounded-md mx-2 transition-colors"
-        //onClick={() => toDelete(item)}
+        className=" hover:bg-blue-300 rounded-md transition-colors"
       >
         {props.itemObject.element_type === "Img" ? (
           props.itemObject.image.startsWith("blob") ? (
@@ -51,7 +48,7 @@ export function SortableItem(props) {
         ) : (
           <></>
         )}
-      </li>
+      </div>
     </div>
   );
 }
