@@ -40,7 +40,7 @@ const MessageView = ({ imageProp, textProp }) => {
   };
 
   return (
-    <section className="min-h-screen bg-slate-400 flex-d w-100 items-center justify-center">
+    <section className="min-h-screen bg-white flex-d w-100 items-center justify-center">
       <div className="flex flex-col items-stretch">
         <div className="mx-4">
           <ViewList children={elements} style={{ width: "100%" }}></ViewList>

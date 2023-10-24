@@ -25,6 +25,7 @@ import SuccessPayment from "./pages/SuccessPayment";
 import CancelPayment from "./pages/CancelPayment";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import CreateEmail from "./pages/CreateEmail";
+import UnsubscribePage from "./pages/UnsubscribePage";
 
 const TRACKING_ID = "G-FPHE42LL46";
 ReactGA.initialize(TRACKING_ID, { debug: true });
@@ -36,6 +37,10 @@ function App() {
         <Route
           path="/message_view/:id"
           element={<MessageView></MessageView>}
+        ></Route>
+        <Route
+          path="/unsubscribe/:id"
+          element={<UnsubscribePage></UnsubscribePage>}
         ></Route>
       </Routes>
       <div className="App" style={({ height: "100vh" }, { display: "flex" })}>
