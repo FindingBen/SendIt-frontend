@@ -75,7 +75,7 @@ const Header = () => {
   };
 
   return (
-    <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-darkBlue text-xs xl:text-base rounded ml-3 mt-3 xl:h-90vh w-36 xl:w-48">
+    <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-darkBlue text-xs xl:text-base rounded ml-3 mt-3 mb-3 xl:h-90vh w-36 xl:w-48">
       <a href="/" className="mx-auto mb-4 xl:mb-4 text-white">
         <svg
           fill="none"
