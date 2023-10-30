@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MDBInput, MDBTypography } from "mdb-react-ui-kit";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
 import { useLoginMutation } from "./authApiSlice";
@@ -35,18 +34,19 @@ const Login = () => {
         password,
       });
       const user = jwt_decode(userData?.data?.access).user_id;
-
+      console.log(user);
       dispatch(setCredentials({ ...userData?.data, user }));
       setUser("");
       setPwd("");
       setLoading(false);
-      localStorage.setItem("tokens", userData.data.refresh);
+      localStorage.setItem("token", userData.data.refresh);
 
       navigate("/home");
     } catch (err) {
       console.log("errrrr", err);
       if (!err?.originalStatus) {
-        localStorage.removeItem("tokens");
+        localStorage.removeItem("token");
+        console.log("test");
         setLoading(false);
         // isLoading: true until timeout occurs
         setErrMsg("Wrong username or password!");
@@ -153,7 +153,7 @@ const Login = () => {
           </div>
         </div>
 
-        <p className="small fw-bold mt-2 pt-1 mb-0 mt-3">
+        <p className="small fw-bold pt-1 mb-0 mt-3">
           Don't have an account?{" "}
           <Link to="/register" className="link-danger">
             Register

@@ -11,6 +11,9 @@ const UserPage = () => {
   const token = useSelector(selectCurrentToken);
   const [username, setUsername] = useState();
   const [packagePlan, setPackagePlan] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [msg, setMsg] = useState();
+  const [errorMsg, setErrorMsg] = useState();
   const [newName, setNewName] = useState();
   const [newLastName, setNewLastName] = useState();
   const [purchases, setPurchases] = useState([]);
@@ -28,13 +31,27 @@ const UserPage = () => {
   useEffect(() => {
     getUser();
     purchase_history();
-  }, [copied]);
+    setTimeout(() => setErrorMsg(), 3000);
+    setTimeout(() => setMsg(), 3000);
+  }, [copied, msg, errorMsg]);
 
-  const handleUser = (e) => setUsername(e.target.value);
+  const handleUser = (e) => {
+    setUsername(e.target.value);
+    setMsg();
+    setErrorMsg();
+  };
 
-  const handleNewName = (e) => setNewName(e.target.value);
+  const handleNewName = (e) => {
+    setNewName(e.target.value);
+    setMsg();
+    setErrorMsg();
+  };
 
-  const handleNewLastName = (e) => setNewLastName(e.target.value);
+  const handleNewLastName = (e) => {
+    setNewLastName(e.target.value);
+    setMsg();
+    setErrorMsg();
+  };
   console.log(purchases);
   let getUser = async () => {
     try {
@@ -61,6 +78,7 @@ const UserPage = () => {
   };
 
   let updateUser = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     const formData = {
       username: username,
@@ -83,6 +101,7 @@ const UserPage = () => {
     if (response.status === 200) {
       console.log("success");
       navigate("/home");
+      setIsLoading(false);
     }
   };
 
@@ -121,40 +140,53 @@ const UserPage = () => {
       setCopied(false);
     }, 1000);
   };
-  console.log(purchases.length);
+
+  const passStatus = (message) => {
+    setMsg(message);
+    setErrorMsg();
+  };
+
+  const errStatus = (message) => {
+    setErrorMsg(message);
+    setMsg();
+  };
+
   return (
-    <section className="h-screen flex-d w-100 items-center justify-center">
-      <div className="flex-1 flex flex-col lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
+    <section className="h-screen flex-d items-center justify-center">
+      <div className="flex flex-col lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="flex-1 px-2 sm:px-0">
           <div className="row">
-            <h3 class="text-3xl text-left font-extralight text-white/50">
+            <h3 class="xl:text-3xl text-2xl text-left font-extralight text-white/50">
               Account settings and purchase history
             </h3>
           </div>
           <div className="flex gap-3">
-            <div className="flex-col">
+            <div className="flex flex-col">
               <div
-                className="flex-initial xl:w-full xl:h-4/5 rounded-lg p-10 mt-4"
+                className="w-full xl:h-4/5 rounded-lg p-4 xl:p-10 mt-4"
                 style={{
                   backgroundColor: "#1118274D",
                 }}
               >
                 {" "}
-                <PasswordChange></PasswordChange>
+                <PasswordChange
+                  errStatus={errStatus}
+                  status={passStatus}
+                ></PasswordChange>
               </div>
               <div
-                className="xl:w-full h-2/6 xl:h-2/5 rounded-lg mt-3 flex flex-col"
+                className="xl:w-full xl:h-3/4 p-2 rounded-lg mt-3 flex flex-col"
                 style={{
                   backgroundColor: "#1118274D",
                 }}
               >
-                <h3 class="text-2xl text-left font-extralight text-white/50 p-4 xl:p-10">
+                <h3 class="xl:text-2xl text-xl text-left font-extralight text-white/50 p-3 xl:p-10">
                   Package information
                 </h3>
                 <div className="flex flex-row">
                   <label
                     for="first_name"
-                    className="ml-10 mr-2 text-sm text-left font-medium text-gray-300 dark:text-white"
+                    className="ml-5 mr-2 text-sm text-left font-medium text-gray-300 dark:text-white"
                   >
                     Package type:
                   </label>
@@ -165,25 +197,25 @@ const UserPage = () => {
                 <div className="flex flex-row mt-2">
                   <label
                     for="first_name"
-                    className="ml-10 mr-2 text-sm text-left font-medium text-gray-300 dark:text-white"
+                    className="ml-5 mr-2 text-sm text-left font-medium text-gray-300 dark:text-white"
                   >
                     Sms count: {user?.sms_count}
                   </label>
                 </div>
                 <Link
                   to="/package_plan/"
-                  className="bg-sky-800 hover:bg-sky-400 text-white font-sm xl:font-base font-light py-2 px-2 ml-10 mt-2 rounded w-25"
+                  className="bg-sky-800 hover:bg-sky-400 text-white text-sm xl:text-base font-light py-1 px-1 xl:py-2 xl:px-2 ml-5 mt-2 rounded w-25"
                   type="submit"
                 >
                   Update
                 </Link>
               </div>
             </div>
-            <div className="flex-initial h-1/2 w-1/3 xl:w-1/3 rounded-lg p-14 xl:p-10 mt-4 bg-darkestGray">
-              <h3 class="text-2xl text-left font-extralight text-white/50">
+            <div className="flex flex-col xl:w-1/3 rounded-lg p-4 xl:p-10 mt-4 bg-darkestGray">
+              <h3 class="text-xl xl:text-2xl text-left font-extralight text-white/50">
                 General settings
               </h3>
-              <div className="grid gap-2  mt-3">
+              <div className="grid gap-2 mt-3">
                 <div>
                   <label
                     for="first_name"
@@ -194,7 +226,7 @@ const UserPage = () => {
                   <input
                     type="text"
                     id="first_name"
-                    className="block bg-gray-500 hover:bg-gray-400 mt-1 text-light font-light py-2 px-4 rounded w-100"
+                    className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 h-3/5 xl:h-2/3 rounded xl:w-full"
                     value={newName}
                     onChange={handleNewName}
                   />
@@ -209,7 +241,7 @@ const UserPage = () => {
                   <input
                     type="text"
                     id="last_name"
-                    className="block bg-gray-500 hover:bg-gray-400 mt-1 text-light font-light py-2 px-4 rounded w-100"
+                    className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 h-3/5 xl:h-2/3 rounded xl:w-full"
                     placeholder="Doe"
                     value={newLastName}
                     onChange={handleNewLastName}
@@ -225,7 +257,7 @@ const UserPage = () => {
                   <input
                     type="text"
                     id="last_name"
-                    className="block bg-gray-500 hover:bg-gray-400 mt-1 text-light font-light py-2 px-4 rounded w-100"
+                    className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 h-3/5 xl:h-2/3 rounded xl:w-full"
                     placeholder="Doe"
                     value={user?.username}
                     disabled
@@ -240,22 +272,44 @@ const UserPage = () => {
                     Email address
                   </label>
                   <input
-                    className="block bg-gray-500 hover:bg-gray-400 mt-1 text-light font-light py-2 px-4 rounded w-100"
+                    className="block bg-gray-500 hover:bg-gray-400 mt-1 text-light font-light py-2 px-4 rounded xl:w-full"
                     type="email"
                     value={user?.email}
                     disabled
                   />
                 </div>
-                <button
-                  onClick={updateUser}
-                  className="bg-sky-800 hover:bg-sky-400 text-white font-light py-2 px-4 rounded w-25"
-                  type="submit"
-                >
-                  Save
-                </button>
+                {!isLoading ? (
+                  <button
+                    onClick={updateUser}
+                    className="bg-sky-800 hover:bg-sky-400 text-white font-light py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
+                    type="submit"
+                  >
+                    Save
+                  </button>
+                ) : (
+                  <button className="bg-sky-800 hover:bg-sky-400 mt-3 text-white text-sm xl:text-base font-light py-1 px-2 xl:py-2 xl:px-4 rounded flex flex-row w-20">
+                    <svg
+                      aria-hidden="true"
+                      class="w-6 h-6 mr-1 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                      viewBox="0 0 100 101"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                        fill="currentColor"
+                      />
+                      <path
+                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                        fill="currentFill"
+                      />
+                    </svg>
+                    <span className="text-sm mt-0.5">Updating...</span>
+                  </button>
+                )}
               </div>
             </div>
-            <div className="flex-initial h-1/2 xl:w-1/3 rounded-lg p-14 xl:p-10 mt-4 bg-darkestGray">
+            <div className="flex-initial h-1/2 xl:w-1/3 rounded-lg p-4 xl:p-10 mt-4 bg-darkestGray">
               <h3 class="text-2xl text-left font-extralight text-white/50">
                 Purchase history
               </h3>
@@ -332,6 +386,100 @@ const UserPage = () => {
           </div>
         </div>
       </div>
+      {msg && msg.length > 0 ? (
+        <div
+          id="toast-success"
+          class="flex items-center w-full max-w-xs mx-auto p-4 mb-4 text-gray-300 bg-gray-600 rounded-lg shadow"
+          role="alert"
+        >
+          <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-800 bg-green-100 rounded-lg ">
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+            </svg>
+            <span class="sr-only">Check icon</span>
+          </div>
+          <div class="ml-3 text-sm font-normal">{msg}</div>
+          <button
+            type="button"
+            class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+            data-dismiss-target="#toast-success"
+            aria-label="Close"
+          >
+            <span class="sr-only">Close</span>
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+              onClick={() => setMsg()}
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+          </button>
+        </div>
+      ) : (
+        <p></p>
+      )}
+      {errorMsg && errorMsg.length > 0 ? (
+        <div
+          id="toast-warning"
+          class="flex items-center w-full max-w-xs mx-auto p-3 xl:p-4 text-gray-200 bg-gray-600 rounded-lg shadow"
+          role="alert"
+        >
+          <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-orange-100 rounded-lg">
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z" />
+            </svg>
+            <span class="sr-only">Warning icon</span>
+          </div>
+          <div class="ml-3 text-sm font-normal">{errorMsg}</div>
+          <button
+            type="button"
+            class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+            data-dismiss-target="#toast-warning"
+            aria-label="Close"
+          >
+            <span class="sr-only">Close</span>
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+              onClick={() => setErrorMsg()}
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+          </button>
+        </div>
+      ) : (
+        <p></p>
+      )}
     </section>
   );
 };

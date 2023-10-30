@@ -220,7 +220,7 @@ const CreateNote = () => {
         <div className="flex-1 px-2 sm:px-0">
           <div className="row">
             <div className="flex justify-between items-center mb-3">
-              <h3 class="text-3xl font-extralight text-left text-white/50">
+              <h3 class="xl:text-3xl text-2xl font-extralight text-left text-white/50">
                 Create content
               </h3>
               <div class="inline-flex items-center space-x-2">
@@ -272,8 +272,8 @@ const CreateNote = () => {
             </div>
             <div className="grid grid-cols-2 bg-darkestGray rounded-md">
               <div className="col border-r-2 flex flex-col p-10">
-                <h3 class="text-3xl text-center font-extralight text-white/50">
-                  Content
+                <h3 class="xl:text-3xl text-2xl text-center font-extralight text-white/50">
+                  Content elements
                 </h3>
                 <div className="rounded-lg p-10">
                   <div className="flex flex-col" style={{ minWidthL: "22rem" }}>

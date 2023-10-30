@@ -319,8 +319,8 @@ const EditMessage = () => {
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="flex-1 px-2 sm:px-0">
           <div className="row">
-            <div className="flex justify-between items-center mb-3">
-              <h3 class="text-3xl font-extralight text-left text-white/50">
+            <div className="flex justify-between items-center xl:mb-3">
+              <h3 class="xl:text-3xl text-2xl font-extralight text-left text-white/50">
                 Edit content
               </h3>
               <div class="inline-flex items-center space-x-2">
@@ -372,7 +372,7 @@ const EditMessage = () => {
             </div>
             <div className="grid grid-cols-2 bg-darkestGray rounded-md">
               <div className="col border-r-2 flex flex-col p-10">
-                <h3 class="text-3xl text-center font-extralight text-white/50">
+                <h3 class="xl:text-3xl text-2xl text-center font-extralight text-white/50">
                   Click and create Content
                 </h3>
                 <div className="rounded-lg p-10">
@@ -507,7 +507,7 @@ const EditMessage = () => {
                   <div class="h-[46px] w-[3px] bg-gray-600 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
                   <div class="h-[46px] w-[3px] bg-gray-600 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
                   <div class="h-[64px] w-[3px] bg-gray-600 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
-                  <div class="w-[225px] h-[470px] rounded-[2rem] overflow-hidden xl:w-[272px] xl:h-[572px] bg-white dark:bg-gray-800">
+                  <div class="w-[225px] h-[470px] rounded-[2rem] overflow-auto xl:w-[272px] xl:h-[572px] bg-white dark:bg-gray-800">
                     <div class="mr-5 mt-2 flex justify-end space-x-1">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

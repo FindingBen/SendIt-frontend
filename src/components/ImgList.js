@@ -13,14 +13,14 @@ const ImgList = ({ imageUrl }) => {
         <img
           key={imageUrl}
           src={`${imageSrc}`}
-          width="260"
+          width="220"
           height="300"
           className="w-100"
         />
       ) : (
         <img
           class="h-auto max-w-lg rounded-lg object-cover"
-          width="260"
+          width="220"
           loading="lazy"
           src={require("../../src/assets/sampleImage.jpg")}
         />

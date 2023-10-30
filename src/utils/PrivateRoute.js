@@ -1,5 +1,4 @@
 import { Route, Routes, Navigate, Outlet, useLocation } from "react-router-dom";
-import HomePage from "../pages/HomePage";
 
 import React, { useContext } from "react";
 import { useSelector } from "react-redux";
