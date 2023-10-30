@@ -215,8 +215,8 @@ const CreateNote = () => {
   };
 
   return (
-    <section className="min-h-screen flex-d w-100 items-center justify-center">
-      <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
+    <section className="min-h-screen flex-d items-center justify-center">
+      <div className="flex-1 flex flex-col space-y-5 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="flex-1 px-2 sm:px-0">
           <div className="row">
             <div className="flex justify-between items-center mb-3">
@@ -271,15 +271,14 @@ const CreateNote = () => {
               </div>
             </div>
             <div className="grid grid-cols-2 bg-darkestGray rounded-md">
-              <div className="col border-r-2 flex flex-col p-10">
+              <div className="col border-r-2 flex flex-col lg:p-4 p-10">
                 <h3 class="xl:text-3xl text-2xl text-center font-extralight text-white/50">
                   Content elements
                 </h3>
-                <div className="rounded-lg p-10">
-                  <div className="flex flex-col" style={{ minWidthL: "22rem" }}>
+                <div className="rounded-lg p-10 lg:p-20">
+                  <div className="flex flex-col">
                     {!showComponent && !active ? (
                       <div
-                        style={{ width: "100%" }}
                         onClick={handleClickImage}
                         name="liClick"
                         className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
@@ -290,7 +289,7 @@ const CreateNote = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          class="w-20 h-15 fill-gray-400 custom-svg-w"
+                          class="lg:w-8 lg:h-20 h-15 w-10 lg:mt-4 fill-gray-400 custom-svg-w"
                         >
                           <path
                             stroke-linecap="round"
@@ -298,7 +297,7 @@ const CreateNote = () => {
                             d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
                           />
                         </svg>
-                        <h2 className="text-2xl text-right py-4 px-4 font-extralight text-white/50">
+                        <h2 className="text-2xl lg:text-xl text-right lg:px-3 lg:py-3 px-4 py-4 font-extralight text-white/50">
                           Add Image
                         </h2>
                       </div>
@@ -331,7 +330,7 @@ const CreateNote = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          class="w-20 h-15 fill-gray-400 custom-svg-w"
+                          class="lg:w-8 lg:h-20 h-15 w-10 lg:mt-4 fill-gray-400 custom-svg-w"
                         >
                           <path
                             stroke-linecap="round"
@@ -339,7 +338,7 @@ const CreateNote = () => {
                             d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
                           />
                         </svg>
-                        <h2 className="text-2xl text-right py-4 px-4 font-extralight text-white/50">
+                        <h2 className="text-2xl text-right lg:px-3 lg:py-3 px-4 py-4 font-extralight text-white/50">
                           Add text
                         </h2>
                       </div>
@@ -359,7 +358,7 @@ const CreateNote = () => {
 
                     {!showComponent && !activeB ? (
                       <div
-                        style={{ width: "100%" }}
+                        
                         onClick={handleClickButton}
                         name="liClick"
                         className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
@@ -370,7 +369,7 @@ const CreateNote = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          class="w-20 h-15 fill-gray-400 custom-svg-w"
+                          class="lg:w-8 lg:h-20 h-15 w-10 lg:mt-4 fill-gray-400 custom-svg-w"
                         >
                           <path
                             stroke-linecap="round"
@@ -383,7 +382,7 @@ const CreateNote = () => {
                             d="M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 019 14.437V9.564z"
                           />
                         </svg>
-                        <h2 className="text-2xl text-right py-4 px-4 font-extralight text-white/50">
+                        <h2 className="text-2xl text-right lg:px-3 lg:py-3 px-4 py-4 font-extralight text-white/50">
                           Add button
                         </h2>
                       </div>
