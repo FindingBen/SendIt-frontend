@@ -215,7 +215,7 @@ const CreateNote = () => {
   };
 
   return (
-    <section className="min-h-screen flex-d items-center justify-center">
+    <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="flex-1 px-2 sm:px-0">
           <div className="row">
@@ -289,7 +289,7 @@ const CreateNote = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          class="lg:w-8 lg:h-20 h-15 w-10 lg:mt-4 fill-gray-400 custom-svg-w"
+                          class="h-16 w-20 mt-2 fill-gray-400 custom-svg-w"
                         >
                           <path
                             stroke-linecap="round"
@@ -330,7 +330,7 @@ const CreateNote = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          class="lg:w-8 lg:h-20 h-15 w-10 lg:mt-4 fill-gray-400 custom-svg-w"
+                          class="h-16 w-20 mt-2 fill-gray-400 custom-svg-w"
                         >
                           <path
                             stroke-linecap="round"
@@ -358,7 +358,6 @@ const CreateNote = () => {
 
                     {!showComponent && !activeB ? (
                       <div
-                        
                         onClick={handleClickButton}
                         name="liClick"
                         className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
@@ -369,7 +368,7 @@ const CreateNote = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          class="lg:w-8 lg:h-20 h-15 w-10 lg:mt-4 fill-gray-400 custom-svg-w"
+                          class="h-16 w-20 mt-2 fill-gray-400"
                         >
                           <path
                             stroke-linecap="round"

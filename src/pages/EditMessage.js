@@ -390,7 +390,7 @@ const EditMessage = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          class="lg:w-8 lg:h-20 h-15 w-10 lg:mt-4 fill-gray-400 custom-svg-w"
+                          className="h-16 w-20 mt-2 fill-gray-400 custom-svg-w"
                         >
                           <path
                             stroke-linecap="round"
@@ -398,7 +398,7 @@ const EditMessage = () => {
                             d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
                           />
                         </svg>
-                        <h2 className="text-2xl text-right lg:px-3 lg:py-3 px-4 py-4 font-extralight text-white/50">
+                        <h2 className="text-2xl text-right py-4 px-4 font-extralight text-white/50">
                           Add Image
                         </h2>
                       </div>
@@ -431,7 +431,7 @@ const EditMessage = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          class="lg:w-8 lg:h-20 h-15 w-10 lg:mt-4 fill-gray-400 custom-svg-w"
+                          class="h-16 w-20 mt-2 fill-gray-400 custom-svg-w"
                         >
                           <path
                             stroke-linecap="round"
@@ -469,7 +469,7 @@ const EditMessage = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          class="lg:w-8 lg:h-20 h-15 w-10 lg:mt-4 fill-gray-400 custom-svg-w"
+                          class="h-16 w-20 mt-2 fill-gray-400 custom-svg-w"
                         >
                           <path
                             stroke-linecap="round"
