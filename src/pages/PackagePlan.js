@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react";
 import {
   selectCurrentUser,
   selectCurrentToken,
-  logOut,
 } from "../features/auth/authSlice";
-import jwtDecode from "jwt-decode";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
-import SuccessPayment from "./SuccessPayment";
 
 const PackagePlan = () => {
   const axiosInstance = useAxiosInstance();
@@ -41,8 +38,6 @@ const PackagePlan = () => {
         let filteredPackages = response.data.filter((item) => item.id !== 1);
 
         setPackage(filteredPackages);
-
-        //setElements((prevItems) => prevItems.filter((item) => item !== element));
       }
     } catch (error) {
       console.error(error);
@@ -55,7 +50,7 @@ const PackagePlan = () => {
       [id]: true,
     }));
     setIsLoading(true);
-    console.log(name_product, id);
+
     let response = await axiosInstance.post("/stripe/stripe_checkout_session", {
       method: "POST",
       headers: {
@@ -66,7 +61,6 @@ const PackagePlan = () => {
       user,
     });
     if (response.status === 200) {
-      //let data = await response.json();
       console.log(response);
 
       setLoadingStates((prevState) => ({
@@ -81,32 +75,11 @@ const PackagePlan = () => {
     }
   };
 
-  let buyPackage = async (id) => {
-    console.log(id);
-    const formData = {};
-    //e.preventDefault();
-    let response = await axiosInstance.put(
-      `/api/package_purchase/${user}/`,
-      {
-        package_plan: id,
-      },
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-      }
-    );
-
-    if (response.status === 200) {
-      //navigate("/home");
-    }
-  };
   const elementsArray = Array.from(
     { length: packagePlan.length },
     (_, index) => index
   );
+
   return (
     <section className="min-h-screen flex-d items-center justify-center">
       <div className="flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
@@ -115,7 +88,7 @@ const PackagePlan = () => {
             <h3 class="xl:text-3xl text-2xl text-left font-extralight text-white/50">
               Package plans
             </h3>
-            <div className="grid gap-6 lg:grid-cols-3 lg:gap-x-8 mt-3">
+            <div className="grid gap-6 lg:grid-cols-3 lg:gap-x-8 mt-3 duration-300">
               {elementsArray?.map((index) => (
                 <div
                   key={packagePlan[index]?.id}

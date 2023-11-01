@@ -94,7 +94,7 @@ const HomePage = () => {
           </div>
 
           <div
-            class="items-center justify-center rounded-lg mb-3"
+            class="items-center justify-center rounded-lg mb-3 duration-300"
             style={{ width: "100%" }}
           >
             <div class="col-span-12">
@@ -124,7 +124,7 @@ const HomePage = () => {
                   </thead>
 
                   {!isLoaded ? (
-                    <tbody>
+                    <tbody className="duration-300">
                       {displayedItems?.map((message) => (
                         <tr>
                           <td class="p-3" style={{ borderBottom: "none" }}>
