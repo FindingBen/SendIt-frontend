@@ -15,7 +15,6 @@ import { Link, useNavigate } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
 import { useState } from "react";
 import "../css/Header.css";
-import { ReactComponent as LogoutIcon } from "../assets/logout.svg";
 
 const Header = () => {
   const [clickedPath, setClickedPath] = useState();
@@ -140,7 +139,7 @@ const Header = () => {
       </ul>
       <Link
         onClick={handleLogout}
-        className="flex rounded-md p-2 cursor-pointer xl:w-12 w-10 hover:bg-light-white text-gray-300 xl:text-sm text-xs items-center gap-x-3"
+        className="flex rounded-md mr-3 p-2 cursor-pointer xl:w-12 w-10 hover:bg-light-white text-gray-300 xl:text-sm text-xs items-center gap-x-3"
       >
         <img src={require("../assets/menuAssets/exit.png")} />
         <span className={`${!open && "hidden"} origin-left duration-200`}>

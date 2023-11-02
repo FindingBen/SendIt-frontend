@@ -10,20 +10,18 @@ import {
 import { useRef, useEffect } from "react";
 import store from "../app/store";
 import { config } from "../constants/Constants";
+
 const useAxiosInstance = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectCurrentToken);
   const user = useSelector((state) => state.auth.user);
-  //const baseURL = "https://sendit-backend-production.up.railway.app/";
   const baseURL = config.url.BASE_URL;
 
   const createAxiosInstance = (token) => {
     const instance = axios.create({
       baseURL: baseURL,
-      //baseURL: "http://localhost:8000/",
     });
 
-    // Set the authorization header
     if (token) {
       instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     }
@@ -32,50 +30,43 @@ const useAxiosInstance = () => {
   };
 
   const axiosInstanceRef = useRef(createAxiosInstance(token));
-  console.log(axiosInstanceRef);
+  const tokenExpiration = dayjs.unix(jwt_decode(token).exp);
+
   axiosInstanceRef.current.defaults.headers.common[
     "Authorization"
   ] = `Bearer ${token}`;
 
   axiosInstanceRef.current.interceptors.request.use(async (req) => {
-    if (!token) {
-      dispatch(logOut());
+    const now = dayjs();
+    const timeUntilExpiration = tokenExpiration.diff(now, "minute");
 
-      localStorage.removeItem("tokens");
-      // Handle the case where the token is not available
-      // e.g., redirect the user to the login page
-      // or perform other necessary actions
+    if (timeUntilExpiration < 5) {
+      // Refresh the token if it's about to expire in 5 minutes or less
+      const getRefreshToken = localStorage.getItem("token");
+
+      try {
+        const response = await axios.post(`${baseURL}/api/token/refresh/`, {
+          refresh: getRefreshToken,
+        });
+        localStorage.setItem("token", response.data.refresh);
+        const newToken = response.data.access;
+        console.log("new token aquired..");
+        axiosInstanceRef.current = createAxiosInstance(newToken);
+        axiosInstanceRef.current.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${newToken}`;
+
+        req.headers.Authorization = `Bearer ${newToken}`;
+        dispatch(setCredentials({ ...response.data, user }));
+      } catch (error) {
+        console.log(error);
+        localStorage.removeItem("token");
+        dispatch(logOut());
+        throw error;
+      }
     }
 
-    const isExpired = dayjs.unix(jwt_decode(token).exp).diff(dayjs()) < 1;
-    const getRefreshToken = localStorage.getItem("tokens");
-
-    if (!isExpired) return req;
-
-    try {
-      const response = await axios.post(`${baseURL}api/token/refresh/`, {
-        refresh: getRefreshToken,
-      });
-      localStorage.setItem("tokens", response.data.refresh);
-
-      const newToken = response.data.access;
-
-      // Update the axios instance with the new token
-      axiosInstanceRef.current = createAxiosInstance(newToken);
-      axiosInstanceRef.current.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${newToken}`;
-
-      req.headers.Authorization = `Bearer ${newToken}`;
-      dispatch(setCredentials({ ...response.data, user }));
-
-      return req;
-    } catch (error) {
-      // Handle refresh token request error
-      localStorage.removeItem("tokens");
-      dispatch(logOut()); // Replace with your logout logic
-      throw error;
-    }
+    return req;
   });
 
   return axiosInstanceRef.current;

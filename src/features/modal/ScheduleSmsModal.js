@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { selectCurrentToken } from "../../features/auth/authSlice";
 import useAxiosInstance from "../../utils/axiosInstance";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -26,7 +24,6 @@ const ScheduleSmsModal = ({
     const newDate = new Date(date);
     const formated = moment(newDate).format("YYYY-MM-DD HH:mm");
     dateSchedule(formated);
-    console.log(formated);
   };
 
   const closeModal = () => {

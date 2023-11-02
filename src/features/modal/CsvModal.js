@@ -30,7 +30,6 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
       const fileExtension = inputFile?.type.split("/")[1];
       console.log(fileExtension);
       if (!allowedExtensions.includes(fileExtension)) {
-        console.log("test");
         setError("Please input a csv file");
         return;
       }

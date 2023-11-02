@@ -7,26 +7,25 @@ const BASEURL = config.url.BASE_URL;
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASEURL,
-
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.token;
     if (token) {
       headers.set("Authorization:", `Bearer ${token}`);
     }
-
+    console.log(token);
     return headers;
   },
 });
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-  console.log(api, extraOptions);
+  console.log("login results", result);
   if (result.error && result.error.status === 401) {
     // Access token expired, try to refresh it
     console.log("Sending refresh token");
     const refreshResult = await baseQuery(
-      "api/token/refresh/",
+      "/api/token/refresh/",
       api,
       extraOptions
     );

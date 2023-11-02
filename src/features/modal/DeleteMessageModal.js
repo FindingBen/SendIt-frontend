@@ -17,8 +17,7 @@ const DeleteMessageModal = ({
   useEffect(() => {
     setShowModal(showModalDelete);
   }, [showModalDelete]);
-  console.log(messageId);
-  console.log("s");
+
   let deleteMessage = async (e) => {
     //e.preventDefault();
     try {
@@ -32,7 +31,7 @@ const DeleteMessageModal = ({
       console.log("Error deleting message:", error);
     }
   };
-  console.log(listUpdated);
+
   const closeModal = () => {
     onClose();
   };

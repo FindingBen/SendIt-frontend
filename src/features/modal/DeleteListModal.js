@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {
-  selectCurrentToken,
-  selectCurrentUser,
-} from "../../features/auth/authSlice";
 import useAxiosInstance from "../../utils/axiosInstance";
 import { useSelector } from "react-redux";
 

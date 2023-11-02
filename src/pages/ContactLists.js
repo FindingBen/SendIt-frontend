@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../css/Home.css";
 import "../css/ContactList.css";
+
 import { selectCurrentToken } from "../features/auth/authSlice";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useSelector } from "react-redux";
@@ -66,7 +67,7 @@ const ContactList = () => {
           </div>
 
           <div class="mb-10 sm:mb-0 mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            <div class="group bg-gray-900/30 py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/40 hover:smooth-hover">
+            <div class="group bg-gray-900/30 py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/40">
               <button
                 class="bg-gray-900/70 text-white/50 group-hover:text-white group-hover:smooth-hover flex w-20 h-20 rounded-full items-center justify-center"
                 onClick={handleModal}
@@ -93,7 +94,11 @@ const ContactList = () => {
 
             {contactList?.map((conList) => {
               return (
-                <div className="inline-flex space-x-2 items-center">
+                <div
+                  className={`inline-flex space-x-2 items-center transition-opacity ${
+                    isLoading ? "opacity-0" : "opacity-100"
+                  }>`}
+                >
                   {!isLoading ? (
                     <div
                       key={conList.id}

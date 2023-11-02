@@ -20,7 +20,7 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
   useEffect(() => {
     setShowModal(showModal);
   }, [showModal]);
-  console.log(listName);
+
   const addList = async (e) => {
     e.preventDefault();
     let response = await axiosInstance.post(
