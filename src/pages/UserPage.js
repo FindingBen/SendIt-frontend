@@ -174,14 +174,9 @@ const UserPage = () => {
                   status={passStatus}
                 ></PasswordChange>
               </div>
-              <div
-                className="xl:w-full xl:h-3/4 p-2 rounded-lg mt-3 flex flex-col"
-                style={{
-                  backgroundColor: "#1118274D",
-                }}
-              >
+              <div className="flex flex-col xl:w-full xl:h-3/4 p-2 rounded-lg mt-3 bg-darkestGray">
                 <h3 class="xl:text-2xl text-xl text-left font-extralight text-white/50 p-3 xl:p-10">
-                  Package information
+                  Subscription
                 </h3>
                 <div className="flex flex-row">
                   <label
@@ -204,7 +199,7 @@ const UserPage = () => {
                 </div>
                 <Link
                   to="/package_plan/"
-                  className="bg-sky-800 hover:bg-sky-400 text-white text-sm xl:text-base font-light py-1 px-1 xl:py-2 xl:px-2 ml-5 mt-2 rounded w-25"
+                  className="bg-sky-800 ml-5 hover:bg-sky-400 text-white font-light py-1 px-2 xl:py-2 xl:px-4 rounded w-20 mt-4 mb-4"
                   type="submit"
                 >
                   Update
@@ -309,7 +304,7 @@ const UserPage = () => {
                 )}
               </div>
             </div>
-            <div className="flex-initial h-1/2 xl:w-1/3 rounded-lg p-4 xl:p-10 mt-4 bg-darkestGray">
+            <div className="flex-initial h-1/2 rounded-lg p-4 xl:p-10 mt-4 bg-darkestGray">
               <h3 class="text-2xl text-left font-extralight text-white/50">
                 Purchase history
               </h3>

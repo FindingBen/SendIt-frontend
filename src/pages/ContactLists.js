@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../css/Home.css";
 import "../css/ContactList.css";
-
 import { selectCurrentToken } from "../features/auth/authSlice";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useSelector } from "react-redux";

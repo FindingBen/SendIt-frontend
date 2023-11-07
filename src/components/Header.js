@@ -91,7 +91,7 @@ const Header = () => {
   return (
     <div
       className={`d-flex flex-column relative flex-shrink-0 p-3 duration-300 text-white bg-darkBlue text-xs xl:text-base rounded ml-3 mt-3 mb-3 xl:h-90vh ${
-        open ? "w-36" : "w-16"
+        open ? "w-36" : "w-16 flex items-center"
       } ${open ? "xl:w-46" : "xl:w-20"}`}
     >
       <div className="mx-auto mb-4 xl:mb-4 text-white">
