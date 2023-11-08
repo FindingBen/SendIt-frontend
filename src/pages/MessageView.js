@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import ViewList from "../components/ViewList";
 import useAxiosInstance from "../utils/axiosInstance";
-import { isMobile, isTablet, isDesktop } from "react-device-detect";
 import { config } from "../constants/Constants";
 
 const MessageView = ({ imageProp, textProp }) => {
@@ -29,9 +28,7 @@ const MessageView = ({ imageProp, textProp }) => {
   let messageView = async () => {
     setId(params.id);
     //https://stingray-app-9825w.ondigitalocean.app
-    let response = await fetch(`${BASE_URL}/api/message_view/${params.id}/`, {
-      method: "GET",
-    });
+    let response = await fetch(`${BASE_URL}/api/message_view/${params.id}/`);
     //console.log(response);
     const data = await response.json();
 

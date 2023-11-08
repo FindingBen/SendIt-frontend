@@ -8,12 +8,10 @@ const UnsubscribePage = () => {
   const [clicked, setClicked] = useState(false);
 
   useEffect(() => {}, [clicked]);
-  console.log(hashedNumber);
+
   const handleUnsubscribe = async () => {
     try {
-      let response = await axiosInstance.get(
-        `/api/unsubscribe/${hashedNumber.id}`
-      );
+      let response = await fetch(`/api/unsubscribe/${hashedNumber.id}`);
 
       if (response.status === 200) {
         setClicked(true);

@@ -11,7 +11,7 @@ const ViewList = ({ children }) => {
   useEffect(() => {
     setItems(children);
   }, [children]);
-
+  
   return (
     <ul className="">
       {itemsElements &&
