@@ -12,7 +12,7 @@ const UnsubscribePage = () => {
       let response = await fetch(
         `${BASEURL}/api/unsubscribe/${hashedNumber.id}`
       );
-      console.log(response);
+
       if (response.status === 200) {
         setClicked(true);
         console.log("Unsubscribed");
