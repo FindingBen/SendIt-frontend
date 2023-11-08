@@ -1,22 +1,14 @@
 import React, { useState, useEffect, memo } from "react";
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-  logOut,
-} from "../features/auth/authSlice";
-import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import ViewList from "../components/ViewList";
-import useAxiosInstance from "../utils/axiosInstance";
 import { config } from "../constants/Constants";
 
-const MessageView = ({ imageProp, textProp }) => {
+const MessageView = () => {
   const [elements, setElements] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
   const [getId, setId] = useState();
   const params = useParams();
-  const axiosInstance = useAxiosInstance();
-  const token = useSelector(selectCurrentToken);
+
   const BASE_URL = config.url.BASE_URL;
 
   //const BASE_URL = "https://sendit-backend-production.up.railway.app";
@@ -24,12 +16,12 @@ const MessageView = ({ imageProp, textProp }) => {
   useEffect(() => {
     messageView();
   }, []);
-
+  console.log("Test");
   let messageView = async () => {
     setId(params.id);
     //https://stingray-app-9825w.ondigitalocean.app
     let response = await fetch(`${BASE_URL}/api/message_view/${params.id}/`);
-    //console.log(response);
+    console.log(response);
     const data = await response.json();
 
     setElements(data);

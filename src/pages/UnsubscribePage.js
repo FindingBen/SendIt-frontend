@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import useAxiosInstance from "../../src/utils/axiosInstance";
 import { useNavigate, useParams } from "react-router-dom";
 
 const UnsubscribePage = () => {
   const hashedNumber = useParams();
-  const axiosInstance = useAxiosInstance();
   const [clicked, setClicked] = useState(false);
 
   useEffect(() => {}, [clicked]);
