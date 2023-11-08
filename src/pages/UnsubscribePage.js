@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { config } from "../constants/Constants";
 
 const UnsubscribePage = () => {
   const hashedNumber = useParams();
   const [clicked, setClicked] = useState(false);
-
-  useEffect(() => {}, [clicked]);
+  const BASEURL = config.url.BASE_URL;
 
   const handleUnsubscribe = async () => {
     try {
-      let response = await fetch(`/api/unsubscribe/${hashedNumber.id}`);
-
+      let response = await fetch(
+        `${BASEURL}/api/unsubscribe/${hashedNumber.id}`
+      );
+      console.log(response);
       if (response.status === 200) {
         setClicked(true);
         console.log("Unsubscribed");
