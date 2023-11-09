@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import useAxiosInstance from "./axiosInstance";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { config } from "../constants/Constants";
 
 const PasswordReset = () => {
-  const axiosInstance = useAxiosInstance();
-
   const [email, setEmail] = useState();
   const [sent, setSent] = useState(false);
   const [errMsg, setErrMsg] = useState("");

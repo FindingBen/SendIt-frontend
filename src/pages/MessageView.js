@@ -31,7 +31,7 @@ const MessageView = () => {
   return (
     <section className="min-h-screen bg-white flex-d w-100 items-center justify-center">
       <div className="flex flex-col items-stretch">
-        <div className="mx-4">
+        <div className="mx-4 p-5">
           <ViewList children={elements} style={{ width: "100%" }}></ViewList>
         </div>
       </div>

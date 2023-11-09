@@ -185,7 +185,7 @@ const UserPage = () => {
                   >
                     Package type:
                   </label>
-                  <span class="bg-yellow-400 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">
+                  <span class=" text-white text-sm font-poppins mr-2">
                     {user?.package_plan?.plan_type}
                   </span>
                 </div>
@@ -319,7 +319,7 @@ const UserPage = () => {
                   {purchases?.map((purchase, index) => {
                     return (
                       <li
-                        className="relative text-base text-left text-gray-300 bg-slate-800 mb-2 rounded-md p-3"
+                        className="relative text-base text-left text-gray-300 bg-slate-800 mb-2 rounded-md p-3 hover:bg-slate-800/50 cursor-pointer"
                         key={purchase.id}
                       >
                         <svg
@@ -346,7 +346,7 @@ const UserPage = () => {
                         </div>
                         <div className="ml-1 flex flex-row">
                           <p className="font-bold">Price:</p>
-                          <p className="ml-1"> {purchase.price}</p>
+                          <p className="ml-1"> {purchase.price + "€"}</p>
                         </div>
                         <div className="ml-1 flex flex-row">
                           <p className="font-bold">Purchase id:</p>

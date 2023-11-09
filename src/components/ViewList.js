@@ -11,7 +11,7 @@ const ViewList = ({ children }) => {
   useEffect(() => {
     setItems(children);
   }, [children]);
-  
+
   return (
     <ul className="">
       {itemsElements &&
@@ -21,8 +21,6 @@ const ViewList = ({ children }) => {
             id="elItem"
             key={item.id}
             loading="lazy"
-            //className="hover:bg-blue-300"
-            //onClick={() => toDelete(item)}
           >
             {item.element_type === "Img" ? (
               item.image.startsWith("blob") ? (

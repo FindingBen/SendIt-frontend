@@ -6,12 +6,6 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { SortableItem } from "./SortableItem";
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-  logOut,
-} from "../features/auth/authSlice";
-import { useSelector, useDispatch } from "react-redux";
 import useAxiosInstance from "../../src/utils/axiosInstance";
 
 const List = ({ children, alignment, clicked, updatedList }) => {
@@ -76,10 +70,10 @@ const List = ({ children, alignment, clicked, updatedList }) => {
               <li key={item.id} className="relative rounded-md mx-2">
                 <SortableItem key={item.id} id={item.id} itemObject={item} />
                 <span
-                  className="absolute top-0 right-2 cursor-pointer hover:bg-slate-400 rounded-md"
+                  className="absolute top-0 right-2 cursor-pointer hover:bg-slate-400 rounded-full "
                   onClick={() => toDelete(item.id)}
                 >
-                  X
+                  <p className="text-white">X</p>
                 </span>
               </li>
             ))}

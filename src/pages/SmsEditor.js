@@ -234,6 +234,7 @@ const SmsEditor = () => {
 
                     <textarea
                       id="smsTextArea"
+                      maxLength={70}
                       className="block p-2.5 w-75 h-2/4 text-sm text-gray-50 bg-gray-400 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Write your sms here..."
                       onChange={handleSms}
@@ -377,7 +378,7 @@ const SmsEditor = () => {
                       >
                         9.41
                       </div>
-                      <div className="bg-gray-200 opacity-95 flex flex-row border-none 1px h-7 rounded-t-lg">
+                      <div className="bg-gray-200 flex flex-row border-none 1px h-7 rounded-t-lg">
                         <img
                           src={require("../../src/assets/message.png")}
                           height={20}
@@ -385,7 +386,7 @@ const SmsEditor = () => {
                           className="mx-1 my-auto"
                         ></img>
 
-                        <h2 className="text-1xl my-1 opacity-80 font-medium text-gray-600 font-helv">
+                        <h2 className="text-1xl my-1 font-SanFrancisco text-gray-600 font-helv">
                           MESSAGES
                         </h2>
                       </div>

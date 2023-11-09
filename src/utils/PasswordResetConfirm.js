@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import useAxiosInstance from "./axiosInstance";
 import { useNavigate, useParams } from "react-router-dom";
 import { config } from "../constants/Constants";
 
 const PasswordResetConfirm = () => {
-  const axiosInstance = useAxiosInstance();
   const [pass, setPass] = useState();
 
   const [errMsg, setErrMsg] = useState("");
