@@ -17,7 +17,6 @@ const UserPage = () => {
   const [newName, setNewName] = useState();
   const [newLastName, setNewLastName] = useState();
   const [purchases, setPurchases] = useState([]);
-  const [copied, setCopied] = useState(false);
 
   const [user, setUser] = useState({
     first_name: newName,
@@ -31,9 +30,12 @@ const UserPage = () => {
   useEffect(() => {
     getUser();
     purchase_history();
+  }, [msg]);
+
+  useEffect(() => {
     setTimeout(() => setErrorMsg(), 3000);
     setTimeout(() => setMsg(), 3000);
-  }, [copied, msg, errorMsg]);
+  }, [errorMsg, msg]);
 
   const handleUser = (e) => {
     setUsername(e.target.value);
@@ -52,7 +54,7 @@ const UserPage = () => {
     setMsg();
     setErrorMsg();
   };
-  console.log(purchases);
+
   let getUser = async () => {
     try {
       let response = await axiosInstance.get(
@@ -97,10 +99,8 @@ const UserPage = () => {
         },
       }
     );
-    console.log(response.data);
+
     if (response.status === 200) {
-      console.log("success");
-      navigate("/home");
       setIsLoading(false);
     }
   };
@@ -123,7 +123,6 @@ const UserPage = () => {
   };
 
   const copyPurchaseId = (id, index) => {
-    setCopied(true);
     const input = document.createElement("input");
     input.value = id;
     document.body.appendChild(input);
@@ -136,9 +135,6 @@ const UserPage = () => {
 
     // Remove the temporary input element
     document.body.removeChild(input);
-    setTimeout(() => {
-      setCopied(false);
-    }, 1000);
   };
 
   const passStatus = (message) => {
@@ -152,7 +148,7 @@ const UserPage = () => {
   };
 
   return (
-    <section className="h-screen flex-d items-center justify-center">
+    <section className="h-screen w-full flex-d items-center justify-center">
       <div className="flex flex-col lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="flex-1 px-2 sm:px-0">
           <div className="row">
@@ -162,12 +158,7 @@ const UserPage = () => {
           </div>
           <div className="flex gap-3">
             <div className="flex flex-col">
-              <div
-                className="w-full xl:h-4/5 rounded-lg p-4 xl:p-10 mt-4"
-                style={{
-                  backgroundColor: "#1118274D",
-                }}
-              >
+              <div className="w-full xl:h-4/5 rounded-lg p-4 xl:p-10 mt-4 bg-darkestGray">
                 {" "}
                 <PasswordChange
                   errStatus={errStatus}
@@ -185,7 +176,7 @@ const UserPage = () => {
                   >
                     Package type:
                   </label>
-                  <span class=" text-white text-sm font-poppins mr-2">
+                  <span class="px-2 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">
                     {user?.package_plan?.plan_type}
                   </span>
                 </div>
@@ -206,7 +197,7 @@ const UserPage = () => {
                 </Link>
               </div>
             </div>
-            <div className="flex flex-col xl:w-1/3 rounded-lg p-4 xl:p-10 mt-4 bg-darkestGray">
+            <div className="flex flex-col rounded-lg p-4 mt-4 bg-darkestGray">
               <h3 class="text-xl xl:text-2xl text-left font-extralight text-white/50">
                 General settings
               </h3>
@@ -221,7 +212,7 @@ const UserPage = () => {
                   <input
                     type="text"
                     id="first_name"
-                    className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 h-3/5 xl:h-2/3 rounded xl:w-full"
+                    className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light py-2 px-4 rounded-md"
                     value={newName}
                     onChange={handleNewName}
                   />
@@ -236,7 +227,7 @@ const UserPage = () => {
                   <input
                     type="text"
                     id="last_name"
-                    className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 h-3/5 xl:h-2/3 rounded xl:w-full"
+                    className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 rounded"
                     placeholder="Doe"
                     value={newLastName}
                     onChange={handleNewLastName}
@@ -252,7 +243,7 @@ const UserPage = () => {
                   <input
                     type="text"
                     id="last_name"
-                    className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 h-3/5 xl:h-2/3 rounded xl:w-full"
+                    className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 rounded"
                     placeholder="Doe"
                     value={user?.username}
                     disabled
@@ -267,7 +258,7 @@ const UserPage = () => {
                     Email address
                   </label>
                   <input
-                    className="block bg-gray-500 hover:bg-gray-400 mt-1 text-light font-light py-2 px-4 rounded xl:w-full"
+                    className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 rounded"
                     type="email"
                     value={user?.email}
                     disabled
@@ -304,7 +295,7 @@ const UserPage = () => {
                 )}
               </div>
             </div>
-            <div className="flex-initial h-1/2 rounded-lg p-4 xl:p-10 mt-4 bg-darkestGray">
+            <div className="flex-initial rounded-lg p-4 xl:p-10 mt-4 bg-darkestGray">
               <h3 class="text-2xl text-left font-extralight text-white/50">
                 Purchase history
               </h3>
@@ -318,8 +309,15 @@ const UserPage = () => {
                 <ul className="flex flex-col items-left mt-3 max-h-72 text-white/50 overflow-y-scroll">
                   {purchases?.map((purchase, index) => {
                     return (
-                      <li
-                        className="relative text-base text-left text-gray-300 bg-slate-800 mb-2 rounded-md p-3 hover:bg-slate-800/50 cursor-pointer transition duration-200"
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.8,
+                          ease: [0, 0.41, 0.1, 1.01],
+                        }}
+                        className="relative text-base text-left text-gray-300 bg-slate-800 mb-2 rounded-md p-3 hover:bg-slate-800/50 cursor-pointer"
                         key={purchase.id}
                       >
                         <svg
@@ -352,7 +350,7 @@ const UserPage = () => {
                           <p className="font-bold">Purchase id:</p>
                           <p className="ml-1"> {purchase.payment_id}</p>
                         </div>
-                      </li>
+                      </motion.div>
                     );
                   })}
                 </ul>
@@ -391,7 +389,7 @@ const UserPage = () => {
             ease: [0, 0.41, 0.1, 1.01],
           }}
           id="toast-success"
-          class="flex items-center w-full max-w-xs mx-auto p-4 mb-4 text-gray-300 bg-gray-600 rounded-lg shadow"
+          class="flex items-center w-full max-w-xs mx-auto p-4 text-gray-300 bg-gray-600 rounded-lg shadow"
           role="alert"
         >
           <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-800 bg-green-100 rounded-lg ">

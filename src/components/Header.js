@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectCurrentUser,
@@ -13,7 +13,6 @@ import {
 import { setEditPage } from "../features/elements/editPageReducer";
 import { Link, useNavigate } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
-import { useState } from "react";
 import "../css/Header.css";
 
 const Header = () => {

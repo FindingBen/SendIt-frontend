@@ -41,14 +41,39 @@ const PasswordChange = ({ status, errStatus }) => {
         if (response.status === 204) {
           status("Password changed!");
           setIsLoading(false);
+          setNewPass("");
+          setOldPass("");
+          setReNewPass("");
         }
       } else {
         errStatus("Passwords must match!");
         setIsLoading(false);
       }
     } catch (error) {
-      console.log(error.response.data.current_password);
-      errStatus(error.response.data.current_password);
+      if (error.response && error.response.data) {
+        const { current_password, new_password } = error.response.data;
+
+        if (
+          current_password &&
+          current_password[0] ===
+            "This password is the same as your current password."
+        ) {
+          errStatus("New password cannot be the same as the old one!");
+        } else if (
+          new_password &&
+          new_password[0] === "This password is too common."
+        ) {
+          errStatus("Please choose a stronger password.");
+        } else {
+          // Handle other error scenarios as needed
+          errStatus("An error occurred while changing the password.");
+        }
+      } else {
+        // Handle other types of errors
+        errStatus("An unexpected error occurred.");
+      }
+
+      //errStatus(error.response.data.current_password);
       setIsLoading(false);
     }
   };
@@ -66,7 +91,7 @@ const PasswordChange = ({ status, errStatus }) => {
           </label>
           <input
             type="password"
-            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-2 rounded xl:w-full h-1/4 xl:h-full"
+            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-2 rounded duration-200"
             placeholder="Enter your old password"
             onChange={handleOldPass}
           ></input>
@@ -77,7 +102,7 @@ const PasswordChange = ({ status, errStatus }) => {
           </label>
           <input
             type="password"
-            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-2 rounded xl:w-full h-1/4 xl:h-full"
+            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-2 rounded duration-200"
             placeholder="Enter your new password"
             onChange={handleNewPass}
           ></input>
@@ -88,7 +113,7 @@ const PasswordChange = ({ status, errStatus }) => {
           </label>
           <input
             type="password"
-            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-2 rounded xl:w-full h-1/4 xl:h-full"
+            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-2 rounded duration-200"
             placeholder="Re-enter your new password"
             onChange={handleReNewPass}
           ></input>

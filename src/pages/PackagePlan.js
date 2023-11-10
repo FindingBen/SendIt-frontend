@@ -6,12 +6,14 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
+import ModalComponent from "../components/ModalComponent";
 
 const PackagePlan = () => {
   const axiosInstance = useAxiosInstance();
   const params = useParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [show, setShow] = useState(false);
   const [loadingState, setLoadingStates] = useState({});
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
@@ -35,7 +37,6 @@ const PackagePlan = () => {
       });
 
       if (response.status === 200) {
-        
         let filteredPackages = response.data.filter((item) => item.id !== 1);
 
         setPackage(filteredPackages);
@@ -46,6 +47,7 @@ const PackagePlan = () => {
   };
 
   let stripeCheckout = async (name_product, id) => {
+    setShow(true);
     setLoadingStates((prevState) => ({
       ...prevState,
       [id]: true,
@@ -68,11 +70,13 @@ const PackagePlan = () => {
         ...prevState,
         [id]: false,
       }));
-
-      window.location.replace(response.data.url); // Log the response data
+      setShow(false);
+      window.location.replace(response.data.url);
+      // Log the response data
     } else {
       console.error("Error creating Stripe Checkout session");
       setIsLoading(false);
+      setShow(false);
     }
   };
 
@@ -302,6 +306,10 @@ const PackagePlan = () => {
               </div>
             ))}
           </div>
+          <ModalComponent
+            modalType={"Redirect"}
+            showModal={show}
+          ></ModalComponent>
         </div>
       </div>
     </section>

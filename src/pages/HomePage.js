@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 const HomePage = () => {
   const axiosInstance = useAxiosInstance();
   let [notes, setNotes] = useState([]);
+  const [initialLoad, setInitialLoad] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
@@ -28,12 +29,14 @@ const HomePage = () => {
     getNotes();
     setListUpdated(false);
     setIsLoaded(true);
-  }, [listUpdated]);
+  }, []);
 
   const itemsPerPage = 4;
   const totalPages = Math.ceil(notes.length / itemsPerPage);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
+    setInitialLoad(false);
   };
 
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -59,6 +62,8 @@ const HomePage = () => {
     setMessageId(id);
     setShow(true);
   };
+
+  const loadingContent = () => {};
 
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
@@ -99,7 +104,7 @@ const HomePage = () => {
               <div class="overflow-auto lg:overflow-visible">
                 <div class="overflow-x-auto">
                   <div class="my-6">
-                    <div class="grid grid-cols-5 gap-4 grid-headers bg-gray-600/50 text-white font-poppins py-2 px-4 rounded-full mb-2">
+                    <div class="grid grid-cols-5 gap-4 grid-headers bg-gray-600/50 text-white font-poppins text-sm xl:text-md py-2 px-4 rounded-full mb-2">
                       <div>Type</div>
                       <div>Created At</div>
                       <div>Analytics</div>
@@ -110,14 +115,18 @@ const HomePage = () => {
                       <div>
                         {displayedItems?.map((message, index) => (
                           <motion.div
-                            initial={{ opacity: 0, scale: 0.5 }}
+                            initial={
+                              initialLoad
+                                ? { opacity: 0, scale: 0.5 }
+                                : { opacity: 1, scale: 1 }
+                            }
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{
                               duration: 0.4,
                               delay: 0.8,
                               ease: [0, 0.41, 0.1, 1.01],
                             }}
-                            class="bg-darkBlue rounded-full text-white"
+                            class="bg-darkBlue rounded-full text-white text-sm xl:text-md"
                           >
                             <div className="mb-2">
                               <div
@@ -169,127 +178,113 @@ const HomePage = () => {
                                   )}
                                 </div>
 
-                                <div>
-                                  <div>
-                                    <Link
-                                      className="hover:bg-sky-300 rounded"
+                                <div className="flex-1">
+                                  <Link
+                                    className="hover:bg-sky-300 rounded"
+                                    type="button"
+                                    to={`/edit_message/${message.id}`}
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.5"
+                                      stroke="currentColor"
+                                      class="w-6 h-6"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                                      />
+                                    </svg>
+                                  </Link>
+
+                                  {message.status === "sent" ? (
+                                    <a
+                                      className="hover:bg-sky-300 rounded disabled-link"
                                       type="button"
-                                      to={`/edit_message/${message.id}`}
+                                      to={`/sms_editor/${message.id}`}
+                                      // data-mdb-ripple-color="dark"
                                     >
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
                                         viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-6 h-6"
+                                        strokeWidth="1.5"
+                                        fill="currentColor"
+                                        className="w-6 h-6 fill-gray-600"
                                       >
                                         <path
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                                          d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        />
+                                      </svg>
+                                    </a>
+                                  ) : message.status === "Scheduled" ? (
+                                    <a
+                                      className="hover:bg-sky-300 rounded disabled-link"
+                                      type="button"
+                                      to={`/sms_editor/${message.id}`}
+                                      // data-mdb-ripple-color="dark"
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="1.5"
+                                        fill="currentColor"
+                                        className="w-6 h-6 fill-gray-600"
+                                      >
+                                        <path
+                                          d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        />
+                                      </svg>
+                                    </a>
+                                  ) : (
+                                    <Link
+                                      className="hover:bg-sky-300 rounded mx-3"
+                                      type="button"
+                                      to={`/sms_editor/${message.id}`}
+
+                                      // data-mdb-ripple-color="dark"
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="1.5"
+                                        fill="currentColor"
+                                        className="w-6 h-6 fill-green-600"
+                                      >
+                                        <path
+                                          d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
                                         />
                                       </svg>
                                     </Link>
+                                  )}
 
-                                    {message.status === "sent" ? (
-                                      <a
-                                        className="hover:bg-sky-300 rounded disabled-link"
-                                        type="button"
-                                        style={{
-                                          marginLeft: "2%",
-                                          marginRight: "2%",
-                                        }}
-                                        to={`/sms_editor/${message.id}`}
-                                        // data-mdb-ripple-color="dark"
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 24 24"
-                                          strokeWidth="1.5"
-                                          fill="currentColor"
-                                          className="w-6 h-6 fill-gray-600"
-                                        >
-                                          <path
-                                            d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                          />
-                                        </svg>
-                                      </a>
-                                    ) : message.status === "Scheduled" ? (
-                                      <a
-                                        className="hover:bg-sky-300 rounded disabled-link"
-                                        type="button"
-                                        style={{
-                                          marginLeft: "2%",
-                                          marginRight: "2%",
-                                        }}
-                                        to={`/sms_editor/${message.id}`}
-                                        // data-mdb-ripple-color="dark"
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 24 24"
-                                          strokeWidth="1.5"
-                                          fill="currentColor"
-                                          className="w-6 h-6 fill-gray-600"
-                                        >
-                                          <path
-                                            d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                          />
-                                        </svg>
-                                      </a>
-                                    ) : (
-                                      <Link
-                                        className="hover:bg-sky-300 rounded"
-                                        type="button"
-                                        style={{
-                                          marginLeft: "2%",
-                                          marginRight: "2%",
-                                        }}
-                                        to={`/sms_editor/${message.id}`}
-
-                                        // data-mdb-ripple-color="dark"
-                                      >
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          viewBox="0 0 24 24"
-                                          strokeWidth="1.5"
-                                          fill="currentColor"
-                                          className="w-6 h-6 fill-green-600"
-                                        >
-                                          <path
-                                            d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                          />
-                                        </svg>
-                                      </Link>
-                                    )}
-
-                                    <button
-                                      type="button"
-                                      className="hover:bg-sky-300 rounded"
-                                      onClick={() => deleteMessage(message.id)}
+                                  <button
+                                    type="button"
+                                    className="hover:bg-sky-300 rounded"
+                                    onClick={() => deleteMessage(message.id)}
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      viewBox="0 0 24 24"
+                                      strokeWidth="1.0"
+                                      stroke="currentColor"
+                                      className="w-6 h-6 fill-red-500"
                                     >
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth="1.0"
-                                        stroke="currentColor"
-                                        className="w-6 h-6 fill-red-500"
-                                      >
-                                        <path
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                        />
-                                      </svg>
-                                    </button>
-                                  </div>
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                      />
+                                    </svg>
+                                  </button>
                                 </div>
                               </div>
                             </div>
@@ -315,7 +310,20 @@ const HomePage = () => {
               />
             </div>
             {totalPages > 1 && (
-              <div className="bottom-0">
+              <motion.div
+                initial={
+                  initialLoad
+                    ? { opacity: 0, scale: 0.5 }
+                    : { opacity: 1, scale: 1 }
+                }
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  duration: 0.4,
+                  delay: 0.8,
+                  ease: [0, 0.41, 0.1, 1.01],
+                }}
+                className="bottom-0"
+              >
                 {Array.from(
                   { length: totalPages },
                   (_, index) => index + 1
@@ -332,7 +340,7 @@ const HomePage = () => {
                   </button>
                 ))}
                 <br></br>
-              </div>
+              </motion.div>
             )}
           </div>
         </div>

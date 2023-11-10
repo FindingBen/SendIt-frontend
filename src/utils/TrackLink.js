@@ -2,8 +2,7 @@ import React from "react";
 import useAxiosInstance from "./axiosInstance";
 
 const TrackLink = ({ destinationUrl, trackingUrl }) => {
-
-    const axiosInstance = useAxiosInstance()
+  const axiosInstance = useAxiosInstance();
 
   const handleClick = async () => {
     // Log the click event on your backend (via API call)
@@ -25,7 +24,11 @@ const TrackLink = ({ destinationUrl, trackingUrl }) => {
     }
   };
 
-  return <a href={trackingUrl} onClick={handleClick}>Click me</a>;
+  return (
+    <a href={trackingUrl} onClick={handleClick}>
+      Click me
+    </a>
+  );
 };
 
 export default TrackLink;
