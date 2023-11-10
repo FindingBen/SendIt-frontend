@@ -6,7 +6,7 @@ import { selectCurrentToken } from "../features/auth/authSlice";
 import { useSelector } from "react-redux";
 import CsvModal from "../features/modal/CsvModal";
 import AddContactModal from "../features/modal/AddContactModal";
-import ReactPaginate from "react-paginate";
+import { motion } from "framer-motion";
 import "../css/ContactList.css";
 
 const ContactList = () => {
@@ -140,7 +140,7 @@ const ContactList = () => {
             <div class="col-span-12">
               <div class="overflow-auto lg:overflow-visible">
                 <div class="overflow-x-auto">
-                  <div class="shadow-md rounded my-6">
+                  <div class="my-6">
                     <div class="grid grid-cols-5 gap-4 grid-headers bg-gray-600/50 text-white font-poppins py-2 px-4 rounded-full mb-2">
                       <div>First Name</div>
                       <div>Last Name</div>
@@ -149,7 +149,10 @@ const ContactList = () => {
                       <div>Action</div>
                     </div>
                     {paginatedData?.map((rowData, index) => (
-                      <div class="bg-darkBlue rounded-full text-white">
+                      <div
+                        key={rowData.id}
+                        class="bg-darkBlue rounded-full text-white"
+                      >
                         <div className="mb-2">
                           <div className={`grid grid-cols-5 gap-4 py-2 px-4`}>
                             <div>{rowData.first_name}</div>

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import PasswordChange from "../utils/PasswordChange";
-import jwtDecode from "jwt-decode";
+import { motion } from "framer-motion";
 
 const UserPage = () => {
   const axiosInstance = useAxiosInstance();
@@ -319,7 +319,7 @@ const UserPage = () => {
                   {purchases?.map((purchase, index) => {
                     return (
                       <li
-                        className="relative text-base text-left text-gray-300 bg-slate-800 mb-2 rounded-md p-3 hover:bg-slate-800/50 cursor-pointer"
+                        className="relative text-base text-left text-gray-300 bg-slate-800 mb-2 rounded-md p-3 hover:bg-slate-800/50 cursor-pointer transition duration-200"
                         key={purchase.id}
                       >
                         <svg
@@ -382,7 +382,14 @@ const UserPage = () => {
         </div>
       </div>
       {msg && msg.length > 0 ? (
-        <div
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 0.4,
+            delay: 0.8,
+            ease: [0, 0.41, 0.1, 1.01],
+          }}
           id="toast-success"
           class="flex items-center w-full max-w-xs mx-auto p-4 mb-4 text-gray-300 bg-gray-600 rounded-lg shadow"
           role="alert"
@@ -424,12 +431,19 @@ const UserPage = () => {
               />
             </svg>
           </button>
-        </div>
+        </motion.div>
       ) : (
         <p></p>
       )}
       {errorMsg && errorMsg.length > 0 ? (
-        <div
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 0.4,
+            delay: 0.8,
+            ease: [0, 0.41, 0.1, 1.01],
+          }}
           id="toast-warning"
           class="flex items-center w-full max-w-xs mx-auto p-3 xl:p-4 text-gray-200 bg-gray-600 rounded-lg shadow"
           role="alert"
@@ -471,7 +485,7 @@ const UserPage = () => {
               />
             </svg>
           </button>
-        </div>
+        </motion.div>
       ) : (
         <p></p>
       )}

@@ -35,7 +35,7 @@ const PackagePlan = () => {
       });
 
       if (response.status === 200) {
-        console.log(response);
+        
         let filteredPackages = response.data.filter((item) => item.id !== 1);
 
         setPackage(filteredPackages);

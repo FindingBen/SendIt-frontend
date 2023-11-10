@@ -34,6 +34,13 @@
   text-fill-color: transparent;
 }
 
+.box {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
