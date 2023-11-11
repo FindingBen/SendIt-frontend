@@ -56,7 +56,7 @@ const List = ({ children, alignment, clicked, updatedList }) => {
       console.log("Error making the API request:", error);
     }
   };
-
+  console.log(itemsElements);
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext
@@ -70,7 +70,7 @@ const List = ({ children, alignment, clicked, updatedList }) => {
               <li key={item.id} className="relative rounded-md mx-2">
                 <SortableItem key={item.id} id={item.id} itemObject={item} />
                 <span
-                  className="absolute top-0 right-2 cursor-pointer hover:bg-slate-400 rounded-full "
+                  className="absolute top-1 right-0 cursor-pointer hover:bg-slate-400 rounded-full "
                   onClick={() => toDelete(item.id)}
                 >
                   <p className="text-white">X</p>

@@ -68,6 +68,7 @@ const CreateNote = () => {
   const handleClickButton = (e) => {
     e.preventDefault();
     setActiveB(!activeB);
+    setIsDirty(true);
     setShowComponent(!showComponent);
   };
 
@@ -93,6 +94,7 @@ const CreateNote = () => {
           } else if (elementContext.element_type === "Button") {
             formData.append("button_title", elementContext.button_title);
             formData.append("button_link", elementContext.button_link);
+            formData.append("button_color", elementContext.button_color);
           }
           formData.append("element_type", elementContext.element_type);
           formData.append("users", elementContext.users);
@@ -166,7 +168,6 @@ const CreateNote = () => {
 
   const handleContextEl = (elementContextList) => {
     setElementsContextList(elementContextList);
-    setIsDirty(true);
   };
 
   const handleChildStateChange = (active) => {

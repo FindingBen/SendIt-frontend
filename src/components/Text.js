@@ -4,9 +4,8 @@ import ReactDOM from "react-dom";
 import ReactQuill from "react-quill";
 import { ElementContext } from "../context/ElementContext";
 import "react-quill/dist/quill.snow.css";
-import { createPortal } from "react-dom";
 import { useSelector } from "react-redux";
-import { MDBListGroupItem } from "mdb-react-ui-kit";
+import { motion } from "framer-motion";
 import { selectCurrentUser } from "../features/auth/authSlice";
 const modules = {
   toolbar: [
@@ -46,7 +45,6 @@ const Text = ({
   const [isMounted, setIsMounted] = useState(true);
   const user = useSelector(selectCurrentUser);
   const [align, setAlign] = useState();
-  const uuidv4 = require("uuid");
   const [isCreated, setIsCreated] = useState(listEl);
 
   useEffect(() => {
@@ -186,7 +184,15 @@ const Text = ({
     }
   }
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 0.4,
+        delay: 0.1,
+        ease: [0, 0.41, 0.1, 1.01],
+      }}
+    >
       <ReactQuill
         className="editor-input"
         theme="snow"
@@ -216,7 +222,7 @@ const Text = ({
           Cancel
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

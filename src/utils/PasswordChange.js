@@ -121,7 +121,7 @@ const PasswordChange = ({ status, errStatus }) => {
       </div>
 
       <button
-        className="flex items-start bg-sky-800 hover:bg-sky-400 text-white font-light py-1 px-2 xl:py-2 xl:px-4 rounded w-20 mt-4"
+        className="flex items-start bg-sky-800 hover:bg-sky-400 duration-300 text-white font-light py-1 px-2 xl:py-2 xl:px-4 rounded w-20 mt-4"
         onClick={passChange}
       >
         {isLoading ? (

@@ -14,6 +14,7 @@ const ContactList = () => {
   const [contactList, setContactList] = useState([]);
   const [listUpdated, setListUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
   const token = useSelector(selectCurrentToken);
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -96,11 +97,15 @@ const ContactList = () => {
               return (
                 <div className={`inline-flex space-x-2 items-center`}>
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.5 }}
+                    initial={
+                      initialLoad
+                        ? { opacity: 0, scale: 0.5 }
+                        : { opacity: 1, scale: 1 }
+                    }
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{
                       duration: 0.4,
-                      delay: 0.8,
+                      delay: 0.2,
                       ease: [0, 0.41, 0.1, 1.01],
                     }}
                     key={conList.id}

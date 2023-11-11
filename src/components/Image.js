@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import { useSelector } from "react-redux";
 import { ElementContext } from "../context/ElementContext";
 import { selectCurrentUser } from "../features/auth/authSlice";
+import { motion } from "framer-motion";
 
 const Image = ({
   onStateChange,
@@ -22,7 +23,6 @@ const Image = ({
   const [file, setFile] = useState();
   const [imageSrc, setImageSrc] = useState("");
   const [cancel, setCancel] = useState(false);
-  const iframe = document.getElementById("myFrame");
   const user = useSelector(selectCurrentUser);
   const uuidv4 = require("uuid");
   const [isMounted, setIsMounted] = useState(true);
@@ -146,7 +146,15 @@ const Image = ({
   }
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 0.4,
+        delay: 0.1,
+        ease: [0, 0.41, 0.1, 1.01],
+      }}
+    >
       <label
         className="block mb-2 text-sm font-light text-grayWhite dark:text-white"
         for="file_input"
@@ -186,7 +194,7 @@ const Image = ({
           Cancel
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

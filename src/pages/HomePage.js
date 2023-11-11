@@ -123,7 +123,7 @@ const HomePage = () => {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{
                               duration: 0.4,
-                              delay: 0.8,
+                              delay: 0.2,
                               ease: [0, 0.41, 0.1, 1.01],
                             }}
                             class="bg-darkBlue rounded-full text-white text-sm xl:text-md"

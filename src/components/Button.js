@@ -2,8 +2,9 @@ import React, { useState, useEffect, useContext, memo } from "react";
 import ReactDOM from "react-dom";
 import { ElementContext } from "../context/ElementContext";
 import ButtonComponent from "./ButtonComponent";
-import { MDBListGroupItem } from "mdb-react-ui-kit";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
+import ColorPircker from "./ColorPircker";
 import { selectCurrentUser } from "../features/auth/authSlice";
 const Button = ({
   onStateChange,
@@ -14,27 +15,36 @@ const Button = ({
 }) => {
   const { createElement, deleteElement } = useContext(ElementContext);
   const [active, setActive] = useState(true);
-  const [text, setText] = useState();
+  const [text, setText] = useState("");
   const [link, setLink] = useState("");
+
   const [showComponent, setShowComponent] = useState(true);
   const container = document.getElementById("myList");
   const [isMounted, setIsMounted] = useState(true);
   const user = useSelector(selectCurrentUser);
-  const uuidv4 = require("uuid");
+  const [color, setColor] = useState("");
   const [isCreated, setIsCreated] = useState(listEl);
   useEffect(() => {
     try {
-      const container = document.getElementById("myList");
+      const container = document?.getElementById("myList");
       const lastListItem = container?.lastChild;
       setTimeout(() => {
         if (!isCreated) {
           ReactDOM.render(
-            <ButtonComponent textValue={text} linkValue={link} />,
+            <ButtonComponent
+              textValue={text}
+              linkValue={link}
+              colorValue={color}
+            />,
             lastListItem
           );
         } else {
           ReactDOM.render(
-            <ButtonComponent textValue={text} linkValue={link} />,
+            <ButtonComponent
+              textValue={text}
+              linkValue={link}
+              colorValue={color}
+            />,
             container
           );
         }
@@ -42,7 +52,7 @@ const Button = ({
     } catch (error) {
       console.log(error);
     }
-  }, [text, link, container]);
+  }, [text, link, color, container]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -50,8 +60,9 @@ const Button = ({
     return () => {
       setText([]);
       setLink([]);
+      setColor([]);
       try {
-        const container = document.getElementById("myList");
+        const container = document?.getElementById("myList");
         const lastListItem = container?.lastChild;
         setTimeout(() => {
           if (!isCreated) {
@@ -74,11 +85,16 @@ const Button = ({
     setLink(event.target.value);
   }
 
+  const handleColor = (color) => {
+    setColor(color);
+  };
+
   const addButtonObjContext = () => {
     const dataText = {
       id: Math.floor(Math.random() * 100),
       button_title: text,
       button_link: link,
+      button_color: color,
       element_type: "Button",
       users: user,
       order: 0,
@@ -173,51 +189,64 @@ const Button = ({
   // </button>
 
   return (
-    <div>
-      <label
-        for="first_name"
-        className="block mb-2 text-sm font-light text-grayWhite dark:text-white"
-      >
-        Button text display
-      </label>
-      <input
-        onChange={handleTextButtonFunc}
-        type="text"
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      />
-      <label
-        for="first_name"
-        className="block mb-2 mt-3 text-sm font-light text-grayWhite dark:text-white"
-      >
-        Insert link
-      </label>
-      <input
-        onChange={handleLinkButtonFunc}
-        type="link"
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      />
-      <div className="mt-3">
-        <button
-          type="button"
-          className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-          value={false}
-          onClick={saveBtn}
-          style={{ marginRight: "10px" }}
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 0.4,
+        delay: 0.1,
+        ease: [0, 0.41, 0.1, 1.01],
+      }}
+    >
+      <div className="flex-1">
+        <label
+          for="first_name"
+          className="block mb-2 text-sm font-light text-grayWhite dark:text-white"
         >
-          Save
-        </button>
-        <button
-          type="button"
-          className="bg-red-800 hover:bg-red-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-          id="cancel"
-          value={false}
-          onClick={handleCancel}
-          style={{ marginRight: "10px" }}
+          Button text display
+        </label>
+        <input
+          onChange={handleTextButtonFunc}
+          type="text"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+        <label
+          for="first_name"
+          className="block mb-2 mt-3 text-sm font-light text-grayWhite dark:text-white"
         >
-          Cancel
-        </button>
+          Insert link
+        </label>
+        <input
+          onChange={handleLinkButtonFunc}
+          type="link"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+        <div className="mt-3 flex flex-row relative">
+          <button
+            type="button"
+            className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+            value={false}
+            onClick={saveBtn}
+            style={{ marginRight: "10px" }}
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            className="bg-red-800 hover:bg-red-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+            id="cancel"
+            value={false}
+            onClick={handleCancel}
+            style={{ marginRight: "10px" }}
+          >
+            Cancel
+          </button>
+          <div className="absolute top-0 right-0">
+            <ColorPircker colorValue={handleColor} />
+          </div>
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

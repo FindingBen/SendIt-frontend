@@ -23,6 +23,9 @@ module.exports = {
       // => @media (min-width: 1536px) { ... }
     },
     extend: {
+      backgroundColor: {
+        customColor: "#color",
+      },
       colors: {
         darkBlue: "#111827",
         darkGray: "#1f2937",
