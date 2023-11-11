@@ -122,32 +122,7 @@ const EditMessage = () => {
       setIsLoaded(false);
     }
   };
-
-  const deleteElements = async (e) => {
-    e.preventDefault();
-    try {
-      await Promise.all(
-        toDelete?.map(async (elementObj) => {
-          try {
-            const response = await axiosInstance.delete(
-              `/api/delete_element/${elementObj.id}/`
-            );
-            if (response.status === 200) {
-              console.log("Success");
-            }
-          } catch (error) {
-            console.log("Error deleting element:", error);
-          }
-        })
-      );
-    } catch (error) {
-      console.log("Error deleting elements:", error);
-    }
-  };
-
   const updateElementsOrder = async () => {
-    //const filtered = await filterEl();
-    //console.log("inside update elements", updatedEl);
     console.log("about to be updated", elements);
     const elementsToUpdate = elements.filter((element) => !element.context);
     for (const element of elementsToUpdate) {
@@ -159,13 +134,11 @@ const EditMessage = () => {
         const elementId = element.id;
         const requestedData = { order: element.order };
 
-        // Make your API request here
+
         await axiosInstance.put(
           `/api/update_element/${elementId}/`,
           requestedData
         );
-
-        //console.log(`Element ${elementId} updated with order ${element.order}`);
       } catch (error) {
         // Handle the error if the update fails
         console.error(`Failed to update element ${element.id}: ${error}`);
@@ -251,8 +224,6 @@ const EditMessage = () => {
 
           if (response.status === 200) {
             createdElements.push(response.data.element);
-            //setCreatedEl(createdElements);
-            console.log(response);
           } else {
             console.log("Failed to create element:", elementContext);
           }
@@ -311,7 +282,6 @@ const EditMessage = () => {
   };
 
   const updateElements = (element) => {
-    console.log("Updating...", element);
     setElements(element);
   };
 
@@ -372,15 +342,14 @@ const EditMessage = () => {
               </div>
             </div>
             <div className="grid grid-cols-2 bg-darkestGray rounded-md">
-              <div className="col border-r-2 flex flex-col p-10 lg:p-20">
-                <h3 class="xl:text-3xl text-2xl text-center font-extralight text-white/50">
+              <div className="col border-r-2 flex flex-col p-10">
+                <h3 class="text-2xl text-center font-extralight text-white/50">
                   Click and create Content
                 </h3>
                 <div className="rounded-lg p-10">
-                  <div className="flex flex-col" style={{ minWidthL: "22rem" }}>
+                  <div className="flex flex-col">
                     {!showComponent && !active ? (
                       <div
-                        style={{ width: "100%" }}
                         onClick={handleClickImage}
                         name="liClick"
                         className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
@@ -421,7 +390,6 @@ const EditMessage = () => {
 
                     {!showComponent && !activeT ? (
                       <div
-                        style={{ width: "100%" }}
                         onClick={handleClickText}
                         name="liClick"
                         className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
@@ -440,7 +408,7 @@ const EditMessage = () => {
                             d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
                           />
                         </svg>
-                        <h2 className="text-2xl text-right lg:px-3 lg:py-3 px-4 py-4 font-extralight text-white/50">
+                        <h2 className="text-2xl text-right px-4 py-4 font-extralight text-white/50">
                           Add text
                         </h2>
                       </div>
@@ -483,7 +451,7 @@ const EditMessage = () => {
                             d="M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 019 14.437V9.564z"
                           />
                         </svg>
-                        <h2 className="text-2xl text-right lg:px-3 lg:py-3 px-4 py-4 font-extralight text-white/50">
+                        <h2 className="text-2xl text-right px-4 py-4 font-extralight text-white/50">
                           Add button
                         </h2>
                       </div>
@@ -503,12 +471,12 @@ const EditMessage = () => {
                 </div>
               </div>
               <div className="col p-10">
-                <div class="h-[500px] w-[250px] relative mx-auto border-gray-600 dark:border-gray-800 bg-gray-600 border-[14px] rounded-[2.5rem] xl:h-[600px] xl:w-[300px] shadow-xl">
+                <div class="h-[500px] w-[250px] relative mx-auto border-gray-600 dark:border-gray-800 bg-gray-600 border-[14px] rounded-[2.5rem] shadow-xl">
                   <div class="w-[108px] h-[10px] xl:w-[148px] xl:h-[18px] bg-gray-600 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
                   <div class="h-[46px] w-[3px] bg-gray-600 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
                   <div class="h-[46px] w-[3px] bg-gray-600 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
                   <div class="h-[64px] w-[3px] bg-gray-600 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
-                  <div class="w-[225px] h-[470px] rounded-[2rem] overflow-auto xl:w-[272px] xl:h-[572px] bg-white dark:bg-gray-800">
+                  <div class="w-[225px] h-[470px] rounded-[2rem] overflow-auto bg-white dark:bg-gray-800">
                     <div class="mr-5 mt-2 flex justify-end space-x-1">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

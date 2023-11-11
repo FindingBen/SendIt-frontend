@@ -63,7 +63,6 @@ const HomePage = () => {
     setShow(true);
   };
 
-  const loadingContent = () => {};
 
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">

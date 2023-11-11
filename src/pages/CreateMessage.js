@@ -272,11 +272,11 @@ const CreateNote = () => {
               </div>
             </div>
             <div className="grid grid-cols-2 bg-darkestGray rounded-md">
-              <div className="col border-r-2 flex flex-col lg:p-4 p-10">
-                <h3 class="xl:text-3xl text-2xl text-center font-extralight text-white/50">
+              <div className="col border-r-2 flex flex-col p-10">
+                <h3 class="text-2xl text-center font-extralight text-white/50">
                   Content elements
                 </h3>
-                <div className="rounded-lg p-10 lg:p-20">
+                <div className="rounded-lg p-10">
                   <div className="flex flex-col">
                     {!showComponent && !active ? (
                       <div
@@ -298,7 +298,7 @@ const CreateNote = () => {
                             d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
                           />
                         </svg>
-                        <h2 className="text-2xl lg:text-xl text-right lg:px-3 lg:py-3 px-4 py-4 font-extralight text-white/50">
+                        <h2 className="text-2xl text-right px-4 py-4 font-extralight text-white/50">
                           Add Image
                         </h2>
                       </div>
@@ -320,7 +320,6 @@ const CreateNote = () => {
 
                     {!showComponent && !activeT ? (
                       <div
-                        style={{ width: "100%" }}
                         onClick={handleClickText}
                         name="liClick"
                         className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
@@ -339,7 +338,7 @@ const CreateNote = () => {
                             d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
                           />
                         </svg>
-                        <h2 className="text-2xl text-right lg:px-3 lg:py-3 px-4 py-4 font-extralight text-white/50">
+                        <h2 className="text-2xl text-right px-4 py-4 font-extralight text-white/50">
                           Add text
                         </h2>
                       </div>
@@ -382,7 +381,7 @@ const CreateNote = () => {
                             d="M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 019 14.437V9.564z"
                           />
                         </svg>
-                        <h2 className="text-2xl text-right lg:px-3 lg:py-3 px-4 py-4 font-extralight text-white/50">
+                        <h2 className="text-2xl text-right px-4 py-4 font-extralight text-white/50">
                           Add button
                         </h2>
                       </div>
@@ -403,12 +402,12 @@ const CreateNote = () => {
               </div>
 
               <div className="col p-10">
-                <div class="h-[500px] w-[250px] relative mx-auto border-gray-600 dark:border-gray-800 bg-gray-600 border-[14px] rounded-[2.5rem] xl:h-[600px] xl:w-[300px] shadow-xl">
+                <div class="h-[500px] w-[250px] relative mx-auto border-gray-600 dark:border-gray-800 bg-gray-600 border-[14px] rounded-[2.5rem] shadow-xl">
                   <div class="w-[108px] h-[10px] xl:w-[148px] xl:h-[18px] bg-gray-600 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
                   <div class="h-[46px] w-[3px] bg-gray-600 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
                   <div class="h-[46px] w-[3px] bg-gray-600 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
                   <div class="h-[64px] w-[3px] bg-gray-600 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
-                  <div class="w-[225px] h-[470px] rounded-[2rem] overflow-hidden xl:w-[272px] xl:h-[572px] bg-white dark:bg-gray-800">
+                  <div class="w-[225px] h-[470px] rounded-[2rem] overflow-hidden bg-white dark:bg-gray-800">
                     <div class="mr-5 mt-2 flex justify-end space-x-1">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

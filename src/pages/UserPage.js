@@ -285,7 +285,7 @@ const UserPage = () => {
               </p>
 
               {purchases.length > 0 ? (
-                <ul className="flex flex-col items-left mt-3 max-h-72 text-white/50 overflow-y-scroll">
+                <ul className="flex flex-col items-left mt-3 max-h-80 text-white/50 overflow-y-scroll">
                   {purchases?.map((purchase, index) => {
                     return (
                       <motion.div
@@ -293,7 +293,7 @@ const UserPage = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{
                           duration: 0.4,
-                          delay: 0.8,
+                          delay: 0.2,
                           ease: [0, 0.41, 0.1, 1.01],
                         }}
                         className="relative text-base text-left text-gray-300 bg-slate-800 mb-2 rounded-md p-3 hover:bg-slate-800/50 cursor-pointer"

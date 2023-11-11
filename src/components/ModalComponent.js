@@ -73,9 +73,11 @@ function ModalComponent({ confirmLeave, showModal, modalType }) {
         <Modal.Body>
           {!modalType ? (
             <p>You have some unsaved data, do you wish to navigate?</p>
-          ) : (
-            <p>You are being redirected to Stripe payment provider, hold on</p>
-          )}
+          ) : modalType === "Payment_Confirmation" ? (
+            <p>Your payment is being verified by Stripe, hold on</p>
+          ) : modalType === "Redirect" ? (
+            <p>You are being redirected to, please wait</p>
+          ) : null}
         </Modal.Body>
         {!modalType ? (
           <Modal.Footer>

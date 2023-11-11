@@ -95,7 +95,7 @@ const ContactList = () => {
 
             {contactList?.map((conList) => {
               return (
-                <div className={`inline-flex space-x-2 items-center`}>
+                <div className={`flex flex-row space-x-2 items-center`}>
                   <motion.div
                     initial={
                       initialLoad
@@ -109,9 +109,9 @@ const ContactList = () => {
                       ease: [0, 0.41, 0.1, 1.01],
                     }}
                     key={conList.id}
-                    class="relative w-100 group bg-gray-900 py-3 sm:py-20 px-4 flex flex-col space-y-2 items-center rounded-md"
+                    class="relative w-100 bg-gray-900 py-14 px-4 flex flex-col space-y-2 items-center rounded-md"
                   >
-                    <div className="mb-8 ml-48">
+                    <div className="absolute top-2 right-2">
                       <button onClick={() => deleteList(conList.id)}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

@@ -7,10 +7,11 @@ import {
 } from "@dnd-kit/sortable";
 import { SortableItem } from "./SortableItem";
 import useAxiosInstance from "../../src/utils/axiosInstance";
+import { motion } from "framer-motion-3d";
 
 const List = ({ children, alignment, clicked, updatedList }) => {
   const [itemsElements, setItems] = useState([children]);
-  const [forDelete, setForDelete] = useState([]);
+
   const axiosInstance = useAxiosInstance();
   useEffect(() => {
     setItems(children);
@@ -28,10 +29,7 @@ const List = ({ children, alignment, clicked, updatedList }) => {
     }
   }, [children, itemsElements]);
 
-  console.log(itemsElements);
-
   const toDelete = (id) => {
-    console.log(id);
     const updatedItems = itemsElements.filter((item) => item.id !== id);
 
     // Update the state with the filtered items
@@ -56,7 +54,7 @@ const List = ({ children, alignment, clicked, updatedList }) => {
       console.log("Error making the API request:", error);
     }
   };
-  console.log(itemsElements);
+
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext
@@ -67,7 +65,17 @@ const List = ({ children, alignment, clicked, updatedList }) => {
         <ul className="flex flex-column" id="myList">
           {itemsElements &&
             itemsElements?.map((item, index) => (
-              <li key={item.id} className="relative rounded-md mx-2">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  duration: 0.3,
+                  delay: 0.1,
+                  ease: [0, 0.41, 0.1, 1.01],
+                }}
+                key={item.id}
+                className="relative rounded-md mx-2"
+              >
                 <SortableItem key={item.id} id={item.id} itemObject={item} />
                 <span
                   className="absolute top-1 right-0 cursor-pointer hover:bg-slate-400 rounded-full "
@@ -75,7 +83,7 @@ const List = ({ children, alignment, clicked, updatedList }) => {
                 >
                   <p className="text-white">X</p>
                 </span>
-              </li>
+              </motion.div>
             ))}
         </ul>
       </SortableContext>

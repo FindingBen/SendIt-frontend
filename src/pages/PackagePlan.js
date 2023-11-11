@@ -10,19 +10,14 @@ import ModalComponent from "../components/ModalComponent";
 
 const PackagePlan = () => {
   const axiosInstance = useAxiosInstance();
-  const params = useParams();
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [loadingState, setLoadingStates] = useState({});
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
   const [packagePlan, setPackage] = useState([]);
-  const location = useLocation();
 
   useEffect(() => {
-    const values = location.search;
-    console.log(values);
     getPackages();
   }, []);
 
