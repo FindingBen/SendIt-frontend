@@ -90,7 +90,7 @@ const PackagePlan = () => {
             </h3>
           </div>
           <div className="flex flex-col gap-8 p-10 lg:flex-row xl:flex-row">
-            {elementsArray?.map((index) => (
+            {elementsArray?.map((plan, index) => (
               <div
                 key={packagePlan[index]?.id}
                 value={index}

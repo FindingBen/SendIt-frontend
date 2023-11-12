@@ -45,13 +45,19 @@ const HomePage = () => {
 
   let getNotes = async () => {
     try {
-      let response = await axiosInstance.get("/api/notes/");
+      let response = await axiosInstance.get("/api/notes/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(token),
+        },
+      });
 
       if (response.status === 200) {
         setNotes(response?.data);
         setIsLoaded(false);
       } else if (response.statusText === "Unauthorized") {
-        dispatch(logOut(user, token));
+        dispatch(logOut());
       }
     } catch (error) {
       console.error(error);
@@ -62,7 +68,6 @@ const HomePage = () => {
     setMessageId(id);
     setShow(true);
   };
-
 
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
@@ -163,11 +168,11 @@ const HomePage = () => {
                                 </div>
                                 <div>
                                   {message.status === "Draft" ? (
-                                    <span class="bg-red-400 text-gray-50 rounded-full px-2">
+                                    <span class="bg-red-400 text-gray-50 text-sm rounded-full px-2">
                                       Draft
                                     </span>
                                   ) : message.status === "Scheduled" ? (
-                                    <span class="bg-blue-400 text-gray-700 rounded-full px-2">
+                                    <span class="bg-blue-400 text-gray-700 text-sm rounded-full px-2">
                                       Scheduled
                                     </span>
                                   ) : (
@@ -222,7 +227,7 @@ const HomePage = () => {
                                     </a>
                                   ) : message.status === "Scheduled" ? (
                                     <a
-                                      className="hover:bg-sky-300 rounded disabled-link"
+                                      className="hover:bg-sky-300 rounded disabled-link mx-2"
                                       type="button"
                                       to={`/sms_editor/${message.id}`}
                                       // data-mdb-ripple-color="dark"
@@ -243,7 +248,7 @@ const HomePage = () => {
                                     </a>
                                   ) : (
                                     <Link
-                                      className="hover:bg-sky-300 rounded mx-3"
+                                      className="hover:bg-sky-300 rounded mx-2"
                                       type="button"
                                       to={`/sms_editor/${message.id}`}
 

@@ -1,15 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { persistor } from "../../app/store";
 const authSlice = createSlice({
   name: "access",
   initialState: { user: null, token: null },
   reducers: {
     setCredentials: (state, action) => {
+      console.log(
+        "setCredentials action dispatched with payload:",
+        action.payload
+      );
       const { user, access } = action.payload;
       return { ...state, user, token: access };
     },
     registerUser: (state, action) => {
-      const { username, first_name, last_name, email, password } = action.payload;
+      const { username, first_name, last_name, email, password } =
+        action.payload;
       return { ...state, username, first_name, last_name, email, password };
     },
     logOut: (state, action) => {

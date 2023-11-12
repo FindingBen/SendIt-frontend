@@ -41,7 +41,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       // Refresh t  oken failed or expired, log out the user
 
       api.dispatch(logOut());
-      localStorage.removeItem("tokens");
+      localStorage.removeItem("token");
     }
     console.log(result);
   }

@@ -4,19 +4,20 @@ import dayjs from "dayjs";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectCurrentToken,
+  selectCurrentUser,
   setCredentials,
   logOut,
 } from "../features/auth/authSlice";
 import { useRef, useEffect } from "react";
-import store from "../app/store";
+import { store } from "../app/store";
 import { config } from "../constants/Constants";
 
 const useAxiosInstance = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectCurrentToken);
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector(selectCurrentUser);
   const baseURL = config.url.BASE_URL;
-
+  console.log("from contact_list", token.substr(-10));
   const createAxiosInstance = (token) => {
     const instance = axios.create({
       baseURL: baseURL,
@@ -38,29 +39,35 @@ const useAxiosInstance = () => {
 
   axiosInstanceRef.current.interceptors.request.use(async (req) => {
     const now = dayjs();
-    const timeUntilExpiration = tokenExpiration.diff(now, "minute");
+    const timeUntilExpiration = tokenExpiration.diff(now, "seconds");
 
-    if (timeUntilExpiration < 5) {
+    if (timeUntilExpiration < 1) {
       // Refresh the token if it's about to expire in 5 minutes or less
-      const getRefreshToken = localStorage.getItem("token");
+      const getRefreshToken = localStorage.getItem("refreshToken");
 
       try {
         const response = await axios.post(`${baseURL}/api/token/refresh/`, {
           refresh: getRefreshToken,
         });
-        localStorage.setItem("token", response.data.refresh);
+
         const newToken = response.data.access;
         console.log("new token aquired..");
-        axiosInstanceRef.current = createAxiosInstance(newToken);
+        localStorage.setItem("refreshToken", response.data.refresh);
+        dispatch(setCredentials({ ...response.data, user }));
+
+        const newAxiosInstance = createAxiosInstance(newToken);
+        axiosInstanceRef.current = newAxiosInstance;
+
         axiosInstanceRef.current.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${newToken}`;
+        //dispatch(setCredentials({ user, access: newToken }));
 
         req.headers.Authorization = `Bearer ${newToken}`;
-        dispatch(setCredentials({ ...response.data, user }));
+        console.log("new Token", newToken.substr(-10));
       } catch (error) {
         console.log(error);
-        localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
         dispatch(logOut());
         throw error;
       }

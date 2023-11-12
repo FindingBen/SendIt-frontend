@@ -71,7 +71,7 @@ const UserPage = () => {
       if (response.status === 200) {
         setUser(response.data);
       } else {
-        localStorage.removeItem("tokens");
+        localStorage.removeItem("refreshToken");
         navigate("/login");
       }
     } catch (error) {

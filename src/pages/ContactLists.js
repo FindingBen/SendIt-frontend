@@ -26,6 +26,7 @@ const ContactList = () => {
   }, [listUpdated]);
 
   let getContactLists = async () => {
+    console.log("from contact_list", token.substr(-10));
     try {
       let response = await axiosInstance.get("/api/contact_lists/", {
         method: "GET",

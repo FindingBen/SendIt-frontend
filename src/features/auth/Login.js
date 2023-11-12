@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
 import { useLoginMutation } from "./authApiSlice";
+import { store } from "../../app/store";
 import jwt_decode from "jwt-decode";
 
 const Login = () => {
@@ -34,19 +35,20 @@ const Login = () => {
         password,
       });
       const user = jwt_decode(userData?.data?.access).user_id;
-      console.log(user);
+      console.log("Before setCredentials:", store.getState());
       dispatch(setCredentials({ ...userData?.data, user }));
+      console.log("After setCredentials:", store.getState());
       setUser("");
       setPwd("");
       setLoading(false);
-      localStorage.setItem("token", userData.data.refresh);
+      localStorage.setItem("refreshToken", userData.data.refresh);
 
       navigate("/home");
     } catch (err) {
       console.log("errrrr", err);
       if (!err?.originalStatus) {
-        localStorage.removeItem("token");
-        console.log("test");
+        localStorage.removeItem("refreshToken");
+
         setLoading(false);
         // isLoading: true until timeout occurs
         setErrMsg("Wrong username or password!");
