@@ -46,7 +46,6 @@ const Image = ({
     setIsMounted(true);
 
     return () => {
-      //setIsMounted(false);
       setImages([]);
       if (isMounted && container) {
         const lastListItem = container?.lastChild;

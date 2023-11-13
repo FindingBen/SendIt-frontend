@@ -32,7 +32,8 @@ const SmsEditor = () => {
   const [contactLists, setContactList] = useState([]);
   const textComponentRef = useRef(null);
   const [recipients, setRecipients] = useState();
-
+  const maxCharacters = 70;
+  const charactersLeft = maxCharacters - smsText.length;
   const BASE = "https://sendit-backend-production.up.railway.app";
   const BASE_URL = "https://sendit-frontend-production.up.railway.app";
   const linkURLBase = `${BASE_URL}/message_view/${params.id}`;
@@ -232,15 +233,19 @@ const SmsEditor = () => {
                       Sms text:
                     </label>
 
-                    <textarea
-                      id="smsTextArea"
-                      maxLength={70}
-                      className="block p-2.5 w-75 h-2/4 text-sm text-gray-50 bg-gray-400 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="Write your sms here..."
-                      onChange={handleSms}
-                      value={smsText}
-                    ></textarea>
-
+                    <div className="relative">
+                      <textarea
+                        id="smsTextArea"
+                        maxLength={maxCharacters}
+                        className="block p-2.5 w-75 h-2/4 text-sm text-gray-50 bg-gray-400 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Write your sms here..."
+                        onChange={handleSms}
+                        value={smsText}
+                      ></textarea>
+                      <div className="text-black/50 text-sm absolute bottom-0 right-40">
+                        {charactersLeft} characters left
+                      </div>
+                    </div>
                     <div className="grid grid-cols-2 gap-6 content-between">
                       <div className="flex flex-row">
                         {recipients && smsText.length > 0 ? (

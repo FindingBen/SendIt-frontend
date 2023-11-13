@@ -2,8 +2,6 @@ import React, { useState, useContext, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { setState } from "../features/modal/formReducer";
 import "../css/CreationMessage.css";
-// import "../css/RootIframe.css";
-
 import Image from "../components/Image";
 import Text from "../components/Text";
 import List from "../components/List";
@@ -26,7 +24,6 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import useAxiosInstance from "../utils/axiosInstance";
 import { ElementContext } from "../context/ElementContext";
-import { useRef } from "react";
 
 const EditMessage = () => {
   const navigate = useNavigate();
@@ -37,7 +34,7 @@ const EditMessage = () => {
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
   const [elements, setElements] = useState([]);
-
+  const [message, setMessage] = useState("");
   const { createElement, deleteElement } = useContext(ElementContext);
   const [elementContextList, setElementsContextList] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -49,6 +46,7 @@ const EditMessage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const axiosInstance = useAxiosInstance();
   const modal_state = useSelector(selectModalCall);
+  const [messageName, setMessageName] = useState(message?.message_name);
   const isFormDirt = useSelector(selectEditPageState);
   const dispatch = useDispatch();
   const params = useParams();
@@ -71,9 +69,8 @@ const EditMessage = () => {
 
   useEffect(() => {
     updateElementsOrder();
-    console.log(elements);
   }, [createdEl]);
-  console.log(createdEl);
+
   useEffect(() => {
     messageView();
   }, []);
@@ -118,12 +115,12 @@ const EditMessage = () => {
       },
     });
     if (response.status === 200 || 201) {
-      setElements(response.data);
+      setElements(response.data.elements);
       setIsLoaded(false);
+      setMessage(response.data.message);
     }
   };
   const updateElementsOrder = async () => {
-    console.log("about to be updated", elements);
     const elementsToUpdate = elements.filter((element) => !element.context);
     for (const element of elementsToUpdate) {
       try {
@@ -134,7 +131,6 @@ const EditMessage = () => {
         const elementId = element.id;
         const requestedData = { order: element.order };
 
-
         await axiosInstance.put(
           `/api/update_element/${elementId}/`,
           requestedData
@@ -144,7 +140,7 @@ const EditMessage = () => {
         console.error(`Failed to update element ${element.id}: ${error}`);
       }
     }
-    console.log("updatedElements", elements);
+
     return elements;
   };
 
@@ -152,16 +148,14 @@ const EditMessage = () => {
     setIsLoading(true);
     try {
       const createdElements = await addElement(e);
-      console.log(createdElements);
-      //await updateElementsOrder(e);
+
       if (createdElements.length > 0) {
         await updateElementsOrder();
       }
 
-      console.log("ELEMENTS", createdElements);
       const requestData = {
-        //element_list: elements, // Map the created elements to their IDs
         users: user,
+        message_name: messageName,
       };
 
       let response = await axiosInstance.put(
@@ -271,6 +265,11 @@ const EditMessage = () => {
     setElements(elements);
   };
 
+  const handleMessageName = (e) => {
+    setMessageName(e.target.value);
+    setIsDirty(true);
+  };
+
   const handleClicked = (element) => {
     deleteElement(element);
 
@@ -284,7 +283,7 @@ const EditMessage = () => {
   const updateElements = (element) => {
     setElements(element);
   };
-
+  console.log(message);
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
@@ -344,9 +343,16 @@ const EditMessage = () => {
             <div className="grid grid-cols-2 bg-darkestGray rounded-md">
               <div className="col border-r-2 flex flex-col p-10">
                 <h3 class="text-2xl text-center font-extralight text-white/50">
-                  Click and create Content
+                  Message configuration
                 </h3>
                 <div className="rounded-lg p-10">
+                  <input
+                    value={message?.message_name}
+                    disabled
+                    onChange={handleMessageName}
+                    className=" bg-gray-200 mb-4 text-black hover:bg-gray-400 duration-200 text-light font-light py-2 px-4 rounded-md"
+                    placeholder="Message name.."
+                  />
                   <div className="flex flex-col">
                     {!showComponent && !active ? (
                       <div
@@ -360,7 +366,7 @@ const EditMessage = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          className="h-16 w-20 mt-2 fill-gray-400 custom-svg-w"
+                          className="h-16 w-20 mt-2 fill-gray-400"
                         >
                           <path
                             stroke-linecap="round"
@@ -400,7 +406,7 @@ const EditMessage = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          class="h-16 w-20 mt-2 fill-gray-400 custom-svg-w"
+                          class="h-16 w-20 mt-2 fill-gray-400"
                         >
                           <path
                             stroke-linecap="round"
@@ -438,7 +444,7 @@ const EditMessage = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          class="h-16 w-20 mt-2 fill-gray-400 custom-svg-w"
+                          class="h-16 w-20 mt-2 fill-gray-400"
                         >
                           <path
                             stroke-linecap="round"

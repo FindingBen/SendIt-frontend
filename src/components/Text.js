@@ -41,7 +41,7 @@ const Text = ({
   const [active, setActive] = useState(true);
   const [text, setText] = useState([]);
   const [showComponent, setShowComponent] = useState(true);
-  const listContainer = document.getElementById("myList");
+  const container = document.getElementById("myList");
   const [isMounted, setIsMounted] = useState(true);
   const user = useSelector(selectCurrentUser);
   const [align, setAlign] = useState();
@@ -49,12 +49,11 @@ const Text = ({
 
   useEffect(() => {
     try {
-      const listContainer = document.getElementById("myList");
-      const lastListItem = listContainer?.lastChild;
+      const lastListItem = container.lastChild;
 
       setTimeout(() => {
         if (!isCreated) {
-          ReactDOM?.render(
+          ReactDOM.render(
             <TextComponent
               textValue={text}
               alignment={getAlignmentclassName(align)}
@@ -62,35 +61,33 @@ const Text = ({
             lastListItem
           );
         } else {
-          ReactDOM?.render(
+          ReactDOM.render(
             <TextComponent
               textValue={text}
               alignment={getAlignmentclassName(align)}
             />,
-            listContainer
+            container
           );
         }
       }, 5);
     } catch (error) {
       console.error(error);
     }
-  }, [text, listContainer]);
+  }, [text, container]);
 
   useEffect(() => {
     setIsMounted(true);
 
     return () => {
-      //setIsMounted(false);
       setText([]);
       try {
-        if (isMounted) {
-          const listContainer = document.getElementById("myList");
-          const lastListItem = listContainer?.lastChild;
+        if (isMounted && container) {
+          const lastListItem = container?.lastChild;
           setTimeout(() => {
             if (!isCreated) {
               ReactDOM.render(<></>, lastListItem);
             } else {
-              ReactDOM.render(<li></li>, listContainer);
+              ReactDOM.render(<li></li>, container);
             }
           }, 5);
         }

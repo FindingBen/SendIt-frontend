@@ -109,7 +109,7 @@ const HomePage = () => {
                 <div class="overflow-x-auto">
                   <div class="my-6">
                     <div class="grid grid-cols-5 gap-4 grid-headers bg-gray-600/50 text-white font-poppins text-sm xl:text-md py-2 px-4 rounded-full mb-2">
-                      <div>Type</div>
+                      <div>Name</div>
                       <div>Created At</div>
                       <div>Analytics</div>
                       <div>Status</div>
@@ -136,7 +136,7 @@ const HomePage = () => {
                               <div
                                 className={`grid grid-cols-5 gap-4 py-2 px-4`}
                               >
-                                <p>Sms</p>
+                                <p>{message.message_name}</p>
                                 <div>{message.created_at}</div>
                                 <div>
                                   {message.status == "Draft" ? (

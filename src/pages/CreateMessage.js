@@ -30,6 +30,7 @@ const CreateNote = () => {
   const [activeB, setActiveB] = useState(false);
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
+  const [messageName, setMessageName] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [displayElItem, setDisplayItems] = useState([]);
   const [elementsList, setElementsList] = useState([]);
@@ -70,6 +71,12 @@ const CreateNote = () => {
     setActiveB(!activeB);
     setIsDirty(true);
     setShowComponent(!showComponent);
+  };
+
+  const handleMessageName = (e) => {
+   
+    setMessageName(e.target.value);
+    setIsDirty(true);
   };
 
   const handleSubmit = async () => {
@@ -137,6 +144,7 @@ const CreateNote = () => {
     try {
       const requestData = {
         users: user,
+        message_name: messageName,
       };
 
       let response = await axiosInstance.post(
@@ -214,7 +222,7 @@ const CreateNote = () => {
     console.log("Updating...", element);
     setElementsContextList(element);
   };
-
+  console.log(messageName);
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
@@ -272,12 +280,19 @@ const CreateNote = () => {
               </div>
             </div>
             <div className="grid grid-cols-2 bg-darkestGray rounded-md">
-              <div className="col border-r-2 flex flex-col p-10">
-                <h3 class="text-2xl text-center font-extralight text-white/50">
-                  Content elements
-                </h3>
-                <div className="rounded-lg p-10">
-                  <div className="flex flex-col">
+              <div className="flex flex-col p-10 relative">
+                <div className="">
+                  <h3 class="text-2xl text-center font-extralight text-white/50">
+                    Message configuration
+                  </h3>
+                </div>
+                <div className="flex flex-col p-10">
+                  <input
+                    onChange={handleMessageName}
+                    className=" bg-gray-200 mb-4 text-black hover:bg-gray-400 duration-200 text-light font-light py-2 px-4 rounded-md"
+                    placeholder="Message name.."
+                  />
+                  <div className="">
                     {!showComponent && !active ? (
                       <div
                         onClick={handleClickImage}
@@ -290,7 +305,7 @@ const CreateNote = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          class="h-16 w-20 mt-2 fill-gray-400 custom-svg-w"
+                          class="h-16 w-20 mt-2 fill-gray-400"
                         >
                           <path
                             stroke-linecap="round"
@@ -330,7 +345,7 @@ const CreateNote = () => {
                           viewBox="0 0 24 24"
                           stroke-width="1.5"
                           stroke="currentColor"
-                          class="h-16 w-20 mt-2 fill-gray-400 custom-svg-w"
+                          class="h-16 w-20 mt-2 fill-gray-400"
                         >
                           <path
                             stroke-linecap="round"

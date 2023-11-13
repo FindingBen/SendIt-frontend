@@ -202,7 +202,9 @@ const AnalyticsPage = () => {
             </div>
             <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-base">
               <h3 className="flex flex-row mx-3 my-3">
-                <p className="text-1xl font-extralight text-left">Click rate</p>
+                <p className="text-1xl font-extralight text-left">
+                  Total clicks
+                </p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -230,7 +232,7 @@ const AnalyticsPage = () => {
               </h3>
               {views ? (
                 <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl">
-                  {(sms?.click_number / sms?.sms_sends) * 100} %
+                  {sms?.click_number}
                 </h2>
               ) : (
                 <div role="status">

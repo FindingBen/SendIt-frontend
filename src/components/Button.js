@@ -26,7 +26,6 @@ const Button = ({
   const [isCreated, setIsCreated] = useState(listEl);
   useEffect(() => {
     try {
-      const container = document?.getElementById("myList");
       const lastListItem = container?.lastChild;
       setTimeout(() => {
         if (!isCreated) {
@@ -62,15 +61,16 @@ const Button = ({
       setLink([]);
       setColor([]);
       try {
-        const container = document?.getElementById("myList");
-        const lastListItem = container?.lastChild;
-        setTimeout(() => {
-          if (!isCreated) {
-            ReactDOM.render(<></>, lastListItem);
-          } else {
-            ReactDOM.render(<li></li>, container);
-          }
-        }, 5);
+        if (isMounted && container) {
+          const lastListItem = container?.lastChild;
+          setTimeout(() => {
+            if (!isCreated) {
+              ReactDOM.render(<></>, lastListItem);
+            } else {
+              ReactDOM.render(<li></li>, container);
+            }
+          }, 5);
+        }
       } catch (error) {
         console.log(error);
       }

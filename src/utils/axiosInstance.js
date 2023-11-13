@@ -17,7 +17,7 @@ const useAxiosInstance = () => {
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
   const baseURL = config.url.BASE_URL;
-  console.log("from contact_list", token.substr(-10));
+
   const createAxiosInstance = (token) => {
     const instance = axios.create({
       baseURL: baseURL,
