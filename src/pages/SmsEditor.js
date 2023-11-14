@@ -79,6 +79,24 @@ const SmsEditor = () => {
     }
   };
 
+  const handleNameLink = () => {
+    const linkEmbed = ` #FirstName `;
+    const textarea = document.getElementById("smsTextArea");
+    const startPos = textarea.selectionStart;
+    const endPos = textarea.selectionEnd;
+
+    // Ensure smsText is not null or undefined
+    if (typeof smsText === "string") {
+      // Insert the link at the specified index
+      setSmsText(
+        smsText.substring(0, startPos) + linkEmbed + smsText.substring(endPos)
+      );
+    } else {
+      // Handle the case where smsText is not a string (e.g., null, undefined)
+      setSmsText(linkEmbed);
+    }
+  };
+
   const handleSms = (e) => {
     setSmsText(e.target.value);
   };
@@ -326,6 +344,48 @@ const SmsEditor = () => {
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
+                              />
+                            </svg>
+                          </button>
+                        )}
+
+                        {recipients && smsText.length > 0 ? (
+                          <button
+                            onClick={handleNameLink}
+                            className="bg-blue-800 hover:bg-blue-400 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:text-base mt-4 ml-2"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="w-6 h-6"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                              />
+                            </svg>
+                          </button>
+                        ) : (
+                          <button
+                            disabled
+                            className="bg-gray-500 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:text-base mt-4 ml-2"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="w-6 h-6"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
                               />
                             </svg>
                           </button>

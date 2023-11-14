@@ -24,7 +24,7 @@ const MessageView = () => {
     console.log(response);
     const data = await response.json();
 
-    setElements(data);
+    setElements(data.elements);
     setIsLoaded(false);
   };
 

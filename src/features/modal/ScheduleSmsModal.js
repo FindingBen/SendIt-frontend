@@ -14,7 +14,7 @@ const ScheduleSmsModal = ({
   const today = new Date();
   const [show, setShowModal] = useState(showModal);
   const axiosInstance = useAxiosInstance();
-  const [dateValue, setDateValue] = useState(today);
+  const [dateValue, setDateValue] = useState();
 
   useEffect(() => {
     setShowModal(showModal);
@@ -24,12 +24,13 @@ const ScheduleSmsModal = ({
     const newDate = new Date(date);
     const formated = moment(newDate).format("YYYY-MM-DD HH:mm");
     dateSchedule(formated);
+    setDateValue(newDate);
   };
 
   const closeModal = () => {
     onClose();
   };
-
+  console.log(dateValue?.toISOString());
   return (
     <>
       {show ? (
@@ -60,7 +61,8 @@ const ScheduleSmsModal = ({
                     className="bg-grayWhite h-10 w-32 px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-400"
                   ></DatePicker>
                   <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                    It will be scheduled for {dateValue[0]}
+                    It will be scheduled for{" "}
+                    <p className="font-bold">{dateValue?.toLocaleString()}</p>
                   </p>
                 </div>
                 {/*footer*/}
