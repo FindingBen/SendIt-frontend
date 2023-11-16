@@ -21,6 +21,7 @@ import {
   selectEditPageState,
   setEditPage,
 } from "../features/elements/editPageReducer";
+import { createElements } from "../utils/helpers/createElements";
 import { useSelector, useDispatch } from "react-redux";
 import useAxiosInstance from "../utils/axiosInstance";
 import { ElementContext } from "../context/ElementContext";
@@ -183,50 +184,17 @@ const EditMessage = () => {
 
   const addElement = async () => {
     dispatch(setList({ populated: true }));
-    const createdElements = [];
 
-    try {
-      for (let i = 0; i < elements.length; i++) {
-        const elementContext = elements[i];
+    const messageId = message.id;
+    const createElementsData = createElements({
+      elementContextList,
+      messageId,
+      token,
+      axiosInstance,
+    });
+    const createdElements = await createElementsData();
 
-        const formData = new FormData();
-        if ("context" in elementContext) {
-          if (elementContext.element_type === "Img") {
-            formData.append("image", elementContext.file);
-          } else if (elementContext.element_type === "Text") {
-            formData.append("text", elementContext.text);
-            formData.append("alignment", elementContext.alignment);
-          } else if (elementContext.element_type === "Button") {
-            formData.append("button_title", elementContext.button_title);
-            formData.append("button_link", elementContext.button_link);
-            formData.append("button_color", elementContext.button_color);
-          }
-          formData.append("element_type", elementContext.element_type);
-          formData.append("users", elementContext.users);
-          formData.append("message", getId);
-          formData.append("order", elementContext.order);
-
-          let response = await axiosInstance.post(
-            "/api/create_element/",
-            formData,
-            {
-              headers: {
-                Authorization: "Bearer " + String(token),
-              },
-            }
-          );
-
-          if (response.status === 200) {
-            createdElements.push(response.data.element);
-          } else {
-            console.log("Failed to create element:", elementContext);
-          }
-        }
-        setElements((prevElement) => [...prevElement, ...createdElements]);
-      }
-    } catch (error) {
-      console.log("Error creating elements:", error);
-    }
+    setElements((prevElement) => [...prevElement, ...createdElements]);
 
     return elements;
   };
@@ -283,7 +251,7 @@ const EditMessage = () => {
   const updateElements = (element) => {
     setElements(element);
   };
-  console.log(message);
+
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">

@@ -62,7 +62,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logOut());
-    localStorage.removeItem("tokens");
+    localStorage.removeItem("refreshToken");
   };
 
   const handleNavigate = (e) => {

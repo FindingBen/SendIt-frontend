@@ -8,27 +8,24 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
   const [show, setShowModal] = useState(showModal);
   const token = useSelector(selectCurrentToken);
   const params = useParams();
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-  const [email, setEmail] = useState();
-  const [phoneNumber, setPhoneNumber] = useState();
+  const firstName = useInputField();
+  const lastName = useInputField();
+  const email = useInputField();
+  const phoneNumber = useInputField();
   const navigate = useNavigate();
   const axiosInstance = useAxiosInstance();
 
-  const handleFirstName = (e) => {
-    setFirstName(e.target.value);
-  };
+  const useInputField = (initialValue = "") => {
+    const [value, setValue] = useState(initialValue);
 
-  const handleLastName = (e) => {
-    setLastName(e.target.value);
-  };
+    const handleChange = (e) => {
+      setValue(e.target.value);
+    };
 
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePhoneNumber = (e) => {
-    setPhoneNumber(e.target.value);
+    return {
+      value,
+      onChange: handleChange,
+    };
   };
 
   useEffect(() => {
@@ -55,9 +52,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
         }
       );
 
-      console.log(response);
       if (response.status === 200 || 201) {
-        console.log("success");
         newContacts((prevContacts) => [...prevContacts, response.data]);
         closeModal();
       }
@@ -96,27 +91,27 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
                     name="first_name"
                     type="text"
                     placeholder="First name"
-                    onChange={handleFirstName}
+                    {...firstName}
                   />
                   <input
                     className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     name="last_name"
                     type="text"
                     placeholder="Last name"
-                    onChange={handleLastName}
+                    {...lastName}
                   />
                   <input
                     className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     name="phone_number"
                     type="text"
                     placeholder="Phone number"
-                    onChange={handlePhoneNumber}
+                    {...phoneNumber}
                   />
                   <input
                     className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     name="email"
                     placeholder="Email"
-                    onChange={handleEmail}
+                    {...email}
                   />
                 </div>
                 {/*footer*/}

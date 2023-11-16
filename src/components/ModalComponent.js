@@ -4,10 +4,26 @@ import { setState } from "../features/modal/formReducer";
 import { setModalState, setOpenModal } from "../features/modal/modalReducer";
 import { useDispatch } from "react-redux";
 import { ElementContext } from "../context/ElementContext";
-function ModalComponent({ confirmLeave, showModal, modalType }) {
+// import useAxiosInstance from "../utils/axiosInstance";
+import { config } from "../../src/constants/Constants";
+// import { createElements } from "../utils/helpers/createElements";
+// import {
+//   selectCurrentUser,
+//   selectCurrentToken,
+// } from "../features/auth/authSlice";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+function ModalComponent({ confirmLeave, showModal, modalType, messageId }) {
+  // const axiosInstance = useAxiosInstance();
+  const BASE_URL = config.url.BASE_URL;
+  const params = useParams();
   const [show, setShow] = useState(showModal);
+  const [message, setMessage] = useState();
   const dispatch = useDispatch();
   const { deleteElement } = useContext(ElementContext);
+  // const token = useSelector(selectCurrentToken);
+  // const user = useSelector(selectCurrentUser);
   const handleClose = (e) => {
     confirmLeave();
     dispatch(setOpenModal({ open: false }));
@@ -27,7 +43,70 @@ function ModalComponent({ confirmLeave, showModal, modalType }) {
     setShow(true);
   };
 
+  // const messageContents = async () => {
+  //   try {
+  //     let response = await fetch(`${BASE_URL}/api/message_view/${messageId}/`);
+  //     if (response.status === 200) {
+  //       const data = await response.json();
+  //       setMessage(data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // const copyElements = async () => {
+  //   let messageObject;
+  //   //try {
+  //   messageObject = await duplicateMessage();
+  //   const elementContextList = message.elements;
+  //   console.log(elementContextList);
+  //   const createElementsData = createElements({
+  //     elementContextList,
+  //     messageObject,
+  //     token,
+  //     axiosInstance,
+  //   });
+  //   const createdElements = await createElementsData(); // Await the result
+
+  //   //setElementsList((prevElement) => prevElement.concat(createdElements));
+
+  //   return createdElements;
+  //   // } catch (error) {
+  //   //   console.log("Error creating elements:", error);
+  //   //   return;
+  //   // }
+  // };
+
+  // const duplicateMessage = async () => {
+  //   const requestData = {
+  //     users: user,
+  //     message_name: message.message.message_name,
+  //   };
+  //   try {
+  //     let response = await axiosInstance.post(
+  //       `${BASE_URL}/api/create_notes/`,
+  //       requestData,
+  //       {
+  //         headers: {
+  //           Authorization: "Bearer " + String(token),
+  //         },
+  //       }
+  //     );
+  //     if (response.status === 200) {
+  //       await copyElements;
+  //       setShow(false);
+  //     } else {
+  //       console.log("Failed to create notes:", response.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     setShow(false);
+  //   }
+  // };
+
   useEffect(() => {
+    // messageContents();
     if (showModal) {
       handleShow();
     }
@@ -77,6 +156,8 @@ function ModalComponent({ confirmLeave, showModal, modalType }) {
             <p>Your payment is being verified by Stripe, hold on</p>
           ) : modalType === "Redirect" ? (
             <p>You are being redirected to, please wait</p>
+          ) : modalType === "copyCreate" ? (
+            <p>Are you sure you want to duplicate this message?</p>
           ) : null}
         </Modal.Body>
         {!modalType ? (
@@ -92,6 +173,21 @@ function ModalComponent({ confirmLeave, showModal, modalType }) {
               onClick={handleStay}
             >
               Stay
+            </button>
+          </Modal.Footer>
+        ) : modalType === "copyCreate" ? (
+          <Modal.Footer>
+            <button
+              className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+              //onClick={duplicateMessage}
+            >
+              Yes
+            </button>
+            <button
+              className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+              onClick={() => setShow(false)}
+            >
+              No
             </button>
           </Modal.Footer>
         ) : (

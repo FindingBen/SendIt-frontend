@@ -71,9 +71,9 @@ const Login = () => {
 
   return (
     <section class="flex flex-col justify-center antialiased bg-darkBlue text-gray-200 min-h-screen p-4 w-100">
-      <div class="h-full">
-        <div class="max-w-[360px] mx-auto mt-20 mb-5">
-          <div class="bg-white shadow-lg rounded-lg mt-9">
+      <div class="flex-1">
+        <div class="max-w-[360px] mx-auto mt-10 mb-5">
+          <div class="bg-white h-[420px] rounded-lg mt-3">
             <header class="text-center px-5 pb-5">
               <svg
                 class="inline-flex -mt-9 w-[72px] h-[72px] rounded-full border-4 border-white box-content shadow mb-3"
@@ -147,7 +147,7 @@ const Login = () => {
                 )}
               </form>
             </div>
-            <span class="text-sm mt-3 hover:text-blue-500 cursor-pointer hover:bg-gray-300 round">
+            <span class="text-sm mt-3 p-2 hover:text-blue-500 cursor-pointer hover:bg-gray-300 rounded duration-300">
               <Link to="/reset_password" className="text-body text-gray-300">
                 Forgot password?
               </Link>

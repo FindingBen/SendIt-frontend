@@ -1,10 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MDBInput, MDBTypography } from "mdb-react-ui-kit";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../features/auth/authSlice";
 import { useRegisterMutation } from "../features/auth/authApiSlice";
-import jwt_decode from "jwt-decode";
+import { motion } from "framer-motion";
 
 const RegisterPage = () => {
   const userRef = useRef();
@@ -78,9 +77,9 @@ const RegisterPage = () => {
 
   return (
     <section class="flex flex-col justify-center antialiased bg-darkBlue text-gray-200 min-h-screen p-4 w-100">
-      <div class="h-full">
+      <div class="flex-1">
         <div class="max-w-[360px] mx-auto mt-20 mb-5">
-          <div class="bg-white shadow-lg rounded-lg mt-9">
+          <div class="bg-white mt-9 rounded-md">
             <header class="text-center px-5 pb-5">
               <svg
                 class="inline-flex -mt-9 w-[72px] h-[72px] rounded-full border-4 border-white box-content shadow mb-3"
@@ -99,8 +98,21 @@ const RegisterPage = () => {
                 Register your credentials below
               </div>
             </header>
-            {errMsg && <p className="text-red-700">{errMsg}</p>}
-            <div class="bg-gray-100 text-center px-5 py-6">
+            {errMsg && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  duration: 0.4,
+                  delay: 0.2,
+                  ease: [0, 0.41, 0.1, 1.01],
+                }}
+                className="text-red-700"
+              >
+                {errMsg}
+              </motion.div>
+            )}
+            <div class="bg-gray-100 text-center px-5 py-6 rounded-b-md">
               <form class="space-y-3" onSubmit={handleSubmit}>
                 <div class="shadow-sm rounded">
                   <div class="flex-none">

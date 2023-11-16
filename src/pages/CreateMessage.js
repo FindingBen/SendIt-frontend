@@ -13,6 +13,7 @@ import modalReducer, {
   selectModalCall,
   setOpenModal,
 } from "../features/modal/modalReducer";
+import { createElements } from "../utils/helpers/createElements";
 import List from "../components/List";
 import { setState } from "../features/modal/formReducer";
 import { setList, selectListState } from "../features/elements/elementReducer";
@@ -44,7 +45,7 @@ const CreateNote = () => {
   const user = useSelector(selectCurrentUser);
   const axiosInstance = useAxiosInstance();
   const modal_state = useSelector(selectModalCall);
-
+  //const createdElements = createElements();
   useEffect(() => {
     if (elementContextList.length > 0) {
       dispatch(setState({ isDirty: true }));
@@ -74,7 +75,6 @@ const CreateNote = () => {
   };
 
   const handleMessageName = (e) => {
-   
     setMessageName(e.target.value);
     setIsDirty(true);
   };
@@ -82,60 +82,25 @@ const CreateNote = () => {
   const handleSubmit = async () => {
     dispatch(setList({ populated: true }));
     setIsLoading(true);
+
+    let messageObject;
     try {
-      let messageObject;
-      try {
-        messageObject = await createMessage();
+      messageObject = await createMessage();
 
-        const createdElements = [];
+      const createElementsData = createElements({
+        elementContextList,
+        messageObject,
+        token,
+        axiosInstance,
+      });
+      const createdElements = await createElementsData(); // Await the result
 
-        for (let i = 0; i < elementContextList.length; i++) {
-          const elementContext = elementContextList[i];
-          const formData = new FormData();
+      setElementsList((prevElement) => prevElement.concat(createdElements));
 
-          if (elementContext.element_type === "Img") {
-            formData.append("image", elementContext.file);
-          } else if (elementContext.element_type === "Text") {
-            formData.append("text", elementContext.text);
-            formData.append("alignment", elementContext.alignment);
-          } else if (elementContext.element_type === "Button") {
-            formData.append("button_title", elementContext.button_title);
-            formData.append("button_link", elementContext.button_link);
-            formData.append("button_color", elementContext.button_color);
-          }
-          formData.append("element_type", elementContext.element_type);
-          formData.append("users", elementContext.users);
-          formData.append("order", i);
-          formData.append("message", messageObject);
-
-          let response = await axiosInstance.post(
-            "/api/create_element/",
-            formData,
-            {
-              headers: {
-                Authorization: "Bearer " + String(token),
-              },
-            }
-          );
-
-          //let data = await response.json();
-          console.log(response.data);
-          if (response.status === 200) {
-            createdElements.push(response.data);
-          } else {
-            console.log("Failed to create element:", elementContext);
-            return; // Return undefined to indicate a failure
-          }
-        }
-
-        setElementsList((prevElement) => prevElement.concat(createdElements));
-        return createdElements; // Return the created elements from the function
-      } catch (error) {
-        console.log("Error creating elements:", error);
-        return; // Return undefined to indicate a failure
-      }
-    } catch (e) {
-      console.log(e);
+      return createdElements;
+    } catch (error) {
+      console.log("Error creating elements:", error);
+      return;
     }
   };
 
@@ -222,7 +187,7 @@ const CreateNote = () => {
     console.log("Updating...", element);
     setElementsContextList(element);
   };
-  console.log(messageName);
+
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">

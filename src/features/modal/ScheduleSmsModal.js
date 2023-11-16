@@ -30,7 +30,7 @@ const ScheduleSmsModal = ({
   const closeModal = () => {
     onClose();
   };
-  console.log(dateValue?.toISOString());
+
   return (
     <>
       {show ? (
