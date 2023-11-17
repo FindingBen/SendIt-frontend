@@ -184,17 +184,50 @@ const EditMessage = () => {
 
   const addElement = async () => {
     dispatch(setList({ populated: true }));
+    const createdElements = [];
 
-    const messageId = message.id;
-    const createElementsData = createElements({
-      elementContextList,
-      messageId,
-      token,
-      axiosInstance,
-    });
-    const createdElements = await createElementsData();
+    try {
+      for (let i = 0; i < elements.length; i++) {
+        const elementContext = elements[i];
 
-    setElements((prevElement) => [...prevElement, ...createdElements]);
+        const formData = new FormData();
+        if ("context" in elementContext) {
+          if (elementContext.element_type === "Img") {
+            formData.append("image", elementContext.file);
+          } else if (elementContext.element_type === "Text") {
+            formData.append("text", elementContext.text);
+            formData.append("alignment", elementContext.alignment);
+          } else if (elementContext.element_type === "Button") {
+            formData.append("button_title", elementContext.button_title);
+            formData.append("button_link", elementContext.button_link);
+            formData.append("button_color", elementContext.button_color);
+          }
+          formData.append("element_type", elementContext.element_type);
+          formData.append("users", elementContext.users);
+          formData.append("message", getId);
+          formData.append("order", elementContext.order);
+
+          let response = await axiosInstance.post(
+            "/api/create_element/",
+            formData,
+            {
+              headers: {
+                Authorization: "Bearer " + String(token),
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            createdElements.push(response.data.element);
+          } else {
+            console.log("Failed to create element:", elementContext);
+          }
+        }
+        setElements((prevElement) => [...prevElement, ...createdElements]);
+      }
+    } catch (error) {
+      console.log("Error creating elements:", error);
+    }
 
     return elements;
   };

@@ -9,8 +9,9 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import useAxiosInstance from "../utils/axiosInstance";
 import DeleteMessageModal from "../features/modal/DeleteMessageModal";
-import ModalComponent from "../components/ModalComponent";
+import { createElements } from "../utils/helpers/createElements";
 import { motion } from "framer-motion";
+import { config } from "../constants/Constants";
 
 const HomePage = () => {
   const axiosInstance = useAxiosInstance();
@@ -19,19 +20,20 @@ const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
+  const [elements, setElements] = useState([]);
   const [listUpdated, setListUpdated] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [showCopy, setShowCopy] = useState(false);
-
+  const BASE_URL = config.url.BASE_URL;
   const [messageId, setMessageId] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
     getNotes();
     setListUpdated(false);
-    setIsLoaded(true);
-  }, [listUpdated]);
+    setLoading(true);
+  }, [listUpdated, loading]);
 
   const itemsPerPage = 5;
   const totalPages = Math.ceil(notes.length / itemsPerPage);
@@ -57,7 +59,6 @@ const HomePage = () => {
 
       if (response.status === 200) {
         setNotes(response?.data);
-        setIsLoaded(false);
       } else if (response.statusText === "Unauthorized") {
         dispatch(logOut());
       }
@@ -71,9 +72,90 @@ const HomePage = () => {
     setShow(true);
   };
 
-  const copyCreateMessage = (id) => {
-    setMessageId(id);
-    setShow(true);
+  const duplicateMessage = async (messageId) => {
+    try {
+      setLoading(true);
+      // Fetch details of the existing message
+      const existingMessageResponse = await axiosInstance.get(
+        `/api/message_view/${messageId}/`,
+        {
+          headers: {
+            Authorization: "Bearer " + String(token),
+          },
+        }
+      );
+      console.log("EXISTING MESSAGE", existingMessageResponse);
+      if (existingMessageResponse.status !== 200) {
+        console.error("Failed to fetch existing message details");
+        return;
+      }
+
+      const existingMessage = existingMessageResponse.data.message;
+
+      // Create a new message with the fetched details
+      const duplicateMessageResponse = await axiosInstance.post(
+        "/api/create_notes/",
+        {
+          users: user,
+          message_name: `Copy of ${existingMessage.message_name}`,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + String(token),
+          },
+        }
+      );
+
+      if (duplicateMessageResponse.status !== 200) {
+        console.error("Failed to create a duplicate message");
+        return;
+      }
+
+      const newMessage = duplicateMessageResponse.data.note.id;
+      const elementList = existingMessageResponse.data.elements;
+
+      elementList?.map(async (element) => {
+        const formData = new FormData();
+
+        if (element.element_type === "Img") {
+          try {
+            const response = await fetch(`${BASE_URL}${element.image}`);
+            const blob = await response.blob();
+            const fileImage = new File([blob], "image.png", {
+              type: "image/png",
+            });
+            formData.append("image", fileImage);
+          } catch (error) {
+            console.error("Error fetching or processing image:", error);
+          }
+        } else if (element.element_type === "Text") {
+          formData.append("text", element.text);
+          formData.append("alignment", element.alignment);
+        } else if (element.element_type === "Button") {
+          formData.append("button_title", element.button_title);
+          formData.append("button_link", element.button_link);
+          formData.append("button_color", element.button_color);
+        }
+        formData.append("element_type", element.element_type);
+        formData.append("order", element.order);
+        formData.append("message", newMessage);
+
+        let response = await axiosInstance.post(
+          "/api/create_element/",
+          formData,
+          {
+            headers: {
+              Authorization: "Bearer " + String(token),
+            },
+          }
+        );
+        if (response.status === 200) {
+        }
+      });
+      setLoading(false);
+    } catch (error) {
+      console.error("Error duplicating message:", error);
+    }
   };
 
   return (
@@ -279,9 +361,7 @@ const HomePage = () => {
                                   <button
                                     type="button"
                                     className="hover:bg-sky-300 rounded"
-                                    onClick={() =>
-                                      copyCreateMessage(message.id)
-                                    }
+                                    onClick={() => duplicateMessage(message.id)}
                                   >
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"

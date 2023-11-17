@@ -4,11 +4,11 @@ export const createElements =
     if (token) {
       try {
         const createdElements = [];
-
+        console.log("CONTEXT", elementContextList);
         for (let i = 0; i < elementContextList.length; i++) {
           const elementContext = elementContextList[i];
           const formData = new FormData();
-
+          console.log(messageObject);
           if ("context" in elementContext) {
             if (elementContext.element_type === "Img") {
               formData.append("image", elementContext.file);
