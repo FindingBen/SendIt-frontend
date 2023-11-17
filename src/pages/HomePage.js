@@ -20,18 +20,15 @@ const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
-  const [elements, setElements] = useState([]);
   const [listUpdated, setListUpdated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
-  const [showCopy, setShowCopy] = useState(false);
   const BASE_URL = config.url.BASE_URL;
   const [messageId, setMessageId] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
     getNotes();
-    setListUpdated(false);
     setLoading(true);
   }, [listUpdated, loading]);
 
@@ -84,7 +81,7 @@ const HomePage = () => {
           },
         }
       );
-      console.log("EXISTING MESSAGE", existingMessageResponse);
+
       if (existingMessageResponse.status !== 200) {
         console.error("Failed to fetch existing message details");
         return;

@@ -22,7 +22,6 @@ const ContactList = () => {
 
   useEffect(() => {
     getContactLists();
-    setIsLoading(true);
   }, [listUpdated]);
 
   let getContactLists = async () => {
@@ -36,7 +35,6 @@ const ContactList = () => {
       });
       if (response.status === 200) {
         setContactList(response.data);
-        setIsLoading(false);
         setListId();
       }
     } catch (error) {
