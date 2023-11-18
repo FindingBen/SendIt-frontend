@@ -137,16 +137,21 @@ const HomePage = () => {
         formData.append("order", element.order);
         formData.append("message", newMessage);
 
-        let response = await axiosInstance.post(
-          "/api/create_element/",
-          formData,
-          {
-            headers: {
-              Authorization: "Bearer " + String(token),
-            },
+        try {
+          let response = await axiosInstance.post(
+            "/api/create_element/",
+            formData,
+            {
+              headers: {
+                Authorization: "Bearer " + String(token),
+              },
+            }
+          );
+          if (response.status === 200) {
+            
           }
-        );
-        if (response.status === 200) {
+        } catch (e) {
+          console.log(e);
         }
       });
       setLoading(false);
