@@ -27,6 +27,8 @@ const DeleteMessageModal = ({
       );
       if (response.status === 200) {
         closeModal();
+        //setListUpdate(true);
+        setUpdated();
       }
     } catch (error) {
       console.log("Error deleting message:", error);
@@ -39,7 +41,6 @@ const DeleteMessageModal = ({
 
   const setFunction = () => {
     deleteMessage();
-    setUpdated();
   };
 
   return (

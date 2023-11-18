@@ -63,7 +63,7 @@ const HomePage = () => {
       console.error(error);
     }
   };
-
+  console.log(listUpdated);
   const deleteMessage = (id) => {
     setMessageId(id);
     setShow(true);
@@ -414,8 +414,8 @@ const HomePage = () => {
                 messageId={messageId}
                 showModalDelete={show}
                 onClose={() => setShow(false)}
-                listUpdated={listUpdated}
                 setUpdated={() => setListUpdated(true)}
+                listUpdated={listUpdated}
               />
               {/* <ModalComponent
                 messageId={messageId}
