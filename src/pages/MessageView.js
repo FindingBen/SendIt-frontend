@@ -11,21 +11,21 @@ const MessageView = () => {
 
   const BASE_URL = config.url.BASE_URL;
 
-  //const BASE_URL = "https://sendit-backend-production.up.railway.app";
-
   useEffect(() => {
     messageView();
   }, []);
   console.log("Test");
   let messageView = async () => {
-    setId(params.id);
-    //https://stingray-app-9825w.ondigitalocean.app
-    let response = await fetch(`${BASE_URL}/api/message_view/${params.id}/`);
-    console.log(response);
-    const data = await response.json();
+    try {
+      setId(params.id);
+      let response = await fetch(`${BASE_URL}/api/message_view/${params.id}/`);
+      const data = await response.json();
 
-    setElements(data.elements);
-    setIsLoaded(false);
+      setElements(data.elements);
+      setIsLoaded(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
