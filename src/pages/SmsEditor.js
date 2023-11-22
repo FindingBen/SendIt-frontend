@@ -126,7 +126,6 @@ const SmsEditor = () => {
         navigate(`/home`);
       }
 
-      console.log(response);
     } catch (error) {
       setErrorMessage(error.response.data.error);
       console.log(error);

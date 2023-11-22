@@ -39,7 +39,7 @@ function App() {
           element={<MessageView></MessageView>}
         ></Route>
         <Route
-          path="/unsubscribe/:id"
+          path="/opt-out/:id"
           element={<UnsubscribePage></UnsubscribePage>}
         ></Route>
       </Routes>

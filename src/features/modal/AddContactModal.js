@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { selectCurrentToken } from "../../features/auth/authSlice";
 import useAxiosInstance from "../../utils/axiosInstance";
 import { useSelector } from "react-redux";
+import Modal from "react-bootstrap/Modal";
 
 const AddContactModal = ({ showModal, onClose, newContacts }) => {
   const [show, setShowModal] = useState(showModal);
@@ -72,22 +73,26 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
     <>
       {show ? (
         <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+          <Modal
+            show={show}
+            onHide={closeModal}
+            backdrop="static"
+            keyboard={false}
+          >
+            <div className="relative w-auto mx-auto max-w-3xl">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">
-                    Add a new contact to your list
-                  </h3>
-                </div>
+                <Modal.Header closeButton>
+                  <Modal.Title>Add a contact</Modal.Title>
+                </Modal.Header>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <p className="my-4 text-slate-500 text-lg leading-relaxed">
                     You are about to add a new contact to this current list you
                     are visiting, remember to double check email and phone
-                    records!
+                    records! Remember to includ calling code as well( 45 ) or
+                    which ever country to phone number is from
                   </p>
                   <input
                     className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -120,14 +125,14 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
                     type="button"
                     onClick={closeModal}
                   >
                     Close
                   </button>
                   <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
                     type="button"
                     onClick={addContact}
                   >
@@ -136,7 +141,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </Modal>
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}

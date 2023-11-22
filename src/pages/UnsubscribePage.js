@@ -10,7 +10,7 @@ const UnsubscribePage = () => {
   const handleUnsubscribe = async () => {
     try {
       let response = await fetch(
-        `${BASEURL}/api/unsubscribe/${hashedNumber.id}`
+        `${BASEURL}/api/optout/${hashedNumber.id}`
       );
 
       if (response.status === 200) {
