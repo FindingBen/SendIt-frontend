@@ -8,7 +8,9 @@
 
 .App {
   text-align: center;
-background-color: #1f2937;
+  background-color: #1f2937;
+  position: relative; /* Add this to make sure the ::before pseudo-element is positioned relative to the .App container */
+  overflow-x: hidden; /* Hide horizontal overflow */
 
 }
 
@@ -19,6 +21,25 @@ color: aliceblue;
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.curve-container {
+  position: relative;
+  height: 100vh;
+  background-color: #1a202c; /* Set the background color */
+  overflow: hidden;
+}
+
+/* Style for the curved line */
+.curve-container::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px; /* Adjust the height of the curve as needed */
+  background: linear-gradient(to right, transparent 50%, #1a202c 50%); /* Set the gradient and colors */
+  border-radius: 50% 50% 0 0; /* Create a semi-circle */
 }
 
 @media (prefers-reduced-motion: no-preference) {

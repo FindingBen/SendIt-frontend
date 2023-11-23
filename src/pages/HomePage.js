@@ -63,7 +63,7 @@ const HomePage = () => {
       console.error(error);
     }
   };
-  console.log(listUpdated);
+
   const deleteMessage = (id) => {
     setMessageId(id);
     setShow(true);
@@ -148,7 +148,6 @@ const HomePage = () => {
             }
           );
           if (response.status === 200) {
-            
           }
         } catch (e) {
           console.log(e);
@@ -422,11 +421,7 @@ const HomePage = () => {
                 setUpdated={() => setListUpdated(true)}
                 listUpdated={listUpdated}
               />
-              {/* <ModalComponent
-                messageId={messageId}
-                showModal={showCopy}
-                modalType={"copyCreate"}
-              /> */}
+
             </div>
             {totalPages > 1 && (
               <motion.div

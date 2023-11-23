@@ -125,7 +125,6 @@ const SmsEditor = () => {
       if (response.status === 200 || 201) {
         navigate(`/home`);
       }
-
     } catch (error) {
       setErrorMessage(error.response.data.error);
       console.log(error);
@@ -254,7 +253,7 @@ const SmsEditor = () => {
                       <textarea
                         id="smsTextArea"
                         maxLength={maxCharacters}
-                        className="block p-2.5 w-75 h-2/4 text-sm text-gray-50 bg-gray-400 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="block p-2.5 w-5/6 h-2/4 text-sm text-gray-50 bg-gray-400 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Write your sms here..."
                         onChange={handleSms}
                         value={smsText}
@@ -270,7 +269,7 @@ const SmsEditor = () => {
                             onClick={() => setShow(true)}
                             type="submit"
                             color="dark"
-                            className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:w-28 xl:h-14 xl:text-base mt-4"
+                            className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-3 rounded text-sm xl:text-base mt-4"
                           >
                             Send
                           </button>
@@ -279,7 +278,7 @@ const SmsEditor = () => {
                             disabled
                             type="submit"
                             color="dark"
-                            className="bg-gray-600 opacity-80 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:w-28 xl:h-14 xl:text-base mt-4"
+                            className="bg-gray-600 opacity-80 text-white font-bold py-2 px-3 rounded text-sm xl:text-base mt-4"
                           >
                             Send
                           </button>
@@ -289,7 +288,7 @@ const SmsEditor = () => {
                             onClick={() => setShowSchedule(true)}
                             type="submit"
                             color="dark"
-                            className="bg-yellow-700 hover:bg-yellow-300 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:w-28 xl:h-14 xl:text-base mt-4 ml-3"
+                            className="bg-yellow-700 hover:bg-yellow-300 text-white font-bold py-2 px-3 rounded text-sm xl:text-base mt-4 ml-3"
                           >
                             Schedule
                           </button>
@@ -298,7 +297,7 @@ const SmsEditor = () => {
                             disabled
                             type="submit"
                             color="dark"
-                            className="bg-yellow-700 opacity-80 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:w-28 xl:h-14 xl:text-base mt-4 ml-3"
+                            className="bg-yellow-700 opacity-80 text-white font-bold py-2 px-3 rounded text-sm xl:text-base mt-4 ml-3"
                           >
                             Schedule
                           </button>
@@ -307,7 +306,7 @@ const SmsEditor = () => {
                           <button
                             onClick={handleAddLink}
                             value={linkURLBase}
-                            className="bg-blue-800 hover:bg-blue-400 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:w-28 xl:h-14 xl:text-base mt-4 ml-44 xl:ml-72"
+                            className="bg-blue-800 hover:bg-blue-400 text-white font-bold py-2 px-3 rounded text-sm xl:text-base mt-4 ml-44 xl:ml-72"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -329,7 +328,7 @@ const SmsEditor = () => {
                             onClick={handleAddLink}
                             value={linkURLBase}
                             disabled
-                            className="bg-gray-500 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:w-28 xl:h-14 xl:text-base mt-4 ml-44 xl:ml-72"
+                            className="bg-gray-500 text-white font-bold py-2 px-3 rounded text-sm xl:text-base mt-4 ml-44 xl:ml-72"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -351,7 +350,7 @@ const SmsEditor = () => {
                         {recipients && smsText.length > 0 ? (
                           <button
                             onClick={handleNameLink}
-                            className="bg-blue-800 hover:bg-blue-400 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:text-base mt-4 ml-2"
+                            className="bg-blue-800 hover:bg-blue-400 text-white font-bold py-2 px-3 rounded text-sm xl:text-base mt-4 ml-2"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -371,7 +370,7 @@ const SmsEditor = () => {
                         ) : (
                           <button
                             disabled
-                            className="bg-gray-500 text-white font-bold py-2 px-3 rounded text-sm w-22 h-12 xl:text-base mt-4 ml-2"
+                            className="bg-gray-500 text-white font-bold py-2 px-3 rounded text-sm xl:text-base mt-4 ml-2"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"

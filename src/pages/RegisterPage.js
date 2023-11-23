@@ -4,8 +4,10 @@ import { useDispatch } from "react-redux";
 import { registerUser } from "../features/auth/authSlice";
 import { useRegisterMutation } from "../features/auth/authApiSlice";
 import { motion } from "framer-motion";
+import { config } from "../constants/Constants";
 
 const RegisterPage = () => {
+  const BASE_URL = config.url.BASE_URL;
   const userRef = useRef();
   const errRef = useRef();
   const [email, setEmail] = useState("");
@@ -17,7 +19,6 @@ const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const [errMsgPass, setErrMsgPass] = useState("");
   const navigate = useNavigate();
-
   const [register, { isLoading }] = useRegisterMutation();
   const dispatch = useDispatch();
 
@@ -33,34 +34,41 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const bodyData = {
+      email: email,
+      username: username,
+      first_name: first_name,
+      last_name: last_name,
+      password: password,
+    };
     try {
-      const userData = await register({
-        email,
-        username,
-        first_name,
-        last_name,
-        password,
-      });
+      const response = await fetch(`${BASE_URL}/api/register/`, {
+        method: "POST",
+        body: JSON.stringify(bodyData),
 
-      dispatch(registerUser(userData));
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      const responseData = await response.json();
+      dispatch(registerUser(responseData));
       setLoading(false);
       // Check if userData contains an error
-      if (userData?.error?.status === 400) {
-        if (userData?.error?.data?.username) {
-          setErrMsg(userData.error.data.username);
+      if (responseData?.error?.status === 400) {
+        if (responseData?.error?.data?.username) {
+          setErrMsg(responseData.error.data.username);
           setLoading(false);
-        } else if (userData?.error?.data?.password) {
-          setErrMsgPass(userData.error.data.password);
+        } else if (responseData?.error?.data?.password) {
+          setErrMsgPass(responseData.error.data.password);
           setLoading(false);
         }
         //setErrMsg("Missing Username or Password");
-      } else if (userData?.error?.status === 401) {
+      } else if (responseData?.error?.status === 401) {
         setErrMsg("Unauthorized");
         setLoading(false);
       } else {
         // No error, proceed with successful registration
-        console.log(userData);
-        dispatch(registerUser(userData));
+        console.log(responseData);
+        dispatch(registerUser(responseData));
         navigate("/home");
       }
     } catch (err) {

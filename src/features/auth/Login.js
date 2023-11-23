@@ -3,20 +3,24 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "./authSlice";
 import { useLoginMutation } from "./authApiSlice";
+//import useAxiosInstance from "../../utils/axiosInstance";
 import { store } from "../../app/store";
 import jwt_decode from "jwt-decode";
+import { config } from "../../constants/Constants";
+import { motion } from "framer-motion";
 
 const Login = () => {
+  // const axiosInstance = useAxiosInstance();
+  const BASE_URL = config.url.BASE_URL;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const userRef = useRef();
   const errRef = useRef();
-  const [username, setUser] = useState("");
-  const [password, setPwd] = useState("");
-  const [errMsg, setErrMsg] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-
-  const [login, { isLoading }] = useLoginMutation();
-  const dispatch = useDispatch();
+  const [username, setUser] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     userRef.current?.focus();
@@ -24,50 +28,50 @@ const Login = () => {
 
   useEffect(() => {
     setErrMsg("");
-  }, [username, password]);
+  }, [username, pwd]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
     setLoading(true);
+    e.preventDefault();
+    const bodyData = {
+      username: username,
+      password: pwd,
+    };
     try {
-      const userData = await login({
-        username,
-        password,
+      const response = await fetch(`${BASE_URL}/api/token/`, {
+        method: "POST",
+        body: JSON.stringify(bodyData),
+
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
       });
-      const user = jwt_decode(userData?.data?.access).user_id;
-      console.log("Before setCredentials:", store.getState());
-      dispatch(setCredentials({ ...userData?.data, user }));
-      console.log("After setCredentials:", store.getState());
+      const responseData = await response.json();
+      const user = jwt_decode(responseData?.access).user_id;
+
+      dispatch(setCredentials({ ...responseData, user }));
       setUser("");
       setPwd("");
-      setLoading(false);
-      localStorage.setItem("refreshToken", userData.data.refresh);
-
+      setSuccess(true);
+      localStorage.setItem("refreshToken", responseData?.refresh);
       navigate("/home");
     } catch (err) {
-      console.log("errrrr", err);
-      if (!err?.originalStatus) {
-        localStorage.removeItem("refreshToken");
-
+      console.log(err);
+      if (!err?.response) {
+        setErrMsg("Wrong credentials!");
         setLoading(false);
-        // isLoading: true until timeout occurs
-        setErrMsg("Wrong username or password!");
-      } else if (err.originalStatus === 400) {
-        setLoading(false);
+      } else if (err.response?.status === 400) {
         setErrMsg("Missing Username or Password");
-      } else if (err.originalStatus === 401) {
         setLoading(false);
+      } else if (err.response?.status === 401) {
         setErrMsg("Unauthorized");
-      } else {
         setLoading(false);
+      } else {
         setErrMsg("Login Failed");
+        setLoading(false);
       }
-      errRef.current?.focus();
+      errRef.current.focus();
     }
   };
-
-  const handleUserInput = (e) => setUser(e.target.value);
-  const handlePwdInput = (e) => setPwd(e.target.value);
 
   return (
     <section class="flex flex-col justify-center antialiased bg-darkBlue text-gray-200 min-h-screen p-4 w-100">
@@ -92,13 +96,29 @@ const Login = () => {
                 Enter your credentials below to continue
               </div>
             </header>
-            {errMsg && <p className="text-red-700">{errMsg}</p>}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.4,
+                delay: 0.2,
+                ease: [0, 0.41, 0.1, 1.01],
+              }}
+            >
+              <p
+                ref={errRef}
+                className={`${errMsg} ? "errmsg" : "offscreen" text-black`}
+                aria-live="assertive"
+              >
+                {errMsg}
+              </p>
+            </motion.div>
             <div class="bg-gray-100 mb-4 text-center px-5 py-6">
               <form class="space-y-3" onSubmit={handleSubmit}>
                 <div class="shadow-sm rounded">
                   <div class="flex-none">
                     <input
-                      onChange={handleUserInput}
+                      onChange={(e) => setUser(e.target.value)}
                       name="username"
                       class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
                       type="text"
@@ -109,7 +129,7 @@ const Login = () => {
                 <div class="shadow-sm rounded">
                   <div class="flex-none">
                     <input
-                      onChange={handlePwdInput}
+                      onChange={(e) => setPwd(e.target.value)}
                       name="password"
                       class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
                       type="password"

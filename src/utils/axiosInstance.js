@@ -53,6 +53,7 @@ const useAxiosInstance = () => {
         const newToken = response.data.access;
         console.log("new token aquired..");
         localStorage.setItem("refreshToken", response.data.refresh);
+
         dispatch(setCredentials({ ...response.data, user }));
 
         const newAxiosInstance = createAxiosInstance(newToken);

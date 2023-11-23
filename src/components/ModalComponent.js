@@ -43,68 +43,6 @@ function ModalComponent({ confirmLeave, showModal, modalType, messageId }) {
     setShow(true);
   };
 
-  // const messageContents = async () => {
-  //   try {
-  //     let response = await fetch(`${BASE_URL}/api/message_view/${messageId}/`);
-  //     if (response.status === 200) {
-  //       const data = await response.json();
-  //       setMessage(data);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const copyElements = async () => {
-  //   let messageObject;
-  //   //try {
-  //   messageObject = await duplicateMessage();
-  //   const elementContextList = message.elements;
-  //   console.log(elementContextList);
-  //   const createElementsData = createElements({
-  //     elementContextList,
-  //     messageObject,
-  //     token,
-  //     axiosInstance,
-  //   });
-  //   const createdElements = await createElementsData(); // Await the result
-
-  //   //setElementsList((prevElement) => prevElement.concat(createdElements));
-
-  //   return createdElements;
-  //   // } catch (error) {
-  //   //   console.log("Error creating elements:", error);
-  //   //   return;
-  //   // }
-  // };
-
-  // const duplicateMessage = async () => {
-  //   const requestData = {
-  //     users: user,
-  //     message_name: message.message.message_name,
-  //   };
-  //   try {
-  //     let response = await axiosInstance.post(
-  //       `${BASE_URL}/api/create_notes/`,
-  //       requestData,
-  //       {
-  //         headers: {
-  //           Authorization: "Bearer " + String(token),
-  //         },
-  //       }
-  //     );
-  //     if (response.status === 200) {
-  //       await copyElements;
-  //       setShow(false);
-  //     } else {
-  //       console.log("Failed to create notes:", response.data);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     setShow(false);
-  //   }
-  // };
-
   useEffect(() => {
     // messageContents();
     if (showModal) {
