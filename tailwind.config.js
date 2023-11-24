@@ -5,6 +5,7 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/flowbite/**/*.js",
+    "./node_modules/flowbite-react/**/*.js",
 
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
@@ -32,6 +33,8 @@ module.exports = {
         darkestGray: "#1118274D",
         darkPurple: "#1D1A22",
         grayWhite: "#CAC4CF",
+        lightGray: "#2C365E",
+        lightBlue: "#2C365E",
       },
       fontFamily: {
         sfPro: ["SF Pro"],

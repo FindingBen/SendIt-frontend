@@ -43,10 +43,7 @@ function App() {
           element={<UnsubscribePage></UnsubscribePage>}
         ></Route>
       </Routes>
-      <div
-        className="App"
-        style={({ height: "100vh" }, { display: "flex" })}
-      >
+      <div className="App" style={({ height: "100vh" }, { display: "flex" })}>
         <ElementProvider>
           <Routes>
             {/* <Route

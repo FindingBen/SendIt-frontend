@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useParams } from "react-router-dom";
-import ChartComponent from "../utils/chart/ChartComponent";
-import { ChartData } from "../utils/chart/ChartData";
+import BarChart from "../utils/chart/BarChart";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePickerComponent from "../components/DatePicker";
+import { motion } from "framer-motion";
 
 const AnalyticsPage = () => {
   const axiosInstance = useAxiosInstance();
@@ -21,14 +21,13 @@ const AnalyticsPage = () => {
   const [startDateValue, setStartDate] = useState(formattedStartDate);
   const [endDateValue, setEndDate] = useState(formattedEndDate);
 
-  const [chartData, setChartData] = useState();
   const params = useParams();
 
   useEffect(() => {
     getdataAnalytics();
     getSms();
   }, [startDateValue, endDateValue]);
-
+  console.log(views);
   function formatDate(inputDate) {
     const date = new Date(inputDate);
 
@@ -64,7 +63,7 @@ const AnalyticsPage = () => {
       console.log(e);
     }
   };
-  console.log(sms);
+
   const getdataAnalytics = async () => {
     try {
       let response = await axiosInstance.get(
@@ -77,7 +76,7 @@ const AnalyticsPage = () => {
       console.log(error);
     }
   };
-  console.log(sms);
+
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
@@ -87,490 +86,401 @@ const AnalyticsPage = () => {
               Analytics dashboard
             </h3>
           </div>
-          <div className="flex flex-row">
-            <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-base">
-              <h3 className="flex flex-row mx-3 my-3">
-                <p className="text-1xl font-extralight text-left">
-                  Total views
-                </p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5 ml-2"
-                  data-tooltip-target="tooltip-default"
-                  type="button"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
-                  />
-                </svg>
-                <div
-                  id="tooltip-default"
-                  role="tooltip"
-                  class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-                >
-                  Tooltip content
-                  <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
-              </h3>
-              {views ? (
-                <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl">
-                  {views?.data.sorted_total_data.screen_views_total}
-                </h2>
-              ) : (
-                <div role="status">
-                  <svg
-                    aria-hidden="true"
-                    class="w-8 h-8 mx-3 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentFill"
-                    />
-                  </svg>
-                  <span class="sr-only">Loading...</span>
-                </div>
-              )}
-            </div>
-            <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-base">
-              <h3 className="flex flex-row mx-3 my-3">
-                <p className="text-1xl font-extralight text-left">
-                  Total sends
-                </p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5 ml-2"
-                  data-tooltip-target="tooltip-default"
-                  type="button"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
-                  />
-                </svg>
-                <div
-                  id="tooltip-default"
-                  role="tooltip"
-                  class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-                >
-                  Tooltip content
-                  <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
-              </h3>
-              {views ? (
-                <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl">
-                  {sms?.sms_sends}
-                </h2>
-              ) : (
-                <div role="status">
-                  <svg
-                    aria-hidden="true"
-                    class="w-8 h-8 mx-3 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentFill"
-                    />
-                  </svg>
-                  <span class="sr-only">Loading...</span>
-                </div>
-              )}
-            </div>
-            <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-base">
-              <h3 className="flex flex-row mx-3 my-3">
-                <p className="text-1xl font-extralight text-left">
-                  Total clicks
-                </p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5 ml-2"
-                  data-tooltip-target="tooltip-default"
-                  type="button"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
-                  />
-                </svg>
-                <div
-                  id="tooltip-default"
-                  role="tooltip"
-                  class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-                >
-                  Tooltip content
-                  <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
-              </h3>
-              {views ? (
-                <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl">
-                  {sms?.click_number}
-                </h2>
-              ) : (
-                <div role="status">
-                  <svg
-                    aria-hidden="true"
-                    class="w-8 h-8 mx-3 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentFill"
-                    />
-                  </svg>
-                  <span class="sr-only">Loading...</span>
-                </div>
-              )}
-            </div>
-            <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-base">
-              <h3 className="flex flex-row mx-3 my-3">
-                <p className="text-1xl font-extralight text-left">
-                  Engagement rate
-                </p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5 ml-2"
-                  data-tooltip-target="tooltip-default"
-                  type="button"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
-                  />
-                </svg>
-                <div
-                  id="tooltip-default"
-                  role="tooltip"
-                  class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-                >
-                  Tooltip content
-                  <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
-              </h3>
-              {views ? (
-                <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl">
-                  {views?.data.sorted_total_data.engegment_rate_total * 100} %
-                </h2>
-              ) : (
-                <div role="status">
-                  <svg
-                    aria-hidden="true"
-                    class="w-8 h-8 mx-3 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentFill"
-                    />
-                  </svg>
-                  <span class="sr-only">Loading...</span>
-                </div>
-              )}
-            </div>
-            <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-base">
-              <h3 className="flex flex-row mx-3 my-3">
-                <p className="text-1xl font-extralight text-left">
-                  User engagement
-                </p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-5 h-5 ml-2"
-                  data-tooltip-target="tooltip-default"
-                  type="button"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
-                  />
-                </svg>
-                <div
-                  id="tooltip-default"
-                  role="tooltip"
-                  class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-                >
-                  Tooltip content
-                  <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
-              </h3>
-              {views ? (
-                <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl flex flex-row">
-                  {views?.data.sorted_total_data.user_engegment_total}{" "}
-                  <p className="text-3xl ml-3 mt-1">sec</p>
-                </h2>
-              ) : (
-                <div role="status">
-                  <svg
-                    aria-hidden="true"
-                    class="w-8 h-8 mx-3 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentFill"
-                    />
-                  </svg>
-                  <span class="sr-only">Loading...</span>
-                </div>
-              )}
-            </div>
-            <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-base">
-              <h3 className="flex flex-row mx-3 my-3">
-                <p className="text-1xl font-extralight text-left">
-                  Scrolled users
-                </p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-4 h-4 xl:w-5 xl:h-5 ml-2"
-                  data-tooltip-target="tooltip-default"
-                  type="button"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
-                  />
-                </svg>
-                <div
-                  id="tooltip-default"
-                  role="tooltip"
-                  class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-                >
-                  Tooltip content
-                  <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
-              </h3>
-              {views ? (
-                <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl">
-                  {views?.data.sorted_total_data.scrolled_user_total}{" "}
-                </h2>
-              ) : (
-                <div role="status">
-                  <svg
-                    aria-hidden="true"
-                    class="w-8 h-8 mx-3 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="currentColor"
-                    />
-                    <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentFill"
-                    />
-                  </svg>
-                  <span class="sr-only">Loading...</span>
-                </div>
-              )}
-            </div>
-          </div>
 
-          <div className="flex flex-row mt-3">
-            <div class="bg-darkBlue rounded-lg p-4 md:p-6 xl:w-50 relative mr-5">
-              <div className="absolute top-4 right-10">
-                <DatePickerComponent
-                  startDate={handleStartDateChange}
-                  endDate={handleEndDateChange}
-                ></DatePickerComponent>
-              </div>
-              <div class="flex flex-row max-w-sm mb-2">
-                <h3 className="flex flex-row mx-3 my-3">
-                  <p className="text-2xl font-extralight text-grayWhite">
-                    Users view over time
-                  </p>
+          <div className="flex gap-3">
+            <div className="flex-none bg-lightBlue h-full w-80 rounded-md">
+              <div className="flex flex-col">
+                <div className="flex flex-row p-2 gap-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-5 h-5 ml-2 text-grayWhite"
-                    data-tooltip-target="tooltip-default"
-                    type="button"
+                    class="w-6 h-6 text-white"
                   >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                      d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-                  <div
-                    id="tooltip-default"
-                    role="tooltip"
-                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-                  >
-                    Tooltip content
-                    <div class="tooltip-arrow" data-popper-arrow></div>
-                  </div>
-                </h3>
+
+                  <p className="text-white font-semibold text-xl">
+                    Total views
+                  </p>
+                </div>
+                <div className="flex items-start p-2">
+                  {views ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: 0.1,
+                        ease: [0, 0.41, 0.1, 1.01],
+                      }}
+                      className="text-white font-semibold text-3xl duration-300 opacity-100 transition-opacity"
+                    >
+                      {views?.data.sorted_total_data.screen_views_total}
+                    </motion.div>
+                  ) : (
+                    <p className="text-white font-semibold text-3xl">
+                      <svg
+                        aria-hidden="true"
+                        class="w-9 h-9 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                        viewBox="0 0 100 101"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                          fill="currentFill"
+                        />
+                      </svg>
+                    </p>
+                  )}
+                </div>
               </div>
-              <ChartComponent chartData={views} />
             </div>
-            <div className="flex flex-col">
-              <div className="bg-darkBlue w-60 xl:h-44 xl:w-86 rounded text-white/50 mr-5">
-                <h3 className="flex flex-row mx-3 my-3">
-                  <p className="text-md xl:text-1xl font-extralight text-left">
-                    Sms send status
-                  </p>
+            <div className="flex-none bg-lightBlue h-[100%] w-80 rounded-md">
+              <div className="flex flex-col">
+                <div className="flex flex-row p-2 gap-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-4 h-4 xl:w-5 xl:h-5 ml-2"
-                    data-tooltip-target="tooltip-default"
-                    type="button"
+                    class="w-6 h-6 text-white"
                   >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                      d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59"
                     />
                   </svg>
-                  <div
-                    id="tooltip-default"
-                    role="tooltip"
-                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+
+                  <p className="text-white font-semibold text-xl">
+                    Total clicks
+                  </p>
+                </div>
+                <div className="flex items-start p-2">
+                  {views ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: 0.1,
+                        ease: [0, 0.41, 0.1, 1.01],
+                      }}
+                      className="text-white font-semibold text-3xl duration-300 opacity-100 transition-opacity"
+                    >
+                      {sms?.click_number ?? 0}
+                    </motion.div>
+                  ) : (
+                    <p className="text-white font-semibold text-3xl">
+                      <svg
+                        aria-hidden="true"
+                        class="w-9 h-9 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                        viewBox="0 0 100 101"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                          fill="currentFill"
+                        />
+                      </svg>
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="flex-none bg-lightBlue h-[100%] w-80 rounded-md">
+              <div className="flex flex-col">
+                <div className="flex flex-row p-2 gap-3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6 text-white"
                   >
-                    Tooltip content
-                    <div class="tooltip-arrow" data-popper-arrow></div>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
+                    />
+                  </svg>
+
+                  <p className="text-white font-semibold text-xl">
+                    Total sends
+                  </p>
+                </div>
+                <div className="flex items-start p-2">
+                  {views ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: 0.1,
+                        ease: [0, 0.41, 0.1, 1.01],
+                      }}
+                      className="text-white font-semibold text-3xl duration-300 opacity-100 transition-opacity"
+                    >
+                      {sms?.sms_sends ?? 0}
+                    </motion.div>
+                  ) : (
+                    <p className="text-white font-semibold text-3xl">
+                      <svg
+                        aria-hidden="true"
+                        class="w-9 h-9 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                        viewBox="0 0 100 101"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                          fill="currentFill"
+                        />
+                      </svg>
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div></div>
+          </div>
+          <div className="flex gap-3 mt-3">
+            <div className="flex-initial bg-lightBlue w-96 h-96 rounded-md">
+              <div className="flex flex-col">
+                <div className="flex flex-row relative">
+                  <p className="text-white font-bold text-2xl p-4">
+                    Other statistics
+                  </p>
+                  <div className="absolute right-2 top-2">
+                    <img
+                      width={70}
+                      src={require("../../src/assets/snipLogo.PNG")}
+                    />
                   </div>
-                </h3>
-                <div className="flex flex-row justify-center">
-                  <div className="h-40 w-36 border-r-50">
-                    <p>Successfull</p>
-                    <h3 className="text-2xl text-green-500 mt-4">
-                      {sms?.delivered}
-                    </h3>
+                </div>
+                <div className="flex flex-col p-4">
+                  <div className="flex flex-row p-1 relative">
+                    <p className="text-white font-semibold">Bounce rate</p>
+                    {views ? (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.1,
+                          ease: [0, 0.41, 0.1, 1.01],
+                        }}
+                        className="text-white font-bold absolute right-5"
+                      >
+                        {views?.data.sorted_total_data.bounceRate * 100} %
+                      </motion.div>
+                    ) : (
+                      <p className="text-white font-semibold absolute right-5">
+                        <svg
+                          aria-hidden="true"
+                          class="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                          viewBox="0 0 100 101"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                            fill="currentColor"
+                          />
+                          <path
+                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                            fill="currentFill"
+                          />
+                        </svg>
+                      </p>
+                    )}
                   </div>
-                  <div className="h-40 w-36">
-                    <p>Failed</p>
-                    <h3 className="text-2xl text-red-500 mt-4">
-                      {sms?.not_delivered}
-                    </h3>
+                  <div className="flex flex-row p-1 relative">
+                    {" "}
+                    <p className="text-white font-semibold">Engagement rate</p>
+                    {views ? (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.1,
+                          ease: [0, 0.41, 0.1, 1.01],
+                        }}
+                        className="text-white font-bold absolute right-5"
+                      >
+                        {views?.data.sorted_total_data.engegment_rate_total *
+                          100}{" "}
+                        %
+                      </motion.div>
+                    ) : (
+                      <p className="text-white font-semibold absolute right-5">
+                        <svg
+                          aria-hidden="true"
+                          class="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                          viewBox="0 0 100 101"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                            fill="currentColor"
+                          />
+                          <path
+                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                            fill="currentFill"
+                          />
+                        </svg>
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex flex-row p-1 relative">
+                    {" "}
+                    <p className="text-white font-semibold">Scrolled users</p>
+                    {views ? (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.1,
+                          ease: [0, 0.41, 0.1, 1.01],
+                        }}
+                        className="text-white font-bold absolute right-5"
+                      >
+                        {views?.data.sorted_total_data.scrolled_user_total}
+                      </motion.div>
+                    ) : (
+                      <p className="text-white font-semibold absolute right-5">
+                        <svg
+                          aria-hidden="true"
+                          class="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                          viewBox="0 0 100 101"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                            fill="currentColor"
+                          />
+                          <path
+                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                            fill="currentFill"
+                          />
+                        </svg>
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex flex-row p-1 relative">
+                    {" "}
+                    <p className="text-white font-semibold">User engagement</p>
+                    {views ? (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.1,
+                          ease: [0, 0.41, 0.1, 1.01],
+                        }}
+                        className="text-white font-bold absolute right-5"
+                      >
+                        {views?.data.sorted_total_data.user_engegment_total}{" "}
+                        secs
+                      </motion.div>
+                    ) : (
+                      <p className="text-white font-semibold absolute right-5">
+                        <svg
+                          aria-hidden="true"
+                          class="w-5 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                          viewBox="0 0 100 101"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                            fill="currentColor"
+                          />
+                          <path
+                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                            fill="currentFill"
+                          />
+                        </svg>
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
-              <div className="bg-darkBlue h-24 w-44 xl:h-32 xl:w-60 rounded text-white/50 mr-5 text-sm xl:text-bas mt-3">
-                <h3 className="flex flex-row mx-3 my-3">
-                  <p className="text-1xl font-extralight text-left">
-                    Bounce rate
-                  </p>
+            </div>
+            <div className="flex-none bg-lightBlue w-80 rounded-md">
+              <div className="flex flex-row relative">
+                <p className="text-white font-bold text-2xl p-4">
+                  Sms delivery
+                </p>
+                <div className="absolute right-4 top-4">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-4 h-4 xl:w-5 xl:h-5 ml-2"
-                    data-tooltip-target="tooltip-default"
-                    type="button"
+                    class="w-10 h-10 text-white"
                   >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                      d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"
                     />
                   </svg>
-                  <div
-                    id="tooltip-default"
-                    role="tooltip"
-                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-white transition-opacity duration-300 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-                  >
-                    Tooltip content
-                    <div class="tooltip-arrow" data-popper-arrow></div>
-                  </div>
-                </h3>
-                {views ? (
-                  <h2 class="text-left mx-3 my-3 text-4xl xl:text-5xl">
-                    {views?.data.sorted_total_data.bounceRate * 100} %
-                  </h2>
-                ) : (
-                  <div role="status">
-                    <svg
-                      aria-hidden="true"
-                      class="w-8 h-8 mx-3 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-                      viewBox="0 0 100 101"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                        fill="currentColor"
-                      />
-                      <path
-                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                        fill="currentFill"
-                      />
-                    </svg>
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                )}
+                </div>
+              </div>
+              <div className="flex h-72">
+                <BarChart />
               </div>
             </div>
+            <div className="flex-initial">
+              <div className="flex-initial bg-lightBlue w-64 h-60 rounded-md">
+                <div className="flex flex-col items-center">
+                  <p className="text-white font-bold text-2xl">
+                    Sms performance
+                  </p>
+                  <img width={190} src={require("../assets/sampleImg.PNG")} />
+                  <p className="text-white/50 font-light text-sm">
+                    Overall performance of the sms including the metrics
+                  </p>
+                </div>
+              </div>
+              <div className="bg-lightBlue w-64 h-32 mt-3 rounded"></div>
+            </div>
+            <div></div>
           </div>
         </div>
       </div>
