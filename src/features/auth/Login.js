@@ -41,9 +41,8 @@ const Login = () => {
       const response = await fetch(`${BASE_URL}/api/token/`, {
         method: "POST",
         body: JSON.stringify(bodyData),
-
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
-        withCredentials: true,
       });
       const responseData = await response.json();
       const user = jwt_decode(responseData?.access).user_id;
