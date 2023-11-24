@@ -421,7 +421,6 @@ const HomePage = () => {
                 setUpdated={() => setListUpdated(true)}
                 listUpdated={listUpdated}
               />
-
             </div>
             {totalPages > 1 && (
               <motion.div
