@@ -20,14 +20,17 @@ const AnalyticsPage = () => {
 
   const [startDateValue, setStartDate] = useState(formattedStartDate);
   const [endDateValue, setEndDate] = useState(formattedEndDate);
-
+  const dataDlivery = [
+    { status: "delivered", value: sms?.delivered },
+    { status: "not delivered", value: sms?.not_delivered },
+  ];
   const params = useParams();
 
   useEffect(() => {
     getdataAnalytics();
     getSms();
   }, [startDateValue, endDateValue]);
-  console.log(views);
+
   function formatDate(inputDate) {
     const date = new Date(inputDate);
 
@@ -43,16 +46,6 @@ const AnalyticsPage = () => {
     return formattedDate;
   }
 
-  const handleStartDateChange = (date) => {
-    const formatedStartDate = formatDate(date);
-    setStartDate(formatedStartDate);
-  };
-
-  const handleEndDateChange = (date) => {
-    const formatedEndDate = formatDate(date);
-    setEndDate(formatedEndDate);
-  };
-
   const getSms = async () => {
     try {
       let response = await axiosInstance.get(`sms/sms/${params.id}`);
@@ -63,7 +56,7 @@ const AnalyticsPage = () => {
       console.log(e);
     }
   };
-
+  console.log(sms);
   const getdataAnalytics = async () => {
     try {
       let response = await axiosInstance.get(
@@ -463,7 +456,7 @@ const AnalyticsPage = () => {
                 </div>
               </div>
               <div className="flex h-72">
-                <BarChart />
+                <BarChart data={dataDlivery} />
               </div>
             </div>
             <div className="flex-initial">

@@ -1,15 +1,15 @@
 import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
-import { ChartData as data } from "./ChartData";
+// import { ChartData as data } from "./ChartData";
 import { colors } from "@mui/material";
 import { margin } from "@mui/system";
 
-const BarChart = () => {
+const BarChart = ({ data }) => {
   return (
     <ResponsiveBar
       data={data}
-      keys={["hot dog", "burger", "sandwich", "kebab", "fries", "donut"]}
-      indexBy="country"
+      keys={["value"]}
+      indexBy="status"
       margin={{ top: 50, right: 0, bottom: 50, left: 0 }}
       padding={0.5}
       borderRadius={10}
