@@ -1,0 +1,7 @@
+.circle-progress {
+    transition: stroke-dashoffset 0.5s ease-in-out; /* Adjust the duration and easing function as needed */
+  }
+  
+  .circle-base {
+    transition: stroke 0.5s ease-in-out; /* Adjust the duration and easing function as needed */
+  }

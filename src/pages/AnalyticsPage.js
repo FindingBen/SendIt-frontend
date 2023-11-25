@@ -3,6 +3,7 @@ import useAxiosInstance from "../utils/axiosInstance";
 import { useParams } from "react-router-dom";
 import BarChart from "../utils/chart/BarChart";
 import DatePicker from "react-datepicker";
+import PieChart from "../utils/chart/PieChart";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePickerComponent from "../components/DatePicker";
 import { motion } from "framer-motion";
@@ -11,6 +12,7 @@ const AnalyticsPage = () => {
   const axiosInstance = useAxiosInstance();
   const [views, setViews] = useState();
   const [sms, setSms] = useState();
+  const [circumference, setCircumference] = useState(0);
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
@@ -45,7 +47,7 @@ const AnalyticsPage = () => {
 
     return formattedDate;
   }
-
+  console.log(views);
   const getSms = async () => {
     try {
       let response = await axiosInstance.get(`sms/sms/${params.id}`);
@@ -71,7 +73,7 @@ const AnalyticsPage = () => {
   };
 
   return (
-    <section className="min-h-screen flex-d w-100 items-center justify-center">
+    <section className="h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="flex-1 px-2 sm:px-0">
           <div className="flex justify-between items-center mb-3">
@@ -81,7 +83,7 @@ const AnalyticsPage = () => {
           </div>
 
           <div className="flex gap-3">
-            <div className="flex-none bg-lightBlue h-full w-80 rounded-md">
+            <div className="flex-none bg-lightBlue w-80 rounded-md">
               <div className="flex flex-col">
                 <div className="flex flex-row p-2 gap-3">
                   <svg
@@ -460,18 +462,18 @@ const AnalyticsPage = () => {
               </div>
             </div>
             <div className="flex-initial">
-              <div className="flex-initial bg-lightBlue w-64 h-60 rounded-md">
+              <div className="flex-1 bg-lightBlue w-64 h-96 rounded-md">
                 <div className="flex flex-col items-center">
-                  <p className="text-white font-bold text-2xl">
+                  <p className="text-white font-bold text-2xl p-4">
                     Sms performance
                   </p>
-                  <img width={190} src={require("../assets/sampleImg.PNG")} />
-                  <p className="text-white/50 font-light text-sm">
+                  <PieChart percentage={views?.data.overall_perf} />
+                  <p className="text-white/50 font-light text-sm p-4">
                     Overall performance of the sms including the metrics
                   </p>
                 </div>
               </div>
-              <div className="bg-lightBlue w-64 h-32 mt-3 rounded"></div>
+              {/* <div className="bg-lightBlue w-64 h-32 mt-3 rounded"></div> */}
             </div>
             <div></div>
           </div>

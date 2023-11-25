@@ -1,10 +1,8 @@
 export const ChartData = [
   {
-    country: "Delivered",
-    donut: 170,
-  },
-  {
-    country: "Not delivered",
-    donut: 82,
+    id: "sass",
+    label: "Overall",
+    value: 302,
+    color: "hsl(170, 70%, 50%)",
   },
 ];

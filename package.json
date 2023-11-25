@@ -20,6 +20,7 @@
     "@mui/material": "^5.14.18",
     "@nivo/bar": "^0.84.0",
     "@nivo/line": "^0.84.0",
+    "@nivo/pie": "^0.84.0",
     "@react-three/fiber": "^8.15.10",
     "@reduxjs/toolkit": "^1.9.5",
     "@syncfusion/ej2-react-image-editor": "^21.2.6",
