@@ -120,10 +120,10 @@ const AnalyticsPage = () => {
                         {views?.data.sorted_total_data.screen_views_total}
                       </motion.div>
                     ) : (
-                      <p className="text-white font-semibold text-3xl">
+                      <p className="text-white font-semibold text-4xl ml-2">
                         <svg
                           aria-hidden="true"
-                          class="w-9 h-9 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                          class="w-10 h-10 ml-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                           viewBox="0 0 100 101"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
@@ -178,10 +178,10 @@ const AnalyticsPage = () => {
                         {sms?.click_number ?? 0}
                       </motion.div>
                     ) : (
-                      <p className="text-white font-semibold text-3xl">
+                      <p className="text-white font-semibold text-4xl ml-2">
                         <svg
                           aria-hidden="true"
-                          class="w-9 h-9 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                          class="w-10 h-10 ml-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                           viewBox="0 0 100 101"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
@@ -236,10 +236,10 @@ const AnalyticsPage = () => {
                         {sms?.sms_sends ?? 0}
                       </motion.div>
                     ) : (
-                      <p className="text-white font-semibold text-3xl">
+                      <p className="text-white font-semibold text-4xl ml-2">
                         <svg
                           aria-hidden="true"
-                          class="w-9 h-9 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                          class="w-10 h-10 ml-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
                           viewBox="0 0 100 101"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
