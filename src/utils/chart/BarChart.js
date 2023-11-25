@@ -10,7 +10,7 @@ const BarChart = ({ data }) => {
       data={data}
       keys={["value"]}
       indexBy="status"
-      margin={{ top: 50, right: 0, bottom: 50, left: 0 }}
+      margin={{ top: 5, right: 0, bottom: 50, left: 0 }}
       padding={0.5}
       borderRadius={10}
       theme={{

@@ -9,6 +9,7 @@
 .App {
 text-align: center;
   background-color: #1f2937;
+
   position: relative; /* Add this to make sure the ::before pseudo-element is positioned relative to the .App container */
   overflow-x: hidden; /* Hide horizontal overflow */
 
