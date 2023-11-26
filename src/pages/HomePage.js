@@ -20,6 +20,8 @@ const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
+  const [messageCount, setMessageCount] = useState("");
+  const [totalValues, setTotalValues] = useState();
   const [listUpdated, setListUpdated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -33,13 +35,13 @@ const HomePage = () => {
   }, [listUpdated, loading]);
 
   const itemsPerPage = 4;
-  const totalPages = Math.ceil(notes.length / itemsPerPage);
+  const totalPages = Math.ceil(notes?.length / itemsPerPage);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
     setInitialLoad(false);
   };
-
+  console.log(notes);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedItems = notes.slice(startIndex, endIndex);
@@ -55,7 +57,10 @@ const HomePage = () => {
       });
 
       if (response.status === 200) {
-        setNotes(response?.data);
+        setNotes(response?.data.messages);
+        setMessageCount(response?.data.messages_count);
+        setTotalValues(response?.data.total_values);
+        console.log(response?.data.total_values.total_views);
       } else if (response.statusText === "Unauthorized") {
         dispatch(logOut());
       }
@@ -68,7 +73,7 @@ const HomePage = () => {
     setMessageId(id);
     setShow(true);
   };
-
+  console.log("notesObj", notes);
   const duplicateMessage = async (messageId) => {
     try {
       setLoading(true);
@@ -211,9 +216,43 @@ const HomePage = () => {
                       d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
                     />
                   </svg>
-                  <p className="text-gradient text-6xl font-light ml-2">25</p>
+
+                  {totalValues ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: 0.1,
+                        ease: [0, 0.41, 0.1, 1.01],
+                      }}
+                      className="text-gradient text-6xl font-light ml-2"
+                    >
+                      {messageCount}
+                    </motion.div>
+                  ) : (
+                    <p className="text-white font-semibold text-4xl ml-2">
+                      <svg
+                        aria-hidden="true"
+                        class="w-7 h-8 mt-3 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                        viewBox="0 0 100 101"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                          fill="currentFill"
+                        />
+                      </svg>
+                    </p>
+                  )}
+
                   <p className="text-white text-2xl font-light text-justify ml-3">
-                    Total <br></br>messages
+                    Sent <br></br>messages
                   </p>
                 </div>
               </div>
@@ -240,19 +279,43 @@ const HomePage = () => {
                       d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-                  <p className="text-gradient-white text-6xl font-light ml-2">
-                    125
-                  </p>
+                  {totalValues ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: 0.1,
+                        ease: [0, 0.41, 0.1, 1.01],
+                      }}
+                      className="text-gradient text-6xl font-light ml-2"
+                    >
+                      {totalValues.total_views}
+                    </motion.div>
+                  ) : (
+                    <p className="text-white font-semibold text-4xl ml-2">
+                      <svg
+                        aria-hidden="true"
+                        class="w-7 h-8 mt-3 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                        viewBox="0 0 100 101"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                          fill="currentFill"
+                        />
+                      </svg>
+                    </p>
+                  )}
                   <p className="text-white text-2xl font-light text-justify ml-3">
                     Total <br></br>Views
                   </p>
                 </div>
-                {/* <div className="p-4 flex items-start flex-row">
-                  <p className="text-white text-6xl font-semibold">125</p>
-                  <p className="text-white text-2xl font-light text-justify ml-3">
-                    Total <br></br>Views
-                  </p>
-                </div> */}
               </div>
             </div>
             <div className="flex-none">
@@ -272,19 +335,44 @@ const HomePage = () => {
                       d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  <p className="text-gradient-red text-6xl font-light ml-2 flex flex-row">
-                    11<p className="text-4xl font-light">%</p>
-                  </p>
+                  {totalValues ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: 0.1,
+                        ease: [0, 0.41, 0.1, 1.01],
+                      }}
+                      className="text-gradient-red text-6xl font-light ml-2 flex flex-row"
+                    >
+                      {totalValues.bounce_rate}
+                      <p className="text-4xl font-light">%</p>
+                    </motion.div>
+                  ) : (
+                    <p className="text-white font-semibold text-4xl ml-2">
+                      <svg
+                        aria-hidden="true"
+                        class="w-7 h-8 mt-3 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                        viewBox="0 0 100 101"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                          fill="currentFill"
+                        />
+                      </svg>
+                    </p>
+                  )}
                   <p className="text-white text-2xl font-light text-justify ml-2">
                     Bounce <br></br>Rate
                   </p>
                 </div>
-                {/* <div className="p-4 flex items-start flex-row">
-                  <p className="text-white text-6xl font-semibold">11%</p>
-                  <p className="text-white text-2xl font-light text-justify ml-3">
-                    Bounce <br></br>Rate
-                  </p>
-                </div> */}
               </div>
             </div>
             <div className="flex-none">
@@ -304,16 +392,44 @@ const HomePage = () => {
                       d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
                     />
                   </svg>
-                  <p className="text-gradient-green text-6xl font-light ml-2">
-                    25
-                  </p>
+                  {totalValues ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: 0.1,
+                        ease: [0, 0.41, 0.1, 1.01],
+                      }}
+                      className="text-gradient-green text-6xl font-light ml-2 flex flex-row"
+                    >
+                      {totalValues.overall_perf}
+                      <p className="text-4xl font-light">%</p>
+                    </motion.div>
+                  ) : (
+                    <p className="text-white font-semibold text-4xl ml-2">
+                      <svg
+                        aria-hidden="true"
+                        class="w-7 h-8 mt-3 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                        viewBox="0 0 100 101"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                          fill="currentColor"
+                        />
+                        <path
+                          d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                          fill="currentFill"
+                        />
+                      </svg>
+                    </p>
+                  )}
                   <p className="text-white text-2xl font-light text-justify ml-3">
                     Overall <br></br>rate
                   </p>
                 </div>
-                {/* <div className="p-4 flex items-start flex-row">
-               
-                </div> */}
               </div>
             </div>
           </div>
@@ -327,7 +443,7 @@ const HomePage = () => {
                     <p className="text-white font-light text-2xl flex items-start my-3">
                       Your latest messages
                     </p>
-                    <div class="grid grid-cols-5 gap-4 grid-headers bg-white text-black font-semibold text-sm xl:text-md py-2 px-4 rounded-full mb-2">
+                    <div class="grid grid-cols-5 gap-4 grid-headers bg-white text-black font-semibold text-sm xl:text-md py-2 px-4 rounded-md mb-2">
                       <div>Name</div>
                       <div>Created At</div>
                       <div>Analytics</div>
@@ -349,7 +465,7 @@ const HomePage = () => {
                               delay: 0.2,
                               ease: [0, 0.41, 0.1, 1.01],
                             }}
-                            class="bg-darkBlue rounded-full text-white font-semibold text-sm"
+                            class="bg-darkBlue rounded-md text-white font-semibold text-sm"
                           >
                             <div className="mb-2">
                               <div

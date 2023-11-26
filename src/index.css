@@ -30,6 +30,19 @@
   );
   /* Optionally, you can add more background properties like size and position */
 }
+
+.background-gradient-red {
+  background: radial-gradient(
+    64.18% 64.18% at 71.16% 35.69%,
+    #fadee2 0.89%,
+    #f5bed0 17.23%,
+    #f09d9d 42.04%,
+    #eb7d7d 55.12%,
+    #e65c5c 71.54%,
+    #aa7575 100%
+  );
+}
+
 .text-gradient {
   background: radial-gradient(
     64.18% 64.18% at 71.16% 35.69%,

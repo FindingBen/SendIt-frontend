@@ -107,39 +107,42 @@ const ContactList = () => {
                       ease: [0, 0.41, 0.1, 1.01],
                     }}
                     key={conList.id}
-                    class="relative w-100 bg-gray-900 py-14 px-4 flex flex-col space-y-2 items-center rounded-md"
+                    class="relative w-100 bg-darkestGray h-72 flex flex-col space-y-2 items-center rounded-md"
                   >
-                    <div className="absolute top-2 right-2">
-                      <button onClick={() => deleteList(conList.id)}>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          class="w-6 h-6 text-red-500"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                      </button>
+                    <button
+                      className="absolute right-2 top-2"
+                      onClick={() => deleteList(conList.id)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6 text-red-500"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </button>
+                    <div className="p-4 flex flex-col items-center justify-between bg-darkBlue w-40 h-60 rounded-md mx-3 my-3 shadow-lg">
+                      <Link to={`/contact_list/${conList.id}`}>
+                        <img
+                          class="w-20 h-20 object-cover object-center rounded-full"
+                          src={require("../assets/contacts.png")}
+                          alt="art"
+                        />
+                      </Link>
+                      <h4 class="text-grayWhite text-2xl font-light capitalize text-center">
+                        {conList.list_name}
+                      </h4>
+                      <p class="text-white/50">
+                        Recipients: {conList.contact_lenght}
+                      </p>
                     </div>
-                    <Link to={`/contact_list/${conList.id}`}>
-                      <img
-                        class="w-20 h-20 object-cover object-center rounded-full"
-                        src={require("../assets/contacts.png")}
-                        alt="art"
-                      />
-                    </Link>
-                    <h4 class="text-grayWhite text-2xl font-light capitalize text-center">
-                      {conList.list_name}
-                    </h4>
-                    <p class="text-white/50">
-                      Recipients: {conList.contact_lenght}
-                    </p>
                   </motion.div>
                 </div>
               );

@@ -141,7 +141,7 @@ const ContactList = () => {
               <div class="overflow-auto lg:overflow-visible">
                 <div class="overflow-x-auto">
                   <div class="my-6">
-                    <div class="grid grid-cols-5 gap-4 grid-headers bg-gray-600/50 text-white font-poppins py-2 px-4 rounded-full mb-2">
+                    <div class="grid grid-cols-5 gap-4 grid-headers bg-gray-600/50 text-white font-poppins py-2 px-4 rounded-md mb-2">
                       <div>First Name</div>
                       <div>Last Name</div>
                       <div>Email</div>
@@ -151,7 +151,7 @@ const ContactList = () => {
                     {paginatedData?.map((rowData, index) => (
                       <div
                         key={rowData.id}
-                        class="bg-darkBlue rounded-full text-white"
+                        class="bg-darkBlue rounded-md text-white"
                       >
                         <div className="mb-2">
                           <div className={`grid grid-cols-5 gap-4 py-2 px-4`}>

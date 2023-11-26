@@ -27,7 +27,7 @@ const AnalyticsPage = () => {
     { status: "not delivered", value: sms?.not_delivered },
   ];
   const params = useParams();
-
+  console.log(sms);
   useEffect(() => {
     getdataAnalytics();
     getSms();
