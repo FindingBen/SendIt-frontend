@@ -288,7 +288,7 @@ const AnalyticsPage = () => {
                           }}
                           className="text-gradient-white text-xl font-light ml-2 absolute right-0"
                         >
-                          {views?.data.sorted_total_data.bounceRate * 100} %
+                          {views?.data.sorted_total_data.bounceRate} %
                         </motion.div>
                       ) : (
                         <p className="text-white font-semibold absolute right-5">
@@ -327,9 +327,7 @@ const AnalyticsPage = () => {
                           }}
                           className="text-gradient-white text-xl font-light ml-2 absolute right-0"
                         >
-                          {views?.data.sorted_total_data.engegment_rate_total *
-                            100}{" "}
-                          %
+                          {views?.data.sorted_total_data.engegment_rate_total} %
                         </motion.div>
                       ) : (
                         <p className="text-white font-semibold absolute right-5">
