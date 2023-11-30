@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../features/auth/authSlice";
-import { useRegisterMutation } from "../features/auth/authApiSlice";
+import ModalComponent from "../components/ModalComponent";
 import { motion } from "framer-motion";
 import { config } from "../constants/Constants";
 
@@ -15,11 +15,12 @@ const RegisterPage = () => {
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [password, setPass] = useState("");
+  const [user, setUserObj] = useState();
   const [errMsg, setErrMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [errMsgPass, setErrMsgPass] = useState("");
+  const [showModal, setShow] = useState(false);
   const navigate = useNavigate();
-  const [register, { isLoading }] = useRegisterMutation();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,6 +41,7 @@ const RegisterPage = () => {
       first_name: first_name,
       last_name: last_name,
       password: password,
+      is_active: false,
     };
     try {
       const response = await fetch(`${BASE_URL}/api/register/`, {
@@ -51,7 +53,12 @@ const RegisterPage = () => {
       });
       const responseData = await response.json();
       dispatch(registerUser(responseData));
-      setLoading(false);
+
+      setUserObj(responseData);
+
+      if (response.status === 200 || response.status === 201) {
+        await handleConfirmation(responseData);
+      }
       // Check if userData contains an error
       if (responseData?.error?.status === 400) {
         if (responseData?.error?.data?.username) {
@@ -66,10 +73,7 @@ const RegisterPage = () => {
         setErrMsg("Unauthorized");
         setLoading(false);
       } else {
-        // No error, proceed with successful registration
-        console.log(responseData);
         dispatch(registerUser(responseData));
-        navigate("/home");
       }
     } catch (err) {
       console.log(err);
@@ -82,6 +86,23 @@ const RegisterPage = () => {
   const handleFirstName = (e) => setFirstName(e.target.value);
   const handleLastName = (e) => setLastName(e.target.value);
   const handlePassword = (e) => setPass(e.target.value);
+
+  const handleConfirmation = async (dataObj) => {
+    const data = {
+      user: dataObj.user,
+    };
+    let response = await fetch(`${BASE_URL}/api/confirm_email_verification/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (response.status === 201) {
+      setLoading(false);
+      setShow(true);
+    }
+  };
 
   return (
     <section class="flex flex-col justify-center antialiased bg-darkBlue text-gray-200 min-h-screen p-4 w-100">
@@ -217,6 +238,10 @@ const RegisterPage = () => {
           </p>
         </div>
       </div>
+      <ModalComponent
+        showModal={showModal}
+        modalType={"emailConfirm"}
+      ></ModalComponent>
       <p className="text-white opacity-60 font-light text-sm">
         © 2023 by Sendperplane
       </p>

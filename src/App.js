@@ -26,6 +26,7 @@ import CancelPayment from "./pages/CancelPayment";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import CreateEmail from "./pages/CreateEmail";
 import UnsubscribePage from "./pages/UnsubscribePage";
+import ActivationEmailSuccess from "./pages/ActivationEmailSuccess";
 
 const TRACKING_ID = "G-FPHE42LL46";
 ReactGA.initialize(TRACKING_ID, { debug: true });
@@ -41,6 +42,10 @@ function App() {
         <Route
           path="/opt-out/:id"
           element={<UnsubscribePage></UnsubscribePage>}
+        ></Route>
+        <Route
+          path="/activate_email/:token_id/:user_id/"
+          element={<ActivationEmailSuccess></ActivationEmailSuccess>}
         ></Route>
       </Routes>
       <div className="App" style={({ height: "100vh" }, { display: "flex" })}>

@@ -14,16 +14,13 @@ import { config } from "../../src/constants/Constants";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function ModalComponent({ confirmLeave, showModal, modalType, messageId }) {
-  // const axiosInstance = useAxiosInstance();
+function ModalComponent({ confirmLeave, showModal, modalType }) {
   const BASE_URL = config.url.BASE_URL;
   const params = useParams();
   const [show, setShow] = useState(showModal);
-  const [message, setMessage] = useState();
   const dispatch = useDispatch();
   const { deleteElement } = useContext(ElementContext);
-  // const token = useSelector(selectCurrentToken);
-  // const user = useSelector(selectCurrentUser);
+
   const handleClose = (e) => {
     confirmLeave();
     dispatch(setOpenModal({ open: false }));
@@ -76,6 +73,10 @@ function ModalComponent({ confirmLeave, showModal, modalType, messageId }) {
                   />
                 </svg>
               </div>
+            ) : modalType === "emailConfirm" ? (
+              <div className="flex flex-col">
+                <p className="font-poppins">Email activation required</p>
+              </div>
             ) : (
               <div className="flex flex-col">
                 <p className="font-poppins">Stripe</p>
@@ -96,6 +97,11 @@ function ModalComponent({ confirmLeave, showModal, modalType, messageId }) {
             <p>You are being redirected to, please wait</p>
           ) : modalType === "copyCreate" ? (
             <p>Are you sure you want to duplicate this message?</p>
+          ) : modalType === "emailConfirm" ? (
+            <p>
+              An activation link has been sent to your email, check your email
+              before you login
+            </p>
           ) : null}
         </Modal.Body>
         {!modalType ? (
@@ -126,6 +132,15 @@ function ModalComponent({ confirmLeave, showModal, modalType, messageId }) {
               onClick={() => setShow(false)}
             >
               No
+            </button>
+          </Modal.Footer>
+        ) : modalType === "emailConfirm" ? (
+          <Modal.Footer>
+            <button
+              className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+              onClick={() => setShow(false)}
+            >
+              Close
             </button>
           </Modal.Footer>
         ) : (

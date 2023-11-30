@@ -44,7 +44,7 @@ const HomePage = () => {
   console.log(notes);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const displayedItems = notes.slice(startIndex, endIndex);
+  const displayedItems = notes?.slice(startIndex, endIndex);
 
   let getNotes = async () => {
     try {
@@ -228,7 +228,7 @@ const HomePage = () => {
                       }}
                       className="text-gradient text-6xl font-light ml-2"
                     >
-                      {messageCount}
+                      {messageCount ?? 0}
                     </motion.div>
                   ) : (
                     <p className="text-white font-semibold text-4xl ml-2">
