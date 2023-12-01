@@ -12,7 +12,6 @@ const AnalyticsPage = () => {
   const axiosInstance = useAxiosInstance();
   const [views, setViews] = useState();
   const [sms, setSms] = useState();
-
   const [circumference, setCircumference] = useState(0);
   const today = new Date();
   const yesterday = new Date(today);
@@ -21,19 +20,24 @@ const AnalyticsPage = () => {
   const formattedStartDate = formatDate(yesterday);
   const formattedEndDate = formatDate(today);
 
-  const [startDateValue, setStartDate] = useState(sms?.created_at);
+  const [startDateValue, setStartDate] = useState(formattedEndDate);
   const [endDateValue, setEndDate] = useState(formattedEndDate);
   const dataDlivery = [
     { status: "delivered", value: sms?.delivered },
     { status: "not delivered", value: sms?.not_delivered },
   ];
   const params = useParams();
-  console.log(sms?.created_at);
+
   useEffect(() => {
+    const startDateToUpdate = sms?.created_at
+      ? formatDate(sms?.created_at)
+      : formattedStartDate;
+    setStartDate(startDateToUpdate);
+
     getdataAnalytics();
     getSms();
-  }, [startDateValue, endDateValue]);
-  console.log(startDateValue);
+  }, []);
+
   function formatDate(inputDate) {
     const date = new Date(inputDate);
 
@@ -48,7 +52,7 @@ const AnalyticsPage = () => {
 
     return formattedDate;
   }
-  console.log(views);
+
   const getSms = async () => {
     try {
       let response = await axiosInstance.get(`sms/sms/${params.id}`);
@@ -59,13 +63,14 @@ const AnalyticsPage = () => {
       console.log(e);
     }
   };
-  console.log(sms);
+
   const getdataAnalytics = async () => {
     try {
       let response = await axiosInstance.get(
         `api/get_analytcs/${params.id}/?startDate=${startDateValue}&endDate=${endDateValue}`
       );
       if (response.status === 200) {
+        console.log(response);
         setViews(response.data);
       }
     } catch (error) {
