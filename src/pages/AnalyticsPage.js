@@ -27,12 +27,12 @@ const AnalyticsPage = () => {
     { status: "not delivered", value: sms?.not_delivered },
   ];
   const params = useParams();
-  console.log(sms);
+  console.log(sms?.created_at);
   useEffect(() => {
     getdataAnalytics();
     getSms();
   }, [startDateValue, endDateValue]);
-
+  console.log(startDateValue);
   function formatDate(inputDate) {
     const date = new Date(inputDate);
 
@@ -62,7 +62,7 @@ const AnalyticsPage = () => {
   const getdataAnalytics = async () => {
     try {
       let response = await axiosInstance.get(
-        `api/get_analytcs/${params.id}/?startDate=${startDateValue}&endDate=${endDateValue}`
+        `api/get_analytcs/${params.id}/?startDate=${sms?.created_at}&endDate=${endDateValue}`
       );
       if (response.status === 200) {
         setViews(response.data);
