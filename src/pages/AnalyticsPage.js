@@ -12,6 +12,7 @@ const AnalyticsPage = () => {
   const axiosInstance = useAxiosInstance();
   const [views, setViews] = useState();
   const [sms, setSms] = useState();
+
   const [circumference, setCircumference] = useState(0);
   const today = new Date();
   const yesterday = new Date(today);
@@ -20,7 +21,7 @@ const AnalyticsPage = () => {
   const formattedStartDate = formatDate(yesterday);
   const formattedEndDate = formatDate(today);
 
-  const [startDateValue, setStartDate] = useState(formattedStartDate);
+  const [startDateValue, setStartDate] = useState(sms?.created_at);
   const [endDateValue, setEndDate] = useState(formattedEndDate);
   const dataDlivery = [
     { status: "delivered", value: sms?.delivered },
@@ -62,7 +63,7 @@ const AnalyticsPage = () => {
   const getdataAnalytics = async () => {
     try {
       let response = await axiosInstance.get(
-        `api/get_analytcs/${params.id}/?startDate=${sms?.created_at}&endDate=${endDateValue}`
+        `api/get_analytcs/${params.id}/?startDate=${startDateValue}&endDate=${endDateValue}`
       );
       if (response.status === 200) {
         setViews(response.data);
