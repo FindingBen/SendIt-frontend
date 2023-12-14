@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { selectCurrentToken } from "../../features/auth/authSlice";
+import { selectCurrentToken } from "../../redux/reducers/authSlice";
 import useAxiosInstance from "../../utils/axiosInstance";
 import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux";

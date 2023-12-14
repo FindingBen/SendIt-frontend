@@ -8,22 +8,24 @@ import Button from "../components/Button";
 import {
   selectCurrentUser,
   selectCurrentToken,
-} from "../features/auth/authSlice";
+} from "../redux/reducers/authSlice";
 import modalReducer, {
   selectModalCall,
   setOpenModal,
-} from "../features/modal/modalReducer";
+} from "../redux/reducers/modalReducer";
 import { createElements } from "../utils/helpers/createElements";
 import List from "../components/List";
-import { setState } from "../features/modal/formReducer";
-import { setList, selectListState } from "../features/elements/elementReducer";
+import { setState } from "../redux/reducers/formReducer";
+import { setList } from "../redux/reducers/elementReducer";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { ElementContext } from "../context/ElementContext";
 import useAxiosInstance from "../utils/axiosInstance";
+import { useRedux } from "../constants/reduxImports";
 const CreateNote = () => {
   const { createElement, deleteElement, contextObject } =
     useContext(ElementContext);
+  const { currentToken, currentUser, dispatch } = useRedux();
   const navigate = useNavigate();
   const [showComponent, setShowComponent] = useState(false);
   const [active, setActive] = useState(false);
@@ -40,9 +42,6 @@ const CreateNote = () => {
   const [isCreate, setIsCreate] = useState(true);
   const [messageObj, setMessageObj] = useState();
   const [align, setAlign] = useState();
-  const dispatch = useDispatch();
-  const token = useSelector(selectCurrentToken);
-  const user = useSelector(selectCurrentUser);
   const axiosInstance = useAxiosInstance();
   const modal_state = useSelector(selectModalCall);
   //const createdElements = createElements();
@@ -90,7 +89,6 @@ const CreateNote = () => {
       const createElementsData = createElements({
         elementContextList,
         messageObject,
-        token,
         axiosInstance,
       });
       const createdElements = await createElementsData(); // Await the result
@@ -108,23 +106,17 @@ const CreateNote = () => {
     let messageObjId;
     try {
       const requestData = {
-        users: user,
+        users: currentUser,
         message_name: messageName,
       };
 
       let response = await axiosInstance.post(
         "/api/create_notes/",
-        requestData,
-        {
-          headers: {
-            Authorization: "Bearer " + String(token),
-          },
-        }
+        requestData
       );
 
       if (response.status === 200) {
         dispatch(setState({ isDirty: false }));
-        console.log(response.data.note);
         messageObjId = response.data.note.id;
         setMessageObj(response.data.note);
         setIsLoading(false);
@@ -184,7 +176,6 @@ const CreateNote = () => {
   };
 
   const updateElements = (element) => {
-    console.log("Updating...", element);
     setElementsContextList(element);
   };
 

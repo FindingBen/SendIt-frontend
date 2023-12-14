@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext, memo } from "react";
 import ImgList from "./ImgList";
 import ReactDOM from "react-dom";
-import { useSelector } from "react-redux";
 import { ElementContext } from "../context/ElementContext";
-import { selectCurrentUser } from "../features/auth/authSlice";
 import { motion } from "framer-motion";
+import { useRedux } from "../constants/reduxImports";
 
 const Image = ({
   onStateChange,
@@ -14,8 +13,8 @@ const Image = ({
   contextList,
   elementList,
   listEl,
-  clicked,
 }) => {
+  const { currentUser } = useRedux();
   const { createElement } = useContext(ElementContext);
   const [showComponent, setShowComponent] = useState(true);
   const [active, setActive] = useState(true);
@@ -23,8 +22,6 @@ const Image = ({
   const [file, setFile] = useState();
   const [imageSrc, setImageSrc] = useState("");
   const [cancel, setCancel] = useState(false);
-  const user = useSelector(selectCurrentUser);
-  const uuidv4 = require("uuid");
   const [isMounted, setIsMounted] = useState(true);
   const container = document.getElementById("myList");
   const [isCreated, setIsCreated] = useState(listEl);
@@ -81,7 +78,7 @@ const Image = ({
       id: Math.floor(Math.random() * 100),
       image: URL.createObjectURL(file),
       element_type: "Img",
-      users: user,
+      users: currentUser,
       file: file,
       order: 0,
       context: true,

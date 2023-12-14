@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
-import { selectCurrentToken } from "../features/auth/authSlice";
-import { useSelector } from "react-redux";
 import CsvModal from "../features/modal/CsvModal";
 import AddContactModal from "../features/modal/AddContactModal";
-import { motion } from "framer-motion";
 import "../css/ContactList.css";
 
 const ContactList = () => {
@@ -17,7 +13,7 @@ const ContactList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const token = useSelector(selectCurrentToken);
+
   const params = useParams();
 
   const rowsPerPage = 7;
@@ -37,16 +33,7 @@ const ContactList = () => {
 
   let getContacts = async () => {
     try {
-      let response = await axiosInstance.get(
-        `/api/contact_list/${params.id}/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(token),
-          },
-        }
-      );
+      let response = await axiosInstance.get(`/api/contact_list/${params.id}/`);
 
       if (response.status === 200) {
         setContacts(response.data);
@@ -63,7 +50,6 @@ const ContactList = () => {
       let response = await axiosInstance.delete(`/api/delete_recipient/${id}/`);
       if (response.status === 200) {
         setContacts(contacts.filter((contact) => contact.id !== id));
-        console.log("deleted!");
         setIsDelete(false);
       }
     } catch (error) {}

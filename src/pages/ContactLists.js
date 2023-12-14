@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../css/Home.css";
 import "../css/ContactList.css";
-import { selectCurrentToken } from "../features/auth/authSlice";
 import useAxiosInstance from "../utils/axiosInstance";
-import { useSelector } from "react-redux";
 import CreateListModal from "../features/modal/CreateListModal";
 import DeleteListModal from "../features/modal/DeleteListModal";
 import { motion } from "framer-motion";
@@ -15,7 +13,6 @@ const ContactList = () => {
   const [listUpdated, setListUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
-  const token = useSelector(selectCurrentToken);
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [listId, setListId] = useState();
@@ -26,13 +23,7 @@ const ContactList = () => {
 
   let getContactLists = async () => {
     try {
-      let response = await axiosInstance.get("/api/contact_lists/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-      });
+      let response = await axiosInstance.get("/api/contact_lists/");
       if (response.status === 200) {
         setContactList(response.data);
         setListId();

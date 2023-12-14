@@ -5,7 +5,7 @@ import ButtonComponent from "./ButtonComponent";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import ColorPircker from "./ColorPircker";
-import { selectCurrentUser } from "../features/auth/authSlice";
+import { selectCurrentUser } from "../redux/reducers/authSlice";
 const Button = ({
   onStateChange,
   componentChange,

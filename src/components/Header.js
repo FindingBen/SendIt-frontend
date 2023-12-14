@@ -1,28 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-  logOut,
-} from "../features/auth/authSlice";
-import { selectFormState } from "../features/modal/formReducer";
-import {
-  setModalState,
-  selectModalState,
-} from "../features/modal/modalReducer";
-import { setEditPage } from "../features/elements/editPageReducer";
+import { useSelector } from "react-redux";
+import { logOut } from "../redux/reducers/authSlice";
+import { selectFormState } from "../redux/reducers/formReducer";
+import { setModalState } from "../redux/reducers/modalReducer";
+import { setEditPage } from "../redux/reducers/editPageReducer";
 import { Link, useNavigate } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
 import "../css/Header.css";
+import { useRedux } from "../constants/reduxImports";
 
 const Header = () => {
+  const { currentModalState, dispatch, currentUser, currentFormState } =
+    useRedux();
   const [clickedPath, setClickedPath] = useState();
-  const user = useSelector(selectCurrentUser);
   const [open, setOpen] = useState(true);
-  const isDirtyState = useSelector(selectFormState);
-  const showModal = useSelector(selectModalState);
   const isDirtyRef = useRef(false);
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const Menus = [
@@ -33,17 +26,17 @@ const Header = () => {
     {
       title: "Account",
       src: "account",
-      location: `/account_settings/${user}`,
+      location: `/account_settings/${currentUser}`,
     },
   ];
 
   useEffect(() => {
-    if (isDirtyState) {
+    if (currentFormState) {
       isDirtyRef.current = true;
     } else {
       isDirtyRef.current = false;
     }
-  }, [isDirtyState, showModal]);
+  }, [currentFormState, currentModalState]);
 
   useEffect(() => {
     const unblock = () => {
@@ -95,7 +88,7 @@ const Header = () => {
     >
       <div className="mx-auto mb-4 xl:mb-4 text-white">
         <img
-          src={require("../assets/noBgLogo.png")}
+          src={require("../assets/logoSpp.PNG")}
           className={`${open ? "w-20 xl:w-24" : "w-20"}`}
         />
       </div>
@@ -147,7 +140,7 @@ const Header = () => {
       </Link>
       <ModalComponent
         confirmLeave={handleConfirmNavigation}
-        showModal={showModal}
+        showModal={currentModalState}
       ></ModalComponent>
     </div>
   );

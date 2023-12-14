@@ -1,21 +1,13 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import dayjs from "dayjs";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  selectCurrentToken,
-  selectCurrentUser,
-  setCredentials,
-  logOut,
-} from "../features/auth/authSlice";
-import { useRef, useEffect } from "react";
-import { store } from "../app/store";
+import { setCredentials, logOut } from "../redux/reducers/authSlice";
+import { useRef } from "react";
 import { config } from "../constants/Constants";
+import { useRedux } from "../constants/reduxImports";
 
 const useAxiosInstance = () => {
-  const dispatch = useDispatch();
-  const token = useSelector(selectCurrentToken);
-  const user = useSelector(selectCurrentUser);
+  const { currentToken, currentUser, dispatch } = useRedux();
   const baseURL = config.url.BASE_URL;
 
   const createAxiosInstance = (token) => {
@@ -24,18 +16,20 @@ const useAxiosInstance = () => {
     });
 
     if (token) {
-      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      instance.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${currentToken}`;
     }
 
     return instance;
   };
 
-  const axiosInstanceRef = useRef(createAxiosInstance(token));
-  const tokenExpiration = dayjs.unix(jwt_decode(token).exp);
+  const axiosInstanceRef = useRef(createAxiosInstance(currentToken));
+  const tokenExpiration = dayjs.unix(jwt_decode(currentToken).exp);
 
   axiosInstanceRef.current.defaults.headers.common[
     "Authorization"
-  ] = `Bearer ${token}`;
+  ] = `Bearer ${currentToken}`;
 
   axiosInstanceRef.current.interceptors.request.use(async (req) => {
     const now = dayjs();
@@ -54,7 +48,7 @@ const useAxiosInstance = () => {
         console.log("new token aquired..");
         localStorage.setItem("refreshToken", response.data.refresh);
 
-        dispatch(setCredentials({ ...response.data, user }));
+        dispatch(setCredentials({ ...response.data, currentUser }));
 
         const newAxiosInstance = createAxiosInstance(newToken);
         axiosInstanceRef.current = newAxiosInstance;

@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-} from "../features/auth/authSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
+import { useRedux } from "../constants/reduxImports";
 import ModalComponent from "../components/ModalComponent";
 
 const PackagePlan = () => {
+  const { currentUser, dispatch } = useRedux();
   const axiosInstance = useAxiosInstance();
   const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [loadingState, setLoadingStates] = useState({});
-  const token = useSelector(selectCurrentToken);
-  const user = useSelector(selectCurrentUser);
   const [packagePlan, setPackage] = useState([]);
 
   useEffect(() => {
@@ -23,13 +17,7 @@ const PackagePlan = () => {
 
   let getPackages = async () => {
     try {
-      let response = await axiosInstance.get("/api/package_plan/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-      });
+      let response = await axiosInstance.get("/api/package_plan/");
 
       if (response.status === 200) {
         let filteredPackages = response.data.filter((item) => item.id !== 1);
@@ -49,15 +37,11 @@ const PackagePlan = () => {
     }));
     setIsLoading(true);
 
-    let response = await axiosInstance.post("/stripe/stripe_checkout_session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(token),
-      },
+    let response = await axiosInstance.post(
+      "/stripe/stripe_checkout_session",
       name_product,
-      user,
-    });
+      currentUser
+    );
     if (response.status === 200) {
       console.log(response);
 

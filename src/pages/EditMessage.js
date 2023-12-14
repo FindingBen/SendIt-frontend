@@ -1,32 +1,23 @@
 import React, { useState, useContext, memo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { setState } from "../features/modal/formReducer";
+import { setState } from "../redux/reducers/formReducer";
 import "../css/CreationMessage.css";
 import Image from "../components/Image";
 import Text from "../components/Text";
 import List from "../components/List";
 import Button from "../components/Button";
-import { setList } from "../features/elements/elementReducer";
+import { setList } from "../redux/reducers/elementReducer";
 import { useEffect } from "react";
-import modalReducer, {
-  selectModalCall,
-  setOpenModal,
-} from "../features/modal/modalReducer";
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-} from "../features/auth/authSlice";
-import { setModalState } from "../features/modal/modalReducer";
-import {
-  selectEditPageState,
-  setEditPage,
-} from "../features/elements/editPageReducer";
-import { createElements } from "../utils/helpers/createElements";
-import { useSelector, useDispatch } from "react-redux";
+import { setOpenModal } from "../redux/reducers/modalReducer";
+import { setModalState } from "../redux/reducers/modalReducer";
+import { setEditPage } from "../redux/reducers/editPageReducer";
 import useAxiosInstance from "../utils/axiosInstance";
 import { ElementContext } from "../context/ElementContext";
+import { useRedux } from "../constants/reduxImports";
 
 const EditMessage = () => {
+  const { currentPageState, dispatch, currentModalCall, currentUser } =
+    useRedux();
   const navigate = useNavigate();
   const [showComponent, setShowComponent] = useState(false);
   const [active, setActive] = useState(false);
@@ -36,20 +27,15 @@ const EditMessage = () => {
   const [file, setFiles] = useState([]);
   const [elements, setElements] = useState([]);
   const [message, setMessage] = useState("");
-  const { createElement, deleteElement } = useContext(ElementContext);
+  const { deleteElement } = useContext(ElementContext);
   const [elementContextList, setElementsContextList] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const token = useSelector(selectCurrentToken);
-  const user = useSelector(selectCurrentUser);
   const [isDirty, setIsDirty] = useState(false);
   const [toDelete, setToDelete] = useState([]);
   const [isCreate, setIsCreate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const axiosInstance = useAxiosInstance();
-  const modal_state = useSelector(selectModalCall);
   const [messageName, setMessageName] = useState(message?.message_name);
-  const isFormDirt = useSelector(selectEditPageState);
-  const dispatch = useDispatch();
   const params = useParams();
   const container = document?.getElementById("myList");
   const [getId, setId] = useState();
@@ -57,14 +43,14 @@ const EditMessage = () => {
 
   useEffect(() => {
     setIsLoaded(true);
-    if (isFormDirt) {
+    if (currentPageState) {
       dispatch(setState({ isDirty: true }));
     } else {
       dispatch(setState({ isDirty: false }));
     }
     dispatch(setOpenModal({ open: false }));
     dispatch(setModalState({ show: false }));
-  }, [modal_state, isFormDirt, isLoading]);
+  }, [currentModalCall, currentPageState, isLoading]);
 
   useEffect(() => {}, [elements]);
 
@@ -108,13 +94,7 @@ const EditMessage = () => {
 
   let messageView = async () => {
     setId(params.id);
-    let response = await axiosInstance.get(`/api/message_view/${params.id}/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(token),
-      },
-    });
+    let response = await axiosInstance.get(`/api/message_view/${params.id}/`);
     if (response.status === 200 || 201) {
       setElements(response.data.elements);
       setIsLoaded(false);
@@ -155,18 +135,13 @@ const EditMessage = () => {
       }
 
       const requestData = {
-        users: user,
+        users: currentUser,
         message_name: messageName,
       };
 
       let response = await axiosInstance.put(
         `/api/message_view_edit/${params.id}/`,
-        requestData,
-        {
-          headers: {
-            Authorization: "Bearer " + String(token),
-          },
-        }
+        requestData
       );
 
       if (response.status === 200) {
@@ -209,12 +184,7 @@ const EditMessage = () => {
 
           let response = await axiosInstance.post(
             "/api/create_element/",
-            formData,
-            {
-              headers: {
-                Authorization: "Bearer " + String(token),
-              },
-            }
+            formData
           );
 
           if (response.status === 200) {

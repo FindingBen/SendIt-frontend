@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { selectCurrentToken, logOut } from "../features/auth/authSlice";
-import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import PasswordChange from "../utils/PasswordChange";
@@ -8,7 +6,6 @@ import { motion } from "framer-motion";
 
 const UserPage = () => {
   const axiosInstance = useAxiosInstance();
-  const token = useSelector(selectCurrentToken);
   const [username, setUsername] = useState();
   const [packagePlan, setPackagePlan] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -57,16 +54,7 @@ const UserPage = () => {
 
   let getUser = async () => {
     try {
-      let response = await axiosInstance.get(
-        `/api/user_account/${params.id}/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(token),
-          },
-        }
-      );
+      let response = await axiosInstance.get(`/api/user_account/${params.id}/`);
 
       if (response.status === 200) {
         setUser(response.data);
@@ -90,14 +78,7 @@ const UserPage = () => {
 
     let response = await axiosInstance.put(
       `/api/update_user/${params.id}/`,
-      formData,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-      }
+      formData
     );
 
     if (response.status === 200) {
@@ -107,13 +88,7 @@ const UserPage = () => {
 
   let purchase_history = async (e) => {
     try {
-      let response = await axiosInstance.get(`stripe/purchases/${params.id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-      });
+      let response = await axiosInstance.get(`stripe/purchases/${params.id}`);
       if (response.status === 200) {
         setPurchases(response.data);
       }

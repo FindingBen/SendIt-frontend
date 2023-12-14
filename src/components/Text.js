@@ -4,9 +4,9 @@ import ReactDOM from "react-dom";
 import ReactQuill from "react-quill";
 import { ElementContext } from "../context/ElementContext";
 import "react-quill/dist/quill.snow.css";
-import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
-import { selectCurrentUser } from "../features/auth/authSlice";
+import { useRedux } from "../constants/reduxImports";
+
 const modules = {
   toolbar: [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -37,13 +37,13 @@ const Text = ({
   listEl,
   setAlignemnt,
 }) => {
-  const { createElement, deleteElement } = useContext(ElementContext);
+  const { currentUser } = useRedux();
+  const { createElement } = useContext(ElementContext);
   const [active, setActive] = useState(true);
   const [text, setText] = useState([]);
   const [showComponent, setShowComponent] = useState(true);
   const container = document.getElementById("myList");
   const [isMounted, setIsMounted] = useState(true);
-  const user = useSelector(selectCurrentUser);
   const [align, setAlign] = useState();
   const [isCreated, setIsCreated] = useState(listEl);
 
@@ -119,13 +119,12 @@ const Text = ({
       text: text,
       alignment: getAlignmentclassName(),
       element_type: "Text",
-      users: user,
+      users: currentUser,
       order: 0,
       context: true,
     };
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
-    //setElements((prevElement) => [...prevElement, dataText]);
     elementList((prevElement) => [...prevElement, dataText]);
   };
 

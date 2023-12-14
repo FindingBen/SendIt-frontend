@@ -1,22 +1,19 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import React, { useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
+import React from "react";
 import ContactLists from "./pages/ContactLists";
 import ContactList from "./pages/ContactList";
-import ButtonComponent from "./components/ButtonComponent";
 import CreateMessage from "./pages/CreateMessage";
 import EditMessage from "./pages/EditMessage";
 import RegisterPage from "./pages/RegisterPage";
 import PrivateRoute from "./utils/PrivateRoute";
 import Layout from "./components/Layout";
-import DeleteMessage from "./pages/DeleteMessage";
-import Login from "./features/auth/Login";
+import Login from "./pages/Login";
 import HomePage from "./pages/HomePage";
 import SmsEditor from "./pages/SmsEditor";
 import { ElementProvider } from "./context/ElementContext";
 import MessageView from "./pages/MessageView";
 import UserPage from "./pages/UserPage";
-import CreateList from "./pages/CreateList";
 import PackagePlan from "./pages/PackagePlan";
 import PasswordReset from "./utils/PasswordReset";
 import PasswordResetConfirm from "./utils/PasswordResetConfirm";
@@ -24,7 +21,6 @@ import ReactGA from "react-ga";
 import SuccessPayment from "./pages/SuccessPayment";
 import CancelPayment from "./pages/CancelPayment";
 import AnalyticsPage from "./pages/AnalyticsPage";
-import CreateEmail from "./pages/CreateEmail";
 import UnsubscribePage from "./pages/UnsubscribePage";
 import ActivationEmailSuccess from "./pages/ActivationEmailSuccess";
 
@@ -72,15 +68,10 @@ function App() {
                 <Route path="analytics/:id" element={<AnalyticsPage />} />
                 <Route path="home" element={<HomePage />} />
                 <Route path="create_note" element={<CreateMessage />} />
-                <Route path="create_email" element={<CreateEmail />} />
                 <Route
                   path="/contact_lists"
                   element={<ContactLists></ContactLists>}
                 />
-                <Route
-                  path="/create_list/"
-                  element={<CreateList></CreateList>}
-                ></Route>
                 <Route
                   path="/contact_list/:id"
                   element={<ContactList></ContactList>}
@@ -103,10 +94,6 @@ function App() {
                   path="/package_plan/"
                   element={<PackagePlan></PackagePlan>}
                 />
-                <Route
-                  path="/delete_message/:id"
-                  element={<DeleteMessage></DeleteMessage>}
-                ></Route>
                 <Route
                   path="/stripe/"
                   element={<SuccessPayment></SuccessPayment>}

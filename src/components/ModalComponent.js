@@ -1,24 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import Modal from "react-bootstrap/Modal";
-import { setState } from "../features/modal/formReducer";
-import { setModalState, setOpenModal } from "../features/modal/modalReducer";
-import { useDispatch } from "react-redux";
+import { setState } from "../redux/reducers/formReducer";
+import { setModalState, setOpenModal } from "../redux/reducers/modalReducer";
 import { ElementContext } from "../context/ElementContext";
-// import useAxiosInstance from "../utils/axiosInstance";
-import { config } from "../../src/constants/Constants";
-// import { createElements } from "../utils/helpers/createElements";
-// import {
-//   selectCurrentUser,
-//   selectCurrentToken,
-// } from "../features/auth/authSlice";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useRedux } from "../constants/reduxImports";
 
 function ModalComponent({ confirmLeave, showModal, modalType }) {
-  const BASE_URL = config.url.BASE_URL;
-  const params = useParams();
+  const { dispatch } = useRedux();
   const [show, setShow] = useState(showModal);
-  const dispatch = useDispatch();
   const { deleteElement } = useContext(ElementContext);
 
   const handleClose = (e) => {

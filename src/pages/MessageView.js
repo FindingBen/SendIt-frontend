@@ -14,7 +14,6 @@ const MessageView = () => {
   useEffect(() => {
     messageView();
   }, []);
-  console.log("Test");
   let messageView = async () => {
     try {
       setId(params.id);

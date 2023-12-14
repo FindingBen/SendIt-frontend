@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useAxiosInstance from "./axiosInstance";
-import { useNavigate, useParams } from "react-router-dom";
-import { selectCurrentToken } from "../features/auth/authSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const PasswordChange = ({ status, errStatus }) => {
   const [newPass, setNewPass] = useState();
   const [reNewPass, setReNewPass] = useState();
   const [isLoading, setIsLoading] = useState();
   const [oldPass, setOldPass] = useState();
-  const token = useSelector(selectCurrentToken);
   const axiosInstance = useAxiosInstance();
-  const navigate = useNavigate();
 
   const handleNewPass = (e) => {
     setNewPass(e.target.value);
@@ -27,17 +23,17 @@ const PasswordChange = ({ status, errStatus }) => {
 
   let passChange = async () => {
     setIsLoading(true);
+    const formData = {
+      new_password: newPass,
+      re_new_password: reNewPass,
+      current_password: oldPass,
+    };
     try {
       if (newPass === reNewPass) {
-        let response = await axiosInstance.post("/auth/users/set_password/", {
-          new_password: newPass,
-          re_new_password: reNewPass,
-          current_password: oldPass,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(token),
-          },
-        });
+        let response = await axiosInstance.post(
+          "/auth/users/set_password/",
+          formData
+        );
         if (response.status === 204) {
           status("Password changed!");
           setIsLoading(false);

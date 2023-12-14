@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { persistor } from "../../app/store";
+import { persistor } from "../store";
+
 const authSlice = createSlice({
   name: "access",
   initialState: { user: null, token: null },

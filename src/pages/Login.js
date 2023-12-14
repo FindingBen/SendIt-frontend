@@ -1,12 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "./authSlice";
-import { useLoginMutation } from "./authApiSlice";
-//import useAxiosInstance from "../../utils/axiosInstance";
-import { store } from "../../app/store";
+import { setCredentials } from "../redux/reducers/authSlice";
 import jwt_decode from "jwt-decode";
-import { config } from "../../constants/Constants";
+import { config } from "../constants/Constants";
 import { motion } from "framer-motion";
 
 const Login = () => {
@@ -46,7 +43,7 @@ const Login = () => {
       });
       const responseData = await response.json();
       const user = jwt_decode(responseData?.access).user_id;
-      console.log(user);
+
       dispatch(setCredentials({ ...responseData, user }));
       setUser("");
       setPwd("");
@@ -54,7 +51,6 @@ const Login = () => {
       localStorage.setItem("refreshToken", responseData?.refresh);
       navigate("/home");
     } catch (err) {
-      console.log(err);
       if (!err?.response) {
         setErrMsg("Wrong credentials!");
         setLoading(false);
@@ -84,7 +80,7 @@ const Login = () => {
               >
                 <path class="text-gray-700" d="M0 0h72v72H0z" />
                 <image
-                  href={require("../../assets/notext-png.png")}
+                  href={require("../assets/logoSpp.PNG")}
                   width="72"
                   height="72"
                 />

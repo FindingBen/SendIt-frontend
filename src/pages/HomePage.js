@@ -1,25 +1,20 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../css/Home.css";
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-  logOut,
-} from "../features/auth/authSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { logOut } from "../redux/reducers/authSlice";
 import useAxiosInstance from "../utils/axiosInstance";
 import DeleteMessageModal from "../features/modal/DeleteMessageModal";
 import SvgLoader from "../components/SvgLoader";
 import { motion } from "framer-motion";
 import { config } from "../constants/Constants";
+import { useRedux } from "../constants/reduxImports";
 
 const HomePage = () => {
   const axiosInstance = useAxiosInstance();
+  const { dispatch, currentUser } = useRedux();
   let [notes, setNotes] = useState([]);
   const [initialLoad, setInitialLoad] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const token = useSelector(selectCurrentToken);
-  const user = useSelector(selectCurrentUser);
   const [messageCount, setMessageCount] = useState("");
   const [totalValues, setTotalValues] = useState();
   const [listUpdated, setListUpdated] = useState(false);
@@ -27,7 +22,6 @@ const HomePage = () => {
   const [show, setShow] = useState(false);
   const BASE_URL = config.url.BASE_URL;
   const [messageId, setMessageId] = useState();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     getNotes();
@@ -48,13 +42,7 @@ const HomePage = () => {
 
   let getNotes = async () => {
     try {
-      let response = await axiosInstance.get("/api/notes/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-      });
+      let response = await axiosInstance.get("/api/notes/");
 
       if (response.status === 200) {
         setNotes(response?.data.messages);
@@ -78,12 +66,7 @@ const HomePage = () => {
       setLoading(true);
       // Fetch details of the existing message
       const existingMessageResponse = await axiosInstance.get(
-        `/api/message_view/${messageId}/`,
-        {
-          headers: {
-            Authorization: "Bearer " + String(token),
-          },
-        }
+        `/api/message_view/${messageId}/`
       );
 
       if (existingMessageResponse.status !== 200) {
@@ -97,13 +80,8 @@ const HomePage = () => {
       const duplicateMessageResponse = await axiosInstance.post(
         "/api/create_notes/",
         {
-          users: user,
+          users: currentUser,
           message_name: `Copy of ${existingMessage.message_name}`,
-        },
-        {
-          headers: {
-            Authorization: "Bearer " + String(token),
-          },
         }
       );
 
@@ -144,12 +122,7 @@ const HomePage = () => {
         try {
           let response = await axiosInstance.post(
             "/api/create_element/",
-            formData,
-            {
-              headers: {
-                Authorization: "Bearer " + String(token),
-              },
-            }
+            formData
           );
           if (response.status === 200) {
           }

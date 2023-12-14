@@ -5,7 +5,6 @@ import BarChart from "../utils/chart/BarChart";
 import SvgLoader from "../components/SvgLoader";
 import PieChart from "../utils/chart/PieChart";
 import "react-datepicker/dist/react-datepicker.css";
-import DatePickerComponent from "../components/DatePicker";
 import { motion } from "framer-motion";
 
 const AnalyticsPage = () => {

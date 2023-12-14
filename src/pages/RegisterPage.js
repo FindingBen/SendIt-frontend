@@ -1,12 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../features/auth/authSlice";
+import { Link } from "react-router-dom";
+import { registerUser } from "../redux/reducers/authSlice";
 import ModalComponent from "../components/ModalComponent";
 import { motion } from "framer-motion";
 import { config } from "../constants/Constants";
+import { useRedux } from "../constants/reduxImports";
 
 const RegisterPage = () => {
+  const { dispatch } = useRedux();
   const BASE_URL = config.url.BASE_URL;
   const userRef = useRef();
   const errRef = useRef();
@@ -21,8 +22,6 @@ const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const [errMsgPass, setErrMsgPass] = useState("");
   const [showModal, setShow] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     userRef.current?.focus();
@@ -120,7 +119,7 @@ const RegisterPage = () => {
                 >
                   <path class="text-gray-700" d="M0 0h72v72H0z" />
                   <image
-                    href={require("../assets/IMG_2447.jpg")}
+                    href={require("../assets/logoSpp.PNG")}
                     width="72"
                     height="72"
                   />

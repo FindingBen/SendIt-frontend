@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { config } from "../constants/Constants";
 
 const UnsubscribePage = () => {
@@ -9,13 +9,10 @@ const UnsubscribePage = () => {
 
   const handleUnsubscribe = async () => {
     try {
-      let response = await fetch(
-        `${BASEURL}/api/optout/${hashedNumber.id}`
-      );
+      let response = await fetch(`${BASEURL}/api/optout/${hashedNumber.id}`);
 
       if (response.status === 200) {
         setClicked(true);
-        console.log("Unsubscribed");
       }
     } catch (e) {
       console.log(e);

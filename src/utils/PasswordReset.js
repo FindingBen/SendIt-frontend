@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import React, {  useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { config } from "../constants/Constants";
 
 const PasswordReset = () => {
@@ -7,7 +7,6 @@ const PasswordReset = () => {
   const [sent, setSent] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const baseURL = config.url.BASE_URL;
 
   const handleEmail = (e) => {

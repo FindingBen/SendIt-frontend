@@ -1,27 +1,19 @@
-import React, { useState, useEffect, useParam, useRef } from "react";
-import { setState } from "../features/modal/formReducer";
+import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-  logOut,
-} from "../features/auth/authSlice";
-import { useSelector, useDispatch } from "react-redux";
 import useAxiosInstance from "../utils/axiosInstance";
 import ScheduleSmsModal from "../features/modal/ScheduleSmsModal";
 import "../css/Sms.css";
 import TextComponent from "../components/TextComponent";
 import iPhoneImage from "../../src/assets/iphone_bg.jpg";
 import SmsConfirmModal from "../features/modal/SmsConfirmModal";
+import { useRedux } from "../constants/reduxImports";
 
 const SmsEditor = () => {
   const axiosInstance = useAxiosInstance();
-  const token = useSelector(selectCurrentToken);
-  const userId = useSelector(selectCurrentUser);
+  const { currentUser, dispatch } = useRedux();
   const params = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [showSchedule, setShowSchedule] = useState(false);
   const [linkURL, setLinkURL] = useState("");
@@ -103,25 +95,16 @@ const SmsEditor = () => {
 
   const sendSms = async () => {
     try {
-      let response = await axiosInstance.post(
-        "/sms/sms-send/",
-        {
-          user: userId,
-          sender: "ME",
-          sms_text: smsText,
-          content_link: uniqueLink,
-          message: params.id,
-          contact_list: recipients,
-          scheduled: false,
-          // is_sent: true,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(token),
-          },
-        }
-      );
+      let response = await axiosInstance.post("/sms/sms-send/", {
+        user: currentUser,
+        sender: "ME",
+        sms_text: smsText,
+        content_link: uniqueLink,
+        message: params.id,
+        contact_list: recipients,
+        scheduled: false,
+        // is_sent: true,
+      });
       if (response.status === 200 || 201) {
         navigate(`/home`);
       }
@@ -133,26 +116,17 @@ const SmsEditor = () => {
 
   const scheduleSms = async () => {
     try {
-      let response = await axiosInstance.post(
-        "/sms/sms-send-schedule/",
-        {
-          user: userId,
-          sender: "ME",
-          sms_text: smsText,
-          content_link: uniqueLink,
-          message: params.id,
-          contact_list: recipients,
-          scheduled_time: dateSchedule,
-          scheduled: true,
-          is_sent: false,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(token),
-          },
-        }
-      );
+      let response = await axiosInstance.post("/sms/sms-send-schedule/", {
+        user: currentUser,
+        sender: "ME",
+        sms_text: smsText,
+        content_link: uniqueLink,
+        message: params.id,
+        contact_list: recipients,
+        scheduled_time: dateSchedule,
+        scheduled: true,
+        is_sent: false,
+      });
       if (response.status === 200 || 201) {
         navigate(`/home`);
       }
@@ -163,13 +137,7 @@ const SmsEditor = () => {
 
   let getContactLists = async () => {
     try {
-      let response = await axiosInstance.get("/api/contact_lists/", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-      });
+      let response = await axiosInstance.get("/api/contact_lists/");
       if (response.status === 200) {
         setContactList(response.data);
       }

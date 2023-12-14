@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-  logOut,
-} from "../features/auth/authSlice";
+import { useLocation } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
-import { useSelector, useDispatch } from "react-redux";
 import ModalComponent from "../components/ModalComponent";
 import { motion } from "framer-motion-3d";
 
 const SuccessPayment = () => {
   const axiosInstance = useAxiosInstance();
   const location = useLocation();
-  const token = useSelector(selectCurrentToken);
   const [isSuccess, setIsSuccess] = useState(0);
 
   const [errMessage, setErrMessage] = useState("");
@@ -21,7 +14,7 @@ const SuccessPayment = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const sessionId = params.get("session_id");
-    console.log(sessionId);
+
     if (sessionId) {
       paymentSuccessfull(sessionId);
     }
@@ -30,14 +23,7 @@ const SuccessPayment = () => {
   const paymentSuccessfull = async (sessionId) => {
     try {
       let response = await axiosInstance.get(
-        `/stripe/payment_successfull/${sessionId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(token),
-          },
-        }
+        `/stripe/payment_successfull/${sessionId}`
       );
       if (response.status === 200) {
         setIsSuccess(true);
@@ -49,26 +35,6 @@ const SuccessPayment = () => {
 
       setErrMessage(error);
       setIsSuccess(false);
-    }
-  };
-
-  const paymentCancelled = async () => {
-    try {
-      let response = await axiosInstance.get(`/stripe/payment_cancelled`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
-        },
-      });
-      if (response.status === 200) {
-        setIsSuccess(false);
-        console.log("payment cancelled!");
-      }
-    } catch (error) {
-      console.log(error.message);
-      setErrMessage(error);
-      setIsSuccess();
     }
   };
 
