@@ -6,8 +6,7 @@ import { motion } from "framer-motion";
 import { useRedux } from "../constants/reduxImports";
 
 const Image = ({
-  onStateChange,
-  componentChange,
+  setComponentState,
   handleImages,
   handleFiles,
   contextList,
@@ -16,8 +15,6 @@ const Image = ({
 }) => {
   const { currentUser } = useRedux();
   const { createElement } = useContext(ElementContext);
-  const [showComponent, setShowComponent] = useState(true);
-  const [active, setActive] = useState(true);
   const [images, setImages] = useState([]);
   const [file, setFile] = useState();
   const [imageSrc, setImageSrc] = useState("");
@@ -38,7 +35,7 @@ const Image = ({
       }, 5);
     }
   }, [imageSrc, container]);
-
+  console.log("FILE", file);
   useEffect(() => {
     setIsMounted(true);
 
@@ -91,11 +88,7 @@ const Image = ({
   function saveImg(event) {
     addImageElContext();
     setCancel(true);
-    setShowComponent(Boolean(event.target.value));
-    setActive(Boolean(!event.target.value));
-
-    componentChange(Boolean(!event.target.value));
-    onStateChange(Boolean(!event.target.value));
+    setComponentState(null);
     if (isMounted && container) {
       if (!isCreated) {
         if (container) {
@@ -116,11 +109,7 @@ const Image = ({
 
   function handleCancel(event) {
     setCancel(true);
-    setShowComponent(Boolean(event.target.value));
-    setActive(Boolean(!event.target.value));
-
-    componentChange(Boolean(!event.target.value));
-    onStateChange(Boolean(!event.target.value));
+    setComponentState(null);
     if (isMounted) {
       const listContainer = document.getElementById("myList");
       if (!isCreated) {
@@ -172,10 +161,13 @@ const Image = ({
       <div className="mt-2">
         <button
           type="button"
-          className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+          className={`${
+            !file ? "bg-gray-600" : "bg-green-800 hover:bg-green-400"
+          }  text-white font-bold py-2 px-4 border border-blue-700 rounded`}
           value={false}
           onClick={saveImg}
           style={{ marginRight: "10px" }}
+          disabled={file === undefined}
         >
           Save
         </button>

@@ -6,19 +6,13 @@ import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import ColorPircker from "./ColorPircker";
 import { selectCurrentUser } from "../redux/reducers/authSlice";
-const Button = ({
-  onStateChange,
-  componentChange,
-  contextList,
-  elementList,
-  listEl,
-}) => {
+import { useRedux } from "../constants/reduxImports";
+
+const Button = ({ setComponentState, contextList, elementList, listEl }) => {
+  const { currentUser } = useRedux();
   const { createElement, deleteElement } = useContext(ElementContext);
-  const [active, setActive] = useState(true);
   const [text, setText] = useState("");
   const [link, setLink] = useState("");
-
-  const [showComponent, setShowComponent] = useState(true);
   const container = document.getElementById("myList");
   const [isMounted, setIsMounted] = useState(true);
   const user = useSelector(selectCurrentUser);
@@ -96,7 +90,7 @@ const Button = ({
       button_link: link,
       button_color: color,
       element_type: "Button",
-      users: user,
+      users: currentUser,
       order: 0,
       context: true,
     };
@@ -107,12 +101,8 @@ const Button = ({
   };
 
   function saveBtn(event) {
-    setShowComponent(Boolean(event.target.value));
-    setActive(Boolean(!event.target.value));
-
+    setComponentState(null);
     addButtonObjContext();
-    componentChange(Boolean(!event.target.value));
-    onStateChange(Boolean(!event.target.value));
     if (isMounted) {
       const container = document.getElementById("myList");
       if (!isCreated) {
@@ -131,10 +121,7 @@ const Button = ({
   }
 
   function handleCancel(event) {
-    setShowComponent(Boolean(event.target.value));
-    setActive(Boolean(!event.target.value));
-    componentChange(Boolean(!event.target.value));
-    onStateChange(Boolean(!event.target.value));
+    setComponentState(null);
     if (isMounted) {
       const container = document.getElementById("myList");
       if (!isCreated) {
@@ -151,42 +138,6 @@ const Button = ({
       }
     }
   }
-
-  function handleSaveAndCancel(event) {
-    setShowComponent(Boolean(event.target.value));
-    setActive(Boolean(!event.target.value));
-    componentChange(Boolean(!event.target.value));
-    onStateChange(Boolean(!event.target.value));
-    if (container) {
-      if (!isCreated) {
-        const listItems = Array.from(container.children);
-        listItems.forEach((listItem) => {
-          if (listItem.innerHTML.trim() === "") {
-            container.removeChild(listItem);
-          }
-        });
-      }
-    }
-  }
-
-  // // Update the button onClick handlers to use the combined function
-  // <button
-  //   type="button"
-  //   className="btn btn-dark"
-  //   value={false}
-  //   onClick={handleSaveAndCancel}
-  // >
-  //   Save
-  // </button>
-  // <button
-  //   type="button"
-  //   className="btn btn-danger"
-  //   id="cancel"
-  //   value={false}
-  //   onClick={handleSaveAndCancel}
-  // >
-  //   Cancel
-  // </button>
 
   return (
     <motion.div

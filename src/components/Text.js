@@ -30,8 +30,7 @@ const modules = {
 };
 
 const Text = ({
-  onStateChange,
-  componentChange,
+  setComponentState,
   elementList,
   contextList,
   listEl,
@@ -39,9 +38,8 @@ const Text = ({
 }) => {
   const { currentUser } = useRedux();
   const { createElement } = useContext(ElementContext);
-  const [active, setActive] = useState(true);
+
   const [text, setText] = useState([]);
-  const [showComponent, setShowComponent] = useState(true);
   const container = document.getElementById("myList");
   const [isMounted, setIsMounted] = useState(true);
   const [align, setAlign] = useState();
@@ -129,12 +127,10 @@ const Text = ({
   };
 
   function saveTxt(event) {
-    setShowComponent(Boolean(event.target.value));
-    setActive(Boolean(!event.target.value));
+    setComponentState(null);
     addTextObjContext();
     setAlign(event);
-    componentChange(Boolean(!event.target.value));
-    onStateChange(Boolean(!event.target.value));
+
     if (isMounted) {
       const listContainer = document.getElementById("myList");
 
@@ -156,10 +152,7 @@ const Text = ({
   }
 
   function handleCancel(event) {
-    setShowComponent(Boolean(event.target.value));
-    setActive(Boolean(!event.target.value));
-    componentChange(Boolean(!event.target.value));
-    onStateChange(Boolean(!event.target.value));
+    setComponentState(null);
     if (isMounted) {
       const listContainer = document.getElementById("myList");
 
