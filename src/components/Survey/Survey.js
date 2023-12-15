@@ -1,39 +1,46 @@
 import React, { useState, useEffect, useContext, memo } from "react";
 import ReactDOM from "react-dom";
-import { ElementContext } from "../context/ElementContext";
-import ButtonComponent from "./ButtonComponent";
 import { motion } from "framer-motion";
-import ColorPircker from "./ColorPircker";
-import { useRedux } from "../constants/reduxImports";
+import ColorPircker from "../ColorPircker";
+import SurveyComponent from "./SurveyComponent";
+import { ElementContext } from "../../context/ElementContext";
+import { useRedux } from "../../constants/reduxImports";
 
-const Button = ({ setComponentState, contextList, elementList, listEl }) => {
+const Survey = ({ setComponentState, contextList, elementList, listEl }) => {
   const { currentUser } = useRedux();
   const { createElement, deleteElement } = useContext(ElementContext);
-  const [text, setText] = useState("");
-  const [link, setLink] = useState("");
+  const [question, setQuestion] = useState("");
+  const [questionType, setQuestionType] = useState("");
   const container = document.getElementById("myList");
   const [isMounted, setIsMounted] = useState(true);
   const [color, setColor] = useState("");
   const [isCreated, setIsCreated] = useState(listEl);
+
+  function handleResponse() {
+    console.log("response");
+  }
+
   useEffect(() => {
     try {
       const lastListItem = container?.lastChild;
       setTimeout(() => {
         if (!isCreated) {
           ReactDOM.render(
-            <ButtonComponent
-              textValue={text}
-              linkValue={link}
+            <SurveyComponent
+              questionValue={question}
+              questionTypeValue={questionType}
               colorValue={color}
+              onSubmit={handleResponse}
             />,
             lastListItem
           );
         } else {
           ReactDOM.render(
-            <ButtonComponent
-              textValue={text}
-              linkValue={link}
+            <SurveyComponent
+              questionValue={question}
+              questionTypeValue={questionType}
               colorValue={color}
+              onSubmit={handleResponse}
             />,
             container
           );
@@ -42,15 +49,15 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
     } catch (error) {
       console.log(error);
     }
-  }, [text, link, color, container]);
+  }, [question, questionType, color, container]);
 
   useEffect(() => {
     setIsMounted(true);
 
     return () => {
-      setText([]);
-      setLink([]);
-      setColor([]);
+      setQuestion("");
+      setQuestionType("");
+      setColor("");
       try {
         if (isMounted && container) {
           const lastListItem = container?.lastChild;
@@ -68,25 +75,24 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
     };
   }, []);
 
-  function handleTextButtonFunc(event) {
-    setText(event.target.value);
+  function handleQuestionValue(event) {
+    setQuestion(event.target.value);
   }
-  console.log(text, link);
-  function handleLinkButtonFunc(event) {
-    setLink(event.target.value);
+
+  function handleQuestionTypeValue(event) {
+    setQuestionType(event.target.value);
   }
 
   const handleColor = (color) => {
     setColor(color);
   };
 
-  const addButtonObjContext = () => {
+  const addSurveyObjContext = () => {
     const dataText = {
       id: Math.floor(Math.random() * 100),
-      button_title: text,
-      button_link: link,
-      button_color: color,
-      element_type: "Button",
+      survey: question,
+      question_type: questionType,
+      element_type: "Survey",
       users: currentUser,
       order: 0,
       context: true,
@@ -97,9 +103,9 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
     elementList((prevElement) => [...prevElement, dataText]);
   };
 
-  function saveBtn(event) {
+  function saveSurvey(event) {
     setComponentState(null);
-    addButtonObjContext();
+    addSurveyObjContext();
     if (isMounted) {
       const container = document.getElementById("myList");
       if (!isCreated) {
@@ -151,10 +157,10 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
           for="first_name"
           className="block mb-2 text-sm font-light text-grayWhite dark:text-white"
         >
-          Button text display
+          Write your question
         </label>
         <input
-          onChange={handleTextButtonFunc}
+          onChange={handleQuestionValue}
           type="text"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         />
@@ -162,19 +168,23 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
           for="first_name"
           className="block mb-2 mt-3 text-sm font-light text-grayWhite dark:text-white"
         >
-          Insert link
+          Choose question type
         </label>
-        <input
-          onChange={handleLinkButtonFunc}
-          type="link"
+        <select
+          id="questionType"
+          onChange={handleQuestionTypeValue}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        />
+        >
+          <option value="">Select a question type</option>
+          <option value="Like/Dislike">Like/Dislike</option>
+          <option value="Question Survey">Question Survey</option>
+        </select>
         <div className="mt-3 flex flex-row relative">
           <button
             type="button"
             className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
             value={false}
-            onClick={saveBtn}
+            onClick={saveSurvey}
             style={{ marginRight: "10px" }}
           >
             Save
@@ -198,4 +208,4 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
   );
 };
 
-export default memo(Button);
+export default Survey;

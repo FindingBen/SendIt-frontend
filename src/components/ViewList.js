@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, memo } from "react";
 import ImgList from "./ImgList";
 import TextComponent from "./TextComponent";
 import ButtonComponent from "./ButtonComponent";
+import SurveyComponent from "./Survey/SurveyComponent";
 import { config } from "../constants/Constants";
 
 const ViewList = ({ children }) => {
@@ -37,6 +38,15 @@ const ViewList = ({ children }) => {
                 textValue={item.button_title}
                 linkValue={item.button_link}
                 colorValue={item.button_color}
+              />
+            ) : (
+              <></>
+            )}
+            {item.element_type === "Survey" ? (
+              <SurveyComponent
+                questionTypeValue={item.question_type}
+                questionValue={item.survey}
+                element_id={item.id}
               />
             ) : (
               <></>

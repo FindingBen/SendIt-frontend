@@ -5,6 +5,7 @@ import "../css/RootIframe.css";
 import Image from "../components/Image";
 import Text from "../components/Text";
 import Button from "../components/Button";
+import Survey from "../components/Survey/Survey";
 import { selectModalCall, setOpenModal } from "../redux/reducers/modalReducer";
 import { createElements } from "../utils/helpers/createElements";
 import List from "../components/List";
@@ -31,7 +32,7 @@ const CreateNote = () => {
   const [messageObj, setMessageObj] = useState();
   const axiosInstance = useAxiosInstance();
   const [selectedComponent, setSelectedComponent] = useState(null);
-
+  console.log(currentUser);
   useEffect(() => {
     if (elementContextList.length > 0) {
       dispatch(setState({ isDirty: true }));
@@ -166,6 +167,14 @@ const CreateNote = () => {
         setComponentState={setComponent}
       />
     ),
+    survey: (
+      <Survey
+        listEl={isCreate}
+        contextList={handleContextEl}
+        elementList={displayElements}
+        setComponentState={setComponent}
+      />
+    ),
   };
 
   return (
@@ -294,6 +303,26 @@ const CreateNote = () => {
                           stroke-linecap="round"
                           stroke-linejoin="round"
                           d="M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 019 14.437V9.564z"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      onClick={() => handleClick("survey")}
+                      name="liClick"
+                      className="mb-3 flex flex-row border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="h-16 w-20 mt-2 fill-gray-400"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
                         />
                       </svg>
                     </div>

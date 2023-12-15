@@ -4,6 +4,7 @@ import { CSS } from "@dnd-kit/utilities";
 import ImgList from "./ImgList";
 import TextComponent from "./TextComponent";
 import ButtonComponent from "./ButtonComponent";
+import SurveyComponent from "./Survey/SurveyComponent";
 import { config } from "../constants/Constants";
 
 export function SortableItem(props) {
@@ -38,7 +39,14 @@ export function SortableItem(props) {
             alignment={props.itemObject.alignment}
           />
         )}
-
+        {props.itemObject.element_type == "Survey" ? (
+          <SurveyComponent
+            questionValue={props.itemObject.survey}
+            questionTypeValue={props.itemObject.question_type}
+          />
+        ) : (
+          <></>
+        )}
         {props.itemObject.element_type === "Button" ? (
           <ButtonComponent
             colorValue={props.itemObject.button_color}

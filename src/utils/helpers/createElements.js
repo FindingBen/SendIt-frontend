@@ -3,7 +3,7 @@ export const createElements =
   async () => {
     try {
       const createdElements = [];
-      console.log("CONTEXT", elementContextList);
+      console.log(messageObject);
       for (let i = 0; i < elementContextList.length; i++) {
         const elementContext = elementContextList[i];
         const formData = new FormData();
@@ -17,6 +17,9 @@ export const createElements =
             formData.append("button_title", elementContext.button_title);
             formData.append("button_link", elementContext.button_link);
             formData.append("button_color", elementContext.button_color);
+          } else if (elementContext.element_type === "Survey") {
+            formData.append("survey", elementContext.survey);
+            formData.append("question_type", elementContext.question_type);
           }
           formData.append("element_type", elementContext.element_type);
           formData.append("users", elementContext.users);
