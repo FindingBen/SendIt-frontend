@@ -25,6 +25,7 @@ const HomePage = () => {
 
   useEffect(() => {
     getNotes();
+    refreshAnalytics();
     setLoading(true);
   }, [listUpdated, loading]);
 
@@ -47,7 +48,6 @@ const HomePage = () => {
       if (response.status === 200) {
         setNotes(response?.data.messages);
         setMessageCount(response?.data.messages_count);
-        setTotalValues(response?.data.total_values);
       } else if (response.statusText === "Unauthorized") {
         dispatch(logOut());
       }
@@ -55,7 +55,18 @@ const HomePage = () => {
       console.error(error);
     }
   };
+  console.log(totalValues);
 
+  let refreshAnalytics = async () => {
+    let response = await axiosInstance.get(
+      `/api/get_total_analytic_values/${currentUser}`
+    );
+    if (response.status === 200) {
+      setTotalValues(response?.data);
+    }
+  };
+
+  console.log(totalValues);
   const deleteMessage = (id) => {
     setMessageId(id);
     setShow(true);
@@ -114,6 +125,9 @@ const HomePage = () => {
           formData.append("button_title", element.button_title);
           formData.append("button_link", element.button_link);
           formData.append("button_color", element.button_color);
+        } else if (element.element_type === "Survey") {
+          formData.append("survey", element.survey);
+          formData.append("question_type", element.question_type);
         }
         formData.append("element_type", element.element_type);
         formData.append("order", element.order);
@@ -166,6 +180,25 @@ const HomePage = () => {
                     />
                   </svg>
                 </Link>
+              </button>
+              <button
+                onClick={refreshAnalytics}
+                className="text-white/50 p-2 rounded-md hover:text-white smooth-hover"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -288,7 +321,7 @@ const HomePage = () => {
                       }}
                       className="text-gradient-red text-6xl font-light ml-2 flex flex-row"
                     >
-                      {totalValues.bounce_rate}
+                      {totalValues.average_bounce_rate}
                       <p className="text-4xl font-light">%</p>
                     </motion.div>
                   ) : (
@@ -330,7 +363,7 @@ const HomePage = () => {
                       }}
                       className="text-gradient-green text-6xl font-light ml-2 flex flex-row"
                     >
-                      {totalValues.overall_perf}
+                      {totalValues.average_overall_rate}
                       <p className="text-4xl font-light">%</p>
                     </motion.div>
                   ) : (
