@@ -93,8 +93,8 @@ const AnalyticsPage = () => {
   console.log(surveyresults);
   return (
     <section className="h-screen flex-d w-100 items-center justify-center">
-      <div className="flex flex-row space-y-20">
-        <div className="flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
+      <div className="flex flex-row p-4">
+        <div className="flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:my-2 sm:mx-4 sm:rounded-2xl">
           <div className="flex-1 px-2 sm:px-0">
             <div className="flex justify-between items-center mb-3">
               <h3 class="xl:text-3xl text-2xl font-extralight text-left text-white/50">
@@ -245,7 +245,6 @@ const AnalyticsPage = () => {
             </div>
           </div>
         </div>
-
         <SurveyResults surveyResults={surveyresults} />
       </div>
     </section>
