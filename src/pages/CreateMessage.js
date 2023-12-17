@@ -32,7 +32,7 @@ const CreateNote = () => {
   const [messageObj, setMessageObj] = useState();
   const axiosInstance = useAxiosInstance();
   const [selectedComponent, setSelectedComponent] = useState(null);
-  console.log(currentUser);
+
   useEffect(() => {
     if (elementContextList.length > 0) {
       dispatch(setState({ isDirty: true }));
