@@ -4,7 +4,7 @@ import { useRedux } from "../constants/reduxImports";
 import ModalComponent from "../components/ModalComponent";
 
 const PackagePlan = () => {
-  const { currentUser, dispatch } = useRedux();
+  const { currentUser, dispatch, currentToken } = useRedux();
   const axiosInstance = useAxiosInstance();
   const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -14,7 +14,7 @@ const PackagePlan = () => {
   useEffect(() => {
     getPackages();
   }, []);
-
+  console.log(packagePlan);
   let getPackages = async () => {
     try {
       let response = await axiosInstance.get("/api/package_plan/");
@@ -37,11 +37,15 @@ const PackagePlan = () => {
     }));
     setIsLoading(true);
 
-    let response = await axiosInstance.post(
-      "/stripe/stripe_checkout_session",
+    let response = await axiosInstance.post("/stripe/stripe_checkout_session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(currentToken),
+      },
       name_product,
-      currentUser
-    );
+      currentUser,
+    });
     if (response.status === 200) {
       console.log(response);
 
@@ -125,7 +129,7 @@ const PackagePlan = () => {
                     )}
                   </button>
                   <p className="text-6xl mx-auto font-normal">
-                    {packagePlan[index]?.price + "€"}
+                    {packagePlan[index]?.price + "kr"}
                   </p>
                 </div>
                 <ul role="list" class="mb-8 space-y-4 text-left text-white">
