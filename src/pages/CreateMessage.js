@@ -16,9 +16,9 @@ import useAxiosInstance from "../utils/axiosInstance";
 import { useRedux } from "../constants/reduxImports";
 
 const CreateNote = () => {
-  const { createElement, deleteElement, contextObject } =
+  const { deleteElement } =
     useContext(ElementContext);
-  const { currentToken, currentUser, dispatch, currentModalState } = useRedux();
+  const { currentUser, dispatch, currentModalState } = useRedux();
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
@@ -60,11 +60,12 @@ const CreateNote = () => {
     let messageObject;
     try {
       messageObject = await createMessage();
-
+      const requestType = "create";
       const createElementsData = createElements({
         elementContextList,
         messageObject,
         axiosInstance,
+        requestType,
       });
       const createdElements = await createElementsData(); // Await the result
 
