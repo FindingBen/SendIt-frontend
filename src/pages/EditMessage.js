@@ -62,17 +62,26 @@ const EditMessage = () => {
   }, []);
 
   const handleClick = (componentKey) => {
+    removeEmptyListItem();
     addEmptyListItem();
     setSelectedComponent((prevSelectedComponent) =>
       prevSelectedComponent === componentKey ? null : componentKey
     );
   };
+
   const addEmptyListItem = () => {
     if (container) {
       const newItem = document?.createElement("li");
 
       newItem.id = "temp";
       container?.appendChild(newItem);
+    }
+  };
+
+  const removeEmptyListItem = () => {
+    const tempItem = container?.querySelector("#temp");
+    if (tempItem) {
+      container?.removeChild(tempItem);
     }
   };
 
