@@ -103,7 +103,7 @@ const AnalyticsPage = () => {
             </div>
 
             <div className="flex flex-row gap-3">
-              <div className="flex-none bg-darkestGray w-80 rounded-md">
+              <div className="flex-none bg-darkestGray w-72 rounded-md">
                 <div className="flex flex-col">
                   <div className="p-2 flex flex-row bg-darkBlue rounded-md mx-3 my-3 shadow-lg">
                     <svg
@@ -151,7 +151,7 @@ const AnalyticsPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex-none bg-darkestGray h-[100%] w-80 rounded-md">
+              <div className="flex-none bg-darkestGray h-[100%] w-72 rounded-md">
                 <div className="flex flex-col">
                   <div className="p-2 flex flex-row bg-darkBlue rounded-md mx-3 my-3 shadow-lg">
                     <svg
@@ -194,7 +194,7 @@ const AnalyticsPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex-none bg-darkestGray h-[100%] w-80 rounded-md">
+              <div className="flex-none bg-darkestGray h-[100%] w-72 rounded-md">
                 <div className="flex flex-col">
                   <div className="p-2 flex flex-row bg-darkBlue rounded-md mx-3 my-3 shadow-lg">
                     <svg

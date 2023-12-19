@@ -4,7 +4,7 @@ import SvgLoader from "../SvgLoader";
 
 const Statistics = ({ views }) => {
   return (
-    <div className="flex-initial bg-darkestGray w-96 h-96 rounded-md">
+    <div className="flex-initial bg-darkestGray w-80 h-96 rounded-md">
       <div className="flex flex-col">
         <div className="p-4 flex flex-col bg-darkBlue h-80 rounded-md mx-3 my-3 shadow-lg relative">
           <p className="text-white text-2xl font-light text-justify p-2">
@@ -13,7 +13,7 @@ const Statistics = ({ views }) => {
 
           <div className="flex flex-col p-2">
             <div className="flex flex-row p-1 relative">
-              <p className="text-white text-xl font-light text-justify">
+              <p className="text-white text-normal font-light text-justify">
                 Bounce rate
               </p>
               {views ? (
@@ -25,7 +25,7 @@ const Statistics = ({ views }) => {
                     delay: 0.1,
                     ease: [0, 0.41, 0.1, 1.01],
                   }}
-                  className="text-gradient-white text-xl font-light ml-2 absolute right-0"
+                  className="text-gradient-white text-normal font-light ml-2 absolute right-0"
                 >
                   {views?.data.sorted_total_data.bounceRate} %
                 </motion.div>
@@ -37,7 +37,7 @@ const Statistics = ({ views }) => {
             </div>
             <div className="flex flex-row p-1 relative">
               {" "}
-              <p className="text-white text-xl font-light text-justify">
+              <p className="text-white text-normal font-light text-justify">
                 Engagement rate
               </p>
               {views ? (
@@ -49,7 +49,7 @@ const Statistics = ({ views }) => {
                     delay: 0.1,
                     ease: [0, 0.41, 0.1, 1.01],
                   }}
-                  className="text-gradient-white text-xl font-light ml-2 absolute right-0"
+                  className="text-gradient-white text-normal font-light ml-2 absolute right-0"
                 >
                   {views?.data.sorted_total_data.engegment_rate_total} %
                 </motion.div>
@@ -61,7 +61,7 @@ const Statistics = ({ views }) => {
             </div>
             <div className="flex flex-row p-1 relative">
               {" "}
-              <p className="text-white text-xl font-light text-justify">
+              <p className="text-white text-normal font-light text-justify">
                 Scrolled users
               </p>
               {views ? (
@@ -73,7 +73,7 @@ const Statistics = ({ views }) => {
                     delay: 0.1,
                     ease: [0, 0.41, 0.1, 1.01],
                   }}
-                  className="text-gradient-white text-xl font-light ml-2 absolute right-5"
+                  className="text-gradient-white text-normal font-light ml-2 absolute right-5"
                 >
                   {views?.data.sorted_total_data.scrolled_user_total}
                 </motion.div>
@@ -85,7 +85,7 @@ const Statistics = ({ views }) => {
             </div>
             <div className="flex flex-row p-1 relative">
               {" "}
-              <p className="text-white text-xl font-light text-justify">
+              <p className="text-white text-normal font-light text-justify">
                 User engagement
               </p>
               {views ? (
@@ -97,7 +97,7 @@ const Statistics = ({ views }) => {
                     delay: 0.1,
                     ease: [0, 0.41, 0.1, 1.01],
                   }}
-                  className="text-gradient-white text-xl font-light ml-2 absolute -right-5"
+                  className="text-gradient-white text-normal font-light ml-2 absolute -right-5"
                 >
                   {views?.data.sorted_total_data.user_engegment_total} secs
                 </motion.div>
