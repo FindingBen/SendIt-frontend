@@ -13,7 +13,7 @@ const AiGenerator = ({
   elementList,
   listEl,
 }) => {
-  const API_KEY = "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";
+  const API_KEY = process.env.REACT_APP_OPENAI_KEY;
   const { currentUser } = useRedux();
   const { createElement, deleteElement } = useContext(ElementContext);
   const container = document.getElementById("myList");
