@@ -372,7 +372,7 @@ const CreateNote = () => {
                 <div class="h-[46px] w-[3px] bg-gray-600 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
                 <div class="h-[46px] w-[3px] bg-gray-600 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
                 <div class="h-[64px] w-[3px] bg-gray-600 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
-                <div class="w-[225px] h-[470px] rounded-[2rem] overflow-hidden bg-white dark:bg-gray-800">
+                <div class="w-[225px] h-[470px] rounded-[2rem] overflow-auto bg-white dark:bg-gray-800">
                   <div class="mr-5 mt-2 flex justify-end space-x-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -397,6 +397,7 @@ const CreateNote = () => {
                   </div>{" "}
                   <List
                     id="myList"
+                    className="my-scroll-list"
                     children={elementContextList}
                     clicked={handleClicked}
                     updatedList={updateElements}
