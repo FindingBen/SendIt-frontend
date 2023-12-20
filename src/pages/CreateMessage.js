@@ -6,6 +6,7 @@ import Image from "../components/Image";
 import Text from "../components/Text";
 import Button from "../components/Button";
 import Survey from "../components/Survey/Survey";
+import AiGenerator from "../components/AiGenerator";
 import { selectModalCall, setOpenModal } from "../redux/reducers/modalReducer";
 import { createElements } from "../utils/helpers/createElements";
 import List from "../components/List";
@@ -16,8 +17,7 @@ import useAxiosInstance from "../utils/axiosInstance";
 import { useRedux } from "../constants/reduxImports";
 
 const CreateNote = () => {
-  const { deleteElement } =
-    useContext(ElementContext);
+  const { deleteElement } = useContext(ElementContext);
   const { currentUser, dispatch, currentModalState } = useRedux();
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
@@ -110,7 +110,8 @@ const CreateNote = () => {
   const handleContextEl = (elementContextList) => {
     setElementsContextList(elementContextList);
   };
-
+  console.log(elementContextList);
+  console.log(elementsList);
   //For displaying images on iframe
   const handleImages = (images) => {
     setImages(images);
@@ -170,6 +171,14 @@ const CreateNote = () => {
     ),
     survey: (
       <Survey
+        listEl={isCreate}
+        contextList={handleContextEl}
+        elementList={displayElements}
+        setComponentState={setComponent}
+      />
+    ),
+    aiContent: (
+      <AiGenerator
         listEl={isCreate}
         contextList={handleContextEl}
         elementList={displayElements}
@@ -324,6 +333,29 @@ const CreateNote = () => {
                           stroke-linecap="round"
                           stroke-linejoin="round"
                           d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="flex flex-row justify-between">
+                    <div
+                      onClick={() => handleClick("aiContent")}
+                      name="liClick"
+                      className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1"
+                        stroke="currentColor"
+                        data-slot="icon"
+                        class="h-16 w-20 mt-2 fill-gray-400"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
                         />
                       </svg>
                     </div>
