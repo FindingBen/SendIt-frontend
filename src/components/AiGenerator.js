@@ -30,6 +30,7 @@ const AiGenerator = ({
   const [headline, setHeadline] = useState("");
   const [isCreated, setIsCreated] = useState(listEl);
   const [isButtonVisible, setIsButtonVisible] = useState(true);
+  const [savedFeedback, setSavedFeedback] = useState("");
   const text = "Visit";
   // Add other necessary state variables
 
@@ -58,7 +59,7 @@ const AiGenerator = ({
       }
     };
   }, []);
-  console.log(API_KEY);
+
   function handleImageUpload(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -149,12 +150,13 @@ const AiGenerator = ({
     setGenerated(true);
     setLoading(false);
     setIsButtonVisible(false);
+    setSavedFeedback("Image saved!");
   };
 
   const handleColorExtraction = (color) => {
     setColor(color);
   };
-
+  console.log(savedFeedback);
   // Helper function to extract colors from the image using ColorExtractorComponent
   const extractColorsFromImage = (imageFile) => {
     return new Promise((resolve) => {
@@ -324,12 +326,14 @@ const AiGenerator = ({
       <button
         type="button"
         className={`${
-          !file ? "bg-gray-600" : "bg-green-800 hover:bg-green-400"
+          campaignText.length === 0
+            ? "bg-gray-600"
+            : "bg-green-800 hover:bg-green-400"
         }  text-white font-bold py-2 px-4 border border-blue-700 rounded mt-3`}
         value={false}
         onClick={generateAIContent}
         style={{ marginRight: "10px" }}
-        disabled={file === undefined}
+        disabled={campaignText.length === 0}
       >
         {loading ? <p>Generating..</p> : <p>Generate</p>}
       </button>
@@ -352,6 +356,14 @@ const AiGenerator = ({
           >
             Save
           </button>
+        </div>
+      )}
+      {savedFeedback ?? (
+        <div
+          class="flex items-center w-32 max-w-xs p-1  bg-green-600 rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+          role="alert"
+        >
+          <div class="text-sm text-white font-light">{savedFeedback}</div>
         </div>
       )}
     </motion.div>
