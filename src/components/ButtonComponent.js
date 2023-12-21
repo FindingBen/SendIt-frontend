@@ -16,7 +16,7 @@ const ButtonComponent = ({ textValue, linkValue, colorValue }) => {
   console.log(color);
   return (
     <div
-      style={{ backgroundColor: `#${color}` }}
+      style={{ backgroundColor: `${color}` }}
       className={`text-white font-poppins py-2 px-4 rounded-full mx-2`}
     >
       <a href={`https://${link}`} target="_blank">
