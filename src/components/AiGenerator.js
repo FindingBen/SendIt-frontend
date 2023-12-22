@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, memo } from "react";
 import ReactDOM from "react-dom";
 import { ElementContext } from "../context/ElementContext";
 import ButtonComponent from "./ButtonComponent";
+import ColorExtractor from "./ColorExtractor/ColorExtractor";
 import TextComponent from "./TextComponent";
 import ImgList from "./ImgList"; // Import your AIComponent
 
@@ -25,7 +26,7 @@ const AiGenerator = ({
   const [campaignText, setCampaignText] = useState("");
   const [imageSrc, setImageSrc] = useState("");
   const [link, setLink] = useState("");
-  const [colors, setColor] = useState(["#1F2937", "#0F172A", "#52525B"]);
+  const [colors, setColor] = useState([]);
   const [isMounted, setIsMounted] = useState(true);
   const [headline, setHeadline] = useState("");
   const [isCreated, setIsCreated] = useState(listEl);
@@ -116,7 +117,7 @@ const AiGenerator = ({
 
       await addImageElContext();
       await addTextObjContext(data.choices[0].message.content);
-      await addButtonObjContext("#000000");
+      await addButtonObjContext(colors);
 
       setGenerated(true);
       setLoading(false);
@@ -145,7 +146,7 @@ const AiGenerator = ({
   let saveImgContext = async () => {
     setImage(URL.createObjectURL(file));
     // Assuming `ColorExtractorComponent` returns a promise
-    //await extractColorsFromImage(file);
+    await extractColorsFromImage(file);
 
     setGenerated(true);
     setLoading(false);
@@ -153,29 +154,31 @@ const AiGenerator = ({
     setSavedFeedback("Image saved!");
   };
 
-  //   const handleColorExtraction = (color) => {
-  //     setColor(color);
-  //   };
-  //   console.log(savedFeedback);
-  //   // Helper function to extract colors from the image using ColorExtractorComponent
-  //   const extractColorsFromImage = (imageFile) => {
-  //     return new Promise((resolve) => {
-  //       ReactDOM.render(
-  //         <ColorExtractorComponent
-  //           imageSrc={URL.createObjectURL(imageFile)}
-  //           returnColors={handleColorExtraction}
-  //         />,
-  //         document.createElement("div")
-  //       );
-  //     });
-  //   };
+  const handleColorExtraction = (color) => {
+    setColor(color);
+  };
+  console.log(savedFeedback);
+  // Helper function to extract colors from the image using ColorExtractorComponent
+  const extractColorsFromImage = (imageFile) => {
+    return new Promise((resolve) => {
+      ReactDOM.render(
+        <ColorExtractor
+          src={URL.createObjectURL(imageFile)}
+          getColors={handleColorExtraction}
+        />,
+        document.createElement("div")
+      );
+    });
+  };
 
   const addButtonObjContext = async (colorValue) => {
+    const randomColor =
+      colorValue[Math.floor(Math.random() * colorValue.length)];
     const dataText = {
       id: Math.floor(Math.random() * 100),
       button_title: text,
       button_link: link,
-      button_color: colorValue,
+      button_color: randomColor,
       element_type: "Button",
       users: currentUser,
       order: 0,

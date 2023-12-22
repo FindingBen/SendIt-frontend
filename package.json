@@ -44,6 +44,7 @@
     "mdb-react-ui-kit": "^6.0.0",
     "mdb-ui-kit": "^6.3.1",
     "moment": "^2.29.4",
+    "node-vibrant": "^3.1.6",
     "papaparse": "^5.4.1",
     "primereact": "^10.0.9",
     "react": "^18.2.0",
