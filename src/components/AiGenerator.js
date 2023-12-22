@@ -32,6 +32,7 @@ const AiGenerator = ({
   const [isCreated, setIsCreated] = useState(listEl);
   const [isButtonVisible, setIsButtonVisible] = useState(true);
   const [savedFeedback, setSavedFeedback] = useState("");
+  const [progress, setProgress] = useState(0);
   const text = "Visit";
   // Add other necessary state variables
 
@@ -60,6 +61,11 @@ const AiGenerator = ({
       }
     };
   }, []);
+
+  useEffect(() => {
+    // This useEffect hook will be triggered whenever progress changes
+    console.log("Progress updated:", progress);
+  }, [progress]);
 
   function handleImageUpload(event) {
     const file = event.target.files[0];
@@ -115,19 +121,27 @@ const AiGenerator = ({
     if (response.status === 200) {
       const data = await response.json();
 
-      await addImageElContext();
-      await addTextObjContext(data.choices[0].message.content);
-      await addButtonObjContext(colors);
+      let currentProgress = 0;
+      const interval = setInterval(() => {
+        currentProgress += 15; // You can adjust the step as needed
+        setProgress(Math.min(currentProgress, 100));
 
-      setGenerated(true);
-      setLoading(false);
+        if (currentProgress >= 100) {
+          clearInterval(interval);
+          addImageElContext();
+          addTextObjContext(data.choices[0].message.content);
+          addButtonObjContext(colors);
+          setGenerated(true);
+          setLoading(false);
+        }
+      }, 500);
     }
 
     // Example: Creating an AI context object
     // contextList((prevElement) => [...prevElement, dataAI]);
     // elementList((prevElement) => [...prevElement, dataAI]);
   };
-
+  console.log(progress);
   let addImageElContext = async (e) => {
     const imageContext = {
       id: Math.floor(Math.random() * 100),
@@ -236,6 +250,10 @@ const AiGenerator = ({
     }
   };
 
+  const updateProgress = (percentage) => {
+    setProgress(percentage);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
@@ -324,20 +342,34 @@ const AiGenerator = ({
           placeholder="Insert link to for example: your store, website, product etc.."
         />
       </div>
-      <button
-        type="button"
-        className={`${
-          campaignText.length === 0
-            ? "bg-gray-600"
-            : "bg-green-800 hover:bg-green-400"
-        }  text-white font-bold py-2 px-4 border border-blue-700 rounded mt-3`}
-        value={false}
-        onClick={generateAIContent}
-        style={{ marginRight: "10px" }}
-        disabled={campaignText.length === 0}
-      >
-        {loading ? <p>Generating..</p> : <p>Generate</p>}
-      </button>
+      {!loading ? (
+        <button
+          type="button"
+          className={`${
+            campaignText.length === 0
+              ? "bg-gray-600"
+              : "bg-green-800 hover:bg-green-400"
+          }  text-white font-bold py-2 px-4 border border-blue-700 rounded mt-3`}
+          value={false}
+          onClick={generateAIContent}
+          disabled={campaignText.length === 0}
+        >
+          Generate
+        </button>
+      ) : (
+        <div className="flex flex-col">
+          <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700 mt-4">
+            <div
+              style={{ width: `${progress}%` }}
+              className={`bg-green-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full transition-all duration-500 ease-in-out`}
+            >
+              {" "}
+              {progress}%
+            </div>
+          </div>
+          <p className="text-white">Generating..</p>
+        </div>
+      )}
       {!generated ? (
         <></>
       ) : (
