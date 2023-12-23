@@ -15,6 +15,7 @@ const SurveyComponent = ({
   const [color, setColor] = useState(colorValue);
   const [response, setResponse] = useState(null);
   const [feedback, setFeedback] = useState("");
+
   useEffect(() => {
     setQuestion(questionValue);
     setQuestionType(questionTypeValue);
@@ -29,7 +30,7 @@ const SurveyComponent = ({
       response_type: response,
       survey_type: "Like/Dislike",
     };
-    console.log(data);
+
     let api_response = await fetch(
       `${BASE_URL}/api/handle_survey/${element_id}`,
       {

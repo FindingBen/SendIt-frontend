@@ -49,25 +49,23 @@ const Text = ({
     try {
       const lastListItem = container.lastChild;
 
-      setTimeout(() => {
-        if (!isCreated) {
-          ReactDOM.render(
-            <TextComponent
-              textValue={text}
-              alignment={getAlignmentclassName(align)}
-            />,
-            lastListItem
-          );
-        } else {
-          ReactDOM.render(
-            <TextComponent
-              textValue={text}
-              alignment={getAlignmentclassName(align)}
-            />,
-            container
-          );
-        }
-      }, 5);
+      if (!isCreated) {
+        ReactDOM.render(
+          <TextComponent
+            textValue={text}
+            alignment={getAlignmentclassName(align)}
+          />,
+          lastListItem
+        );
+      } else {
+        ReactDOM.render(
+          <TextComponent
+            textValue={text}
+            alignment={getAlignmentclassName(align)}
+          />,
+          container
+        );
+      }
     } catch (error) {
       console.error(error);
     }
@@ -81,13 +79,11 @@ const Text = ({
       try {
         if (isMounted && container) {
           const lastListItem = container?.lastChild;
-          setTimeout(() => {
-            if (!isCreated) {
-              ReactDOM.render(<></>, lastListItem);
-            } else {
-              ReactDOM.render(<li></li>, container);
-            }
-          }, 5);
+          if (!isCreated) {
+            ReactDOM.render(<></>, lastListItem);
+          } else {
+            ReactDOM.render(<li></li>, container);
+          }
         }
       } catch (error) {
         console.error(error);
@@ -121,8 +117,11 @@ const Text = ({
       order: 0,
       context: true,
     };
+    //this creates a context data
     createElement(dataText);
+    //this adds data to context el list
     contextList((prevElement) => [...prevElement, dataText]);
+    //this makes sure that newly created data is displayed together with old elements
     elementList((prevElement) => [...prevElement, dataText]);
   };
 

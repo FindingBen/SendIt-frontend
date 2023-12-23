@@ -13,37 +13,36 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
   const [link, setLink] = useState("");
   const container = document.getElementById("myList");
   const [isMounted, setIsMounted] = useState(true);
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState("#000000");
   const [isCreated, setIsCreated] = useState(listEl);
   useEffect(() => {
     try {
       const lastListItem = container?.lastChild;
-      setTimeout(() => {
-        if (!isCreated) {
-          ReactDOM.render(
-            <ButtonComponent
-              textValue={text}
-              linkValue={link}
-              colorValue={color}
-            />,
-            lastListItem
-          );
-        } else {
-          ReactDOM.render(
-            <ButtonComponent
-              textValue={text}
-              linkValue={link}
-              colorValue={color}
-            />,
-            container
-          );
-        }
-      }, 5);
+
+      if (!isCreated) {
+        ReactDOM.render(
+          <ButtonComponent
+            textValue={text}
+            linkValue={link}
+            colorValue={`#${color}`}
+          />,
+          lastListItem
+        );
+      } else {
+        ReactDOM.render(
+          <ButtonComponent
+            textValue={text}
+            linkValue={link}
+            colorValue={`#${color}`}
+          />,
+          container
+        );
+      }
     } catch (error) {
       console.log(error);
     }
   }, [text, link, color, container]);
-
+  console.log(color);
   useEffect(() => {
     setIsMounted(true);
 
@@ -54,13 +53,12 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
       try {
         if (isMounted && container) {
           const lastListItem = container?.lastChild;
-          setTimeout(() => {
-            if (!isCreated) {
-              ReactDOM.render(<></>, lastListItem);
-            } else {
-              ReactDOM.render(<li></li>, container);
-            }
-          }, 5);
+
+          if (!isCreated) {
+            ReactDOM.render(<></>, lastListItem);
+          } else {
+            ReactDOM.render(<li></li>, container);
+          }
         }
       } catch (error) {
         console.log(error);
@@ -71,7 +69,7 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
   function handleTextButtonFunc(event) {
     setText(event.target.value);
   }
-  console.log(text, link);
+
   function handleLinkButtonFunc(event) {
     setLink(event.target.value);
   }

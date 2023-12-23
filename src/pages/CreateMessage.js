@@ -30,6 +30,7 @@ const CreateNote = () => {
   const [isDirty, setIsDirty] = useState(false);
   const [isCreate, setIsCreate] = useState(true);
   const [messageObj, setMessageObj] = useState();
+  const [errorMsg, setErrorMsg] = useState("");
   const axiosInstance = useAxiosInstance();
   const [selectedComponent, setSelectedComponent] = useState(null);
 
@@ -99,9 +100,12 @@ const CreateNote = () => {
         navigate("/home");
       } else {
         console.log("Failed to create notes:", response.data);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log("Error creating elements and notes:", error);
+      setErrorMsg(error.response.data.message_name);
+      setIsLoading(false);
     }
 
     return messageObjId;
@@ -121,9 +125,9 @@ const CreateNote = () => {
     setFiles(file);
   };
 
-  const displayElements = (displayElItem) => {
-    setDisplayItems((prevItems) => [...prevItems, displayElItem]);
-  };
+  // const displayElements = (displayElItem) => {
+  //   setDisplayItems((prevItems) => [...prevItems, displayElItem]);
+  // };
 
   const handleClicked = (element) => {
     deleteElement(element);
@@ -147,7 +151,7 @@ const CreateNote = () => {
         handleFiles={handleFiles}
         handleImages={handleImages}
         listImages={images}
-        elementList={displayElements}
+        // elementList={displayElements}
         listEl={isCreate}
         contextList={handleContextEl}
         setComponentState={setComponent}
@@ -155,7 +159,7 @@ const CreateNote = () => {
     ),
     text: (
       <Text
-        elementList={displayElements}
+        // elementList={displayElements}
         listEl={isCreate}
         contextList={handleContextEl}
         setComponentState={setComponent}
@@ -165,7 +169,7 @@ const CreateNote = () => {
       <Button
         listEl={isCreate}
         contextList={handleContextEl}
-        elementList={displayElements}
+        // elementList={displayElements}
         setComponentState={setComponent}
       />
     ),
@@ -173,7 +177,7 @@ const CreateNote = () => {
       <Survey
         listEl={isCreate}
         contextList={handleContextEl}
-        elementList={displayElements}
+        //elementList={displayElements}
         setComponentState={setComponent}
       />
     ),
@@ -181,7 +185,7 @@ const CreateNote = () => {
       <AiGenerator
         listEl={isCreate}
         contextList={handleContextEl}
-        elementList={displayElements}
+        //elementList={displayElements}
         setComponentState={setComponent}
       />
     ),
@@ -192,11 +196,16 @@ const CreateNote = () => {
       <div className="flex-1 flex flex-col space-y-5 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="flex-1 px-2 sm:px-0">
           <div className="flex justify-between items-center mb-3">
-            <input
-              onChange={handleMessageName}
-              className=" bg-gray-200 mb-4 text-black hover:bg-gray-400 duration-200 text-light font-light py-2 px-4 rounded-md"
-              placeholder="Message name.."
-            />
+            <div className="flex flex-row">
+              <input
+                onChange={handleMessageName}
+                className=" bg-gray-200 mb-4 text-black hover:bg-gray-400 duration-200 text-light font-light py-2 px-4 rounded-md"
+                placeholder="Message name.."
+              />
+              {errorMsg && (
+                <p className="text-red-600 font-light ml-2 mt-2">{errorMsg}</p>
+              )}
+            </div>
             <div class="inline-flex items-center space-x-2">
               {!isLoading ? (
                 <button onClick={handleSubmit}>

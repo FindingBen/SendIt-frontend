@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useContext, memo } from "react";
 import ReactDOM from "react-dom";
 import { ElementContext } from "../context/ElementContext";
-import ButtonComponent from "./ButtonComponent";
 import ColorExtractor from "./ColorExtractor/ColorExtractor";
-import TextComponent from "./TextComponent";
-import ImgList from "./ImgList"; // Import your AIComponent
-
 import { motion } from "framer-motion";
 import { useRedux } from "../constants/reduxImports";
 
@@ -24,7 +20,6 @@ const AiGenerator = ({
   const [image, setImage] = useState("");
   const [file, setFile] = useState();
   const [campaignText, setCampaignText] = useState("");
-  const [imageSrc, setImageSrc] = useState("");
   const [link, setLink] = useState("");
   const [colors, setColor] = useState([]);
   const [isMounted, setIsMounted] = useState(true);
@@ -65,22 +60,12 @@ const AiGenerator = ({
   useEffect(() => {
     // This useEffect hook will be triggered whenever progress changes
     console.log("Progress updated:", progress);
-  }, [progress]);
-
+  }, [progress, isButtonVisible]);
+  console.log(isButtonVisible);
   function handleImageUpload(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
     setFile(file);
-
-    try {
-      reader.onload = (event) => {
-        setImageSrc(event.target.result);
-      };
-
-      reader.readAsDataURL(file);
-    } catch (error) {
-      console.error(error);
-    }
   }
 
   const handleCampaignValue = (event) => {
@@ -136,12 +121,8 @@ const AiGenerator = ({
         }
       }, 500);
     }
-
-    // Example: Creating an AI context object
-    // contextList((prevElement) => [...prevElement, dataAI]);
-    // elementList((prevElement) => [...prevElement, dataAI]);
   };
-  console.log(progress);
+
   let addImageElContext = async (e) => {
     const imageContext = {
       id: Math.floor(Math.random() * 100),
@@ -154,24 +135,23 @@ const AiGenerator = ({
     };
     createElement(imageContext);
     contextList((prevElement) => [...prevElement, imageContext]);
-    elementList((prevElement) => [...prevElement, imageContext]);
+    //elementList((prevElement) => [...prevElement, imageContext]);
   };
 
-  let saveImgContext = async () => {
+  let saveImgContext = (e) => {
     setImage(URL.createObjectURL(file));
     // Assuming `ColorExtractorComponent` returns a promise
-    await extractColorsFromImage(file);
+    extractColorsFromImage(file);
+    setTimeout(() => console.log("extracting colors.."), 1000);
 
-    setGenerated(true);
     setLoading(false);
     setIsButtonVisible(false);
-    setSavedFeedback("Image saved!");
   };
 
   const handleColorExtraction = (color) => {
     setColor(color);
   };
-  console.log(savedFeedback);
+
   // Helper function to extract colors from the image using ColorExtractorComponent
   const extractColorsFromImage = (imageFile) => {
     return new Promise((resolve) => {
@@ -240,9 +220,27 @@ const AiGenerator = ({
     }
   };
 
+  function handleCancel(event) {
+    setComponentState(null);
+    if (isMounted) {
+      const container = document.getElementById("myList");
+      if (!isCreated) {
+        const listItems = Array.from(container?.children);
+        listItems?.forEach((listItem) => {
+          // Perform your operations on each list item
+          // For example, check if the element is empty
+          if (listItem.innerHTML.trim() === "") {
+            // The element is empty
+            // Perform your logic here
+            container?.removeChild(listItem);
+          }
+        });
+      }
+    }
+  }
+
   const handleRemoveImage = () => {
     setFile(null);
-    setImageSrc(null);
 
     const fileInput = document.getElementById("image");
     if (fileInput) {
@@ -250,8 +248,11 @@ const AiGenerator = ({
     }
   };
 
-  const updateProgress = (percentage) => {
-    setProgress(percentage);
+  const handleDelete = () => {
+    console.log(elementList);
+    // contextList.map((element) => {
+    //   deleteElement(element);
+    // });
   };
 
   return (
@@ -264,37 +265,44 @@ const AiGenerator = ({
         ease: [0, 0.41, 0.1, 1.01],
       }}
     >
-      <label
-        className="block mb-2 text-sm font-light text-grayWhite dark:text-white"
-        for="file_input"
-      >
-        Upload file
-      </label>
-
-      <div className="flex flex-row">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-          id="image"
-        />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          onClick={handleRemoveImage}
-          data-slot="icon"
-          class="w-6 h-6 text-white hover:bg-gray-600/50 cursor-pointer rounded-md"
+      <div className="flex flex-col items-start">
+        <label
+          className="mb-2 text-sm font-light text-grayWhite dark:text-white"
+          for="file_input"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          Upload file
+        </label>
+
+        <div className="flex flex-row w-full">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            id="image"
           />
-        </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            onClick={handleRemoveImage}
+            data-slot="icon"
+            disabled={file === undefined}
+            className={`w-6 h-6 my-auto ml-1 ${
+              file
+                ? "text-white cursor-pointer hover:bg-gray-600/50"
+                : "text-white/50"
+            }  rounded-md`}
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+        </div>
       </div>
 
       {file && (
@@ -306,7 +314,7 @@ const AiGenerator = ({
             delay: 0.1,
             ease: [0, 0.41, 0.1, 1.01],
           }}
-          className="mt-2"
+          className="mt-2 flex items-start"
         >
           {isButtonVisible && (
             <button
@@ -315,8 +323,7 @@ const AiGenerator = ({
                 !file ? "bg-gray-600" : "bg-green-800 hover:bg-green-400"
               }  text-white font-bold py-2 px-4 border border-blue-700 rounded`}
               value={false}
-              onClick={saveImgContext}
-              style={{ marginRight: "10px" }}
+              onClick={(e) => saveImgContext(e)}
               disabled={file === undefined}
             >
               Save
@@ -343,19 +350,30 @@ const AiGenerator = ({
         />
       </div>
       {!loading ? (
-        <button
-          type="button"
-          className={`${
-            campaignText.length === 0
-              ? "bg-gray-600"
-              : "bg-green-800 hover:bg-green-400"
-          }  text-white font-bold py-2 px-4 border border-blue-700 rounded mt-3`}
-          value={false}
-          onClick={generateAIContent}
-          disabled={campaignText.length === 0}
-        >
-          Generate
-        </button>
+        <div className="flex flex-row">
+          <button
+            type="button"
+            className={`${
+              campaignText.length === 0
+                ? "bg-gray-600"
+                : "bg-green-800 hover:bg-green-400"
+            }  text-white font-bold py-2 px-4 border border-blue-700 rounded mt-3`}
+            value={false}
+            onClick={generateAIContent}
+            disabled={campaignText.length === 0}
+          >
+            Generate
+          </button>
+          <button
+            type="button"
+            className="bg-red-800 hover:bg-red-400 text-white font-bold py-2 px-4 border mt-3 ml-3 border-blue-700 rounded"
+            id="cancel"
+            value={false}
+            onClick={handleCancel}
+          >
+            Cancel
+          </button>
+        </div>
       ) : (
         <div className="flex flex-col">
           <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700 mt-4">
@@ -377,26 +395,32 @@ const AiGenerator = ({
           <p className="text-white/50 font-light">
             If you are satisfied with results click save, otherwise, regenerate.
           </p>
-          <button
-            type="button"
-            className={`${
-              !file ? "bg-gray-600" : "bg-green-800 hover:bg-green-400"
-            }  text-white font-bold py-2 px-4 border border-blue-700 rounded mt-3`}
-            value={false}
-            onClick={saveAIContent}
-            style={{ marginRight: "10px" }}
-            disabled={file === undefined}
-          >
-            Save
-          </button>
-        </div>
-      )}
-      {savedFeedback ?? (
-        <div
-          class="flex items-center w-32 max-w-xs p-1  bg-green-600 rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
-          role="alert"
-        >
-          <div class="text-sm text-white font-light">{savedFeedback}</div>
+          <div className="flex flex-row gap-2">
+            <button
+              type="button"
+              className={`${
+                !file ? "bg-gray-600" : "bg-green-800 hover:bg-green-400"
+              }  text-white font-bold py-2 px-4 border border-blue-700 rounded mt-3`}
+              value={false}
+              onClick={saveAIContent}
+              style={{ marginRight: "10px" }}
+              disabled={file === undefined}
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              className={`${
+                !file ? "bg-gray-600" : "bg-red-800 hover:bg-red-400"
+              }  text-white font-bold py-2 px-4 border border-blue-700 rounded mt-3`}
+              value={false}
+              onClick={handleDelete}
+              style={{ marginRight: "10px" }}
+              disabled={file === undefined}
+            >
+              Delete
+            </button>
+          </div>
         </div>
       )}
     </motion.div>

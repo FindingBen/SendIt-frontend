@@ -72,6 +72,10 @@ const HomePage = () => {
     setShow(true);
   };
 
+  const handleListUpdate = () => {
+    setListUpdated(!listUpdated);
+  };
+
   const duplicateMessage = async (messageId) => {
     try {
       setLoading(true);
@@ -112,7 +116,7 @@ const HomePage = () => {
         requestType,
       });
 
-      const createdElements = await createElementsData();
+      await createElementsData();
 
       setLoading(false);
     } catch (error) {
@@ -405,7 +409,7 @@ const HomePage = () => {
                 messageId={messageId}
                 showModalDelete={show}
                 onClose={() => setShow(false)}
-                setUpdated={() => setListUpdated(true)}
+                setUpdated={handleListUpdate}
                 listUpdated={listUpdated}
               />
             </div>

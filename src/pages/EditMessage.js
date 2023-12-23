@@ -217,6 +217,7 @@ const EditMessage = () => {
   };
 
   const handleMessageName = (e) => {
+    console.log(e.target.value);
     setMessageName(e.target.value);
     setIsDirty(true);
   };
@@ -283,11 +284,10 @@ const EditMessage = () => {
         <div className="flex-1 px-2 sm:px-0">
           <div className="flex justify-between items-center xl:mb-3">
             <input
-              value={message?.message_name}
-              disabled
+              value={messageName}
               onChange={handleMessageName}
-              className=" bg-gray-200 mb-4 text-black hover:bg-gray-400 duration-200 text-light font-light py-2 px-4 rounded-md"
-              placeholder="Message name.."
+              className=" bg-gray-200 mb-4 text-black hover:bg-gray-400 duration-200 text-light font-light py-2 px-4 rounded-md placeholder:text-black placeholder:font-normal"
+              placeholder={message?.message_name}
             />
             <div class="inline-flex items-center space-x-2">
               {!isLoading ? (

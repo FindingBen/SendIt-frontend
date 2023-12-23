@@ -49,7 +49,7 @@ export function SortableItem(props) {
         )}
         {props.itemObject.element_type === "Button" ? (
           <ButtonComponent
-            colorValue={props.itemObject.button_color}
+            colorValue={`#${props.itemObject.button_color}`}
             textValue={props.itemObject.button_title}
             linkValue={props.itemObject.button_link}
           />

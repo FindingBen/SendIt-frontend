@@ -26,16 +26,15 @@ const Image = ({
   useEffect(() => {
     if (container) {
       const lastListItem = container.lastChild;
-      setTimeout(() => {
-        if (!isCreated) {
-          ReactDOM.render(<ImgList imageUrl={imageSrc} />, lastListItem);
-        } else {
-          ReactDOM.render(<ImgList imageUrl={imageSrc} />, container);
-        }
-      }, 5);
+
+      if (!isCreated) {
+        ReactDOM.render(<ImgList imageUrl={imageSrc} />, lastListItem);
+      } else {
+        ReactDOM.render(<ImgList imageUrl={imageSrc} />, container);
+      }
     }
   }, [imageSrc, container]);
-  console.log("FILE", file);
+
   useEffect(() => {
     setIsMounted(true);
 
@@ -43,13 +42,12 @@ const Image = ({
       setImages([]);
       if (isMounted && container) {
         const lastListItem = container?.lastChild;
-        setTimeout(() => {
-          if (!isCreated) {
-            ReactDOM.render(<></>, lastListItem);
-          } else {
-            ReactDOM.render(<li></li>, container);
-          }
-        }, 5);
+
+        if (!isCreated) {
+          ReactDOM.render(<></>, lastListItem);
+        } else {
+          ReactDOM.render(<li></li>, container);
+        }
       }
     };
   }, []);
