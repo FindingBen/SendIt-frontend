@@ -25,8 +25,8 @@ const AiGenerator = ({
   const [isMounted, setIsMounted] = useState(true);
   const [headline, setHeadline] = useState("");
   const [isCreated, setIsCreated] = useState(listEl);
-  const [isButtonVisible, setIsButtonVisible] = useState(true);
-  const [savedFeedback, setSavedFeedback] = useState("");
+  const [isButtonVisible, setIsButtonVisible] = useState(false);
+
   const [progress, setProgress] = useState(0);
   const text = "Visit";
   // Add other necessary state variables
@@ -61,11 +61,12 @@ const AiGenerator = ({
     // This useEffect hook will be triggered whenever progress changes
     console.log("Progress updated:", progress);
   }, [progress, isButtonVisible]);
-  console.log(isButtonVisible);
+
   function handleImageUpload(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
     setFile(file);
+    setIsButtonVisible(true);
   }
 
   const handleCampaignValue = (event) => {
@@ -135,7 +136,7 @@ const AiGenerator = ({
     };
     createElement(imageContext);
     contextList((prevElement) => [...prevElement, imageContext]);
-    //elementList((prevElement) => [...prevElement, imageContext]);
+    elementList((prevElement) => [...prevElement, imageContext]);
   };
 
   let saveImgContext = (e) => {

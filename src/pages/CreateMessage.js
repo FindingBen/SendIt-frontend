@@ -114,8 +114,7 @@ const CreateNote = () => {
   const handleContextEl = (elementContextList) => {
     setElementsContextList(elementContextList);
   };
-  console.log(elementContextList);
-  console.log(elementsList);
+
   //For displaying images on iframe
   const handleImages = (images) => {
     setImages(images);
@@ -185,7 +184,7 @@ const CreateNote = () => {
       <AiGenerator
         listEl={isCreate}
         contextList={handleContextEl}
-        //elementList={displayElements}
+        elementList={displayElements}
         setComponentState={setComponent}
       />
     ),
