@@ -19,6 +19,10 @@ function ModalComponent({ confirmLeave, showModal, modalType }) {
     deleteElement();
   };
 
+  const handleCloseCopy = () => {
+    setShow(false);
+  };
+
   const handleStay = () => {
     setShow(false);
     dispatch(setModalState({ show: false }));
@@ -33,6 +37,8 @@ function ModalComponent({ confirmLeave, showModal, modalType }) {
     // messageContents();
     if (showModal) {
       handleShow();
+    } else {
+      handleCloseCopy();
     }
   }, [showModal]);
 
@@ -66,6 +72,10 @@ function ModalComponent({ confirmLeave, showModal, modalType }) {
               <div className="flex flex-col">
                 <p className="font-poppins">Email activation required</p>
               </div>
+            ) : modalType === "copy" ? (
+              <div className="flex flex-col">
+                <p className="font-poppins">Message duplication</p>
+              </div>
             ) : (
               <div className="flex flex-col">
                 <p className="font-poppins">Stripe</p>
@@ -84,8 +94,8 @@ function ModalComponent({ confirmLeave, showModal, modalType }) {
             <p>Your payment is being verified by Stripe, hold on</p>
           ) : modalType === "Redirect" ? (
             <p>You are being redirected to, please wait</p>
-          ) : modalType === "copyCreate" ? (
-            <p>Are you sure you want to duplicate this message?</p>
+          ) : modalType === "copy" ? (
+            <p>Duplicating message hold on..</p>
           ) : modalType === "emailConfirm" ? (
             <p>
               An activation link has been sent to your email, check your email

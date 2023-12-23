@@ -43,7 +43,7 @@ const Login = () => {
       });
       const responseData = await response.json();
       const user = jwt_decode(responseData?.access).user_id;
-
+      console.log(responseData);
       dispatch(setCredentials({ ...responseData, user }));
       setUser("");
       setPwd("");

@@ -11,7 +11,7 @@ const authSlice = createSlice({
         action.payload
       );
       const { user, access } = action.payload;
-      return { ...state, user, token: access };
+      return { ...state, user: user, token: access };
     },
     registerUser: (state, action) => {
       const { username, first_name, last_name, email, password } =

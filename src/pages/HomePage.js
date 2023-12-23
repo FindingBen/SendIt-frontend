@@ -4,7 +4,7 @@ import "../css/Home.css";
 import { logOut } from "../redux/reducers/authSlice";
 import useAxiosInstance from "../utils/axiosInstance";
 import DeleteMessageModal from "../features/modal/DeleteMessageModal";
-import SvgLoader from "../components/SvgLoader";
+import ModalComponent from "../components/ModalComponent";
 import { motion } from "framer-motion";
 import { config } from "../constants/Constants";
 import { useRedux } from "../constants/reduxImports";
@@ -22,6 +22,7 @@ const HomePage = () => {
   const [listUpdated, setListUpdated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
+  const [showCopy, setShowCopy] = useState(false);
   const BASE_URL = config.url.BASE_URL;
   const [messageId, setMessageId] = useState();
 
@@ -77,6 +78,7 @@ const HomePage = () => {
   };
 
   const duplicateMessage = async (messageId) => {
+    setShowCopy(true);
     try {
       setLoading(true);
       // Fetch details of the existing message
@@ -118,6 +120,7 @@ const HomePage = () => {
 
       await createElementsData();
 
+      setTimeout(() => setShowCopy(false), 1000);
       setLoading(false);
     } catch (error) {
       console.error("Error duplicating message:", error);
@@ -412,6 +415,7 @@ const HomePage = () => {
                 setUpdated={handleListUpdate}
                 listUpdated={listUpdated}
               />
+              <ModalComponent modalType={"copy"} showModal={showCopy} />
             </div>
             {totalPages > 1 && (
               <motion.div

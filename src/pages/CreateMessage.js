@@ -125,9 +125,9 @@ const CreateNote = () => {
     setFiles(file);
   };
 
-  // const displayElements = (displayElItem) => {
-  //   setDisplayItems((prevItems) => [...prevItems, displayElItem]);
-  // };
+  const displayElements = (displayElItem) => {
+    setDisplayItems((prevItems) => [...prevItems, displayElItem]);
+  };
 
   const handleClicked = (element) => {
     deleteElement(element);
@@ -151,7 +151,7 @@ const CreateNote = () => {
         handleFiles={handleFiles}
         handleImages={handleImages}
         listImages={images}
-        // elementList={displayElements}
+        elementList={displayElements}
         listEl={isCreate}
         contextList={handleContextEl}
         setComponentState={setComponent}
@@ -159,7 +159,7 @@ const CreateNote = () => {
     ),
     text: (
       <Text
-        // elementList={displayElements}
+        elementList={displayElements}
         listEl={isCreate}
         contextList={handleContextEl}
         setComponentState={setComponent}
@@ -169,7 +169,7 @@ const CreateNote = () => {
       <Button
         listEl={isCreate}
         contextList={handleContextEl}
-        // elementList={displayElements}
+        elementList={displayElements}
         setComponentState={setComponent}
       />
     ),
@@ -177,7 +177,7 @@ const CreateNote = () => {
       <Survey
         listEl={isCreate}
         contextList={handleContextEl}
-        //elementList={displayElements}
+        elementList={displayElements}
         setComponentState={setComponent}
       />
     ),
