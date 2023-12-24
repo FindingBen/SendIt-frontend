@@ -14,7 +14,6 @@ import SmsEditor from "./pages/SmsEditor";
 import { ElementProvider } from "./context/ElementContext";
 import MessageView from "./pages/MessageView";
 import UserPage from "./pages/UserPage";
-import PackagePlan from "./pages/PackagePlan";
 import PasswordReset from "./utils/PasswordReset";
 import PasswordResetConfirm from "./utils/PasswordResetConfirm";
 import ReactGA from "react-ga";
@@ -90,10 +89,7 @@ function App() {
                   path="/account_settings/:id"
                   element={<UserPage></UserPage>}
                 />
-                <Route
-                  path="/package_plan/"
-                  element={<PackagePlan></PackagePlan>}
-                />
+
                 <Route
                   path="/stripe/"
                   element={<SuccessPayment></SuccessPayment>}

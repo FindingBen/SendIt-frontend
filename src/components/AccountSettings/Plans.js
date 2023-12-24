@@ -47,7 +47,7 @@ const Plans = ({ packagePlan }) => {
     { length: packagePlan.length },
     (_, index) => index
   );
-
+  console.log(packagePlan);
   return (
     <div className="flex-1 items-center justify-center">
       <div className="flex flex-col gap-8 p-10 lg:flex-row xl:flex-row">
@@ -66,7 +66,13 @@ const Plans = ({ packagePlan }) => {
               loadingState[packagePlan[index]?.id]
                 ? "opacity-75"
                 : "opacity-100"
-            } max-h-[428px] w-[260px] rounded-3xl p-8 bg-gray-700/50 transition ease-in-out delay-90 hover:text-gradient  hover:-translate-y-1 hover:scale-110 hover:bg-gray-900/80 duration-300 cursor-pointer`}
+            } max-h-[428px] w-[260px] rounded-3xl p-8 transition ${
+              {
+                "Gold plan": "bg-yellow-700",
+                "Silver Plan": "bg-slate-600/50",
+                "Basic Plan": "bg-green-400",
+              }[packagePlan[index]?.plan_type] || "bg-gray-700/50"
+            } ease-in-out delay-90 hover:text-gradient hover:-translate-y-1 hover:scale-110 hover:bg-gray-900/80 duration-300 cursor-pointer`}
           >
             <h2 className="mb-5 text-xl font-poppins text-white">
               {packagePlan[index]?.plan_type}

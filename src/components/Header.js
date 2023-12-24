@@ -22,7 +22,7 @@ const Header = () => {
     { title: "Home", src: "homeIcon", location: "/home" },
     { title: "Create", src: "create", location: "/create_note/" },
     { title: "Contacts", src: "contactList", location: "/contact_lists/" },
-    { title: "Plan", src: "membership", location: "/package_plan/" },
+
     {
       title: "Account",
       src: "account",
