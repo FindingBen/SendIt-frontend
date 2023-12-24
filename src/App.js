@@ -1,4 +1,5 @@
 import "./App.css";
+import "flowbite";
 import { Route, Routes } from "react-router-dom";
 import React from "react";
 import ContactLists from "./pages/ContactLists";

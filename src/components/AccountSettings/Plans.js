@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRedux } from "../../constants/reduxImports";
 import useAxiosInstance from "../../utils/axiosInstance";
 import ModalComponent from "../ModalComponent";
@@ -8,6 +8,11 @@ const Plans = ({ packagePlan }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [loadingState, setLoadingStates] = useState({});
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [calculatedPackage, setCalculatedPackage] = useState(null);
+  const [budget, setBudget] = useState("");
+  const [recipients, setRecipients] = useState("");
+  const [messages, setMessages] = useState("");
 
   let stripeCheckout = async (name_product, id) => {
     setShow(true);
@@ -43,14 +48,53 @@ const Plans = ({ packagePlan }) => {
     }
   };
 
+  const handleMessagesCount = (e) => {
+    setMessages(e.target.value);
+  };
+
+  const handleRecipientsCount = (e) => {
+    setRecipients(e.target.value);
+  };
+
+  const handleBudgetValue = (e) => {
+    setBudget(e.target.value);
+  };
+
+  const calculatePackage = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    try {
+      const response = await axiosInstance.post("/stripe/calculate_plan/", {
+        messages_count: messages,
+        customers_count: recipients,
+        budget: budget, // You might want to add a budget input field
+      });
+
+      if (response.status === 200) {
+        setCalculatedPackage(response.data.recommended_package);
+        setIsLoading(false);
+      } else {
+        console.error("Error calculating plan usage");
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error("Error calculating plan usage", error);
+      setIsLoading(false);
+    }
+  };
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
   const elementsArray = Array.from(
     { length: packagePlan.length },
     (_, index) => index
   );
-  console.log(packagePlan);
+
   return (
     <div className="flex-1 items-center justify-center">
-      <div className="flex flex-col gap-8 p-10 lg:flex-row xl:flex-row">
+      <div className="flex flex-row gap-8 p-10 lg:flex-row xl:flex-row relative">
         {elementsArray?.map((plan, index) => (
           <div
             key={packagePlan[index]?.id}
@@ -267,7 +311,94 @@ const Plans = ({ packagePlan }) => {
             </ul>
           </div>
         ))}
+        <button
+          className={`absolute ${
+            isDrawerOpen ? "right-[260px]" : "right-[4px]"
+          } top-[44%]`}
+          onClick={toggleDrawer}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            className={`w-8 h-8 text-white ${
+              isDrawerOpen ? "rotate-180" : "rotate-0"
+            }`}
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+            />
+          </svg>
+        </button>
+        <p
+          className={`text-white text-justify absolute right-[80px] top-[220px] ${
+            isDrawerOpen && "hidden"
+          }`}
+        >
+          Need help choosing<br></br> the right plan?
+        </p>
+        <div
+          className={`absolute top-10 -right-6 h-[428px] w-[260px] bg-gray-900 rounded-3xl transition-transform transform ${
+            isDrawerOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="flex flex-col p-4">
+            <label
+              for="first_name"
+              className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
+            >
+              How much is your budget per month?
+            </label>
+            <input
+              type="text"
+              id="first_name"
+              onChange={handleBudgetValue}
+              className="block bg-white duration-200 text-black font-light py-2 px-4 rounded-md"
+              placeholder="For ex 1000 dkk a month"
+            />
+            <label
+              for="first_name"
+              className="block mb-2 mt-2 text-sm text-left font-normal text-gray-300 dark:text-white"
+            >
+              How many recipients do you have?
+            </label>
+            <input
+              onChange={handleRecipientsCount}
+              type="text"
+              id="first_name"
+              className="block bg-white duration-200 text-black font-light py-2 px-4 rounded-md"
+            />
+            <label
+              for="first_name"
+              className="block mb-2 mt-2 text-sm text-left font-normal text-gray-300 dark:text-white"
+            >
+              How many messages per month do you excpect to send?
+            </label>
+            <input
+              onChange={handleMessagesCount}
+              type="text"
+              id="first_name"
+              className="block bg-white duration-200 text-black font-light py-2 px-4 rounded-md"
+            />
+            <button
+              onClick={calculatePackage}
+              className="bg-sky-800 hover:bg-sky-400 duration-300 text-white font-normal mt-2 py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
+            >
+              {loadingState ? "Calculate" : "Calculating.."}
+            </button>
+            {calculatedPackage && (
+              <p className="text-white font-light">
+                Best package for you is {calculatedPackage}
+              </p>
+            )}
+          </div>
+        </div>
       </div>
+
       <ModalComponent modalType={"Redirect"} showModal={show}></ModalComponent>
     </div>
   );
