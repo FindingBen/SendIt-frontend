@@ -17,6 +17,11 @@ const SmsConfirmModal = ({ showModal, onClose, sendConfirm }) => {
     onClose();
   };
 
+  const closeAfterSend = () => {
+    sendConfirm();
+    onClose();
+  };
+
   return (
     <>
       {show ? (
@@ -69,7 +74,7 @@ const SmsConfirmModal = ({ showModal, onClose, sendConfirm }) => {
                   <button
                     className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
                     type="button"
-                    onClick={() => sendConfirm()}
+                    onClick={closeAfterSend}
                   >
                     Send
                   </button>
