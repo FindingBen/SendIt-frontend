@@ -8,12 +8,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import { motion } from "framer-motion";
 import SurveyResults from "../components/Survey/SurveyResults";
 import Statistics from "../components/Analytics/Statistics";
+import formatDate from "../utils/helpers/dateFunction";
 
 const AnalyticsPage = () => {
   const axiosInstance = useAxiosInstance();
   const [views, setViews] = useState();
   const [sms, setSms] = useState();
-  const [circumference, setCircumference] = useState(0);
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
@@ -40,20 +40,20 @@ const AnalyticsPage = () => {
     getdataAnalytics();
   }, []);
 
-  function formatDate(inputDate) {
-    const date = new Date(inputDate);
+  // function formatDate(inputDate) {
+  //   const date = new Date(inputDate);
 
-    // Get year, month, and day components
-    const year = date.getFullYear();
-    // JavaScript months are 0-based, so we add 1 to get the correct month.
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
+  //   // Get year, month, and day components
+  //   const year = date.getFullYear();
+  //   // JavaScript months are 0-based, so we add 1 to get the correct month.
+  //   const month = String(date.getMonth() + 1).padStart(2, "0");
+  //   const day = String(date.getDate()).padStart(2, "0");
 
-    // Create the formatted date string in the desired format (YYYY-MM-DD)
-    const formattedDate = `${year}-${month}-${day}`;
+  //   // Create the formatted date string in the desired format (YYYY-MM-DD)
+  //   const formattedDate = `${year}-${month}-${day}`;
 
-    return formattedDate;
-  }
+  //   return formattedDate;
+  // }
 
   const getSms = async () => {
     try {
@@ -90,7 +90,7 @@ const AnalyticsPage = () => {
       }
     } catch (error) {}
   };
-  console.log(surveyresults);
+
   return (
     <section className="h-screen flex-d w-100 items-center justify-center">
       <div className="flex flex-row p-4">

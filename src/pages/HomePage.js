@@ -11,7 +11,7 @@ import { useRedux } from "../constants/reduxImports";
 import { createElements } from "../utils/helpers/createElements";
 import OverallStatistics from "../components/Analytics/OverallStatistics";
 import PieChart from "../utils/chart/PieChart";
-import { useStepContext } from "@mui/material";
+import formatDate from "../utils/helpers/dateFunction";
 
 const HomePage = () => {
   const axiosInstance = useAxiosInstance();
@@ -29,7 +29,15 @@ const HomePage = () => {
   const [messageId, setMessageId] = useState();
   const [analyticsOpen, setAnalyticsOpen] = useState(false);
   const [smsId, setSmsId] = useState();
-
+  const [views, setViews] = useState();
+  //Date Section
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  const formattedStartDate = formatDate(yesterday);
+  const formattedEndDate = formatDate(today);
+  //
+  console.log(formattedStartDate);
   useEffect(() => {
     getNotes();
     refreshAnalytics();
@@ -72,6 +80,20 @@ const HomePage = () => {
     }
   };
 
+  const getdataAnalytics = async (id) => {
+    try {
+      let response = await axiosInstance.get(
+        `api/get_analytcs/${id}/?startDate=${formattedStartDate}&endDate=${formattedEndDate}`
+      );
+      if (response.status === 200) {
+        console.log(response);
+        setViews(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(views?.data.overall_perf);
   const deleteMessage = (id) => {
     setMessageId(id);
     setShow(true);
@@ -134,6 +156,7 @@ const HomePage = () => {
   const toggleAnalyticsDrawer = (id) => {
     setAnalyticsOpen(true);
     setSmsId(id);
+    getdataAnalytics(id);
   };
 
   const closeAnalyticsDrawer = () => {
@@ -487,11 +510,36 @@ const HomePage = () => {
                 X
               </button>
               <p className="text-white text-xl mb-2">Quick view</p>
-              <PieChart viewType={"ViewHome"} />
+              <PieChart
+                percentage={views?.data.overall_perf}
+                viewType={"ViewHome"}
+              />
               <div className="flex flex-col bg-darkBlue p-4 w-full h-[150px] rounded-lg">
-                <p className="text-white mb-2 text-justify">Campaign view</p>
-                <p className="text-white mb-2 text-justify">Content clicks</p>
-                <p className="text-white mb-2 text-justify">Bounce rate</p>
+                <div className="flex flex-row relative">
+                  <p className="text-white mb-2 text-justify text-light">
+                    Campaign view
+                  </p>
+                  <p className="text-white font-semibold">
+                    {
+                      <p className="text-white mb-2 text-justify absolute right-0 top-0">
+                        {views?.data.sorted_total_data.screen_views_total}
+                      </p>
+                    }
+                  </p>
+                </div>
+
+                <div className="flex flex-row relative">
+                  <p className="text-white mb-2 text-justify text-light">
+                    Bounce rate
+                  </p>
+                  <p className="text-white font-semibold">
+                    {
+                      <p className="text-white mb-2 text-justify absolute right-0 top-0">
+                        {views?.data.sorted_total_data.bounceRate} %
+                      </p>
+                    }
+                  </p>
+                </div>
               </div>
               <Link
                 to={`/analytics/${smsId}`}
