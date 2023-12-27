@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./PieChart.css";
 
-const PieChart = ({ percentage }) => {
+const PieChart = ({ percentage, viewType }) => {
   const circumference = 65 * 2 * Math.PI;
   const [dashOffset, setDashOffset] = useState(circumference);
 
@@ -11,8 +11,16 @@ const PieChart = ({ percentage }) => {
   }, [percentage, circumference]);
 
   return (
-    <div className="flex-none bg-darkestGray w-64 h-96 rounded-md">
-      <div className="p-2 flex items-center flex-col bg-darkBlue rounded-md mx-3 my-3 shadow-lg relative">
+    <div
+      className={`flex-none ${
+        viewType === "ViewHome" ? " w-64" : "bg-darkestGray w-64 h-96"
+      } rounded-md`}
+    >
+      <div
+        className={`p-2 flex items-center flex-col ${
+          viewType === "ViewHome" ? "" : "bg-darkBlue shadow-lg"
+        } rounded-md mx-3 my-3 relative`}
+      >
         <p className="text-white text-xl font-light text-justify p-4">
           Sms performance
         </p>
@@ -44,9 +52,13 @@ const PieChart = ({ percentage }) => {
             percentage ?? 0
           }%`}</span>
         </div>
-        <p className="text-white/50 font-light text-sm p-4">
-          Overall performance of the sms including the metrics
-        </p>
+        {viewType === "AnalyticsView" ? (
+          <p className="text-white/50 font-light text-sm p-4">
+            Overall performance of the sms including the metrics
+          </p>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

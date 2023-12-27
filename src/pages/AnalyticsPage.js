@@ -241,7 +241,10 @@ const AnalyticsPage = () => {
             <div className="flex gap-3 mt-3">
               <Statistics views={views} />
               <BarChart data={dataDlivery} />
-              <PieChart percentage={views?.data.overall_perf} />
+              <PieChart
+                viewType={"AnalyticsView"}
+                percentage={views?.data.overall_perf}
+              />
             </div>
           </div>
         </div>
