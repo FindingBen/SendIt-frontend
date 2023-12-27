@@ -177,16 +177,16 @@ const SmsEditor = () => {
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
-        <div className="flex-1 p-10 px-2 sm:px-0">
-          {/* <div className="flex justify-between items-center mb-3">
-              <h3 class="text-3xl text-left font-extralight text-white/50">
-                Sms setttings
-              </h3>
-            </div> */}
+        <div className="flex-1 px-2 sm:px-0">
+          <div className="flex justify-between items-center mb-3">
+            <h3 class="text-3xl text-left font-extralight text-white">
+              Sms credit: {user?.sms_count}
+            </h3>
+          </div>
           <div className="grid grid-cols-2 gap-4 rounded-md">
             <div className="grid gap-2 bg-darkestGray rounded-lg">
               <div class="rounded p-10">
-                <h3 class="text-2xl text-left font-extralight text-white/50 mb-4">
+                <h3 class="text-2xl text-left font-extralight text-white mb-4">
                   Sms send
                 </h3>
                 <div>
@@ -251,7 +251,7 @@ const SmsEditor = () => {
                         }}
                         type="submit"
                         color="dark"
-                        className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-3 rounded text-sm xl:text-base mt-4"
+                        className="bg-green-800 hover:bg-green-400 text-white font-normal py-2 px-3 rounded text-sm xl:text-base mt-4"
                         disabled={
                           user &&
                           recipients &&
@@ -265,7 +265,7 @@ const SmsEditor = () => {
                         onClick={() => setShowSchedule(true)}
                         type="submit"
                         color="dark"
-                        className="bg-yellow-700 hover:bg-yellow-300 text-white font-bold py-2 px-3 rounded text-sm xl:text-base mt-4 ml-3"
+                        className="bg-yellow-700 hover:bg-yellow-300 text-white font-normal py-2 px-3 rounded text-sm xl:text-base mt-4 ml-3"
                       >
                         Schedule
                       </button>
@@ -284,27 +284,27 @@ const SmsEditor = () => {
               )}
             </div>
             <div className="col mt-3">
-              <p className="text-3xl font-extralight text-white/50">
+              <p className="text-3xl font-extralight text-white">
                 Sms Configuration
               </p>
-              <div className="font-extralight text-white/50 p-5">
+              <div className="font-extralight text-white p-5">
                 You picked up a list of{" "}
-                <p className="text-white inline-block">
+                <p className="text-white inline-block font-bold">
                   {recipients?.contact_lenght ?? 0}
                 </p>{" "}
                 recipients which means you will get deducted{" "}
-                <p className="text-white inline-block">
+                <p className="text-white inline-block font-bold">
                   {recipients?.contact_lenght ?? 0}
                 </p>{" "}
                 message credits. Your new credit statement will be{" "}
-                <p className="text-white inline-block">
+                <p className="text-white inline-block font-bold">
                   {user?.sms_count - recipients?.contact_lenght}
                 </p>{" "}
                 after this sendout.
               </div>
               <div className="flex flex-col p-5 rounded-lg">
                 <div className="flex flex-row p-2">
-                  <p className="font-extralight text-white/50">
+                  <p className="font-extralight text-white">
                     Link your campaign{" "}
                   </p>
                   <button
@@ -334,7 +334,7 @@ const SmsEditor = () => {
                   </button>
                 </div>
                 <div className="flex flex-row p-2">
-                  <p className="font-extralight text-white/50">
+                  <p className="font-extralight text-white">
                     Personalize your sending{" "}
                   </p>
                   <button

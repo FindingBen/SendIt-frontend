@@ -116,7 +116,6 @@ const UserPage = () => {
             <ul className="flex flex-wrap -mb-px">
               <li className="me-2">
                 <a
-                  href="#"
                   className={`inline-block p-4 border-b-2 ${
                     selectedComponent === "account"
                       ? "border-blue-600 text-blue-600"
@@ -129,7 +128,6 @@ const UserPage = () => {
               </li>
               <li className="me-2">
                 <a
-                  href="#"
                   className={`inline-block p-4 border-b-2 ${
                     selectedComponent === "billing"
                       ? "border-blue-600 text-blue-600"
@@ -142,7 +140,6 @@ const UserPage = () => {
               </li>
               <li className="me-2">
                 <a
-                  href="#"
                   className={`inline-block p-4 border-b-2 ${
                     selectedComponent === "plans"
                       ? "border-blue-600 text-blue-600"
