@@ -81,7 +81,7 @@ const UserAccount = ({ user }) => {
         </div>
       </div>
       <div className="flex flex-col rounded-lg p-4 mt-4 bg-darkestGray">
-        <h3 class="text-xl xl:text-2xl text-left font-extralight text-white/50">
+        <h3 class="text-xl xl:text-2xl text-left font-extralight text-white">
           General settings
         </h3>
         <div className="flex flex-col mt-3">
@@ -89,7 +89,7 @@ const UserAccount = ({ user }) => {
             <div>
               <label
                 for="first_name"
-                className="block mb-2 text-sm text-left font-medium text-gray-300 dark:text-white"
+                className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
               >
                 First name
               </label>
@@ -104,7 +104,7 @@ const UserAccount = ({ user }) => {
             <div>
               <label
                 for="last_name"
-                className="block mb-2 text-sm text-left font-medium text-gray-300 dark:text-white"
+                className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
               >
                 Last name
               </label>
@@ -122,7 +122,7 @@ const UserAccount = ({ user }) => {
             <div>
               <label
                 for="last_name"
-                className="block mb-2 text-sm text-left font-medium text-gray-300 dark:text-white"
+                className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
               >
                 Username
               </label>
@@ -139,7 +139,7 @@ const UserAccount = ({ user }) => {
             <div className="mb-3">
               <label
                 for="email"
-                className="block mb-2 text-sm text-left font-medium text-gray-300 dark:text-white"
+                className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
               >
                 Email address
               </label>

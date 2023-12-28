@@ -18,7 +18,7 @@ const Billings = ({ purchases }) => {
   };
   return (
     <div className="flex-initial rounded-lg p-4 xl:p-10 mt-4 bg-darkestGray">
-      <h3 class="text-2xl text-left font-extralight text-white/50">
+      <h3 class="text-2xl text-left font-extralight text-white">
         Purchase history
       </h3>
 

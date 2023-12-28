@@ -77,12 +77,12 @@ const PasswordChange = ({ status, errStatus }) => {
   return (
     <div className="flex-1 px-1">
       <div className="flex flex-col">
-        <h3 class="xl:text-2xl text-xl text-left font-extralight text-white/50">
+        <h3 class="xl:text-2xl text-xl text-left font-extralight text-white">
           Change password
         </h3>
 
         <div className="mt-3">
-          <label className="block mb-2 text-sm text-left font-medium text-gray-300 dark:text-white">
+          <label className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white">
             Enter old password
           </label>
           <input
@@ -93,7 +93,7 @@ const PasswordChange = ({ status, errStatus }) => {
           ></input>
         </div>
         <div>
-          <label className="block mt-1 text-sm text-left font-medium text-gray-300 dark:text-white">
+          <label className="block mt-1 text-sm text-left font-normal text-gray-300 dark:text-white">
             Enter new password
           </label>
           <input
@@ -104,7 +104,7 @@ const PasswordChange = ({ status, errStatus }) => {
           ></input>
         </div>
         <div>
-          <label className="block mt-1 text-sm text-left font-medium text-gray-300 dark:text-white">
+          <label className="block mt-1 text-sm text-left font-normal text-gray-300 dark:text-white">
             Repeat new password
           </label>
           <input

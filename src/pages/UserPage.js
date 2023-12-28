@@ -112,9 +112,9 @@ const UserPage = () => {
             </h3>
           </div>
 
-          <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+          <div class="text-sm font-normal text-center text-white border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
             <ul className="flex flex-wrap -mb-px">
-              <li className="me-2">
+              <li className="me-2 hover:cursor-pointer">
                 <a
                   className={`inline-block p-4 border-b-2 ${
                     selectedComponent === "account"
@@ -126,7 +126,7 @@ const UserPage = () => {
                   Account settings
                 </a>
               </li>
-              <li className="me-2">
+              <li className="me-2 hover:cursor-pointer">
                 <a
                   className={`inline-block p-4 border-b-2 ${
                     selectedComponent === "billing"
@@ -138,7 +138,7 @@ const UserPage = () => {
                   Billing histroy
                 </a>
               </li>
-              <li className="me-2">
+              <li className="me-2 hover:cursor-pointer">
                 <a
                   className={`inline-block p-4 border-b-2 ${
                     selectedComponent === "plans"
