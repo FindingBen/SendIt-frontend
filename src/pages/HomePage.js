@@ -252,8 +252,8 @@ const HomePage = () => {
               </button>
             </div>
             <div class="bg-darkestGray p-4 rounded-lg">
-              <div class="grid grid-cols-5 gap-4 grid-headers text-white font-normal text-sm xl:text-md py-2 px-4 rounded-lg mb-2">
-                <div>Name</div>
+              <div class="grid grid-cols-5 gap-4 grid-headers bg-darkBlue text-white font-normal text-sm xl:text-md py-2 px-4 rounded-lg mb-2">
+                <div className="">Name</div>
                 <div>Created At</div>
                 <div>Analytics</div>
                 <div>Status</div>
@@ -274,9 +274,9 @@ const HomePage = () => {
                         delay: 0.2,
                         ease: [0, 0.41, 0.1, 1.01],
                       }}
-                      class="bg-darkBlue rounded-lg text-white font-semibold text-sm"
+                      class="border-b border-grayWhite/50 text-white font-semibold text-sm"
                     >
-                      <div className="mb-2">
+                      <div className="mb-2 my-auto">
                         <div className={`grid grid-cols-5 gap-4 py-2 px-4`}>
                           <p>{message.message_name}</p>
                           <div>{message.created_at}</div>
@@ -337,7 +337,7 @@ const HomePage = () => {
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"
-                                stroke-width="1.5"
+                                stroke-width="0.6"
                                 stroke="currentColor"
                                 class="w-6 h-6"
                               >
@@ -351,7 +351,7 @@ const HomePage = () => {
 
                             {message.status === "sent" ? (
                               <a
-                                className="hover:bg-sky-300 rounded disabled-link"
+                                className="hover:bg-sky-300 rounded disabled-link mx-2"
                                 type="button"
                                 to={`/sms_editor/${message.id}`}
                                 // data-mdb-ripple-color="dark"
@@ -361,7 +361,7 @@ const HomePage = () => {
                                   viewBox="0 0 24 24"
                                   strokeWidth="1.5"
                                   fill="currentColor"
-                                  className="w-6 h-6 mx-2 fill-gray-600"
+                                  className="w-6 h-6 fill-gray-600"
                                 >
                                   <path
                                     d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
@@ -402,9 +402,9 @@ const HomePage = () => {
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   viewBox="0 0 24 24"
-                                  strokeWidth="1.5"
+                                  strokeWidth="0.6"
                                   fill="currentColor"
-                                  className="w-6 h-6 fill-green-600"
+                                  className="w-6 h-6 text-gray-500"
                                 >
                                   <path
                                     d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
@@ -423,7 +423,7 @@ const HomePage = () => {
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"
-                                stroke-width="1.5"
+                                stroke-width="0.6"
                                 stroke="currentColor"
                                 class="w-6 h-6"
                               >
@@ -442,9 +442,9 @@ const HomePage = () => {
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24"
-                                strokeWidth="1.0"
+                                strokeWidth="0.5"
                                 stroke="currentColor"
-                                className="w-6 h-6 fill-red-500"
+                                className="w-6 h-6 fill-darkBlue"
                               >
                                 <path
                                   strokeLinecap="round"

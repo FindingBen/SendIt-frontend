@@ -6,7 +6,7 @@ const OverallStatistics = ({ totalValues, messageCount }) => {
   return (
     <div className="flex bg-darkestGray rounded-lg p-2 lg:w-[70%]">
       <div className="flex flex-row items-center w-[275px] rounded-md">
-        <div className="flex-none p-3 my-auto bg-darkBlue rounded-full ml-4">
+        <div className="flex-none p-3 my-auto bg-darkBlue rounded-full shadow-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -48,7 +48,7 @@ const OverallStatistics = ({ totalValues, messageCount }) => {
       </div>
 
       <div className="flex flex-row items-center w-[275px] rounded-md">
-        <div className="flex-none p-3 my-auto bg-darkBlue rounded-full">
+        <div className="flex-none p-3 my-auto bg-darkBlue rounded-full shadow-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -96,7 +96,7 @@ const OverallStatistics = ({ totalValues, messageCount }) => {
       </div>
 
       <div className="flex flex-row items-center  w-[275px] rounded-md">
-        <div className="flex-none p-3 my-auto bg-darkBlue rounded-full">
+        <div className="flex-none p-3 my-auto bg-darkBlue rounded-full shadow-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -139,7 +139,7 @@ const OverallStatistics = ({ totalValues, messageCount }) => {
       </div>
 
       <div className="flex flex-row items-center  w-[275px] rounded-md">
-        <div className="flex-none p-3 my-auto bg-darkBlue rounded-full ml-4">
+        <div className="flex-none p-3 my-auto bg-darkBlue rounded-full shadow-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
