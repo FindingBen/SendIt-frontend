@@ -178,13 +178,13 @@ const HomePage = () => {
   return (
     <section className="min-h-screen w-100 items-center justify-center">
       <div className="flex flex-col space-y-5 lg:space-y-0 lg:flex-row sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
-        <div className="flex-1 px-2 sm:px-0">
+        <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center xl:mb-3">
             <h3 class="xl:text-3xl text-2xl font-extralight text-left text-white">
               Home dashboard
             </h3>
 
-            <div class="flex flex-row items-center space-x-2">
+            <div class="flex flex-row items-center">
               <button>
                 <Link
                   class="text-white/50 p-2 rounded-md hover:text-white smooth-hover"
@@ -512,8 +512,10 @@ const HomePage = () => {
             )}
           </div>
           <div
-            className={`absolute top-[103px] -right-6 lg:h-[548px] lg:w-[330px] xl:h-[648px] xl:w-[460px] bg-darkestGray rounded-2xl transition-transform transform ${
-              analyticsOpen ? "-translate-x-20" : "translate-x-full"
+            className={`absolute top-[103px] -right-6 lg:h-[548px] lg:w-[340px] xl:h-[648px] xl:w-[460px] bg-darkestGray rounded-2xl transition-transform transform ${
+              analyticsOpen
+                ? "xl:-translate-x-20 lg:-translate-x-16"
+                : "translate-x-full"
             }`}
           >
             <div className="flex flex-col p-4 relative items-center">
@@ -530,7 +532,7 @@ const HomePage = () => {
               />
               <div className="flex flex-col items-center p-4 w-full h-[150px] rounded-lg">
                 <div className="flex flex-row relative">
-                  <div className="p-2 flex items-center flex-col rounded-md mx-2 my-auto">
+                  <div className="p-2 flex items-center flex-col rounded-md mx-1 my-auto">
                     <p className="text-white text-normal font-light text-justify">
                       Campaign views
                     </p>
@@ -553,7 +555,7 @@ const HomePage = () => {
                       </p>
                     )}
                   </div>
-                  <div className="p-2 flex items-center flex-col rounded-md mx-2 my-auto">
+                  <div className="p-2 flex items-center flex-col rounded-md mx-1 my-auto">
                     <p className="text-white text-normal font-light text-justify">
                       Bounce rate
                     </p>
