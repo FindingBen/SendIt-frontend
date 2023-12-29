@@ -18,7 +18,8 @@ import { useRedux } from "../constants/reduxImports";
 
 const CreateNote = () => {
   const { deleteElement } = useContext(ElementContext);
-  const { currentUser, dispatch, currentModalState } = useRedux();
+  const { currentUser, dispatch, currentModalState, currentPackageState } =
+    useRedux();
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
@@ -48,7 +49,7 @@ const CreateNote = () => {
       prevSelectedComponent === componentKey ? null : componentKey
     );
   };
-
+  console.log(currentPackageState);
   const handleMessageName = (e) => {
     setMessageName(e.target.value);
     setIsDirty(true);
@@ -346,27 +347,31 @@ const CreateNote = () => {
                     </div>
                   </div>
                   <div className="flex flex-row justify-between">
-                    <div
-                      onClick={() => handleClick("aiContent")}
-                      name="liClick"
-                      className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1"
-                        stroke="currentColor"
-                        data-slot="icon"
-                        class="h-16 w-20 mt-2 fill-gray-400"
+                    {currentPackageState === "Gold package" ? (
+                      <div
+                        onClick={() => handleClick("aiContent")}
+                        name="liClick"
+                        className="mb-3 flex flex-row justify-between border-gray-600 border-1 rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                       >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
-                        />
-                      </svg>
-                    </div>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1"
+                          stroke="currentColor"
+                          data-slot="icon"
+                          class="h-16 w-20 mt-2 fill-gray-400"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
+                          />
+                        </svg>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               </div>

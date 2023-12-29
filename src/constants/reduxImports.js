@@ -9,6 +9,7 @@ import {
   selectModalState,
 } from "../redux/reducers/modalReducer";
 import { selectFormState } from "../redux/reducers/formReducer";
+import { selectCurrentPackage } from "../redux/reducers/packageReducer";
 
 export const useRedux = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export const useRedux = () => {
   const currentModalCall = useSelector(selectModalCall);
   const currentModalState = useSelector(selectModalState);
   const currentFormState = useSelector(selectFormState);
+  const currentPackageState = useSelector(selectCurrentPackage);
 
   return {
     dispatch,
@@ -27,5 +29,6 @@ export const useRedux = () => {
     currentModalCall,
     currentModalState,
     currentFormState,
+    currentPackageState,
   };
 };

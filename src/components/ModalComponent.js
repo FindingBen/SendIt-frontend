@@ -4,6 +4,7 @@ import { setState } from "../redux/reducers/formReducer";
 import { setModalState, setOpenModal } from "../redux/reducers/modalReducer";
 import { ElementContext } from "../context/ElementContext";
 import { useRedux } from "../constants/reduxImports";
+import SvgLoader from "./SvgLoader";
 
 function ModalComponent({ confirmLeave, showModal, modalType }) {
   const { dispatch } = useRedux();
@@ -53,7 +54,7 @@ function ModalComponent({ confirmLeave, showModal, modalType }) {
         <Modal.Header closeButton>
           <Modal.Title>
             {!modalType ? (
-              <div>
+              <div className="relative">
                 Warning!
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -76,12 +77,28 @@ function ModalComponent({ confirmLeave, showModal, modalType }) {
               <div className="flex flex-col">
                 <p className="font-poppins">Message duplication</p>
               </div>
+            ) : modalType === "Payment_Confirmation" ? (
+              <div className="flex flex-row">
+                <div className="flex flex-col">
+                  <p className="font-poppins">Confirming payment</p>
+                  <div class="flex-none w-14 p-2 text-xs mt-2 font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">
+                    <SvgLoader width={"w-10"} />
+                  </div>
+                  <div className="flex-none absolute right-2 top-0">
+                    <img src={require("../assets/stripe.png")} width={70} />
+                  </div>
+                </div>
+              </div>
             ) : (
-              <div className="flex flex-col">
-                <p className="font-poppins">Stripe</p>
-
-                <div class="px-4 py-2 text-xs mt-2 font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">
-                  Redirecting...
+              <div className="flex flex-row">
+                <div className="flex flex-col">
+                  <p className="font-poppins">Stripe</p>
+                  <div class="flex-none w-14 p-2 text-xs mt-2 font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">
+                    <SvgLoader width={"w-10"} />
+                  </div>
+                  <div className="flex-none absolute right-2 top-0">
+                    <img src={require("../assets/stripe.png")} width={70} />
+                  </div>
                 </div>
               </div>
             )}
@@ -91,7 +108,7 @@ function ModalComponent({ confirmLeave, showModal, modalType }) {
           {!modalType ? (
             <p>You have some unsaved data, do you wish to navigate?</p>
           ) : modalType === "Payment_Confirmation" ? (
-            <p>Your payment is being verified by Stripe, hold on</p>
+            <p>Your payment is being verified by Sendperplane, hold on</p>
           ) : modalType === "Redirect" ? (
             <p>You are being redirected to, please wait</p>
           ) : modalType === "copy" ? (

@@ -3,11 +3,14 @@ import { useLocation } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import ModalComponent from "../components/ModalComponent";
 import { motion } from "framer-motion-3d";
-
+import { useRedux } from "../constants/reduxImports";
+import { setPackage } from "../redux/reducers/packageReducer";
 const SuccessPayment = () => {
+  const { dispatch } = useRedux();
   const axiosInstance = useAxiosInstance();
   const location = useLocation();
   const [isSuccess, setIsSuccess] = useState(0);
+  const [showModal, setShow] = useState(false);
 
   const [errMessage, setErrMessage] = useState("");
 
@@ -21,18 +24,24 @@ const SuccessPayment = () => {
   }, [location.search, isSuccess]);
 
   const paymentSuccessfull = async (sessionId) => {
+    setShow(true);
     try {
       let response = await axiosInstance.get(
         `/stripe/payment_successfull/${sessionId}`
       );
       if (response.status === 200) {
-        setIsSuccess(true);
+        setTimeout(() => setShow(false), 1000);
 
-        console.log("payment verified!");
+        dispatch(
+          setPackage({ package_plan: response?.data.package_plan.plan_type })
+        );
+        if (showModal === false) {
+          setIsSuccess(true);
+        }
       }
     } catch (error) {
       console.log(error.message);
-
+      setShow(false);
       setErrMessage(error);
       setIsSuccess(false);
     }
@@ -92,6 +101,10 @@ const SuccessPayment = () => {
           )}
         </div>
       </div>
+      <ModalComponent
+        modalType={"Payment_Confirmation"}
+        showModal={showModal}
+      />
     </section>
   );
 };

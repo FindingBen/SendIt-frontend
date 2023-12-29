@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
 import { logOut } from "../redux/reducers/authSlice";
-import { selectFormState } from "../redux/reducers/formReducer";
+import { cleanPackage } from "../redux/reducers/packageReducer";
 import { setModalState } from "../redux/reducers/modalReducer";
 import { setEditPage } from "../redux/reducers/editPageReducer";
 import { Link, useNavigate } from "react-router-dom";
@@ -55,6 +54,7 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logOut());
+    dispatch(cleanPackage());
     localStorage.removeItem("refreshToken");
   };
 

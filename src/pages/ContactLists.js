@@ -131,7 +131,7 @@ const ContactList = () => {
                         {conList.list_name}
                       </h4>
                       <p class="text-white/50">
-                        Recipients: {conList.contact_lenght}
+                        Recipients: {conList.contact_lenght ?? 0}
                       </p>
                     </div>
                   </motion.div>

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../redux/reducers/authSlice";
+import { setPackage } from "../redux/reducers/packageReducer";
 import jwt_decode from "jwt-decode";
 import { config } from "../constants/Constants";
 import { motion } from "framer-motion";
@@ -43,8 +44,11 @@ const Login = () => {
       });
       const responseData = await response.json();
       const user = jwt_decode(responseData?.access).user_id;
-      console.log(responseData);
+      const packageValue = jwt_decode(responseData?.access).package_plan
+        .package_plan;
+      console.log(packageValue);
       dispatch(setCredentials({ ...responseData, user }));
+      dispatch(setPackage({ package_plan: packageValue }));
       setUser("");
       setPwd("");
       setSuccess(true);
