@@ -409,18 +409,6 @@ const AiGenerator = ({
             >
               Save
             </button>
-            <button
-              type="button"
-              className={`${
-                !file ? "bg-gray-600" : "bg-red-800 hover:bg-red-400"
-              }  text-white font-bold py-2 px-4 border border-blue-700 rounded mt-3`}
-              value={false}
-              onClick={handleDelete}
-              style={{ marginRight: "10px" }}
-              disabled={file === undefined}
-            >
-              Delete
-            </button>
           </div>
         </div>
       )}

@@ -16,9 +16,14 @@ const RegisterPage = () => {
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [password, setPass] = useState("");
+  const [rePassword, setRePass] = useState("");
+  const [userType, setUserType] = useState("");
   const [user, setUserObj] = useState();
   const [registered, setRegistered] = useState(false);
   const [errMsg, setErrMsg] = useState("");
+  const [matchPassErr, setMatchPassErr] = useState("");
+  const [errEmail, setErrEmail] = useState("");
+  const [errSelect, setErrSelect] = useState("");
   const [loading, setLoading] = useState(false);
   const [errMsgPass, setErrMsgPass] = useState("");
   const [showModal, setShow] = useState(false);
@@ -36,59 +41,89 @@ const RegisterPage = () => {
     e.preventDefault();
     setLoading(true);
     const bodyData = {
-      email: email,
+      custom_email: email,
       username: username,
       first_name: first_name,
       last_name: last_name,
       password: password,
+      re_password: rePassword,
+      user_type: userType,
       is_active: false,
     };
-    try {
-      const response = await fetch(`${BASE_URL}/api/register/`, {
-        method: "POST",
-        body: JSON.stringify(bodyData),
+    //try {
+    const response = await fetch(`${BASE_URL}/api/register/`, {
+      method: "POST",
+      body: JSON.stringify(bodyData),
 
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-      const responseData = await response.json();
-      dispatch(registerUser(responseData));
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    });
+    const responseData = await response.json();
+    dispatch(registerUser(responseData));
+    console.log(response);
+    setUserObj(responseData);
 
-      setUserObj(responseData);
-
-      if (response.status === 200 || response.status === 201) {
-        await handleConfirmation(responseData);
-      }
-      // Check if userData contains an error
-      if (responseData?.error?.status === 400) {
-        if (responseData?.error?.data?.username) {
-          setErrMsg(responseData.error.data.username);
-          setLoading(false);
-        } else if (responseData?.error?.data?.password) {
-          setErrMsgPass(responseData.error.data.password);
-          setLoading(false);
-        }
-        //setErrMsg("Missing Username or Password");
-      } else if (responseData?.error?.status === 401) {
-        setErrMsg("Unauthorized");
-        setLoading(false);
-      } else {
-        dispatch(registerUser(responseData));
-        setLoading(false);
-        setErrMsgPass("Cannot be blank");
-      }
-    } catch (err) {
-      console.log(err);
-      setErrMsgPass(err);
-      errRef.current.focus();
+    if (response.status === 200 || response.status === 201) {
+      await handleConfirmation(responseData);
     }
+    // Check if userData contains an error
+    if (response.status === 400) {
+      console.log(response);
+      if (responseData.username) {
+        if (responseData.username[0].startsWith("A user with")) {
+          console.log("S");
+          setErrMsg("Username is already in use");
+        } else {
+          setErrMsg("Can't be blank");
+        }
+        setLoading(false);
+      } else if (responseData.password) {
+        setErrMsgPass("Can't be blank");
+        setLoading(false);
+      } else if (responseData.custom_email) {
+        if (responseData.custom_email[0].startsWith("A user with")) {
+          console.log("S");
+          setErrEmail("Email is already in use");
+        } else {
+          setErrEmail("Can't be blank");
+        }
+        setLoading(false);
+      } else if (responseData.non_field_errors) {
+        setMatchPassErr("Passwords don't match");
+        setLoading(false);
+      } else if (responseData.user_type) {
+        setErrSelect("You have to choose one!");
+        setLoading(false);
+      } else if (responseData.re_password) {
+        setMatchPassErr("Can't be blank");
+        setLoading(false);
+      }
+      console.log(responseData);
+      //setErrMsg("Missing Username or Password");
+    } else if (response.status === 401) {
+      setErrMsg("Unauthorized");
+      setLoading(false);
+    } else {
+      dispatch(registerUser(responseData));
+      setLoading(false);
+      //setErrMsgPass("Cannot be blank");
+    }
+    // } catch (err) {
+    //   console.log(err);
+    //   setErrMsgPass(err);
+    //   errRef.current.focus();
+    // }
   };
   const handleEmail = (e) => setEmail(e.target.value);
   const handleUserInput = (e) => setUser(e.target.value);
   const handleFirstName = (e) => setFirstName(e.target.value);
   const handleLastName = (e) => setLastName(e.target.value);
   const handlePassword = (e) => setPass(e.target.value);
+  const handleRePassword = (e) => setRePass(e.target.value);
 
+  const handleUserType = (e) => {
+    setUserType(e.target.value);
+  };
   const handleConfirmation = async (dataObj) => {
     const data = {
       user: dataObj.user,
@@ -107,9 +142,9 @@ const RegisterPage = () => {
   };
 
   return (
-    <section class="flex flex-col justify-center antialiased bg-darkBlue text-gray-200 min-h-screen p-4 w-100">
+    <section class="flex flex-col justify-center antialiased bg-darkBlue text-gray-200 h-screen p-4 w-100">
       <div class="flex-1">
-        <div class="max-w-[360px] mx-auto mt-20 mb-5">
+        <div class="max-w-[440px] mx-auto flex flex-col mb-5">
           {!registered ? (
             <div class="bg-white mt-9 rounded-md">
               <header class="text-center px-5 pb-5">
@@ -130,25 +165,162 @@ const RegisterPage = () => {
                   Register your credentials below
                 </div>
               </header>
-              {errMsg && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: 0.2,
-                    ease: [0, 0.41, 0.1, 1.01],
-                  }}
-                  className="text-red-700"
-                >
-                  {errMsg}
-                </motion.div>
-              )}
-              <div class="bg-gray-100 text-center px-5 py-6 rounded-b-md">
-                <form class="space-y-3" onSubmit={handleSubmit}>
-                  <div class="shadow-sm rounded">
-                    <div class="flex-none">
-                      {errMsgPass && (
+
+              <div class="bg-gray-100 text-center px-5 py-2 rounded-b-md">
+                <form onSubmit={handleSubmit}>
+                  <div className="flex flex-row gap-2">
+                    <div class="rounded-md">
+                      <div class="flex-none">
+                        <div className="h-6">
+                          {errMsg && (
+                            <motion.div
+                              initial={{ opacity: 0, scale: 0.5 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              transition={{
+                                duration: 0.4,
+                                delay: 0.2,
+                                ease: [0, 0.41, 0.1, 1.01],
+                              }}
+                              className="text-red-700 h-4 text-sm"
+                            >
+                              {errMsg}
+                            </motion.div>
+                          )}
+                        </div>
+
+                        <input
+                          onChange={handleUserInput}
+                          name="username"
+                          class={`text-sm text-gray-800 bg-white placeholder-gray-400 w-full border ${
+                            errMsg ? "border-red-400" : ""
+                          } rounded-md focus:border-indigo-300 focus:ring-0`}
+                          type="text"
+                          placeholder="username"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <div class="h-6"></div>
+                      <div class="flex-none">
+                        <input
+                          onChange={handleFirstName}
+                          name="first_name"
+                          class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full rounded-md border border-transparent focus:border-indigo-300 focus:ring-0"
+                          type="text"
+                          placeholder="First name"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row gap-2">
+                    <div>
+                      <div className="h-6"></div>
+                      <div class="flex-none">
+                        <input
+                          onChange={handleLastName}
+                          name="last_name"
+                          class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
+                          type="text"
+                          placeholder="Last name"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="h-6">
+                        {errEmail && (
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{
+                              duration: 0.4,
+                              delay: 0.2,
+                              ease: [0, 0.41, 0.1, 1.01],
+                            }}
+                            className="text-red-700 text-sm"
+                          >
+                            {errEmail}
+                          </motion.div>
+                        )}
+                      </div>
+                      <div class="flex-none">
+                        <input
+                          onChange={handleEmail}
+                          name="email"
+                          class={`text-sm text-gray-800 bg-white placeholder-gray-400 w-full rounded-md border ${
+                            errEmail ? "border-red-400" : ""
+                          } `}
+                          type="text"
+                          placeholder="email"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row gap-2">
+                    <div>
+                      <div className="h-6">
+                        {errMsgPass && (
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{
+                              duration: 0.4,
+                              delay: 0.2,
+                              ease: [0, 0.41, 0.1, 1.01],
+                            }}
+                            className="text-red-700"
+                          >
+                            {errMsgPass}
+                          </motion.div>
+                        )}
+                      </div>
+                      <div class="flex-none">
+                        <input
+                          onChange={handlePassword}
+                          name="password"
+                          class={`text-sm text-gray-800 bg-white placeholder-gray-400 w-full rounded-md border ${
+                            errMsgPass ? "border-red-400" : ""
+                          }`}
+                          type="password"
+                          placeholder="Password"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="h-6">
+                        {matchPassErr && (
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{
+                              duration: 0.4,
+                              delay: 0.2,
+                              ease: [0, 0.41, 0.1, 1.01],
+                            }}
+                            className="text-red-700"
+                          >
+                            {matchPassErr}
+                          </motion.div>
+                        )}
+                      </div>
+                      <div class="flex-none">
+                        <input
+                          onChange={handleRePassword}
+                          name="password"
+                          class={`text-sm text-gray-800 bg-white placeholder-gray-400 w-full rounded-md border ${
+                            matchPassErr ? "border-red-400" : ""
+                          }`}
+                          type="password"
+                          placeholder="Repeat password"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2 mt-3 mb-3">
+                    <label className="text-black/50 font-normal">
+                      Who are you gona use the platform as?
+                    </label>
+                    <div className="h-4">
+                      {errSelect && (
                         <motion.div
                           initial={{ opacity: 0, scale: 0.5 }}
                           animate={{ opacity: 1, scale: 1 }}
@@ -159,75 +331,22 @@ const RegisterPage = () => {
                           }}
                           className="text-red-700"
                         >
-                          {errMsgPass}
+                          {errSelect}
                         </motion.div>
                       )}
-                      <input
-                        onChange={handleUserInput}
-                        name="username"
-                        class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
-                        type="text"
-                        placeholder="username"
-                      />
                     </div>
-                  </div>
-                  <div class="shadow-sm rounded">
-                    <div class="flex-none">
-                      <input
-                        onChange={handleFirstName}
-                        name="first_name"
-                        class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
-                        type="text"
-                        placeholder="First name"
-                      />
-                    </div>
-                  </div>
-                  <div class="shadow-sm rounded">
-                    <div class="flex-none">
-                      <input
-                        onChange={handleLastName}
-                        name="last_name"
-                        class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
-                        type="text"
-                        placeholder="Last name"
-                      />
-                    </div>
-                  </div>
-                  <div class="shadow-sm rounded">
-                    <div class="flex-none">
-                      <input
-                        onChange={handleEmail}
-                        name="email"
-                        class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
-                        type="text"
-                        placeholder="email"
-                      />
-                    </div>
-                  </div>
-                  <div class="shadow-sm rounded">
-                    {errMsgPass && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                          duration: 0.4,
-                          delay: 0.2,
-                          ease: [0, 0.41, 0.1, 1.01],
-                        }}
-                        className="text-red-700"
-                      >
-                        {errMsgPass}
-                      </motion.div>
-                    )}
-                    <div class="flex-none">
-                      <input
-                        onChange={handlePassword}
-                        name="password"
-                        class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
-                        type="password"
-                        placeholder="Password"
-                      />
-                    </div>
+                    <select
+                      placeholder="What type of user are you?"
+                      onChange={handleUserType}
+                      className={`bg-gray-50 border text-gray-900 text-sm rounded-lg ${
+                        errSelect ? "border-red-400" : ""
+                      } focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
+                    >
+                      <option value="">Select option</option>
+                      <option value="Independent">Independent</option>
+                      <option value="Business">Business</option>
+                      <option value="Other">Other</option>
+                    </select>
                   </div>
                   {loading ? (
                     <div className="relative">
@@ -252,7 +371,7 @@ const RegisterPage = () => {
                   ) : (
                     <button
                       type="submit"
-                      class="font-semibold text-sm inline-flex items-center justify-center px-3 py-2 border border-transparent rounded leading-5 shadow transition duration-150 ease-in-out w-full bg-indigo-500 hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
+                      class="font-semibold w-28 mb-3 text-smitems-center justify-center px-3 py-2 rounded-md transition duration-150 ease-in-out bg-purple-700 hover:bg-indigo-600 text-white"
                     >
                       Register
                     </button>
@@ -261,13 +380,13 @@ const RegisterPage = () => {
               </div>
             </div>
           ) : (
-            <div class="relative flex flex-col items-center justify-center">
+            <div class="relative flex flex-col items-center mt-24 justify-center">
               <div class="max-w-xl px-5 text-center">
-                <h2 class="mb-2 text-[42px] font-bold text-zinc-800">
+                <h2 class="mb-2 text-[42px] font-normal text-white">
                   Check your inbox
                 </h2>
                 <p class="mb-2 text-lg text-zinc-500">
-                  We are glad, that you’re with us ? We’ve sent you a
+                  We are glad, that you’re with us! We’ve sent you a
                   verification link to the email address{" "}
                   <span class="font-medium text-indigo-500">{email}</span>.
                 </p>
