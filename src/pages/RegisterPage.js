@@ -35,6 +35,8 @@ const RegisterPage = () => {
   useEffect(() => {
     setErrMsg("");
     setErrMsgPass("");
+    setMatchPassErr("");
+    setErrEmail("");
   }, [username, email, first_name, last_name]);
 
   const handleSubmit = async (e) => {
@@ -50,69 +52,65 @@ const RegisterPage = () => {
       user_type: userType,
       is_active: false,
     };
-    //try {
-    const response = await fetch(`${BASE_URL}/api/register/`, {
-      method: "POST",
-      body: JSON.stringify(bodyData),
+    try {
+      const response = await fetch(`${BASE_URL}/api/register/`, {
+        method: "POST",
+        body: JSON.stringify(bodyData),
 
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    });
-    const responseData = await response.json();
-    dispatch(registerUser(responseData));
-    console.log(response);
-    setUserObj(responseData);
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      const responseData = await response.json();
+      dispatch(registerUser(responseData));
 
-    if (response.status === 200 || response.status === 201) {
-      await handleConfirmation(responseData);
-    }
-    // Check if userData contains an error
-    if (response.status === 400) {
-      console.log(response);
-      if (responseData.username) {
-        if (responseData.username[0].startsWith("A user with")) {
-          console.log("S");
-          setErrMsg("Username is already in use");
-        } else {
-          setErrMsg("Can't be blank");
+      setUserObj(responseData);
+
+      if (response.status === 200 || response.status === 201) {
+        await handleConfirmation(responseData);
+      }
+      // Check if userData contains an error
+      if (response.status === 400) {
+        if (responseData.username) {
+          if (responseData.username[0].startsWith("A user with")) {
+            console.log("S");
+            setErrMsg("Username is already in use");
+          } else {
+            setErrMsg("Can't be blank");
+          }
+          setLoading(false);
+        } else if (responseData.password) {
+          setErrMsgPass("Can't be blank");
+          setLoading(false);
+        } else if (responseData.custom_email) {
+          if (responseData.custom_email[0].startsWith("A user with")) {
+            console.log("S");
+            setErrEmail("Email is already in use");
+          } else {
+            setErrEmail("Can't be blank");
+          }
+          setLoading(false);
+        } else if (responseData.non_field_errors) {
+          setMatchPassErr("Passwords don't match");
+          setLoading(false);
+        } else if (responseData.user_type) {
+          setErrSelect("You have to choose one!");
+          setLoading(false);
+        } else if (responseData.re_password) {
+          setMatchPassErr("Can't be blank");
+          setLoading(false);
         }
+      } else if (response.status === 401) {
+        setErrMsg("Unauthorized");
         setLoading(false);
-      } else if (responseData.password) {
-        setErrMsgPass("Can't be blank");
-        setLoading(false);
-      } else if (responseData.custom_email) {
-        if (responseData.custom_email[0].startsWith("A user with")) {
-          console.log("S");
-          setErrEmail("Email is already in use");
-        } else {
-          setErrEmail("Can't be blank");
-        }
-        setLoading(false);
-      } else if (responseData.non_field_errors) {
-        setMatchPassErr("Passwords don't match");
-        setLoading(false);
-      } else if (responseData.user_type) {
-        setErrSelect("You have to choose one!");
-        setLoading(false);
-      } else if (responseData.re_password) {
-        setMatchPassErr("Can't be blank");
+      } else {
+        dispatch(registerUser(responseData));
         setLoading(false);
       }
-      console.log(responseData);
-      //setErrMsg("Missing Username or Password");
-    } else if (response.status === 401) {
-      setErrMsg("Unauthorized");
-      setLoading(false);
-    } else {
-      dispatch(registerUser(responseData));
-      setLoading(false);
-      //setErrMsgPass("Cannot be blank");
+    } catch (err) {
+      console.log(err);
+      setErrMsgPass(err);
+      errRef.current.focus();
     }
-    // } catch (err) {
-    //   console.log(err);
-    //   setErrMsgPass(err);
-    //   errRef.current.focus();
-    // }
   };
   const handleEmail = (e) => setEmail(e.target.value);
   const handleUserInput = (e) => setUser(e.target.value);
