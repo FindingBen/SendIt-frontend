@@ -11,7 +11,7 @@ import { useRedux } from "../constants/reduxImports";
 
 const SmsEditor = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentUser, dispatch } = useRedux();
+  const { currentUser, currentPackageState } = useRedux();
   const params = useParams();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
@@ -25,13 +25,11 @@ const SmsEditor = () => {
   const [contactLists, setContactList] = useState([]);
   const textComponentRef = useRef(null);
   const [recipients, setRecipients] = useState();
-  const maxCharacters = 70;
-  const charactersLeft = maxCharacters - smsText.length;
   const BASE = "https://sendit-backend-production.up.railway.app";
   const BASE_URL = "https://sendit-frontend-production.up.railway.app";
   const linkURLBase = `${BASE_URL}/message_view/${params.id}`;
   const uniqueLink = `${BASE}/sms/sms/tracking/`;
-
+  const maxCharacters = 70;
   useEffect(() => {
     getContactLists();
     getUser();
@@ -170,6 +168,13 @@ const SmsEditor = () => {
     }
   };
 
+  const canScheduleSms = () => {
+    if (currentPackageState === "Basic package") {
+      return false;
+    }
+    return true;
+  };
+
   const handleDate = (date) => {
     setDateSchedule(date);
   };
@@ -261,14 +266,18 @@ const SmsEditor = () => {
                         Send
                       </button>
 
-                      <button
-                        onClick={() => setShowSchedule(true)}
-                        type="submit"
-                        color="dark"
-                        className="bg-yellow-700 hover:bg-yellow-300 text-white font-normal py-2 px-3 rounded text-sm xl:text-base mt-4 ml-3"
-                      >
-                        Schedule
-                      </button>
+                      {canScheduleSms() ? (
+                        <button
+                          onClick={() => setShowSchedule(true)}
+                          type="submit"
+                          color="dark"
+                          className="bg-yellow-700 hover:bg-yellow-300 text-white font-normal py-2 px-3 rounded text-sm xl:text-base mt-4 ml-3"
+                        >
+                          Schedule
+                        </button>
+                      ) : (
+                        <></>
+                      )}
                     </div>
                   </div>
                 </div>

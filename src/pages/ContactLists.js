@@ -6,13 +6,16 @@ import useAxiosInstance from "../utils/axiosInstance";
 import CreateListModal from "../features/modal/CreateListModal";
 import DeleteListModal from "../features/modal/DeleteListModal";
 import { motion } from "framer-motion";
+import { useRedux } from "../constants/reduxImports";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
+  const { currentPackageState } = useRedux();
   const [contactList, setContactList] = useState([]);
   const [listUpdated, setListUpdated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
+  let max_list_allowed = 3;
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [listId, setListId] = useState();
@@ -37,6 +40,16 @@ const ContactList = () => {
     setShow(true);
   };
 
+  const canAddNewList = () => {
+    if (
+      currentPackageState === "Basic package" &&
+      contactList.length >= max_list_allowed
+    ) {
+      return false;
+    }
+    return true;
+  };
+
   const deleteList = (id) => {
     setListId(id);
     setShowDelete(true);
@@ -58,28 +71,31 @@ const ContactList = () => {
 
           <div class="mb-10 sm:mb-0 mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <div class="group bg-gray-900/30 py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/40">
-              <button
-                class="bg-gray-900/70 text-white/50 group-hover:text-white group-hover:smooth-hover flex w-20 h-20 rounded-full items-center justify-center"
-                onClick={handleModal}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-10 w-10"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+              {canAddNewList() ? (
+                <button
+                  class="bg-gray-900/70 text-white/50 group-hover:text-white group-hover:smooth-hover flex w-20 h-20 rounded-full items-center justify-center"
+                  onClick={handleModal}
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="1"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  />
-                </svg>
-              </button>
-              <p class="text-white/50 group-hover:text-white group-hover:smooth-hover text-center transition duration-200">
-                Create list
-              </p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-10 w-10"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
+                  </svg>
+                </button>
+              ) : (
+                <p class="text-white/50 group-hover:text-white group-hover:smooth-hover text-center transition duration-200">
+                  Maximum lists reached
+                </p>
+              )}
             </div>
 
             {contactList?.map((conList) => {
