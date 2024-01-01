@@ -57,14 +57,10 @@ const AiGenerator = ({
     };
   }, []);
 
-  useEffect(() => {
-    // This useEffect hook will be triggered whenever progress changes
-    console.log("Progress updated:", progress);
-  }, [progress, isButtonVisible]);
+  useEffect(() => {}, [progress, isButtonVisible]);
 
   function handleImageUpload(event) {
     const file = event.target.files[0];
-    const reader = new FileReader();
     setFile(file);
     setIsButtonVisible(true);
   }
@@ -116,9 +112,10 @@ const AiGenerator = ({
           clearInterval(interval);
           addImageElContext();
           addTextObjContext(data.choices[0].message.content);
-          addButtonObjContext(colors);
+          addButtonObjContext();
           setGenerated(true);
           setLoading(false);
+          setComponentState(null);
         }
       }, 500);
     }
@@ -150,9 +147,11 @@ const AiGenerator = ({
   };
 
   const handleColorExtraction = (color) => {
-    setColor(color);
+    const randomColor = color[Math.floor(Math.random() * color.length)];
+    console.log(randomColor);
+    setColor(randomColor);
   };
-
+  console.log(colors);
   // Helper function to extract colors from the image using ColorExtractorComponent
   const extractColorsFromImage = (imageFile) => {
     return new Promise((resolve) => {
@@ -166,14 +165,12 @@ const AiGenerator = ({
     });
   };
 
-  const addButtonObjContext = async (colorValue) => {
-    const randomColor =
-      colorValue[Math.floor(Math.random() * colorValue.length)];
+  const addButtonObjContext = async () => {
     const dataText = {
       id: Math.floor(Math.random() * 100),
       button_title: text,
       button_link: link,
-      button_color: randomColor,
+      button_color: colors.substring(1),
       element_type: "Button",
       users: currentUser,
       order: 0,
@@ -247,13 +244,6 @@ const AiGenerator = ({
     if (fileInput) {
       fileInput.value = "";
     }
-  };
-
-  const handleDelete = () => {
-    console.log(elementList);
-    // contextList.map((element) => {
-    //   deleteElement(element);
-    // });
   };
 
   return (
@@ -392,7 +382,7 @@ const AiGenerator = ({
       {!generated ? (
         <></>
       ) : (
-        <div className="flex flex-col p-4">
+        <div className="flex flex-col p-4 items-center">
           <p className="text-white/50 font-light">
             If you are satisfied with results click save, otherwise, regenerate.
           </p>

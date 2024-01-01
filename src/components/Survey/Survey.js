@@ -177,13 +177,18 @@ const Survey = ({ setComponentState, contextList, elementList, listEl }) => {
         >
           <option value="">Select a question type</option>
           <option value="Like/Dislike">Like/Dislike</option>
-          <option value="Question Survey">Question Survey</option>
+          {/* <option value="Question Survey">Question Survey</option> */}
         </select>
         <div className="mt-3 flex flex-row relative">
           <button
             type="button"
-            className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+            className={`${
+              !question || !questionType
+                ? "bg-gray-600"
+                : "bg-green-800 hover:bg-green-400"
+            }  text-white font-bold py-2 px-4 border border-blue-700 rounded`}
             value={false}
+            disabled={!question || !questionType}
             onClick={saveSurvey}
             style={{ marginRight: "10px" }}
           >
@@ -199,9 +204,9 @@ const Survey = ({ setComponentState, contextList, elementList, listEl }) => {
           >
             Cancel
           </button>
-          <div className="absolute top-0 right-0">
+          {/* <div className="absolute top-0 right-0">
             <ColorPircker colorValue={handleColor} />
-          </div>
+          </div> */}
         </div>
       </div>
     </motion.div>

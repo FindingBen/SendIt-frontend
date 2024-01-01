@@ -7,11 +7,8 @@ const ButtonComponent = ({ textValue, linkValue, colorValue }) => {
   useEffect(() => {
     setText(textValue);
     setLink(linkValue);
-  }, [textValue, linkValue]);
-
-  useEffect(() => {
     setColor(colorValue);
-  }, [colorValue, color]);
+  }, [textValue, linkValue, colorValue]);
 
   console.log(color);
   return (
