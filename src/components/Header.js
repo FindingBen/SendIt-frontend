@@ -5,6 +5,7 @@ import { setModalState } from "../redux/reducers/modalReducer";
 import { setEditPage } from "../redux/reducers/editPageReducer";
 import { Link, useNavigate } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
+import { menu } from "../assets/menuAssets/menuIcons";
 import "../css/Header.css";
 import { useRedux } from "../constants/reduxImports";
 
@@ -13,21 +14,11 @@ const Header = () => {
     useRedux();
   const [clickedPath, setClickedPath] = useState();
   const [open, setOpen] = useState(true);
+  const [activeNav, setActiveNav] = useState("Home");
   const isDirtyRef = useRef(false);
-
   const navigate = useNavigate();
 
-  const Menus = [
-    { title: "Home", src: "homeIcon", location: "/home" },
-    { title: "Create", src: "create", location: "/create_note/" },
-    { title: "Contacts", src: "contactList", location: "/contact_lists/" },
-
-    {
-      title: "Account",
-      src: "account",
-      location: `/account_settings/${currentUser}`,
-    },
-  ];
+  useEffect(() => {}, [activeNav]);
 
   useEffect(() => {
     if (currentFormState) {
@@ -60,6 +51,7 @@ const Header = () => {
 
   const handleNavigate = (e) => {
     const path = e.currentTarget.getAttribute("href");
+    setActiveNav(e.target.value);
 
     setClickedPath(path);
 
@@ -80,6 +72,10 @@ const Header = () => {
     dispatch(setEditPage({ isEditFormDirty: false }));
   };
 
+  const detectActiveNav = (title) => {
+    setActiveNav(title);
+  };
+
   return (
     <div
       className={`d-flex flex-column relative flex-shrink-0 p-3 duration-300 text-white bg-darkBlue text-xs xl:text-base rounded ml-3 mt-3 mb-3 xl:h-90vh ${
@@ -96,7 +92,7 @@ const Header = () => {
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
-        stroke-width="1.5"
+        stroke-width="0.6"
         stroke="currentColor"
         onClick={() => setOpen(!open)}
         class={`w-7 h-7 absolute cursor-pointer -right-2 top-9 ${
@@ -112,18 +108,29 @@ const Header = () => {
 
       <hr />
       <ul id="navList" className="nav nav-pills flex-column mb-auto">
-        {Menus.map((Menu, index) => (
+        {menu?.map((Menu, index) => (
           <Link
             key={index}
-            onClick={(e) => handleNavigate(e)}
-            to={`${Menu.location}`}
-            className={`flex  rounded-md p-2 cursor-pointer xl:w-12 w-10 hover:bg-light-white text-gray-300 xl:text-sm text-xs items-center gap-x-3 
+            onClick={(e) => handleNavigate(e) || detectActiveNav(Menu.title)}
+            to={`${
+              Menu.title === "Account"
+                ? Menu.location + currentUser
+                : Menu.location
+            }`}
+            value={`${Menu.title}`}
+            className={`flex flex-row rounded-md p-2 cursor-pointer xl:w-12 w-10 hover:bg-light-white ${
+              activeNav === Menu.title ? "bg-white text-black" : ""
+            } text-gray-300 xl:text-sm text-xs items-center gap-x-3 
               ${Menu.gap ? "mt-9" : "mt-2"} ${
               index === 0 && "bg-light-white"
             } `}
           >
-            <img src={require(`../assets/menuAssets/${Menu.src}.png`)} />
-            <span className={`${!open && "hidden"} origin-left duration-200`}>
+            <div>{Menu.element}</div>
+            <span
+              className={`${!open && "hidden"} origin-left ${
+                activeNav === Menu.title ? " text-white" : ""
+              } duration-200`}
+            >
               {Menu.title}
             </span>
           </Link>
@@ -133,7 +140,22 @@ const Header = () => {
         onClick={handleLogout}
         className="flex rounded-md mr-3 p-2 cursor-pointer xl:w-12 w-10 hover:bg-light-white text-gray-300 xl:text-sm text-xs items-center gap-x-3"
       >
-        <img src={require("../assets/menuAssets/exit.png")} />
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 rotate-90"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25"
+            />
+          </svg>
+        </div>
         <span className={`${!open && "hidden"} origin-left duration-200`}>
           Logout
         </span>
