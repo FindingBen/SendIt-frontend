@@ -38,8 +38,7 @@ const HomePage = () => {
   yesterday.setDate(today.getDate() - 1);
   const formattedStartDate = formatDate(yesterday);
   const formattedEndDate = formatDate(today);
-  //
-  console.log(formattedStartDate);
+
   useEffect(() => {
     getNotes();
     refreshAnalytics();
@@ -97,7 +96,6 @@ const HomePage = () => {
         `api/get_analytcs/${id}/?startDate=${formattedStartDate}&endDate=${formattedEndDate}`
       );
       if (response.status === 200) {
-        console.log(response);
         setViews(response.data);
       }
     } catch (error) {
