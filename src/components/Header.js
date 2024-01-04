@@ -84,8 +84,8 @@ const Header = () => {
     >
       <div className="mx-auto mb-4 xl:mb-4 text-white">
         <img
-          src={require("../assets/logoSpp.PNG")}
-          className={`${open ? "w-20 xl:w-24" : "w-20"}`}
+          src={require("../assets/noBgLogo.png")}
+          className={`${open ? "w-20 xl:w-24" : "w-20"} rounded-md`}
         />
       </div>
       <svg
@@ -126,6 +126,7 @@ const Header = () => {
             } `}
           >
             <div>{Menu.element}</div>
+
             <span
               className={`${!open && "hidden"} origin-left ${
                 activeNav === Menu.title ? " text-white" : ""
