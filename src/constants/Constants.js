@@ -1,6 +1,6 @@
 const prod = {
   url: {
-    BASE_URL: "https://sendit-backend.railway.internal",
+    BASE_URL: "https://sendit-backend-production.up.railway.app",
     //BASE_URL: "http://localhost:8000/",
   },
 };
