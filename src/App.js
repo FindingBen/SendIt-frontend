@@ -31,10 +31,7 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route
-          path="/message_view/:id"
-          element={<MessageView></MessageView>}
-        ></Route>
+        <Route path="/view/:id" element={<MessageView></MessageView>}></Route>
         <Route
           path="/opt-out/:id"
           element={<UnsubscribePage></UnsubscribePage>}

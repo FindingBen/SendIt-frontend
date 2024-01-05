@@ -118,7 +118,7 @@ const HomePage = () => {
       setLoading(true);
       // Fetch details of the existing message
       const existingMessageResponse = await axiosInstance.get(
-        `/api/message_view/${messageId}/`
+        `/api/view/${messageId}/`
       );
 
       if (existingMessageResponse.status !== 200) {
