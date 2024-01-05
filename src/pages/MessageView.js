@@ -18,7 +18,7 @@ const MessageView = () => {
   let messageView = async () => {
     try {
       setId(params.id);
-      let response = await fetch(`${BASE_URL}/api/message_view/${params.id}/`);
+      let response = await fetch(`${BASE_URL}/api/view/${params.id}/`);
       const data = await response.json();
       setElements(data.elements);
       setIsLoaded(false);
@@ -37,5 +37,5 @@ const MessageView = () => {
     </section>
   );
 };
-    
+
 export default MessageView;
