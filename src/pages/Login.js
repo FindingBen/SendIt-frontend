@@ -57,6 +57,7 @@ const Login = () => {
           setErrMsg("Credentials are wrong, try again.");
           setLoading(false);
         }
+        setLoading(false);
       }
       const user = jwt_decode(responseData?.access).user_id;
       const packageValue = jwt_decode(responseData?.access).package_plan
@@ -70,6 +71,7 @@ const Login = () => {
       navigate("/home");
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
 
