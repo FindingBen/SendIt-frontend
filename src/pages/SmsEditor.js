@@ -111,7 +111,7 @@ const SmsEditor = () => {
         user: currentUser,
         sender: "ME",
         sms_text: smsText,
-        content_link: uniqueLink,
+        content_link: linkURL,
         message: params.id,
         contact_list: recipients.id,
         scheduled: false,
