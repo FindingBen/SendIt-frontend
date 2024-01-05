@@ -133,7 +133,7 @@ const HomePage = () => {
         "/api/create_notes/",
         {
           users: currentUser,
-          message_name: `Copy of ${existingMessage.message_name}`,
+          message_name: `${existingMessage.message_name}`,
         }
       );
 
