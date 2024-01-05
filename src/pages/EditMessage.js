@@ -87,7 +87,7 @@ const EditMessage = () => {
 
   let messageView = async () => {
     setId(params.id);
-    let response = await axiosInstance.get(`/api/message_view/${params.id}/`);
+    let response = await axiosInstance.get(`/api/view/${params.id}/`);
     if (response.status === 200 || 201) {
       setElements(response.data.elements);
       setIsLoaded(false);

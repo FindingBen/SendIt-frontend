@@ -44,11 +44,6 @@ function App() {
       <div className="App" style={({ height: "100vh" }, { display: "flex" })}>
         <ElementProvider>
           <Routes>
-            {/* <Route
-              path="/message_view/:id"
-              element={<MessageView></MessageView>}
-            ></Route> */}
-
             <Route path="register" element={<RegisterPage />} />
             <Route path="login" element={<Login></Login>} />
             <Route
