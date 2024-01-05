@@ -26,7 +26,7 @@ const SmsEditor = () => {
   const textComponentRef = useRef(null);
   const [recipients, setRecipients] = useState();
   const BASE = "https://sendit-backend-production.up.railway.app";
-  const BASE_URL = "https://sendit-frontend-production.up.railway.app";
+  const BASE_URL = "https://spplane.app/";
   const linkURLBase = `${BASE_URL}/message_view/${params.id}`;
   const uniqueLink = `${BASE}/sms/sms/tracking/`;
   const maxCharacters = 70;

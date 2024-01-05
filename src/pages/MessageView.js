@@ -37,5 +37,5 @@ const MessageView = () => {
     </section>
   );
 };
-
+    
 export default MessageView;
