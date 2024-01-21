@@ -291,27 +291,25 @@ const EditMessage = () => {
             />
             <div class="inline-flex items-center space-x-2">
               {!isLoading ? (
-                <button onClick={editMessage}>
-                  <a
-                    class="text-white/50 p-2 rounded-md hover:text-white smooth-hover flex flex-row"
-                    href="#"
+                <button
+                  onClick={editMessage}
+                  className="text-white/50 bg-darkBlue p-2 rounded-md hover:text-white smooth-hover flex flex-row"
+                >
+                  <h2 className="lg:text-2xl text-xl mx-2">Save</h2>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6 my-1"
                   >
-                    <h2 className="text-2xl mx-2">Save</h2>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="w-6 h-6 my-1"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                      />
-                    </svg>
-                  </a>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                    />
+                  </svg>
                 </button>
               ) : (
                 <div role="status">
@@ -339,7 +337,7 @@ const EditMessage = () => {
           <div className="flex flex-row bg-darkestGray rounded-md">
             <div className="flex flex-col p-10 relative">
               <div className="flex flex-col">
-                <div className="flex-none w-[200px] h-[500px] bg-darkestGray rounded-md p-3">
+                <div className="flex-none w-[200px] h-[500px] bg-darkBlue rounded-md p-3">
                   <div className="flex flex-row justify-between">
                     <div
                       onClick={() => handleClick("image")}
@@ -350,9 +348,9 @@ const EditMessage = () => {
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="1.5"
+                        stroke-width="0.5"
                         stroke="currentColor"
-                        class="h-16 w-20 mt-2 fill-gray-400"
+                        class="h-16 w-20 mt-2 text-white"
                       >
                         <path
                           stroke-linecap="round"
@@ -370,9 +368,9 @@ const EditMessage = () => {
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="1.5"
+                        stroke-width="0.5"
                         stroke="currentColor"
-                        class="h-16 w-20 mt-2 fill-gray-400"
+                        class="h-16 w-20 mt-2 text-white"
                       >
                         <path
                           stroke-linecap="round"
@@ -392,9 +390,9 @@ const EditMessage = () => {
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="1.5"
+                        stroke-width="0.5"
                         stroke="currentColor"
-                        class="h-16 w-20 mt-2 fill-gray-400"
+                        class="h-16 w-20 mt-2 text-white"
                       >
                         <path
                           stroke-linecap="round"
@@ -417,9 +415,9 @@ const EditMessage = () => {
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="1.5"
+                        stroke-width="0.5"
                         stroke="currentColor"
-                        class="h-16 w-20 mt-2 fill-gray-400"
+                        class="h-16 w-20 mt-2 text-white"
                       >
                         <path
                           stroke-linecap="round"
@@ -436,12 +434,12 @@ const EditMessage = () => {
               {selectedComponent && componentsMap[selectedComponent]}
             </div>
             <div className="col p-10">
-              <div class="h-[500px] w-[250px] relative mx-auto border-gray-600 dark:border-gray-800 bg-gray-600 border-[14px] rounded-[2.5rem] shadow-xl">
-                <div class="w-[108px] h-[10px] xl:w-[148px] xl:h-[18px] bg-gray-600 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
-                <div class="h-[46px] w-[3px] bg-gray-600 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
-                <div class="h-[46px] w-[3px] bg-gray-600 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
-                <div class="h-[64px] w-[3px] bg-gray-600 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
-                <div class="w-[225px] h-[470px] rounded-[2rem] overflow-auto bg-white dark:bg-gray-800">
+              <div class="h-[500px] w-[250px] relative mx-auto border-darkBlue bg-darkBlue border-[14px] rounded-[2.5rem] shadow-xl">
+                <div class="w-[108px] h-[10px] xl:w-[148px] xl:h-[18px] bg-darkBlue top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
+                <div class="h-[46px] w-[3px] bg-darkBlue absolute -left-[17px] top-[124px] rounded-l-lg"></div>
+                <div class="h-[46px] w-[3px] bg-darkBlue absolute -left-[17px] top-[178px] rounded-l-lg"></div>
+                <div class="h-[64px] w-[3px] bg-darkBlue absolute -right-[17px] top-[142px] rounded-r-lg"></div>
+                <div class="w-[225px] h-[470px] rounded-[2rem] overflow-auto bg-gray-300 dark:bg-gray-800">
                   <div class="mr-5 mt-2 flex justify-end space-x-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
