@@ -393,12 +393,12 @@ const CreateNote = () => {
               {selectedComponent && componentsMap[selectedComponent]}
             </div>
             <div className="col p-10">
-              <div class="h-[500px] w-[250px] relative mx-auto bg-darkBlue bg-darkBlue border-[14px] rounded-[2.5rem] shadow-xl">
+              <div class="h-[500px] w-[250px] relative mx-auto border-darkBlue bg-darkBlue border-[14px] rounded-[2.5rem] shadow-xl">
                 <div class="w-[108px] h-[10px] xl:w-[148px] xl:h-[18px] bg-darkBlue top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
                 <div class="h-[46px] w-[3px] bg-darkBlue absolute -left-[17px] top-[124px] rounded-l-lg"></div>
                 <div class="h-[46px] w-[3px] bg-darkBlue absolute -left-[17px] top-[178px] rounded-l-lg"></div>
                 <div class="h-[64px] w-[3px] bg-darkBlue absolute -right-[17px] top-[142px] rounded-r-lg"></div>
-                <div class="w-[225px] h-[470px] rounded-[2rem] overflow-auto bg-gray-400">
+                <div class="w-[225px] h-[470px] rounded-[2rem] overflow-auto bg-white">
                   <div class="mr-5 mt-2 flex justify-end space-x-1">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
