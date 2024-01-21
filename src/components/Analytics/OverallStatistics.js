@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 
 const OverallStatistics = ({ totalValues, messageCount }) => {
   return (
-    <div className="flex bg-darkestGray rounded-lg p-2 lg:w-[70%]">
-      <div className="flex flex-row items-center w-[275px] rounded-md">
+    <div className="flex bg-darkestGray rounded-lg p-2 lg:w-[70%] w-[70%]">
+      <div className="flex flex-row items-center lg:w-[275px] rounded-md">
         <div className="flex-none p-3 my-auto bg-darkBlue rounded-full shadow-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +13,7 @@ const OverallStatistics = ({ totalValues, messageCount }) => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-8 h-8 text-white mx-auto my-auto"
+            class="lg:w-8 lg:h-8 w-5 h-5 text-white mx-auto my-auto"
           >
             <path
               stroke-linecap="round"
@@ -23,8 +23,8 @@ const OverallStatistics = ({ totalValues, messageCount }) => {
           </svg>
         </div>
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
-          <p className="text-white text-normal font-light text-justify">
-            Sent messages
+          <p className="text-white lg:text-normal font-light text-justify">
+            Total sends
           </p>
           {totalValues ? (
             <motion.div
@@ -35,19 +35,19 @@ const OverallStatistics = ({ totalValues, messageCount }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white text-2xl font-normal"
+              className="text-white lg:text-2xl font-normal"
             >
               {messageCount ?? 0}
             </motion.div>
           ) : (
-            <p className="text-white font-semibold text-2xl ml-2">
+            <p className="text-white font-semibold lg:text-2xl ml-2">
               <SvgLoader width={"w-8"} height={"h-8"} />
             </p>
           )}
         </div>
       </div>
 
-      <div className="flex flex-row items-center w-[275px] rounded-md">
+      <div className="flex flex-row items-center lg:w-[275px] rounded-md">
         <div className="flex-none p-3 my-auto bg-darkBlue rounded-full shadow-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@ const OverallStatistics = ({ totalValues, messageCount }) => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-8 h-8 text-white mx-auto my-auto"
+            class="lg:w-8 lg:h-8 w-5 h-5 text-white mx-auto my-auto"
           >
             <path
               stroke-linecap="round"
@@ -83,19 +83,19 @@ const OverallStatistics = ({ totalValues, messageCount }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white text-2xl font-normal"
+              className="text-white lg:text-2xl font-normal"
             >
               {totalValues.total_views ?? 0}
             </motion.div>
           ) : (
-            <p className="text-white font-semibold text-2xl">
+            <p className="text-white font-semibold lg:text-2xl">
               <SvgLoader width={"w-8"} height={"h-8"} />
             </p>
           )}
         </div>
       </div>
 
-      <div className="flex flex-row items-center  w-[275px] rounded-md">
+      <div className="flex flex-row items-center lg:w-[275px] rounded-md">
         <div className="flex-none p-3 my-auto bg-darkBlue rounded-full shadow-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +103,7 @@ const OverallStatistics = ({ totalValues, messageCount }) => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-8 h-8 text-white mx-auto my-auto"
+            class="lg:w-8 lg:h-8 w-5 h-5 text-white mx-auto my-auto"
           >
             <path
               stroke-linecap="round"
@@ -125,20 +125,20 @@ const OverallStatistics = ({ totalValues, messageCount }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white text-2xl font-normal flex flex-row"
+              className="text-white lg:text-2xl font-normal flex flex-row"
             >
               {totalValues.average_bounce_rate ?? 0}
-              <p className="text-xl font-light">%</p>
+              <p className="lg:text-xl font-light">%</p>
             </motion.div>
           ) : (
-            <p className="text-white font-semibold text-2xl">
+            <p className="text-white font-semibold lg:text-2xl">
               <SvgLoader width={"w-8"} height={"h-8"} />
             </p>
           )}
         </div>
       </div>
 
-      <div className="flex flex-row items-center  w-[275px] rounded-md">
+      <div className="flex flex-row items-center lg:w-[275px] rounded-md">
         <div className="flex-none p-3 my-auto bg-darkBlue rounded-full shadow-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +146,7 @@ const OverallStatistics = ({ totalValues, messageCount }) => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-8 h-8 text-white mx-auto my-auto"
+            class="lg:w-8 lg:h-8 w-5 h-5 text-white mx-auto my-auto"
           >
             <path
               stroke-linecap="round"
@@ -168,13 +168,13 @@ const OverallStatistics = ({ totalValues, messageCount }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white text-2xl font-light flex flex-row"
+              className="text-white lg:text-2xl font-light flex flex-row"
             >
               {totalValues.average_overall_rate ?? 0}
-              <p className="text-xl font-light">%</p>
+              <p className="lg:text-xl font-light">%</p>
             </motion.div>
           ) : (
-            <p className="text-white font-semibold text-2xl ml-2">
+            <p className="text-white font-semibold lg:text-2xl ml-2">
               <SvgLoader width={"w-8"} height={"h-8"} />
             </p>
           )}

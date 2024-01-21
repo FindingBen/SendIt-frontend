@@ -5,7 +5,6 @@ import useAxiosInstance from "../utils/axiosInstance";
 import ScheduleSmsModal from "../features/modal/ScheduleSmsModal";
 import "../css/Sms.css";
 import TextComponent from "../components/TextComponent";
-import iPhoneImage from "../../src/assets/iphone_bg.jpg";
 import SmsConfirmModal from "../features/modal/SmsConfirmModal";
 import { useRedux } from "../constants/reduxImports";
 

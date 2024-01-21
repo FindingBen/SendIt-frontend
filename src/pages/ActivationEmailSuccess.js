@@ -10,7 +10,7 @@ const ActivationEmailSuccess = () => {
   useEffect(() => {
     activateEmail();
   }, []);
-  console.log(params);
+
   let activateEmail = async () => {
     if (isActivated === false) {
       try {

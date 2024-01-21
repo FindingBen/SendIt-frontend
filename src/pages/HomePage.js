@@ -178,7 +178,7 @@ const HomePage = () => {
       <div className="flex flex-col space-y-5 lg:space-y-0 lg:flex-row sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center xl:mb-3">
-            <h3 class="xl:text-3xl text-2xl font-extralight text-left text-white">
+            <h3 class="xl:text-3xl lg:text-2xl text-xl font-extralight text-left text-white">
               Home dashboard
             </h3>
 
@@ -194,7 +194,7 @@ const HomePage = () => {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-6 h-6"
+                    class="lg:w-6 lg:h-6 w-5 h-5"
                   >
                     <path
                       stroke-linecap="round"
@@ -214,7 +214,7 @@ const HomePage = () => {
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
                   stroke="currentColor"
-                  class="w-6 h-6"
+                  class="lg:w-6 lg:h-6 w-5 h-5"
                 >
                   <path
                     stroke-linecap="round"
@@ -239,12 +239,12 @@ const HomePage = () => {
             }`}
           >
             <div className="flex flex-row relative">
-              <p className="text-white font-light text-2xl flex items-start my-3 mt-3">
+              <p className="text-white font-light lg:text-2xl text-xl flex items-start my-3 mt-3">
                 Your latest messages
               </p>
               <button
                 onClick={handleSortButtonClick}
-                className="px-2 py-1 text-white font-light rounded-lg bg-darkestGray absolute right-0 top-3"
+                className="px-2 py-1 text-white font-light text-sm rounded-lg bg-darkestGray absolute right-0 lg:top-5 top-5"
               >
                 Sort by date
               </button>
@@ -272,16 +272,16 @@ const HomePage = () => {
                         delay: 0.2,
                         ease: [0, 0.41, 0.1, 1.01],
                       }}
-                      class="border-b border-grayWhite/50 text-white font-semibold text-sm"
+                      class="border-b border-grayWhite/50 text-white font-semibold text-xs lg:text-sm"
                     >
                       <div className="mb-2 my-auto">
-                        <div className={`grid grid-cols-5 gap-4 py-2 px-4`}>
+                        <div className={`grid grid-cols-5 gap-3 py-2 px-4`}>
                           <p>{message.message_name}</p>
                           <div>{message.created_at}</div>
                           <div>
-                            {message.status == "Draft" ? (
+                            {message.status === "Draft" ? (
                               <p>Unavailabe</p>
-                            ) : message.status == "Scheduled" ? (
+                            ) : message.status === "Scheduled" ? (
                               <p>Unavailabe</p>
                             ) : (
                               <Link
@@ -298,7 +298,7 @@ const HomePage = () => {
                                   viewBox="0 0 24 24"
                                   stroke-width="1.5"
                                   stroke="currentColor"
-                                  class="w-6 h-6"
+                                  class="lg:w-6 lg:h-6 w-4 h-4"
                                 >
                                   <path
                                     stroke-linecap="round"
@@ -311,15 +311,15 @@ const HomePage = () => {
                           </div>
                           <div>
                             {message.status === "Draft" ? (
-                              <span class="text-xs font-medium leading-none text-center text-white bg-red-400 rounded-full px-4 py-1">
+                              <span class="text-xs font-medium leading-none text-center text-white bg-red-400 rounded-full px-3 lg:px-4 lg:py-1">
                                 Draft
                               </span>
                             ) : message.status === "Scheduled" ? (
-                              <span class="text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse px-2 py-1">
+                              <span class="text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse px-3 lg:px-4 lg:py-1">
                                 Scheduled
                               </span>
                             ) : (
-                              <span class="text-xs font-medium leading-none text-center text-green-100 bg-green-400 rounded-full px-4 py-1">
+                              <span class="text-xs font-medium leading-none text-center text-green-100 bg-green-400 rounded-full px-3 lg:px-4 lg:py-1">
                                 Sent
                               </span>
                             )}
@@ -337,7 +337,7 @@ const HomePage = () => {
                                 viewBox="0 0 24 24"
                                 stroke-width="0.6"
                                 stroke="currentColor"
-                                class="w-6 h-6"
+                                class="lg:w-6 lg:h-6 w-4 h-4"
                               >
                                 <path
                                   stroke-linecap="round"
@@ -348,7 +348,7 @@ const HomePage = () => {
                             </Link>
 
                             {message.status === "sent" ? (
-                              <a
+                              <Link
                                 className="hover:bg-sky-300 rounded disabled-link mx-2"
                                 type="button"
                                 to={`/sms_editor/${message.id}`}
@@ -359,7 +359,7 @@ const HomePage = () => {
                                   viewBox="0 0 24 24"
                                   strokeWidth="1.5"
                                   fill="currentColor"
-                                  className="w-6 h-6 fill-gray-600"
+                                  className="lg:w-6 lg:h-6 w-4 h-4 fill-gray-600"
                                 >
                                   <path
                                     d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
@@ -367,9 +367,9 @@ const HomePage = () => {
                                     strokeLinejoin="round"
                                   />
                                 </svg>
-                              </a>
+                              </Link>
                             ) : message.status === "Scheduled" ? (
-                              <a
+                              <Link
                                 className="hover:bg-sky-300 rounded disabled-link mx-2"
                                 type="button"
                                 to={`/sms_editor/${message.id}`}
@@ -380,7 +380,7 @@ const HomePage = () => {
                                   viewBox="0 0 24 24"
                                   strokeWidth="1.5"
                                   fill="currentColor"
-                                  className="w-6 h-6 fill-gray-600"
+                                  className="lg:w-6 lg:h-6 w-4 h-4 fill-gray-600"
                                 >
                                   <path
                                     d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
@@ -388,7 +388,7 @@ const HomePage = () => {
                                     strokeLinejoin="round"
                                   />
                                 </svg>
-                              </a>
+                              </Link>
                             ) : (
                               <Link
                                 className="hover:bg-sky-300 rounded mx-2"
@@ -402,7 +402,7 @@ const HomePage = () => {
                                   viewBox="0 0 24 24"
                                   strokeWidth="0.6"
                                   fill="currentColor"
-                                  className="w-6 h-6 text-gray-500"
+                                  className="lg:w-6 lg:h-6 w-4 h-4 text-gray-500"
                                 >
                                   <path
                                     d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
@@ -414,7 +414,7 @@ const HomePage = () => {
                             )}
                             <button
                               type="button"
-                              className="hover:bg-sky-300 rounded"
+                              className="hover:bg-sky-300 rounded mr-2"
                               onClick={() => duplicateMessage(message.id)}
                             >
                               <svg
@@ -423,7 +423,7 @@ const HomePage = () => {
                                 viewBox="0 0 24 24"
                                 stroke-width="0.6"
                                 stroke="currentColor"
-                                class="w-6 h-6"
+                                class="lg:w-6 lg:h-6 w-4 h-4"
                               >
                                 <path
                                   stroke-linecap="round"
@@ -442,7 +442,7 @@ const HomePage = () => {
                                 viewBox="0 0 24 24"
                                 strokeWidth="0.5"
                                 stroke="currentColor"
-                                className="w-6 h-6 fill-darkBlue"
+                                className="lg:w-6 lg:h-6 w-4 h-4 fill-darkBlue"
                               >
                                 <path
                                   strokeLinecap="round"
@@ -510,7 +510,7 @@ const HomePage = () => {
             )}
           </div>
           <div
-            className={`absolute top-[103px] -right-6 lg:h-[548px] lg:w-[340px] xl:h-[648px] xl:w-[460px] bg-darkestGray rounded-2xl transition-transform transform ${
+            className={`absolute top-[100px] -right-6 lg:h-[548px] lg:w-[340px] xl:h-[648px] xl:w-[460px] bg-darkestGray rounded-2xl transition-transform transform ${
               analyticsOpen
                 ? "xl:-translate-x-20 lg:-translate-x-16"
                 : "translate-x-full"

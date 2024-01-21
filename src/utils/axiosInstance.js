@@ -35,7 +35,7 @@ const useAxiosInstance = () => {
     const now = dayjs();
     const timeUntilExpiration = tokenExpiration.diff(now, "seconds");
 
-    if (timeUntilExpiration < 1) {
+    if (timeUntilExpiration < 1 && !req.isTokenRefresh) {
       // Refresh the token if it's about to expire in 5 minutes or less
       const getRefreshToken = localStorage.getItem("refreshToken");
 
@@ -59,6 +59,7 @@ const useAxiosInstance = () => {
         //dispatch(setCredentials({ user, access: newToken }));
 
         req.headers.Authorization = `Bearer ${newToken}`;
+        req.isTokenRefresh = true;
         console.log("new Token", newToken.substr(-10));
       } catch (error) {
         console.log(error);
