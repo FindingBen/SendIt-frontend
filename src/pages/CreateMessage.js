@@ -238,7 +238,7 @@ const CreateNote = () => {
                 <span className="text-left text-white">Campaign name</span>
                 <input
                   onChange={handleMessageName}
-                  className="flex-1 bg-white rounded-lg"
+                  className="flex-1 bg-white rounded-lg p-2"
                 />
               </div>
               <div className="flex flex-col p-4 bg-darkGray mt-4 rounded-lg">
@@ -349,14 +349,12 @@ const CreateNote = () => {
                     </p>
                   </div>
                 </div>
-              </div>
-              {/* <div className="flex flex-col">
-                <div className="flex-none w-[200px] h-[500px] bg-darkBlue rounded-md p-3 shadow-xl">
-                  <div className="flex flex-col justify-between">
+                <div className="flex flex-row justify-between">
+                  {currentPackageState === "Gold package" ? (
                     <div
-                      onClick={() => handleClick("image")}
+                      onClick={() => handleClick("aiContent")}
                       name="liClick"
-                      className="mb-3 flex flex-row rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                      className="mb-2 flex flex-row rounded-md p-2 bg-white transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -364,127 +362,24 @@ const CreateNote = () => {
                         viewBox="0 0 24 24"
                         stroke-width="0.5"
                         stroke="currentColor"
-                        class="h-16 w-20 mt-2 text-white"
+                        data-slot="icon"
+                        class="h-5 w-5 mt-2 text-black"
                       >
                         <path
                           stroke-linecap="round"
                           stroke-linejoin="round"
-                          d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                          d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
                         />
                       </svg>
-                      <p className="text-white font-light text-xl text-justify my-auto ml-3">
-                        Add Image
+                      <p className="text-black font-base text-normal text-justify my-auto">
+                        Use AI
                       </p>
                     </div>
-                    <div
-                      onClick={() => handleClick("text")}
-                      name="liClick"
-                      className="mb-3 flex flex-row rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="0.5"
-                        stroke="currentColor"
-                        class="h-16 w-20 mt-2 text-white"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
-                        />
-                      </svg>
-                      <p className="text-white font-light text-xl text-justify my-auto">
-                        Add Text
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex flex-col justify-between">
-                    <div
-                      onClick={() => handleClick("button")}
-                      name="liClick"
-                      className="mb-3 flex flex-row rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="0.5"
-                        stroke="currentColor"
-                        class="h-16 w-20 mt-2 text-white"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 019 14.437V9.564z"
-                        />
-                      </svg>
-                      <p className="text-white font-light text-xl text-justify my-auto">
-                        Add CTA
-                      </p>
-                    </div>
-                    <div
-                      onClick={() => handleClick("survey")}
-                      name="liClick"
-                      className="mb-3 flex flex-row rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="0.5"
-                        stroke="currentColor"
-                        class="h-16 w-20 mt-2 text-white"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
-                        />
-                      </svg>
-                      <p className="text-white font-light text-xl text-justify my-auto">
-                        Add Survey
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex flex-row justify-between">
-                    {currentPackageState === "Gold package" ? (
-                      <div
-                        onClick={() => handleClick("aiContent")}
-                        name="liClick"
-                        className="mb-3 flex flex-row rounded transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="0.5"
-                          stroke="currentColor"
-                          data-slot="icon"
-                          class="h-16 w-20 mt-2 text-white"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
-                          />
-                        </svg>
-                        <p className="text-white font-light text-xl text-justify my-auto">
-                          Use AI
-                        </p>
-                      </div>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
-              </div> */}
+              </div>
             </div>
             <div className="flex-1 mt-20">
               {selectedComponent && componentsMap[selectedComponent]}
