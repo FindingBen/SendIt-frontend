@@ -198,20 +198,13 @@ const CreateNote = () => {
         <div className="flex-1 px-2 sm:px-0">
           <div className="flex justify-between items-center mb-3">
             <div className="flex flex-row">
-              <input
-                onChange={handleMessageName}
-                className=" bg-gray-200 mb-4 text-black hover:bg-gray-400 duration-200 text-light font-light py-2 px-4 rounded-md"
-                placeholder="Message name.."
-              />
-              {errorMsg && (
-                <p className="text-red-600 font-light ml-2 mt-2">{errorMsg}</p>
-              )}
+              <span className="text-2xl text-white">Create Content</span>
             </div>
             <div class="inline-flex items-center space-x-2">
               {!isLoading ? (
                 <button
                   onClick={handleSubmit}
-                  className="text-white/50 bg-darkBlue p-2 rounded-md hover:text-white smooth-hover flex flex-row"
+                  className="text-white bg-darkBlue p-2 rounded-md hover:text-white smooth-hover flex flex-row"
                 >
                   <h2 className="lg:text-2xl text-xl mx-2">Create</h2>
                   <svg
@@ -234,9 +227,130 @@ const CreateNote = () => {
               )}
             </div>
           </div>
-          <div className="flex flex-row bg-darkestGray rounded-md">
-            <div className="flex flex-col p-10 relative">
-              <div className="flex flex-col">
+          <div className="flex flex-row bg-darkBlue rounded-md">
+            <div className="flex flex-col p-10">
+              <div className="flex flex-col w-96 gap-2 rounded-lg p-4 bg-darkGray">
+                {errorMsg && (
+                  <p className="text-red-600 font-light ml-2 mt-2">
+                    {errorMsg}
+                  </p>
+                )}
+                <span className="text-left text-white">Campaign name</span>
+                <input
+                  onChange={handleMessageName}
+                  className="flex-1 bg-white rounded-lg"
+                />
+              </div>
+              <div className="flex flex-col p-4 bg-darkGray mt-4 rounded-lg">
+                <span className="text-left text-white">Content elements</span>
+                <div className="flex flex-row mt-2 gap-2">
+                  <div
+                    onClick={() => handleClick("image")}
+                    name="liClick"
+                    className="mb-3 flex flex-row rounded-md bg-white p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="0.5"
+                      stroke="currentColor"
+                      class="h-5 w-5 text-black"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                      />
+                    </svg>
+                    <p className="text-black font-normal text-base text-justify my-auto">
+                      Add Image
+                    </p>
+                  </div>
+                  <div
+                    onClick={() => handleClick("button")}
+                    name="liClick"
+                    className="mb-3 flex flex-row rounded-md bg-white p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="0.5"
+                      stroke="currentColor"
+                      class="h-5 w-5 text-black"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 019 14.437V9.564z"
+                      />
+                    </svg>
+                    <p className="text-black font-normal text-base text-justify my-auto">
+                      Add CTA
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-row gap-2">
+                  <div
+                    onClick={() => handleClick("text")}
+                    name="liClick"
+                    className="mb-3 flex flex-row rounded-md bg-white p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="0.5"
+                      stroke="currentColor"
+                      class="h-5 w-5 text-black"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 019 14.437V9.564z"
+                      />
+                    </svg>
+                    <p className="text-black font-normal text-base text-justify my-auto">
+                      Add Text
+                    </p>
+                  </div>
+                  <div
+                    onClick={() => handleClick("survey")}
+                    name="liClick"
+                    className="mb-3 flex flex-row rounded transition bg-white p-2 ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="0.5"
+                      stroke="currentColor"
+                      class="h-5 w-5 text-black"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                      />
+                    </svg>
+                    <p className="text-black font-normal text-normal text-justify my-auto">
+                      Add Survey
+                    </p>
+                  </div>
+                </div>
+              </div>
+              {/* <div className="flex flex-col">
                 <div className="flex-none w-[200px] h-[500px] bg-darkBlue rounded-md p-3 shadow-xl">
                   <div className="flex flex-col justify-between">
                     <div
@@ -370,7 +484,7 @@ const CreateNote = () => {
                     )}
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="flex-1 mt-20">
               {selectedComponent && componentsMap[selectedComponent]}
