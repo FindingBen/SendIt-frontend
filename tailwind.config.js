@@ -39,15 +39,12 @@ module.exports = {
       fontFamily: {
         sfPro: ["SF Pro"],
         helv: ["helvetica"],
+        sans: ["Sans"],
       },
       height: {
         "90vh": "90vh",
       },
     },
   },
-  plugins: [
-    require("flowbite/plugin")({
-      charts: true,
-    }),
-  ],
+  plugins: [],
 };

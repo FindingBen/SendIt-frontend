@@ -1,4 +1,3 @@
-import "./App.css";
 import "flowbite";
 import { Route, Routes } from "react-router-dom";
 import React from "react";
@@ -29,7 +28,8 @@ ReactGA.initialize(TRACKING_ID, { debug: true });
 
 function App() {
   return (
-    <div>
+    <section>
+      <div className="main"></div>
       <Routes>
         <Route path="/view/:id" element={<MessageView></MessageView>}></Route>
         <Route
@@ -41,7 +41,7 @@ function App() {
           element={<ActivationEmailSuccess></ActivationEmailSuccess>}
         ></Route>
       </Routes>
-      <div className="App" style={({ height: "100vh" }, { display: "flex" })}>
+      <div className="App">
         <ElementProvider>
           <Routes>
             <Route path="register" element={<RegisterPage />} />
@@ -96,7 +96,7 @@ function App() {
           </Routes>
         </ElementProvider>
       </div>
-    </div>
+    </section>
   );
 }
 

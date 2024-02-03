@@ -4,18 +4,63 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-image-editor/styles/material.css";
+
 :root {
-  --black-gradient: linear-gradient(
-    144.39deg,
-    #ffffff -278.56%,
-    #6d6d6d -78.47%,
-    #11101d 91.61%
-  );
-  --card-shadow: 0px 20px 100px -10px rgba(66, 71, 91, 0.1);
+
+ 
+  overflow-x: hidden;
 }
 
 * {
   scroll-behavior: smooth;
+}
+
+.main {
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  padding: 120px 24px 160px 24px;
+  pointer-events: none;
+}
+
+.main:before {
+  /* background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, #fafafa 100%); */
+  position: absolute;
+  content: "";
+  
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+
+.main:after {
+  content: "";
+  background-image: url("/src/assets/world.svg");
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  
+  opacity: 0.3;
+  /* filter: invert(1); */
+}
+
+.App {
+  background-color: #1f2937;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  text-align: center;
 }
 
 .background-gradient {
@@ -73,6 +118,10 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
+}
+
+.blue_gradient {
+  @apply bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent text-left;
 }
 
 .text-gradient-red {

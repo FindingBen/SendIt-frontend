@@ -178,7 +178,7 @@ const HomePage = () => {
       <div className="flex flex-col space-y-5 lg:space-y-0 lg:flex-row sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center xl:mb-3">
-            <h3 class="xl:text-3xl lg:text-2xl text-xl font-extralight text-left text-white">
+            <h3 class="xl:text-3xl lg:text-2xl text-xl text-left text-white">
               Home dashboard
             </h3>
 
@@ -234,7 +234,7 @@ const HomePage = () => {
 
           {/* table content */}
           <div
-            className={`mainContainer transition-width ${
+            className={`transition-width ${
               analyticsOpen ? "w-[70%]" : "w-full"
             }`}
           >
@@ -249,7 +249,7 @@ const HomePage = () => {
                 Sort by date
               </button>
             </div>
-            <div class="bg-darkestGray p-4 rounded-lg">
+            <div class="bg-darkBlue p-4 rounded-lg">
               <div class="grid grid-cols-5 gap-4 grid-headers bg-darkBlue text-white font-normal text-sm xl:text-md py-2 px-4 rounded-lg mb-2">
                 <div className="">Name</div>
                 <div>Created At</div>
@@ -259,23 +259,27 @@ const HomePage = () => {
               </div>
               {notes?.length > 0 && displayedItems ? (
                 <div>
-                  {displayedItems?.map((message, index) => (
-                    <motion.div
-                      initial={
-                        initialLoad
-                          ? { opacity: 0, scale: 0.5 }
-                          : { opacity: 1, scale: 1 }
-                      }
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{
-                        duration: 0.4,
-                        delay: 0.2,
-                        ease: [0, 0.41, 0.1, 1.01],
-                      }}
-                      class="border-b border-grayWhite/50 text-white font-semibold text-xs lg:text-sm"
-                    >
-                      <div className="mb-2 my-auto">
-                        <div className={`grid grid-cols-5 gap-3 py-2 px-4`}>
+                  {displayedItems?.map((message, index) => {
+                    const isEvenRow = index % 2 === 0; // Check if the row is even
+                    const rowClassName = isEvenRow ? "bg-darkestGray" : "";
+                    return (
+                      <motion.div
+                        initial={
+                          initialLoad
+                            ? { opacity: 1, scale: 0.5 }
+                            : { opacity: 1, scale: 1 }
+                        }
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.2,
+                          ease: [0, 0.41, 0.1, 1.01],
+                        }}
+                        className={`border-b border-grayWhite/50 text-white ${rowClassName} font-semibold text-xs lg:text-sm`}
+                      >
+                        <div
+                          className={`grid grid-cols-5 gap-3 mb-2 py-2 px-4`}
+                        >
                           <p>{message.message_name}</p>
                           <div>{message.created_at}</div>
                           <div>
@@ -337,7 +341,7 @@ const HomePage = () => {
                                 viewBox="0 0 24 24"
                                 stroke-width="0.6"
                                 stroke="currentColor"
-                                class="lg:w-6 lg:h-6 w-4 h-4"
+                                class="lg:w-6 lg:h-6 w-4 h-4 text-white"
                               >
                                 <path
                                   stroke-linecap="round"
@@ -359,7 +363,7 @@ const HomePage = () => {
                                   viewBox="0 0 24 24"
                                   strokeWidth="1.5"
                                   fill="currentColor"
-                                  className="lg:w-6 lg:h-6 w-4 h-4 fill-gray-600"
+                                  className="lg:w-6 lg:h-6 w-4 h-4 fill-gray-500"
                                 >
                                   <path
                                     d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
@@ -402,7 +406,7 @@ const HomePage = () => {
                                   viewBox="0 0 24 24"
                                   strokeWidth="0.6"
                                   fill="currentColor"
-                                  className="lg:w-6 lg:h-6 w-4 h-4 text-gray-500"
+                                  className="lg:w-6 lg:h-6 w-4 h-4"
                                 >
                                   <path
                                     d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
@@ -442,7 +446,7 @@ const HomePage = () => {
                                 viewBox="0 0 24 24"
                                 strokeWidth="0.5"
                                 stroke="currentColor"
-                                className="lg:w-6 lg:h-6 w-4 h-4 fill-darkBlue"
+                                className="lg:w-6 lg:h-6 w-4 h-4 fill-red-700"
                               >
                                 <path
                                   strokeLinecap="round"
@@ -453,9 +457,9 @@ const HomePage = () => {
                             </button>
                           </div>
                         </div>
-                      </div>
-                    </motion.div>
-                  ))}
+                      </motion.div>
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="flex-1 items-center p-10">
@@ -510,7 +514,7 @@ const HomePage = () => {
             )}
           </div>
           <div
-            className={`absolute top-[100px] -right-6 lg:h-[548px] lg:w-[340px] xl:h-[648px] xl:w-[460px] bg-darkestGray rounded-2xl transition-transform transform ${
+            className={`absolute top-[100px] -right-6 lg:h-[548px] lg:w-[340px] xl:h-[648px] xl:w-[460px] bg-darkBlue rounded-2xl shadow-lg transition-transform transform ${
               analyticsOpen
                 ? "xl:-translate-x-20 lg:-translate-x-16"
                 : "translate-x-full"

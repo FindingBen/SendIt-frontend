@@ -88,26 +88,9 @@ const Header = () => {
           className={`${open ? "w-20 xl:w-24" : "w-20"} rounded-md`}
         />
       </div>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="0.6"
-        stroke="currentColor"
-        onClick={() => setOpen(!open)}
-        class={`w-7 h-7 absolute cursor-pointer -right-2 top-9 ${
-          !open && "rotate-180"
-        }`}
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      </svg>
 
       <hr />
-      <ul id="navList" className="nav nav-pills flex-column mb-auto">
+      <ul id="navList" className="flex flex-column mb-auto">
         {menu?.map((Menu, index) => (
           <Link
             key={index}
@@ -118,25 +101,45 @@ const Header = () => {
                 : Menu.location
             }`}
             value={`${Menu.title}`}
-            className={`flex flex-row rounded-md p-2 cursor-pointer xl:w-12 w-10 hover:bg-light-white ${
-              activeNav === Menu.title ? "bg-white text-black" : ""
-            } text-gray-300 xl:text-sm text-xs items-center gap-x-3 
-              ${Menu.gap ? "mt-9" : "mt-2"} ${
-              index === 0 && "bg-light-white"
-            } `}
+            className={`flex flex-row rounded-md p-2 cursor-pointer`}
           >
-            <div>{Menu.element}</div>
-
-            <span
-              className={`${!open && "hidden"} origin-left ${
-                activeNav === Menu.title ? " text-white" : ""
-              } duration-200`}
+            <div
+              className={`flex flex-row gap-2 rounded-md p-2 xl:w-12 hover:bg-light-white ${
+                activeNav === Menu.title ? "bg-white text-black" : ""
+              } text-gray-300 xl:text-sm text-xs items-center gap-x-3 
+              ${Menu.gap ? "mt-9" : "mt-2"} ${
+                index === 0 && "bg-light-white"
+              } `}
             >
-              {Menu.title}
-            </span>
+              {Menu.element}
+              <span
+                className={`${!open && "hidden"} origin-left
+                duration-200`}
+              >
+                {Menu.title}
+              </span>
+            </div>
           </Link>
         ))}
       </ul>
+      <div className="flex flex-row gap-3">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="0.6"
+          stroke="currentColor"
+          onClick={() => setOpen(!open)}
+          class={`w-7 h-7 cursor-pointer ${!open && "rotate-180"}`}
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span className={`${!open && "hidden"} origin-left`}>Hide</span>
+      </div>
       <Link
         onClick={handleLogout}
         className="flex rounded-md mr-3 p-2 cursor-pointer xl:w-12 w-10 hover:bg-light-white text-gray-300 xl:text-sm text-xs items-center gap-x-3"
