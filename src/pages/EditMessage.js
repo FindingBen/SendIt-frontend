@@ -16,6 +16,7 @@ import useAxiosInstance from "../utils/axiosInstance";
 import { ElementContext } from "../context/ElementContext";
 import { useRedux } from "../constants/reduxImports";
 import SvgLoader from "../components/SvgLoader";
+import PreviewPanel from "../components/PreviewComponent/PreviewPanel";
 
 const EditMessage = () => {
   const { currentPageState, dispatch, currentModalCall, currentUser } =
@@ -40,6 +41,7 @@ const EditMessage = () => {
   const [getId, setId] = useState();
   const [createdEl, setCreatedEl] = useState([]);
   const [selectedComponent, setSelectedComponent] = useState(null);
+  const [device, setDevice] = useState("tablet");
 
   useEffect(() => {
     setIsLoaded(true);
@@ -283,7 +285,7 @@ const EditMessage = () => {
     <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="flex-1 px-2 sm:px-0">
-          <div className="flex justify-between items-center xl:mb-3">
+          <div className="flex justify-between items-center mb-2">
             <div className="flex flex-row">
               <span className="text-2xl text-white">Edit Content</span>
             </div>
@@ -450,43 +452,45 @@ const EditMessage = () => {
               {selectedComponent && componentsMap[selectedComponent]}
             </div>
             <div className="col p-10">
-              <div class="h-[500px] w-[250px] relative mx-auto border-darkBlue bg-darkBlue border-[14px] rounded-[2.5rem] shadow-xl">
-                <div class="w-[108px] h-[10px] xl:w-[148px] xl:h-[18px] bg-darkBlue top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
-                <div class="h-[46px] w-[3px] bg-darkBlue absolute -left-[17px] top-[124px] rounded-l-lg"></div>
-                <div class="h-[46px] w-[3px] bg-darkBlue absolute -left-[17px] top-[178px] rounded-l-lg"></div>
-                <div class="h-[64px] w-[3px] bg-darkBlue absolute -right-[17px] top-[142px] rounded-r-lg"></div>
-                <div class="w-[225px] h-[470px] rounded-[2rem] overflow-auto bg-gray-300">
-                  <div class="mr-5 mt-2 flex justify-end space-x-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4 text-gray-800"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                    </svg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4 text-gray-800"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M17.778 8.222c-4.296-4.296-11.26-4.296-15.556 0A1 1 0 01.808 6.808c5.076-5.077 13.308-5.077 18.384 0a1 1 0 01-1.414 1.414zM14.95 11.05a7 7 0 00-9.9 0 1 1 0 01-1.414-1.414 9 9 0 0112.728 0 1 1 0 01-1.414 1.414zM12.12 13.88a3 3 0 00-4.242 0 1 1 0 01-1.415-1.415 5 5 0 017.072 0 1 1 0 01-1.415 1.415zM9 16a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </div>{" "}
-                  <List
-                    id="myList"
-                    className="my-scroll-list"
-                    children={elements}
-                    clicked={handleClicked}
-                    updatedList={updateElements}
-                  ></List>
-                </div>
+              <div className="flex flex-row bg-darkGray p-2 rounded-lg mb-2 mx-2 gap-2 w-32">
+                <span className="text-white">Preview</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  onClick={() => setDevice("phone")}
+                  stroke-width="1.0"
+                  stroke="currentColor"
+                  class="w-6 h-6 bg-darkGray text-white hover:bg-white/50 cursor-pointer rounded-lg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"
+                  />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  onClick={() => setDevice("tablet")}
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6 bg-darkGray text-white hover:bg-white/50 cursor-pointer rounded-lg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M10.5 19.5h3m-6.75 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-15a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 4.5v15a2.25 2.25 0 0 0 2.25 2.25Z"
+                  />
+                </svg>
               </div>
+              <PreviewPanel
+                device={device}
+                handleClicked={handleClicked}
+                elementContextList={elements}
+                updateElements={updateElements}
+              />
             </div>
           </div>
         </div>

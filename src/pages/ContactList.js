@@ -191,7 +191,7 @@ const ContactList = () => {
               openContact ? "w-[70%]" : "w-full"
             }`}
           >
-            <div class="items-center justify-center rounded-lg mb-3 w-full bg-darkestGray p-2">
+            <div class="items-center justify-center rounded-lg mb-3 w-full bg-darkBlue p-2">
               <div className="flex flex-row space-x-2">
                 <button
                   className={`px-2 py-1 text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
@@ -292,7 +292,7 @@ const ContactList = () => {
             </div>
           </div>
           <div
-            className={`absolute top-[103px] -right-6 lg:h-[526px] lg:w-[340px] xl:h-[648px] xl:w-[460px] bg-darkestGray rounded-2xl transition-transform transform ${
+            className={`absolute top-[103px] -right-6 lg:h-[526px] lg:w-[340px] xl:h-[648px] xl:w-[460px] bg-darkBlue rounded-2xl transition-transform transform ${
               openContact
                 ? "xl:-translate-x-20 lg:-translate-x-16"
                 : "translate-x-full"
@@ -310,11 +310,7 @@ const ContactList = () => {
               <div className="flex flex-col items-center p-4 w-full h-[150px] rounded-lg">
                 <div className="flex flex-col gap-3 relative">
                   <input
-                    className={`block ${
-                      isLoading
-                        ? "bg-darkGray"
-                        : "bg-darkBlue border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded"
-                    }`}
+                    className={`block ${"bg-darkGray border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded"}`}
                     defaultValue={contact?.first_name}
                     onChange={(e) => setFirstName(e.target.value)}
                   ></input>
