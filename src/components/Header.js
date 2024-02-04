@@ -77,7 +77,7 @@ const Header = () => {
 
   return (
     <div
-      className={`flex flex-column items-center relative p-1 duration-300 text-white bg-darkBlue rounded-full ml-3 mt-3 mb-3`}
+      className={`flex flex-column items-center relative p-1 text-white bg-darkBlue rounded-full ml-3 mt-3 mb-3`}
     >
       <ul id="navList" className="flex flex-column my-auto">
         {menu?.map((Menu, index) => (
@@ -90,10 +90,10 @@ const Header = () => {
                 : Menu.location
             }`}
             value={`${Menu.title}`}
-            className={`flex flex-row rounded-md p-2 cursor-pointer`}
+            className={`flex flex-row rounded-md p-2 cursor-pointer `}
           >
             <div
-              className={`flex flex-row gap-2 rounded-md p-2 hover:bg-light-white ${
+              className={`flex flex-row gap-2 rounded-md p-2 hover:bg-darkestGray duration-200 ${
                 activeNav === Menu.title ? "bg-white text-black" : ""
               } text-gray-300 xl:text-sm text-xs items-center gap-x-3 
               ${Menu.gap ? "mt-9" : "mt-2"} ${

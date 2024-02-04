@@ -241,12 +241,12 @@ const HomePage = () => {
               <p className="text-white font-light lg:text-2xl text-xl flex items-start my-3 mt-3">
                 Your latest messages
               </p>
-              <button
+              <div
                 onClick={handleSortButtonClick}
-                className="px-2 py-1 text-white font-light text-sm rounded-2xl bg-darkestGray absolute right-0 lg:top-5 top-5"
+                className="px-3 py-2 text-white font-light text-sm rounded-2xl bg-darkBlue absolute right-0 lg:top-5 top-5"
               >
                 Sort by date
-              </button>
+              </div>
             </div>
             <div class="bg-darkBlue p-4 rounded-2xl">
               <div class="grid grid-cols-5 gap-4 grid-headers bg-darkBlue text-white font-normal text-sm xl:text-md py-2 px-4 rounded-lg mb-2">

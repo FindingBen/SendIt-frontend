@@ -87,7 +87,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
                   <Modal.Title>Add a contact</Modal.Title>
                 </Modal.Header>
                 {/*body*/}
-                <div className="relative p-6 flex-auto">
+                <div className="relative p-6 flex-auto mx-auto">
                   <p className="my-4 text-slate-500 text-lg leading-relaxed">
                     You are about to add a new contact to this current list you
                     are visiting, remember to double check email and phone
@@ -95,28 +95,28 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
                     which ever country to phone number is from
                   </p>
                   <input
-                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full"
                     name="first_name"
                     type="text"
                     placeholder="First name"
                     onChange={handleFirstName}
                   />
                   <input
-                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full"
                     name="last_name"
                     type="text"
                     placeholder="Last name"
                     onChange={handleLastName}
                   />
                   <input
-                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm  rounded-xl w-full p-2.5 "
                     name="phone_number"
                     type="text"
                     placeholder="Phone number"
                     onChange={handlePhoneNumber}
                   />
                   <input
-                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     name="email"
                     placeholder="Email"
                     onChange={handleEmail}

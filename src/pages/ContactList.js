@@ -310,22 +310,22 @@ const ContactList = () => {
               <div className="flex flex-col items-center p-4 w-full h-[150px] rounded-lg">
                 <div className="flex flex-col gap-3 relative">
                   <input
-                    className={`block ${"bg-darkGray border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded"}`}
+                    className={`block ${"bg-darkGray border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"}`}
                     defaultValue={contact?.first_name}
                     onChange={(e) => setFirstName(e.target.value)}
                   ></input>
                   <input
-                    className="block bg-darkGray border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded"
+                    className="block bg-darkGray border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"
                     defaultValue={contact?.last_name}
                     onChange={(e) => setLastName(e.target.value)}
                   ></input>
                   <input
-                    className="block bg-darkGray border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded"
+                    className="block bg-darkGray border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"
                     defaultValue={contact?.email}
                     onChange={(e) => setEmail(e.target.value)}
                   ></input>
                   <input
-                    className="block bg-darkGray border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded"
+                    className="block bg-darkGray border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"
                     defaultValue={contact?.phone_number}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                   ></input>

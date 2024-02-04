@@ -55,9 +55,9 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
             backdrop="static"
             keyboard={false}
           >
-            <div className="relative w-auto max-w-3xl">
+            <div className="relative w-auto max-w-3xl rounded-2xl">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="border-0 rounded-2xl shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <Modal.Header closeButton>
                   <Modal.Title>Create a new list</Modal.Title>
@@ -69,7 +69,7 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
                   </p>
 
                   <input
-                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     name="text"
                     placeholder="List name"
                     onChange={handleListName}

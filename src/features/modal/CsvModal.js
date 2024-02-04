@@ -111,7 +111,7 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
           >
             <div className="relative w-auto mx-auto max-w-3xl">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="border-0 rounded-xl shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <Modal.Header closeButton>
                   <Modal.Title>Upload a csv file</Modal.Title>
@@ -125,7 +125,7 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
                     otherwise it wont work!
                   </p>
                   <input
-                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    className="block w-full text-sm p-1 text-gray-900 border border-gray-300 rounded-xl cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     type="file"
                     onChange={handleCsvFile}
                   ></input>
