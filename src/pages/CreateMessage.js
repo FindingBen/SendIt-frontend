@@ -196,17 +196,19 @@ const CreateNote = () => {
 
   return (
     <section className="min-h-screen flex-d w-100 items-center justify-center">
-      <div className="flex-1 flex flex-col space-y-5 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
+      <div className="flex-1 flex flex-col space-y-5 sm:p-6 sm:my-2 sm:mx-4">
         <div className="flex-1 px-2 sm:px-0">
           <div className="flex justify-between items-center mb-2">
             <div className="flex flex-row">
-              <span className="text-2xl text-white">Create Content</span>
+              <span className="text-2xl text-white font-light">
+                Create Content
+              </span>
             </div>
             <div class="inline-flex items-center space-x-2">
               {!isLoading ? (
                 <button
                   onClick={handleSubmit}
-                  className="text-white bg-darkBlue p-2 rounded-md hover:text-white smooth-hover flex flex-row"
+                  className="text-white bg-darkBlue p-2 rounded-2xl hover:text-white smooth-hover flex flex-row"
                 >
                   <h2 className="lg:text-2xl text-xl mx-2">Create</h2>
                   <svg
@@ -229,7 +231,7 @@ const CreateNote = () => {
               )}
             </div>
           </div>
-          <div className="flex flex-row bg-darkBlue rounded-md">
+          <div className="flex flex-row bg-darkBlue rounded-2xl">
             <div className="flex flex-col p-10">
               <div className="flex flex-col w-96 gap-2 rounded-lg p-4 bg-darkGray">
                 {errorMsg && (
@@ -387,7 +389,7 @@ const CreateNote = () => {
               {selectedComponent && componentsMap[selectedComponent]}
             </div>
             <div className="col p-10">
-              <div className="flex flex-row bg-darkGray p-2 rounded-lg mb-2 mx-2 gap-2 w-32">
+              <div className="flex flex-row bg-darkGray p-2 rounded-lg mb-2 mx-auto gap-2 w-32">
                 <span className="text-white">Preview</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

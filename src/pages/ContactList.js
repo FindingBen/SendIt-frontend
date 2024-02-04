@@ -188,10 +188,10 @@ const ContactList = () => {
 
           <div
             className={`mainContainer transition-width ${
-              openContact ? "w-[70%]" : "w-full"
+              openContact ? "w-[72%]" : "w-full"
             }`}
           >
-            <div class="items-center justify-center rounded-lg mb-3 w-full bg-darkBlue p-2">
+            <div class="items-center justify-center rounded-2xl mb-3 w-full bg-darkBlue p-2">
               <div className="flex flex-row space-x-2">
                 <button
                   className={`px-2 py-1 text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
@@ -213,7 +213,7 @@ const ContactList = () => {
               <div class="overflow-auto lg:overflow-visible">
                 <div class="overflow-x-auto">
                   <div class="my-6">
-                    <div class="grid grid-cols-5 gap-4 grid-headers bg-darkBlue text-white font-light py-2 px-4 rounded-md mb-2">
+                    <div class="grid grid-cols-5 gap-4 grid-headers bg-darkBlue text-white font-light py-2 px-4 rounded-2xl mb-2">
                       <div>First Name</div>
                       <div>Last Name</div>
                       <div>Email</div>
@@ -292,7 +292,7 @@ const ContactList = () => {
             </div>
           </div>
           <div
-            className={`absolute top-[103px] -right-6 lg:h-[526px] lg:w-[340px] xl:h-[648px] xl:w-[460px] bg-darkBlue rounded-2xl transition-transform transform ${
+            className={`absolute top-[14%] xl:top-[12%] -right-6 h-[526px] w-[340px] xl:h-[648px] xl:w-[440px] bg-darkBlue rounded-2xl transition-transform transform ${
               openContact
                 ? "xl:-translate-x-20 lg:-translate-x-16"
                 : "translate-x-full"
@@ -343,16 +343,15 @@ const ContactList = () => {
             <div>
               {Array.from({ length: totalPages }, (_, index) => index + 1).map(
                 (page) => (
-                  <button
-                    type="button"
-                    className="btn btn-outline-secondary"
+                  <div
+                    className="btn btn-outline-secondary ml-2 bg-darkBlue"
                     data-mdb-ripple-color="dark"
                     key={page}
                     id="paginationBtn"
                     onClick={() => handlePageChange(page)}
                   >
                     {page}
-                  </button>
+                  </div>
                 )
               )}
               <br></br>

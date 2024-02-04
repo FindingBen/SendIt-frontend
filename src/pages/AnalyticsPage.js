@@ -81,15 +81,15 @@ const AnalyticsPage = () => {
         <div className="flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:my-2 sm:mx-4 sm:rounded-2xl">
           <div className="flex-1 px-2 sm:px-0">
             <div className="flex justify-between items-center mb-3">
-              <h3 class="xl:text-3xl text-2xl font-extralight text-left text-white/50">
+              <h3 class="xl:text-3xl text-2xl font-extralight text-left text-white">
                 Analytics dashboard
               </h3>
             </div>
 
             <div className="flex flex-row gap-3">
-              <div className="flex-none bg-darkestGray w-72 rounded-md">
+              <div className="flex-none bg-darkestGray w-72 rounded-2xl">
                 <div className="flex flex-col">
-                  <div className="p-2 flex flex-row bg-darkBlue rounded-md mx-3 my-3 shadow-lg">
+                  <div className="p-2 flex flex-row bg-darkBlue rounded-2xl mx-3 my-3 shadow-lg">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -135,9 +135,9 @@ const AnalyticsPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex-none bg-darkestGray h-[100%] w-72 rounded-md">
+              <div className="flex-none bg-darkestGray h-[100%] w-72 rounded-2xl">
                 <div className="flex flex-col">
-                  <div className="p-2 flex flex-row bg-darkBlue rounded-md mx-3 my-3 shadow-lg">
+                  <div className="p-2 flex flex-row bg-darkBlue rounded-2xl mx-3 my-3 shadow-lg">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -178,9 +178,9 @@ const AnalyticsPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex-none bg-darkestGray h-[100%] w-72 rounded-md">
+              <div className="flex-none bg-darkestGray h-[100%] w-72 rounded-2xl">
                 <div className="flex flex-col">
-                  <div className="p-2 flex flex-row bg-darkBlue rounded-md mx-3 my-3 shadow-lg">
+                  <div className="p-2 flex flex-row bg-darkBlue rounded-2xl mx-3 my-3 shadow-lg">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"

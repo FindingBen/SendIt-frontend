@@ -14,12 +14,12 @@ const PieChart = ({ percentage, viewType }) => {
     <div
       className={`flex-none ${
         viewType === "ViewHome" ? "lg:w-64" : "bg-darkestGray w-64 h-96"
-      } rounded-md`}
+      } rounded-2xl`}
     >
       <div
         className={`p-2 flex items-center flex-col ${
           viewType === "ViewHome" ? "" : "bg-darkBlue shadow-lg"
-        } rounded-md mx-3 my-3 relative`}
+        } rounded-2xl mx-3 my-3 relative`}
       >
         <p className="text-white text-xl font-light text-justify p-4">
           Sms performance

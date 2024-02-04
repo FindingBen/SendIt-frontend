@@ -4,8 +4,8 @@ import SvgLoader from "../SvgLoader";
 
 const SendingStats = ({ sms_stats }) => {
   return (
-    <div className="flex bg-darkestGray rounded-lg p-2">
-      <div className="flex flex-row items-center w-[275px] rounded-md">
+    <div className="flex bg-darkestGray rounded-2xl p-2">
+      <div className="flex flex-row items-center w-[275px] rounded-2xl">
         <div className="flex-none p-3 my-auto bg-darkBlue rounded-full ml-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"

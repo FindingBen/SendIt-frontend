@@ -17,7 +17,7 @@ const Billings = ({ purchases }) => {
     document.body.removeChild(input);
   };
   return (
-    <div className="flex-initial rounded-lg p-4 xl:p-10 mt-4 bg-darkestGray">
+    <div className="flex-initial rounded-2xl p-4 xl:p-10 mt-4 bg-darkBlue">
       <h3 class="text-2xl text-left font-extralight text-white">
         Purchase history
       </h3>
@@ -39,7 +39,7 @@ const Billings = ({ purchases }) => {
                   delay: 0.2,
                   ease: [0, 0.41, 0.1, 1.01],
                 }}
-                className="relative text-base text-left text-gray-300 bg-slate-800 mb-2 rounded-md p-3 hover:bg-slate-800/50 cursor-pointer"
+                className="relative text-base text-left text-gray-300 bg-slate-800 mb-2 rounded-2xl p-3 hover:bg-slate-800/50 cursor-pointer"
                 key={purchase.id}
               >
                 <svg

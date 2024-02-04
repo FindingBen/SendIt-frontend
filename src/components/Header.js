@@ -6,7 +6,6 @@ import { setEditPage } from "../redux/reducers/editPageReducer";
 import { Link, useNavigate } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
 import { menu } from "../assets/menuAssets/menuIcons";
-import "../css/Header.css";
 import { useRedux } from "../constants/reduxImports";
 
 const Header = () => {
@@ -78,19 +77,9 @@ const Header = () => {
 
   return (
     <div
-      className={`d-flex flex-column relative flex-shrink-0 p-3 duration-300 text-white bg-darkBlue text-xs xl:text-base rounded ml-3 mt-3 mb-3 xl:h-90vh ${
-        open ? "w-36" : "w-16 flex items-center"
-      } ${open ? "xl:w-46" : "xl:w-20"}`}
+      className={`flex flex-column items-center relative p-1 duration-300 text-white bg-darkBlue rounded-full ml-3 mt-3 mb-3`}
     >
-      <div className="mx-auto mb-4 xl:mb-4 text-white">
-        <img
-          src={require("../assets/noBgLogo.png")}
-          className={`${open ? "w-20 xl:w-24" : "w-20"} rounded-md`}
-        />
-      </div>
-
-      <hr />
-      <ul id="navList" className="flex flex-column mb-auto">
+      <ul id="navList" className="flex flex-column my-auto">
         {menu?.map((Menu, index) => (
           <Link
             key={index}
@@ -112,34 +101,11 @@ const Header = () => {
               } `}
             >
               {Menu.element}
-              <span
-                className={`${!open && "hidden"} origin-left
-                duration-200`}
-              >
-                {Menu.title}
-              </span>
             </div>
           </Link>
         ))}
       </ul>
-      <div className="flex flex-row gap-3">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="0.6"
-          stroke="currentColor"
-          onClick={() => setOpen(!open)}
-          class={`w-7 h-7 cursor-pointer ${!open && "rotate-180"}`}
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <span className={`${!open && "hidden"} origin-left`}>Hide</span>
-      </div>
+
       <Link
         onClick={handleLogout}
         className="flex rounded-md mr-3 p-2 cursor-pointer xl:w-12 w-10 hover:bg-light-white text-gray-300 xl:text-sm text-xs items-center gap-x-3"
@@ -151,7 +117,7 @@ const Header = () => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6 rotate-90"
+            class="w-6 h-6 rotate-90 ml-2"
           >
             <path
               stroke-linecap="round"
@@ -160,9 +126,6 @@ const Header = () => {
             />
           </svg>
         </div>
-        <span className={`${!open && "hidden"} origin-left duration-200`}>
-          Logout
-        </span>
       </Link>
       <ModalComponent
         confirmLeave={handleConfirmNavigation}

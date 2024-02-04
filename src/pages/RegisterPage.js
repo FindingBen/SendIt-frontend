@@ -72,7 +72,6 @@ const RegisterPage = () => {
       if (response.status === 400) {
         if (responseData.username) {
           if (responseData.username[0].startsWith("A user with")) {
-            console.log("S");
             setErrMsg("Username is already in use");
           } else {
             setErrMsg("Can't be blank");
@@ -83,7 +82,6 @@ const RegisterPage = () => {
           setLoading(false);
         } else if (responseData.custom_email) {
           if (responseData.custom_email[0].startsWith("A user with")) {
-            console.log("S");
             setErrEmail("Email is already in use");
           } else {
             setErrEmail("Can't be blank");
@@ -107,7 +105,6 @@ const RegisterPage = () => {
         setLoading(false);
       }
     } catch (err) {
-      console.log(err);
       setErrMsgPass(err);
       errRef.current.focus();
     }
@@ -144,7 +141,7 @@ const RegisterPage = () => {
       <div class="flex-1">
         <div class="max-w-[440px] mx-auto flex flex-col mb-5">
           {!registered ? (
-            <div class="bg-white mt-9 rounded-md">
+            <div class="bg-white mt-9 rounded-2xl">
               <header class="text-center px-5 pb-5">
                 <svg
                   class="inline-flex -mt-9 w-[72px] h-[72px] rounded-full border-4 border-white box-content shadow mb-3"
@@ -164,7 +161,7 @@ const RegisterPage = () => {
                 </div>
               </header>
 
-              <div class="bg-gray-100 text-center px-5 py-2 rounded-b-md">
+              <div class="bg-gray-100 text-center px-5 py-2 rounded-b-2xl">
                 <form onSubmit={handleSubmit}>
                   <div className="flex flex-row gap-2">
                     <div class="rounded-md">
@@ -189,7 +186,7 @@ const RegisterPage = () => {
                         <input
                           onChange={handleUserInput}
                           name="username"
-                          class={`text-sm text-gray-800 bg-white placeholder-gray-400 w-full border ${
+                          class={`text-sm text-gray-800 bg-white p-2 rounded-xl placeholder-gray-400 w-full border ${
                             errMsg ? "border-red-400" : ""
                           } rounded-md focus:border-indigo-300 focus:ring-0`}
                           type="text"
@@ -203,7 +200,7 @@ const RegisterPage = () => {
                         <input
                           onChange={handleFirstName}
                           name="first_name"
-                          class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full rounded-md border border-transparent focus:border-indigo-300 focus:ring-0"
+                          class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full rounded-xl p-2 border border-transparent focus:border-indigo-300 focus:ring-0"
                           type="text"
                           placeholder="First name"
                         />
@@ -217,7 +214,7 @@ const RegisterPage = () => {
                         <input
                           onChange={handleLastName}
                           name="last_name"
-                          class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
+                          class="text-sm text-gray-800 bg-white placeholder-gray-400 p-2 rounded-xl w-full border border-transparent focus:border-indigo-300 focus:ring-0"
                           type="text"
                           placeholder="Last name"
                         />
@@ -244,7 +241,7 @@ const RegisterPage = () => {
                         <input
                           onChange={handleEmail}
                           name="email"
-                          class={`text-sm text-gray-800 bg-white placeholder-gray-400 w-full rounded-md border ${
+                          class={`text-sm text-gray-800 bg-white placeholder-gray-400 p-2 w-full rounded-xl border ${
                             errEmail ? "border-red-400" : ""
                           } `}
                           type="text"
@@ -275,7 +272,7 @@ const RegisterPage = () => {
                         <input
                           onChange={handlePassword}
                           name="password"
-                          class={`text-sm text-gray-800 bg-white placeholder-gray-400 w-full rounded-md border ${
+                          class={`text-sm text-gray-800 bg-white placeholder-gray-400 p-2 w-full rounded-xl border ${
                             errMsgPass ? "border-red-400" : ""
                           }`}
                           type="password"
@@ -304,7 +301,7 @@ const RegisterPage = () => {
                         <input
                           onChange={handleRePassword}
                           name="password"
-                          class={`text-sm text-gray-800 bg-white placeholder-gray-400 w-full rounded-md border ${
+                          class={`text-sm text-gray-800 bg-white placeholder-gray-400 p-2 w-full rounded-xl border ${
                             matchPassErr ? "border-red-400" : ""
                           }`}
                           type="password"
@@ -369,7 +366,7 @@ const RegisterPage = () => {
                   ) : (
                     <button
                       type="submit"
-                      class="font-semibold w-28 mb-3 text-smitems-center justify-center px-3 py-2 rounded-md transition duration-150 ease-in-out bg-purple-700 hover:bg-indigo-600 text-white"
+                      class="font-semibold w-28 mb-3 text-smitems-center justify-center px-3 py-2 rounded-xl transition duration-150 ease-in-out bg-darkBlue hover:bg-indigo-600 text-white"
                     >
                       Register
                     </button>

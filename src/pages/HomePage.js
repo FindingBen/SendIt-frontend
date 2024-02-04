@@ -174,36 +174,35 @@ const HomePage = () => {
   };
 
   return (
-    <section className="min-h-screen w-100 items-center justify-center">
+    <section className="min-h-screen w-full items-center justify-center">
       <div className="flex flex-col space-y-5 lg:space-y-0 lg:flex-row sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="flex-1 sm:px-0">
-          <div className="flex justify-between items-center xl:mb-3">
-            <h3 class="xl:text-3xl lg:text-2xl text-xl text-left text-white">
-              Home dashboard
+          <div className="flex justify-between items-center mb-4">
+            <h3 class="xl:text-3xl lg:text-2xl text-xl font-light text-left text-white">
+              Overview
             </h3>
 
             <div class="flex flex-row items-center">
-              <button>
-                <Link
-                  class="text-white/50 p-2 rounded-md hover:text-white smooth-hover"
-                  to={"/create_note"}
+              <Link
+                class="text-white/50 p-2 rounded-md hover:text-white smooth-hover"
+                to={"/create_note"}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="lg:w-6 lg:h-6 w-5 h-5"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="lg:w-6 lg:h-6 w-5 h-5"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
-                    />
-                  </svg>
-                </Link>
-              </button>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                  />
+                </svg>
+              </Link>
+
               <button
                 onClick={refreshAnalytics}
                 className="text-white/50 p-2 rounded-md hover:text-white smooth-hover"
@@ -235,7 +234,7 @@ const HomePage = () => {
           {/* table content */}
           <div
             className={`transition-width ${
-              analyticsOpen ? "w-[70%]" : "w-full"
+              analyticsOpen ? "w-[72%]" : "w-full"
             }`}
           >
             <div className="flex flex-row relative">
@@ -244,12 +243,12 @@ const HomePage = () => {
               </p>
               <button
                 onClick={handleSortButtonClick}
-                className="px-2 py-1 text-white font-light text-sm rounded-lg bg-darkestGray absolute right-0 lg:top-5 top-5"
+                className="px-2 py-1 text-white font-light text-sm rounded-2xl bg-darkestGray absolute right-0 lg:top-5 top-5"
               >
                 Sort by date
               </button>
             </div>
-            <div class="bg-darkBlue p-4 rounded-lg">
+            <div class="bg-darkBlue p-4 rounded-2xl">
               <div class="grid grid-cols-5 gap-4 grid-headers bg-darkBlue text-white font-normal text-sm xl:text-md py-2 px-4 rounded-lg mb-2">
                 <div className="">Name</div>
                 <div>Created At</div>
@@ -500,7 +499,7 @@ const HomePage = () => {
                 ).map((page) => (
                   <button
                     type="button"
-                    className="px-3 py-2 bg-darkestGray hover:bg-gray-700 duration-200 rounded-lg text-white mt-2"
+                    className="px-3 py-2 bg-darkBlue ml-2 hover:bg-gray-700 duration-200 rounded-lg text-white mt-2"
                     data-mdb-ripple-color="dark"
                     key={page}
                     id="paginationBtn"
@@ -514,7 +513,7 @@ const HomePage = () => {
             )}
           </div>
           <div
-            className={`absolute top-[100px] -right-6 lg:h-[548px] lg:w-[340px] xl:h-[648px] xl:w-[460px] bg-darkBlue rounded-2xl shadow-lg transition-transform transform ${
+            className={`absolute top-[13.5%] xl:top-[10%] -right-6 h-[548px] w-[340px] xl:h-[648px] xl:w-[430px] bg-darkBlue rounded-2xl shadow-lg transition-transform transform ${
               analyticsOpen
                 ? "xl:-translate-x-20 lg:-translate-x-16"
                 : "translate-x-full"

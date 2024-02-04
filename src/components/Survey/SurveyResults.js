@@ -4,8 +4,8 @@ import SvgLoader from "../SvgLoader";
 
 const SurveyResults = ({ surveyResults }) => {
   return (
-    <div className="flex-none bg-darkestGray w-72 h-[500px] rounded-md mt-14">
-      <div className="p-2 flex items-start h-[450px] flex-col bg-darkBlue rounded-md mx-3 my-3 shadow-lg relative">
+    <div className="flex-none bg-darkestGray w-72 h-[500px] rounded-2xl mt-14">
+      <div className="p-2 flex items-start h-[450px] flex-col bg-darkBlue rounded-2xl mx-3 my-3 shadow-lg relative">
         <div className="flex flex-row">
           <p className="text-white text-2xl font-light text-justify p-4">
             Survey results

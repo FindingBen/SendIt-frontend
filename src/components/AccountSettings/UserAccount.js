@@ -72,7 +72,7 @@ const UserAccount = ({ user }) => {
   return (
     <div className="flex gap-3">
       <div className="flex flex-col relative">
-        <div className="rounded-lg p-4 mt-4 bg-darkestGray">
+        <div className="rounded-2xl p-4 mt-4 bg-darkBlue">
           {" "}
           <PasswordChange
             errStatus={errStatus}
@@ -80,7 +80,7 @@ const UserAccount = ({ user }) => {
           ></PasswordChange>
         </div>
       </div>
-      <div className="flex flex-col rounded-lg p-4 mt-4 bg-darkestGray">
+      <div className="flex flex-col rounded-2xl p-4 mt-4 bg-darkBlue">
         <h3 class="text-xl xl:text-2xl text-left font-extralight text-white">
           General settings
         </h3>

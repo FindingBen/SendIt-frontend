@@ -70,7 +70,7 @@ const ContactList = () => {
           </div>
 
           <div class="mb-10 sm:mb-0 mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            <div class="group bg-gray-900/30 py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-900/40">
+            <div class="group bg-gray-900/30 py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-2xl hover:bg-gray-900/40">
               {canAddNewList() ? (
                 <button
                   class="bg-gray-900/70 text-white/50 group-hover:text-white group-hover:smooth-hover flex w-20 h-20 rounded-full items-center justify-center"
@@ -114,7 +114,7 @@ const ContactList = () => {
                       ease: [0, 0.41, 0.1, 1.01],
                     }}
                     key={conList.id}
-                    class="relative w-100 bg-darkestGray h-72 flex flex-col space-y-2 items-center rounded-md"
+                    class="relative w-100 bg-darkestGray h-72 flex flex-col space-y-2 items-center rounded-2xl"
                   >
                     <button
                       className="absolute right-2 top-2"
@@ -135,7 +135,7 @@ const ContactList = () => {
                         />
                       </svg>
                     </button>
-                    <div className="p-4 flex flex-col items-center justify-between bg-darkBlue w-40 h-60 rounded-md mx-3 my-3 shadow-lg">
+                    <div className="p-4 flex flex-col items-center justify-between bg-darkBlue w-40 h-60 rounded-2xl mx-3 my-3 shadow-lg">
                       <Link to={`/contact_list/${conList.id}`}>
                         <img
                           class="w-20 h-20 object-cover object-center rounded-full"

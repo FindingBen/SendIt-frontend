@@ -188,7 +188,7 @@ const SmsEditor = () => {
             </h3>
           </div>
           <div className="grid grid-cols-2 gap-4 rounded-md">
-            <div className="grid gap-2 bg-darkestGray rounded-lg">
+            <div className="grid gap-2 bg-darkBlue rounded-2xl">
               <div class="rounded p-10">
                 <h3 class="text-2xl text-left font-extralight text-white mb-4">
                   Sms send
@@ -196,7 +196,7 @@ const SmsEditor = () => {
                 <div>
                   <label
                     for="first_name"
-                    className="block mb-2 text-sm text-left font-medium text-gray-300 dark:text-white"
+                    className="block mb-2 text-sm text-left font-light text-gray-300 dark:text-white"
                   >
                     From:
                   </label>
@@ -211,7 +211,7 @@ const SmsEditor = () => {
                 </div>
 
                 <div>
-                  <label className="block mb-2 mt-4 text-sm text-left font-medium text-gray-300 dark:text-white">
+                  <label className="block mb-2 mt-4 text-sm text-left font-light text-gray-300 dark:text-white">
                     Select contact list:
                   </label>
 
@@ -233,7 +233,7 @@ const SmsEditor = () => {
                 </div>
                 <br></br>
                 <div className="form-group purple-border text-gray-100 rounded-lg">
-                  <label className="block mb-2 text-sm text-left font-medium text-gray-300 dark:text-white">
+                  <label className="block mb-2 text-sm text-left font-light text-gray-300 dark:text-white">
                     Sms text:
                   </label>
 
@@ -270,7 +270,7 @@ const SmsEditor = () => {
                           onClick={() => setShowSchedule(true)}
                           type="submit"
                           color="dark"
-                          className="bg-yellow-700 hover:bg-yellow-300 text-white font-normal py-2 px-3 rounded text-sm xl:text-base mt-4 ml-3"
+                          className="bg-blue-700 hover:bg-blue-400 text-white font-normal py-2 px-3 rounded text-sm xl:text-base mt-4 ml-3"
                         >
                           Schedule
                         </button>

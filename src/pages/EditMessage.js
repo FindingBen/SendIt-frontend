@@ -287,7 +287,9 @@ const EditMessage = () => {
         <div className="flex-1 px-2 sm:px-0">
           <div className="flex justify-between items-center mb-2">
             <div className="flex flex-row">
-              <span className="text-2xl text-white">Edit Content</span>
+              <span className="text-2xl text-white font-light">
+                Edit Content
+              </span>
             </div>
             {/* <input
               value={messageName}
@@ -299,7 +301,7 @@ const EditMessage = () => {
               {!isLoading ? (
                 <button
                   onClick={editMessage}
-                  className="text-white/50 bg-darkBlue p-2 rounded-md hover:text-white smooth-hover flex flex-row"
+                  className="text-white bg-darkBlue p-2 rounded-2xl hover:text-white smooth-hover flex flex-row"
                 >
                   <h2 className="lg:text-2xl text-xl mx-2">Save</h2>
                   <svg
@@ -452,7 +454,7 @@ const EditMessage = () => {
               {selectedComponent && componentsMap[selectedComponent]}
             </div>
             <div className="col p-10">
-              <div className="flex flex-row bg-darkGray p-2 rounded-lg mb-2 mx-2 gap-2 w-32">
+              <div className="flex flex-row bg-darkGray p-2 rounded-2xl mb-2 mx-auto gap-2 w-32">
                 <span className="text-white">Preview</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

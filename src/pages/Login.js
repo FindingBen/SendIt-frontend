@@ -122,7 +122,7 @@ const Login = () => {
                     <input
                       onChange={(e) => setUser(e.target.value)}
                       name="username"
-                      class="text-sm text-gray-800 bg-white placeholder-gray-400 rounded-md w-full border border-transparent focus:border-indigo-300 focus:ring-0"
+                      class="text-sm text-gray-800 bg-white placeholder-gray-400 rounded-xl p-2 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
                       type="text"
                       placeholder="username"
                     />
@@ -149,7 +149,7 @@ const Login = () => {
                     <input
                       onChange={(e) => setPwd(e.target.value)}
                       name="password"
-                      class="text-sm text-gray-800 bg-white mb-3 placeholder-gray-400 rounded-md w-full border border-transparent focus:border-indigo-300 focus:ring-0"
+                      class="text-sm text-gray-800 bg-white mb-3 placeholder-gray-400 p-2 rounded-xl w-full border border-transparent focus:border-indigo-300 focus:ring-0"
                       type="password"
                       placeholder="password"
                     />
@@ -178,7 +178,7 @@ const Login = () => {
                 ) : (
                   <button
                     type="submit"
-                    class="font-semibold text-sm inline-flex items-center justify-center px-3 py-2 border border-transparent rounded leading-5 shadow transition duration-150 ease-in-out w-full bg-purple-700 hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
+                    class="font-semibold text-sm inline-flex items-center justify-center px-3 py-2 rounded-xl leading-5 shadow-lg transition duration-150 ease-in-out w-full bg-darkBlue hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
                   >
                     Login
                   </button>
@@ -186,7 +186,7 @@ const Login = () => {
               </form>
             </div>
             <span class="text-sm mt-3 p-2 hover:text-blue-500 cursor-pointer hover:bg-gray-300 rounded duration-300">
-              <Link to="/reset_password" className="text-body text-gray-300">
+              <Link to="/reset_password" className=" text-white">
                 Forgot password?
               </Link>
             </span>

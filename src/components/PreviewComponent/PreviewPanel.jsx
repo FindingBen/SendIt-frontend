@@ -6,13 +6,12 @@ const PreviewPanel = ({
   elementContextList,
   handleClicked,
   updateElements,
-  elements,
 }) => {
   return (
     <div>
       {device === "tablet" ? (
         <div class="h-[470px] w-[350px] relative mx-auto border-darkGray bg-darkGray border-[14px] rounded-[2.5rem] shadow-xl">
-          <div class="w-[108px] h-[10px] xl:w-[148px] xl:h-[18px] bg-darkGray top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
+          {/* <div class="w-[108px] h-[10px] xl:w-[148px] xl:h-[18px] bg-darkGray top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div> */}
           <div class="h-[46px] w-[3px] bg-darkGray absolute -left-[17px] top-[124px] rounded-l-lg"></div>
           <div class="h-[46px] w-[3px] bg-darkGray absolute -left-[17px] top-[178px] rounded-l-lg"></div>
           <div class="h-[64px] w-[3px] bg-darkGray absolute -right-[17px] top-[142px] rounded-r-lg"></div>

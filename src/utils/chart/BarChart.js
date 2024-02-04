@@ -6,8 +6,8 @@ import { margin } from "@mui/system";
 
 const BarChart = ({ data }) => {
   return (
-    <div className="flex-none bg-darkestGray w-72 h-96 rounded-md">
-      <div className="p-2 flex items-start h-80 flex-col bg-darkBlue rounded-md mx-3 my-3 shadow-lg relative">
+    <div className="flex-none bg-darkestGray w-72 h-96 rounded-2xl">
+      <div className="p-2 flex items-start h-80 flex-col bg-darkBlue rounded-2xl mx-3 my-3 shadow-lg relative">
         <div className="flex flex-row">
           <p className="text-white text-2xl font-light text-justify p-4">
             Sms delivery

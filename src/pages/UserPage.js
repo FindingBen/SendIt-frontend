@@ -115,7 +115,7 @@ const UserPage = () => {
           <div class="text-sm font-normal text-center text-white border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
             <ul className="flex flex-wrap -mb-px">
               <li className="me-2 hover:cursor-pointer">
-                <a
+                <div
                   className={`inline-block p-4 border-b-2 ${
                     selectedComponent === "account"
                       ? "border-blue-600 text-blue-600"
@@ -124,10 +124,10 @@ const UserPage = () => {
                   onClick={() => handleTabClick("account")}
                 >
                   Account settings
-                </a>
+                </div>
               </li>
               <li className="me-2 hover:cursor-pointer">
-                <a
+                <div
                   className={`inline-block p-4 border-b-2 ${
                     selectedComponent === "billing"
                       ? "border-blue-600 text-blue-600"
@@ -136,10 +136,10 @@ const UserPage = () => {
                   onClick={() => handleTabClick("billing")}
                 >
                   Billing histroy
-                </a>
+                </div>
               </li>
               <li className="me-2 hover:cursor-pointer">
-                <a
+                <div
                   className={`inline-block p-4 border-b-2 ${
                     selectedComponent === "plans"
                       ? "border-blue-600 text-blue-600"
@@ -148,7 +148,7 @@ const UserPage = () => {
                   onClick={() => handleTabClick("plans")}
                 >
                   Plans
-                </a>
+                </div>
               </li>
             </ul>
           </div>
@@ -170,7 +170,7 @@ const UserPage = () => {
           class="flex items-center w-full max-w-xs mx-auto p-4 text-gray-300 bg-gray-600 rounded-lg shadow"
           role="alert"
         >
-          <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-800 bg-green-100 rounded-lg ">
+          <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-800 bg-green-100 rounded-lg">
             <svg
               class="w-5 h-5"
               aria-hidden="true"

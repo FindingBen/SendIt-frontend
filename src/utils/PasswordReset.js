@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { config } from "../constants/Constants";
 
@@ -36,10 +36,10 @@ const PasswordReset = () => {
   };
 
   return (
-    <section class="flex flex-col justify-center antialiased bg-darkBlue text-gray-200 min-h-screen p-4 w-100">
+    <section class="flex flex-col justify-center bg-darkBlue text-gray-200 min-h-screen p-4 w-100">
       <div class="h-full">
         <div class="max-w-[360px] mx-auto mt-20 mb-5">
-          <div class="bg-white shadow-lg rounded-lg mt-9">
+          <div class="bg-white shadow-lg rounded-2xl mt-9">
             <header class="text-center px-5 pb-5">
               <svg
                 class="inline-flex -mt-9 w-[72px] h-[72px] rounded-full border-4 border-white box-content shadow mb-3"
@@ -69,7 +69,7 @@ const PasswordReset = () => {
                     <input
                       onChange={handleEmail}
                       name="username"
-                      class="text-sm text-gray-800 bg-white placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
+                      class="text-sm text-gray-800 bg-white p-2 placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
                       type="text"
                       placeholder="Email"
                     />
@@ -100,7 +100,7 @@ const PasswordReset = () => {
                   <button
                     onClick={passReset}
                     type="submit"
-                    class="font-semibold mt-2 text-sm inline-flex items-center justify-center px-3 py-2 border border-transparent rounded leading-5 shadow transition duration-150 ease-in-out w-full bg-indigo-500 hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
+                    class="font-semibold mt-2 text-sm inline-flex items-center justify-center px-3 py-2 border border-transparent rounded leading-5 shadow transition duration-150 ease-in-out w-full bg-darkBlue hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
                   >
                     Send
                   </button>
