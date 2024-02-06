@@ -29,27 +29,11 @@ const SmsEditor = () => {
   const linkURLBase = `${BASE_URL}/view/${params.id}`;
   const uniqueLink = `${BASE}/sms/sms/tracking/`;
   const maxCharacters = 70;
+
   useEffect(() => {
     getContactLists();
     getUser();
   }, []);
-
-  useEffect(() => {
-    setErrorMessage("");
-
-    try {
-      if (textComponentRef.current) {
-        setTimeout(() => {
-          ReactDOM?.render(
-            <TextComponent textValue={smsText} />,
-            textComponentRef.current
-          );
-        }, 5);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }, [smsText, textComponentRef, isDropdownOpen]);
 
   const getUser = async () => {
     try {
@@ -216,7 +200,7 @@ const SmsEditor = () => {
                   </label>
 
                   <select
-                    className="block bg-gray-300 w-50 text-gray-700 divide-y divide-gray-100 rounded-lg"
+                    className="block bg-gray-300 w-50 text-gray-700 divide-y p-2 divide-gray-100 rounded-lg"
                     onChange={handleChoice}
                   >
                     <option value={"Choose"}>Choose your list</option>

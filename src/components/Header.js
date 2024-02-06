@@ -93,7 +93,7 @@ const Header = () => {
             className={`flex flex-row rounded-md p-2 cursor-pointer `}
           >
             <div
-              className={`flex flex-row gap-2 rounded-md p-2 hover:bg-darkestGray duration-200 ${
+              className={`flex flex-row gap-2 rounded-md p-2 hover:bg-darkestGray ${
                 activeNav === Menu.title ? "bg-white text-black" : ""
               } text-gray-300 xl:text-sm text-xs items-center gap-x-3 
               ${Menu.gap ? "mt-9" : "mt-2"} ${

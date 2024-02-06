@@ -1,51 +1,44 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { selectCurrentToken } from "../../redux/reducers/authSlice";
 import useAxiosInstance from "../../utils/axiosInstance";
 import { useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
+import "react-international-phone/style.css";
+import { PhoneInput } from "react-international-phone";
 
 const AddContactModal = ({ showModal, onClose, newContacts }) => {
   const [show, setShowModal] = useState(showModal);
   const token = useSelector(selectCurrentToken);
+  const [number, setNumber] = useState("");
   const params = useParams();
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-  const [email, setEmail] = useState();
-  const [phoneNumber, setPhoneNumber] = useState();
-  const navigate = useNavigate();
+  const [contact, setContact] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+  });
+
   const axiosInstance = useAxiosInstance();
 
-  const handleFirstName = (e) => {
-    setFirstName(e.target.value);
-  };
-
-  const handleLastName = (e) => {
-    setLastName(e.target.value);
-  };
-
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePhoneNumber = (e) => {
-    setPhoneNumber(e.target.value);
+  const handleUserInput = (e) => {
+    setContact({ ...contact, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
     setShowModal(showModal);
   }, [showModal]);
-
+  console.log(contact);
   const addContact = async (e) => {
     e.preventDefault();
     try {
       let response = await axiosInstance.post(
         `/api/create_contact/${params.id}/`,
         {
-          first_name: firstName,
-          last_name: lastName,
-          phone_number: phoneNumber,
-          email: email,
+          first_name: contact.firstName,
+          last_name: contact.lastName,
+          phone_number: number,
+          email: contact.email,
           contact_list: params.id,
         },
         {
@@ -81,7 +74,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
           >
             <div className="relative w-auto mx-auto max-w-3xl">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white/50 outline-none focus:outline-none">
                 {/*header*/}
                 <Modal.Header closeButton>
                   <Modal.Title>Add a contact</Modal.Title>
@@ -96,30 +89,30 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
                   </p>
                   <input
                     className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full"
-                    name="first_name"
+                    name="firstName"
                     type="text"
                     placeholder="First name"
-                    onChange={handleFirstName}
+                    onChange={handleUserInput}
                   />
                   <input
                     className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full"
-                    name="last_name"
+                    name="lastName"
                     type="text"
                     placeholder="Last name"
-                    onChange={handleLastName}
+                    onChange={handleUserInput}
                   />
-                  <input
-                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm  rounded-xl w-full p-2.5 "
-                    name="phone_number"
-                    type="text"
-                    placeholder="Phone number"
-                    onChange={handlePhoneNumber}
+                  <PhoneInput
+                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full"
+                    placeholder="Enter phone number"
+                    onChange={(e) => setNumber(e)}
+                    defaultCountry="dk"
+                    name="phoneNumber"
                   />
                   <input
                     className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     name="email"
                     placeholder="Email"
-                    onChange={handleEmail}
+                    onChange={handleUserInput}
                   />
                 </div>
                 {/*footer*/}

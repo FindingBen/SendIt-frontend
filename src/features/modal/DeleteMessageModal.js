@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import useAxiosInstance from "../../utils/axiosInstance";
-import { useNavigate, useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 
 const DeleteMessageModal = ({
@@ -11,7 +10,6 @@ const DeleteMessageModal = ({
   setUpdated,
 }) => {
   const [show, setShowModal] = useState(showModalDelete);
-  const [listUpdate, setListUpdate] = useState(listUpdated);
 
   const axiosInstance = useAxiosInstance();
 

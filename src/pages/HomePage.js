@@ -243,7 +243,7 @@ const HomePage = () => {
               </p>
               <div
                 onClick={handleSortButtonClick}
-                className="px-3 py-2 text-white font-light text-sm rounded-2xl bg-darkBlue absolute right-0 lg:top-5 top-5"
+                className="px-3 py-2 text-white font-light text-sm rounded-2xl cursor-pointer bg-darkBlue absolute right-0 lg:top-5 top-5"
               >
                 Sort by date
               </div>

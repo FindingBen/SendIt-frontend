@@ -2,7 +2,7 @@ import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
 // import { ChartData as data } from "./ChartData";
 import { colors } from "@mui/material";
-import { margin } from "@mui/system";
+
 
 const BarChart = ({ data }) => {
   return (
