@@ -24,11 +24,11 @@ const ContactList = () => {
   const params = useParams();
 
   const rowsPerPage = 7;
-  const totalPages = Math.ceil(contacts.length / rowsPerPage);
+  const totalPages = Math.ceil(contacts?.length / rowsPerPage);
 
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
-  const paginatedData = contacts.slice(startIndex, endIndex);
+  const paginatedData = contacts?.slice(startIndex, endIndex);
 
   useEffect(() => {
     getContacts();
@@ -38,15 +38,18 @@ const ContactList = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-
-  let getContacts = async () => {
+  console.log(contacts);
+  let getContacts = async (sortParam) => {
     try {
-      let response = await axiosInstance.get(
-        `/api/contact_list/${params.id}/?sort_by=${sortOrder}`
-      );
+      let url = `/api/contact_list/${params.id}`;
 
+      // Check if a sorting parameter is present, then include it in the URL
+      if (sortParam) {
+        url += `/?sort_by=${sortOrder}`;
+      }
+      let response = await axiosInstance.get(url);
       if (response.status === 200) {
-        setContacts(response.data);
+        setContacts(response.data.contacts);
         setIsLoading(false);
       }
     } catch (error) {
@@ -65,11 +68,15 @@ const ContactList = () => {
 
   const handleSortByName = () => {
     setSortOrder(sortOrder === "first_name" ? "-first_name" : "first_name");
+    const sort = `?sort_by=${sortOrder}`;
+    getContacts(sort);
   };
 
   // Function to handle sorting by date created
   const handleSortByDateCreated = () => {
     setSortOrder(sortOrder === "created_at" ? "-created_at" : "created_at");
+    const sort = `?sort_by=${sortOrder}`;
+    getContacts(sort);
   };
 
   let deleteContact = async (id) => {

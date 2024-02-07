@@ -265,7 +265,7 @@ const HomePage = () => {
                       <motion.div
                         initial={
                           initialLoad
-                            ? { opacity: 1, scale: 0.5 }
+                            ? { opacity: 0, scale: 0.5 }
                             : { opacity: 1, scale: 1 }
                         }
                         animate={{ opacity: 1, scale: 1 }}
