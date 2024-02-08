@@ -5,13 +5,15 @@ import ModalComponent from "../components/ModalComponent";
 import { motion } from "framer-motion-3d";
 import { useRedux } from "../constants/reduxImports";
 import { setPackage } from "../redux/reducers/packageReducer";
+import ReceiptComponent from "../components/ReceiptComponent";
+
 const SuccessPayment = () => {
   const { dispatch } = useRedux();
   const axiosInstance = useAxiosInstance();
   const location = useLocation();
   const [isSuccess, setIsSuccess] = useState(0);
   const [showModal, setShow] = useState(false);
-
+  const [purchase, setPurchase] = useState({});
   const [errMessage, setErrMessage] = useState("");
 
   useEffect(() => {
@@ -31,10 +33,13 @@ const SuccessPayment = () => {
       );
       if (response.status === 200) {
         setTimeout(() => setShow(false), 1000);
-
+        console.log(response.data);
         dispatch(
-          setPackage({ package_plan: response?.data.package_plan.plan_type })
+          setPackage({
+            package_plan: response?.data.user.package_plan.plan_type,
+          })
         );
+        setPurchase(response?.data.purchase);
         if (showModal === false) {
           setIsSuccess(true);
         }
@@ -60,19 +65,12 @@ const SuccessPayment = () => {
                 delay: 0.2,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="mt-10 text-center text-3xl font-light text-grayWhite"
+              className="mt-10 text-center font-light text-grayWhite"
             >
-              Payment successful!<br></br>
-              <p className="p-2 text-poppins text-normal">
-                Thank you for your purchase, happy sending!
-              </p>
-              <div className="flex justify-center mt-5">
-                <img
-                  src={require("../../src/assets/check.png")}
-                  height={150}
-                  width={150}
-                  alt="Checkmark"
-                ></img>
+              <span className="text-3xl">Payment successful!</span>
+              <br></br>
+              <div className="flex justify-center mt-5 text-normal">
+                <ReceiptComponent purchase_obj={purchase} />
               </div>
             </motion.div>
           ) : isSuccess === false ? (

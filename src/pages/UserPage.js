@@ -86,16 +86,6 @@ const UserPage = () => {
     }
   };
 
-  const passStatus = (message) => {
-    setMsg(message);
-    setErrorMsg();
-  };
-
-  const errStatus = (message) => {
-    setErrorMsg(message);
-    setMsg();
-  };
-
   const componentMap = {
     account: <UserAccount user={user} />,
     billing: <Billings purchases={purchases} />,
