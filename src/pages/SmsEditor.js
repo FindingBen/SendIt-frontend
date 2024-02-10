@@ -124,6 +124,7 @@ const SmsEditor = () => {
         is_sent: false,
       });
       if (response.status === 200 || 201) {
+        dispatch(setOperation(true));
         navigate(`/home`);
       }
     } catch (e) {
