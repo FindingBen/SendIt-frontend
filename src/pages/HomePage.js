@@ -58,11 +58,13 @@ const HomePage = () => {
     } else if (currentOperationState) {
       getNotes();
       dispatch(setOperation(false));
+    } else if (sortOrder) {
+      getNotes();
     }
 
     refreshAnalytics();
     setInitialLoad(false);
-  }, [loading, listUpdated]);
+  }, [loading, listUpdated, sortOrder]);
   console.log("STATE:::", currentOperationState);
   const itemsPerPage = 4;
   const totalPages = Math.ceil(currentMessages?.length / itemsPerPage);
