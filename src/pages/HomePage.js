@@ -13,10 +13,17 @@ import OverallStatistics from "../components/Analytics/OverallStatistics";
 import PieChart from "../utils/chart/PieChart";
 import formatDate from "../utils/helpers/dateFunction";
 import SvgLoader from "../components/SvgLoader";
+import {
+  selectMessages,
+  setMessages,
+  setMessagesCount,
+} from "../redux/reducers/messageReducer";
 
 const HomePage = () => {
   const axiosInstance = useAxiosInstance();
-  const { dispatch, currentUser } = useRedux();
+  const { dispatch, currentUser, currentMessageCount, currentMessages } =
+    useRedux();
+
   let [notes, setNotes] = useState([]);
   const [initialLoad, setInitialLoad] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,10 +47,11 @@ const HomePage = () => {
   const formattedEndDate = formatDate(today);
 
   useEffect(() => {
+    // Fetch data only on initial load and when user is logged in
     getNotes();
     refreshAnalytics();
-    setLoading(true);
-  }, [listUpdated, loading, sortOrder]);
+    setInitialLoad(false);
+  }, [loading, listUpdated]);
 
   const itemsPerPage = 4;
   const totalPages = Math.ceil(notes?.length / itemsPerPage);
@@ -64,8 +72,11 @@ const HomePage = () => {
       );
 
       if (response.status === 200) {
+        console.log(response.data);
         setNotes(response?.data.messages);
         setMessageCount(response?.data.messages_count);
+        // dispatch(setMessages(response.data.messages));
+        // dispatch(setMessagesCount(response.data.messages_count));
       } else if (response.statusText === "Unauthorized") {
         dispatch(logOut());
       }
@@ -263,17 +274,17 @@ const HomePage = () => {
                     const rowClassName = isEvenRow ? "bg-darkestGray" : "";
                     return (
                       <motion.div
-                        initial={
-                          initialLoad
-                            ? { opacity: 0, scale: 0.5 }
-                            : { opacity: 1, scale: 1 }
-                        }
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                          duration: 0.4,
-                          delay: 0.2,
-                          ease: [0, 0.41, 0.1, 1.01],
-                        }}
+                        // initial={
+                        //   initialLoad
+                        //     ? { opacity: 0, scale: 0.5 }
+                        //     : { opacity: 1, scale: 1 }
+                        // }
+                        // animate={{ opacity: 1, scale: 1 }}
+                        // transition={{
+                        //   duration: 0.4,
+                        //   delay: 0.2,
+                        //   ease: [0, 0.41, 0.1, 1.01],
+                        // }}
                         className={`border-b border-grayWhite/50 text-white ${rowClassName} font-semibold text-xs lg:text-sm`}
                       >
                         <div

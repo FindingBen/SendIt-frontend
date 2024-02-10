@@ -24,7 +24,7 @@ import UnsubscribePage from "./pages/UnsubscribePage";
 import ActivationEmailSuccess from "./pages/ActivationEmailSuccess";
 
 const TRACKING_ID = "G-FPHE42LL46";
-ReactGA.initialize(TRACKING_ID, { debug: true });
+ReactGA.initialize(TRACKING_ID);
 
 function App() {
   return (

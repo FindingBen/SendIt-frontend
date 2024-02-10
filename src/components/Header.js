@@ -7,12 +7,14 @@ import { Link, useNavigate } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
 import { menu } from "../assets/menuAssets/menuIcons";
 import { useRedux } from "../constants/reduxImports";
+import { clearMessages } from "../redux/reducers/messageReducer";
+import { cleanContactLists } from "../redux/reducers/contactListReducer";
 
 const Header = () => {
   const { currentModalState, dispatch, currentUser, currentFormState } =
     useRedux();
   const [clickedPath, setClickedPath] = useState();
-  const [open, setOpen] = useState(true);
+
   const [activeNav, setActiveNav] = useState("Home");
   const isDirtyRef = useRef(false);
   const navigate = useNavigate();
@@ -45,6 +47,8 @@ const Header = () => {
   const handleLogout = () => {
     dispatch(logOut());
     dispatch(cleanPackage());
+    dispatch(clearMessages());
+    dispatch(cleanContactLists());
     localStorage.removeItem("refreshToken");
   };
 
@@ -63,6 +67,7 @@ const Header = () => {
       // Pass the clicked path
     }
   };
+
   const handleConfirmNavigation = () => {
     dispatch(setModalState({ show: false }));
 

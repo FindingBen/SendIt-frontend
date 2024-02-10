@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import useAxiosInstance from "../../utils/axiosInstance";
 import Modal from "react-bootstrap/Modal";
+import { setContactLists } from "../../redux/reducers/contactListReducer";
+import { useRedux } from "../../constants/reduxImports";
 
 const DeleteListModal = ({ showModal, onClose, contactListId, setUpdated }) => {
   const axiosInstance = useAxiosInstance();
+  const { dispatch } = useRedux();
   const [show, setShowModal] = useState(showModal);
   const [listId, setListId] = useState();
 
@@ -13,10 +16,26 @@ const DeleteListModal = ({ showModal, onClose, contactListId, setUpdated }) => {
   }, [showModal]);
 
   let deleteList = async (e) => {
-    let response = await axiosInstance.delete(`/api/delete_list/${listId}`);
-    if (response.status === 200) {
-      setUpdated();
-      closeModal();
+    try {
+      let response = await axiosInstance.delete(`/api/delete_list/${listId}`);
+      if (response.status === 200) {
+        // Fetch updated contact lists after deletion
+        let updatedListsResponse = await axiosInstance.get(
+          "/api/contact_lists/"
+        );
+        if (updatedListsResponse.status === 200) {
+          // Update local state
+          setUpdated();
+          closeModal();
+
+          // Dispatch action to update the Redux store
+          dispatch(
+            setContactLists({ contactLists: updatedListsResponse.data })
+          );
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   const closeModal = () => {
@@ -63,7 +82,8 @@ const DeleteListModal = ({ showModal, onClose, contactListId, setUpdated }) => {
                 {/*body*/}
                 <div className="relative p-4 flex-auto">
                   <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                    You are about to delete the contact list and its contacts, this cant be reversed, are you sure?
+                    You are about to delete the contact list and its contacts,
+                    this cant be reversed, are you sure?
                   </p>
                 </div>
                 {/*footer*/}

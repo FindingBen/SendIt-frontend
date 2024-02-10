@@ -57,7 +57,7 @@ const PasswordResetConfirm = () => {
               >
                 <path class="text-gray-700" d="M0 0h72v72H0z" />
                 <image
-                  href={require("../assets/notext-png.png")}
+                  href={require("../assets/noBgLogo.png")}
                   width="72"
                   height="72"
                 />

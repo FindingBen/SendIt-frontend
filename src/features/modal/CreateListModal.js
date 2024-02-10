@@ -6,9 +6,12 @@ import {
 import useAxiosInstance from "../../utils/axiosInstance";
 import { useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
+import { setContactLists } from "../../redux/reducers/contactListReducer";
+import { useRedux } from "../../constants/reduxImports";
 
 const CreateListModal = ({ showModal, onClose, newList }) => {
   const axiosInstance = useAxiosInstance();
+  const { dispatch, currentContactList } = useRedux();
   const [show, setShowModal] = useState(showModal);
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
@@ -37,7 +40,9 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
       }
     );
     if (response.status === 200 || 201) {
-      newList((prevList) => [...prevList, response.data]);
+      const newListData = [...currentContactList.contactLists, response.data];
+      newList(newListData);
+      dispatch(setContactLists({ contactLists: newListData }));
       closeModal();
     }
   };

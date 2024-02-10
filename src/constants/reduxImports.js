@@ -10,6 +10,7 @@ import {
 } from "../redux/reducers/modalReducer";
 import { selectFormState } from "../redux/reducers/formReducer";
 import { selectCurrentPackage } from "../redux/reducers/packageReducer";
+import { selectContactLists } from "../redux/reducers/contactListReducer";
 
 export const useRedux = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ export const useRedux = () => {
   const currentModalState = useSelector(selectModalState);
   const currentFormState = useSelector(selectFormState);
   const currentPackageState = useSelector(selectCurrentPackage);
+  const currentContactList = useSelector(selectContactLists);
 
   return {
     dispatch,
@@ -30,5 +32,6 @@ export const useRedux = () => {
     currentModalState,
     currentFormState,
     currentPackageState,
+    currentContactList,
   };
 };

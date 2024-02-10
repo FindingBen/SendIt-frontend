@@ -6,8 +6,11 @@ import { useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import "react-international-phone/style.css";
 import { PhoneInput } from "react-international-phone";
+import { useRedux } from "../../constants/reduxImports";
+import { setContactLists } from "../../redux/reducers/contactListReducer";
 
 const AddContactModal = ({ showModal, onClose, newContacts }) => {
+  const { currentContactList, dispatch } = useRedux();
   const [show, setShowModal] = useState(showModal);
   const token = useSelector(selectCurrentToken);
   const [number, setNumber] = useState("");
@@ -28,7 +31,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
   useEffect(() => {
     setShowModal(showModal);
   }, [showModal]);
-  console.log(contact);
+
   const addContact = async (e) => {
     e.preventDefault();
     try {
@@ -51,6 +54,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
 
       if (response.status === 200 || 201) {
         newContacts((prevContacts) => [...prevContacts, response.data]);
+        dispatch(setContactLists({ listChange: true }));
         closeModal();
       }
     } catch (error) {

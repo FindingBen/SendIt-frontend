@@ -37,7 +37,7 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
       });
       const responseData = await response.json();
-
+      console.log(responseData);
       if (!response.ok) {
         if (
           response.status === 400 &&
@@ -62,6 +62,7 @@ const Login = () => {
       const user = jwt_decode(responseData?.access).user_id;
       const packageValue = jwt_decode(responseData?.access).package_plan
         .package_plan;
+
       dispatch(setCredentials({ ...responseData, user }));
       dispatch(setPackage({ package_plan: packageValue }));
 

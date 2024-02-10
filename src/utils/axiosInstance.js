@@ -6,6 +6,8 @@ import { useRef } from "react";
 import { config } from "../constants/Constants";
 import { useRedux } from "../constants/reduxImports";
 
+import { cleanPackage } from "../redux/reducers/packageReducer";
+
 const useAxiosInstance = () => {
   const { currentToken, currentUser, dispatch } = useRedux();
   const baseURL = config.url.BASE_URL;
@@ -60,11 +62,12 @@ const useAxiosInstance = () => {
 
         req.headers.Authorization = `Bearer ${newToken}`;
         req.isTokenRefresh = true;
-        console.log("new Token", newToken.substr(-10));
       } catch (error) {
         console.log(error);
         localStorage.removeItem("refreshToken");
         dispatch(logOut());
+
+        dispatch(cleanPackage());
         throw error;
       }
     }

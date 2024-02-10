@@ -7,28 +7,35 @@ import CreateListModal from "../features/modal/CreateListModal";
 import DeleteListModal from "../features/modal/DeleteListModal";
 import { motion } from "framer-motion";
 import { useRedux } from "../constants/reduxImports";
+import { setContactLists } from "../redux/reducers/contactListReducer";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentPackageState } = useRedux();
+  const { currentPackageState, currentContactList, dispatch } = useRedux();
   const [contactList, setContactList] = useState([]);
   const [listUpdated, setListUpdated] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [initialLoad, setInitialLoad] = useState(true);
+  const [initialLoad, setInitialLoad] = useState(false);
   let max_list_allowed = 3;
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [listId, setListId] = useState();
 
   useEffect(() => {
-    getContactLists();
-  }, [listUpdated]);
+    // Fetch contact lists only if the Redux store is empty
+    if (!currentContactList.length) {
+      getContactLists();
+      setInitialLoad(true);
+    }
+  }, []);
 
   let getContactLists = async () => {
     try {
       let response = await axiosInstance.get("/api/contact_lists/");
       if (response.status === 200) {
         setContactList(response.data);
+        dispatch(
+          setContactLists({ contactLists: response.data, listChange: false })
+        );
         setListId();
       }
     } catch (error) {
@@ -53,6 +60,7 @@ const ContactList = () => {
   const deleteList = (id) => {
     setListId(id);
     setShowDelete(true);
+    //getContactLists();
   };
 
   const handleNewList = (contactList) => {
@@ -98,7 +106,7 @@ const ContactList = () => {
               )}
             </div>
 
-            {contactList?.map((conList) => {
+            {currentContactList.contactLists?.map((conList) => {
               return (
                 <div className={`flex flex-row space-x-2 items-center`}>
                   <motion.div
@@ -108,11 +116,15 @@ const ContactList = () => {
                         : { opacity: 1, scale: 1 }
                     }
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                      duration: 0.4,
-                      delay: 0.2,
-                      ease: [0, 0.41, 0.1, 1.01],
-                    }}
+                    transition={
+                      initialLoad
+                        ? {
+                            duration: 0.4,
+                            delay: 0.2,
+                            ease: [0, 0.41, 0.1, 1.01],
+                          }
+                        : {}
+                    }
                     key={conList.id}
                     class="relative w-100 bg-darkestGray h-72 flex flex-col space-y-2 items-center rounded-2xl"
                   >
