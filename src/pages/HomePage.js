@@ -14,15 +14,20 @@ import PieChart from "../utils/chart/PieChart";
 import formatDate from "../utils/helpers/dateFunction";
 import SvgLoader from "../components/SvgLoader";
 import {
-  selectMessages,
   setMessages,
   setMessagesCount,
+  setOperation,
 } from "../redux/reducers/messageReducer";
 
 const HomePage = () => {
   const axiosInstance = useAxiosInstance();
-  const { dispatch, currentUser, currentMessageCount, currentMessages } =
-    useRedux();
+  const {
+    dispatch,
+    currentUser,
+    currentMessageCount,
+    currentMessages,
+    currentOperationState,
+  } = useRedux();
 
   let [notes, setNotes] = useState([]);
   const [initialLoad, setInitialLoad] = useState(true);
@@ -48,13 +53,19 @@ const HomePage = () => {
 
   useEffect(() => {
     // Fetch data only on initial load and when user is logged in
-    getNotes();
+    if (!currentMessages.length) {
+      getNotes();
+    } else if (currentOperationState) {
+      getNotes();
+      dispatch(setOperation(false));
+    }
+
     refreshAnalytics();
     setInitialLoad(false);
   }, [loading, listUpdated]);
-
+  console.log("STATE:::", currentOperationState);
   const itemsPerPage = 4;
-  const totalPages = Math.ceil(notes?.length / itemsPerPage);
+  const totalPages = Math.ceil(currentMessages?.length / itemsPerPage);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -63,7 +74,7 @@ const HomePage = () => {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const displayedItems = notes?.slice(startIndex, endIndex);
+  const displayedItems = currentMessages?.slice(startIndex, endIndex);
 
   let getNotes = async () => {
     try {
@@ -75,8 +86,8 @@ const HomePage = () => {
         console.log(response.data);
         setNotes(response?.data.messages);
         setMessageCount(response?.data.messages_count);
-        // dispatch(setMessages(response.data.messages));
-        // dispatch(setMessagesCount(response.data.messages_count));
+        dispatch(setMessages(response.data.messages));
+        dispatch(setMessagesCount(response.data.messages_count));
       } else if (response.statusText === "Unauthorized") {
         dispatch(logOut());
       }
@@ -165,7 +176,13 @@ const HomePage = () => {
       });
 
       await createElementsData();
-
+      if (duplicateMessageResponse.status === 200) {
+        const updatedMessageList = [
+          ...currentMessages,
+          duplicateMessageResponse.data.note,
+        ];
+        dispatch(setMessages(updatedMessageList));
+      }
       setTimeout(() => setShowCopy(false), 1000);
       setLoading(false);
     } catch (error) {
@@ -267,7 +284,7 @@ const HomePage = () => {
                 <div>Status</div>
                 <div>Action</div>
               </div>
-              {notes?.length > 0 && displayedItems ? (
+              {currentMessages?.length > 0 && displayedItems ? (
                 <div>
                   {displayedItems?.map((message, index) => {
                     const isEvenRow = index % 2 === 0; // Check if the row is even

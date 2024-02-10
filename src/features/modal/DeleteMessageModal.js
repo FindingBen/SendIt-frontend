@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import useAxiosInstance from "../../utils/axiosInstance";
 import Modal from "react-bootstrap/Modal";
+import { setMessages } from "../../redux/reducers/messageReducer";
+import { useRedux } from "../../constants/reduxImports";
 
 const DeleteMessageModal = ({
   messageId,
@@ -10,7 +12,7 @@ const DeleteMessageModal = ({
   setUpdated,
 }) => {
   const [show, setShowModal] = useState(showModalDelete);
-
+  const { dispatch } = useRedux();
   const axiosInstance = useAxiosInstance();
 
   useEffect(() => {
@@ -27,6 +29,16 @@ const DeleteMessageModal = ({
         closeModal();
         //setListUpdate(true);
         setUpdated();
+        let updatedMessageList = await axiosInstance.get("/api/notes/");
+        if (updatedMessageList.status === 200) {
+          // Update local state
+          console.log(updatedMessageList);
+          setUpdated();
+          closeModal();
+
+          // Dispatch action to update the Redux store
+          dispatch(setMessages(updatedMessageList.data.messages));
+        }
       }
     } catch (error) {
       console.log("Error deleting message:", error);

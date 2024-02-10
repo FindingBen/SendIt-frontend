@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import ReactDOM from "react-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import ScheduleSmsModal from "../features/modal/ScheduleSmsModal";
 import "../css/Sms.css";
-import TextComponent from "../components/TextComponent";
 import SmsConfirmModal from "../features/modal/SmsConfirmModal";
 import { useRedux } from "../constants/reduxImports";
+import { setOperation } from "../redux/reducers/messageReducer";
 
 const SmsEditor = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentUser, currentPackageState } = useRedux();
+  const { currentUser, currentPackageState, dispatch } = useRedux();
   const params = useParams();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
@@ -18,11 +17,9 @@ const SmsEditor = () => {
   const [linkURL, setLinkURL] = useState("");
   const [user, setUser] = useState();
   const [dateSchedule, setDateSchedule] = useState();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [smsText, setSmsText] = useState([]);
   const [contactLists, setContactList] = useState([]);
-  const textComponentRef = useRef(null);
   const [recipients, setRecipients] = useState();
   const BASE = "https://sendit-backend-production.up.railway.app";
   const BASE_URL = "https://spplane.app";
@@ -89,27 +86,28 @@ const SmsEditor = () => {
   };
 
   const sendSms = async () => {
-    try {
-      const response = await axiosInstance.post("/sms/sms-send/", {
-        user: currentUser,
-        sender: "ME",
-        sms_text: smsText,
-        content_link: linkURL,
-        message: params.id,
-        contact_list: recipients.id,
-        scheduled: false,
-        // is_sent: true,
-      });
+    //try {
+    const response = await axiosInstance.post("/sms/sms-send/", {
+      user: currentUser,
+      sender: "ME",
+      sms_text: smsText,
+      content_link: linkURL,
+      message: params.id,
+      contact_list: recipients.id,
+      scheduled: false,
+      // is_sent: true,
+    });
 
-      if (response.status === 200 || response.status === 201) {
-        navigate(`/home`);
-      } else {
-        setErrorMessage("Error sending SMS");
-      }
-    } catch (error) {
-      setErrorMessage(error.response?.data?.error || "Error sending SMS");
-      console.error(error);
+    if (response.status === 200 || response.status === 201) {
+      dispatch(setOperation(true));
+      navigate(`/home`);
+    } else {
+      setErrorMessage("Error sending SMS");
     }
+    // } catch (error) {
+    //   setErrorMessage(error.response?.data?.error || "Error sending SMS");
+    //   console.error(error);
+    // }
   };
 
   const scheduleSms = async () => {

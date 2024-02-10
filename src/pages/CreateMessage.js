@@ -17,11 +17,17 @@ import useAxiosInstance from "../utils/axiosInstance";
 import { useRedux } from "../constants/reduxImports";
 import SvgLoader from "../components/SvgLoader";
 import PreviewPanel from "../components/PreviewComponent/PreviewPanel";
+import { setMessages } from "../redux/reducers/messageReducer";
 
 const CreateNote = () => {
   const { deleteElement } = useContext(ElementContext);
-  const { currentUser, dispatch, currentModalState, currentPackageState } =
-    useRedux();
+  const {
+    currentUser,
+    dispatch,
+    currentModalState,
+    currentPackageState,
+    currentMessages,
+  } = useRedux();
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
@@ -52,7 +58,7 @@ const CreateNote = () => {
       prevSelectedComponent === componentKey ? null : componentKey
     );
   };
-  console.log(currentPackageState);
+
   const handleMessageName = (e) => {
     setMessageName(e.target.value);
     setIsDirty(true);
@@ -100,6 +106,8 @@ const CreateNote = () => {
         dispatch(setState({ isDirty: false }));
         messageObjId = response.data.note.id;
         setMessageObj(response.data.note);
+        const newMessageList = [...currentMessages, response.data.note];
+        dispatch(setMessages(newMessageList));
         setIsLoading(false);
         navigate("/home");
       } else {

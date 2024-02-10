@@ -5,7 +5,7 @@ import { setCredentials, logOut } from "../redux/reducers/authSlice";
 import { useRef } from "react";
 import { config } from "../constants/Constants";
 import { useRedux } from "../constants/reduxImports";
-
+import { cleanContactLists } from "../redux/reducers/contactListReducer";
 import { cleanPackage } from "../redux/reducers/packageReducer";
 
 const useAxiosInstance = () => {
@@ -66,7 +66,7 @@ const useAxiosInstance = () => {
         console.log(error);
         localStorage.removeItem("refreshToken");
         dispatch(logOut());
-
+        dispatch(cleanContactLists());
         dispatch(cleanPackage());
         throw error;
       }

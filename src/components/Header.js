@@ -49,6 +49,7 @@ const Header = () => {
     dispatch(cleanPackage());
     dispatch(clearMessages());
     dispatch(cleanContactLists());
+    dispatch(clearMessages());
     localStorage.removeItem("refreshToken");
   };
 

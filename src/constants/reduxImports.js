@@ -11,6 +11,11 @@ import {
 import { selectFormState } from "../redux/reducers/formReducer";
 import { selectCurrentPackage } from "../redux/reducers/packageReducer";
 import { selectContactLists } from "../redux/reducers/contactListReducer";
+import {
+  selectMessages,
+  selectMessagesCount,
+} from "../redux/reducers/messageReducer";
+import { selectOperationState } from "../redux/reducers/messageReducer";
 
 export const useRedux = () => {
   const dispatch = useDispatch();
@@ -22,6 +27,9 @@ export const useRedux = () => {
   const currentFormState = useSelector(selectFormState);
   const currentPackageState = useSelector(selectCurrentPackage);
   const currentContactList = useSelector(selectContactLists);
+  const currentMessages = useSelector(selectMessages);
+  const currentMessagesCount = useSelector(selectMessagesCount);
+  const currentOperationState = useSelector(selectOperationState);
 
   return {
     dispatch,
@@ -33,5 +41,8 @@ export const useRedux = () => {
     currentFormState,
     currentPackageState,
     currentContactList,
+    currentMessages,
+    currentMessagesCount,
+    currentOperationState,
   };
 };
