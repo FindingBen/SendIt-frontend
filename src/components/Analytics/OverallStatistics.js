@@ -2,7 +2,7 @@ import React from "react";
 import SvgLoader from "../SvgLoader";
 import { motion } from "framer-motion";
 
-const OverallStatistics = ({ totalValues, messageCount }) => {
+const OverallStatistics = ({ totalValues }) => {
   return (
     <div className="flex bg-darkBlue rounded-2xl p-2 w-[72%]">
       <div className="flex flex-row items-center lg:w-[275px] rounded-md">
@@ -37,7 +37,7 @@ const OverallStatistics = ({ totalValues, messageCount }) => {
               }}
               className="text-white lg:text-2xl font-normal"
             >
-              {messageCount ?? 0}
+              {totalValues.total_sends ?? 0}
             </motion.div>
           ) : (
             <p className="text-white font-semibold lg:text-2xl ml-2">

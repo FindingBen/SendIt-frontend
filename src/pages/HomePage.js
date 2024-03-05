@@ -65,7 +65,7 @@ const HomePage = () => {
     refreshAnalytics();
     setInitialLoad(false);
   }, [loading, listUpdated, sortOrder]);
-  console.log("STATE:::", currentOperationState);
+
   const itemsPerPage = 4;
   const totalPages = Math.ceil(currentMessages?.length / itemsPerPage);
 
@@ -85,7 +85,6 @@ const HomePage = () => {
       );
 
       if (response.status === 200) {
-        console.log(response.data);
         setNotes(response?.data.messages);
         setMessageCount(response?.data.messages_count);
         dispatch(setMessages(response.data.messages));
@@ -255,10 +254,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <OverallStatistics
-            totalValues={totalValues}
-            messageCount={messageCount}
-          />
+          <OverallStatistics totalValues={totalValues} />
           {/* <SendingStats sms_stats={stats} /> */}
 
           {/* table content */}
