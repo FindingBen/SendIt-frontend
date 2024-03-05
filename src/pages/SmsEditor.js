@@ -21,7 +21,7 @@ const SmsEditor = () => {
   const [smsText, setSmsText] = useState([]);
   const [contactLists, setContactList] = useState([]);
   const [recipients, setRecipients] = useState();
-  const BASE = "https://sendit-backend-production.up.railway.app";
+  const BASE = "https://spp.up.railway.app";
   const BASE_URL = "https://spplane.app";
   const linkURLBase = `${BASE_URL}/view/${params.id}`;
   const uniqueLink = `${BASE}/sms/sms/tracking/`;
@@ -86,28 +86,28 @@ const SmsEditor = () => {
   };
 
   const sendSms = async () => {
-    //try {
-    const response = await axiosInstance.post("/sms/sms-send/", {
-      user: currentUser,
-      sender: "ME",
-      sms_text: smsText,
-      content_link: linkURL,
-      message: params.id,
-      contact_list: recipients.id,
-      scheduled: false,
-      // is_sent: true,
-    });
+    try {
+      const response = await axiosInstance.post("/sms/sms-send/", {
+        user: currentUser,
+        sender: "ME",
+        sms_text: smsText,
+        content_link: linkURL,
+        message: params.id,
+        contact_list: recipients.id,
+        scheduled: false,
+        // is_sent: true,
+      });
 
-    if (response.status === 200 || response.status === 201) {
-      dispatch(setOperation(true));
-      navigate(`/home`);
-    } else {
-      setErrorMessage("Error sending SMS");
+      if (response.status === 200 || response.status === 201) {
+        dispatch(setOperation(true));
+        navigate(`/home`);
+      } else {
+        setErrorMessage("Error sending SMS");
+      }
+    } catch (error) {
+      setErrorMessage(error.response?.data?.error || "Error sending SMS");
+      console.error(error);
     }
-    // } catch (error) {
-    //   setErrorMessage(error.response?.data?.error || "Error sending SMS");
-    //   console.error(error);
-    // }
   };
 
   const scheduleSms = async () => {
@@ -292,6 +292,12 @@ const SmsEditor = () => {
                   {user?.sms_count - recipients?.contact_lenght}
                 </p>{" "}
                 after this sendout.
+                {recipients?.contact_lenght > user?.sms_count && (
+                  <p className="text-red-500 mt-3">
+                    Warning: The selected list has more recipients than your
+                    available credits.
+                  </p>
+                )}
               </div>
               <div className="flex flex-col p-5 rounded-lg">
                 <div className="flex flex-row p-2">
