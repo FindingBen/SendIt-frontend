@@ -15,10 +15,12 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
   const [show, setShowModal] = useState(showModal);
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
+  const [errorMsg, setErrorMsg] = useState("");
   const [listName, setListName] = useState();
 
   const handleListName = (e) => {
     setListName(e.target.value);
+    setErrorMsg("");
   };
 
   useEffect(() => {
@@ -26,29 +28,38 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
   }, [showModal]);
 
   const addList = async (e) => {
-    e.preventDefault();
-    let response = await axiosInstance.post(
-      `/api/create_list/${user}`,
-      {
-        list_name: listName,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(token),
+    try {
+      e.preventDefault();
+      let response = await axiosInstance.post(
+        `/api/create_list/${user}`,
+        {
+          list_name: listName,
         },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(token),
+          },
+        }
+      );
+      if (response.status === 200 || 201) {
+        const newListData = [...currentContactList.contactLists, response.data];
+        newList(newListData);
+        dispatch(setContactLists({ contactLists: newListData }));
+        closeModal();
       }
-    );
-    if (response.status === 200 || 201) {
-      const newListData = [...currentContactList.contactLists, response.data];
-      newList(newListData);
-      dispatch(setContactLists({ contactLists: newListData }));
-      closeModal();
+    } catch (error) {
+      setErrorMsg(error);
+
+      if (error) {
+        setErrorMsg("This field cannot be empty!");
+      }
     }
   };
 
   const closeModal = () => {
     onClose();
+    setErrorMsg("");
   };
   return (
     <>
@@ -72,7 +83,9 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
                   <p className="my-4 text-slate-500 text-lg leading-relaxed">
                     Simply enter the name for the list and click create.
                   </p>
-
+                  {errorMsg && (
+                    <p className="text-sm text-red-500">{errorMsg}</p>
+                  )}
                   <input
                     className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                     name="text"

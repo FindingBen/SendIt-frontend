@@ -38,7 +38,6 @@ const Text = ({
 }) => {
   const { currentUser } = useRedux();
   const { createElement } = useContext(ElementContext);
-
   const [text, setText] = useState([]);
   const container = document.getElementById("myList");
   const [isMounted, setIsMounted] = useState(true);
@@ -129,7 +128,6 @@ const Text = ({
     setComponentState(null);
     addTextObjContext();
     setAlign(event);
-
     if (isMounted) {
       const listContainer = document.getElementById("myList");
 
@@ -196,6 +194,7 @@ const Text = ({
           value={false}
           onClick={saveTxt}
           style={{ marginRight: "10px" }}
+          disabled={text.length <= 0}
         >
           Save
         </button>

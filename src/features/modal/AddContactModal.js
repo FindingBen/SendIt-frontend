@@ -109,7 +109,6 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
                     className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full"
                     placeholder="Enter phone number"
                     onChange={(e) => setNumber(e)}
-                    defaultCountry="dk"
                     name="phoneNumber"
                   />
                   <input

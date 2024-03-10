@@ -15,34 +15,43 @@ const Plans = ({ packagePlan }) => {
   const [messages, setMessages] = useState("");
 
   let stripeCheckout = async (name_product, id) => {
-    setShow(true);
-    setLoadingStates((prevState) => ({
-      ...prevState,
-      [id]: true,
-    }));
-    setIsLoading(true);
-
-    let response = await axiosInstance.post("/stripe/stripe_checkout_session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + String(currentToken),
-      },
-      name_product,
-      currentUser,
-    });
-    if (response.status === 200) {
-      console.log(response);
-
+    try {
+      setShow(true);
       setLoadingStates((prevState) => ({
         ...prevState,
-        [id]: false,
+        [id]: true,
       }));
-      setShow(false);
-      window.location.replace(response.data.url);
-      // Log the response data
-    } else {
-      console.error("Error creating Stripe Checkout session");
+      setIsLoading(true);
+
+      let response = await axiosInstance.post(
+        "/stripe/stripe_checkout_session",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(currentToken),
+          },
+          name_product,
+          currentUser,
+        }
+      );
+      if (response.status === 200) {
+        console.log(response);
+
+        setLoadingStates((prevState) => ({
+          ...prevState,
+          [id]: false,
+        }));
+        setShow(false);
+        window.location.replace(response.data.url);
+        // Log the response data
+        // } else {
+        //   console.error("Error creating Stripe Checkout session");
+        //   setIsLoading(false);
+        //   setShow(false);
+        // }
+      }
+    } catch (error) {
       setIsLoading(false);
       setShow(false);
     }

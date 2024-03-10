@@ -30,7 +30,7 @@ const UnsubscribePage = () => {
             </p>
             <button
               onClick={handleUnsubscribe}
-              className="bg-blue-800 hover:bg-green-400 text-white font-bold py-2 px-3 rounded text-sm mt-5"
+              className="bg-blue-800 hover:bg-green-400 text-white font-bold py-2 px-3 rounded text-sm mt-5 cursor-pointer"
             >
               Yes please
             </button>
