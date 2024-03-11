@@ -25,7 +25,7 @@ const ReceiptComponent = ({ purchase_obj }) => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-12 h-12 text-green-500"
+            class="w-14 h-14 text-green-500"
           >
             <path
               stroke-linecap="round"
@@ -43,7 +43,7 @@ const ReceiptComponent = ({ purchase_obj }) => {
             </p>
           </div>
         </div>
-        <div className="text-justify p-2">
+        <div className="text-start p-2">
           <p className="text-normal text-white">
             Item: <span className="font-bold">{purchase_obj.package_name}</span>
           </p>
@@ -59,7 +59,7 @@ const ReceiptComponent = ({ purchase_obj }) => {
       </div>
       <div
         onClick={() => copyPurchaseId(purchase_obj.payment_id)}
-        className="px-2 py-2 bg-black rounded-2xl mx-5 cursor-pointer"
+        className="px-2 py-2 bg-white/80 text-black font-normal rounded-2xl mx-5 mt-2 cursor-pointer"
       >
         Copy ID
       </div>
