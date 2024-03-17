@@ -14,10 +14,12 @@ import PieChart from "../utils/chart/PieChart";
 import formatDate from "../utils/helpers/dateFunction";
 import SvgLoader from "../components/SvgLoader";
 import {
+  clearMessages,
   setMessages,
   setMessagesCount,
   setOperation,
 } from "../redux/reducers/messageReducer";
+import { cleanPackage } from "../redux/reducers/packageReducer";
 
 const HomePage = () => {
   const axiosInstance = useAxiosInstance();
@@ -105,11 +107,17 @@ const HomePage = () => {
   };
 
   let refreshAnalytics = async () => {
-    let response = await axiosInstance.get(
-      `/api/get_total_analytic_values/${currentUser}`
-    );
-    if (response.status === 200) {
-      setTotalValues(response?.data);
+    try {
+      let response = await axiosInstance.get(
+        `/api/get_total_analytic_values/${currentUser}`
+      );
+      if (response.status === 200) {
+        setTotalValues(response?.data);
+      }
+    } catch (error) {
+      dispatch(cleanPackage());
+      dispatch(clearMessages());
+      dispatch(logOut());
     }
   };
 

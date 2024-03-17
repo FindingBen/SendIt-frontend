@@ -216,16 +216,16 @@ const CreateNote = () => {
               {!isLoading ? (
                 <button
                   onClick={handleSubmit}
-                  className="text-white bg-darkBlue p-2 rounded-2xl hover:text-white smooth-hover flex flex-row"
+                  className="text-white bg-darkBlue p-1 rounded-2xl hover:text-white smooth-hover flex flex-row"
                 >
-                  <h2 className="lg:text-2xl text-xl mx-2">Create</h2>
+                  <h2 className="text-lg mx-2">Create</h2>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-6 h-6 my-1"
+                    class="w-4 h-4 my-1"
                   >
                     <path
                       stroke-linecap="round"
@@ -235,7 +235,7 @@ const CreateNote = () => {
                   </svg>
                 </button>
               ) : (
-                <SvgLoader width={8} height={8} />
+                <SvgLoader width={7} height={7} />
               )}
             </div>
           </div>

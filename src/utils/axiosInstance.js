@@ -7,6 +7,7 @@ import { config } from "../constants/Constants";
 import { useRedux } from "../constants/reduxImports";
 import { cleanContactLists } from "../redux/reducers/contactListReducer";
 import { cleanPackage } from "../redux/reducers/packageReducer";
+import { clearMessages } from "../redux/reducers/messageReducer";
 
 const useAxiosInstance = () => {
   const { currentToken, currentUser, dispatch } = useRedux();
@@ -17,13 +18,21 @@ const useAxiosInstance = () => {
       baseURL: baseURL,
     });
 
-    if (token) {
-      instance.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${currentToken}`;
-    }
+    try {
+      if (token) {
+        instance.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${currentToken}`;
+      }
 
-    return instance;
+      return instance;
+    } catch (error) {
+      console.log(error);
+      dispatch(logOut());
+      dispatch(cleanPackage());
+      dispatch(clearMessages());
+      dispatch(cleanContactLists());
+    }
   };
 
   const axiosInstanceRef = useRef(createAxiosInstance(currentToken));
@@ -68,6 +77,7 @@ const useAxiosInstance = () => {
         dispatch(logOut());
         dispatch(cleanContactLists());
         dispatch(cleanPackage());
+        dispatch(clearMessages());
         throw error;
       }
     }
