@@ -37,7 +37,7 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
       });
       const responseData = await response.json();
-      console.log(responseData);
+
       if (!response.ok) {
         if (
           response.status === 400 &&

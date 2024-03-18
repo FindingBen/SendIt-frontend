@@ -27,7 +27,7 @@ const useAxiosInstance = () => {
 
       return instance;
     } catch (error) {
-      console.log(error);
+      console.log("FFFF", error);
       dispatch(logOut());
       dispatch(cleanPackage());
       dispatch(clearMessages());
@@ -72,7 +72,7 @@ const useAxiosInstance = () => {
         req.headers.Authorization = `Bearer ${newToken}`;
         req.isTokenRefresh = true;
       } catch (error) {
-        console.log(error);
+        console.log("AAA", error);
         localStorage.removeItem("refreshToken");
         dispatch(logOut());
         dispatch(cleanContactLists());
