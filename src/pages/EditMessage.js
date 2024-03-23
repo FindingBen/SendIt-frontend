@@ -41,6 +41,7 @@ const EditMessage = () => {
   const [getId, setId] = useState();
   const [createdEl, setCreatedEl] = useState([]);
   const [selectedComponent, setSelectedComponent] = useState(null);
+  const [imageStateVal, setImageStateVal] = useState(false);
   const [device, setDevice] = useState("tablet");
 
   useEffect(() => {
@@ -252,6 +253,7 @@ const EditMessage = () => {
         listEl={isCreate}
         elementList={handleElementState}
         contextList={handleContextEl}
+        imageState={setImageStateVal}
         setComponentState={setComponent}
       />
     ),
@@ -301,16 +303,16 @@ const EditMessage = () => {
               {!isLoading ? (
                 <button
                   onClick={editMessage}
-                  className="text-white bg-darkBlue p-2 rounded-2xl hover:text-white smooth-hover flex flex-row"
+                  className="text-white bg-darkBlue p-1 rounded-2xl hover:text-white smooth-hover flex flex-row"
                 >
-                  <h2 className="lg:text-2xl text-xl mx-2">Save</h2>
+                  <h2 className="text-lg mx-2">Save</h2>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="w-6 h-6 my-1"
+                    class="w-4 h-4 my-1"
                   >
                     <path
                       stroke-linecap="round"
@@ -321,7 +323,7 @@ const EditMessage = () => {
                 </button>
               ) : (
                 <div role="status">
-                  <SvgLoader height={8} width={8} />
+                  <SvgLoader height={4} width={4} />
                   <span class="sr-only">Saving...</span>
                 </div>
               )}
@@ -343,7 +345,9 @@ const EditMessage = () => {
                   <span className="text-left text-white">Content elements</span>
                   <div className="flex flex-row mt-2 gap-2">
                     <div
-                      onClick={() => handleClick("image")}
+                      onClick={
+                        imageStateVal ? null : () => handleClick("image")
+                      }
                       name="liClick"
                       className="mb-3 flex flex-row rounded-md bg-white p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                     >
@@ -366,7 +370,9 @@ const EditMessage = () => {
                       </p>
                     </div>
                     <div
-                      onClick={() => handleClick("button")}
+                      onClick={
+                        imageStateVal ? null : () => handleClick("button")
+                      }
                       name="liClick"
                       className="mb-3 flex flex-row rounded-md bg-white p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                     >
@@ -396,7 +402,7 @@ const EditMessage = () => {
                   </div>
                   <div className="flex flex-row gap-2">
                     <div
-                      onClick={() => handleClick("text")}
+                      onClick={imageStateVal ? null : () => handleClick("text")}
                       name="liClick"
                       className="mb-3 flex flex-row rounded-md bg-white p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                     >
@@ -424,7 +430,9 @@ const EditMessage = () => {
                       </p>
                     </div>
                     <div
-                      onClick={() => handleClick("survey")}
+                      onClick={
+                        imageStateVal ? null : () => handleClick("survey")
+                      }
                       name="liClick"
                       className="mb-3 flex flex-row rounded transition bg-white p-2 ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                     >

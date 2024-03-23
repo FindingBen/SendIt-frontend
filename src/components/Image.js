@@ -12,6 +12,7 @@ const Image = ({
   contextList,
   elementList,
   listEl,
+  imageState,
 }) => {
   const { currentUser } = useRedux();
   const { createElement } = useContext(ElementContext);
@@ -57,7 +58,7 @@ const Image = ({
     const reader = new FileReader();
     handleFiles(file);
     setFile(file);
-
+    imageState(true);
     reader.onload = (event) => {
       setImageSrc(event.target.result);
       const newImage = event.target.result;
@@ -87,6 +88,7 @@ const Image = ({
     addImageElContext();
     setCancel(true);
     setComponentState(null);
+    imageState(false);
     if (isMounted && container) {
       if (!isCreated) {
         if (container) {
@@ -108,6 +110,7 @@ const Image = ({
   function handleCancel(event) {
     setCancel(true);
     setComponentState(null);
+    imageState(false);
     if (isMounted) {
       const listContainer = document.getElementById("myList");
       if (!isCreated) {

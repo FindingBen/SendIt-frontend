@@ -41,8 +41,10 @@ const CreateNote = () => {
   const [messageObj, setMessageObj] = useState();
   const [errorMsg, setErrorMsg] = useState("");
   const axiosInstance = useAxiosInstance();
+  const [imageStateVal, setImageStateVal] = useState(false);
+
   const [selectedComponent, setSelectedComponent] = useState(null);
-  const [device, setDevice] = useState("tablet");
+  const [device, setDevice] = useState("phone");
 
   useEffect(() => {
     if (elementContextList.length > 0) {
@@ -166,6 +168,7 @@ const CreateNote = () => {
         listEl={isCreate}
         contextList={handleContextEl}
         setComponentState={setComponent}
+        imageState={setImageStateVal}
       />
     ),
     text: (
@@ -257,7 +260,7 @@ const CreateNote = () => {
                 <span className="text-left text-white">Content elements</span>
                 <div className="flex flex-row mt-2 gap-2">
                   <div
-                    onClick={() => handleClick("image")}
+                    onClick={imageStateVal ? null : () => handleClick("image")}
                     name="liClick"
                     className="mb-3 flex flex-row rounded-md bg-white p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                   >
@@ -280,7 +283,7 @@ const CreateNote = () => {
                     </p>
                   </div>
                   <div
-                    onClick={() => handleClick("button")}
+                    onClick={imageStateVal ? null : () => handleClick("button")}
                     name="liClick"
                     className="mb-3 flex flex-row rounded-md bg-white p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                   >
@@ -310,7 +313,7 @@ const CreateNote = () => {
                 </div>
                 <div className="flex flex-row gap-2">
                   <div
-                    onClick={() => handleClick("text")}
+                    onClick={imageStateVal ? null : () => handleClick("text")}
                     name="liClick"
                     className="mb-3 flex flex-row rounded-md bg-white p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                   >
@@ -338,7 +341,7 @@ const CreateNote = () => {
                     </p>
                   </div>
                   <div
-                    onClick={() => handleClick("survey")}
+                    onClick={imageStateVal ? null : () => handleClick("survey")}
                     name="liClick"
                     className="mb-3 flex flex-row rounded transition bg-white p-2 ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                   >
@@ -364,7 +367,9 @@ const CreateNote = () => {
                 <div className="flex flex-row justify-between">
                   {currentPackageState === "Gold package" ? (
                     <div
-                      onClick={() => handleClick("aiContent")}
+                      onClick={
+                        imageStateVal ? null : () => handleClick("aiContent")
+                      }
                       name="liClick"
                       className="mb-2 flex flex-row rounded-md p-2 bg-white transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                     >
