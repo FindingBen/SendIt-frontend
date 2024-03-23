@@ -221,7 +221,6 @@ const EditMessage = () => {
   };
 
   const handleMessageName = (e) => {
-    console.log(e.target.value);
     setMessageName(e.target.value);
     setIsDirty(true);
   };
