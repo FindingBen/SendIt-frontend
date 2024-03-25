@@ -8,7 +8,7 @@ import DeleteListModal from "../features/modal/DeleteListModal";
 import { motion } from "framer-motion";
 import { useRedux } from "../constants/reduxImports";
 import { setContactLists } from "../redux/reducers/contactListReducer";
-
+import SmsPill from "../components/SmsPill/SmsPill";
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
   const { currentPackageState, currentContactList, dispatch } = useRedux();
@@ -68,13 +68,16 @@ const ContactList = () => {
   };
 
   return (
-    <div class="min-h-screen flex-d w-100 items-center justify-center">
+    <div class="min-h-screen w-[100%] items-center justify-center">
       <div class="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 max-w-6xl sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
-        <div class="flex-1 px-2 sm:px-0">
+        <div class="flex-1 sm:px-0">
           <div class="flex justify-between items-center">
             <h3 class="xl:text-3xl text-2xl font-extralight text-white">
               Contact lists
             </h3>
+            <div className="flex flex-row items-center">
+              <SmsPill />
+            </div>
           </div>
 
           <div class="mb-10 sm:mb-0 mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

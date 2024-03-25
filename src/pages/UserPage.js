@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import Billings from "../components/AccountSettings/Billings";
 import UserAccount from "../components/AccountSettings/UserAccount";
@@ -10,13 +10,14 @@ const UserPage = () => {
   const axiosInstance = useAxiosInstance();
   const [username, setUsername] = useState();
   const [packagePlans, setPackage] = useState([]);
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const [msg, setMsg] = useState();
   const [errorMsg, setErrorMsg] = useState();
   const [newName, setNewName] = useState();
   const [newLastName, setNewLastName] = useState();
   const [purchases, setPurchases] = useState([]);
-
+  const queryParams = new URLSearchParams(location.search);
   const [selectedComponent, setSelectedComponent] = useState("account");
   const [user, setUser] = useState({
     first_name: newName,
@@ -27,10 +28,18 @@ const UserPage = () => {
   const params = useParams();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const tabFromQueryParam = queryParams.get("tab");
+    if (tabFromQueryParam === "plans") {
+      setSelectedComponent("plans");
+    }
+  }, [queryParams]);
+
   const handleTabClick = (componentKey) => {
     setSelectedComponent((prevSelectedComponent) =>
       prevSelectedComponent === componentKey ? null : componentKey
     );
+    navigate(`/account_settings/${params.id}`);
   };
 
   useEffect(() => {
@@ -50,7 +59,7 @@ const UserPage = () => {
 
       if (response.status === 200) {
         let filteredPackages = response.data.filter((item) => item.id !== 1);
-        console.log("AAA", response.data);
+
         setPackage(filteredPackages);
       }
     } catch (error) {
@@ -89,7 +98,7 @@ const UserPage = () => {
     billing: <Billings purchases={purchases} />,
     plans: <Plans packagePlan={packagePlans} />,
   };
-  console.log(packagePlans);
+
   return (
     <section className="h-screen w-full flex-d items-center justify-center">
       <div className="flex flex-col lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
