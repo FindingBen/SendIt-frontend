@@ -125,7 +125,7 @@ const AnalyticsPage = () => {
                         </motion.div>
                       ) : (
                         <p className="ml-2">
-                          <SvgLoader width={"w-8"} height={"h-8"} />
+                          <SvgLoader width={"w-10"} height={"h-10"} />
                         </p>
                       )}
                     </div>
@@ -168,7 +168,7 @@ const AnalyticsPage = () => {
                         </motion.div>
                       ) : (
                         <p className="ml-2">
-                          <SvgLoader width={"w-8"} height={"h-8"} />
+                          <SvgLoader width={"w-10"} height={"h-10"} />
                         </p>
                       )}
                     </div>
@@ -211,7 +211,7 @@ const AnalyticsPage = () => {
                         </motion.div>
                       ) : (
                         <p className="ml-2">
-                          <SvgLoader width={"w-8"} height={"h-8"} />
+                          <SvgLoader width={"w-10"} height={"h-10"} />
                         </p>
                       )}
                     </div>
