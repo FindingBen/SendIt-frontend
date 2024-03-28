@@ -27,7 +27,7 @@ const PasswordReset = () => {
       },
       body: JSON.stringify(formData),
     });
-    console.log("reset", response);
+
     if (response.status === 200 || response.status === 204) {
       //setTimeout(() => navigate("/login"), 5);
       setLoading(false);

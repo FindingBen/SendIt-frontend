@@ -32,7 +32,7 @@ const DeleteMessageModal = ({
         let updatedMessageList = await axiosInstance.get("/api/notes/");
         if (updatedMessageList.status === 200) {
           // Update local state
-          console.log(updatedMessageList);
+
           setUpdated();
           closeModal();
 

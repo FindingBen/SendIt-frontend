@@ -33,7 +33,7 @@ const SuccessPayment = () => {
       );
       if (response.status === 200) {
         setTimeout(() => setShow(false), 1000);
-        console.log(response.data);
+
         dispatch(
           setPackage({
             package_plan: response?.data.user.package_plan.plan_type,
@@ -45,7 +45,7 @@ const SuccessPayment = () => {
         }
       }
     } catch (error) {
-      console.log(error.message);
+
       setShow(false);
       setErrMessage(error);
       setIsSuccess(false);

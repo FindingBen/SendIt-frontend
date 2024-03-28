@@ -9,11 +9,10 @@ export const createElements =
   async () => {
     const createdElements = [];
     if (requestType === "copy") {
-      console.log("copy");
+
       elementContextList?.map(async (element) => {
         const formData = new FormData();
-        console.log(messageObject);
-        console.log(elementContextList);
+
         if (element.element_type === "Img") {
           try {
             const response = await fetch(`${BASE_URL}${element.image}`);
@@ -86,7 +85,6 @@ export const createElements =
               formData
             );
 
-            console.log(response.data);
             if (response.status === 200) {
               createdElements.push(response.data);
             } else {

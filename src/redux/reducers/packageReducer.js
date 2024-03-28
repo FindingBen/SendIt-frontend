@@ -5,7 +5,6 @@ const packageSlice = createSlice({
   initialState: { package: null },
   reducers: {
     setPackage: (state, action) => {
-      console.log("Package action dispatched with payload:", action.payload);
       const { package_plan } = action.payload;
       return { ...state, package: package_plan };
     },

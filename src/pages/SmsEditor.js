@@ -107,7 +107,6 @@ const SmsEditor = () => {
       }
     } catch (error) {
       setErrorMessage(error.response?.data?.error || "Error sending SMS");
-      console.error(error);
     }
   };
 

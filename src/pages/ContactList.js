@@ -38,7 +38,7 @@ const ContactList = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  console.log(contacts);
+
   let getContacts = async (sortParam) => {
     try {
       let url = `/api/contact_list/${params.id}`;

@@ -29,7 +29,7 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
       // included in the allowed extensions
       // we show the error
       const fileExtension = inputFile?.type.split("/")[1];
-      console.log(fileExtension);
+
       if (!allowedExtensions.includes(fileExtension)) {
         setError("Please input a csv file");
         return;
@@ -57,7 +57,7 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
         skipEmptyLines: true,
       });
       const parsedData = csv?.data;
-      console.log("DATA:", parsedData);
+
       await createContact(parsedData);
     };
     reader.readAsText(file);
