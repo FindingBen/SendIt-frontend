@@ -142,15 +142,15 @@ const ContactList = () => {
     <section className="min-h-screen flex-d w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
         <div className="flex-1 px-2 sm:px-0">
-          <div className="flex justify-between items-center xl:mb-3">
+          <div className="flex justify-between items-center mb-3">
             <h3 class="xl:text-3xl text-2xl font-extralight text-left text-white">
               Contacts
             </h3>
-            <div class="inline-flex items-center space-x-2">
-              <button onClick={handleModal}>
-                <a
-                  class="text-white/50 p-2 rounded-md hover:text-white smooth-hover"
-                  href="#"
+            <div class="items-start space-x-2 bg-darkBlue rounded-2xl w-24 h-10 shadow-md">
+              <div className="inline-flex mx-auto mt-1">
+                <div
+                  onClick={handleModal}
+                  class="text-white rounded-md hover:text-white/50 smooth-hover cursor-pointer"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -166,13 +166,11 @@ const ContactList = () => {
                       d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
                     />
                   </svg>
-                </a>
-              </button>
+                </div>
 
-              <button onClick={handleCsvModal}>
-                <a
-                  class="text-white/50 p-2 rounded-md hover:text-white smooth-hover"
-                  href="#"
+                <div
+                  class="text-white rounded-md hover:text-white/50 smooth-hover cursor-pointer"
+                  onClick={handleCsvModal}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -188,8 +186,8 @@ const ContactList = () => {
                       d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15"
                     />
                   </svg>
-                </a>
-              </button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -198,7 +196,7 @@ const ContactList = () => {
               openContact ? "w-[72%]" : "w-full"
             }`}
           >
-            <div class="items-center justify-center rounded-2xl mb-3 w-full bg-darkBlue p-2">
+            <div class="items-center justify-center rounded-2xl mb-3 w-full bg-darkBlue shadow-md p-2">
               <div className="flex flex-row space-x-2">
                 <button
                   className={`px-2 py-1 text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
@@ -217,6 +215,7 @@ const ContactList = () => {
                   Sort by Date Created
                 </button>
               </div>
+
               <div class="overflow-auto lg:overflow-visible">
                 <div class="overflow-x-auto">
                   <div class="my-6">
@@ -299,7 +298,7 @@ const ContactList = () => {
             </div>
           </div>
           <div
-            className={`absolute top-[14%] xl:top-[12%] -right-6 h-[526px] w-[340px] xl:h-[648px] xl:w-[440px] bg-darkBlue rounded-2xl transition-transform transform ${
+            className={`absolute top-[12%] xl:top-[9%] -right-6 h-[526px] w-[340px] xl:h-[648px] xl:w-[440px] bg-darkBlue rounded-2xl transition-transform transform ${
               openContact
                 ? "xl:-translate-x-20 lg:-translate-x-16"
                 : "translate-x-full"
