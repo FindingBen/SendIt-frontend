@@ -206,10 +206,10 @@ const CreateNote = () => {
   };
 
   return (
-    <section className="min-h-screen flex-d w-100 items-center justify-center">
-      <div className="flex-1 flex flex-col space-y-5 sm:p-6 sm:my-2 sm:mx-4">
-        <div className="flex-1 px-2 sm:px-0">
-          <div className="flex justify-between items-center mb-2">
+    <section className="min-h-screen w-full items-center justify-center mx-20">
+      <div className="flex-1 flex flex-col">
+        <div className="flex-1 sm:px-0">
+          <div className="flex justify-between items-center mb-4 h-20">
             <div className="flex flex-row">
               <span className="text-2xl text-white font-light">
                 Create Content

@@ -212,7 +212,7 @@ const HomePage = () => {
   };
 
   return (
-    <section className="min-h-screen w-full items-center justify-center mx-10">
+    <section className="min-h-screen w-full items-center justify-center mx-20">
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20">
@@ -492,9 +492,9 @@ const HomePage = () => {
             )}
           </div>
           <div
-            className={`absolute top-[13.5%] xl:top-[10%] -right-6 h-[548px] w-[340px] xl:h-[648px] xl:w-[430px] bg-slate-800 rounded-2xl shadow-lg transition-transform transform ${
+            className={`absolute top-[15%] xl:top-[11%] -right-6 h-[548px] w-[340px] xl:h-[648px] xl:w-[430px] bg-slate-800 rounded-2xl shadow-lg transition-transform transform ${
               analyticsOpen
-                ? "xl:-translate-x-20 lg:-translate-x-16"
+                ? "xl:-translate-x-26 lg:-translate-x-24"
                 : "translate-x-full"
             }`}
           >

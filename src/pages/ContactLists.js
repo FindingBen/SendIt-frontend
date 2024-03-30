@@ -68,10 +68,10 @@ const ContactList = () => {
   };
 
   return (
-    <div class="min-h-screen w-[100%] items-center justify-center">
-      <div class="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 max-w-6xl sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
+    <div class="min-h-screen w-[100%] items-center justify-center mx-20">
+      <div class="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
         <div class="flex-1 sm:px-0">
-          <div class="flex justify-between items-center">
+          <div class="flex justify-between items-center mb-4 h-20">
             <h3 class="xl:text-3xl text-2xl font-extralight text-white">
               Contact lists
             </h3>

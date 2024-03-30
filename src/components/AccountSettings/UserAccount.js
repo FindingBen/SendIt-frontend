@@ -79,7 +79,7 @@ const UserAccount = ({ user }) => {
           ></PasswordChange>
         </div>
       </div> */}
-      <div className="flex flex-col rounded-2xl p-4 mt-4 bg-slate-800 w-80 h-[605px]">
+      <div className="flex flex-col rounded-2xl p-4 mt-4 bg-slate-800 w-80 h-[540px]">
         <h3 class="text-xl xl:text-2xl text-left font-extralight text-white">
           General settings
         </h3>
@@ -87,14 +87,14 @@ const UserAccount = ({ user }) => {
           <div>
             <label
               for="first_name"
-              className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-xs xl:text-sm text-left font-normal text-gray-300 dark:text-white"
             >
               First name
             </label>
             <input
               type="text"
               id="first_name"
-              className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light py-2 px-4 rounded-md"
+              className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-sm text-xs rounded-lg py-2 px-4"
               value={newName}
               onChange={handleNewName}
             />
@@ -102,14 +102,14 @@ const UserAccount = ({ user }) => {
           <div>
             <label
               for="last_name"
-              className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-xs xl:text-sm text-left font-normal text-gray-300 dark:text-white"
             >
               Last name
             </label>
             <input
               type="text"
               id="last_name"
-              className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 rounded"
+              className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 xl:text-sm text-xs rounded-lg"
               placeholder="Doe"
               value={newLastName}
               onChange={handleNewLastName}
@@ -119,14 +119,14 @@ const UserAccount = ({ user }) => {
           <div>
             <label
               for="last_name"
-              className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-xs xl:text-sm text-left font-normal text-gray-300 dark:text-white"
             >
               Username
             </label>
             <input
               type="text"
               id="last_name"
-              className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 rounded"
+              className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 xl:text-sm text-xs rounded-lg"
               placeholder="Doe"
               value={user?.username}
               disabled
@@ -136,12 +136,12 @@ const UserAccount = ({ user }) => {
           <div className="mb-3">
             <label
               for="email"
-              className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-xs xl:text-sm text-left font-normal text-gray-300 dark:text-white"
             >
               Email address
             </label>
             <input
-              className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 rounded"
+              className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 xl:text-sm text-xs rounded-lg"
               type="email"
               value={user?.email}
               disabled
@@ -150,7 +150,7 @@ const UserAccount = ({ user }) => {
 
           <button
             onClick={updateUser}
-            className="bg-sky-800 hover:bg-sky-400 duration-300 text-white font-light py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
+            className="bg-sky-800 hover:bg-sky-400 duration-300 text-white font-light text-xs xl:text-sm py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
             type="submit"
           >
             {!isLoading ? (

@@ -77,39 +77,39 @@ const PasswordChange = ({ status, errStatus }) => {
   return (
     <div className=" bg-slate-800 rounded-2xl p-4 mt-3 w-[30%]">
       <div className="flex flex-col">
-        <h3 class="xl:text-2xl text-xl text-left font-extralight text-white">
+        <h3 class="xl:text-xl text-lg text-left font-extralight text-white">
           Change password
         </h3>
 
         <div className="mt-3">
-          <label className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white">
+          <label className="block mb-2 xl:text-sm text-xs text-left font-normal text-gray-300 dark:text-white">
             Enter old password
           </label>
           <input
             type="password"
-            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-2 rounded duration-200"
+            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-2 xl:text-sm text-xs rounded-lg duration-200"
             placeholder="Enter your old password"
             onChange={handleOldPass}
           ></input>
         </div>
         <div>
-          <label className="block mt-1 text-sm text-left font-normal text-gray-300 dark:text-white">
+          <label className="block mt-1 xl:text-sm text-xs text-left font-normal text-gray-300 dark:text-white">
             Enter new password
           </label>
           <input
             type="password"
-            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-2 rounded duration-200"
+            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-2 xl:text-sm text-xs rounded-lg duration-200"
             placeholder="Enter your new password"
             onChange={handleNewPass}
           ></input>
         </div>
         <div>
-          <label className="block mt-1 text-sm text-left font-normal text-gray-300 dark:text-white">
+          <label className="block mt-1 xl:text-sm text-xs text-left font-normal text-gray-300 dark:text-white">
             Repeat new password
           </label>
           <input
             type="password"
-            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-2 rounded duration-200"
+            className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-2 xl:text-sm text-xs rounded-lg duration-200"
             placeholder="Re-enter your new password"
             onChange={handleReNewPass}
           ></input>
@@ -117,7 +117,7 @@ const PasswordChange = ({ status, errStatus }) => {
       </div>
 
       <button
-        className="flex items-start bg-sky-800 hover:bg-sky-400 duration-300 text-white font-light py-1 px-2 xl:py-2 xl:px-4 rounded w-20 mt-4"
+        className="flex items-start bg-sky-800 hover:bg-sky-400 duration-300 text-white xl:text-sm text-xs font-light py-1 px-2 xl:py-2 xl:px-4 rounded w-20 mt-4"
         onClick={passChange}
       >
         {isLoading ? (

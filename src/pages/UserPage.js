@@ -29,19 +29,6 @@ const UserPage = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const tabFromQueryParam = queryParams.get("tab");
-    if (tabFromQueryParam === "plans") {
-      setSelectedComponent("plans");
-    }
-  }, [queryParams]);
-
-  const handleTabClick = (componentKey) => {
-    setSelectedComponent((prevSelectedComponent) =>
-      prevSelectedComponent === componentKey ? null : componentKey
-    );
-    navigate(`/account_settings/${params.id}`);
-  };
 
   useEffect(() => {
     getUser();
@@ -105,10 +92,10 @@ const UserPage = () => {
   };
 
   return (
-    <section className="h-screen w-full flex-d items-center justify-center mx-10 relative">
-      <div className="flex flex-col lg:space-y-0 lg:flex-row">
-        <div className="flex-1 px-2 sm:px-0">
-          <div className="row">
+    <section className="min-h-screen w-full items-center justify-center mx-20 relative">
+      <div className="flex-1 flex flex-col lg:flex-row">
+        <div className="flex-1 sm:px-0">
+          <div className="flex justify-between items-center h-20">
             <h3 class="xl:text-3xl text-2xl text-left font-extralight text-white">
               User page
             </h3>

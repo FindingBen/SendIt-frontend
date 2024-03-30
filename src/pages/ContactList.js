@@ -139,10 +139,10 @@ const ContactList = () => {
     }
   };
   return (
-    <section className="min-h-screen flex-d w-100 items-center justify-center">
-      <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
+    <section className="min-h-screen flex-d w-100 items-center justify-center mx-20">
+      <div className="flex-1 flex flex-col space-y-5 lg:flex-row">
         <div className="flex-1 px-2 sm:px-0">
-          <div className="flex justify-between items-center mb-3">
+          <div className="flex justify-between items-center mb-4 h-20">
             <h3 class="xl:text-3xl text-2xl font-extralight text-left text-white">
               Contacts
             </h3>

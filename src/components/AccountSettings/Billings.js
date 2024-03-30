@@ -16,18 +16,18 @@ const Billings = ({ purchases }) => {
     // Remove the temporary input element
     document.body.removeChild(input);
   };
-  console.log(purchases);
+
   return (
     <div className="flex-initial rounded-2xl p-4 xl:p-10 mt-4 bg-slate-800">
-      <h3 class="text-2xl text-left font-extralight text-white">
+      <h3 class="xl:text-xl text-lg text-left font-extralight text-white">
         Purchase history
       </h3>
 
-      <p class="text-left text-sm text-gray-500 dark:text-gray-400">
+      <p class="text-left xl:text-sm text-xs text-gray-500 dark:text-gray-400">
         Copy the purchase id and include it in your inquire in case of any
         questions{" "}
       </p>
-      <div class="grid grid-cols-5 gap-4 mt-2 grid-headers bg-darkBlue text-white font-light py-2 px-4 rounded-2xl mb-2">
+      <div class="grid grid-cols-5 text-sm xl:text-normal gap-4 mt-2 grid-headers bg-darkBlue text-white font-light py-2 px-4 rounded-2xl mb-2">
         <div>Product name</div>
         <div>Price</div>
         <div>ID</div>
@@ -36,7 +36,7 @@ const Billings = ({ purchases }) => {
         <div>Action</div> */}
       </div>
       {purchases.length > 0 ? (
-        <div className="flex flex-col items-left mt-3 max-h-80 text-white/50 overflow-y-scroll">
+        <div className="flex flex-col items-left mt-3 text-sm xl:text-normal max-h-80 text-white/50 overflow-y-scroll">
           {purchases?.map((purchase, index) => {
             const isEvenRow = index % 2 === 0; // Check if the row is even
             const rowClassName = isEvenRow ? "bg-darkestGray rounded-2xl" : "";
