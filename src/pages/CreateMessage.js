@@ -219,7 +219,7 @@ const CreateNote = () => {
               {!isLoading ? (
                 <button
                   onClick={handleSubmit}
-                  className="text-white bg-darkBlue p-1 rounded-2xl hover:text-white smooth-hover flex flex-row"
+                  className="text-white bg-slate-800 p-1 rounded-2xl hover:text-white smooth-hover flex flex-row"
                 >
                   <h2 className="text-lg mx-2">Create</h2>
                   <svg
@@ -242,9 +242,9 @@ const CreateNote = () => {
               )}
             </div>
           </div>
-          <div className="flex flex-row bg-darkBlue rounded-2xl">
+          <div className="flex flex-row bg-slate-800 rounded-2xl">
             <div className="flex flex-col p-10">
-              <div className="flex flex-col w-96 gap-2 rounded-lg p-4 bg-darkGray">
+              <div className="flex flex-col w-96 gap-2 rounded-lg p-4 bg-darkBlue">
                 {errorMsg && (
                   <p className="text-red-600 font-light ml-2 mt-2">
                     {errorMsg}
@@ -256,7 +256,7 @@ const CreateNote = () => {
                   className="flex-1 bg-white rounded-lg p-2"
                 />
               </div>
-              <div className="flex flex-col p-4 bg-darkGray mt-4 rounded-lg">
+              <div className="flex flex-col p-4 bg-darkBlue mt-4 rounded-lg">
                 <span className="text-left text-white">Content elements</span>
                 <div className="flex flex-row mt-2 gap-2">
                   <div
@@ -402,7 +402,7 @@ const CreateNote = () => {
               {selectedComponent && componentsMap[selectedComponent]}
             </div>
             <div className="col p-10">
-              <div className="flex flex-row bg-darkGray p-2 rounded-lg mb-2 mx-auto gap-2 w-32">
+              <div className="flex flex-row bg-darkBlue p-2 rounded-lg mb-2 mx-auto gap-2 w-32">
                 <span className="text-white">Preview</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

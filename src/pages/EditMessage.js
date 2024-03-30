@@ -302,7 +302,7 @@ const EditMessage = () => {
               {!isLoading ? (
                 <button
                   onClick={editMessage}
-                  className="text-white bg-darkBlue p-1 rounded-2xl hover:text-white smooth-hover flex flex-row"
+                  className="text-white bg-slate-800 p-1 rounded-2xl hover:text-white smooth-hover flex flex-row"
                 >
                   <h2 className="text-lg mx-2">Save</h2>
                   <svg
@@ -323,14 +323,14 @@ const EditMessage = () => {
               ) : (
                 <div role="status">
                   <SvgLoader height={4} width={4} />
-                  <span class="sr-only">Saving...</span>
+                  
                 </div>
               )}
             </div>
           </div>
-          <div className="flex flex-row bg-darkBlue rounded-md">
+          <div className="flex flex-row bg-slate-800 rounded-md">
             <div className="flex flex-col p-10">
-              <div className="flex flex-col w-96 gap-2 rounded-lg p-4 bg-darkGray">
+              <div className="flex flex-col w-96 gap-2 rounded-lg p-4 bg-darkBlue">
                 <span className="text-left text-white">Campaign name</span>
                 <input
                   value={messageName}
@@ -340,7 +340,7 @@ const EditMessage = () => {
                 />
               </div>
               <div className="flex flex-col">
-                <div className="flex flex-col p-4 bg-darkGray mt-4 rounded-lg">
+                <div className="flex flex-col p-4 bg-darkBlue mt-4 rounded-lg">
                   <span className="text-left text-white">Content elements</span>
                   <div className="flex flex-row mt-2 gap-2">
                     <div
@@ -461,7 +461,7 @@ const EditMessage = () => {
               {selectedComponent && componentsMap[selectedComponent]}
             </div>
             <div className="col p-10">
-              <div className="flex flex-row bg-darkGray p-2 rounded-2xl mb-2 mx-auto gap-2 w-32">
+              <div className="flex flex-row bg-darkBlue p-2 rounded-2xl mb-2 mx-auto gap-2 w-32">
                 <span className="text-white">Preview</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

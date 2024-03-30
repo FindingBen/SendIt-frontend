@@ -4,7 +4,7 @@ import SvgLoader from "../SvgLoader";
 
 const Statistics = ({ views }) => {
   return (
-    <div className="flex-initial bg-darkestGray w-80 h-96 rounded-2xl">
+    <div className="flex-initial bg-slate-800 w-80 h-96 rounded-2xl">
       <div className="flex flex-col">
         <div className="p-4 flex flex-col bg-darkBlue h-80 rounded-2xl mx-3 my-3 shadow-lg relative">
           <p className="text-white text-2xl font-light text-justify p-2">

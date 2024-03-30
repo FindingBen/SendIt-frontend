@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PasswordChange from "../../utils/PasswordChange";
 import useAxiosInstance from "../../utils/axiosInstance";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -71,7 +70,7 @@ const UserAccount = ({ user }) => {
 
   return (
     <div className="flex gap-3">
-      <div className="flex flex-col relative">
+      {/* <div className="flex flex-col relative">
         <div className="rounded-2xl p-4 mt-4 bg-darkBlue">
           {" "}
           <PasswordChange
@@ -79,85 +78,83 @@ const UserAccount = ({ user }) => {
             status={passStatus}
           ></PasswordChange>
         </div>
-      </div>
-      <div className="flex flex-col rounded-2xl p-4 mt-4 bg-darkBlue">
+      </div> */}
+      <div className="flex flex-col rounded-2xl p-4 mt-4 bg-slate-800 w-80 h-[605px]">
         <h3 class="text-xl xl:text-2xl text-left font-extralight text-white">
           General settings
         </h3>
         <div className="flex flex-col mt-3">
-          <div className="flex flex-row gap-2">
-            <div>
-              <label
-                for="first_name"
-                className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
-              >
-                First name
-              </label>
-              <input
-                type="text"
-                id="first_name"
-                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light py-2 px-4 rounded-md"
-                value={newName}
-                onChange={handleNewName}
-              />
-            </div>
-            <div>
-              <label
-                for="last_name"
-                className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
-              >
-                Last name
-              </label>
-              <input
-                type="text"
-                id="last_name"
-                className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 rounded"
-                placeholder="Doe"
-                value={newLastName}
-                onChange={handleNewLastName}
-              />
-            </div>
+          <div>
+            <label
+              for="first_name"
+              className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
+            >
+              First name
+            </label>
+            <input
+              type="text"
+              id="first_name"
+              className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light py-2 px-4 rounded-md"
+              value={newName}
+              onChange={handleNewName}
+            />
           </div>
-          <div className="flex flex-row gap-2">
-            <div>
-              <label
-                for="last_name"
-                className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
-              >
-                Username
-              </label>
-              <input
-                type="text"
-                id="last_name"
-                className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 rounded"
-                placeholder="Doe"
-                value={user?.username}
-                disabled
-                onChange={handleUser}
-              />
-            </div>
-            <div className="mb-3">
-              <label
-                for="email"
-                className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
-              >
-                Email address
-              </label>
-              <input
-                className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 rounded"
-                type="email"
-                value={user?.email}
-                disabled
-              />
-            </div>
+          <div>
+            <label
+              for="last_name"
+              className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
+            >
+              Last name
+            </label>
+            <input
+              type="text"
+              id="last_name"
+              className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 rounded"
+              placeholder="Doe"
+              value={newLastName}
+              onChange={handleNewLastName}
+            />
           </div>
+
+          <div>
+            <label
+              for="last_name"
+              className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
+            >
+              Username
+            </label>
+            <input
+              type="text"
+              id="last_name"
+              className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 rounded"
+              placeholder="Doe"
+              value={user?.username}
+              disabled
+              onChange={handleUser}
+            />
+          </div>
+          <div className="mb-3">
+            <label
+              for="email"
+              className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
+            >
+              Email address
+            </label>
+            <input
+              className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-2 px-4 duration-200 rounded"
+              type="email"
+              value={user?.email}
+              disabled
+            />
+          </div>
+
           <button
             onClick={updateUser}
             className="bg-sky-800 hover:bg-sky-400 duration-300 text-white font-light py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
             type="submit"
           >
             {!isLoading ? (
-              <p>Save</p>
+              <p>Update</p>
             ) : (
               <svg
                 aria-hidden="true"
@@ -179,6 +176,7 @@ const UserAccount = ({ user }) => {
           </button>
         </div>
       </div>
+
       {errorMsg && errorMsg.length > 0 ? (
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
@@ -189,7 +187,7 @@ const UserAccount = ({ user }) => {
             ease: [0, 0.41, 0.1, 1.01],
           }}
           id="toast-warning"
-          class="flex items-center w-full max-w-xs mx-auto p-3 xl:p-4 text-gray-200 bg-gray-600 rounded-lg shadow absolute bottom-24 left-[40%]"
+          class="flex items-center w-full max-w-xs mx-auto p-3 xl:p-4 text-gray-200 bg-gray-600 rounded-lg shadow absolute top-0 left-[40%]"
           role="alert"
         >
           <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-orange-100 rounded-lg">

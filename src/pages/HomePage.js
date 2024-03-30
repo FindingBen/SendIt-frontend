@@ -212,10 +212,10 @@ const HomePage = () => {
   };
 
   return (
-    <section className="min-h-screen w-full items-center justify-center">
-      <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
+    <section className="min-h-screen w-full items-center justify-center mx-10">
+      <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1 sm:px-0">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex justify-between items-center mb-4 h-20">
             <h3 class="xl:text-3xl lg:text-2xl text-xl font-light text-left text-white">
               Overview
             </h3>
@@ -260,12 +260,12 @@ const HomePage = () => {
               </p>
               <div
                 onClick={handleSortButtonClick}
-                className="px-3 py-2 text-white font-light text-sm rounded-2xl cursor-pointer bg-darkBlue absolute right-0 lg:top-5 top-5"
+                className="px-3 py-2 text-white font-light text-sm rounded-2xl cursor-pointer bg-slate-800 absolute right-0 lg:top-5 top-5"
               >
                 Sort by date
               </div>
             </div>
-            <div class="bg-darkBlue p-4 rounded-2xl">
+            <div class="bg-slate-800 p-4 rounded-2xl shadow-lg">
               <div class="grid grid-cols-5 gap-4 grid-headers bg-darkBlue text-white font-normal text-sm xl:text-md py-2 px-4 rounded-lg mb-2">
                 <div className="">Name</div>
                 <div>Created At</div>
@@ -291,7 +291,7 @@ const HomePage = () => {
                         //   delay: 0.2,
                         //   ease: [0, 0.41, 0.1, 1.01],
                         // }}
-                        className={`border-b border-grayWhite/50 text-white ${rowClassName} font-semibold text-xs lg:text-sm`}
+                        className={`rounded-2xl text-white ${rowClassName} font-semibold text-xs lg:text-sm`}
                       >
                         <div
                           className={`grid grid-cols-5 gap-3 mb-2 py-2 px-4`}
@@ -492,7 +492,7 @@ const HomePage = () => {
             )}
           </div>
           <div
-            className={`absolute top-[13.5%] xl:top-[10%] -right-6 h-[548px] w-[340px] xl:h-[648px] xl:w-[430px] bg-darkBlue rounded-2xl shadow-lg transition-transform transform ${
+            className={`absolute top-[13.5%] xl:top-[10%] -right-6 h-[548px] w-[340px] xl:h-[648px] xl:w-[430px] bg-slate-800 rounded-2xl shadow-lg transition-transform transform ${
               analyticsOpen
                 ? "xl:-translate-x-20 lg:-translate-x-16"
                 : "translate-x-full"

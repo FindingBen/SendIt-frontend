@@ -75,7 +75,7 @@ const PasswordChange = ({ status, errStatus }) => {
   };
 
   return (
-    <div className="flex-1 px-1">
+    <div className=" bg-slate-800 rounded-2xl p-4 mt-3 w-[30%]">
       <div className="flex flex-col">
         <h3 class="xl:text-2xl text-xl text-left font-extralight text-white">
           Change password

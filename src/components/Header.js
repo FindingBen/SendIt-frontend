@@ -83,7 +83,7 @@ const Header = () => {
 
   return (
     <div
-      className={`flex flex-column items-center relative p-1 text-white bg-darkBlue`}
+      className={`flex flex-column items-center relative p-1 text-white bg-slate-800`}
     >
       <ul id="navList" className="flex flex-column my-auto">
         {menu?.map((Menu, index) => (

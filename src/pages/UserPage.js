@@ -4,6 +4,7 @@ import useAxiosInstance from "../utils/axiosInstance";
 import Billings from "../components/AccountSettings/Billings";
 import UserAccount from "../components/AccountSettings/UserAccount";
 import Plans from "../components/AccountSettings/Plans";
+import PasswordChange from "../utils/PasswordChange";
 import { motion } from "framer-motion";
 
 const UserPage = () => {
@@ -93,15 +94,19 @@ const UserPage = () => {
     }
   };
 
-  const componentMap = {
-    account: <UserAccount user={user} />,
-    billing: <Billings purchases={purchases} />,
-    plans: <Plans packagePlan={packagePlans} />,
+  const passStatus = (message) => {
+    setMsg(message);
+    setErrorMsg();
+  };
+
+  const errStatus = (message) => {
+    setErrorMsg(message);
+    setMsg();
   };
 
   return (
-    <section className="h-screen w-full flex-d items-center justify-center">
-      <div className="flex flex-col lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
+    <section className="h-screen w-full flex-d items-center justify-center mx-10 relative">
+      <div className="flex flex-col lg:space-y-0 lg:flex-row">
         <div className="flex-1 px-2 sm:px-0">
           <div className="row">
             <h3 class="xl:text-3xl text-2xl text-left font-extralight text-white">
@@ -109,48 +114,13 @@ const UserPage = () => {
             </h3>
           </div>
 
-          <div class="text-sm font-normal text-center text-white border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-            <ul className="flex flex-wrap -mb-px">
-              <li className="me-2 hover:cursor-pointer">
-                <div
-                  className={`inline-block p-4 border-b-2 ${
-                    selectedComponent === "account"
-                      ? "border-blue-600 text-blue-600"
-                      : "border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                  } rounded-t-lg`}
-                  onClick={() => handleTabClick("account")}
-                >
-                  Account settings
-                </div>
-              </li>
-              <li className="me-2 hover:cursor-pointer">
-                <div
-                  className={`inline-block p-4 border-b-2 ${
-                    selectedComponent === "billing"
-                      ? "border-blue-600 text-blue-600"
-                      : "border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                  } rounded-t-lg`}
-                  onClick={() => handleTabClick("billing")}
-                >
-                  Billing histroy
-                </div>
-              </li>
-              <li className="me-2 hover:cursor-pointer">
-                <div
-                  className={`inline-block p-4 border-b-2 ${
-                    selectedComponent === "plans"
-                      ? "border-blue-600 text-blue-600"
-                      : "border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                  } rounded-t-lg`}
-                  onClick={() => handleTabClick("plans")}
-                >
-                  Plans
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div className="flex-1 mt-2">
-            {selectedComponent && componentMap[selectedComponent]}
+          <div class="text-sm font-normal text-center text-white dark:text-gray-400 dark:border-gray-700"></div>
+          <div className="flex flex-row mt-2">
+            <UserAccount user={user} />
+            <div className="flex-1 flex-col">
+              <Billings purchases={purchases} />
+              <PasswordChange errStatus={errStatus} status={passStatus} />
+            </div>
           </div>
         </div>
       </div>
@@ -164,7 +134,7 @@ const UserPage = () => {
             ease: [0, 0.41, 0.1, 1.01],
           }}
           id="toast-success"
-          class="flex items-center w-full max-w-xs mx-auto p-4 text-gray-300 bg-gray-600 rounded-lg shadow"
+          class="flex items-center w-full max-w-xs mx-auto p-4 text-gray-300 bg-gray-600 rounded-lg shadow absolute bottom-40 left-[55%]"
           role="alert"
         >
           <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-800 bg-green-100 rounded-lg">
@@ -214,11 +184,11 @@ const UserPage = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{
             duration: 0.4,
-            delay: 0.8,
+            delay: 0.6,
             ease: [0, 0.41, 0.1, 1.01],
           }}
           id="toast-warning"
-          class="flex items-center w-full max-w-xs mx-auto p-3 xl:p-4 text-gray-200 bg-gray-600 rounded-lg shadow"
+          class="flex items-center w-full max-w-xs mx-auto p-3 xl:p-4 text-gray-200 bg-gray-600 rounded-lg shadow absolute bottom-40 left-[50%]"
           role="alert"
         >
           <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-orange-100 rounded-lg">

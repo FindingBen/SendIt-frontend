@@ -13,7 +13,7 @@ const PieChart = ({ percentage, viewType }) => {
   return (
     <div
       className={`flex-none ${
-        viewType === "ViewHome" ? "lg:w-64" : "bg-darkestGray w-64 h-96"
+        viewType === "ViewHome" ? "lg:w-64" : "bg-slate-800 w-64 h-96"
       } rounded-2xl`}
     >
       <div
