@@ -293,7 +293,7 @@ const EditMessage = () => {
   return (
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
-        <div className="flex-1 px-2 sm:px-0">
+        <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20 bg-black border-l border-white">
             <div className="flex flex-row">
               <span className="text-2xl text-white font-light mx-20">
@@ -337,7 +337,7 @@ const EditMessage = () => {
           </div>
           <div className="flex flex-row rounded-2xl mx-20">
             <div className="flex flex-col p-10">
-              <div className="flex flex-col w-96 gap-2 rounded-lg p-4 bg-slate-800">
+              <div className="flex flex-col w-96 gap-2 rounded-2xl p-4 bg-black">
                 <span className="text-left text-white">Campaign name</span>
                 <input
                   defaultValue={message?.message_name}
@@ -354,7 +354,7 @@ const EditMessage = () => {
                 )}
               </div>
               <div className="flex flex-col">
-                <div className="flex flex-col p-4 bg-slate-800 mt-4 rounded-lg">
+                <div className="flex flex-col p-4 bg-black mt-4 rounded-2xl">
                   <span className="text-left text-white">Content elements</span>
                   <div className="flex flex-row mt-2 gap-2">
                     <div

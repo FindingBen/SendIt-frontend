@@ -197,7 +197,7 @@ const ContactList = () => {
                 openContact ? "w-[72%]" : "w-full"
               }`}
             >
-              <div class="items-center justify-center rounded-2xl mb-3 w-full bg-slate-800 shadow-md p-2">
+              <div class="items-center justify-center rounded-2xl mb-3 w-full bg-black shadow-md p-2">
                 <div className="flex flex-row space-x-2">
                   <button
                     className={`px-2 py-1 text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
@@ -220,7 +220,7 @@ const ContactList = () => {
                 <div class="overflow-auto lg:overflow-visible">
                   <div class="overflow-x-auto">
                     <div class="my-6">
-                      <div class="grid grid-cols-5 gap-4 grid-headers bg-darkBlue text-white font-light py-2 px-4 rounded-2xl mb-2">
+                      <div class="grid grid-cols-5 gap-4 grid-headers text-white font-semibold py-2 px-4 rounded-2xl mb-2">
                         <div>First Name</div>
                         <div>Last Name</div>
                         <div>Email</div>
@@ -230,7 +230,7 @@ const ContactList = () => {
                       {paginatedData?.map((rowData, index) => {
                         const isEvenRow = index % 2 === 0; // Check if the row is even
                         const rowClassName = isEvenRow
-                          ? "bg-darkestGray rounded-2xl"
+                          ? "bg-darkBlue rounded-2xl"
                           : "";
                         return (
                           <div
@@ -309,7 +309,7 @@ const ContactList = () => {
               </div>
             </div>
             <div
-              className={`absolute top-[14.5%] xl:top-[11%] -right-6 h-[526px] w-[340px] xl:h-[648px] xl:w-[440px] bg-slate-800 rounded-2xl transition-transform transform ${
+              className={`absolute top-[14.5%] xl:top-[11%] -right-6 h-[526px] w-[340px] xl:h-[648px] xl:w-[440px] bg-black rounded-2xl transition-transform transform ${
                 openContact
                   ? "xl:-translate-x-20 lg:-translate-x-24"
                   : "translate-x-full"

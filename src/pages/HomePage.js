@@ -266,8 +266,8 @@ const HomePage = () => {
                   Sort by date
                 </div>
               </div>
-              <div class="bg-slate-800 p-4 rounded-2xl shadow-lg">
-                <div class="grid grid-cols-5 gap-4 grid-headers bg-darkBlue text-white font-normal text-sm xl:text-md py-2 px-4 rounded-lg mb-2">
+              <div class="bg-black p-4 rounded-2xl shadow-lg">
+                <div class="grid grid-cols-5 gap-4 grid-headers  text-white font-semibold text-sm xl:text-md py-2 px-4 rounded-2xl mb-2">
                   <div className="">Name</div>
                   <div>Created At</div>
                   <div>Analytics</div>
@@ -278,7 +278,7 @@ const HomePage = () => {
                   <div>
                     {displayedItems?.map((message, index) => {
                       const isEvenRow = index % 2 === 0; // Check if the row is even
-                      const rowClassName = isEvenRow ? "bg-darkestGray" : "";
+                      const rowClassName = isEvenRow ? "bg-darkBlue" : "";
                       return (
                         <motion.div
                           // initial={
@@ -292,7 +292,7 @@ const HomePage = () => {
                           //   delay: 0.2,
                           //   ease: [0, 0.41, 0.1, 1.01],
                           // }}
-                          className={`rounded-2xl text-white ${rowClassName} font-semibold text-xs lg:text-sm`}
+                          className={`rounded-2xl text-white ${rowClassName} font-normal text-xs lg:text-sm`}
                         >
                           <div
                             className={`grid grid-cols-5 gap-3 mb-2 py-2 px-4`}

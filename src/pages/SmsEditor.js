@@ -172,7 +172,7 @@ const SmsEditor = () => {
             <SmsPill />
           </div>
           <div className="grid grid-cols-2 gap-4 rounded-md mx-20">
-            <div className="grid gap-2 bg-slate-800 rounded-2xl">
+            <div className="grid gap-2 bg-black rounded-2xl">
               <div class="rounded p-10">
                 <h3 class="text-2xl text-left font-extralight text-white mb-4">
                   Sms send

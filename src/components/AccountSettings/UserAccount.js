@@ -79,7 +79,7 @@ const UserAccount = ({ user }) => {
           ></PasswordChange>
         </div>
       </div> */}
-      <div className="flex flex-col rounded-2xl p-4 mt-4 bg-slate-800 w-80 h-[540px]">
+      <div className="flex flex-col rounded-2xl p-4 mt-4 bg-black w-80 h-[540px]">
         <h3 class="text-xl xl:text-2xl text-left font-extralight text-white">
           General settings
         </h3>

@@ -226,7 +226,7 @@ const CreateNote = () => {
               {!isLoading ? (
                 <button
                   onClick={handleSubmit}
-                  className="text-white bg-slate-800 p-1 rounded-2xl hover:text-white smooth-hover flex flex-row"
+                  className="text-white bg-black p-1 rounded-2xl hover:text-white smooth-hover flex flex-row"
                 >
                   <h2 className="text-lg mx-2">Create</h2>
                   <svg
@@ -251,7 +251,7 @@ const CreateNote = () => {
           </div>
           <div className="flex flex-row rounded-2xl mx-20">
             <div className="flex flex-col p-10">
-              <div className="flex flex-col w-96 gap-2 rounded-lg p-4 bg-slate-800">
+              <div className="flex flex-col w-96 gap-2 rounded-2xl p-4 bg-black">
                 {errorMsg && (
                   <p className="text-red-600 font-light ml-2">{errorMsg}</p>
                 )}
@@ -269,7 +269,7 @@ const CreateNote = () => {
                   </button>
                 )}
               </div>
-              <div className="flex flex-col p-4 bg-slate-800 mt-4 rounded-lg">
+              <div className="flex flex-col p-4 bg-black mt-4 rounded-2xl">
                 <span className="text-left text-white">Content elements</span>
                 <div className="flex flex-row mt-2 gap-2">
                   <div

@@ -82,7 +82,7 @@ const ContactList = () => {
           </div>
 
           <div class="mb-10 sm:mb-0 mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-20">
-            <div class="group bg-slate-800 py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-2xl hover:bg-gray-900/40">
+            <div class="group bg-black py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-2xl hover:bg-gray-900/40">
               {canAddNewList() ? (
                 <button
                   class="bg-gray-900/70 text-white/50 group-hover:text-white group-hover:smooth-hover flex w-20 h-20 rounded-full items-center justify-center"
@@ -130,7 +130,7 @@ const ContactList = () => {
                         : {}
                     }
                     key={conList.id}
-                    class="relative w-100 bg-slate-800 h-72 flex flex-col space-y-2 items-center rounded-2xl"
+                    class="relative w-100 bg-black/50 h-72 flex flex-col space-y-2 items-center rounded-2xl"
                   >
                     <button
                       className="absolute right-2 top-2"

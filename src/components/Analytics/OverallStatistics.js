@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const OverallStatistics = ({ totalValues }) => {
   return (
-    <div className="flex bg-slate-800 rounded-2xl p-2 w-[72%] shadow-lg">
+    <div className="flex bg-black rounded-2xl p-2 w-[72%] shadow-lg">
       <div className="flex flex-row items-center lg:w-[275px] rounded-md">
         <div className="flex-none p-3 my-auto bg-darkBlue rounded-full shadow-lg">
           <svg
