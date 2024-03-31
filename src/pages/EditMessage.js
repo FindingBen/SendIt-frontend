@@ -42,6 +42,7 @@ const EditMessage = () => {
   const [createdEl, setCreatedEl] = useState([]);
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [imageStateVal, setImageStateVal] = useState(false);
+  const [showSaveButton, setShowSaveButton] = useState(false);
   const [device, setDevice] = useState("tablet");
 
   useEffect(() => {
@@ -98,6 +99,7 @@ const EditMessage = () => {
       setMessage(response.data.message);
     }
   };
+
   const updateElementsOrder = async () => {
     const elementsToUpdate = elements.filter((element) => !element.context);
     for (const element of elementsToUpdate) {
@@ -223,6 +225,12 @@ const EditMessage = () => {
   const handleMessageName = (e) => {
     setMessageName(e.target.value);
     setIsDirty(true);
+    setShowSaveButton(e.target.value.length > 0);
+  };
+
+  const handleSave = (e) => {
+    setMessageName(messageName);
+    setShowSaveButton(false);
   };
 
   const handleClicked = (element) => {
@@ -283,12 +291,12 @@ const EditMessage = () => {
   };
 
   return (
-    <section className="min-h-screen w-full items-center justify-center mx-20">
+    <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
         <div className="flex-1 px-2 sm:px-0">
-          <div className="flex justify-between items-center mb-4 h-20">
+          <div className="flex justify-between items-center mb-4 h-20 bg-black border-l border-white">
             <div className="flex flex-row">
-              <span className="text-2xl text-white font-light">
+              <span className="text-2xl text-white font-light mx-20">
                 Edit Content
               </span>
             </div>
@@ -298,13 +306,13 @@ const EditMessage = () => {
               className=" bg-gray-200 mb-4 text-black hover:bg-gray-400 duration-200 text-light font-light py-2 px-4 rounded-md placeholder:text-black placeholder:font-normal"
               placeholder={message?.message_name}
             /> */}
-            <div class="inline-flex items-center space-x-2">
+            <div class="inline-flex items-center mx-20">
               {!isLoading ? (
                 <button
                   onClick={editMessage}
                   className="text-white bg-slate-800 p-1 rounded-2xl hover:text-white smooth-hover flex flex-row"
                 >
-                  <h2 className="text-lg mx-2">Save</h2>
+                  <h2 className="text-lg mx-2">Edit</h2>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -327,19 +335,26 @@ const EditMessage = () => {
               )}
             </div>
           </div>
-          <div className="flex flex-row bg-slate-800 rounded-md">
+          <div className="flex flex-row bg-slate-800 rounded-2xl mx-20">
             <div className="flex flex-col p-10">
-              <div className="flex flex-col w-96 gap-2 rounded-lg p-4 bg-darkBlue">
+              <div className="flex flex-col w-96 gap-2 rounded-lg p-4 bg-slate-800">
                 <span className="text-left text-white">Campaign name</span>
                 <input
-                  value={messageName}
-                  placeholder={message?.message_name}
+                  defaultValue={message?.message_name}
                   onChange={handleMessageName}
                   className="flex-1 bg-white rounded-lg p-2"
                 />
+                {showSaveButton && (
+                  <button
+                    onClick={handleSave}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg duration-200"
+                  >
+                    Save
+                  </button>
+                )}
               </div>
               <div className="flex flex-col">
-                <div className="flex flex-col p-4 bg-darkBlue mt-4 rounded-lg">
+                <div className="flex flex-col p-4 bg-slate-800 mt-4 rounded-lg">
                   <span className="text-left text-white">Content elements</span>
                   <div className="flex flex-row mt-2 gap-2">
                     <div
@@ -460,7 +475,7 @@ const EditMessage = () => {
               {selectedComponent && componentsMap[selectedComponent]}
             </div>
             <div className="col p-10">
-              <div className="flex flex-row bg-darkBlue p-2 rounded-2xl mb-2 mx-auto gap-2 w-32">
+              <div className="flex flex-row bg-slate-800 p-2 rounded-2xl mb-2 mx-auto gap-2 w-32">
                 <span className="text-white">Preview</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

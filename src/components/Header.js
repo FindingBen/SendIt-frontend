@@ -83,8 +83,13 @@ const Header = () => {
 
   return (
     <div
-      className={`flex flex-column items-center relative p-1 text-white bg-slate-800`}
+      className={`flex flex-column items-center relative p-1 text-white bg-black`}
     >
+      <img
+        src={require("../assets/noBgLogo.png")}
+        width={65}
+        className="mt-2"
+      />
       <ul id="navList" className="flex flex-column my-auto">
         {menu?.map((Menu, index) => (
           <Link

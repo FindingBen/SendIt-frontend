@@ -139,15 +139,15 @@ const ContactList = () => {
     }
   };
   return (
-    <section className="min-h-screen flex-d w-100 items-center justify-center mx-20">
+    <section className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:flex-row">
-        <div className="flex-1 px-2 sm:px-0">
-          <div className="flex justify-between items-center mb-4 h-20">
-            <h3 class="xl:text-3xl text-2xl font-extralight text-left text-white">
+        <div className="flex-1 sm:px-0">
+          <div className="flex justify-between items-center mb-4 h-20 bg-black border-l">
+            <h3 class="xl:text-3xl text-2xl font-extralight text-left text-white mx-20">
               Contacts
             </h3>
-            <div class="items-start space-x-2 bg-slate-800 rounded-2xl w-24 h-10 shadow-md">
-              <div className="inline-flex mx-auto mt-1">
+            <div class="items-start w-24 h-10 shadow-md mx-20">
+              <div className="inline-flex mx-auto mt-1 gap-2">
                 <div
                   onClick={handleModal}
                   class="text-white rounded-md hover:text-white/50 smooth-hover cursor-pointer"
@@ -191,174 +191,179 @@ const ContactList = () => {
             </div>
           </div>
 
-          <div
-            className={`mainContainer transition-width ${
-              openContact ? "w-[72%]" : "w-full"
-            }`}
-          >
-            <div class="items-center justify-center rounded-2xl mb-3 w-full bg-slate-800 shadow-md p-2">
-              <div className="flex flex-row space-x-2">
-                <button
-                  className={`px-2 py-1 text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
-                    sortOrder === "first_name" ? "bg-gray-700" : ""
-                  }`}
-                  onClick={handleSortByName}
-                >
-                  Sort by Name
-                </button>
-                <button
-                  className={`px-2 py-1 text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
-                    sortOrder === "created_at" ? "bg-gray-700" : ""
-                  }`}
-                  onClick={handleSortByDateCreated}
-                >
-                  Sort by Date Created
-                </button>
-              </div>
+          <div className="mx-20">
+            <div
+              className={`mainContainer transition-width ${
+                openContact ? "w-[72%]" : "w-full"
+              }`}
+            >
+              <div class="items-center justify-center rounded-2xl mb-3 w-full bg-slate-800 shadow-md p-2">
+                <div className="flex flex-row space-x-2">
+                  <button
+                    className={`px-2 py-1 text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
+                      sortOrder === "first_name" ? "bg-gray-700" : ""
+                    }`}
+                    onClick={handleSortByName}
+                  >
+                    Sort by Name
+                  </button>
+                  <button
+                    className={`px-2 py-1 text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
+                      sortOrder === "created_at" ? "bg-gray-700" : ""
+                    }`}
+                    onClick={handleSortByDateCreated}
+                  >
+                    Sort by Date Created
+                  </button>
+                </div>
 
-              <div class="overflow-auto lg:overflow-visible">
-                <div class="overflow-x-auto">
-                  <div class="my-6">
-                    <div class="grid grid-cols-5 gap-4 grid-headers bg-darkBlue text-white font-light py-2 px-4 rounded-2xl mb-2">
-                      <div>First Name</div>
-                      <div>Last Name</div>
-                      <div>Email</div>
-                      <div>Phone Number</div>
-                      <div>Action</div>
-                    </div>
-                    {paginatedData?.map((rowData, index) => {
-                      const isEvenRow = index % 2 === 0; // Check if the row is even
-                      const rowClassName = isEvenRow
-                        ? "bg-darkestGray rounded-2xl"
-                        : "";
-                      return (
-                        <div
-                          key={rowData.id}
-                          className={` ${
-                            contactId === rowData.id
-                              ? "bg-white text-black font-normal rounded-lg"
-                              : "text-white"
-                          } font-light ${rowClassName}`}
-                        >
-                          <div className="mb-2">
-                            <div className={`grid grid-cols-5 gap-4 py-2 px-4`}>
-                              <div>{rowData.first_name}</div>
-                              <div>{rowData.last_name}</div>
-                              <div>{rowData.email}</div>
-                              <div>{rowData.phone_number}</div>
+                <div class="overflow-auto lg:overflow-visible">
+                  <div class="overflow-x-auto">
+                    <div class="my-6">
+                      <div class="grid grid-cols-5 gap-4 grid-headers bg-darkBlue text-white font-light py-2 px-4 rounded-2xl mb-2">
+                        <div>First Name</div>
+                        <div>Last Name</div>
+                        <div>Email</div>
+                        <div>Phone Number</div>
+                        <div>Action</div>
+                      </div>
+                      {paginatedData?.map((rowData, index) => {
+                        const isEvenRow = index % 2 === 0; // Check if the row is even
+                        const rowClassName = isEvenRow
+                          ? "bg-darkestGray rounded-2xl"
+                          : "";
+                        return (
+                          <div
+                            key={rowData.id}
+                            className={` ${
+                              contactId === rowData.id
+                                ? "bg-white text-black font-normal rounded-lg"
+                                : "text-white"
+                            } font-light ${rowClassName}`}
+                          >
+                            <div className="mb-2">
+                              <div
+                                className={`grid grid-cols-5 gap-4 py-2 px-4`}
+                              >
+                                <div>{rowData.first_name}</div>
+                                <div>{rowData.last_name}</div>
+                                <div>{rowData.email}</div>
+                                <div>{rowData.phone_number}</div>
 
-                              <div>
-                                <button
-                                  type="button"
-                                  onClick={() =>
-                                    toggleContactDrawer(rowData.id)
-                                  }
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.0"
-                                    stroke="currentColor"
-                                    class="w-6 h-6 hover:bg-gray-950 duration-200 rounded"
+                                <div>
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      toggleContactDrawer(rowData.id)
+                                    }
                                   >
-                                    <path
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                                    />
-                                    <path
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                                    />
-                                  </svg>
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => deleteContact(rowData.id)}
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="0.5"
-                                    stroke="currentColor"
-                                    class="h-6 w-6"
-                                    x-tooltip="tooltip"
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="1.0"
+                                      stroke="currentColor"
+                                      class="w-6 h-6 hover:bg-gray-950 duration-200 rounded"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                                      />
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                                      />
+                                    </svg>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => deleteContact(rowData.id)}
                                   >
-                                    <path
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                    />
-                                  </svg>
-                                </button>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke-width="0.5"
+                                      stroke="currentColor"
+                                      class="h-6 w-6"
+                                      x-tooltip="tooltip"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                      />
+                                    </svg>
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            className={`absolute top-[12%] xl:top-[9%] -right-6 h-[526px] w-[340px] xl:h-[648px] xl:w-[440px] bg-slate-800 rounded-2xl transition-transform transform ${
-              openContact
-                ? "xl:-translate-x-20 lg:-translate-x-16"
-                : "translate-x-full"
-            }`}
-          >
-            <div className="flex flex-col p-4 relative items-center">
-              <button
-                className="bg-darkBlue hover:bg-gray-700 duration-300 text-white px-2 rounded-full absolute right-3 top-3"
-                onClick={closeContactDrawer}
-              >
-                X
-              </button>
-              <p className="text-white font-light text-xl mb-2">
-                Quick view and edit
-              </p>
-
-              <div className="flex flex-col items-center p-4 w-full h-[150px] rounded-lg">
-                <div className="flex flex-col gap-3 relative">
-                  <input
-                    className={`block ${"bg-darkBlue border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"}`}
-                    defaultValue={contact?.first_name}
-                    onChange={(e) => setFirstName(e.target.value)}
-                  ></input>
-                  <input
-                    className="block bg-darkBlue border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"
-                    defaultValue={contact?.last_name}
-                    onChange={(e) => setLastName(e.target.value)}
-                  ></input>
-                  <input
-                    className="block bg-darkBlue border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"
-                    defaultValue={contact?.email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  ></input>
-                  <input
-                    className="block bg-darkBlue border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"
-                    defaultValue={contact?.phone_number}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                  ></input>
-                </div>
+            <div
+              className={`absolute top-[12%] xl:top-[9%] -right-6 h-[526px] w-[340px] xl:h-[648px] xl:w-[440px] bg-slate-800 rounded-2xl transition-transform transform ${
+                openContact
+                  ? "xl:-translate-x-20 lg:-translate-x-16"
+                  : "translate-x-full"
+              }`}
+            >
+              <div className="flex flex-col p-4 relative items-center">
                 <button
-                  onClick={updateContact}
-                  className="bg-darkBlue hover:bg-gray-700 duration-300 px-2 py-1 mt-3 text-white rounded-lg"
+                  className="bg-darkBlue hover:bg-gray-700 duration-300 text-white px-2 rounded-full absolute right-3 top-3"
+                  onClick={closeContactDrawer}
                 >
-                  Update
+                  X
                 </button>
+                <p className="text-white font-light text-xl mb-2">
+                  Quick view and edit
+                </p>
+
+                <div className="flex flex-col items-center p-4 w-full h-[150px] rounded-lg">
+                  <div className="flex flex-col gap-3 relative">
+                    <input
+                      className={`block ${"bg-darkBlue border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"}`}
+                      defaultValue={contact?.first_name}
+                      onChange={(e) => setFirstName(e.target.value)}
+                    ></input>
+                    <input
+                      className="block bg-darkBlue border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"
+                      defaultValue={contact?.last_name}
+                      onChange={(e) => setLastName(e.target.value)}
+                    ></input>
+                    <input
+                      className="block bg-darkBlue border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"
+                      defaultValue={contact?.email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    ></input>
+                    <input
+                      className="block bg-darkBlue border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"
+                      defaultValue={contact?.phone_number}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                    ></input>
+                  </div>
+                  <button
+                    onClick={updateContact}
+                    className="bg-darkBlue hover:bg-gray-700 duration-300 px-2 py-1 mt-3 text-white rounded-lg"
+                  >
+                    Update
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          {totalPages > 1 && (
-            <div>
-              {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-                (page) => (
+            {totalPages > 1 && (
+              <div>
+                {Array.from(
+                  { length: totalPages },
+                  (_, index) => index + 1
+                ).map((page) => (
                   <div
                     className="btn btn-outline-secondary ml-2 bg-darkBlue"
                     data-mdb-ripple-color="dark"
@@ -368,11 +373,11 @@ const ContactList = () => {
                   >
                     {page}
                   </div>
-                )
-              )}
-              <br></br>
-            </div>
-          )}
+                ))}
+                <br></br>
+              </div>
+            )}
+          </div>
 
           <CsvModal
             newContacts={handleNewContact}

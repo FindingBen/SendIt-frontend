@@ -45,7 +45,6 @@ const SuccessPayment = () => {
         }
       }
     } catch (error) {
-
       setShow(false);
       setErrMessage(error);
       setIsSuccess(false);
@@ -54,8 +53,8 @@ const SuccessPayment = () => {
 
   return (
     <section className="min-h-screen flex-d w-full items-center justify-center">
-      <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-10 sm:p-6 sm:my-2 sm:mx-4 sm:rounded-2xl">
-        <div className="flex-1 px-2 sm:px-0 xl:px-0">
+      <div className="flex-1 flex flex-col mb-4 h-20 bg-black border-l border-white">
+        <div className="flex-1 px-2 sm:px-0 xl:px-0 mx-20">
           {isSuccess ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.5 }}

@@ -68,19 +68,20 @@ const ContactList = () => {
   };
 
   return (
-    <div class="min-h-screen w-[100%] items-center justify-center mx-20">
+    <div class="min-h-screen w-[100%] items-center justify-center">
       <div class="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
         <div class="flex-1 sm:px-0">
-          <div class="flex justify-between items-center mb-4 h-20">
-            <h3 class="xl:text-3xl text-2xl font-extralight text-white">
+          <div className="flex justify-between items-center mb-4 h-20 bg-black border-l border-white">
+            <h3 class="xl:text-3xl lg:text-2xl text-xl font-light text-left text-white mx-20">
               Contact lists
             </h3>
-            <div className="flex flex-row items-center">
+
+            <div class="flex flex-row items-center mx-20">
               <SmsPill />
             </div>
           </div>
 
-          <div class="mb-10 sm:mb-0 mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div class="mb-10 sm:mb-0 mt-10 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-20">
             <div class="group bg-slate-800 py-20 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-2xl hover:bg-gray-900/40">
               {canAddNewList() ? (
                 <button
