@@ -309,9 +309,9 @@ const ContactList = () => {
               </div>
             </div>
             <div
-              className={`absolute top-[12%] xl:top-[9%] -right-6 h-[526px] w-[340px] xl:h-[648px] xl:w-[440px] bg-slate-800 rounded-2xl transition-transform transform ${
+              className={`absolute top-[14.5%] xl:top-[11%] -right-6 h-[526px] w-[340px] xl:h-[648px] xl:w-[440px] bg-slate-800 rounded-2xl transition-transform transform ${
                 openContact
-                  ? "xl:-translate-x-20 lg:-translate-x-16"
+                  ? "xl:-translate-x-20 lg:-translate-x-24"
                   : "translate-x-full"
               }`}
             >

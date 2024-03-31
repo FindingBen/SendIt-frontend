@@ -376,7 +376,7 @@ const Plans = () => {
             Need help choosing<br></br> the right plan?
           </p>
           <div
-            className={`absolute top-10 -right-6 h-[428px] w-[260px] bg-gray-900 rounded-3xl transition-transform transform ${
+            className={`absolute top-10 -right-6 h-[428px] w-[260px] bg-slate-800 rounded-3xl transition-transform transform ${
               isDrawerOpen ? "translate-x-0" : "translate-x-full"
             }`}
           >

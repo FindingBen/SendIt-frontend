@@ -335,7 +335,7 @@ const EditMessage = () => {
               )}
             </div>
           </div>
-          <div className="flex flex-row bg-slate-800 rounded-2xl mx-20">
+          <div className="flex flex-row rounded-2xl mx-20">
             <div className="flex flex-col p-10">
               <div className="flex flex-col w-96 gap-2 rounded-lg p-4 bg-slate-800">
                 <span className="text-left text-white">Campaign name</span>

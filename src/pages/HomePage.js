@@ -261,7 +261,7 @@ const HomePage = () => {
                 </p>
                 <div
                   onClick={handleSortButtonClick}
-                  className="px-3 py-2 text-white font-light text-sm rounded-2xl cursor-pointer bg-slate-800 absolute right-0 lg:top-5 top-5"
+                  className="px-3 py-2 text-white font-light text-sm rounded-2xl cursor-pointer bg-slate-800 hover:bg-gray-700 absolute right-0 lg:top-5 top-5"
                 >
                   Sort by date
                 </div>
@@ -479,7 +479,7 @@ const HomePage = () => {
                   ).map((page) => (
                     <button
                       type="button"
-                      className="px-3 py-2 bg-darkBlue ml-2 hover:bg-gray-700 duration-200 rounded-lg text-white mt-2"
+                      className="px-3 py-2 bg-slate-800 ml-2 hover:bg-gray-700 duration-200 rounded-lg text-white mt-2"
                       data-mdb-ripple-color="dark"
                       key={page}
                       id="paginationBtn"
