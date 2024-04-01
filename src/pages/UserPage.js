@@ -3,9 +3,8 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import Billings from "../components/AccountSettings/Billings";
 import UserAccount from "../components/AccountSettings/UserAccount";
-import Plans from "../components/AccountSettings/Plans";
+import SmsPill from "../components/SmsPill/SmsPill";
 import PasswordChange from "../utils/PasswordChange";
-import { motion } from "framer-motion";
 
 const UserPage = () => {
   const axiosInstance = useAxiosInstance();
@@ -84,10 +83,13 @@ const UserPage = () => {
     <section className="min-h-screen w-full items-center justify-center relative">
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1 sm:px-0">
-          <div className="flex justify-between items-center mb-4 h-20 bg-black border-l border-white">
+          <div className="flex justify-between items-center mb-4 h-20 bg-black">
             <h3 class="xl:text-3xl text-2xl text-left font-extralight text-white mx-20">
               User page
             </h3>
+            <div class="flex flex-row items-center mx-20">
+              <SmsPill />
+            </div>
           </div>
 
           <div className="mx-20">

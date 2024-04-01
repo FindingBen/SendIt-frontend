@@ -216,7 +216,7 @@ const CreateNote = () => {
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 flex flex-col">
         <div className="flex-1 sm:px-0">
-          <div className="flex justify-between items-center mb-4 h-20 bg-black border-l border-white">
+          <div className="flex justify-between items-center mb-4 h-20 bg-black">
             <div className="flex flex-row">
               <span className="text-2xl text-white font-light mx-20">
                 Create Content
@@ -415,7 +415,7 @@ const CreateNote = () => {
               {selectedComponent && componentsMap[selectedComponent]}
             </div>
             <div className="col p-10">
-              <div className="flex flex-row bg-slate-800 p-2 rounded-lg mb-2 mx-auto gap-2 w-32">
+              <div className="flex flex-row bg-black p-2 rounded-lg mb-2 mx-auto gap-2 w-32">
                 <span className="text-white">Preview</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

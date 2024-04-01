@@ -14,16 +14,16 @@ const PreviewPanel = ({
       <div
         class={`h-[470px] ${
           device === "tablet" ? "w-[350px]" : "w-[250px]"
-        } relative mx-auto border-slate-800 bg-darkGray border-[14px] rounded-[2.5rem] shadow-xl`}
+        } relative mx-auto border-black bg-darkGray border-[14px] rounded-[2.5rem] shadow-xl`}
       >
-        <div class="w-[108px] h-[10px] xl:w-[148px] xl:h-[18px] bg-slate-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
-        <div class="h-[46px] w-[3px] bg-darkGray absolute -left-[17px] top-[124px] rounded-l-lg"></div>
-        <div class="h-[46px] w-[3px] bg-darkGray absolute -left-[17px] top-[178px] rounded-l-lg"></div>
-        <div class="h-[64px] w-[3px] bg-darkGray absolute -right-[17px] top-[142px] rounded-r-lg"></div>
+        <div class="w-[108px] h-[10px] xl:w-[148px] xl:h-[18px] bg-black top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
+        <div class="h-[46px] w-[3px] bg-darkGrayblack absolute -left-[17px] top-[124px] rounded-l-lg"></div>
+        <div class="h-[46px] w-[3px] bg-black absolute -left-[17px] top-[178px] rounded-l-lg"></div>
+        <div class="h-[64px] w-[3px] bg-black absolute -right-[17px] top-[142px] rounded-r-lg"></div>
         <div
           class={`${
             device === "tablet" ? "w-[325px]" : "w-[225px]"
-          } h-[440px] rounded-[2rem] overflow-auto bg-white`}
+          } h-[440px] rounded-[2rem] overflow-auto bg-white/80`}
         >
           <div class="mr-5 mt-2 flex justify-end space-x-1">
             <svg

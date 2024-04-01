@@ -4,6 +4,8 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useRedux } from "../../constants/reduxImports";
 import { setUserInfo } from "../../redux/reducers/userReducer";
+import SmsPill from "../SmsPill/SmsPill";
+
 const UserAccount = () => {
   const axiosInstance = useAxiosInstance();
   const { currentPackageState, dispatch, currentUserState } = useRedux();

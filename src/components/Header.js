@@ -105,7 +105,7 @@ const Header = () => {
             className={`flex flex-row rounded-md p-2 cursor-pointer `}
           >
             <div
-              className={`flex flex-row gap-2 rounded-md p-2 hover:bg-darkestGray ${
+              className={`flex flex-row gap-2 rounded-md p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 ${
                 activeNav === Menu.title ? "bg-white text-black" : ""
               } text-gray-300 xl:text-sm text-xs items-center gap-x-3 
               ${Menu.gap ? "mt-9" : "mt-2"} ${
@@ -118,9 +118,9 @@ const Header = () => {
         ))}
       </ul>
 
-      <Link
+      <div
         onClick={handleLogout}
-        className="flex rounded-md mr-3 p-2 cursor-pointer xl:w-12 w-10 hover:bg-light-white text-gray-300 xl:text-sm text-xs items-center gap-x-3"
+        className="flex rounded-md mr-3 p-2 cursor-pointer xl:w-12 w-10 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 text-gray-300 xl:text-sm text-xs items-center gap-x-3"
       >
         <div>
           <svg
@@ -138,7 +138,7 @@ const Header = () => {
             />
           </svg>
         </div>
-      </Link>
+      </div>
       <ModalComponent
         confirmLeave={handleConfirmNavigation}
         showModal={currentModalState}

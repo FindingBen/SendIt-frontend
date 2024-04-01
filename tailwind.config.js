@@ -35,6 +35,7 @@ module.exports = {
         grayWhite: "#CAC4CF",
         lightGray: "#2C365E",
         lightBlue: "#2C365E",
+        darkBlack: "#000000",
       },
       fontFamily: {
         sfPro: ["SF Pro"],

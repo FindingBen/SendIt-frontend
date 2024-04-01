@@ -215,33 +215,13 @@ const HomePage = () => {
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1 sm:px-0">
-          <div className="flex justify-between items-center mb-4 h-20 bg-black border-l border-white">
+          <div className="flex justify-between items-center mb-4 h-20 bg-darkBlack">
             <h3 class="xl:text-3xl lg:text-2xl text-xl font-light text-left text-white mx-20">
               Overview
             </h3>
 
             <div class="flex flex-row items-center mx-20">
               <SmsPill />
-
-              {/* <button
-                onClick={refreshAnalytics}
-                className="text-white/50 p-2 rounded-md hover:text-white smooth-hover"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="lg:w-6 lg:h-6 w-5 h-5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
-                  />
-                </svg>
-              </button> */}
             </div>
           </div>
 
@@ -259,12 +239,12 @@ const HomePage = () => {
                 <p className="text-white font-light lg:text-2xl text-xl flex items-start my-3 mt-3">
                   Your latest messages
                 </p>
-                <div
+                <button
                   onClick={handleSortButtonClick}
-                  className="px-3 py-2 text-white font-light text-sm rounded-2xl cursor-pointer bg-black hover:bg-gray-700 absolute right-0 lg:top-5 top-5"
+                  className="px-3 py-2 text-white font-light text-sm rounded-2xl cursor-pointer bg-black transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 lg:top-5 top-5"
                 >
                   Sort by date
-                </div>
+                </button>
               </div>
               <div class="bg-black p-4 rounded-2xl shadow-lg">
                 <div class="grid grid-cols-5 gap-4 grid-headers  text-white font-semibold text-sm xl:text-md py-2 px-4 rounded-2xl mb-2">
@@ -278,21 +258,12 @@ const HomePage = () => {
                   <div>
                     {displayedItems?.map((message, index) => {
                       const isEvenRow = index % 2 === 0; // Check if the row is even
-                      const rowClassName = isEvenRow ? "bg-darkBlue" : "";
+                      const rowClassName = isEvenRow
+                        ? "border-b border-white/50"
+                        : "";
                       return (
                         <motion.div
-                          // initial={
-                          //   initialLoad
-                          //     ? { opacity: 0, scale: 0.5 }
-                          //     : { opacity: 1, scale: 1 }
-                          // }
-                          // animate={{ opacity: 1, scale: 1 }}
-                          // transition={{
-                          //   duration: 0.4,
-                          //   delay: 0.2,
-                          //   ease: [0, 0.41, 0.1, 1.01],
-                          // }}
-                          className={`rounded-2xl text-white ${rowClassName} font-normal text-xs lg:text-sm`}
+                          className={` text-white font-normal text-xs lg:text-sm`}
                         >
                           <div
                             className={`grid grid-cols-5 gap-3 mb-2 py-2 px-4`}
@@ -479,7 +450,7 @@ const HomePage = () => {
                   ).map((page) => (
                     <button
                       type="button"
-                      className="px-3 py-2 bg-slate-800 ml-2 hover:bg-gray-700 duration-200 rounded-lg text-white mt-2"
+                      className="px-3 py-2 bg-black ml-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 rounded-lg text-white mt-2"
                       data-mdb-ripple-color="dark"
                       key={page}
                       id="paginationBtn"

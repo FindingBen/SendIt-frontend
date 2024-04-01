@@ -123,7 +123,7 @@ const Plans = () => {
   return (
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 items-center justify-center">
-        <div className="flex justify-between items-center mb-4 h-20 bg-black border-l border-white">
+        <div className="flex justify-between items-center mb-4 h-20 bg-black">
           <h3 class="xl:text-3xl lg:text-2xl text-xl font-light text-left text-white mx-20">
             Package plans
           </h3>
@@ -144,13 +144,15 @@ const Plans = () => {
                 loadingState[packagePlan[index]?.id]
                   ? "opacity-75"
                   : "opacity-100"
-              } max-h-[428px] w-[260px] rounded-3xl p-8 transition ${
-                {
-                  "Gold package": "bg-yellow-700",
-                  "Silver package": "bg-slate-600/50",
-                  "Basic package": "bg-green-400",
-                }[packagePlan[index]?.plan_type] || "bg-gray-700/50"
-              } ease-in-out delay-90 hover:text-gradient hover:-translate-y-1 hover:scale-110 hover:bg-gray-900/80 duration-300 cursor-pointer`}
+              } max-h-[428px] w-[260px] rounded-3xl p-8 transition ease-in-out delay-90 bg-darkBlack hover:text-gradient hover:-translate-y-1 hover:scale-110 duration-300 cursor-pointer ${
+                packagePlan[index]?.plan_type === "Gold package"
+                  ? "hover:bg-yellow-700"
+                  : packagePlan[index]?.plan_type === "Silver package"
+                  ? "hover:bg-slate-600/50"
+                  : packagePlan[index]?.plan_type === "Basic package"
+                  ? "hover:bg-green-400"
+                  : "bg-gray-900"
+              }`}
             >
               <h2 className="mb-5 text-xl font-poppins text-white">
                 {packagePlan[index]?.plan_type}

@@ -243,7 +243,7 @@ const ContactList = () => {
                               contactId === rowData.id
                                 ? "bg-white text-black font-normal rounded-lg"
                                 : "text-white"
-                            } font-light ${rowClassName}`}
+                            } font-light`}
                           >
                             <div className="mb-2">
                               <div
