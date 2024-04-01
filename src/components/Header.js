@@ -9,7 +9,7 @@ import { menu } from "../assets/menuAssets/menuIcons";
 import { useRedux } from "../constants/reduxImports";
 import { clearMessages } from "../redux/reducers/messageReducer";
 import { cleanContactLists } from "../redux/reducers/contactListReducer";
-
+import { cleanUser } from "../redux/reducers/userReducer";
 const Header = () => {
   const { currentModalState, dispatch, currentUser, currentFormState } =
     useRedux();
@@ -50,6 +50,7 @@ const Header = () => {
     dispatch(clearMessages());
     dispatch(cleanContactLists());
     dispatch(clearMessages());
+    dispatch(cleanUser());
     localStorage.removeItem("refreshToken");
   };
 

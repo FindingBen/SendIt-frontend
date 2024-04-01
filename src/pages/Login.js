@@ -6,6 +6,7 @@ import { setPackage } from "../redux/reducers/packageReducer";
 import jwt_decode from "jwt-decode";
 import { config } from "../constants/Constants";
 import { motion } from "framer-motion";
+import { setUserInfo } from "../redux/reducers/userReducer";
 
 const Login = () => {
   const BASE_URL = config.url.BASE_URL;
@@ -60,12 +61,12 @@ const Login = () => {
         setLoading(false);
       }
       const user = jwt_decode(responseData?.access).user_id;
-      const packageValue = jwt_decode(responseData?.access).package_plan
-        .package_plan;
-
+      const packageValue = jwt_decode(responseData?.access).package_plan;
+      const user_info = jwt_decode(responseData?.access);
+      console.log(user_info);
       dispatch(setCredentials({ ...responseData, user }));
       dispatch(setPackage({ package_plan: packageValue }));
-
+      dispatch(setUserInfo({ ...user_info }));
       setUser("");
       setPwd("");
       localStorage.setItem("refreshToken", responseData?.refresh);

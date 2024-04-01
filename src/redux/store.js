@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./reducers/authSlice";
+import userReducer from "./reducers/userReducer";
 
 import formReducer from "./reducers/formReducer";
 import modalReducer from "./reducers/modalReducer";
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   packageState: packageReducer,
   messages: messageReducer,
   contactLists: contactListReducer,
+  user: userReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

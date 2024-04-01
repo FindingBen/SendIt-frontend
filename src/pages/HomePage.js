@@ -261,7 +261,7 @@ const HomePage = () => {
                 </p>
                 <div
                   onClick={handleSortButtonClick}
-                  className="px-3 py-2 text-white font-light text-sm rounded-2xl cursor-pointer bg-slate-800 hover:bg-gray-700 absolute right-0 lg:top-5 top-5"
+                  className="px-3 py-2 text-white font-light text-sm rounded-2xl cursor-pointer bg-black hover:bg-gray-700 absolute right-0 lg:top-5 top-5"
                 >
                   Sort by date
                 </div>
@@ -493,7 +493,7 @@ const HomePage = () => {
               )}
             </div>
             <div
-              className={`absolute top-[15%] xl:top-[11%] -right-6 h-[548px] w-[340px] xl:h-[648px] xl:w-[430px] bg-slate-800 rounded-2xl shadow-lg transition-transform transform ${
+              className={`absolute top-[15%] xl:top-[11%] -right-6 h-[548px] w-[340px] xl:h-[648px] xl:w-[430px] bg-black rounded-2xl shadow-lg transition-transform transform ${
                 analyticsOpen
                   ? "xl:-translate-x-26 lg:-translate-x-24"
                   : "translate-x-full"

@@ -16,6 +16,7 @@ import {
   selectMessagesCount,
 } from "../redux/reducers/messageReducer";
 import { selectOperationState } from "../redux/reducers/messageReducer";
+import { selectCurrentUserState } from "../redux/reducers/userReducer";
 
 export const useRedux = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ export const useRedux = () => {
   const currentMessages = useSelector(selectMessages);
   const currentMessagesCount = useSelector(selectMessagesCount);
   const currentOperationState = useSelector(selectOperationState);
+  const currentUserState = useSelector(selectCurrentUserState);
 
   return {
     dispatch,
@@ -44,5 +46,6 @@ export const useRedux = () => {
     currentMessages,
     currentMessagesCount,
     currentOperationState,
+    currentUserState,
   };
 };
