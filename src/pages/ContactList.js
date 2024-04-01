@@ -18,6 +18,9 @@ const ContactList = () => {
   const [first_name, setFirstName] = useState(contact?.first_name);
   const [last_name, setLastName] = useState();
   const [email, setEmail] = useState();
+  const [msg, setMsg] = useState();
+  const [errorMsg, setErrorMsg] = useState();
+  const [isEditing, setIsEditing] = useState(false);
   const [phone_number, setPhoneNumber] = useState();
   const [openContact, setOpenContact] = useState(false);
   const [sortOrder, setSortOrder] = useState("first_name");
@@ -33,7 +36,7 @@ const ContactList = () => {
   useEffect(() => {
     getContacts();
     setIsLoading(true);
-  }, [sortOrder, contactId]);
+  }, [sortOrder, contactId, first_name, last_name, email, phone_number]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -111,6 +114,7 @@ const ContactList = () => {
   const closeContactDrawer = () => {
     setOpenContact(false);
     setContactId();
+    setIsEditing(false);
   };
 
   const updateContact = async () => {
@@ -130,9 +134,9 @@ const ContactList = () => {
       if (response.status === 200) {
         // Assuming the API returns the updated contact object
         setContact(response.data);
+        setIsEditing(false);
 
         // Close the contact drawer after successful update
-        closeContactDrawer();
       }
     } catch (error) {
       console.error(error);
@@ -315,46 +319,137 @@ const ContactList = () => {
                   : "translate-x-full"
               }`}
             >
-              <div className="flex flex-col p-4 relative items-center">
-                <button
-                  className="bg-darkBlue hover:bg-gray-700 duration-300 text-white px-2 rounded-full absolute right-3 top-3"
-                  onClick={closeContactDrawer}
-                >
-                  X
-                </button>
-                <p className="text-white font-light text-xl mb-2">
+              <div className="flex flex-col items-start p-4 relative">
+                <div className="bg-darkBlue hover:bg-gray-700 duration-300 text-white px-2 rounded-full absolute right-3 top-3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    onClick={() => setIsEditing(true)}
+                    class="w-8 h-8 absolute right-0 cursor-pointer hover:bg-gray-500 p-1 rounded-xl"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                    />
+                  </svg>
+                </div>
+                <p className="text-white flex flex-row font-light text-xl mb-2 relative">
                   Quick view and edit
                 </p>
 
-                <div className="flex flex-col items-center p-4 w-full h-[150px] rounded-lg">
+                <div className="flex flex-col p-4 w-full h-[150px] rounded-lg">
                   <div className="flex flex-col gap-3 relative">
-                    <input
-                      className={`block ${"bg-darkBlue border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"}`}
-                      defaultValue={contact?.first_name}
-                      onChange={(e) => setFirstName(e.target.value)}
-                    ></input>
-                    <input
-                      className="block bg-darkBlue border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"
-                      defaultValue={contact?.last_name}
-                      onChange={(e) => setLastName(e.target.value)}
-                    ></input>
-                    <input
-                      className="block bg-darkBlue border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"
-                      defaultValue={contact?.email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    ></input>
-                    <input
-                      className="block bg-darkBlue border-white/50 border-solid hover:bg-gray-700 text-light font-light py-2 px-4 duration-200 rounded-xl"
-                      defaultValue={contact?.phone_number}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                    ></input>
+                    <div className="flex flex-row gap-3 relative">
+                      <label
+                        for="first_name"
+                        className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white"
+                      >
+                        First name
+                      </label>
+                      {isEditing ? (
+                        <input
+                          type="text"
+                          id="first_name"
+                          className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-sm text-xs rounded-lg py-1 px-4"
+                          defaultValue={contact?.first_name}
+                          onChange={(e) => setFirstName(e.target.value)}
+                        />
+                      ) : (
+                        <p className="block text-white absolute right-2 top-0">
+                          {contact?.first_name}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-row gap-3 relative">
+                      <label
+                        for="first_name"
+                        className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white"
+                      >
+                        Last name
+                      </label>
+                      {isEditing ? (
+                        <input
+                          type="text"
+                          className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-sm text-xs rounded-lg py-1 px-4"
+                          defaultValue={contact?.last_name}
+                          onChange={(e) => setLastName(e.target.value)}
+                        />
+                      ) : (
+                        <p className="block text-white absolute right-2 top-0">
+                          {contact?.last_name}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-row gap-3 relative">
+                      <label
+                        for="first_name"
+                        className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white"
+                      >
+                        Users email
+                      </label>
+                      {isEditing ? (
+                        <input
+                          type="email"
+                          className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-sm text-xs rounded-lg py-1 px-4"
+                          defaultValue={contact?.email}
+                          onChange={(e) => setEmail(e.target.value)}
+                        />
+                      ) : (
+                        <p className="block text-white absolute right-2 top-0">
+                          {contact?.email}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-row gap-3 relative">
+                      <label className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white">
+                        Phone number
+                      </label>
+                      {isEditing ? (
+                        <input
+                          type="number"
+                          className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-sm text-xs rounded-lg py-1 px-4"
+                          defaultValue={contact?.phone_number}
+                          onChange={(e) => setPhoneNumber(e.target.value)}
+                        />
+                      ) : (
+                        <p className="block text-white absolute right-2 top-0">
+                          {contact?.phone_number}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  <button
-                    onClick={updateContact}
-                    className="bg-darkBlue hover:bg-gray-700 duration-300 px-2 py-1 mt-3 text-white rounded-lg"
-                  >
-                    Update
-                  </button>
+                  {isEditing ? (
+                    <div className="flex flex-row gap-2">
+                      <button
+                        onClick={updateContact}
+                        className="bg-green-600 hover:bg-gray-700 duration-300 px-2 py-1 mt-3 text-white rounded-lg"
+                      >
+                        Update
+                      </button>
+                      <button
+                        onClick={() => setIsEditing(false)}
+                        className="bg-red-600 hover:bg-gray-700 duration-300 px-2 py-1 mt-3 text-white rounded-lg"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                  {!isEditing ? (
+                    <button
+                      onClick={closeContactDrawer}
+                      className="bg-red-600 hover:bg-gray-700 duration-300 px-2 py-1 mt-3 text-white rounded-lg"
+                    >
+                      Close
+                    </button>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             </div>
