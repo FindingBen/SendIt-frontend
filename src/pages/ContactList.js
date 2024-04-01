@@ -146,7 +146,7 @@ const ContactList = () => {
     <section className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:flex-row">
         <div className="flex-1 sm:px-0">
-          <div className="flex justify-between items-center mb-4 h-20 bg-black border-l">
+          <div className="flex justify-between items-center mb-4 h-20 bg-black">
             <h3 class="xl:text-3xl text-2xl font-extralight text-left text-white mx-20">
               Contacts
             </h3>
