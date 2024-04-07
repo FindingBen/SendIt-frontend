@@ -246,27 +246,29 @@ const HomePage = () => {
                   Sort by date
                 </button>
               </div>
-              <div class="bg-black p-4 rounded-2xl shadow-lg">
-                <div class="grid grid-cols-5 gap-4 grid-headers  text-white font-semibold text-sm xl:text-md py-2 px-4 rounded-2xl mb-2">
+              <div class="flex flex-col gap-4">
+                {/* <div class="grid grid-cols-5 gap-4 grid-headers  text-white font-semibold text-sm xl:text-md py-2 px-4 rounded-2xl mb-2">
                   <div className="">Name</div>
                   <div>Created At</div>
                   <div>Analytics</div>
                   <div>Status</div>
                   <div>Action</div>
-                </div>
+                </div> */}
                 {currentMessages?.length > 0 && displayedItems ? (
                   <div>
                     {displayedItems?.map((message, index) => {
                       return (
                         <motion.div
-                          className={` text-white font-normal text-xs lg:text-sm rounded-2xl cursor-pointer`}
+                          className={` text-white font-normal text-xs bg-black lg:text-sm rounded-2xl cursor-pointer`}
                         >
-                          <div
-                            className={`grid grid-cols-5 gap-3 mb-2 py-2 px-4`}
-                          >
-                            <p>{message.message_name}</p>
-                            <div>{message.created_at}</div>
-                            <div>
+                          <div className={`grid grid-cols-5 gap-3 mb-2 p-3`}>
+                            <div className="border-r border-white">
+                              {message.message_name}
+                            </div>
+                            <div className="border-r border-white">
+                              {message.created_at}
+                            </div>
+                            <div className="border-r border-white">
                               {message.status === "Draft" ? (
                                 <p>Unavailabe</p>
                               ) : message.status === "Scheduled" ? (
@@ -297,7 +299,7 @@ const HomePage = () => {
                                 </Link>
                               )}
                             </div>
-                            <div>
+                            <div className="border-r border-white">
                               {message.status === "Draft" ? (
                                 <span class="text-xs font-medium leading-none text-center text-white bg-red-400 rounded-full px-3 lg:px-4 lg:py-1">
                                   Draft
