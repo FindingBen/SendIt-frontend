@@ -257,13 +257,9 @@ const HomePage = () => {
                 {currentMessages?.length > 0 && displayedItems ? (
                   <div>
                     {displayedItems?.map((message, index) => {
-                      const isEvenRow = index % 2 === 0; // Check if the row is even
-                      const rowClassName = isEvenRow
-                        ? "border-b border-white/50"
-                        : "";
                       return (
                         <motion.div
-                          className={` text-white font-normal text-xs lg:text-sm`}
+                          className={` text-white font-normal text-xs lg:text-sm rounded-2xl cursor-pointer`}
                         >
                           <div
                             className={`grid grid-cols-5 gap-3 mb-2 py-2 px-4`}

@@ -2,6 +2,7 @@ import HomeIcon from "./iconComponents/HomeIcon";
 import CreateIcon from "./iconComponents/CreateIcon";
 import ContactLists from "./iconComponents/ContactLists";
 import AccountIcon from "./iconComponents/AccountIcon";
+import ArchiveIcon from "./iconComponents/ArchiveIcon";
 
 export const menu = [
   {
@@ -27,5 +28,11 @@ export const menu = [
     element: <AccountIcon />,
     title: "Account",
     location: "/account_settings/",
+  },
+  {
+    id: 5,
+    element: <ArchiveIcon />,
+    title: "Archives",
+    location: "/archive/",
   },
 ];

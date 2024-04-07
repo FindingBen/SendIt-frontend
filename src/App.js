@@ -21,6 +21,7 @@ import Plans from "./components/AccountSettings/Plans";
 import SuccessPayment from "./pages/SuccessPayment";
 import CancelPayment from "./pages/CancelPayment";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import Archives from "./pages/Archives";
 import UnsubscribePage from "./pages/UnsubscribePage";
 import ActivationEmailSuccess from "./pages/ActivationEmailSuccess";
 
@@ -84,7 +85,7 @@ function App() {
                   path="/account_settings/:id"
                   element={<UserPage></UserPage>}
                 />
-
+                <Route path="/archive/" element={<Archives></Archives>} />
                 <Route
                   path="/stripe/"
                   element={<SuccessPayment></SuccessPayment>}
