@@ -36,6 +36,10 @@ module.exports = {
         lightGray: "#2C365E",
         lightBlue: "#2C365E",
         darkBlack: "#000000",
+        mainBlue: "#0D0D29",
+        navBlue: "#090921",
+        shadowColor: "#06B6D4",
+        purpleHaze: "#4937BA",
       },
       fontFamily: {
         sfPro: ["SF Pro"],

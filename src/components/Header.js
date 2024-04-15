@@ -84,7 +84,7 @@ const Header = () => {
 
   return (
     <div
-      className={`flex flex-column items-center relative p-1 text-white bg-black`}
+      className={`flex flex-column items-center relative p-1 text-white bg-navBlue border-r-2 border-gray-800`}
     >
       <img
         src={require("../assets/noBgLogo.png")}

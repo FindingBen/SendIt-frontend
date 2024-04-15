@@ -21,6 +21,7 @@ import {
 } from "../redux/reducers/messageReducer";
 import { cleanPackage } from "../redux/reducers/packageReducer";
 import SmsPill from "../components/SmsPill/SmsPill";
+import { MessageCard } from "../components/MessageCard/MessageCard";
 
 const HomePage = () => {
   const axiosInstance = useAxiosInstance();
@@ -58,6 +59,7 @@ const HomePage = () => {
     // Fetch data only on initial load and when user is logged in
     if (!currentMessages.length) {
       getNotes();
+      //setSortOrder("created_at");
     } else if (currentOperationState) {
       getNotes();
       dispatch(setOperation(false));
@@ -80,7 +82,7 @@ const HomePage = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedItems = currentMessages?.slice(startIndex, endIndex);
-
+  console.log(sortOrder);
   let getNotes = async () => {
     try {
       let response = await axiosInstance.get(
@@ -214,9 +216,9 @@ const HomePage = () => {
   return (
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 flex flex-col lg:flex-row">
-        <div className="flex-1 sm:px-0">
-          <div className="flex justify-between items-center mb-4 h-20 bg-darkBlack">
-            <h3 class="xl:text-3xl lg:text-2xl text-xl font-light text-left text-white mx-20">
+        <div className="flex-1">
+          <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
+            <h3 class="xl:text-3xl lg:text-2xl text-xl font-semibold text-left text-white mx-20">
               Overview
             </h3>
 
@@ -231,180 +233,42 @@ const HomePage = () => {
 
             {/* table content */}
             <div
-              className={`transition-width ${
+              className={`transition-width bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl mt-4 ${
                 analyticsOpen ? "w-[72%]" : "w-full"
               }`}
             >
-              <div className="flex flex-row relative">
-                <p className="text-white font-light lg:text-2xl text-xl flex items-start my-3 mt-3">
+              <div className="flex flex-row relative border-b border-gray-800">
+                <p className="text-white font-semibold text-xl xl:text-2xl flex items-start my-3 mt-3 ml-5">
                   Your latest messages
                 </p>
                 <button
                   onClick={handleSortButtonClick}
-                  className="px-3 py-2 text-white font-light text-sm rounded-2xl cursor-pointer bg-black transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 lg:top-5 top-5"
+                  className="px-2 py-1 mr-5 text-white font-normal text-sm cursor-pointer bg-purpleHaze rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4"
                 >
                   Sort by date
                 </button>
               </div>
-              <div class="flex flex-col gap-4">
-                {/* <div class="grid grid-cols-5 gap-4 grid-headers  text-white font-semibold text-sm xl:text-md py-2 px-4 rounded-2xl mb-2">
-                  <div className="">Name</div>
-                  <div>Created At</div>
-                  <div>Analytics</div>
-                  <div>Status</div>
-                  <div>Action</div>
-                </div> */}
+              <div class="flex flex-col">
+                <div class="grid grid-cols-5 gap-4 text-white/50 font-normal text-sm border-b-2 p-2 border-gray-800">
+                  <div className="">NAME</div>
+                  <div>CREATED AT</div>
+                  <div>ANALYTICS</div>
+                  <div>STATUS</div>
+                  <div>ACTION</div>
+                </div>
                 {currentMessages?.length > 0 && displayedItems ? (
                   <div>
                     {displayedItems?.map((message, index) => {
                       return (
                         <motion.div
-                          className={` text-white font-normal text-xs bg-black lg:text-sm rounded-2xl cursor-pointer`}
+                          className={`text-white font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 bg-mainBlue`}
                         >
-                          <div className={`grid grid-cols-5 gap-3 mb-2 p-3`}>
-                            <div className="border-r border-white">
-                              {message.message_name}
-                            </div>
-                            <div className="border-r border-white">
-                              {message.created_at}
-                            </div>
-                            <div className="border-r border-white">
-                              {message.status === "Draft" ? (
-                                <p>Unavailabe</p>
-                              ) : message.status === "Scheduled" ? (
-                                <p>Unavailabe</p>
-                              ) : (
-                                <Link
-                                  type="button"
-                                  className="hover:bg-sky-300 rounded"
-                                  onClick={() =>
-                                    toggleAnalyticsDrawer(message.id)
-                                  }
-                                  //to={`/analytics/${message.id}`}
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="lg:w-6 lg:h-6 w-4 h-4"
-                                  >
-                                    <path
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"
-                                    />
-                                  </svg>
-                                </Link>
-                              )}
-                            </div>
-                            <div className="border-r border-white">
-                              {message.status === "Draft" ? (
-                                <span class="text-xs font-medium leading-none text-center text-white bg-red-400 rounded-full px-3 lg:px-4 lg:py-1">
-                                  Draft
-                                </span>
-                              ) : message.status === "Scheduled" ? (
-                                <span class="text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse px-3 lg:px-4 lg:py-1">
-                                  Scheduled
-                                </span>
-                              ) : (
-                                <span class="text-xs font-medium leading-none text-center text-green-100 bg-green-400 rounded-full px-3 lg:px-4 lg:py-1">
-                                  Sent
-                                </span>
-                              )}
-                            </div>
-
-                            <div className="flex flex-row items-center justify-center gap-1">
-                              <Link
-                                className="hover:bg-sky-300 rounded"
-                                type="button"
-                                to={`/edit_message/${message.id}`}
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke-width="0.6"
-                                  stroke="currentColor"
-                                  class="lg:w-6 lg:h-6 w-4 h-4 text-white"
-                                >
-                                  <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                                  />
-                                </svg>
-                              </Link>
-
-                              {message.status === "sent" ? (
-                                <></>
-                              ) : message.status === "Scheduled" ? (
-                                <></>
-                              ) : (
-                                <Link
-                                  className="hover:bg-sky-300 rounded"
-                                  type="button"
-                                  to={`/sms_editor/${message.id}`}
-
-                                  // data-mdb-ripple-color="dark"
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    strokeWidth="0.6"
-                                    fill="currentColor"
-                                    className="lg:w-6 lg:h-6 w-4 h-4"
-                                  >
-                                    <path
-                                      d="M4.848 2.771A49.144 49.144 0 0112 2.25c2.43 0 4.817.178 7.152.52 1.978.292 3.348 2.024 3.348 3.97v6.02c0 1.946-1.37 3.678-3.348 3.97a48.901 48.901 0 01-3.476.383.39.39 0 00-.297.17l-2.755 4.133a.75.75 0 01-1.248 0l-2.755-4.133a.39.39 0 00-.297-.17 48.9 48.9 0 01-3.476-.384c-1.978-.29-3.348-2.024-3.348-3.97V6.741c0-1.946 1.37-3.68 3.348-3.97zM6.75 8.25a.75.75 0 01.75-.75h9a.75.75 0 010 1.5h-9a.75.75 0 01-.75-.75zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H7.5z"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                    />
-                                  </svg>
-                                </Link>
-                              )}
-                              <button
-                                type="button"
-                                className="hover:bg-sky-300 rounded"
-                                onClick={() => duplicateMessage(message.id)}
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke-width="0.6"
-                                  stroke="currentColor"
-                                  class="lg:w-6 lg:h-6 w-4 h-4"
-                                >
-                                  <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"
-                                  />
-                                </svg>
-                              </button>
-                              <button
-                                type="button"
-                                className="hover:bg-sky-300 rounded"
-                                onClick={() => deleteMessage(message.id)}
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 24 24"
-                                  strokeWidth="0.5"
-                                  stroke="currentColor"
-                                  className="lg:w-6 lg:h-6 w-4 h-4 fill-red-700"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                  />
-                                </svg>
-                              </button>
-                            </div>
-                          </div>
+                          <MessageCard
+                            message={message}
+                            toggleAnalyticsDrawer={toggleAnalyticsDrawer}
+                            deleteMessage={deleteMessage}
+                            duplicateMessage={duplicateMessage}
+                          />
                         </motion.div>
                       );
                     })}
@@ -462,7 +326,7 @@ const HomePage = () => {
               )}
             </div>
             <div
-              className={`absolute top-[15%] xl:top-[11%] -right-6 h-[548px] w-[340px] xl:h-[648px] xl:w-[430px] bg-black rounded-2xl shadow-lg transition-transform transform ${
+              className={`absolute top-[15%] xl:top-[11%] -right-6 h-[548px] w-[340px] xl:h-[648px] xl:w-[430px] bg-mainBlue border-2 border-gray-800 rounded-2xl shadow-lg transition-transform transform ${
                 analyticsOpen
                   ? "xl:-translate-x-26 lg:-translate-x-24"
                   : "translate-x-full"
@@ -532,7 +396,7 @@ const HomePage = () => {
                 </div>
                 <Link
                   to={`/analytics/${smsId}`}
-                  className="bg-darkBlue hover:bg-gray-700 duration-300 px-2 py-1 mt-2 text-white rounded-lg"
+                  className="bg-purpleHaze hover:bg-gray-700 duration-300 px-2 py-1 mt-2 text-white rounded-lg"
                 >
                   View more
                 </Link>

@@ -83,8 +83,8 @@ const UserPage = () => {
     <section className="min-h-screen w-full items-center justify-center relative">
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1 sm:px-0">
-          <div className="flex justify-between items-center mb-4 h-20 bg-black">
-            <h3 class="xl:text-3xl text-2xl text-left font-extralight text-white mx-20">
+          <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
+            <h3 class="xl:text-3xl text-2xl text-left font-semibold text-white mx-20">
               User page
             </h3>
             <div class="flex flex-row items-center mx-20">

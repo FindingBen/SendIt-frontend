@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const OverallStatistics = ({ totalValues }) => {
   return (
     <div className="flex w-[72%] gap-4">
-      <div className="flex flex-row items-center lg:w-[275px] h-[120px] rounded-2xl bg-black">
+      <div className="flex flex-row items-center lg:w-[275px] h-[120px] rounded-2xl bg-mainBlue border-2 border-gray-800">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           <p className="text-white text-xl lg:text-normal font-light text-justify">
             Total sends
@@ -31,7 +31,7 @@ const OverallStatistics = ({ totalValues }) => {
         </div>
       </div>
 
-      <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-black">
+      <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-mainBlue border-2 border-gray-800">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           <p className="text-white text-xl font-light text-justify">
             Total Views
@@ -57,7 +57,7 @@ const OverallStatistics = ({ totalValues }) => {
         </div>
       </div>
 
-      <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-black">
+      <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-mainBlue border-2 border-gray-800">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           <p className="text-white text-xl font-light text-justify">
             Bounce Rate
@@ -84,7 +84,7 @@ const OverallStatistics = ({ totalValues }) => {
         </div>
       </div>
 
-      <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-black">
+      <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-mainBlue border-2 border-gray-800">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           <p className="text-white text-xl font-light text-justify">
             Overall rate

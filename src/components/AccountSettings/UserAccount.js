@@ -58,8 +58,8 @@ const UserAccount = () => {
 
   return (
     <div className="flex gap-3 mr-5">
-      <div className="flex flex-col rounded-2xl p-4 mt-4 bg-black w-80 h-[540px]">
-        <h3 class="flex flex-row text-xl xl:text-2xl text-left font-extralight text-white relative">
+      <div className="flex flex-col rounded-2xl p-4 mt-4 bg-mainBlue border-gray-800 border-2 w-80 h-[540px]">
+        <h3 class="flex flex-row text-xl xl:text-2xl text-left font-semibold text-white relative">
           General settings
           <svg
             xmlns="http://www.w3.org/2000/svg"

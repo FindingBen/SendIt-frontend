@@ -146,7 +146,7 @@ const ContactList = () => {
     <section className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:flex-row">
         <div className="flex-1 sm:px-0">
-          <div className="flex justify-between items-center mb-4 h-20 bg-black">
+          <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
             <h3 class="xl:text-3xl text-2xl font-extralight text-left text-white mx-20">
               Contacts
             </h3>
@@ -201,11 +201,11 @@ const ContactList = () => {
                 openContact ? "w-[72%]" : "w-full"
               }`}
             >
-              <div class="items-center justify-center rounded-2xl mb-3 w-full bg-black shadow-md p-2">
+              <div class="items-center justify-center rounded-2xl mb-3 w-full bg-navBlue border-gray-800 border-2 shadow-md p-2">
                 <div className="flex flex-row space-x-2">
                   <button
                     className={`px-2 py-1 text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
-                      sortOrder === "first_name" ? "bg-gray-700" : ""
+                      sortOrder === "first_name" ? "bg-purpleHaze" : ""
                     }`}
                     onClick={handleSortByName}
                   >
@@ -213,7 +213,7 @@ const ContactList = () => {
                   </button>
                   <button
                     className={`px-2 py-1 text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
-                      sortOrder === "created_at" ? "bg-gray-700" : ""
+                      sortOrder === "created_at" ? "bg-purpleHaze" : ""
                     }`}
                     onClick={handleSortByDateCreated}
                   >
@@ -313,7 +313,7 @@ const ContactList = () => {
               </div>
             </div>
             <div
-              className={`absolute top-[14.5%] xl:top-[11%] -right-6 h-[526px] w-[340px] xl:h-[648px] xl:w-[440px] bg-black rounded-2xl transition-transform transform ${
+              className={`absolute top-[14.5%] xl:top-[11%] -right-6 h-[526px] w-[340px] xl:h-[648px] xl:w-[440px] bg-navBlue border-gray-800 border-2 rounded-2xl transition-transform transform ${
                 openContact
                   ? "xl:-translate-x-20 lg:-translate-x-24"
                   : "translate-x-full"

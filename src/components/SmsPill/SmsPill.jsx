@@ -10,7 +10,7 @@ const SmsPill = () => {
   const sms_value = jwt_decode(currentToken);
 
   return (
-    <div className="flex flex-row h-10 w-40 rounded-2xl relative shadow-lg">
+    <div className="flex flex-row h-10 w-40 rounded-2xl relative shadow-lg bg-purpleHaze">
       <div className="rounded-2xl text-white my-auto ml-2">
         Credits: {sms_value.sms_count}
       </div>

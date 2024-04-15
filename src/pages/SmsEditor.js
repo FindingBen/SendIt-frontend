@@ -165,7 +165,7 @@ const SmsEditor = () => {
     <section className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
         <div className="flex-1 sm:px-0">
-          <div className="flex justify-between items-center mb-4 h-20 bg-black border-l border-white">
+          <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
             <h3 class="xl:text-3xl lg:text-2xl text-xl text-left font-extralight text-white mx-20">
               Sms sending flow
             </h3>

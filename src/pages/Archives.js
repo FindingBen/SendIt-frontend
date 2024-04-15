@@ -63,7 +63,7 @@ const Archives = () => {
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1 sm:px-0">
-          <div className="flex justify-between items-center mb-4 h-20 bg-darkBlack">
+          <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
             <h3 class="xl:text-3xl lg:text-2xl text-xl font-light text-left text-white mx-20">
               Archives
             </h3>

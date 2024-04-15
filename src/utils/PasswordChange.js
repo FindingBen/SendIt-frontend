@@ -83,9 +83,9 @@ const PasswordChange = () => {
   };
 
   return (
-    <div className=" bg-black rounded-2xl p-4 mt-3 w-[50%]">
+    <div className=" bg-mainBlue shadow-md border-gray-800 border-2 rounded-2xl p-4 mt-3 w-[50%]">
       <div className="flex flex-col">
-        <h3 class="flex flex-row text-xl xl:text-2xl text-left font-extralight text-white relative">
+        <h3 class="flex flex-row text-xl xl:text-2xl text-left font-semibold text-white relative">
           Change password
           <svg
             xmlns="http://www.w3.org/2000/svg"

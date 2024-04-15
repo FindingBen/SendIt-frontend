@@ -18,8 +18,8 @@ const Billings = ({ purchases }) => {
   };
 
   return (
-    <div className="flex-initial rounded-2xl p-4 xl:p-10 mt-4 bg-black">
-      <h3 class="xl:text-2xl text-xl text-left font-extralight text-white">
+    <div className="flex-initial rounded-2xl p-4 xl:p-10 mt-4 bg-mainBlue border-gray-800 border-2">
+      <h3 class="xl:text-2xl text-xl text-left font-semibold text-white">
         Purchase history
       </h3>
 
