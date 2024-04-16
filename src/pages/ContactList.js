@@ -147,7 +147,7 @@ const ContactList = () => {
       <div className="flex-1 flex flex-col space-y-5 lg:flex-row">
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
-            <h3 class="xl:text-3xl text-2xl font-extralight text-left text-white mx-20">
+            <h3 class="xl:text-3xl text-2xl font-semibold text-left text-white mx-20">
               Contacts
             </h3>
             <div class="items-start w-24 h-10 shadow-md mx-20">
@@ -201,8 +201,8 @@ const ContactList = () => {
                 openContact ? "w-[72%]" : "w-full"
               }`}
             >
-              <div class="items-center justify-center rounded-2xl mb-3 w-full bg-navBlue border-gray-800 border-2 shadow-md p-2">
-                <div className="flex flex-row space-x-2">
+              <div class="items-center justify-center rounded-2xl mb-3 w-full bg-navBlue border-gray-800 border-2 shadow-md">
+                <div className="flex flex-row space-x-2 p-2">
                   <button
                     className={`px-2 py-1 text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
                       sortOrder === "first_name" ? "bg-purpleHaze" : ""
@@ -223,19 +223,16 @@ const ContactList = () => {
 
                 <div class="overflow-auto lg:overflow-visible">
                   <div class="overflow-x-auto">
-                    <div class="my-6">
-                      <div class="grid grid-cols-5 gap-4 grid-headers text-white font-semibold py-2 px-4 rounded-2xl mb-2">
-                        <div>First Name</div>
-                        <div>Last Name</div>
-                        <div>Email</div>
-                        <div>Phone Number</div>
-                        <div>Action</div>
+                    <div>
+                      <div class="grid grid-cols-5 gap-4 grid-headers text-white/50 font-normal text-sm border-b-2 p-1 border-gray-800 mb-2">
+                        <div>FIRST NAME</div>
+                        <div>LAST NAME</div>
+                        <div>EMAIL</div>
+                        <div>PHONE NUMBER</div>
+                        <div>ACTION</div>
                       </div>
                       {paginatedData?.map((rowData, index) => {
-                        const isEvenRow = index % 2 === 0; // Check if the row is even
-                        const rowClassName = isEvenRow
-                          ? "bg-darkBlue rounded-2xl"
-                          : "";
+                        const isLastItem = index === paginatedData.length - 1;
                         return (
                           <div
                             key={rowData.id}
@@ -247,7 +244,9 @@ const ContactList = () => {
                           >
                             <div className="mb-2">
                               <div
-                                className={`grid grid-cols-5 gap-4 py-2 px-4`}
+                                className={`grid grid-cols-5 gap-4 h-10 border-b-2 border-gray-800 ${
+                                  isLastItem ? "rounded-b-2xl" : ""
+                                }`}
                               >
                                 <div>{rowData.first_name}</div>
                                 <div>{rowData.last_name}</div>

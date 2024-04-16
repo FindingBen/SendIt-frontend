@@ -64,7 +64,7 @@ const Archives = () => {
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
-            <h3 class="xl:text-3xl lg:text-2xl text-xl font-light text-left text-white mx-20">
+            <h3 class="xl:text-3xl lg:text-2xl text-xl font-semibold text-left text-white mx-20">
               Archives
             </h3>
 
@@ -74,25 +74,27 @@ const Archives = () => {
           </div>
           <div className="w-full">
             <div className="flex flex-row relative mx-20">
-              <p className="text-white font-light lg:text-2xl text-xl flex items-start my-3 mt-3">
+              <p className="text-white font-semibold text-xl xl:text-2xl flex items-start my-3 mt-3">
                 Archived messages
               </p>
               <button
                 //onClick={handleSortButtonClick}
-                className="px-3 py-2 text-white font-light text-sm rounded-2xl cursor-pointer bg-black transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 lg:top-5 top-5"
+                className="px-3 py-2 text-white font-light text-sm rounded-lg cursor-pointer bg-navBlue border-2 border-gray-800 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-3"
               >
                 Sort by date
               </button>
             </div>
             <div
-              class={`bg-black p-4 rounded-2xl shadow-lg mx-20 ${
+              class={`bg-navBlue border-2 border-gray-800 rounded-2xl shadow-lg mx-20 ${
                 openCont ? "w-[60%]" : ""
               }`}
             >
-              <div class="grid grid-cols-5 gap-4 grid-headers  text-white font-semibold text-sm xl:text-md py-2 px-4 rounded-2xl mb-2">
-                <div>Name</div>
-                <div>Created At</div>
-                <div>Action</div>
+              <div class="grid grid-cols-5 gap-4 grid-headers border-b-2 p-2 border-gray-800 text-white/50 font-normal text-sm xl:text-md py-2 px-4 mb-2">
+                <div>NAME</div>
+                <div>ARCHIVED</div>
+                <div>SENT</div>
+                <div>SUCCESS RATE</div>
+                <div>ACTION</div>
               </div>
               {archives?.length > 0 && displayedItems ? (
                 <div>
@@ -132,7 +134,7 @@ const Archives = () => {
             </div>
             {openCont ? (
               <div
-                className={`absolute top-[15%] xl:top-[11%] right-20 h-[548px] w-[340px] xl:h-[648px] xl:w-[430px] bg-black rounded-2xl shadow-lg transition-transform transform`}
+                className={`absolute top-[15%] xl:top-[11%] right-20 h-[548px] w-[340px] xl:h-[648px] xl:w-[430px] bg-navBlue border-2 border-gray-800 rounded-2xl shadow-lg transition-transform transform`}
               >
                 <div className="flex flex-col p-4 relative items-center">
                   <button

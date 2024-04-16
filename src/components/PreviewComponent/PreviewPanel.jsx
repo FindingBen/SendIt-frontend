@@ -14,9 +14,9 @@ const PreviewPanel = ({
       <div
         class={`h-[470px] ${
           device === "tablet" ? "w-[350px]" : "w-[250px]"
-        } relative mx-auto border-black bg-darkGray border-[14px] rounded-[2.5rem] shadow-xl`}
+        } relative mx-auto border-gray-800 bg-navBlue border-[14px] rounded-[2.5rem] shadow-xl`}
       >
-        <div class="w-[108px] h-[10px] xl:w-[148px] xl:h-[18px] bg-black top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
+        <div class="w-[108px] h-[10px] xl:w-[148px] xl:h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
         <div class="h-[46px] w-[3px] bg-darkGrayblack absolute -left-[17px] top-[124px] rounded-l-lg"></div>
         <div class="h-[46px] w-[3px] bg-black absolute -left-[17px] top-[178px] rounded-l-lg"></div>
         <div class="h-[64px] w-[3px] bg-black absolute -right-[17px] top-[142px] rounded-r-lg"></div>
