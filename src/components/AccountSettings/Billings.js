@@ -18,28 +18,28 @@ const Billings = ({ purchases }) => {
   };
 
   return (
-    <div className="flex-initial rounded-2xl p-4 xl:p-10 mt-4 bg-mainBlue border-gray-800 border-2">
-      <h3 class="xl:text-2xl text-xl text-left font-semibold text-white">
+    <div className="flex-initial rounded-2xl mt-4 bg-mainBlue border-gray-800 border-2">
+      <h3 class="xl:text-2xl ml-5 mt-4 text-xl text-left font-semibold text-white">
         Purchase history
       </h3>
 
-      <p class="text-left xl:text-sm text-xs text-gray-500 dark:text-gray-400">
+      <p class="text-left ml-5 xl:text-sm text-xs text-gray-500 dark:text-gray-400">
         Copy the purchase id and include it in your inquire in case of any
         questions{" "}
       </p>
-      <div class="grid grid-cols-5 text-sm xl:text-normal gap-4 mt-2 grid-headers text-white font-light py-2 px-4 rounded-2xl mb-2">
+      <div class="grid grid-cols-5 border-b-2 border-gray-800 text-normal xl:text-normal gap-4 mt-2 text-white/50 font-normal">
         <div>Product name</div>
         <div>Price</div>
         <div>ID</div>
         <div>Purchase Date</div>
-        {/* <div>Phone Number</div>
-        <div>Action</div> */}
+
+        <div>Action</div>
       </div>
       {purchases.length > 0 ? (
-        <div className="flex flex-col items-left mt-3 text-sm xl:text-normal max-h-80 text-white/50 overflow-y-scroll">
+        <div className="flex flex-col items-left text-sm xl:text-normal max-h-80 text-white/50 overflow-y-scroll">
           {purchases?.map((purchase, index) => {
-            const isEvenRow = index % 2 === 0; // Check if the row is even
-            const rowClassName = isEvenRow ? "bg-darkBlue rounded-2xl" : "";
+            const isEvenRow = index % 2 === 0;
+            const isLastItem = index === purchases?.length - 1;
             return (
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
@@ -50,28 +50,34 @@ const Billings = ({ purchases }) => {
                   ease: [0, 0.41, 0.1, 1.01],
                 }}
                 key={purchase.id}
-                className={` text-white font-light ${rowClassName}`}
+                className={`text-white font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
+                  isEvenRow
+                    ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
+                    : "bg-mainBlue"
+                } ${isLastItem ? "rounded-b-2xl" : ""}`}
               >
-                {/* <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-4 h-4 xl:w-5 xl:h-5 absolute right-1 top-1 cursor-pointer"
-                  onClick={() => copyPurchaseId(purchase.payment_id, index)}
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"
-                  />
-                </svg> */}
-                <div className={`grid grid-cols-5 gap-4 py-2 px-4`}>
+                <div className={`grid grid-cols-5 gap-4 p-3`}>
                   <div>{purchase.package_name}</div>
                   <div>{purchase.price}</div>
                   <div>{purchase.payment_id}</div>
                   <div>{purchase.created_at}</div>
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-5 h-5 cursor-pointer"
+                      onClick={() => copyPurchaseId(purchase.payment_id, index)}
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"
+                      />
+                    </svg>
+                  </div>
                 </div>
               </motion.div>
             );

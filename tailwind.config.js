@@ -38,6 +38,7 @@ module.exports = {
         darkBlack: "#000000",
         mainBlue: "#0D0D29",
         navBlue: "#090921",
+        lighterMainBlue:"#151530",
         shadowColor: "#06B6D4",
         purpleHaze: "#4937BA",
       },

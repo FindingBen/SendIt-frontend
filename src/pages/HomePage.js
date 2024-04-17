@@ -233,7 +233,7 @@ const HomePage = () => {
 
             {/* table content */}
             <div
-              className={`transition-width bg-mainBlue border-gray-800 shadow-md border-2  rounded-2xl mt-4 ${
+              className={`transition-width bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl mt-4 ${
                 analyticsOpen ? "w-[72%]" : "w-full"
               }`}
             >
@@ -260,11 +260,14 @@ const HomePage = () => {
                   <div>
                     {displayedItems?.map((message, index) => {
                       const isLastItem = index === displayedItems.length - 1;
+                      const evenRow = index % 2 === 0;
                       return (
                         <motion.div
-                          className={`text-white font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 bg-mainBlue ${
-                            isLastItem ? "rounded-b-2xl" : ""
-                          }`}
+                          className={`text-white font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
+                            evenRow
+                              ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
+                              : "bg-mainBlue"
+                          } ${isLastItem ? "rounded-b-2xl" : ""}`}
                         >
                           <MessageCard
                             message={message}

@@ -166,13 +166,15 @@ const SmsEditor = () => {
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
-            <h3 class="xl:text-3xl lg:text-2xl text-xl text-left font-extralight text-white mx-20">
+            <h3 class="xl:text-3xl lg:text-2xl text-xl text-left font-semibold text-white mx-20">
               Sms sending flow
             </h3>
-            <SmsPill />
+            <div class="flex flex-row items-center mx-20">
+              <SmsPill />
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-4 rounded-md mx-20">
-            <div className="grid gap-2 bg-black rounded-2xl">
+            <div className="grid gap-2 bg-mainBlue border-gray-800 border-2 rounded-2xl">
               <div class="rounded p-10">
                 <h3 class="text-2xl text-left font-extralight text-white mb-4">
                   Sms send
