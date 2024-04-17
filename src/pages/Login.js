@@ -78,13 +78,13 @@ const Login = () => {
   };
 
   return (
-    <section class="flex flex-col justify-center antialiased bg-darkBlue text-gray-200 min-h-screen p-4 w-100">
+    <section class="flex flex-col justify-center antialiased bg-gradient-to-b from-lighterMainBlue to-mainBlue text-gray-200 min-h-screen p-4 w-100">
       <div class="flex-1">
         <div class="max-w-[360px] mx-auto mt-10 mb-5">
-          <div class="bg-white h-[420px] rounded-lg mt-3">
+          <div class="bg-navBlue border-2 border-gray-800 h-[420px] rounded-lg mt-3">
             <header class="text-center px-5 pb-5">
-              <svg
-                class="inline-flex -mt-9 w-[72px] h-[72px] rounded-full border-4 border-white box-content shadow mb-3"
+              {/* <svg
+                class="inline-flex -mt-9 w-[72px] h-[72px] bg-gray-800 rounded-full border-gray-800 border-2 mb-3"
                 viewBox="0 0 72 72"
               >
                 <path class="text-gray-700" d="M0 0h72v72H0z" />
@@ -93,15 +93,15 @@ const Login = () => {
                   width="72"
                   height="72"
                 />
-              </svg>
+              </svg> */}
 
-              <h3 class="text-xl font-bold text-gray-900 mb-1">Login</h3>
+              <h3 class="text-xl font-semibold text-white mb-1 mt-5">Login</h3>
               <div class="text-sm font-medium text-gray-500">
                 Enter your credentials below to continue
               </div>
             </header>
 
-            <div class="bg-gray-100 mb-4 text-center px-5 py-6">
+            <div class="bg-navBlue mb-4 text-center px-5 py-6">
               <form class="space-y-3" onSubmit={handleSubmit}>
                 <div>
                   <div className="h-6">
@@ -114,7 +114,7 @@ const Login = () => {
                           delay: 0.2,
                           ease: [0, 0.41, 0.1, 1.01],
                         }}
-                        className="text-red-700"
+                        className="text-red-600"
                       >
                         {errMsg}
                       </motion.div>
@@ -141,7 +141,7 @@ const Login = () => {
                           delay: 0.2,
                           ease: [0, 0.41, 0.1, 1.01],
                         }}
-                        className="text-red-700"
+                        className="text-red-600"
                       >
                         {errPass}
                       </motion.div>
@@ -180,7 +180,7 @@ const Login = () => {
                 ) : (
                   <button
                     type="submit"
-                    class="font-semibold text-sm inline-flex items-center justify-center px-3 py-2 rounded-xl leading-5 shadow-lg transition duration-150 ease-in-out w-full bg-darkBlue hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
+                    class="font-semibold text-sm inline-flex items-center justify-center px-3 py-2 rounded-xl leading-5 shadow-lg transition duration-150 ease-in-out w-full bg-purpleHaze hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
                   >
                     Login
                   </button>

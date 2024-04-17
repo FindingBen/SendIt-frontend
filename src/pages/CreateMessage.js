@@ -251,7 +251,7 @@ const CreateNote = () => {
           </div>
           <div className="flex flex-row rounded-2xl mx-20">
             <div className="flex flex-col p-10">
-              <div className="flex flex-col w-96 gap-2 rounded-2xl p-4 bg-navBlue border-2 border-gray-800">
+              <div className="flex flex-col w-96 gap-2 rounded-2xl p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800">
                 {errorMsg && (
                   <p className="text-red-600 font-light ml-2">{errorMsg}</p>
                 )}
@@ -269,7 +269,7 @@ const CreateNote = () => {
                   </button>
                 )}
               </div>
-              <div className="flex flex-col p-4 bg-bg-navBlue border-2 border-gray-800 mt-4 rounded-2xl">
+              <div className="flex flex-col p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 mt-4 rounded-2xl">
                 <span className="text-left text-white">Content elements</span>
                 <div className="flex flex-row mt-2 gap-2">
                   <div
