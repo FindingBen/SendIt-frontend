@@ -36,24 +36,12 @@ const PasswordReset = () => {
   };
 
   return (
-    <section class="flex flex-col justify-center bg-darkBlue text-gray-200 min-h-screen p-4 w-100">
+    <section class="flex flex-col justify-center bg-gradient-to-b from-lighterMainBlue to-mainBlue text-gray-200 min-h-screen p-4 w-100">
       <div class="h-full">
         <div class="max-w-[360px] mx-auto mt-20 mb-5">
-          <div class="bg-white shadow-lg rounded-2xl mt-9">
+          <div class="bg-navBlue border-2 border-gray-800 shadow-lg rounded-2xl mt-9">
             <header class="text-center px-5 pb-5">
-              <svg
-                class="inline-flex -mt-9 w-[72px] h-[72px] rounded-full border-4 border-white box-content shadow mb-3"
-                viewBox="0 0 72 72"
-              >
-                <path class="text-gray-700" d="M0 0h72v72H0z" />
-                <image
-                  href={require("../assets/noBgLogo.png")}
-                  width="72"
-                  height="72"
-                />
-              </svg>
-
-              <h3 class="text-xl font-bold text-gray-900 mb-1">
+              <h3 class="text-xl font-bold text-white mb-1 mt-4">
                 Enter your email below
               </h3>
               <div class="text-sm font-medium text-gray-500">
@@ -63,13 +51,13 @@ const PasswordReset = () => {
             </header>
             {errMsg && <p className="text-red-700">{errMsg}</p>}
             {!sent ? (
-              <div class="bg-gray-100 mb-4 text-center px-5 py-6">
+              <div class="bg-navBlue mb-4 text-center px-5 py-6">
                 <div class="shadow-sm rounded">
                   <div class="flex-none">
                     <input
                       onChange={handleEmail}
                       name="username"
-                      class="text-sm text-gray-800 bg-white p-2 placeholder-gray-400 w-full border border-transparent focus:border-indigo-300 focus:ring-0"
+                      class="text-sm text-gray-800 bg-white p-2 placeholder-gray-400 w-full rounded-lg focus:border-indigo-300 focus:ring-0"
                       type="text"
                       placeholder="Email"
                     />
@@ -77,7 +65,7 @@ const PasswordReset = () => {
                 </div>
 
                 {loading ? (
-                  <div className="relative">
+                  <div className="relative mt-2">
                     <svg
                       style={{ marginLeft: "45%" }}
                       aria-hidden="true"
@@ -100,14 +88,14 @@ const PasswordReset = () => {
                   <button
                     onClick={passReset}
                     type="submit"
-                    class="font-semibold mt-2 text-sm inline-flex items-center justify-center px-3 py-2 border border-transparent rounded leading-5 shadow transition duration-150 ease-in-out w-full bg-darkBlue hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
+                    class="font-semibold mt-2 text-sm inline-flex items-center justify-center px-3 py-2 rounded leading-5 shadow transition duration-150 ease-in-out w-full bg-purpleHaze hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
                   >
                     Send
                   </button>
                 )}
               </div>
             ) : (
-              <div className="text-sm font-light text-gray-700 m-2 mb-4">
+              <div className="text-sm font-light text-white m-2 mb-4">
                 <p className="m-2">
                   Email has been sent, if its valid you should recieve a message
                   with instructions

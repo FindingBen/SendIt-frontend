@@ -137,31 +137,21 @@ const RegisterPage = () => {
   };
 
   return (
-    <section class="flex flex-col justify-center antialiased bg-darkBlue text-gray-200 h-screen p-4 w-100">
+    <section class="flex flex-col justify-center antialiased bg-gradient-to-b from-lighterMainBlue to-mainBlue text-gray-200 h-screen p-4 w-100">
       <div class="flex-1">
         <div class="max-w-[440px] mx-auto flex flex-col mb-5">
           {!registered ? (
-            <div class="bg-white mt-9 rounded-2xl">
+            <div class="bg-mainBlue border-2 border-gray-800 mt-9 rounded-2xl">
               <header class="text-center px-5 pb-5">
-                <svg
-                  class="inline-flex -mt-9 w-[72px] h-[72px] rounded-full border-4 border-white box-content shadow mb-3"
-                  viewBox="0 0 72 72"
-                >
-                  <path class="text-gray-700" d="M0 0h72v72H0z" />
-                  <image
-                    href={require("../assets/logoSpp.PNG")}
-                    width="72"
-                    height="72"
-                  />
-                </svg>
-
-                <h3 class="text-xl font-bold text-gray-900 mb-1">Register</h3>
-                <div class="text-sm font-medium text-gray-500">
+                <h3 class="text-xl font-semibold text-white mb-1 mt-2">
+                  Register
+                </h3>
+                <div class="text-sm font-medium text-white/50 mt-2">
                   Register your credentials below
                 </div>
               </header>
 
-              <div class="bg-gray-100 text-center px-5 py-2 rounded-b-2xl">
+              <div class="bg-mainBlue text-center px-5 py-2 rounded-b-2xl">
                 <form onSubmit={handleSubmit}>
                   <div className="flex flex-row gap-2">
                     <div class="rounded-md">
@@ -190,7 +180,7 @@ const RegisterPage = () => {
                             errMsg ? "border-red-400" : ""
                           } rounded-md focus:border-indigo-300 focus:ring-0`}
                           type="text"
-                          placeholder="username"
+                          placeholder="Username"
                         />
                       </div>
                     </div>
@@ -245,7 +235,7 @@ const RegisterPage = () => {
                             errEmail ? "border-red-400" : ""
                           } `}
                           type="text"
-                          placeholder="email"
+                          placeholder="Email"
                         />
                       </div>
                     </div>
@@ -311,7 +301,7 @@ const RegisterPage = () => {
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 mt-3 mb-3">
-                    <label className="text-black/50 font-normal">
+                    <label className="text-white/50 font-normal">
                       Who are you gona use the platform as?
                     </label>
                     <div className="h-4">
@@ -366,7 +356,7 @@ const RegisterPage = () => {
                   ) : (
                     <button
                       type="submit"
-                      class="font-semibold w-28 mb-3 text-smitems-center justify-center px-3 py-2 rounded-xl transition duration-150 ease-in-out bg-darkBlue hover:bg-indigo-600 text-white"
+                      class="font-semibold w-28 mb-3 text-smitems-center justify-center px-3 py-2 rounded-xl transition duration-150 ease-in-out bg-purpleHaze hover:bg-indigo-600 text-white"
                     >
                       Register
                     </button>
@@ -380,7 +370,7 @@ const RegisterPage = () => {
                 <h2 class="mb-2 text-[42px] font-normal text-white">
                   Check your inbox
                 </h2>
-                <p class="mb-2 text-lg text-zinc-500">
+                <p class="mb-2 text-lg text-white/50">
                   We are glad, that you’re with us! We’ve sent you a
                   verification link to the email address{" "}
                   <span class="font-medium text-indigo-500">{email}</span>.
