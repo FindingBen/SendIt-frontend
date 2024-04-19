@@ -116,8 +116,22 @@ const ContactList = () => {
                 );
               })}
             </div>
-            <div className="bg-mainBlue border-gray-800 border-2 rounded-2xl mt-4">
-              <p>Package limitation</p>
+            <div className="bg-mainBlue w-[30%] p-4 border-gray-800 border-2 rounded-2xl mt-4 mr-20">
+              <p className="text-white text-justify text-xl font-semibold mb-3">
+                Package limitation
+              </p>
+              <p className="text-start text-white/50">
+                Because of your current package you have the following limit
+                down below:
+              </p>
+              <div className="flex flex-col mt-5">
+                <div className="flex flex-row">
+                  <p className="text-start text-white">Contact Lists</p>
+                  <div class="w-[60%] bg-gray-200 rounded-full h-3 dark:bg-gray-700">
+                    <div class="bg-purple-600 w-[45%] h-3 rounded-full dark:bg-purple-500"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
