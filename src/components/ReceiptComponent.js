@@ -16,7 +16,7 @@ const ReceiptComponent = ({ purchase_obj }) => {
     document.body.removeChild(input);
   };
   return (
-    <div className="flex flex-col p-2 bg-darkBlue rounded-xl w-72 h-80">
+    <div className="flex flex-col p-2 bg-mainBlue border-2 border-gray-800 rounded-xl w-72 h-80">
       <div className="flex flex-col">
         <div className="flex flex-row p-4">
           <svg
@@ -59,7 +59,7 @@ const ReceiptComponent = ({ purchase_obj }) => {
       </div>
       <div
         onClick={() => copyPurchaseId(purchase_obj.payment_id)}
-        className="px-2 py-2 bg-white/80 text-black font-normal rounded-2xl mx-5 mt-2 cursor-pointer"
+        className="px-2 py-2 bg-purpleHaze text-white font-normal rounded-2xl mx-5 mt-2 cursor-pointer"
       >
         Copy ID
       </div>

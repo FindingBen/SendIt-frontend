@@ -30,7 +30,7 @@ const DeleteListModal = ({ showModal, onClose, contactListId, setUpdated }) => {
 
           // Dispatch action to update the Redux store
           dispatch(
-            setContactLists({ contactLists: updatedListsResponse.data })
+            setContactLists({ contactLists: updatedListsResponse.data.data })
           );
         }
       }

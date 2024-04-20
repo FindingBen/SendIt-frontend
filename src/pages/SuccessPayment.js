@@ -53,7 +53,7 @@ const SuccessPayment = () => {
 
   return (
     <section className="min-h-screen flex-d w-full items-center justify-center">
-      <div className="flex-1 flex flex-col mb-4 h-20 bg-black border-l border-white">
+      <div className="flex-1 flex flex-col mb-4 h-20">
         <div className="flex-1 px-2 sm:px-0 xl:px-0 mx-20">
           {isSuccess ? (
             <motion.div
@@ -66,7 +66,9 @@ const SuccessPayment = () => {
               }}
               className="mt-10 text-center font-light text-grayWhite"
             >
-              <span className="text-3xl">Payment successful!</span>
+              <span className="text-3xl font-semibold">
+                Payment successful!
+              </span>
               <br></br>
               <div className="flex justify-center mt-5 text-normal">
                 <ReceiptComponent purchase_obj={purchase} />
