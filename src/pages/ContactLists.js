@@ -23,7 +23,6 @@ const ContactList = () => {
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [listId, setListId] = useState();
-  console.log(currentContactList);
 
   useEffect(() => {
     // Fetch contact lists only if the Redux store is empty
@@ -52,7 +51,7 @@ const ContactList = () => {
         setContactList(response.data.data);
         setLimits(response.data.limits);
         setRecipients(response.data.recipients);
-        console.log(response.data);
+
         dispatch(
           setContactLists({
             contactLists: response.data.data,
@@ -89,7 +88,7 @@ const ContactList = () => {
   const handleNewList = (contactList) => {
     setContactList(contactList);
   };
-  console.log(limits);
+
   return (
     <div class="min-h-screen w-[100%] items-center justify-center">
       <div class="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
