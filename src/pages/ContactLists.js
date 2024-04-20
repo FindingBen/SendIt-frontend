@@ -28,15 +28,15 @@ const ContactList = () => {
     // Fetch contact lists only if the Redux store is empty
     getContactLists();
   }, []);
+  console.log(recipientsPercentage);
+  // useEffect(() => {
+  //   const contactListsPercentage =
+  //     (contactList.length / limits.contact_lists) * 100;
+  //   const recipientsPercentage = (recipients.length / limits.recipients) * 100;
 
-  useEffect(() => {
-    const contactListsPercentage =
-      (contactList.length / limits.contact_lists) * 100;
-    const recipientsPercentage = (recipients.length / limits.recipients) * 100;
-
-    setContactListsPercentage(contactListsPercentage);
-    setRecipientsPercentage(recipientsPercentage);
-  }, []);
+  //   setContactListsPercentage(contactListsPercentage);
+  //   setRecipientsPercentage(recipientsPercentage);
+  // }, []);
 
   let getContactLists = async () => {
     try {
@@ -45,7 +45,6 @@ const ContactList = () => {
         setContactList(response.data.data);
         setLimits(response.data.limits);
         setRecipients(response.data.recipients);
-
         dispatch(
           setContactLists({
             contactLists: response.data.data,
@@ -53,6 +52,16 @@ const ContactList = () => {
           })
         );
         setListId();
+        const contactListsPercentage =
+          (response.data.data.length / response.data.limits.contact_lists) *
+          100;
+        const recipientsPercentage = (
+          (response.data.recipients.length / response.data.limits.recipients) *
+          100
+        ).toFixed(1);
+        console.log("MILKDUD", recipientsPercentage);
+        setContactListsPercentage(contactListsPercentage);
+        setRecipientsPercentage(recipientsPercentage);
       }
     } catch (error) {
       console.log(error);
@@ -83,6 +92,7 @@ const ContactList = () => {
     setContactList(contactList);
   };
   console.log(contactListsPercentage);
+  console.log(recipientsPercentage);
   return (
     <div class="min-h-screen w-[100%] items-center justify-center">
       <div class="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
@@ -214,9 +224,11 @@ const ContactList = () => {
                 <div className="flex flex-row mt-4">
                   <p className="text-start text-white">Recipients</p>
                   <div class="w-[60%] bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3">
-                    <div
-                      className={`bg-purple-600 w-[${recipientsPercentage}%] h-3 rounded-full dark:bg-purple-500`}
-                    ></div>
+                    {recipientsPercentage && (
+                      <div
+                        className={`bg-purple-600 w-[${recipientsPercentage}] h-3 rounded-full dark:bg-purple-500`}
+                      ></div>
+                    )}
                   </div>
                   <p className="text-white ml-2">{limits?.recipients}</p>
                 </div>
