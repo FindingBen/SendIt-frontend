@@ -26,23 +26,17 @@ const ContactList = () => {
 
   useEffect(() => {
     // Fetch contact lists only if the Redux store is empty
-    if (!currentContactList.contactLists?.length) {
-      getContactLists();
-      setInitialLoad(true);
-    }
+    getContactLists();
   }, []);
 
   useEffect(() => {
-    if (contactList && limits) {
-      const contactListsPercentage =
-        (contactList?.length / limits.contact_lists) * 100;
-      const recipientsPercentage =
-        (recipients?.length / limits.recipients) * 100;
-      console.log(recipientsPercentage);
-      setContactListsPercentage(contactListsPercentage);
-      setRecipientsPercentage(recipientsPercentage);
-    }
-  }, [contactList, limits, recipients]);
+    const contactListsPercentage =
+      (contactList.length / limits.contact_lists) * 100;
+    const recipientsPercentage = (recipients.length / limits.recipients) * 100;
+
+    setContactListsPercentage(contactListsPercentage);
+    setRecipientsPercentage(recipientsPercentage);
+  }, []);
 
   let getContactLists = async () => {
     try {
@@ -88,7 +82,7 @@ const ContactList = () => {
   const handleNewList = (contactList) => {
     setContactList(contactList);
   };
-
+  console.log(contactListsPercentage);
   return (
     <div class="min-h-screen w-[100%] items-center justify-center">
       <div class="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
