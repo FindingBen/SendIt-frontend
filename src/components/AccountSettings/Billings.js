@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const Billings = ({ purchases }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
   const copyPurchaseId = (id, index) => {
     const input = document.createElement("input");
     input.value = id;
@@ -17,8 +19,16 @@ const Billings = ({ purchases }) => {
     document.body.removeChild(input);
   };
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = purchases.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
-    <div className="flex-initial rounded-2xl mt-4 bg-mainBlue border-gray-800 border-2">
+    <div className="flex-initial rounded-2xl mt-4 bg-mainBlue border-gray-800 border-2 h-80">
       <h3 class="xl:text-2xl ml-5 mt-4 text-xl text-left font-semibold text-white">
         Purchase history
       </h3>
@@ -35,11 +45,11 @@ const Billings = ({ purchases }) => {
 
         <div>Action</div>
       </div>
-      {purchases.length > 0 ? (
-        <div className="flex flex-col items-left text-sm xl:text-normal max-h-80 text-white/50 overflow-y-scroll">
-          {purchases?.map((purchase, index) => {
+      {currentItems.length > 0 ? (
+        <div className="flex flex-col items-left text-sm xl:text-normal text-white/50 ">
+          {currentItems?.map((purchase, index) => {
             const isEvenRow = index % 2 === 0;
-            const isLastItem = index === purchases?.length - 1;
+            const isLastItem = index === currentItems?.length - 1;
             return (
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
@@ -100,6 +110,25 @@ const Billings = ({ purchases }) => {
             />
           </svg>
           <p className="text-sm mt-2 text-grayWhite">No purchases yet..</p>
+        </div>
+      )}
+      {purchases.length > itemsPerPage && (
+        <div className="flex sticky bottom-0 justify-center mt-2 mb-1">
+          {[...Array(Math.ceil(purchases.length / itemsPerPage))].map(
+            (_, index) => (
+              <button
+                key={index}
+                onClick={() => paginate(index + 1)}
+                className={`${
+                  currentPage === index + 1
+                    ? "bg-purpleHaze text-white"
+                    : "bg-mainBlue text-white/50"
+                } px-2 py-1 mr-2 rounded-md`}
+              >
+                {index + 1}
+              </button>
+            )
+          )}
         </div>
       )}
     </div>

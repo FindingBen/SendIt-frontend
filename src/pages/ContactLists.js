@@ -16,8 +16,8 @@ const ContactList = () => {
   const [recipients, setRecipients] = useState([]);
   const [listUpdated, setListUpdated] = useState(false);
   const [initialLoad, setInitialLoad] = useState(false);
-  const [contactListsPercentage, setContactListsPercentage] = useState(0);
-  const [recipientsPercentage, setRecipientsPercentage] = useState(0);
+  const [contactListsPercentage, setContactListsPercentage] = useState();
+  const [recipientsPercentage, setRecipientsPercentage] = useState();
   const [limits, setLimits] = useState({});
   let max_list_allowed = 3;
   const [show, setShow] = useState(false);
@@ -28,15 +28,14 @@ const ContactList = () => {
     // Fetch contact lists only if the Redux store is empty
     getContactLists();
   }, []);
-  console.log(recipientsPercentage);
-  // useEffect(() => {
-  //   const contactListsPercentage =
-  //     (contactList.length / limits.contact_lists) * 100;
-  //   const recipientsPercentage = (recipients.length / limits.recipients) * 100;
 
-  //   setContactListsPercentage(contactListsPercentage);
-  //   setRecipientsPercentage(recipientsPercentage);
-  // }, []);
+  useEffect(() => {
+    const recipientsPercentages = (recipients.length / limits.recipients) * 100;
+    const contactListsPercentage =
+      (contactList.length / limits.contact_lists) * 100;
+    setContactListsPercentage(contactListsPercentage);
+    setRecipientsPercentage(recipientsPercentages);
+  }, [recipientsPercentage, contactListsPercentage]);
 
   let getContactLists = async () => {
     try {
@@ -45,6 +44,7 @@ const ContactList = () => {
         setContactList(response.data.data);
         setLimits(response.data.limits);
         setRecipients(response.data.recipients);
+
         dispatch(
           setContactLists({
             contactLists: response.data.data,
@@ -52,16 +52,15 @@ const ContactList = () => {
           })
         );
         setListId();
+        const recipientsPercentages =
+          (response.data.recipients.length / response.data.limits.recipients) *
+          100;
         const contactListsPercentage =
           (response.data.data.length / response.data.limits.contact_lists) *
           100;
-        const recipientsPercentage = (
-          (response.data.recipients.length / response.data.limits.recipients) *
-          100
-        ).toFixed(1);
-        console.log("MILKDUD", recipientsPercentage);
+
         setContactListsPercentage(contactListsPercentage);
-        setRecipientsPercentage(recipientsPercentage);
+        setRecipientsPercentage(recipientsPercentages);
       }
     } catch (error) {
       console.log(error);
@@ -91,8 +90,11 @@ const ContactList = () => {
   const handleNewList = (contactList) => {
     setContactList(contactList);
   };
-  console.log(contactListsPercentage);
-  console.log(recipientsPercentage);
+
+  const widthVariants = {
+    width: recipientsPercentage,
+  };
+
   return (
     <div class="min-h-screen w-[100%] items-center justify-center">
       <div class="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
@@ -214,23 +216,37 @@ const ContactList = () => {
               <div className="flex flex-col mt-5">
                 <div className="flex flex-row">
                   <p className="text-start text-white">Contact Lists</p>
-                  <div class="w-[60%] bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3">
+                  <div class="w-[50%] relative bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3">
                     <div
                       className={`bg-purple-600 w-[${contactListsPercentage}%] h-3 rounded-full dark:bg-purple-500`}
                     ></div>
+                    <p
+                      className={`absolute inset-0 bg-purple-600 blur w-[${contactListsPercentage}%]`}
+                    ></p>
                   </div>
-                  <p className="text-white ml-2">{limits?.contact_lists}</p>
+                  <div className="flex flex-row mx-auto p-1 bg-mainBlue border-2 border-gray-800 rounded-lg">
+                    <p className="text-white">
+                      {contactList?.length}/{limits?.contact_lists}
+                    </p>
+                  </div>
                 </div>
                 <div className="flex flex-row mt-4">
                   <p className="text-start text-white">Recipients</p>
-                  <div class="w-[60%] bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3">
-                    {recipientsPercentage && (
-                      <div
-                        className={`bg-purple-600 w-[${recipientsPercentage}] h-3 rounded-full dark:bg-purple-500`}
-                      ></div>
-                    )}
+                  <div class="w-[50%] bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3 relative">
+                    <div
+                      className={`bg-purple-600 h-3 rounded-full dark:bg-purple-500`}
+                      style={{ width: recipientsPercentage }}
+                    ></div>
+                    <p
+                      className={`absolute inset-0 bg-purple-600 blur`}
+                      style={{ width: recipientsPercentage }}
+                    ></p>
                   </div>
-                  <p className="text-white ml-2">{limits?.recipients}</p>
+                  <div className="flex flex-row mx-auto p-1 bg-mainBlue border-2 border-gray-800 rounded-lg">
+                    <p className="text-white">
+                      {recipients?.length}/{limits?.recipients}
+                    </p>
+                  </div>
                 </div>
                 <div className="flex flex-row items-start mt-3">
                   <Link
