@@ -136,7 +136,7 @@ const SmsEditor = () => {
     try {
       let response = await axiosInstance.get("/api/contact_lists/");
       if (response.status === 200) {
-        setContactList(response.data);
+        setContactList(response.data.data);
       }
     } catch (error) {
       console.log(error);

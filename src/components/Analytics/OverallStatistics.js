@@ -4,12 +4,9 @@ import { motion } from "framer-motion";
 
 const OverallStatistics = ({ totalValues }) => {
   return (
-    <div className="flex w-[72%] gap-4">
-      <div className="flex flex-row items-center lg:w-[275px] h-[120px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800">
+    <div className="flex w-full gap-4">
+      <div className="flex flex-row items-center lg:w-[275px] h-[120px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
-          <p className="text-white text-xl lg:text-normal font-light text-justify">
-            Total sends
-          </p>
           {totalValues ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.0 }}
@@ -19,7 +16,7 @@ const OverallStatistics = ({ totalValues }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white lg:text-2xl font-normal"
+              className="text-white text-5xl font-normal absolute top-5"
             >
               {totalValues.total_sends ?? 0}
             </motion.div>
@@ -28,14 +25,14 @@ const OverallStatistics = ({ totalValues }) => {
               <SvgLoader width={"w-8"} height={"h-8"} />
             </p>
           )}
+          <p className="text-white text-normal lg:text-normal font-semibold text-justify absolute right-2 bottom-2">
+            Total sends
+          </p>
         </div>
       </div>
 
-      <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800">
+      <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
-          <p className="text-white text-xl font-light text-justify">
-            Total Views
-          </p>
           {totalValues ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.0 }}
@@ -45,7 +42,7 @@ const OverallStatistics = ({ totalValues }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white lg:text-2xl font-normal"
+              className="text-white text-5xl font-semibold absolute top-5"
             >
               {totalValues.total_views ?? 0}
             </motion.div>
@@ -54,14 +51,14 @@ const OverallStatistics = ({ totalValues }) => {
               <SvgLoader width={"w-8"} height={"h-8"} />
             </p>
           )}
+          <p className="text-white text-normal font-semibold text-justify absolute right-2 bottom-2">
+            Total Views
+          </p>
         </div>
       </div>
 
-      <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800">
+      <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
-          <p className="text-white text-xl font-light text-justify">
-            Bounce Rate
-          </p>
           {totalValues ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.0 }}
@@ -71,7 +68,7 @@ const OverallStatistics = ({ totalValues }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white lg:text-2xl font-normal flex flex-row"
+              className="text-white text-5xl font-semibold absolute top-5 flex flex-row"
             >
               {totalValues.average_bounce_rate ?? 0}
               <p className="lg:text-xl font-light">%</p>
@@ -81,14 +78,14 @@ const OverallStatistics = ({ totalValues }) => {
               <SvgLoader width={"w-8"} height={"h-8"} />
             </p>
           )}
+          <p className="text-white text-normal font-semibold text-justify absolute right-2 bottom-2">
+            Bounce Rate
+          </p>
         </div>
       </div>
 
-      <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800">
+      <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
-          <p className="text-white text-xl font-light text-justify">
-            Overall rate
-          </p>
           {totalValues ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.0 }}
@@ -98,7 +95,7 @@ const OverallStatistics = ({ totalValues }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white lg:text-2xl font-light flex flex-row"
+              className="text-white text-5xl font-semibold absolute top-5 flex flex-row"
             >
               {totalValues.average_overall_rate ?? 0}
               <p className="lg:text-xl font-light">%</p>
@@ -108,6 +105,9 @@ const OverallStatistics = ({ totalValues }) => {
               <SvgLoader width={"w-8"} height={"h-8"} />
             </p>
           )}
+          <p className="text-white text-normal font-semibold text-justify absolute right-2 bottom-2">
+            Overall rate
+          </p>
         </div>
       </div>
     </div>

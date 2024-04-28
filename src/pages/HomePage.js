@@ -317,7 +317,7 @@ const HomePage = () => {
                   viewType={"ViewHome"}
                 />
                 <div className="flex flex-col items-center p-4 w-full h-[150px] rounded-lg">
-                  <div className="flex flex-row relative">
+                  <div className="flex flex-row relative border-2 border-gray-800 rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue">
                     <div className="p-2 flex items-center flex-col rounded-md mx-1 my-auto">
                       <p className="text-white text-normal font-light text-justify">
                         Campaign views
