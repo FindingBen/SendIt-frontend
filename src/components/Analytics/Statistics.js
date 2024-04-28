@@ -4,6 +4,7 @@ import SvgLoader from "../SvgLoader";
 import ProgressBar from "../Progress/ProgressBar";
 
 const Statistics = ({ views }) => {
+  console.log(views);
   return (
     <div className="flex flex-col w-full">
       <p className="text-white text-2xl font-semibold text-justify">
@@ -77,7 +78,7 @@ const Statistics = ({ views }) => {
                 }}
                 className="text-white text-normal font-semibold ml-2 absolute -right-5"
               >
-                {views?.data.sorted_total_data.user_engegment_total} secs
+                {views?.data.overall_perf} %
               </motion.div>
             ) : (
               <p className="text-white font-semibold absolute right-5">
