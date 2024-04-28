@@ -24,7 +24,7 @@ const AnalyticsPage = () => {
   const [surveyresults, setSurveyResults] = useState();
   const [startDateValue, setStartDate] = useState(formattedEndDate);
   const [endDateValue, setEndDate] = useState(formattedEndDate);
-  const [periodData, setPeriodData] = useState();
+  const [periodData, setPeriodData] = useState([]);
   const dataDlivery = [
     { status: "delivered", value: sms?.delivered },
     { status: "not delivered", value: sms?.not_delivered },
@@ -67,7 +67,7 @@ const AnalyticsPage = () => {
       console.log(error);
     }
   };
-
+  console.log(periodData);
   const getSurveyResponse = async () => {
     try {
       let response = await axiosInstance.get(

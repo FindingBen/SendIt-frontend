@@ -2,7 +2,6 @@ import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { colors } from "@mui/material";
 const PeriodicStats = ({ data }) => {
-  data = [];
   //   data = [
   //     {
   //       date: "AD",
