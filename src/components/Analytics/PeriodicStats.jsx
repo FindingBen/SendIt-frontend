@@ -1,72 +1,13 @@
 import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { colors } from "@mui/material";
-const PeriodicStats = ({ data }) => {
-  //   data = [
-  //     {
-  //       date: "AD",
-  //       "hot dog": 142,
-  //       "hot dogColor": "hsl(210, 70%, 50%)",
-  //       burger: 20,
-  //       burgerColor: "hsl(291, 70%, 50%)",
-  //       sandwich: 41,
-  //       sandwichColor: "hsl(104, 70%, 50%)",
-  //     },
-  //     {
-  //       date: "AE",
-  //       "hot dog": 13,
-  //       "hot dogColor": "hsl(306, 70%, 50%)",
-  //       burger: 35,
-  //       burgerColor: "hsl(238, 70%, 50%)",
-  //       sandwich: 110,
-  //       sandwichColor: "hsl(166, 70%, 50%)",
-  //     },
-  //     {
-  //       date: "AF",
-  //       "hot dog": 40,
-  //       "hot dogColor": "hsl(92, 70%, 50%)",
-  //       burger: 67,
-  //       burgerColor: "hsl(225, 70%, 50%)",
-  //       sandwich: 196,
-  //       sandwichColor: "hsl(134, 70%, 50%)",
-  //     },
-  //     {
-  //       date: "AG",
-  //       "hot dog": 166,
-  //       "hot dogColor": "hsl(132, 70%, 50%)",
-  //       burger: 106,
-  //       burgerColor: "hsl(266, 70%, 50%)",
-  //       sandwich: 39,
-  //       sandwichColor: "hsl(243, 70%, 50%)",
-  //     },
-  //     {
-  //       date: "AI",
-  //       "hot dog": 49,
-  //       "hot dogColor": "hsl(129, 70%, 50%)",
-  //       burger: 79,
-  //       burgerColor: "hsl(334, 70%, 50%)",
-  //       sandwich: 67,
-  //       sandwichColor: "hsl(189, 70%, 50%)",
-  //     },
-  //     {
-  //       date: "AL",
-  //       "hot dog": 173,
-  //       "hot dogColor": "hsl(275, 70%, 50%)",
-  //       burger: 18,
-  //       burgerColor: "hsl(182, 70%, 50%)",
-  //       sandwich: 35,
-  //       sandwichColor: "hsl(95, 70%, 50%)",
-  //     },
-  //     {
-  //       date: "AM",
-  //       "hot dog": 36,
-  //       "hot dogColor": "hsl(179, 70%, 50%)",
-  //       burger: 191,
-  //       burgerColor: "hsl(246, 70%, 50%)",
-  //       sandwich: 86,
-  //       sandwichColor: "hsl(301, 70%, 50%)",
-  //     },
-  //   ];
+const PeriodicStats = ({ data, avgData }) => {
+  const barColors = {
+    engegmentRate: "#5b21b6", // Customize color for engagement rate
+    scrolledUser: "#a78bfa", // Customize color for scrolled users
+    screenViews: "#1e3a8a", // Customize color for screen views
+  };
+
   return (
     <div className="flex flex-col gap-2">
       {/* <p className="text-white text-normal font-semibold text-justify p-2">
@@ -75,13 +16,13 @@ const PeriodicStats = ({ data }) => {
       <div className="flex flex-row w-[100%] h-[280px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <ResponsiveBar
           data={data}
-          keys={["hot dog", "burger", "sandwich", "kebab", "fries", "donut"]}
+          keys={["engegmentRate", "scrolledUser", "screenViews"]}
           indexBy="date"
           margin={{ top: 20, right: 40, bottom: 50, left: 60 }}
           padding={0.45}
           valueScale={{ type: "linear" }}
           indexScale={{ type: "band", round: true }}
-          colors={{ scheme: "purples" }}
+          colors={(bar) => barColors[bar.id]}
           defs={[
             {
               id: "dots",
@@ -174,22 +115,30 @@ const PeriodicStats = ({ data }) => {
             e.id + ": " + e.formattedValue + " in country: " + e.indexValue
           }
         />
-        <div className="flex flex-col p-2 gap-2 items-start">
-          <div className="text-justify items-start">
-            <p className="text-lg text-white font-semibold">854</p>
-            <p className="text-white/50 font-light text-sm">Avg. Session</p>
+        <div className="flex flex-col p-1 gap-3">
+          <div className="items-justify">
+            <p className="text-lg text-justify text-white font-semibold">
+              {avgData?.average_engagement_rate}
+            </p>
+            <p className="text-white/50 font-light text-justify text-sm">
+              Avg. Session
+            </p>
           </div>
-          <div className="text-justify items-start">
-            <p className="text-lg text-white font-semibold">3m 21sec</p>
-            <p className="text-white/50 font-light text-sm">
+          <div className="flex flex-col">
+            <p className="text-lg text-white  text-justify font-semibold">
+              {avgData?.average_user_engagement} secs
+            </p>
+            <p className="text-white/50 items-start text-justifyfont-light text-sm">
               Avg. Session Duration
             </p>
           </div>
-          <div className="text-justify items-start">
-            <p className="text-lg text-white font-semibold">22</p>
-            <p className="text-white/50 font-light text-sm">
-              Avg. Scrolled users
+          <div className="items-start">
+            <p className="text-lg text-white text-justify font-semibold">
+              {avgData?.average_scrolled_users.toFixed(2)}
             </p>
+            <div className="text-white/50 items-start text-sm">
+              Avg. Scrolled users
+            </div>
           </div>
         </div>
       </div>

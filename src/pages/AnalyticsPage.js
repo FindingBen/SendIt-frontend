@@ -25,6 +25,7 @@ const AnalyticsPage = () => {
   const [startDateValue, setStartDate] = useState(formattedEndDate);
   const [endDateValue, setEndDate] = useState(formattedEndDate);
   const [periodData, setPeriodData] = useState([]);
+  const [avgDataValues, setAvgDataValues] = useState();
   const dataDlivery = [
     { status: "delivered", value: sms?.delivered },
     { status: "not delivered", value: sms?.not_delivered },
@@ -60,8 +61,9 @@ const AnalyticsPage = () => {
       );
       if (response.status === 200) {
         setViews(response.data);
+        console.log(response.data.avg_data);
         setPeriodData(response.data.period_data);
-        console.log(response);
+        setAvgDataValues(response.data.avg_data);
       }
     } catch (error) {
       console.log(error);
@@ -78,7 +80,7 @@ const AnalyticsPage = () => {
       }
     } catch (error) {}
   };
-
+  console.log(avgDataValues);
   return (
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 flex flex-col lg:flex-row">
@@ -104,9 +106,9 @@ const AnalyticsPage = () => {
                             delay: 0.1,
                             ease: [0, 0.41, 0.1, 1.01],
                           }}
-                          className="text-gradient-white text-4xl font-light ml-2 duration-300 opacity-100 transition-opacity"
+                          className="text-white absolute top-5 text-5xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
                         >
-                          {views?.data.sorted_total_data.screen_views_total}
+                          {views?.data?.sorted_total_data?.screen_views_total}
                         </motion.div>
                       ) : (
                         <p className="ml-2">
@@ -129,7 +131,7 @@ const AnalyticsPage = () => {
                             delay: 0.1,
                             ease: [0, 0.41, 0.1, 1.01],
                           }}
-                          className="text-gradient-white text-4xl font-light ml-2 duration-300 opacity-100 transition-opacity"
+                          className="text-white absolute top-5 text-5xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
                         >
                           {sms?.click_number ?? 0}
                         </motion.div>
@@ -157,7 +159,7 @@ const AnalyticsPage = () => {
                             delay: 0.1,
                             ease: [0, 0.41, 0.1, 1.01],
                           }}
-                          className="text-gradient-white text-4xl font-light ml-2 duration-300 opacity-100 transition-opacity"
+                          className="text-white absolute top-5 text-5xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
                         >
                           {sms?.sms_sends ?? 0}
                         </motion.div>
@@ -179,18 +181,13 @@ const AnalyticsPage = () => {
             </div>
             <div className="grid grid-cols-2 grid-rows-1 gap-2 mt-2 mx-20">
               <div className="flex-1 w-full">
-                <PeriodicStats data={periodData} />
+                <PeriodicStats data={periodData} avgData={avgDataValues} />
               </div>
               <div className="flex flex-row gap-2 w-full">
                 <BarChart data={dataDlivery} />
                 <SurveyResults surveyResults={surveyresults} />
               </div>
             </div>
-            {/* <div className="flex flex-row gap-3 mx-20">
-              <BarChart data={dataDlivery} />
-              <PeriodicStats />
-             
-            </div> */}
           </div>
         </div>
       </div>

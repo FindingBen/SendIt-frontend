@@ -15,7 +15,7 @@ const Statistics = ({ views }) => {
             <p className="text-white text-normal font-semibold text-justify">
               Bounce rate
             </p>
-            <ProgressBar />
+            <ProgressBar progress={23} />
             {views ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.0 }}
@@ -25,7 +25,7 @@ const Statistics = ({ views }) => {
                   delay: 0.1,
                   ease: [0, 0.41, 0.1, 1.01],
                 }}
-                className="text-gradient-white text-normal font-light ml-2 absolute right-0"
+                className="text-white text-normal font-semibold ml-2 absolute right-0"
               >
                 {views?.data.sorted_total_data.bounceRate} %
               </motion.div>
@@ -49,7 +49,7 @@ const Statistics = ({ views }) => {
                   delay: 0.1,
                   ease: [0, 0.41, 0.1, 1.01],
                 }}
-                className="text-gradient-white text-normal font-semibold ml-2 absolute right-0"
+                className="text-white text-normal font-semibold ml-2 absolute right-0"
               >
                 {views?.data.sorted_total_data.engegment_rate_total} %
               </motion.div>
@@ -75,7 +75,7 @@ const Statistics = ({ views }) => {
                   delay: 0.1,
                   ease: [0, 0.41, 0.1, 1.01],
                 }}
-                className="text-gradient-white text-normal font-light ml-2 absolute -right-5"
+                className="text-white text-normal font-semibold ml-2 absolute -right-5"
               >
                 {views?.data.sorted_total_data.user_engegment_total} secs
               </motion.div>
