@@ -4,6 +4,10 @@ import { ResponsiveBar } from "@nivo/bar";
 import { colors } from "@mui/material";
 
 const BarChart = ({ data }) => {
+  const barColors = {
+    delivered: "#5b21b6", // Customize color for engagement rate
+  };
+  console.log(data);
   return (
     <div className="p-2 items-start h-72 w-[35%] flex-col rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
       <div className="flex flex-row">
@@ -35,6 +39,7 @@ const BarChart = ({ data }) => {
         margin={{ top: 5, right: 0, bottom: 125, left: 0 }}
         padding={0.5}
         borderRadius={10}
+        colors={(bar) => barColors[bar.id]}
         theme={{
           axis: {
             domain: {
