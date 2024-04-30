@@ -14,6 +14,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
   const [show, setShowModal] = useState(showModal);
   const token = useSelector(selectCurrentToken);
   const [number, setNumber] = useState("");
+  const [errMsg, setErrMsg] = useState("");
   const params = useParams();
   const [contact, setContact] = useState({
     firstName: "",
@@ -59,11 +60,13 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
       }
     } catch (error) {
       console.error(error);
+      setErrMsg(error.response.data);
     }
   };
 
   const closeModal = () => {
     onClose();
+    setErrMsg("");
   };
 
   return (
@@ -120,6 +123,11 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                  {errMsg && (
+                    <p className="text-red-700 font-semibold text-normal">
+                      {errMsg}
+                    </p>
+                  )}
                   <button
                     className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
                     type="button"

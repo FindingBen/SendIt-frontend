@@ -19,24 +19,31 @@ const ContactList = () => {
   const [contactListsPercentage, setContactListsPercentage] = useState();
   const [recipientsPercentage, setRecipientsPercentage] = useState();
   const [limits, setLimits] = useState({});
-  let max_list_allowed = 3;
+  let basic_max_list_allowed = 5;
+  let silver_max_list_allowed = 10;
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [listId, setListId] = useState();
-
+  const recipientsPercentages = (recipients.length / limits.recipients) * 100;
+  const contactListsPercentages =
+    (contactList.length / limits.contact_lists) * 100;
   useEffect(() => {
     // Fetch contact lists only if the Redux store is empty
     getContactLists();
   }, []);
 
   useEffect(() => {
-    const recipientsPercentages = (recipients.length / limits.recipients) * 100;
-    const contactListsPercentage =
-      (contactList.length / limits.contact_lists) * 100;
     setContactListsPercentage(contactListsPercentage);
     setRecipientsPercentage(recipientsPercentages);
-  }, [recipientsPercentage, contactListsPercentage]);
+    setListUpdated(false);
+  }, [contactList, listUpdated]);
+  console.log(recipientsPercentages);
 
+  if (listUpdated === true) {
+    setContactListsPercentage(recipientsPercentages);
+    setRecipientsPercentage(recipientsPercentages);
+    setListUpdated(false);
+  }
   let getContactLists = async () => {
     try {
       let response = await axiosInstance.get("/api/contact_lists/");
@@ -72,10 +79,7 @@ const ContactList = () => {
   };
 
   const canAddNewList = () => {
-    if (
-      currentPackageState === "Basic package" &&
-      contactList.length >= max_list_allowed
-    ) {
+    if (contactList.length >= basic_max_list_allowed) {
       return false;
     }
     return true;
@@ -109,15 +113,18 @@ const ContactList = () => {
             </div>
           </div>
 
-          <div className="flex flex-row">
-            <div className=" bg-mainBlue w-[60%] border-gray-800 shadow-md border-2 rounded-2xl mt-4 mx-20">
+          <div className="flex flex-row h-[100%]">
+            <div className=" bg-mainBlue w-[60%] h-[80%] border-gray-800 shadow-md border-2 rounded-2xl mt-4 mx-20">
               <div className="flex flex-row relative border-b border-gray-800">
                 <p className="text-white font-semibold text-xl xl:text-2xl flex items-start my-3 mt-3 ml-5">
                   Your contact lists
                 </p>
                 <button
+                  disabled={!canAddNewList()}
                   onClick={handleModal}
-                  className="px-2 py-1 mr-5 text-white font-normal text-sm cursor-pointer bg-purpleHaze rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4"
+                  className={`px-2 py-1 mr-5 text-white font-normal text-sm cursor-pointer ${
+                    canAddNewList() ? "bg-purpleHaze" : "bg-gray-500"
+                  } rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4`}
                 >
                   Create list
                 </button>
@@ -205,7 +212,7 @@ const ContactList = () => {
                 );
               })}
             </div>
-            <div className="bg-mainBlue w-[30%] p-4 border-gray-800 border-2 rounded-2xl mt-4 mr-20">
+            <div className="bg-mainBlue w-[30%] h-[75%] p-4 border-gray-800 border-2 rounded-2xl mt-4 mr-20">
               <p className="text-white text-justify text-xl font-semibold mb-3">
                 Package limitation
               </p>
@@ -218,10 +225,12 @@ const ContactList = () => {
                   <p className="text-start text-white">Contact Lists</p>
                   <div class="w-[50%] relative bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3">
                     <div
-                      className={`bg-purple-600 w-[${contactListsPercentage}%] h-3 rounded-full dark:bg-purple-500`}
+                      className={`bg-purple-600 h-3 rounded-full dark:bg-purple-500`}
+                      style={{ width: contactListsPercentages }}
                     ></div>
                     <p
-                      className={`absolute inset-0 bg-purple-600 blur w-[${contactListsPercentage}%]`}
+                      className={`absolute inset-0 bg-purple-600 blur`}
+                      style={{ width: contactListsPercentages }}
                     ></p>
                   </div>
                   <div className="flex flex-row mx-auto p-1 bg-mainBlue border-2 border-gray-800 rounded-lg">
@@ -235,11 +244,11 @@ const ContactList = () => {
                   <div class="w-[50%] bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3 relative">
                     <div
                       className={`bg-purple-600 h-3 rounded-full dark:bg-purple-500`}
-                      style={{ width: recipientsPercentage }}
+                      style={{ width: recipientsPercentages }}
                     ></div>
                     <p
                       className={`absolute inset-0 bg-purple-600 blur`}
-                      style={{ width: recipientsPercentage }}
+                      style={{ width: recipientsPercentages }}
                     ></p>
                   </div>
                   <div className="flex flex-row mx-auto p-1 bg-mainBlue border-2 border-gray-800 rounded-lg">
@@ -268,6 +277,7 @@ const ContactList = () => {
         <DeleteListModal
           contactListId={listId}
           showModal={showDelete}
+          newList={handleNewList}
           setUpdated={() => setListUpdated(true)}
           onClose={() => setShowDelete(false)}
         ></DeleteListModal>

@@ -59,9 +59,9 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
       const parsedData = csv?.data;
 
       await createContact(parsedData);
+      closeModal()
     };
     reader.readAsText(file);
-    closeModal();
   };
 
   const createContact = async (parsedData) => {
@@ -91,12 +91,14 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
         console.log("Response:", response);
       } catch (error) {
         console.log(error);
+        setError(error.response.data);
       }
     }
   };
 
   const closeModal = () => {
     onClose();
+    setError("");
   };
 
   return (
@@ -132,6 +134,11 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                  {error && (
+                    <p className="text-red-700 text-normal font-semibold">
+                      {error}
+                    </p>
+                  )}
                   <button
                     className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
                     type="button"

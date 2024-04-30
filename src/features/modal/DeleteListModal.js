@@ -4,7 +4,13 @@ import Modal from "react-bootstrap/Modal";
 import { setContactLists } from "../../redux/reducers/contactListReducer";
 import { useRedux } from "../../constants/reduxImports";
 
-const DeleteListModal = ({ showModal, onClose, contactListId, setUpdated }) => {
+const DeleteListModal = ({
+  showModal,
+  onClose,
+  contactListId,
+  setUpdated,
+  newList,
+}) => {
   const axiosInstance = useAxiosInstance();
   const { dispatch } = useRedux();
   const [show, setShowModal] = useState(showModal);
@@ -27,6 +33,7 @@ const DeleteListModal = ({ showModal, onClose, contactListId, setUpdated }) => {
           // Update local state
           setUpdated();
           closeModal();
+          newList(updatedListsResponse.data.data);
 
           // Dispatch action to update the Redux store
           dispatch(

@@ -13,7 +13,7 @@ const PeriodicStats = ({ data, avgData }) => {
       {/* <p className="text-white text-normal font-semibold text-justify p-2">
         Audience metrics
       </p> */}
-      <div className="flex flex-row w-[100%] h-[280px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+      <div className="flex flex-row w-[100%] h-[288px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <ResponsiveBar
           data={data}
           keys={["engegmentRate", "scrolledUser", "screenViews"]}
