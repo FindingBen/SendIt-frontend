@@ -255,7 +255,9 @@ const CreateNote = () => {
                 {errorMsg && (
                   <p className="text-red-600 font-light ml-2">{errorMsg}</p>
                 )}
-                <span className="text-left text-white">Campaign name</span>
+                <span className="text-left text-white font-semibold">
+                  Campaign name
+                </span>
                 <input
                   onChange={handleMessageName}
                   className="flex-1 bg-white rounded-lg p-2"
@@ -270,7 +272,9 @@ const CreateNote = () => {
                 )}
               </div>
               <div className="flex flex-col p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 mt-4 rounded-2xl">
-                <span className="text-left text-white">Content elements</span>
+                <span className="text-left text-white font-semibold">
+                  Content elements
+                </span>
                 <div className="flex flex-row mt-2 gap-2">
                   <div
                     onClick={imageStateVal ? null : () => handleClick("image")}
@@ -411,8 +415,10 @@ const CreateNote = () => {
                 </div>
               </div>
             </div>
-            <div className="flex-1 mt-20">
-              {selectedComponent && componentsMap[selectedComponent]}
+            <div className="w-[100%]">
+              <div className="max-w-[90%] h-36 mt-20">
+                {selectedComponent && componentsMap[selectedComponent]}
+              </div>
             </div>
             <div className="col p-10">
               <div className="flex flex-row bg-bg-navBlue border-2 border-gray-800 p-2 rounded-lg mb-2 mx-auto gap-2 w-32">

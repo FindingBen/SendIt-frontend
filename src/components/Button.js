@@ -147,30 +147,30 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
       <div className="flex-1">
         <label
           for="first_name"
-          className="block mb-2 text-sm font-light text-grayWhite dark:text-white"
+          className="block mb-2 text-normal font-semibold text-grayWhite"
         >
           Button text display
         </label>
         <input
           onChange={handleTextButtonFunc}
           type="text"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-white/20 border-1 border-gray-200 text-gray-200 text-sm rounded-lg w-full p-2"
         />
         <label
           for="first_name"
-          className="block mb-2 mt-3 text-sm font-light text-grayWhite dark:text-white"
+          className="block mb-2 text-normal font-semibold text-grayWhite"
         >
           Insert link
         </label>
         <input
           onChange={handleLinkButtonFunc}
           type="link"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-white/20 border-1 border-gray-200 text-gray-200 text-sm rounded-lg w-full p-2"
         />
         <div className="mt-3 flex flex-row relative">
           <button
             type="button"
-            className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+            className="bg-green-800 hover:bg-green-400 text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded"
             value={false}
             onClick={saveBtn}
             style={{ marginRight: "10px" }}
@@ -179,7 +179,7 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
           </button>
           <button
             type="button"
-            className="bg-red-800 hover:bg-red-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+            className="bg-red-800 hover:bg-red-400 text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded"
             id="cancel"
             value={false}
             onClick={handleCancel}

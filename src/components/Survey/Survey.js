@@ -83,10 +83,6 @@ const Survey = ({ setComponentState, contextList, elementList, listEl }) => {
     setQuestionType(event.target.value);
   }
 
-  const handleColor = (color) => {
-    setColor(color);
-  };
-
   const addSurveyObjContext = () => {
     const dataText = {
       id: Math.floor(Math.random() * 100),
@@ -155,28 +151,32 @@ const Survey = ({ setComponentState, contextList, elementList, listEl }) => {
       <div className="flex-1">
         <label
           for="first_name"
-          className="block mb-2 text-sm font-light text-grayWhite dark:text-white"
+          className="block mb-2 text-normal font-semibold text-grayWhite"
         >
           Write your question
         </label>
         <input
           onChange={handleQuestionValue}
           type="text"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-white/20 border-1 border-gray-200 text-gray-200 text-sm rounded-lg w-full p-2"
         />
         <label
           for="first_name"
-          className="block mb-2 mt-3 text-sm font-light text-grayWhite dark:text-white"
+          className="block mb-2 mt-3 text-normal font-semibold text-grayWhite"
         >
           Choose question type
         </label>
         <select
           id="questionType"
           onChange={handleQuestionTypeValue}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="bg-white/20 border-1 border-gray-200 text-gray-200 text-sm rounded-lg w-full p-2"
         >
-          <option value="">Select a question type</option>
-          <option value="Like/Dislike">Like/Dislike</option>
+          <option className="bg-gray-600" value="">
+            Select a question type
+          </option>
+          <option className="bg-gray-600" value="Like/Dislike">
+            Like/Dislike
+          </option>
           {/* <option value="Question Survey">Question Survey</option> */}
         </select>
         <div className="mt-3 flex flex-row relative">
@@ -186,7 +186,7 @@ const Survey = ({ setComponentState, contextList, elementList, listEl }) => {
               !question || !questionType
                 ? "bg-gray-600"
                 : "bg-green-800 hover:bg-green-400"
-            }  text-white font-bold py-2 px-4 border border-blue-700 rounded`}
+            }  text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded-lg`}
             value={false}
             disabled={!question || !questionType}
             onClick={saveSurvey}
@@ -196,7 +196,7 @@ const Survey = ({ setComponentState, contextList, elementList, listEl }) => {
           </button>
           <button
             type="button"
-            className="bg-red-800 hover:bg-red-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+            className="bg-red-800 hover:bg-red-400 text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded-lg"
             id="cancel"
             value={false}
             onClick={handleCancel}

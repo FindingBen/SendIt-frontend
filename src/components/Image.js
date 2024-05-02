@@ -142,20 +142,16 @@ const Image = ({
       }}
     >
       <label
-        className="block mb-2 text-sm font-light text-grayWhite dark:text-white"
+        className="block mb-2 text-normal font-semibold text-grayWhite"
         for="file_input"
       >
         Upload file
       </label>
-      {/* <ImageEditorComponent
-        //onChange={handleImageUpload}
-        created={imageEditorCreated}
-      ></ImageEditorComponent> */}
       <input
         type="file"
         accept="image/*"
         onChange={handleImageUpload}
-        className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+        className="bg-white/20 border-1 border-gray-200 text-gray-200 text-sm rounded-lg w-full"
         id="image"
       />
 
@@ -164,7 +160,7 @@ const Image = ({
           type="button"
           className={`${
             !file ? "bg-gray-600" : "bg-green-800 hover:bg-green-400"
-          }  text-white font-bold py-2 px-4 border border-blue-700 rounded`}
+          }  text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded-lg`}
           value={false}
           onClick={saveImg}
           style={{ marginRight: "10px" }}
@@ -175,7 +171,7 @@ const Image = ({
         <button
           type="button"
           id="cancel"
-          className="bg-red-800 hover:bg-red-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+          className="bg-red-800 hover:bg-red-400 text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded-lg"
           value={false}
           onClick={handleCancel}
           style={{ marginRight: "10px" }}
