@@ -471,8 +471,10 @@ const EditMessage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex-1 mt-20">
-              {selectedComponent && componentsMap[selectedComponent]}
+            <div className="w-[100%]">
+              <div className="max-w-[90%] h-36 mt-20">
+                {selectedComponent && componentsMap[selectedComponent]}
+              </div>
             </div>
             <div className="col p-10">
               <div className="flex flex-row bg-navBlue border-2 border-gray-800 p-2 rounded-2xl mb-2 mx-auto gap-2 w-32">
