@@ -5,7 +5,7 @@ import ProgressBar from "../Progress/ProgressBar";
 
 const Statistics = ({ views }) => {
   return (
-    <div className="p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 w-[100%] flex flex-col rounded-2xl relative">
+    <div className="p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 w-[100%] h-full flex flex-col rounded-2xl relative">
       <div className="flex flex-col gap-4 p-2">
         <div className="flex flex-col p-1 relative">
           <p className="text-white text-normal font-semibold text-justify">

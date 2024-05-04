@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import SvgLoader from "../SvgLoader";
 const StatCards = ({ views, sms }) => {
   return (
-    <div className="flex flex-row gap-3 w-full">
+    <div className="flex flex-row gap-2 w-full">
       <div className="flex flex-col gap-2">
         <div className="p-2 flex flex-row items-center h-[125px] w-[275px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
           <div className="flex items-start p-2">
