@@ -3,9 +3,9 @@ import useAxiosInstance from "../utils/axiosInstance";
 import { useParams } from "react-router-dom";
 import BarChart from "../utils/chart/BarChart";
 import SvgLoader from "../components/SvgLoader";
-import PieChart from "../utils/chart/PieChart";
+import StatCards from "../components/Analytics/StatCards";
 import "react-datepicker/dist/react-datepicker.css";
-import { motion } from "framer-motion";
+import AvgDataStats from "../components/Analytics/AvgDataStats";
 import SurveyResults from "../components/Survey/SurveyResults";
 import Statistics from "../components/Analytics/Statistics";
 import formatDate from "../utils/helpers/dateFunction";
@@ -69,7 +69,7 @@ const AnalyticsPage = () => {
       console.log(error);
     }
   };
-  console.log(periodData);
+
   const getSurveyResponse = async () => {
     try {
       let response = await axiosInstance.get(
@@ -80,11 +80,11 @@ const AnalyticsPage = () => {
       }
     } catch (error) {}
   };
-  console.log(avgDataValues);
+
   return (
-    <section className="min-h-screen w-full items-center justify-center">
-      <div className="flex-1 flex flex-col lg:flex-row">
-        <div className="flex flex-col lg:flex-row">
+    <section className="h-screen w-[100%] items-center justify-center overflow-hidden">
+      <div className="flex flex-col">
+        <div className="flex flex-col">
           <div class="flex-1">
             <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
               <h3 class="xl:text-3xl text-2xl font-semibold text-left text-white mx-20">
@@ -94,88 +94,9 @@ const AnalyticsPage = () => {
 
             <div className="grid grid-cols-2 grid-rows-1 gap-2 mx-20">
               <div className="flex flex-row gap-3 w-full">
-                <div className="flex flex-col gap-2">
-                  <div className="p-2 flex flex-row items-center h-[125px] w-[275px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
-                    <div className="flex items-start p-2">
-                      {views ? (
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{
-                            duration: 0.4,
-                            delay: 0.1,
-                            ease: [0, 0.41, 0.1, 1.01],
-                          }}
-                          className="text-white absolute top-5 text-5xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
-                        >
-                          {views?.data?.sorted_total_data?.screen_views_total}
-                        </motion.div>
-                      ) : (
-                        <p className="ml-2">
-                          <SvgLoader width={"w-10"} height={"h-10"} />
-                        </p>
-                      )}
-                    </div>
-                    <p className="text-white text-normal font-semibold text-justify absolute right-2 bottom-2">
-                      Total views
-                    </p>
-                  </div>
-                  <div className="p-2 flex flex-row items-center h-[125px] w-[275px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
-                    <div className="flex items-start p-2">
-                      {views ? (
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{
-                            duration: 0.4,
-                            delay: 0.1,
-                            ease: [0, 0.41, 0.1, 1.01],
-                          }}
-                          className="text-white absolute top-5 text-5xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
-                        >
-                          {sms?.click_number ?? 0}
-                        </motion.div>
-                      ) : (
-                        <p className="ml-2">
-                          <SvgLoader width={"w-10"} height={"h-10"} />
-                        </p>
-                      )}
-                    </div>
-                    <p className="text-white text-normal font-semibold text-justify absolute right-2 bottom-2">
-                      Total clicks
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col">
-                  <div className="p-2 flex flex-row items-center h-[125px] w-[275px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
-                    <div className="flex items-start p-2">
-                      {views ? (
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{
-                            duration: 0.4,
-                            delay: 0.1,
-                            ease: [0, 0.41, 0.1, 1.01],
-                          }}
-                          className="text-white absolute top-5 text-5xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
-                        >
-                          {sms?.sms_sends ?? 0}
-                        </motion.div>
-                      ) : (
-                        <p className="ml-2">
-                          <SvgLoader width={"w-10"} height={"h-10"} />
-                        </p>
-                      )}
-                    </div>
-                    <p className="text-white text-normal font-semibold text-justify absolute right-2 bottom-2">
-                      Total sends
-                    </p>
-                  </div>
-                </div>
+                <StatCards views={views} sms={sms} />
               </div>
-              <div className="w-[70%] flex-1">
+              <div className="w-[100%] flex-1">
                 <Statistics views={views} />
               </div>
             </div>
@@ -184,6 +105,7 @@ const AnalyticsPage = () => {
                 <PeriodicStats data={periodData} avgData={avgDataValues} />
               </div>
               <div className="flex flex-row gap-2 w-full">
+                <AvgDataStats avgData={avgDataValues} />
                 <BarChart data={dataDlivery} />
                 <SurveyResults surveyResults={surveyresults} />
               </div>

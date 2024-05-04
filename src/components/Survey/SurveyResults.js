@@ -6,7 +6,7 @@ const SurveyResults = ({ surveyResults }) => {
   return (
     <div className="p-2 items-start h-72 w-[35%] flex-col rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
       <div className="flex flex-row">
-        <p className="text-white text-2xl font-light text-justify p-4">
+        <p className="text-white text-lg font-light text-justify p-4">
           Survey results
         </p>
         <div className="absolute right-4 top-4">
@@ -16,7 +16,7 @@ const SurveyResults = ({ surveyResults }) => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-8 h-8 text-white"
+            class="w-6 h-6 text-white"
           >
             <path
               stroke-linecap="round"

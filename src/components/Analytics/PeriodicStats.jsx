@@ -85,7 +85,7 @@ const PeriodicStats = ({ data, avgData }) => {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: "country",
+            legend: "Week days",
             legendPosition: "middle",
             legendOffset: 32,
             truncateTickAt: 0,
@@ -115,32 +115,6 @@ const PeriodicStats = ({ data, avgData }) => {
             e.id + ": " + e.formattedValue + " in country: " + e.indexValue
           }
         />
-        <div className="flex flex-col p-1 gap-3">
-          <div className="items-justify">
-            <p className="text-lg text-justify text-white font-semibold">
-              {avgData?.average_engagement_rate}
-            </p>
-            <p className="text-white/50 font-light text-justify text-sm">
-              Avg. Session
-            </p>
-          </div>
-          <div className="flex flex-col">
-            <p className="text-lg text-white  text-justify font-semibold">
-              {avgData?.average_user_engagement} secs
-            </p>
-            <p className="text-white/50 items-start text-justifyfont-light text-sm">
-              Avg. Session Duration
-            </p>
-          </div>
-          <div className="items-start">
-            <p className="text-lg text-white text-justify font-semibold">
-              {avgData?.average_scrolled_users.toFixed(2)}
-            </p>
-            <div className="text-white/50 items-start text-sm">
-              Avg. Scrolled users
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
