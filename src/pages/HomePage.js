@@ -82,7 +82,7 @@ const HomePage = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedItems = currentMessages?.slice(startIndex, endIndex);
-  console.log(sortOrder);
+
   let getNotes = async () => {
     try {
       let response = await axiosInstance.get(
@@ -213,6 +213,23 @@ const HomePage = () => {
     setSmsId();
   };
 
+  const msgArchive = async (msgId) => {
+    const body = {
+      status: "archived",
+    };
+    try {
+      let response = await axiosInstance.put(
+        `api/message_view_edit/${msgId}/`,
+        body
+      );
+      console.log(response);
+      if (response.status === 200 || 201) {
+        console.log("Success");
+        getNotes();
+      }
+    } catch (error) {}
+  };
+
   return (
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 flex flex-col lg:flex-row">
@@ -271,6 +288,7 @@ const HomePage = () => {
                         >
                           <MessageCard
                             message={message}
+                            archiveMsg={msgArchive}
                             toggleAnalyticsDrawer={toggleAnalyticsDrawer}
                             deleteMessage={deleteMessage}
                             duplicateMessage={duplicateMessage}

@@ -98,7 +98,7 @@ const ContactList = () => {
   const widthVariants = {
     width: recipientsPercentage,
   };
-
+  console.log(contactListsPercentages);
   return (
     <div class="min-h-screen w-[100%] items-center justify-center">
       <div class="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
@@ -158,7 +158,7 @@ const ContactList = () => {
                       <div>{conList.created_at}</div>
                       <div>{conList.contact_lenght}</div>
                       <div className="flex flex-row mx-16 gap-3">
-                        <div className=" border-gray-800 rounded-md border-2 mx-auto my-auto p-0.5">
+                        <div className=" border-gray-800 rounded-md border-2 mx-auto my-auto p-0.5  hover:bg-purpleHaze cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
                           <Link
                             type="button"
                             to={`/contact_list/${conList.id}`}
@@ -184,7 +184,7 @@ const ContactList = () => {
                             </svg>
                           </Link>
                         </div>
-                        <div className=" border-gray-800 rounded-md border-2 mx-auto my-auto p-0.5">
+                        <div className=" border-gray-800 rounded-md border-2 mx-auto my-auto p-0.5 hover:bg-purpleHaze hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
                           <button
                             type="button"
                             onClick={() => deleteList(conList.id)}
@@ -226,11 +226,11 @@ const ContactList = () => {
                   <div class="w-[50%] relative bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3">
                     <div
                       className={`bg-purple-600 h-3 rounded-full dark:bg-purple-500`}
-                      style={{ width: contactListsPercentages }}
+                      style={{ width: contactListsPercentages + "%" }}
                     ></div>
                     <p
                       className={`absolute inset-0 bg-purple-600 blur`}
-                      style={{ width: contactListsPercentages }}
+                      style={{ width: contactListsPercentages + "%" }}
                     ></p>
                   </div>
                   <div className="flex flex-row mx-auto p-1 bg-mainBlue border-2 border-gray-800 rounded-lg">
@@ -244,11 +244,11 @@ const ContactList = () => {
                   <div class="w-[50%] bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3 relative">
                     <div
                       className={`bg-purple-600 h-3 rounded-full dark:bg-purple-500`}
-                      style={{ width: recipientsPercentages }}
+                      style={{ width: recipientsPercentages + "%" }}
                     ></div>
                     <p
                       className={`absolute inset-0 bg-purple-600 blur`}
-                      style={{ width: recipientsPercentages }}
+                      style={{ width: recipientsPercentages + "%" }}
                     ></p>
                   </div>
                   <div className="flex flex-row mx-auto p-1 bg-mainBlue border-2 border-gray-800 rounded-lg">
@@ -260,7 +260,7 @@ const ContactList = () => {
                 <div className="flex flex-row items-start mt-3">
                   <Link
                     to={"/plans"}
-                    className="py-1 px-2 bg-purpleHaze rounded-lg text-white "
+                    className="py-1 px-2 bg-purpleHaze rounded-lg text-white cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105"
                   >
                     Upgrade
                   </Link>
