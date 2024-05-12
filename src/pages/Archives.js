@@ -23,7 +23,7 @@ const Archives = () => {
     getArchives();
   }, []);
 
-  const itemsPerPage = 4;
+  const itemsPerPage = 9;
   const totalPages = Math.ceil(archives?.length / itemsPerPage);
 
   const handlePageChange = (page) => {
@@ -127,11 +127,44 @@ const Archives = () => {
               ) : (
                 <div className="flex-1 items-center p-10">
                   <p className="text-white/50 text-base font-poppins">
-                    Your content will appear here once you create it..
+                    Your content will appear here once you archive it..
                   </p>
                 </div>
               )}
             </div>
+            {totalPages > 1 && (
+              <motion.div
+                initial={
+                  initialLoad
+                    ? { opacity: 0, scale: 0.5 }
+                    : { opacity: 1, scale: 1 }
+                }
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  duration: 0.4,
+                  delay: 0.8,
+                  ease: [0, 0.41, 0.1, 1.01],
+                }}
+                className="bottom-0"
+              >
+                {Array.from(
+                  { length: totalPages },
+                  (_, index) => index + 1
+                ).map((page) => (
+                  <button
+                    type="button"
+                    className="px-3 py-2 bg-navBlue border-2 border-gray-800 hover:bg-purpleHaze ml-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 rounded-lg text-white mt-2"
+                    data-mdb-ripple-color="dark"
+                    key={page}
+                    id="paginationBtn"
+                    onClick={() => handlePageChange(page)}
+                  >
+                    {page}
+                  </button>
+                ))}
+                <br></br>
+              </motion.div>
+            )}
             {openCont ? (
               <div
                 className={`absolute top-[15%] xl:top-[11%] right-20 h-[548px] w-[340px] xl:h-[648px] xl:w-[430px] bg-navBlue border-2 border-gray-800 rounded-2xl shadow-lg transition-transform transform`}
