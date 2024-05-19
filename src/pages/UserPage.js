@@ -78,7 +78,7 @@ const UserPage = () => {
       console.log(e);
     }
   };
-
+  console.log(user);
   return (
     <section className="min-h-screen w-full items-center justify-center relative">
       <div className="flex-1 flex flex-col lg:flex-row">
@@ -97,7 +97,7 @@ const UserPage = () => {
               <UserAccount />
               <div className="flex-1 flex-col">
                 <Billings purchases={purchases} />
-                <PasswordChange />
+                <PasswordChange user_obj={user} />
               </div>
             </div>
           </div>

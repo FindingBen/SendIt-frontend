@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useAxiosInstance from "./axiosInstance";
 import { useNavigate } from "react-router-dom";
 
-const PasswordChange = () => {
+const PasswordChange = ({ user_obj }) => {
   const [newPass, setNewPass] = useState();
   const [reNewPass, setReNewPass] = useState();
   const [isLoading, setIsLoading] = useState();
@@ -37,7 +37,7 @@ const PasswordChange = () => {
     try {
       if (newPass === reNewPass) {
         let response = await axiosInstance.post(
-          "/auth/users/set_password/",
+          "/api/users/set_password/",
           formData
         );
         if (response.status === 204) {
@@ -209,7 +209,7 @@ const PasswordChange = () => {
                 Last update
               </label>
               <p className="block text-white absolute right-2 top-0">
-                2024-02-12 12:00 AM
+                {user_obj.last_password_change}
               </p>
             </div>
           </div>

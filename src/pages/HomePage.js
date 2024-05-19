@@ -22,6 +22,7 @@ import {
 import { cleanPackage } from "../redux/reducers/packageReducer";
 import SmsPill from "../components/SmsPill/SmsPill";
 import { MessageCard } from "../components/MessageCard/MessageCard";
+import QuickAnalytics from "../components/quickViewSms/quickAnalytics";
 
 const HomePage = () => {
   const axiosInstance = useAxiosInstance();
@@ -285,6 +286,7 @@ const HomePage = () => {
                               ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
                               : "bg-mainBlue"
                           } ${isLastItem ? "rounded-b-2xl" : ""}`}
+                          key={message.id}
                         >
                           <MessageCard
                             message={message}
@@ -315,83 +317,12 @@ const HomePage = () => {
               />
               <ModalComponent modalType={"copy"} showModal={showCopy} />
             </div>
-            <div
-              className={`absolute top-[15%] xl:top-[11%] -right-6 h-[548px] w-[340px] xl:h-[648px] xl:w-[430px] bg-mainBlue border-2 border-gray-800 rounded-2xl shadow-lg transition-transform transform ${
-                analyticsOpen
-                  ? "xl:-translate-x-26 lg:-translate-x-24"
-                  : "translate-x-full"
-              }`}
-            >
-              <div className="flex flex-col p-4 relative items-center">
-                <button
-                  className="bg-darkBlue hover:bg-gray-700 duration-300 text-white px-2 rounded-full absolute right-3 top-3"
-                  onClick={closeAnalyticsDrawer}
-                >
-                  X
-                </button>
-                <p className="text-white text-xl mb-2">Quick view</p>
-                <PieChart
-                  percentage={views?.data.overall_perf}
-                  viewType={"ViewHome"}
-                />
-                <div className="flex flex-col items-center p-4 w-full h-[150px] rounded-lg">
-                  <div className="flex flex-row relative border-2 border-gray-800 rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue">
-                    <div className="p-2 flex items-center flex-col rounded-md mx-1 my-auto">
-                      <p className="text-white text-normal font-light text-justify">
-                        Campaign views
-                      </p>
-                      {views ? (
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{
-                            duration: 0.4,
-                            delay: 0.1,
-                            ease: [0, 0.41, 0.1, 1.01],
-                          }}
-                          className="text-white text-2xl font-normal shadow-lg"
-                        >
-                          {views?.data.sorted_total_data.screen_views_total}
-                        </motion.div>
-                      ) : (
-                        <p className="text-white font-semibold text-2xl ml-2">
-                          <SvgLoader width={"w-8"} height={"h-8"} />
-                        </p>
-                      )}
-                    </div>
-                    <div className="p-2 flex items-center flex-col rounded-md mx-1 my-auto">
-                      <p className="text-white text-normal font-light text-justify">
-                        Bounce rate
-                      </p>
-                      {views ? (
-                        <motion.div
-                          initial={{ opacity: 0, scale: 0.0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{
-                            duration: 0.4,
-                            delay: 0.1,
-                            ease: [0, 0.41, 0.1, 1.01],
-                          }}
-                          className="text-white text-2xl font-normal shadow-lg"
-                        >
-                          {views?.data.sorted_total_data.bounceRate} %
-                        </motion.div>
-                      ) : (
-                        <p className="text-white font-semibold text-2xl ml-2">
-                          <SvgLoader width={"w-8"} height={"h-8"} />
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-                <Link
-                  to={`/analytics/${smsId}`}
-                  className="bg-purpleHaze hover:bg-gray-700 duration-300 px-2 py-1 mt-2 text-white rounded-lg"
-                >
-                  View more
-                </Link>
-              </div>
-            </div>
+            <QuickAnalytics
+              analyticsOpen={analyticsOpen}
+              views={views}
+              closeAnalyticsDrawer={closeAnalyticsDrawer}
+              smsId={smsId}
+            />
           </div>
           {totalPages > 1 && (
             <motion.div

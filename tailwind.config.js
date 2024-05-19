@@ -16,10 +16,9 @@ module.exports = {
       ss: "620px",
       sm: "768px",
       md: "1060px",
-      lg: "1200px",
-      xl: "1700px",
+      lg: "1350px",
+      xl: "1530px",
       // => @media (min-width: 1280px) { ... }
-
       "2xl": "1736px",
       // => @media (min-width: 1536px) { ... }
     },
@@ -38,7 +37,7 @@ module.exports = {
         darkBlack: "#000000",
         mainBlue: "#0D0D29",
         navBlue: "#090921",
-        lighterMainBlue:"#151530",
+        lighterMainBlue: "#151530",
         shadowColor: "#06B6D4",
         purpleHaze: "#4937BA",
       },
