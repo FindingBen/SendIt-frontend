@@ -9,10 +9,30 @@ export const MessageCard = ({
   archiveMsg,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen((prev) => !prev);
   };
+
   return (
     <div className={`grid grid-cols-5 gap-3 mb-3 h-10 items-center`}>
       <div className="text-white/90">{message.message_name}</div>
@@ -133,9 +153,13 @@ export const MessageCard = ({
                 className="py-2 text-sm text-gray-700 dark:text-gray-200"
                 aria-labelledby="dropdownDefaultButton"
               >
-                <li className="block px-4 py-2 hover:bg-gray-100 text-black">
-                  <Link to={`/sms_editor/${message.id}`}>Send message</Link>
-                </li>
+                {message.status === "Draft" ? (
+                  <li className="block px-4 py-2 hover:bg-gray-100 text-black">
+                    <Link to={`/sms_editor/${message.id}`}>Send message</Link>
+                  </li>
+                ) : (
+                  <></>
+                )}
                 <li className="block px-4 py-2 hover:bg-gray-100 text-black">
                   <button onClick={() => archiveMsg(message.id)}>
                     Archive message

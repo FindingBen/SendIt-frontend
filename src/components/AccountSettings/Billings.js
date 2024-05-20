@@ -23,6 +23,42 @@ const Billings = ({ purchases }) => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = purchases.slice(indexOfFirstItem, indexOfLastItem);
 
+  const totalPages = Math.ceil(purchases.length / itemsPerPage);
+
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxVisiblePages = 8;
+
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      const startPage = Math.max(1, currentPage - 2);
+      const endPage = Math.min(totalPages, currentPage + 2);
+
+      if (startPage > 1) {
+        pages.push(1);
+        if (startPage > 2) {
+          pages.push("...");
+        }
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+
+      if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+          pages.push("...");
+        }
+        pages.push(totalPages);
+      }
+    }
+
+    return pages;
+  };
+
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -114,21 +150,19 @@ const Billings = ({ purchases }) => {
       )}
       {purchases.length > itemsPerPage && (
         <div className="flex sticky bottom-0 justify-center mt-2 mb-1">
-          {[...Array(Math.ceil(purchases.length / itemsPerPage))].map(
-            (_, index) => (
-              <button
-                key={index}
-                onClick={() => paginate(index + 1)}
-                className={`${
-                  currentPage === index + 1
-                    ? "bg-purpleHaze text-white"
-                    : "bg-mainBlue text-white/50"
-                } px-2 py-1 mr-2 rounded-md`}
-              >
-                {index + 1}
-              </button>
-            )
-          )}
+          {getPageNumbers().map((page, index) => (
+            <button
+              key={index}
+              onClick={() => typeof page === "number" && paginate(page)}
+              className={`${
+                currentPage === page
+                  ? "bg-purpleHaze text-white"
+                  : "bg-mainBlue text-white/50"
+              } px-2 py-1 mr-2 rounded-md`}
+            >
+              {page}
+            </button>
+          ))}
         </div>
       )}
     </div>

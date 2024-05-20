@@ -113,11 +113,11 @@ const Archives = () => {
               }`}
             >
               <div class="grid grid-cols-5 gap-4 grid-headers border-b-2 p-2 border-gray-800 text-white/50 font-normal text-sm xl:text-md py-2 px-4 mb-2">
-                <div>NAME</div>
-                <div>ARCHIVED</div>
-                <div>SENT</div>
-                <div>SUCCESS RATE</div>
-                <div>ACTION</div>
+                <div>Name</div>
+                <div>Archived</div>
+                <div>View</div>
+                <div>Success rate</div>
+                <div>Action</div>
               </div>
               {archives?.length > 0 && displayedItems ? (
                 <div>
@@ -249,7 +249,7 @@ const Archives = () => {
             )}
             {openCont ? (
               <div
-                className={`absolute top-[15%] xl:top-[11%] right-20 h-[548px] w-[340px] xl:h-[648px] xl:w-[430px] bg-navBlue border-2 border-gray-800 rounded-2xl shadow-lg transition-transform transform`}
+                className={`absolute top-[15%] xl:top-[13%] right-20 h-[548px] w-[340px] xl:h-[548px] xl:w-[360px] bg-navBlue border-2 border-gray-800 rounded-2xl shadow-lg transition-transform transform`}
               >
                 <div className="flex flex-col p-4 relative items-center">
                   <button
