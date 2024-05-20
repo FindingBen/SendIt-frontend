@@ -10,6 +10,7 @@ import {
 } from "../redux/reducers/modalReducer";
 import { selectFormState } from "../redux/reducers/formReducer";
 import { selectCurrentPackage } from "../redux/reducers/packageReducer";
+import { selectCurrentSmsCount } from "../redux/reducers/packageReducer";
 import { selectContactLists } from "../redux/reducers/contactListReducer";
 import {
   selectMessages,
@@ -32,6 +33,7 @@ export const useRedux = () => {
   const currentMessagesCount = useSelector(selectMessagesCount);
   const currentOperationState = useSelector(selectOperationState);
   const currentUserState = useSelector(selectCurrentUserState);
+  const currentSmsPackCount = useSelector(selectCurrentSmsCount);
 
   return {
     dispatch,
@@ -47,5 +49,6 @@ export const useRedux = () => {
     currentMessagesCount,
     currentOperationState,
     currentUserState,
+    currentSmsPackCount,
   };
 };

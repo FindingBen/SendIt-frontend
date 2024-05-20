@@ -65,7 +65,7 @@ const Login = () => {
       const user_info = jwt_decode(responseData?.access);
       console.log(user_info);
       dispatch(setCredentials({ ...responseData, user }));
-      dispatch(setPackage({ package_plan: packageValue }));
+      dispatch(setPackage(packageValue));
       dispatch(setUserInfo({ ...user_info }));
       setUser("");
       setPwd("");

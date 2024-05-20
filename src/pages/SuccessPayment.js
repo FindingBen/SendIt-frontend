@@ -11,9 +11,10 @@ const SuccessPayment = () => {
   const { dispatch } = useRedux();
   const axiosInstance = useAxiosInstance();
   const location = useLocation();
-  const [isSuccess, setIsSuccess] = useState(0);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [showModal, setShow] = useState(false);
   const [purchase, setPurchase] = useState({});
+  const [loaded, setLoaded] = useState(false);
   const [errMessage, setErrMessage] = useState("");
 
   useEffect(() => {
@@ -23,25 +24,35 @@ const SuccessPayment = () => {
     if (sessionId) {
       paymentSuccessfull(sessionId);
     }
+
+    return () => {
+      setLoaded(false);
+    };
   }, [location.search, isSuccess]);
 
   const paymentSuccessfull = async (sessionId) => {
     setShow(true);
+
     try {
       let response = await axiosInstance.get(
         `/stripe/payment_successfull/${sessionId}`
       );
       if (response.status === 200) {
-        setTimeout(() => setShow(false), 1000);
-
-        dispatch(
-          setPackage({
-            package_plan: response?.data.user.package_plan.plan_type,
-          })
-        );
+        setTimeout(() => setShow(false), 2000);
+        console.log(response.data);
+        const package_payload = {
+          package_plan: response?.data.user.package_plan.plan_type,
+          sms_count:
+            response?.data.user.sms_count +
+            response?.data.user.package_plan.sms_count_pack,
+        };
+        dispatch(setPackage(package_payload));
         setPurchase(response?.data.purchase);
+        setLoaded(true);
         if (showModal === false) {
           setIsSuccess(true);
+          // setPurchase({}); // Reset purchase state
+          // setIsSuccess(null);
         }
       }
     } catch (error) {
@@ -50,7 +61,7 @@ const SuccessPayment = () => {
       setIsSuccess(false);
     }
   };
-
+  console.log(purchase);
   return (
     <section className="min-h-screen flex-d w-full items-center justify-center">
       <div className="flex-1 flex flex-col mb-4 h-20">
@@ -64,14 +75,14 @@ const SuccessPayment = () => {
                 delay: 0.2,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="mt-10 text-center font-light text-grayWhite"
+              className="mt-10 text-center font-light text-white"
             >
               <span className="text-3xl font-semibold">
                 Payment successful!
               </span>
               <br></br>
               <div className="flex justify-center mt-5 text-normal">
-                <ReceiptComponent purchase_obj={purchase} />
+                {loaded && <ReceiptComponent purchase_obj={purchase} />}
               </div>
             </motion.div>
           ) : isSuccess === false ? (
