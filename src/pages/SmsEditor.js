@@ -7,6 +7,7 @@ import SmsConfirmModal from "../features/modal/SmsConfirmModal";
 import { useRedux } from "../constants/reduxImports";
 import { setOperation } from "../redux/reducers/messageReducer";
 import SmsPill from "../components/SmsPill/SmsPill";
+import Checklist from "../components/Checklist/Checklist";
 
 const SmsEditor = () => {
   const axiosInstance = useAxiosInstance();
@@ -21,17 +22,30 @@ const SmsEditor = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [smsText, setSmsText] = useState([]);
   const [contactLists, setContactList] = useState([]);
+  const [islist, setIslist] = useState(false);
+  const [istext, setIsText] = useState(false);
+  const [isName, setIsname] = useState(false);
+  const [isLink, setIslink] = useState(false);
   const [recipients, setRecipients] = useState();
   const BASE = "https://spp.up.railway.app";
   const BASE_URL = "https://spplane.app";
   const linkURLBase = `${BASE_URL}/view/${params.id}`;
   const uniqueLink = `${BASE}/sms/sms/tracking/`;
-  const maxCharacters = 70;
+  const maxCharacters = 100;
 
   useEffect(() => {
     getContactLists();
     getUser();
   }, []);
+
+  useEffect(() => {
+    if (!smsText.includes("#Link")) {
+      setIslink(false);
+    }
+    if (!smsText.includes("#FirstName")) {
+      setIsname(false);
+    }
+  }, [smsText]);
 
   const getUser = async () => {
     try {
@@ -58,9 +72,11 @@ const SmsEditor = () => {
       setSmsText(
         smsText.substring(0, startPos) + linkEmbed + smsText.substring(endPos)
       );
+      setIslink(true);
     } else {
       // Handle the case where smsText is not a string (e.g., null, undefined)
       setSmsText(linkEmbed);
+      setIslink(false);
     }
   };
 
@@ -76,6 +92,7 @@ const SmsEditor = () => {
       setSmsText(
         smsText.substring(0, startPos) + linkEmbed + smsText.substring(endPos)
       );
+      setIsname(true);
     } else {
       // Handle the case where smsText is not a string (e.g., null, undefined)
       setSmsText(linkEmbed);
@@ -84,6 +101,11 @@ const SmsEditor = () => {
 
   const handleSms = (e) => {
     setSmsText(e.target.value);
+    if (smsText.length > 10) {
+      setIsText(true);
+    } else {
+      setIsText(false);
+    }
   };
 
   const sendSms = async () => {
@@ -147,6 +169,14 @@ const SmsEditor = () => {
     if (e.target.value !== "Choose") {
       const recipientData = JSON.parse(e.target.value);
       setRecipients(recipientData);
+      console.log(recipientData.contact_lenght);
+      if (recipientData.contact_lenght > 0) {
+        setIslist(true);
+      } else if (recipientData.contact_lenght === 0) {
+        setIslist(false);
+      }
+    } else {
+      setIslist(false);
     }
   };
 
@@ -160,7 +190,7 @@ const SmsEditor = () => {
   const handleDate = (date) => {
     setDateSchedule(date);
   };
-
+  console.log(recipients.contact_length);
   return (
     <section className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
@@ -278,10 +308,10 @@ const SmsEditor = () => {
               )}
             </div>
             <div className="col mt-3">
-              <p className="text-3xl font-extralight text-white">
-                Sms Configuration
+              <p className="text-3xl font-extralight text-white text-justify">
+                Sms Checklist
               </p>
-              <div className="font-extralight text-white p-5">
+              {/* <div className="font-extralight text-white p-5">
                 You picked up a list of{" "}
                 <p className="text-white inline-block font-bold">
                   {recipients?.contact_lenght ?? 0}
@@ -301,66 +331,51 @@ const SmsEditor = () => {
                     available credits.
                   </p>
                 )}
-              </div>
-              <div className="flex flex-col p-5 rounded-lg">
-                <div className="flex flex-row p-2">
-                  <p className="font-extralight text-white">
-                    Link your campaign{" "}
-                  </p>
-                  <button
-                    onClick={handleAddLink}
-                    value={linkURLBase}
-                    disabled={smsText.length === 0 || !recipients}
-                    className={`${
-                      smsText.length === 0 || !recipients
-                        ? "bg-gray-500"
-                        : "bg-blue-800 cursor-pointer"
-                    } hover:bg-blue-400 text-white font-bold py-2 px-3 rounded text-sm xl:text-base ml-2`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="w-6 h-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"
-                      />
-                    </svg>
-                  </button>
+              </div> */}
+              <Checklist
+                isListSelected={islist}
+                isTextWritten={istext}
+                isLinked={isLink}
+                isPersonalized={isName}
+              />
+              <div className="flex flex-col mt-5 p-2">
+                <div className="h-10">
+                  {recipients.contact_lenght === 0 ? (
+                    <p className="font-semibold text-sm text-red-500 text-justify">
+                      Make sure to select contact list with recipients!
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
                 </div>
-                <div className="flex flex-row p-2">
-                  <p className="font-extralight text-white">
-                    Personalize your sending{" "}
-                  </p>
-                  <button
-                    onClick={handleNameLink}
-                    disabled={smsText.length === 0 || !recipients}
-                    className={`${
-                      smsText.length === 0 || !recipients
-                        ? "bg-gray-500"
-                        : "bg-blue-800 cursor-pointer"
-                    } hover:bg-blue-400 text-white font-bold py-2 px-3 rounded text-sm xl:text-base ml-2`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="w-6 h-6"
+                <div className="flex flex-row gap-2">
+                  <div className="flex flex-row p-2">
+                    <button
+                      onClick={handleAddLink}
+                      value={linkURLBase}
+                      disabled={smsText.length === 0 || !recipients}
+                      className={`${
+                        smsText.length === 0 || !recipients
+                          ? "bg-gray-500"
+                          : "bg-blue-800 cursor-pointer"
+                      } hover:bg-blue-400 text-white font-bold py-2 px-3 rounded text-sm xl:text-base ml-2`}
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
-                      />
-                    </svg>
-                  </button>
+                      #Link
+                    </button>
+                  </div>
+                  <div className="flex flex-row p-2">
+                    <button
+                      onClick={handleNameLink}
+                      disabled={smsText.length === 0 || !recipients}
+                      className={`${
+                        smsText.length === 0 || !recipients
+                          ? "bg-gray-500"
+                          : "bg-blue-800 cursor-pointer"
+                      } hover:bg-blue-400 text-white font-bold py-2 px-3 rounded text-sm xl:text-base ml-2`}
+                    >
+                      #FirstName
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
