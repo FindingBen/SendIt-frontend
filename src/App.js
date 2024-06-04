@@ -22,6 +22,7 @@ import SuccessPayment from "./pages/SuccessPayment";
 import CancelPayment from "./pages/CancelPayment";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import Archives from "./pages/Archives";
+import DemoPage from "./pages/DemoPage";
 import UnsubscribePage from "./pages/UnsubscribePage";
 import ActivationEmailSuccess from "./pages/ActivationEmailSuccess";
 
@@ -46,7 +47,8 @@ function App() {
       <div className="App">
         <ElementProvider>
           <Routes>
-            <Route path="register" element={<RegisterPage />} />
+            <Route path="register" element={<DemoPage />} />
+            {/* <Route path="register" element={<RegisterPage />} /> */}
             <Route path="login" element={<Login></Login>} />
             <Route
               path="reset_password"
