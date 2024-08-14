@@ -330,7 +330,7 @@ const EditMessage = () => {
                 </button>
               ) : (
                 <div role="status">
-                  <SvgLoader height={4} width={4} />
+                  <SvgLoader height={6} width={6} />
                 </div>
               )}
             </div>

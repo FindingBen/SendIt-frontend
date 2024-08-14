@@ -107,7 +107,7 @@ const Billings = ({ purchases }) => {
                   <div>{purchase.price}</div>
                   <div>{purchase.payment_id}</div>
                   <div>{purchase.created_at}</div>
-                  <div>
+                  <div className="flex justify-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
