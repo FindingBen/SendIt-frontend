@@ -11,6 +11,7 @@ import editPageReducer from "./reducers/editPageReducer";
 import packageReducer from "./reducers/packageReducer";
 import messageReducer from "./reducers/messageReducer";
 import contactListReducer from "./reducers/contactListReducer";
+import archiveReducer from "./reducers/archiveReducer";
 
 const persistConfig = {
   key: "root",
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   messages: messageReducer,
   contactLists: contactListReducer,
   user: userReducer,
+  archiveState: archiveReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

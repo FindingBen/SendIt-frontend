@@ -4,6 +4,7 @@ import "../css/Home.css";
 import { logOut } from "../redux/reducers/authSlice";
 import useAxiosInstance from "../utils/axiosInstance";
 import DeleteMessageModal from "../features/modal/DeleteMessageModal";
+import { setArchiveState } from "../redux/reducers/archiveReducer";
 import ModalComponent from "../components/ModalComponent";
 import { motion } from "framer-motion";
 import { config } from "../constants/Constants";
@@ -32,6 +33,7 @@ const HomePage = () => {
     currentMessageCount,
     currentMessages,
     currentOperationState,
+    currentArchivedState,
   } = useRedux();
 
   let [notes, setNotes] = useState([]);
@@ -66,6 +68,9 @@ const HomePage = () => {
       dispatch(setOperation(false));
     } else if (sortOrder) {
       getNotes();
+    } else if (currentArchivedState) {
+      getNotes();
+      dispatch(setArchiveState({ archived: false }));
     }
 
     refreshAnalytics();

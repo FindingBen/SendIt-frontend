@@ -9,9 +9,10 @@ import ArchivePreviewPanel from "../components/PreviewComponent/ArchivePreviewPa
 import DeleteMessageModal from "../features/modal/DeleteMessageModal";
 import { Link } from "react-router-dom";
 import ReDraftModal from "../features/modal/ReDraftModal";
+import { setArchiveState } from "../redux/reducers/archiveReducer";
 
 const Archives = () => {
-  const { currentUser } = useRedux();
+  const { currentUser, currentFormState, dispatch } = useRedux();
   const axiosInstance = useAxiosInstance();
   const params = useParams();
   const BASE_URL = config.url.BASE_URL;
@@ -48,6 +49,7 @@ const Archives = () => {
     setMessageId(id);
     setShowReDraft(true);
     setIsUpdated();
+    dispatch(setArchiveState({ archived: true }));
   };
 
   const startIndex = (currentPage - 1) * itemsPerPage;
