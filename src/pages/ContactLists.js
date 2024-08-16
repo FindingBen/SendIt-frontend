@@ -15,7 +15,6 @@ const ContactList = () => {
   const [contactList, setContactList] = useState([]);
   const [recipients, setRecipients] = useState([]);
   const [listUpdated, setListUpdated] = useState(false);
-  const [initialLoad, setInitialLoad] = useState(false);
   const [contactListsPercentage, setContactListsPercentage] = useState();
   const [recipientsPercentage, setRecipientsPercentage] = useState();
   const [limits, setLimits] = useState({});
@@ -32,15 +31,16 @@ const ContactList = () => {
     getContactLists();
   }, []);
 
+  console.log("REC", recipientsPercentages);
+
   useEffect(() => {
     setContactListsPercentage(contactListsPercentage);
     setRecipientsPercentage(recipientsPercentages);
     setListUpdated(false);
   }, [contactList, listUpdated]);
-  console.log(recipientsPercentages);
 
   if (listUpdated === true) {
-    setContactListsPercentage(recipientsPercentages);
+    setContactListsPercentage(contactListsPercentage);
     setRecipientsPercentage(recipientsPercentages);
     setListUpdated(false);
   }
@@ -95,10 +95,6 @@ const ContactList = () => {
     setContactList(contactList);
   };
 
-  const widthVariants = {
-    width: recipientsPercentage,
-  };
-  console.log(contactListsPercentages);
   return (
     <div class="min-h-screen w-[100%] items-center justify-center">
       <div class="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
