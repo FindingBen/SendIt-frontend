@@ -58,7 +58,7 @@ const HomePage = () => {
 
   useEffect(() => {
     // Fetch data only on initial load and when user is logged in
-    if (!currentMessages.length) {
+    if (!currentMessages?.length) {
       getNotes();
       //setSortOrder("created_at");
     } else if (currentOperationState) {
@@ -277,7 +277,7 @@ const HomePage = () => {
                 {currentMessages?.length > 0 && displayedItems ? (
                   <div>
                     {displayedItems?.map((message, index) => {
-                      const isLastItem = index === displayedItems.length - 1;
+                      const isLastItem = index === displayedItems?.length - 1;
                       const evenRow = index % 2 === 0;
                       return (
                         <motion.div

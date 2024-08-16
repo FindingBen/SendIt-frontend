@@ -26,7 +26,7 @@ const OverallStatistics = ({ totalValues }) => {
             </p>
           )}
           <p className="text-white text-normal lg:text-normal font-semibold text-justify absolute right-2 bottom-2">
-            Total sends
+            Total Sends
           </p>
         </div>
       </div>
@@ -57,8 +57,6 @@ const OverallStatistics = ({ totalValues }) => {
         </div>
       </div>
 
-  
-
       <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           {totalValues ? (
@@ -81,7 +79,7 @@ const OverallStatistics = ({ totalValues }) => {
             </p>
           )}
           <p className="text-white text-normal font-semibold text-justify absolute right-2 bottom-2">
-            Overall rate
+            Overall Rate
           </p>
         </div>
       </div>

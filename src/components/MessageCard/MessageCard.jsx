@@ -10,20 +10,16 @@ export const MessageCard = ({
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsDropdownOpen(false);
+      console.log("DDD");
     }
   };
-
+  console.log("SSS");
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
+    console.log("EVENT");
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -34,7 +30,10 @@ export const MessageCard = ({
   };
 
   return (
-    <div className={`grid grid-cols-5 gap-3 mb-3 h-10 items-center`}>
+    <div
+      className={`grid grid-cols-5 gap-3 mb-3 h-10 items-center`}
+      ref={dropdownRef}
+    >
       <div className="text-white/90">{message.message_name}</div>
       <div className="text-white/50">{message.created_at}</div>
       <div>
@@ -164,6 +163,12 @@ export const MessageCard = ({
                   <button onClick={() => archiveMsg(message.id)}>
                     Archive message
                   </button>
+                </li>
+                <li
+                  className="block px-4 py-2 hover:bg-gray-100 text-black"
+                  onClick={() => duplicateMessage(message.id)}
+                >
+                  Duplicate
                 </li>
               </ul>
             </div>
