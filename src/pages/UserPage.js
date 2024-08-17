@@ -30,28 +30,15 @@ const UserPage = () => {
 
   useEffect(() => {
     getUser();
-    purchase_history();
-    getPackages();
-  }, [msg]);
+    if (purchases?.length < 2) {
+      purchase_history();
+    }
+  }, [msg, purchases]);
 
   useEffect(() => {
     setTimeout(() => setErrorMsg(), 3000);
     setTimeout(() => setMsg(), 3000);
   }, [errorMsg, msg]);
-
-  let getPackages = async () => {
-    try {
-      let response = await axiosInstance.get("/api/package_plan/");
-
-      if (response.status === 200) {
-        let filteredPackages = response.data.filter((item) => item.id !== 1);
-
-        setPackage(filteredPackages);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   let getUser = async () => {
     try {
@@ -78,7 +65,7 @@ const UserPage = () => {
       console.log(e);
     }
   };
-  console.log(user);
+
   return (
     <section className="min-h-screen w-full items-center justify-center relative">
       <div className="flex-1 flex flex-col lg:flex-row">

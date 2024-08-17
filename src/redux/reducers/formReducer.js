@@ -15,4 +15,4 @@ export const { setState } = formSlice.actions;
 
 export default formSlice.reducer;
 
-export const selectFormState = (state) => state.archiveState.isDirty;
+export const selectFormState = (state) => state.formState.isDirty;

@@ -296,17 +296,12 @@ const EditMessage = () => {
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
             <div className="flex flex-row">
-              <span className="text-2xl text-white font-semibold mx-20">
+              <span className="text-3xl text-white font-semibold mx-20">
                 Edit Content
               </span>
             </div>
-            {/* <input
-              value={messageName}
-              onChange={handleMessageName}
-              className=" bg-gray-200 mb-4 text-black hover:bg-gray-400 duration-200 text-light font-light py-2 px-4 rounded-md placeholder:text-black placeholder:font-normal"
-              placeholder={message?.message_name}
-            /> */}
-            <div class="inline-flex items-center mx-20">
+
+            <div class="inline-flex items-center mx-20 relative">
               {!isLoading ? (
                 <button
                   onClick={editMessage}
@@ -329,7 +324,7 @@ const EditMessage = () => {
                   </svg>
                 </button>
               ) : (
-                <div role="status">
+                <div role="status" className="absolute top-0 right-0">
                   <SvgLoader height={6} width={6} />
                 </div>
               )}

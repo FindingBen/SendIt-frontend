@@ -218,7 +218,7 @@ const CreateNote = () => {
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
             <div className="flex flex-row">
-              <span className="text-2xl text-white font-semibold mx-20">
+              <span className="text-3xl text-white font-semibold mx-20">
                 Create Content
               </span>
             </div>
@@ -382,7 +382,7 @@ const CreateNote = () => {
                   </div>
                 </div>
                 <div className="flex flex-row justify-between">
-                  {currentPackageState.package_plan === "Gold package" ? (
+                  {currentPackageState?.package === "Gold package" ? (
                     <div
                       onClick={
                         imageStateVal ? null : () => handleClick("aiContent")
