@@ -120,7 +120,6 @@ const Image = ({
             // Perform your operations on each list item
             // For example, check if the element is empty
             if (listItem.innerHTML.trim() === "") {
-              console.log("EMPTYYYYY");
               // The element is empty
               // Perform your logic here
               listContainer?.removeChild(listItem);

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "../css/Home.css";
 import "../css/ContactList.css";
 import useAxiosInstance from "../utils/axiosInstance";
 import CreateListModal from "../features/modal/CreateListModal";

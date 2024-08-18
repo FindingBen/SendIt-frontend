@@ -10,7 +10,7 @@ const Checklist = ({
   useEffect(() => {
     setIsText(isTextWritten);
   }, [isTextWritten]);
-  console.log(isPersonalized);
+
   return (
     <div className="border-b-2 border-gray-800">
       <p className="text-white/50 text-sm text-justify my-2">

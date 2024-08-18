@@ -7,7 +7,7 @@ const BarChart = ({ data }) => {
   const barColors = {
     delivered: "#5b21b6", // Customize color for engagement rate
   };
-  console.log(data);
+
   return (
     <div className="p-2 items-start h-72 w-[35%] flex-col rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
       <div className="flex flex-row">

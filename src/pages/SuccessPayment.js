@@ -39,7 +39,7 @@ const SuccessPayment = () => {
       );
       if (response.status === 200) {
         setTimeout(() => setShow(false), 2000);
-        console.log(response.data);
+
         const package_payload = {
           package_plan: response?.data.user.package_plan.plan_type,
           sms_count:
@@ -61,7 +61,7 @@ const SuccessPayment = () => {
       setIsSuccess(false);
     }
   };
-  console.log(purchase);
+
   return (
     <section className="min-h-screen flex-d w-full items-center justify-center">
       <div className="flex-1 flex flex-col mb-4 h-20">

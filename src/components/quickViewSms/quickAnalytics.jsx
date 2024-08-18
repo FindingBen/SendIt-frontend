@@ -10,7 +10,6 @@ const QuickAnalytics = ({
   closeAnalyticsDrawer,
   smsId,
 }) => {
-  console.log(analyticsOpen);
   return (
     <div
       className={`absolute 2xl:top-[12%] xl:top-[15%] lg:top-[9%] -right-6 h-[548px] w-[320px] xl:h-[548px] xl:w-[350px] bg-mainBlue border-2 border-gray-800 rounded-2xl shadow-lg transition-transform transform ${

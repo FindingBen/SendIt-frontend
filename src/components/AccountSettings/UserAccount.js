@@ -55,7 +55,7 @@ const UserAccount = () => {
       setErrorMsg("Updated failed!");
     }
   };
-  console.log(currentPackageState);
+
   return (
     <div className="flex gap-3 mr-5">
       <div className="flex flex-col rounded-2xl p-4 mt-4 bg-mainBlue border-gray-800 border-2 w-80 h-[540px]">

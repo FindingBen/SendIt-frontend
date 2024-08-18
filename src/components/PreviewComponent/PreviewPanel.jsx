@@ -8,7 +8,6 @@ const PreviewPanel = ({
   updateElements,
   elementState,
 }) => {
-  console.log(elementContextList);
   return (
     <div>
       <div

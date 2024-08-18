@@ -13,13 +13,12 @@ export const MessageCard = ({
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsDropdownOpen(false);
-      console.log("DDD");
     }
   };
-  console.log("SSS");
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
-    console.log("EVENT");
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };

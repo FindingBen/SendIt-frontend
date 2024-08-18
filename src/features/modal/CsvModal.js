@@ -85,12 +85,12 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
         );
 
         if (response.status === 200 || 201) {
-          //console.log(response.data);
+
           newContacts((prevContacts) => [...prevContacts, response.data]);
         }
-        console.log("Response:", response);
+
       } catch (error) {
-        console.log(error);
+
         setError(error.response.data);
       }
     }

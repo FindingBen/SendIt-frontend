@@ -7,7 +7,7 @@ const ColorPircker = ({ colorValue }) => {
   const [color, setColor] = useState("000000");
 
   colorValue(color);
-  console.log(color);
+
   return (
     <div className="flex-1 gap-4 items-center">
       <ColorPicker

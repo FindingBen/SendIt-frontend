@@ -27,7 +27,6 @@ const useAxiosInstance = () => {
 
       return instance;
     } catch (error) {
-      console.log("FFFF", error);
       dispatch(logOut());
       dispatch(cleanPackage());
       dispatch(clearMessages());
@@ -56,7 +55,6 @@ const useAxiosInstance = () => {
         });
 
         const newToken = response.data.access;
-        console.log("new token aquired..");
         localStorage.setItem("refreshToken", response.data.refresh);
 
         dispatch(setCredentials({ ...response.data, currentUser }));
@@ -72,7 +70,6 @@ const useAxiosInstance = () => {
         req.headers.Authorization = `Bearer ${newToken}`;
         req.isTokenRefresh = true;
       } catch (error) {
-        console.log("AAA", error);
         localStorage.removeItem("refreshToken");
         dispatch(logOut());
         dispatch(cleanContactLists());

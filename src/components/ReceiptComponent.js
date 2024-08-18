@@ -22,7 +22,6 @@ const ReceiptComponent = ({ purchase_obj }) => {
     setPurchase(purchase_obj);
   }, [purchase_obj]);
 
-  console.log("PACKAGE!", purchase_obj);
   return (
     <div className="flex flex-col p-2 bg-mainBlue border-2 border-gray-800 rounded-xl w-72 h-80">
       <div className="flex flex-col">

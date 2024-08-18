@@ -42,7 +42,7 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
       console.log(error);
     }
   }, [text, link, color, container]);
-  console.log(color);
+
   useEffect(() => {
     setIsMounted(true);
 

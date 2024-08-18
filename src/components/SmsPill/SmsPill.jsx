@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useRedux } from "../../constants/reduxImports";
-import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
 const SmsPill = () => {
   const { currentUser, currentSmsPackCount, currentToken } = useRedux();
-  const navigate = useNavigate();
+
   const formatNumberWithSeparators = (number) => {
     if (number !== "undefined") {
       return number.toLocaleString("de-DE");

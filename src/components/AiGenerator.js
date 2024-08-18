@@ -148,10 +148,10 @@ const AiGenerator = ({
 
   const handleColorExtraction = (color) => {
     const randomColor = color[Math.floor(Math.random() * color.length)];
-    console.log(randomColor);
+
     setColor(randomColor);
   };
-  console.log(colors);
+
   // Helper function to extract colors from the image using ColorExtractorComponent
   const extractColorsFromImage = (imageFile) => {
     return new Promise((resolve) => {

@@ -30,7 +30,7 @@ const ReDraftModal = ({
       );
     
       if (response.status === 200 || 201) {
-        console.log("Success");
+
         onClose();
         setUpdated(true);
       }

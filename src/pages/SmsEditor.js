@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import ScheduleSmsModal from "../features/modal/ScheduleSmsModal";
-import "../css/Sms.css";
 import SmsConfirmModal from "../features/modal/SmsConfirmModal";
 import { useRedux } from "../constants/reduxImports";
 import { setOperation } from "../redux/reducers/messageReducer";

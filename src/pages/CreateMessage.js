@@ -1,15 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/CreationMessage.css";
-import "../css/RootIframe.css";
+
 import Image from "../components/Image";
 import Text from "../components/Text";
 import Button from "../components/Button";
 import Survey from "../components/Survey/Survey";
 import AiGenerator from "../components/AiGenerator";
-import { selectModalCall, setOpenModal } from "../redux/reducers/modalReducer";
+import { setOpenModal } from "../redux/reducers/modalReducer";
 import { createElements } from "../utils/helpers/createElements";
-import List from "../components/List";
 import { setState } from "../redux/reducers/formReducer";
 import { setList } from "../redux/reducers/elementReducer";
 import { ElementContext } from "../context/ElementContext";
@@ -120,11 +119,11 @@ const CreateNote = () => {
         setIsLoading(false);
         navigate("/home");
       } else {
-        console.log("Failed to create notes:", response.data);
+    
         setIsLoading(false);
       }
     } catch (error) {
-      console.log("Error creating elements and notes:", error);
+      
       setErrorMsg(error.response.data.message_name);
       setIsLoading(false);
     }

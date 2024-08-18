@@ -6,7 +6,7 @@ const packageSlice = createSlice({
   reducers: {
     setPackage: (state, action) => {
       const { package_plan, sms_count } = action.payload;
-      console.log(action.payload);
+
       return {
         ...state,
         package: action.payload.package_plan,

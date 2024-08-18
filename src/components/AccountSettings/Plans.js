@@ -41,8 +41,6 @@ const Plans = () => {
         }
       );
       if (response.status === 200) {
-        console.log(response);
-
         setLoadingStates((prevState) => ({
           ...prevState,
           [id]: false,
@@ -119,7 +117,7 @@ const Plans = () => {
     { length: packagePlan.length },
     (_, index) => index
   );
-  console.log(packagePlan);
+
   return (
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 items-center justify-center">

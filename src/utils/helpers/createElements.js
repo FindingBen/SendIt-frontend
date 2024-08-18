@@ -38,14 +38,14 @@ export const createElements =
         formData.append("element_type", element.element_type);
         formData.append("order", element.order);
         formData.append("message", messageObject);
-        console.log(formData);
+
         try {
           let response = await axiosInstance.post(
             "/api/create_element/",
             formData
           );
           if (response.status === 200) {
-            console.log(response.data);
+
             createdElements.push(response.data);
           } else {
             console.log("Failed to create element:", element);
