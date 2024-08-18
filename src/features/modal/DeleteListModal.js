@@ -37,7 +37,10 @@ const DeleteListModal = ({
 
           // Dispatch action to update the Redux store
           dispatch(
-            setContactLists({ contactLists: updatedListsResponse.data.data })
+            setContactLists({
+              contactLists: updatedListsResponse.data.data,
+              listChange: true,
+            })
           );
         }
       }

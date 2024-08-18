@@ -25,13 +25,17 @@ const ContactList = () => {
   const [listId, setListId] = useState();
   const recipientsPercentages = (recipients.length / limits.recipients) * 100;
   const contactListsPercentages =
-    (contactList.length / limits.contact_lists) * 100;
-  useEffect(() => {
-    // Fetch contact lists only if the Redux store is empty
-    getContactLists();
-  }, []);
+    (currentContactList.contactLists?.length / limits.contact_lists) * 100;
 
-  console.log("REC", recipientsPercentages);
+  useEffect(() => {
+    // Fetch contact lists only if the Redux store is empty and not fetched yet
+    if (
+      currentContactList.contactLists?.length === 0 ||
+      !currentContactList.listChange
+    ) {
+      getContactLists();
+    }
+  }, [currentContactList.contactLists, currentContactList.listChange]);
 
   useEffect(() => {
     setContactListsPercentage(contactListsPercentage);

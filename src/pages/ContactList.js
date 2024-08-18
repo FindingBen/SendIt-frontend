@@ -4,9 +4,12 @@ import useAxiosInstance from "../utils/axiosInstance";
 import CsvModal from "../features/modal/CsvModal";
 import AddContactModal from "../features/modal/AddContactModal";
 import "../css/ContactList.css";
+import { setContactLists } from "../redux/reducers/contactListReducer";
+import { useRedux } from "../constants/reduxImports";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
+  const { currentContactList, dispatch } = useRedux();
   const [contacts, setContacts] = useState([]);
   const [contact, setContact] = useState({});
   const [showCsv, setShowCsv] = useState(false);
@@ -89,6 +92,12 @@ const ContactList = () => {
       if (response.status === 200) {
         setContacts(contacts.filter((contact) => contact.id !== id));
         setIsDelete(false);
+        dispatch(
+          setContactLists({
+            contactLists: [],
+            listChange: true,
+          })
+        );
       }
     } catch (error) {}
   };
@@ -223,11 +232,11 @@ const ContactList = () => {
 
                 <div>
                   <div class="grid grid-cols-5 gap-4 grid-headers text-white/50 font-normal text-sm border-b-2 p-2 border-gray-800">
-                    <div>FIRST NAME</div>
-                    <div>LAST NAME</div>
-                    <div>EMAIL</div>
-                    <div>PHONE NUMBER</div>
-                    <div>ACTION</div>
+                    <div>First Name</div>
+                    <div>Last Name</div>
+                    <div>Email</div>
+                    <div>Phone number</div>
+                    <div>Action</div>
                   </div>
                   {paginatedData?.map((rowData, index) => {
                     const isLastItem = index === paginatedData.length - 1;
@@ -237,17 +246,17 @@ const ContactList = () => {
                         key={rowData.id}
                         className={`${
                           contactId === rowData.id
-                            ? "bg-white text-black font-normal rounded-lg"
-                            : "text-white"
-                        } font-light ${
-                          evenRow
-                            ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
-                            : "bg-mainBlue"
-                        }`}
+                            ? "bg-purpleHaze text-white font-normal transition duration-300"
+                            : evenRow
+                            ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue text-white"
+                            : "bg-mainBlue text-white"
+                        } ${
+                          isLastItem ? "rounded-b-2xl border-none" : ""
+                        } font-light`}
                       >
                         <div
                           className={`grid grid-cols-5 gap-4 p-2 border-b-2 border-gray-800 ${
-                            isLastItem ? "rounded-b-2xl" : ""
+                            isLastItem ? "rounded-b-2xl border-none" : ""
                           }`}
                         >
                           <div>{rowData.first_name}</div>
@@ -256,7 +265,7 @@ const ContactList = () => {
                           <div>{rowData.phone_number}</div>
 
                           <div className="flex flex-row mx-16 mt-1">
-                            <div className=" border-gray-800 rounded-md border-2 mx-auto my-auto p-0.5">
+                            <div className="mx-auto my-auto p-0.5">
                               <button
                                 type="button"
                                 onClick={() => toggleContactDrawer(rowData.id)}
@@ -267,7 +276,7 @@ const ContactList = () => {
                                   viewBox="0 0 24 24"
                                   stroke-width="1.0"
                                   stroke="currentColor"
-                                  class="w-5 h-5 fill-gray-700"
+                                  class="w-5 h-5 hover:bg-slate-500 duration-150 rounded-md"
                                 >
                                   <path
                                     stroke-linecap="round"
@@ -282,7 +291,7 @@ const ContactList = () => {
                                 </svg>
                               </button>
                             </div>
-                            <div className=" border-gray-800 rounded-md border-2 mx-auto my-auto p-0.5">
+                            <div className="mx-auto my-auto p-0.5">
                               <button
                                 type="button"
                                 onClick={() => deleteContact(rowData.id)}
@@ -293,7 +302,7 @@ const ContactList = () => {
                                   viewBox="0 0 24 24"
                                   stroke-width="0.5"
                                   stroke="currentColor"
-                                  class="h-5 w-5"
+                                  class="h-5 w-5 hover:bg-slate-500 duration-150 rounded-md"
                                   x-tooltip="tooltip"
                                 >
                                   <path
@@ -313,7 +322,7 @@ const ContactList = () => {
               </div>
             </div>
             <div
-              className={`absolute top-[14.5%] xl:top-[11%] -right-6 h-[526px] w-[340px] xl:h-[648px] xl:w-[440px] bg-navBlue border-gray-800 border-2 rounded-2xl transition-transform transform ${
+              className={`absolute top-[14.5%] 2xl:top-[11%] xl:top-[15%] -right-6 h-[526px] w-[320px] xl:h-[500px] xl:w-[350px] 2xl:w-[400px] bg-navBlue border-gray-800 border-2 rounded-2xl transition-transform transform ${
                 openContact
                   ? "xl:-translate-x-20 lg:-translate-x-24"
                   : "translate-x-full"
@@ -338,7 +347,7 @@ const ContactList = () => {
                   </svg>
                 </div>
                 <p className="text-white flex flex-row font-light text-xl mb-2 relative">
-                  Quick view and edit
+                  View and Edit
                 </p>
 
                 <div className="flex flex-col p-4 w-full h-[150px] rounded-lg">
@@ -389,7 +398,7 @@ const ContactList = () => {
                         for="first_name"
                         className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white"
                       >
-                        Users email
+                        Email
                       </label>
                       {isEditing ? (
                         <input

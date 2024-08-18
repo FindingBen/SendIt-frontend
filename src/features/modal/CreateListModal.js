@@ -45,7 +45,9 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
       if (response.status === 200 || 201) {
         const newListData = [...currentContactList.contactLists, response.data];
         newList(newListData);
-        dispatch(setContactLists({ contactLists: newListData }));
+        dispatch(
+          setContactLists({ contactLists: newListData, listChange: true })
+        );
         closeModal();
       }
     } catch (error) {

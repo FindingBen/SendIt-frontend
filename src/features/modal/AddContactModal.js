@@ -55,7 +55,12 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
 
       if (response.status === 200 || 201) {
         newContacts((prevContacts) => [...prevContacts, response.data]);
-        dispatch(setContactLists({ listChange: true }));
+        dispatch(
+          setContactLists({
+            contactLists: [],
+            listChange: true,
+          })
+        );
         closeModal();
       }
     } catch (error) {
