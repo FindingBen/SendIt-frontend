@@ -146,6 +146,7 @@ const ContactList = () => {
                         ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
                         : "bg-mainBlue"
                     }`}
+                    key={conList.id}
                   >
                     <motion.div
                       className={`grid grid-cols-4 gap-4 p-2 text-white border-gray-800 ${

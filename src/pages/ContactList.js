@@ -353,10 +353,7 @@ const ContactList = () => {
                 <div className="flex flex-col p-4 w-full h-[150px] rounded-lg">
                   <div className="flex flex-col gap-3 relative">
                     <div className="flex flex-row gap-3 relative">
-                      <label
-                        for="first_name"
-                        className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white"
-                      >
+                      <label className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white">
                         First name
                       </label>
                       {isEditing ? (
@@ -374,10 +371,7 @@ const ContactList = () => {
                       )}
                     </div>
                     <div className="flex flex-row gap-3 relative">
-                      <label
-                        for="first_name"
-                        className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white"
-                      >
+                      <label className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white">
                         Last name
                       </label>
                       {isEditing ? (

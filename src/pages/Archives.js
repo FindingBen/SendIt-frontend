@@ -131,6 +131,7 @@ const Archives = () => {
                     return (
                       <motion.div
                         className={` text-white font-normal text-xs lg:text-sm`}
+                        key={message.id}
                       >
                         <div
                           className={`grid grid-cols-5 gap-3 mb-2 py-2 px-4`}
