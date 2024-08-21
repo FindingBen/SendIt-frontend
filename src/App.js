@@ -47,8 +47,8 @@ function App() {
       <div className="App">
         <ElementProvider>
           <Routes>
-            {/* <Route path="register" element={<Reg />} /> */}
-            <Route path="register" element={<RegisterPage />} />
+            <Route path="register" element={<DemoPage />} />
+            {/* <Route path="register" element={<RegisterPage />} /> */}
             <Route path="login" element={<Login></Login>} />
             <Route
               path="reset_password"
