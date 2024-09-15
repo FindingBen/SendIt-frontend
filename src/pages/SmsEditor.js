@@ -29,7 +29,7 @@ const SmsEditor = () => {
   const BASE = "https://spp.up.railway.app";
   const BASE_URL = "https://spplane.app";
   const linkURLBase = `${BASE_URL}/view/${params.id}`;
-  const uniqueLink = `${BASE}/sms/sms/tracking/`;
+  const uniqueLink = `${BASE}/sms/sms/newsletter/${params.id}`;
   const maxCharacters = 100;
 
   useEffect(() => {
@@ -113,7 +113,7 @@ const SmsEditor = () => {
         user: currentUser,
         sender: "ME",
         sms_text: smsText,
-        content_link: linkURL,
+        content_link: uniqueLink,
         message: params.id,
         contact_list: recipients.id,
         scheduled: false,

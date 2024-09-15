@@ -157,7 +157,7 @@ const StatCards = ({ views, sms }) => {
             )}
           </div>
           <p className="text-white text-normal font-semibold text-justify absolute right-2 bottom-2">
-            Button clicks
+            Sms url clicks
           </p>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -165,7 +165,7 @@ const StatCards = ({ views, sms }) => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             data-tooltip-id="my-tooltip"
-            data-tooltip-content="Total number of sms you sent for this content."
+            data-tooltip-content="Total number of sms clicks that lead people to your landing page. The numbers can be from same person so they are not unique."
             stroke="currentColor"
             class="size-6 text-white/50 absolute right-2 top-2 cursor-pointer"
           >
