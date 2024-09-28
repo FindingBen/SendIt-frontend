@@ -22,6 +22,7 @@ const AiGenerator = ({
   const [campaignText, setCampaignText] = useState("");
   const [link, setLink] = useState("");
   const [colors, setColor] = useState([]);
+  const { v4: uuidv4 } = require("uuid");
   const [isMounted, setIsMounted] = useState(true);
   const [headline, setHeadline] = useState("");
   const [isCreated, setIsCreated] = useState(listEl);
@@ -123,7 +124,7 @@ const AiGenerator = ({
 
   let addImageElContext = async (e) => {
     const imageContext = {
-      id: Math.floor(Math.random() * 100),
+      unique_button_id: uuidv4(),
       image: URL.createObjectURL(file),
       element_type: "Img",
       users: currentUser,

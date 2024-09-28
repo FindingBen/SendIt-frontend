@@ -41,6 +41,7 @@ const Text = ({
   const [text, setText] = useState([]);
   const container = document.getElementById("myList");
   const [isMounted, setIsMounted] = useState(true);
+  const { v4: uuidv4 } = require("uuid");
   const [align, setAlign] = useState();
   const [isCreated, setIsCreated] = useState(listEl);
 
@@ -108,7 +109,7 @@ const Text = ({
 
   const addTextObjContext = () => {
     const dataText = {
-      id: Math.floor(Math.random() * 100),
+      unique_button_id: uuidv4(),
       text: text,
       alignment: getAlignmentclassName(),
       element_type: "Text",

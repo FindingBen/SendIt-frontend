@@ -11,19 +11,25 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
   const { createElement, deleteElement } = useContext(ElementContext);
   const [text, setText] = useState("");
   const [link, setLink] = useState("");
+
   const container = document.getElementById("myList");
   const [isMounted, setIsMounted] = useState(true);
   const [color, setColor] = useState("#000000");
+  const [buttonId, setButtonId] = useState("");
+  const { v4: uuidv4 } = require("uuid");
+
   const [isCreated, setIsCreated] = useState(listEl);
+
   useEffect(() => {
     try {
       const lastListItem = container?.lastChild;
-
+      const uniqueButtonId = uuidv4();
+      setButtonId(uniqueButtonId);
       if (!isCreated) {
         ReactDOM.render(
           <ButtonComponent
             textValue={text}
-            linkValue={link}
+            linkValue={buttonId}
             colorValue={`#${color}`}
           />,
           lastListItem
@@ -32,7 +38,7 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
         ReactDOM.render(
           <ButtonComponent
             textValue={text}
-            linkValue={link}
+            linkValue={buttonId}
             colorValue={`#${color}`}
           />,
           container
@@ -41,8 +47,8 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
     } catch (error) {
       console.log(error);
     }
-  }, [text, link, color, container]);
-
+  }, [text, color, container]);
+  console.log("LEED", buttonId);
   useEffect(() => {
     setIsMounted(true);
 
@@ -50,6 +56,7 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
       setText([]);
       setLink([]);
       setColor([]);
+      setButtonId();
       try {
         if (isMounted && container) {
           const lastListItem = container?.lastChild;
@@ -80,7 +87,7 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
 
   const addButtonObjContext = () => {
     const dataText = {
-      id: Math.floor(Math.random() * 100),
+      unique_button_id: buttonId,
       button_title: text,
       button_link: link,
       button_color: color,
@@ -97,7 +104,9 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
 
   function saveBtn(event) {
     setComponentState(null);
+
     addButtonObjContext();
+
     if (isMounted) {
       const container = document.getElementById("myList");
       if (!isCreated) {

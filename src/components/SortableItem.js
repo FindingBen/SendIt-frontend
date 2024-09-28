@@ -39,7 +39,7 @@ export function SortableItem(props) {
             alignment={props.itemObject.alignment}
           />
         )}
-        {props.itemObject.element_type == "Survey" ? (
+        {props.itemObject.element_type === "Survey" ? (
           <SurveyComponent
             questionValue={props.itemObject.survey}
             questionTypeValue={props.itemObject.question_type}
@@ -51,7 +51,7 @@ export function SortableItem(props) {
           <ButtonComponent
             colorValue={`#${props.itemObject.button_color}`}
             textValue={props.itemObject.button_title}
-            linkValue={props.itemObject.button_link}
+            linkValue={props.itemObject.button_link_track}
           />
         ) : (
           <></>

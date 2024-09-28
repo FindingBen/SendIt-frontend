@@ -14,6 +14,7 @@ const Survey = ({ setComponentState, contextList, elementList, listEl }) => {
   const container = document.getElementById("myList");
   const [isMounted, setIsMounted] = useState(true);
   const [color, setColor] = useState("");
+  const { v4: uuidv4 } = require("uuid");
   const [isCreated, setIsCreated] = useState(listEl);
 
   function handleResponse() {
@@ -85,7 +86,7 @@ const Survey = ({ setComponentState, contextList, elementList, listEl }) => {
 
   const addSurveyObjContext = () => {
     const dataText = {
-      id: Math.floor(Math.random() * 100),
+      unique_button_id: uuidv4(),
       survey: question,
       question_type: questionType,
       element_type: "Survey",

@@ -36,7 +36,7 @@ const ViewList = ({ children }) => {
             {item.element_type === "Button" ? (
               <ButtonComponent
                 textValue={item.button_title}
-                linkValue={item.button_link}
+                linkValue={item.button_link_track}
                 colorValue={`#${item.button_color}`}
               />
             ) : (

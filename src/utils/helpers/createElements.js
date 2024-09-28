@@ -9,7 +9,6 @@ export const createElements =
   async () => {
     const createdElements = [];
     if (requestType === "copy") {
-
       elementContextList?.map(async (element) => {
         const formData = new FormData();
 
@@ -28,6 +27,10 @@ export const createElements =
           formData.append("text", element.text);
           formData.append("alignment", element.alignment);
         } else if (element.element_type === "Button") {
+          formData.append(
+            "button_link_track",
+            `https://spp.up.railway.app/sms/sms/button/${element.unique_button_id}`
+          );
           formData.append("button_title", element.button_title);
           formData.append("button_link", element.button_link);
           formData.append("button_color", element.button_color);
@@ -37,6 +40,7 @@ export const createElements =
         }
         formData.append("element_type", element.element_type);
         formData.append("order", element.order);
+        formData.append("unique_button_id", element.unique_button_id);
         formData.append("message", messageObject);
 
         try {
@@ -45,11 +49,10 @@ export const createElements =
             formData
           );
           if (response.status === 200) {
-
             createdElements.push(response.data);
           } else {
             console.log("Failed to create element:", element);
-            return; // Return undefined to indicate a failure
+            return undefined; // Return undefined to indicate a failure
           }
         } catch (e) {
           console.log(e);
@@ -62,14 +65,21 @@ export const createElements =
           const elementContext = elementContextList[i];
           const formData = new FormData();
           if ("context" in elementContext) {
+            console.log("BUTTONID", elementContext);
             if (elementContext.element_type === "Img") {
               formData.append("image", elementContext.file);
             } else if (elementContext.element_type === "Text") {
               formData.append("text", elementContext.text);
+
               formData.append("alignment", elementContext.alignment);
             } else if (elementContext.element_type === "Button") {
               formData.append("button_title", elementContext.button_title);
               formData.append("button_link", elementContext.button_link);
+
+              formData.append(
+                "button_link_track",
+                `https://spp.up.railway.app/sms/sms/button/${elementContext.unique_button_id}`
+              );
               formData.append("button_color", elementContext.button_color);
             } else if (elementContext.element_type === "Survey") {
               formData.append("survey", elementContext.survey);
@@ -78,18 +88,22 @@ export const createElements =
             formData.append("element_type", elementContext.element_type);
             formData.append("users", elementContext.users);
             formData.append("order", i);
+            formData.append(
+              "unique_button_id",
+              elementContext.unique_button_id
+            );
             formData.append("message", messageObject);
 
             let response = await axiosInstance.post(
               "/api/create_element/",
               formData
             );
-
+            console.log(formData);
             if (response.status === 200) {
               createdElements.push(response.data);
             } else {
               console.log("Failed to create element:", elementContext);
-              return; // Return undefined to indicate a failure
+              return undefined; // Return undefined to indicate a failure
             }
           }
         }
