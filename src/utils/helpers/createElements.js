@@ -93,12 +93,12 @@ export const createElements =
             formData.append("order", i);
 
             formData.append("message", messageObject);
-
+            console.log(formData);
             let response = await axiosInstance.post(
               "/api/create_element/",
               formData
             );
-            console.log(formData);
+
             if (response.status === 200) {
               createdElements.push(response.data);
             } else {

@@ -10,6 +10,7 @@ import SurveyResults from "../components/Survey/SurveyResults";
 import Statistics from "../components/Analytics/Statistics";
 import formatDate from "../utils/helpers/dateFunction";
 import PeriodicStats from "../components/Analytics/PeriodicStats";
+import ButtonAnalytics from "../components/Analytics/ButtonAnalytics";
 
 const AnalyticsPage = () => {
   const axiosInstance = useAxiosInstance();
@@ -92,9 +93,12 @@ const AnalyticsPage = () => {
               </h3>
             </div>
 
-            <div className="grid grid-cols-2 grid-rows-1 gap-2 mx-20">
+            <div className="grid grid-cols-3 grid-rows-1 gap-2 mx-20">
               <div className="flex flex-row gap-3 w-full">
-                <StatCards views={views} sms={sms} />
+                <StatCards sms={sms} views={views} />
+              </div>
+              <div className="w-[100%] flex-1 ml-8">
+                <ButtonAnalytics sms={sms} />
               </div>
               <div className="w-[100%] flex-1">
                 <Statistics views={views} />
