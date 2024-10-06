@@ -113,22 +113,22 @@ const ContactList = () => {
           </div>
 
           <div className="flex flex-row h-[100%]">
-            <div className=" bg-mainBlue w-[60%] h-[80%] border-gray-800 shadow-md border-2 rounded-2xl mt-4 mx-20">
+            <div className=" bg-mainBlue w-[60%] h-[80%] 2xl:h-[100%] 2xl:w-[70%] border-gray-800 shadow-md border-2 rounded-2xl mt-4 mx-20">
               <div className="flex flex-row relative border-b border-gray-800">
-                <p className="text-white font-semibold text-xl xl:text-2xl flex items-start my-3 mt-3 ml-5">
+                <p className="text-white font-semibold text-xl xl:text-2xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
                   Your contact lists
                 </p>
                 <button
                   disabled={!canAddNewList()}
                   onClick={handleModal}
-                  className={`px-2 py-1 mr-5 text-white font-normal text-sm cursor-pointer ${
+                  className={`px-2 py-1 2xl:px-3 2xl:py-2 mr-5 text-white font-normal text-sm 2xl:text-lg cursor-pointer ${
                     canAddNewList() ? "bg-purpleHaze" : "bg-gray-500"
                   } rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4`}
                 >
                   Create list
                 </button>
               </div>
-              <div class="grid grid-cols-4 gap-4 text-white/50 font-normal text-sm border-b-2 p-2 border-gray-800">
+              <div class="grid grid-cols-4 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
                 <div className="">NAME</div>
                 <div>CREATED AT</div>
                 <div>RECIPIENTS</div>
@@ -158,7 +158,7 @@ const ContactList = () => {
                       <div>{conList.created_at}</div>
                       <div>{conList.contact_lenght}</div>
                       <div className="flex flex-row mx-16 gap-3">
-                        <div className=" border-gray-800 rounded-md border-2 mx-auto my-auto p-0.5  hover:bg-purpleHaze cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+                        <div className="rounded-md mx-auto my-auto p-0.5  hover:bg-purpleHaze cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
                           <Link
                             type="button"
                             to={`/contact_list/${conList.id}`}
@@ -169,7 +169,7 @@ const ContactList = () => {
                               viewBox="0 0 24 24"
                               stroke-width="1.0"
                               stroke="currentColor"
-                              class="w-5 h-5 fill-gray-700"
+                              class="w-5 h-5 2xl:w-7 2xl:h-7"
                             >
                               <path
                                 stroke-linecap="round"
@@ -184,7 +184,7 @@ const ContactList = () => {
                             </svg>
                           </Link>
                         </div>
-                        <div className=" border-gray-800 rounded-md border-2 mx-auto my-auto p-0.5 hover:bg-purpleHaze hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+                        <div className="rounded-md mx-auto my-auto p-0.5 hover:bg-purpleHaze hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
                           <button
                             type="button"
                             onClick={() => deleteList(conList.id)}
@@ -195,7 +195,7 @@ const ContactList = () => {
                               viewBox="0 0 24 24"
                               stroke-width="0.5"
                               stroke="currentColor"
-                              class="h-5 w-5"
+                              class="h-5 w-5 2xl:h-7 2xl:w-7"
                               x-tooltip="tooltip"
                             >
                               <path
@@ -212,8 +212,8 @@ const ContactList = () => {
                 );
               })}
             </div>
-            <div className="bg-mainBlue w-[30%] h-[75%] p-4 border-gray-800 border-2 rounded-2xl mt-4 mr-20">
-              <p className="text-white text-justify text-xl font-semibold mb-3">
+            <div className="bg-mainBlue w-[30%] 2xl:w-[35%] h-[75%] 2xl:h-[85%] p-4 border-gray-800 border-2 rounded-2xl mt-4 mr-20">
+              <p className="text-white text-justify text-xl 2xl:text-2xl font-semibold mb-3">
                 Package limitation
               </p>
               <p className="text-start text-white/50">
@@ -222,7 +222,9 @@ const ContactList = () => {
               </p>
               <div className="flex flex-col mt-5">
                 <div className="flex flex-row">
-                  <p className="text-start text-white">Contact Lists</p>
+                  <p className="text-start text-white 2xl:text-lg">
+                    Contact Lists
+                  </p>
                   <div class="w-[50%] relative bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3">
                     <div
                       className={`bg-purple-600 h-3 rounded-full dark:bg-purple-500`}
@@ -240,7 +242,9 @@ const ContactList = () => {
                   </div>
                 </div>
                 <div className="flex flex-row mt-4">
-                  <p className="text-start text-white">Recipients</p>
+                  <p className="text-start text-white 2xl:text-lg">
+                    Recipients
+                  </p>
                   <div class="w-[50%] bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3 relative">
                     <div
                       className={`bg-purple-600 h-3 rounded-full dark:bg-purple-500`}
@@ -260,7 +264,7 @@ const ContactList = () => {
                 <div className="flex flex-row items-start mt-3">
                   <Link
                     to={"/plans"}
-                    className="py-1 px-2 bg-purpleHaze rounded-lg text-white cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105"
+                    className="py-1 px-2 2xl:py-2 2xl:px-4 bg-purpleHaze rounded-lg text-white cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105"
                   >
                     Upgrade
                   </Link>

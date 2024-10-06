@@ -13,7 +13,7 @@ const SendingStats = ({ sms_stats }) => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-8 h-8 text-white mx-auto my-auto"
+            class="w-6 h-6 2xl:w-8 2xl:h-8 text-white mx-auto my-auto"
           >
             <path
               stroke-linecap="round"
@@ -23,7 +23,7 @@ const SendingStats = ({ sms_stats }) => {
           </svg>
         </div>
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
-          <p className="text-white text-normal font-light text-justify">
+          <p className="text-white text-normal 2xl:text-2xl font-light text-justify">
             Sent messages
           </p>
           {sms_stats ? (
@@ -35,7 +35,7 @@ const SendingStats = ({ sms_stats }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white text-2xl font-normal"
+              className="text-white text-2xl 2xl:text-3xl font-normal"
             >
               {sms_stats.sent_numbers}
             </motion.div>

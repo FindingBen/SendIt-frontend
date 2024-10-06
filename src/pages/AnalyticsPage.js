@@ -97,7 +97,7 @@ const AnalyticsPage = () => {
               <div className="flex flex-row gap-3 w-full">
                 <StatCards sms={sms} views={views} />
               </div>
-              <div className="w-[100%] flex-1 ml-8">
+              <div className="w-[100%] flex-1 ml-8 2xl:ml-6">
                 <ButtonAnalytics sms={sms} />
               </div>
               <div className="w-[100%] flex-1">

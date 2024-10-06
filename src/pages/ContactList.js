@@ -213,7 +213,7 @@ const ContactList = () => {
               <div class="items-center justify-center rounded-2xl mb-3 w-full bg-mainBlue border-gray-800 border-2 shadow-md">
                 <div className="flex flex-row space-x-2 p-2">
                   <button
-                    className={`px-2 py-1 text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
+                    className={`px-2 py-1 2xl:px-4 2xl:py-2 text-white font-light 2xl:text-lg hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
                       sortOrder === "first_name" ? "bg-purpleHaze" : ""
                     }`}
                     onClick={handleSortByName}
@@ -221,7 +221,7 @@ const ContactList = () => {
                     Sort by Name
                   </button>
                   <button
-                    className={`px-2 py-1 text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
+                    className={`px-2 py-1 2xl:px-4 2xl:py-2 2xl:text-lg text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
                       sortOrder === "created_at" ? "bg-purpleHaze" : ""
                     }`}
                     onClick={handleSortByDateCreated}
@@ -231,7 +231,7 @@ const ContactList = () => {
                 </div>
 
                 <div>
-                  <div class="grid grid-cols-5 gap-4 grid-headers text-white/50 font-normal text-sm border-b-2 p-2 border-gray-800">
+                  <div class="grid grid-cols-5 gap-4 grid-headers text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
                     <div>First Name</div>
                     <div>Last Name</div>
                     <div>Email</div>
@@ -255,8 +255,10 @@ const ContactList = () => {
                         } font-light`}
                       >
                         <div
-                          className={`grid grid-cols-5 gap-4 p-2 border-b-2 border-gray-800 ${
-                            isLastItem ? "rounded-b-2xl border-none" : ""
+                          className={`grid grid-cols-5 2xl:text-lg gap-4 p-2 border-b-2 border-gray-800 ${
+                            isLastItem
+                              ? "rounded-b-2xl 2xl:text-lg border-none"
+                              : ""
                           }`}
                         >
                           <div>{rowData.first_name}</div>
@@ -276,7 +278,7 @@ const ContactList = () => {
                                   viewBox="0 0 24 24"
                                   stroke-width="1.0"
                                   stroke="currentColor"
-                                  class="w-5 h-5 hover:bg-slate-500 duration-150 rounded-md"
+                                  class="w-5 h-5 2xl:w-7 2xl:h-7 hover:bg-slate-500 duration-150 rounded-md"
                                 >
                                   <path
                                     stroke-linecap="round"
@@ -302,7 +304,7 @@ const ContactList = () => {
                                   viewBox="0 0 24 24"
                                   stroke-width="0.5"
                                   stroke="currentColor"
-                                  class="h-5 w-5 hover:bg-slate-500 duration-150 rounded-md"
+                                  class="h-5 w-5 2xl:w-7 2xl:h-7 hover:bg-slate-500 duration-150 rounded-md"
                                   x-tooltip="tooltip"
                                 >
                                   <path

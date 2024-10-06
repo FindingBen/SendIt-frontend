@@ -12,7 +12,7 @@ const QuickAnalytics = ({
 }) => {
   return (
     <div
-      className={`absolute 2xl:top-[12%] xl:top-[15%] lg:top-[9%] -right-6 h-[548px] w-[320px] xl:h-[548px] xl:w-[350px] bg-mainBlue border-2 border-gray-800 rounded-2xl shadow-lg transition-transform transform ${
+      className={`absolute 2xl:top-[12%] xl:top-[15%] lg:top-[9%] -right-6 h-[548px] w-[320px] xl:h-[548px] xl:w-[350px] 2xl:h-[600px] 2xl:w-[400px] bg-mainBlue border-2 border-gray-800 rounded-2xl shadow-lg transition-transform transform ${
         analyticsOpen
           ? "xl:-translate-x-26 lg:-translate-x-24"
           : "translate-x-full"
@@ -25,12 +25,12 @@ const QuickAnalytics = ({
         >
           X
         </button>
-        <p className="text-white text-xl mb-2">Quick view</p>
+        <p className="text-white text-xl 2xl:text-2xl mb-2">Quick view</p>
         <PieChart percentage={views?.data.overall_perf} viewType={"ViewHome"} />
         <div className="flex flex-col items-center p-4 w-full h-[150px] rounded-lg">
           <div className="flex flex-row relative border-2 border-gray-800 rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue">
             <div className="p-2 flex items-center flex-col rounded-md mx-1 my-auto">
-              <p className="text-white xl:text-normal lg:text-sm font-light text-justify">
+              <p className="text-white 2xl:text-lg xl:text-normal lg:text-sm font-light text-justify">
                 Campaign views
               </p>
               {views ? (
@@ -42,7 +42,7 @@ const QuickAnalytics = ({
                     delay: 0.1,
                     ease: [0, 0.41, 0.1, 1.01],
                   }}
-                  className="text-white xl:text-2xl lg:text-sm font-normal shadow-lg"
+                  className="text-white xl:text-2xl lg:text-sm 2xl:text-3xl font-normal shadow-lg"
                 >
                   {views?.data.sorted_total_data.screen_views_total}
                 </motion.div>
@@ -53,7 +53,7 @@ const QuickAnalytics = ({
               )}
             </div>
             <div className="p-2 flex items-center flex-col rounded-md mx-1 my-auto">
-              <p className="text-white text-normal font-light text-justify lg:text-sm">
+              <p className="text-white text-normal 2xl:text-lg font-light text-justify lg:text-sm">
                 Bounce rate
               </p>
               {views ? (
@@ -65,7 +65,7 @@ const QuickAnalytics = ({
                     delay: 0.1,
                     ease: [0, 0.41, 0.1, 1.01],
                   }}
-                  className="text-white xl:text-2xl lg:text-sm font-normal shadow-lg"
+                  className="text-white xl:text-2xl lg:text-sm 2xl:text-3xl font-normal shadow-lg"
                 >
                   {views?.data.sorted_total_data.bounceRate} %
                 </motion.div>
@@ -79,7 +79,7 @@ const QuickAnalytics = ({
         </div>
         <Link
           to={`/analytics/${smsId}`}
-          className="bg-purpleHaze hover:bg-gray-700 duration-300 px-2 py-1 mt-2 text-white rounded-lg"
+          className="bg-purpleHaze hover:bg-gray-700 duration-300 px-2 py-1 2xl:px-4 2xl:py-2 2xl:text-lg mt-2 text-white rounded-lg"
         >
           View more
         </Link>

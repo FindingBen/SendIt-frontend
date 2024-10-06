@@ -13,7 +13,7 @@ const PieChart = ({ percentage, viewType }) => {
   return (
     <div
       className={`flex-none ${
-        viewType === "ViewHome" ? "lg:w-64" : "bg-slate-800 w-64 h-96"
+        viewType === "ViewHome" ? "lg:w-64 2xl:w-72" : "bg-slate-800 w-64 h-96"
       } rounded-2xl`}
     >
       <div
@@ -21,7 +21,7 @@ const PieChart = ({ percentage, viewType }) => {
           viewType === "ViewHome" ? "" : "bg-darkBlue shadow-lg"
         } rounded-2xl mx-3 my-3 relative`}
       >
-        <p className="text-white text-xl font-light text-justify p-4">
+        <p className="text-white text-xl 2xl:text-2xl font-light text-justify p-4">
           Sms performance
         </p>
         <div className="inline-flex items-center justify-center overflow-hidden rounded-full shadow-2xl">

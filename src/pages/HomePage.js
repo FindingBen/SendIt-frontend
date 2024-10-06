@@ -260,18 +260,18 @@ const HomePage = () => {
               }`}
             >
               <div className="flex flex-row relative border-b border-gray-800">
-                <p className="text-white font-semibold text-xl xl:text-2xl flex items-start my-3 mt-3 ml-5">
+                <p className="text-white font-semibold text-xl xl:text-2xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
                   Your latest messages
                 </p>
                 <button
                   onClick={handleSortButtonClick}
-                  className="px-2 py-1 mr-5 text-white font-normal text-sm cursor-pointer bg-purpleHaze rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4"
+                  className="px-2 py-1 2xl:px-4 2xl:py-2 mr-5 text-white font-normal text-sm 2xl:text-lg cursor-pointer bg-purpleHaze rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4"
                 >
                   Sort by date
                 </button>
               </div>
               <div class="flex flex-col">
-                <div class="grid grid-cols-5 gap-4 text-white/50 font-normal text-sm border-b-2 p-2 border-gray-800">
+                <div class="grid grid-cols-5 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
                   <div className="">NAME</div>
                   <div>CREATED AT</div>
                   <div>ANALYTICS</div>

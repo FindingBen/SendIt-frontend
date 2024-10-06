@@ -65,15 +65,15 @@ const Billings = ({ purchases }) => {
 
   return (
     <div className="flex-initial rounded-2xl mt-4 bg-mainBlue border-gray-800 border-2 h-80">
-      <h3 class="xl:text-2xl ml-5 mt-4 text-xl text-left font-semibold text-white">
+      <h3 class="xl:text-2xl 2xl:text-3xl ml-5 mt-4 2xl:mt-6 text-xl text-left font-semibold text-white">
         Purchase history
       </h3>
 
-      <p class="text-left ml-5 xl:text-sm text-xs text-gray-500 dark:text-gray-400">
+      <p class="text-left ml-5 xl:text-sm 2xl:text-lg text-xs text-gray-500 dark:text-gray-400">
         Copy the purchase id and include it in your inquire in case of any
         questions{" "}
       </p>
-      <div class="grid grid-cols-5 border-b-2 border-gray-800 text-normal xl:text-normal gap-4 mt-2 text-white/50 font-normal">
+      <div class="grid grid-cols-5 border-b-2 border-gray-800 text-normal xl:text-normal 2xl:text-lg gap-4 mt-2 2xl:mt-4 text-white/50 font-normal">
         <div>Product name</div>
         <div>Price</div>
         <div>ID</div>
@@ -82,7 +82,7 @@ const Billings = ({ purchases }) => {
         <div>Action</div>
       </div>
       {currentItems.length > 0 ? (
-        <div className="flex flex-col items-left text-sm xl:text-normal text-white/50 ">
+        <div className="flex flex-col items-left text-sm 2xl:text-normal text-white/50 ">
           {currentItems?.map((purchase, index) => {
             const isEvenRow = index % 2 === 0;
             const isLastItem = index === currentItems?.length - 1;
@@ -96,7 +96,7 @@ const Billings = ({ purchases }) => {
                   ease: [0, 0.41, 0.1, 1.01],
                 }}
                 key={purchase.id}
-                className={`text-white font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
+                className={`text-white font-normal text-xs 2xl:text-sm cursor-pointer border-b-2 border-gray-800 ${
                   isEvenRow
                     ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
                     : "bg-mainBlue"

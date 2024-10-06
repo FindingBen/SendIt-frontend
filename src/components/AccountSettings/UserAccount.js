@@ -58,8 +58,8 @@ const UserAccount = () => {
 
   return (
     <div className="flex gap-3 mr-5">
-      <div className="flex flex-col rounded-2xl p-4 mt-4 bg-mainBlue border-gray-800 border-2 w-80 h-[540px]">
-        <h3 class="flex flex-row text-xl xl:text-2xl text-left font-semibold text-white relative">
+      <div className="flex flex-col rounded-2xl p-4 mt-4 bg-mainBlue border-gray-800 border-2 w-80 2xl:w-[450px] h-[540px] 2xl:h-[650px]">
+        <h3 class="flex flex-row text-xl xl:text-2xl 2xl:text-3xl text-left font-semibold text-white relative">
           General settings
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@ const UserAccount = () => {
             stroke-width="1.5"
             stroke="currentColor"
             onClick={() => setIsEditing(true)}
-            class="w-8 h-8 absolute right-0 cursor-pointer hover:bg-gray-500 p-1 rounded-xl"
+            class="w-8 h-8 2xl:w-10 2xl:h-10 absolute right-0 cursor-pointer hover:bg-gray-500 p-1 rounded-xl"
           >
             <path
               stroke-linecap="round"
@@ -81,7 +81,7 @@ const UserAccount = () => {
           <div className="flex flex-row gap-3 relative">
             <label
               for="first_name"
-              className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-normal text-gray-300 dark:text-white"
             >
               First name
             </label>
@@ -89,12 +89,12 @@ const UserAccount = () => {
               <input
                 type="text"
                 id="first_name"
-                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-sm text-xs rounded-lg py-1 px-4"
+                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-sm 2xl:text-xl text-xs rounded-lg py-1 px-4"
                 defaultValue={currentUserState.first_name}
                 onChange={(e) => setNewName(e.target.value)}
               />
             ) : (
-              <p className="block text-white absolute right-2 top-0">
+              <p className="block text-white absolute 2xl:text-xl right-2 top-0">
                 {currentUserState.first_name}
               </p>
             )}
@@ -102,7 +102,7 @@ const UserAccount = () => {
           <div className="flex flex-row gap-3 mt-3 relative">
             <label
               for="last_name"
-              className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-normal text-gray-300 dark:text-white"
             >
               Last name
             </label>
@@ -110,12 +110,12 @@ const UserAccount = () => {
               <input
                 type="text"
                 id="last_name"
-                className="block bg-gray-500 hover:bg-gray-400 text-light font-light py-1 px-4 duration-200 xl:text-sm text-xs rounded-lg"
+                className="block bg-gray-500 hover:bg-gray-400 text-light 2xl:text-xl font-light py-1 px-4 duration-200 xl:text-sm text-xs rounded-lg"
                 defaultValue={currentUserState.last_name}
                 onChange={(e) => setNewLastName(e.target.value)}
               />
             ) : (
-              <p className="block text-white absolute right-2 top-0">
+              <p className="block text-white absolute 2xl:text-xl right-2 top-0">
                 {currentUserState.last_name}
               </p>
             )}
@@ -124,19 +124,19 @@ const UserAccount = () => {
           <div className="flex flex-row gap-4 mt-3 relative">
             <label
               for="last_name"
-              className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-normal text-gray-300 dark:text-white"
             >
               Username
             </label>
 
-            <p className="block text-white absolute right-2 top-0">
+            <p className="block text-white absolute 2xl:text-xl right-2 top-0">
               {currentUserState.username}
             </p>
           </div>
           <div className="flex flex-row gap-4 mt-3 relative">
             <label
               for="email"
-              className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-normal text-gray-300 dark:text-white"
             >
               Email address
             </label>
@@ -151,22 +151,22 @@ const UserAccount = () => {
           <div className="flex flex-row gap-4 mt-3 relative">
             <label
               for="email"
-              className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-ss xl:text-normal text-left 2xl:text-xl font-normal text-gray-300 dark:text-white"
             >
               Account type
             </label>
-            <p className="block text-white absolute right-2 top-0">
+            <p className="block text-white absolute 2xl:text-xl right-2 top-0">
               {currentUserState.user_type}
             </p>
           </div>
           <div className="flex flex-row gap-4 mt-3 relative">
             <label
               for="email"
-              className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-normal text-gray-300 dark:text-white"
             >
               Package Plan
             </label>
-            <p className="block text-white absolute right-2 top-0">
+            <p className="block text-white 2xl:text-xl absolute right-2 top-0">
               {currentPackageState?.package}
             </p>
           </div>
@@ -174,7 +174,7 @@ const UserAccount = () => {
           {isEditing ? (
             <button
               onClick={updateUser}
-              className="bg-sky-800 hover:bg-sky-400 duration-300 text-white font-light text-ss xl:text-normal py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
+              className="bg-sky-800 hover:bg-sky-400 duration-300 text-white font-light text-ss 2xl:text-xl xl:text-normal py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
               type="submit"
             >
               {!isLoading ? (

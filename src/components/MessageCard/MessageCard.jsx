@@ -30,7 +30,7 @@ export const MessageCard = ({
 
   return (
     <div
-      className={`grid grid-cols-5 gap-3 mb-3 h-10 items-center`}
+      className={`grid grid-cols-5 gap-3 mb-3 2xl:text-lg h-10 items-center`}
       ref={dropdownRef}
     >
       <div className="text-white/90">{message.message_name}</div>
@@ -53,7 +53,7 @@ export const MessageCard = ({
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="lg:w-6 lg:h-6 w-4 h-4"
+              class="lg:w-6 lg:h-6 w-4 h-4 2xl:w-8 2xl:h-8"
             >
               <path
                 stroke-linecap="round"
@@ -66,21 +66,21 @@ export const MessageCard = ({
       </div>
       <div>
         {message.status === "Draft" ? (
-          <span class="text-xs font-medium leading-none text-center text-white bg-gradient-to-r from-sky-500 to-sky-800 rounded-lg px-3 lg:py-1">
+          <span class="text-xs 2xl:text-normal font-medium leading-none text-center text-white bg-gradient-to-r from-sky-500 to-sky-800 rounded-lg px-3 lg:py-1">
             Draft
           </span>
         ) : message.status === "Scheduled" ? (
-          <span class="text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-lg animate-pulse px-3 lg:py-1">
+          <span class="text-xs 2xl:text-normal font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-lg animate-pulse px-3 lg:py-1">
             Scheduled
           </span>
         ) : (
-          <span class="text-xs font-medium leading-none text-center text-white bg-gradient-to-r from-green-500 to-green-800 rounded-lg px-3 lg:py-1">
+          <span class="text-xs 2xl:text-normal font-medium leading-none text-center text-white bg-gradient-to-r from-green-500 to-green-800 rounded-lg px-3 lg:py-1">
             Sent
           </span>
         )}
       </div>
       <div className="flex flex-row mx-12 mt-2">
-        <div className=" border-gray-800 rounded-md border-2 mx-auto my-auto p-0.5 hover:bg-purpleHaze cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+        <div className=" border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-purpleHaze cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
           <Link type="button" to={`/edit_message/${message.id}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +88,7 @@ export const MessageCard = ({
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-5 h-5 fill-gray-200"
+              class="w-5 h-5 2xl:w-7 2xl:h-8 fill-gray-200"
             >
               <path
                 stroke-linecap="round"
@@ -98,7 +98,7 @@ export const MessageCard = ({
             </svg>
           </Link>
         </div>
-        <div className="border-gray-800 rounded-md border-2 mx-auto my-auto p-0.5 hover:bg-purpleHaze hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+        <div className="border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-purpleHaze hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
           <Link
             type="button"
             className=""
@@ -109,7 +109,7 @@ export const MessageCard = ({
               viewBox="0 0 24 24"
               strokeWidth="0.5"
               stroke="currentColor"
-              className="lg:w-5 lg:h-5 w-4 h-4 hover:fill-red-700"
+              className="lg:w-5 lg:h-5 w-4 h-4 2xl:w-7 2xl:h-8 hover:fill-red-700"
             >
               <path
                 strokeLinecap="round"
@@ -119,7 +119,7 @@ export const MessageCard = ({
             </svg>
           </Link>
         </div>
-        <div className="border-gray-800 rounded-md border-2 mx-auto my-auto p-0.5  hover:bg-purpleHaze cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+        <div className="border-gray-800 rounded-md mx-auto my-auto p-0.5  hover:bg-purpleHaze cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
           <button
             id="dropdownDefaultButton"
             data-dropdown-toggle="dropdown"
@@ -133,7 +133,7 @@ export const MessageCard = ({
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-5 h-5"
+              class="w-5 h-5 2xl:w-7 2xl:h-8"
             >
               <path
                 stroke-linecap="round"

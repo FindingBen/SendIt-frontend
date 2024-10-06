@@ -6,7 +6,7 @@ const StatCards = ({ views, sms }) => {
   return (
     <div className="flex flex-row gap-2 w-full">
       <div className="flex flex-col gap-2">
-        <div className="p-2 flex flex-row items-center h-[125px] w-[225px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+        <div className="p-2 flex flex-row items-center h-[125px] w-[225px] 2xl:h-[170px] 2xl:w-[285px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
           <div className="flex items-start p-2">
             {views ? (
               <motion.div
@@ -17,7 +17,7 @@ const StatCards = ({ views, sms }) => {
                   delay: 0.1,
                   ease: [0, 0.41, 0.1, 1.01],
                 }}
-                className="text-white absolute top-5 text-5xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
+                className="text-white absolute top-5 text-5xl 2xl:text-6xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
               >
                 {views?.data?.sorted_total_data?.screen_views_total}
               </motion.div>
@@ -27,7 +27,7 @@ const StatCards = ({ views, sms }) => {
               </p>
             )}
           </div>
-          <p className="text-white text-normal font-semibold text-justify absolute right-2 bottom-2">
+          <p className="text-white text-normal 2xl:text-lg font-semibold text-justify absolute right-2 bottom-2">
             Total views
           </p>
           <svg
@@ -48,7 +48,7 @@ const StatCards = ({ views, sms }) => {
           </svg>
           <Tooltip id="my-tooltip" />
         </div>
-        <div className="p-2 flex flex-row items-center h-[125px] w-[225px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+        <div className="p-2 flex flex-row items-center h-[125px] w-[225px] 2xl:h-[170px] 2xl:w-[285px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
           {sms?.has_button ? (
             <div>
               <div className="flex items-start p-2">
@@ -61,7 +61,7 @@ const StatCards = ({ views, sms }) => {
                       delay: 0.1,
                       ease: [0, 0.41, 0.1, 1.01],
                     }}
-                    className="text-white absolute top-5 text-5xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
+                    className="text-white absolute top-5 text-5xl 2xl:text-6xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
                   >
                     {sms?.click_button ?? 0}
                   </motion.div>
@@ -71,7 +71,7 @@ const StatCards = ({ views, sms }) => {
                   </p>
                 )}
               </div>
-              <p className="text-white text-normal font-semibold text-justify absolute right-2 bottom-2">
+              <p className="text-white text-normal 2xl:text-lg font-semibold text-justify absolute right-2 bottom-2">
                 Total button clicks
               </p>
             </div>
@@ -99,7 +99,7 @@ const StatCards = ({ views, sms }) => {
       </div>
 
       <div className="flex flex-col">
-        <div className="p-2 flex flex-row items-center h-[125px] w-[225px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+        <div className="p-2 flex flex-row items-center h-[125px] w-[225px] 2xl:h-[170px] 2xl:w-[285px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
           <div className="flex items-start p-2">
             {views ? (
               <motion.div
@@ -110,7 +110,7 @@ const StatCards = ({ views, sms }) => {
                   delay: 0.1,
                   ease: [0, 0.41, 0.1, 1.01],
                 }}
-                className="text-white absolute top-5 text-5xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
+                className="text-white absolute top-5 text-5xl 2xl:text-6xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
               >
                 {sms?.sms_sends ?? 0}
               </motion.div>
@@ -120,7 +120,7 @@ const StatCards = ({ views, sms }) => {
               </p>
             )}
           </div>
-          <p className="text-white text-normal font-semibold text-justify absolute right-2 bottom-2">
+          <p className="text-white text-normal 2xl:text-lg font-semibold text-justify absolute right-2 bottom-2">
             Total sends
           </p>
           <svg
@@ -141,7 +141,7 @@ const StatCards = ({ views, sms }) => {
           </svg>
           <Tooltip id="my-tooltip" />
         </div>
-        <div className="p-2 mt-2 flex flex-row items-center h-[125px] w-[225px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+        <div className="p-2 mt-2 flex flex-row items-center h-[125px] w-[225px] 2xl:h-[170px] 2xl:w-[285px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
           <div className="flex items-start p-2">
             {views ? (
               <motion.div
@@ -152,7 +152,7 @@ const StatCards = ({ views, sms }) => {
                   delay: 0.1,
                   ease: [0, 0.41, 0.1, 1.01],
                 }}
-                className="text-white absolute top-5 text-5xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
+                className="text-white absolute top-5 text-5xl 2xl:text-6xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
               >
                 {sms?.click_number ?? 0}
               </motion.div>
@@ -162,7 +162,7 @@ const StatCards = ({ views, sms }) => {
               </p>
             )}
           </div>
-          <p className="text-white text-normal font-semibold text-justify absolute right-2 bottom-2">
+          <p className="text-white text-normal 2xl:text-lg font-semibold text-justify absolute right-2 bottom-2">
             Sms url clicks
           </p>
           <svg

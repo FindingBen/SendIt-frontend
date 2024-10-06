@@ -5,7 +5,7 @@ import { Tooltip } from "react-tooltip";
 const OverallStatistics = ({ totalValues }) => {
   return (
     <div className="flex w-full gap-4">
-      <div className="flex flex-row items-center lg:w-[275px] h-[120px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+      <div className="flex flex-row items-center lg:w-[275px] h-[120px] 2xl:w-[300px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           {totalValues ? (
             <motion.div
@@ -16,7 +16,7 @@ const OverallStatistics = ({ totalValues }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white text-5xl font-normal absolute top-5"
+              className="text-white text-5xl 2xl:text-6xl font-normal absolute top-5"
             >
               {totalValues.total_sends ?? 0}
             </motion.div>
@@ -26,7 +26,7 @@ const OverallStatistics = ({ totalValues }) => {
             </p>
           )}
 
-          <p className="text-white text-normal lg:text-normal font-semibold text-justify absolute right-2 bottom-2">
+          <p className="text-white text-normal lg:text-normal 2xl:text-2xl font-semibold text-justify absolute right-2 bottom-2">
             Total Sends
           </p>
         </div>
@@ -36,9 +36,9 @@ const OverallStatistics = ({ totalValues }) => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           data-tooltip-id="my-tooltip"
-          data-tooltip-content="It calculates the total ammount of sent messages weather it's still active or archived."
+          data-tooltip-content="It calculates the total ammount of sent messages excluding archived."
           stroke="currentColor"
-          class="size-6 text-white/50 absolute right-2 top-2 cursor-pointer"
+          class="size-6 2xl:size-8 text-white/50 absolute right-2 top-2 cursor-pointer"
         >
           <path
             stroke-linecap="round"
@@ -49,7 +49,7 @@ const OverallStatistics = ({ totalValues }) => {
         <Tooltip id="my-tooltip" />
       </div>
 
-      <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+      <div className="flex flex-row items-center lg:w-[275px] h-[120px] 2xl:w-[300px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           {totalValues ? (
             <motion.div
@@ -60,7 +60,7 @@ const OverallStatistics = ({ totalValues }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white text-5xl font-semibold absolute top-5"
+              className="text-white text-5xl 2xl:text-6xl font-semibold absolute top-5"
             >
               {totalValues.total_views ?? 0}
             </motion.div>
@@ -69,7 +69,7 @@ const OverallStatistics = ({ totalValues }) => {
               <SvgLoader width={"w-8"} height={"h-8"} />
             </p>
           )}
-          <p className="text-white text-normal font-semibold text-justify absolute right-2 bottom-2">
+          <p className="text-white text-normal 2xl:text-2xl font-semibold text-justify absolute right-2 bottom-2">
             Total Views
           </p>
         </div>
@@ -92,7 +92,7 @@ const OverallStatistics = ({ totalValues }) => {
         <Tooltip id="my-tooltip" />
       </div>
 
-      <div className="flex flex-row items-center lg:w-[275px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+      <div className="flex flex-row items-center lg:w-[275px] h-[120px] 2xl:w-[300px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           {totalValues ? (
             <motion.div
@@ -103,7 +103,7 @@ const OverallStatistics = ({ totalValues }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white text-5xl font-semibold absolute top-5 flex flex-row"
+              className="text-white text-5xl 2xl:text-6xl font-semibold absolute top-5 flex flex-row"
             >
               {totalValues.average_overall_rate ?? 0}
               <p className="lg:text-xl font-light">%</p>
@@ -113,7 +113,7 @@ const OverallStatistics = ({ totalValues }) => {
               <SvgLoader width={"w-8"} height={"h-8"} />
             </p>
           )}
-          <p className="text-white text-normal font-semibold text-justify absolute right-2 bottom-2">
+          <p className="text-white text-normal 2xl:text-2xl font-semibold text-justify absolute right-2 bottom-2">
             Overall Rate
           </p>
         </div>
@@ -125,7 +125,7 @@ const OverallStatistics = ({ totalValues }) => {
           data-tooltip-id="my-tooltip"
           data-tooltip-content="It calculates the overall rate performance of all of your messages. You can read more about this soon in our analytics metric guide."
           stroke="currentColor"
-          class="size-6 text-white/50 absolute right-2 top-2 cursor-pointer"
+          class="size-6 2xl:size-8 text-white/50 absolute right-2 top-2 cursor-pointer"
         >
           <path
             stroke-linecap="round"

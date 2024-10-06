@@ -83,9 +83,9 @@ const PasswordChange = ({ user_obj }) => {
   };
 
   return (
-    <div className=" bg-mainBlue shadow-md border-gray-800 border-2 rounded-2xl p-4 mt-3 w-[50%]">
+    <div className=" bg-mainBlue shadow-md border-gray-800 border-2 rounded-2xl p-4 mt-3 w-[50%] 2xl:w-[65%]">
       <div className="flex flex-col">
-        <h3 class="flex flex-row text-xl xl:text-2xl text-left font-semibold text-white relative">
+        <h3 class="flex flex-row text-xl 2xl:text-3xl text-left font-semibold text-white relative">
           Change password
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -107,36 +107,36 @@ const PasswordChange = ({ user_obj }) => {
         {isEditing ? (
           <div>
             <div className="flex flex-row mt-5 relative">
-              <label className="block mb-2 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white">
+              <label className="block mb-2 text-ss xl:text-normal 2xl:text-lg text-left font-normal text-gray-300 dark:text-white">
                 Enter old password
               </label>
 
               <input
                 type="password"
-                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-normal text-ss rounded-lg py-1 px-4 absolute right-0"
+                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-normal 2xl:text-lg text-ss rounded-lg py-1 px-4 absolute right-0"
                 placeholder="Enter your old password"
                 onChange={handleOldPass}
               ></input>
             </div>
             <div className="flex flex-row mt-2 relative">
-              <label className="block text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white">
+              <label className="block text-ss xl:text-normal text-left 2xl:text-lg font-normal text-gray-300 dark:text-white">
                 Enter new password
               </label>
 
               <input
                 type="password"
-                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-normal text-ss rounded-lg py-1 px-4 absolute right-0"
+                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-normal 2xl:text-lg text-ss rounded-lg py-1 px-4 absolute right-0"
                 placeholder="Enter your new password"
                 onChange={handleNewPass}
               ></input>
             </div>
             <div className="flex flex-row mt-3 relative">
-              <label className="block text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white">
+              <label className="block text-ss xl:text-normal text-left 2xl:text-lg font-normal text-gray-300 dark:text-white">
                 Repeat new password
               </label>
               <input
                 type="password"
-                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-normal text-ss rounded-lg py-1 px-4 absolute right-0"
+                className="block bg-gray-500 hover:bg-gray-400 duration-200 2xl:text-lg text-light font-light xl:text-normal text-ss rounded-lg py-1 px-4 absolute right-0"
                 placeholder="Re-enter your new password"
                 onChange={handleReNewPass}
               ></input>
@@ -197,18 +197,18 @@ const PasswordChange = ({ user_obj }) => {
         ) : (
           <div className="flex flex-col">
             <div className="flex flex-row mt-5 relative">
-              <label className="block mt-1 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white">
+              <label className="block mt-1 text-ss xl:text-normal 2xl:text-lg text-left font-normal text-gray-300 dark:text-white">
                 Password
               </label>
-              <p className="block text-white absolute right-2 top-0">
+              <p className="block text-white absolute 2xl:text-lg right-2 top-0">
                 ************
               </p>
             </div>
             <div className="flex flex-row mt-2 relative">
-              <label className="block mt-1 text-ss xl:text-normal text-left font-normal text-gray-300 dark:text-white">
+              <label className="block mt-1 text-ss xl:text-normal 2xl:text-lg text-left font-normal text-gray-300 dark:text-white">
                 Last update
               </label>
-              <p className="block text-white absolute right-2 top-0">
+              <p className="block text-white absolute 2xl:text-lg right-2 top-0">
                 {user_obj.last_password_change}
               </p>
             </div>

@@ -4,9 +4,9 @@ import SvgLoader from "../SvgLoader";
 
 const SurveyResults = ({ surveyResults }) => {
   return (
-    <div className="p-2 items-start h-72 w-[35%] flex-col rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+    <div className="p-2 items-start h-72 2xl:h-[380px] w-[35%] flex-col rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
       <div className="flex flex-row">
-        <p className="text-white text-lg font-light text-justify p-4">
+        <p className="text-white text-lg 2xl:text-xl font-light text-justify p-4">
           Survey results
         </p>
         <div className="absolute right-4 top-4">
@@ -16,7 +16,7 @@ const SurveyResults = ({ surveyResults }) => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6 text-white"
+            class="w-6 h-6 2xl:w-8 2xl:h-8 text-white"
           >
             <path
               stroke-linecap="round"
@@ -42,7 +42,7 @@ const SurveyResults = ({ surveyResults }) => {
                 }}
                 className="text-gradient-white text-xl font-light absolute right-0"
               >
-                {surveyResults.like_response}
+                {surveyResults?.like_response}
               </motion.div>
             ) : (
               <p className="text-white font-semibold absolute right-5">
@@ -51,7 +51,7 @@ const SurveyResults = ({ surveyResults }) => {
             )}
           </div>
           <div className="flex flex-row p-1 relative">
-            <p className="text-white text-xl font-light text-justify">
+            <p className="text-white text-xl 2xl:text-2xl font-light text-justify">
               Dislike
             </p>
             {surveyResults ? (
@@ -65,7 +65,7 @@ const SurveyResults = ({ surveyResults }) => {
                 }}
                 className="text-gradient-white text-xl font-light absolute right-0"
               >
-                {surveyResults.dislike_response}
+                {surveyResults?.dislike_response}
               </motion.div>
             ) : (
               <p className="text-white font-semibold absolute right-5">
