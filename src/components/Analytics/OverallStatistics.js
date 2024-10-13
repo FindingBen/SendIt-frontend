@@ -5,7 +5,7 @@ import { Tooltip } from "react-tooltip";
 const OverallStatistics = ({ totalValues }) => {
   return (
     <div className="flex w-full gap-4">
-      <div className="flex flex-row items-center lg:w-[275px] h-[120px] 2xl:w-[300px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+      <div className="flex flex-row items-center lg:w-[256px] h-[120px] 2xl:w-[300px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           {totalValues ? (
             <motion.div
@@ -49,7 +49,7 @@ const OverallStatistics = ({ totalValues }) => {
         <Tooltip id="my-tooltip" />
       </div>
 
-      <div className="flex flex-row items-center lg:w-[275px] h-[120px] 2xl:w-[300px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+      <div className="flex flex-row items-center lg:w-[256px] h-[120px] 2xl:w-[300px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           {totalValues ? (
             <motion.div
@@ -92,7 +92,7 @@ const OverallStatistics = ({ totalValues }) => {
         <Tooltip id="my-tooltip" />
       </div>
 
-      <div className="flex flex-row items-center lg:w-[275px] h-[120px] 2xl:w-[300px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+      <div className="flex flex-row items-center lg:w-[256px] h-[120px] 2xl:w-[300px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           {totalValues ? (
             <motion.div
@@ -106,7 +106,7 @@ const OverallStatistics = ({ totalValues }) => {
               className="text-white text-5xl 2xl:text-6xl font-semibold absolute top-5 flex flex-row"
             >
               {totalValues.average_overall_rate ?? 0}
-              <p className="lg:text-xl font-light">%</p>
+              <p className="lg:text-xl font-light">dkk</p>
             </motion.div>
           ) : (
             <p className="text-white font-semibold lg:text-2xl ml-2">
@@ -114,7 +114,7 @@ const OverallStatistics = ({ totalValues }) => {
             </p>
           )}
           <p className="text-white text-normal 2xl:text-2xl font-semibold text-justify absolute right-2 bottom-2">
-            Overall Rate
+            Total spend
           </p>
         </div>
         <svg
@@ -123,7 +123,7 @@ const OverallStatistics = ({ totalValues }) => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           data-tooltip-id="my-tooltip"
-          data-tooltip-content="It calculates the overall rate performance of all of your messages. You can read more about this soon in our analytics metric guide."
+          data-tooltip-content="Total ammount of money spend on the platform."
           stroke="currentColor"
           class="size-6 2xl:size-8 text-white/50 absolute right-2 top-2 cursor-pointer"
         >

@@ -12,6 +12,7 @@ import { createElements } from "../utils/helpers/createElements";
 import OverallStatistics from "../components/Analytics/OverallStatistics";
 import PieChart from "../utils/chart/PieChart";
 import formatDate from "../utils/helpers/dateFunction";
+import CompletedCampaigns from "../components/CompletedCampaignsView/CompletedCampaigns";
 import SvgLoader from "../components/SvgLoader";
 import {
   clearMessages,
@@ -39,6 +40,7 @@ const HomePage = () => {
   const [initialLoad, setInitialLoad] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [messageCount, setMessageCount] = useState("");
+  const [campaignStats, setCampaignStats] = useState([]);
   const [totalValues, setTotalValues] = useState();
   const [listUpdated, setListUpdated] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -71,7 +73,7 @@ const HomePage = () => {
       getNotes();
       dispatch(setArchiveState({ archived: false }));
     }
-
+    getCampaignStats();
     refreshAnalytics();
     setInitialLoad(false);
   }, [loading, listUpdated, sortOrder]);
@@ -140,6 +142,16 @@ const HomePage = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const getCampaignStats = async () => {
+    try {
+      let response = await axiosInstance.get("sms/campaign-stats");
+      console.log(response.data);
+      if (response.status == 200) {
+        setCampaignStats(response.data);
+      }
+    } catch (error) {}
   };
 
   const deleteMessage = (id) => {
@@ -249,84 +261,86 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="mx-20">
-            <OverallStatistics totalValues={totalValues} />
-            {/* <SendingStats sms_stats={stats} /> */}
+          <div className="flex flex-row mx-20">
+            <div className="flex flex-col">
+              <OverallStatistics totalValues={totalValues} />
 
-            {/* table content */}
-            <div
-              className={`transition-width bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl mt-4 ${
-                analyticsOpen ? "w-[72%]" : "w-full"
-              }`}
-            >
-              <div className="flex flex-row relative border-b border-gray-800">
-                <p className="text-white font-semibold text-xl xl:text-2xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
-                  Your latest messages
-                </p>
-                <button
-                  onClick={handleSortButtonClick}
-                  className="px-2 py-1 2xl:px-4 2xl:py-2 mr-5 text-white font-normal text-sm 2xl:text-lg cursor-pointer bg-purpleHaze rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4"
-                >
-                  Sort by date
-                </button>
-              </div>
-              <div class="flex flex-col">
-                <div class="grid grid-cols-5 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
-                  <div className="">NAME</div>
-                  <div>CREATED AT</div>
-                  <div>ANALYTICS</div>
-                  <div>STATUS</div>
-                  <div>ACTION</div>
+              {/* table content */}
+              <div
+                className={`transition-width bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl mt-4`}
+              >
+                <div className="flex flex-row relative border-b border-gray-800">
+                  <p className="text-white font-semibold text-xl xl:text-2xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
+                    Your latest messages
+                  </p>
+                  <button
+                    onClick={handleSortButtonClick}
+                    className="px-2 py-1 2xl:px-4 2xl:py-2 mr-5 text-white font-normal text-sm 2xl:text-lg cursor-pointer bg-purpleHaze rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4"
+                  >
+                    Sort by date
+                  </button>
                 </div>
-                {currentMessages?.length > 0 && displayedItems ? (
-                  <div>
-                    {displayedItems?.map((message, index) => {
-                      const isLastItem = index === displayedItems?.length - 1;
-                      const evenRow = index % 2 === 0;
-                      return (
-                        <motion.div
-                          className={`text-white font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
-                            evenRow
-                              ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
-                              : "bg-mainBlue"
-                          } ${isLastItem ? "rounded-b-2xl" : ""}`}
-                          key={message.id}
-                        >
-                          <MessageCard
-                            message={message}
-                            archiveMsg={msgArchive}
-                            toggleAnalyticsDrawer={toggleAnalyticsDrawer}
-                            deleteMessage={deleteMessage}
-                            duplicateMessage={duplicateMessage}
-                          />
-                        </motion.div>
-                      );
-                    })}
+                <div class="flex flex-col">
+                  <div class="grid grid-cols-5 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
+                    <div className="">NAME</div>
+                    <div>CREATED AT</div>
+                    <div>ANALYTICS</div>
+                    <div>STATUS</div>
+                    <div>ACTION</div>
                   </div>
-                ) : (
-                  <div className="flex-1 items-center p-10">
-                    <p className="text-white/50 text-base font-poppins">
-                      Your content will appear here once you create it..
-                    </p>
-                  </div>
-                )}
-              </div>
+                  {currentMessages?.length > 0 && displayedItems ? (
+                    <div>
+                      {displayedItems?.map((message, index) => {
+                        const isLastItem = index === displayedItems?.length - 1;
+                        const evenRow = index % 2 === 0;
+                        return (
+                          <motion.div
+                            className={`text-white font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
+                              evenRow
+                                ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
+                                : "bg-mainBlue"
+                            } ${isLastItem ? "rounded-b-2xl" : ""}`}
+                            key={message.id}
+                          >
+                            <MessageCard
+                              message={message}
+                              archiveMsg={msgArchive}
+                              toggleAnalyticsDrawer={toggleAnalyticsDrawer}
+                              deleteMessage={deleteMessage}
+                              duplicateMessage={duplicateMessage}
+                            />
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="flex-1 items-center p-10">
+                      <p className="text-white/50 text-base font-poppins">
+                        Your content will appear here once you create it..
+                      </p>
+                    </div>
+                  )}
+                </div>
 
-              <DeleteMessageModal
-                messageId={messageId}
-                showModalDelete={show}
-                onClose={() => setShow(false)}
-                setUpdated={handleListUpdate}
-                listUpdated={listUpdated}
-              />
-              <ModalComponent modalType={"copy"} showModal={showCopy} />
+                <DeleteMessageModal
+                  messageId={messageId}
+                  showModalDelete={show}
+                  onClose={() => setShow(false)}
+                  setUpdated={handleListUpdate}
+                  listUpdated={listUpdated}
+                />
+                <ModalComponent modalType={"copy"} showModal={showCopy} />
+              </div>
             </div>
-            <QuickAnalytics
+            <div className="container">
+              <CompletedCampaigns percentage={20} campaigns={campaignStats} />
+            </div>
+            {/* <QuickAnalytics
               analyticsOpen={analyticsOpen}
               views={views}
               closeAnalyticsDrawer={closeAnalyticsDrawer}
               smsId={smsId}
-            />
+            /> */}
           </div>
           {totalPages > 1 && (
             <motion.div

@@ -44,8 +44,7 @@ export const MessageCard = ({
           <Link
             type="button"
             className="hover:bg-purple-400 rounded cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105"
-            onClick={() => toggleAnalyticsDrawer(message.id)}
-            //to={`/analytics/${message.id}`}
+            to={`/analytics/${message.id}`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
