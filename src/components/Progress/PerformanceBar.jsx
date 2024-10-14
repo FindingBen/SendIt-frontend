@@ -2,10 +2,9 @@ import React from "react";
 
 const PerformanceBar = ({ performance }) => {
   const getPerformanceColor = (performance) => {
-    if (performance < 50) return "bg-red-600 dark:bg-red-500";
-    if (performance >= 50 && performance <= 75)
-      return "bg-yellow-600 dark:bg-yellow-500";
-    return "bg-green-600 dark:bg-green-500";
+    if (performance < 50) return "bg-red-600";
+    if (performance >= 50 && performance <= 75) return "bg-yellow-600";
+    return "bg-green-600";
   };
   return (
     <div class="w-[100%] relative bg-gray-200 rounded-full h-2 2xl:h-4 dark:bg-gray-700 mt-1 mx-1">
