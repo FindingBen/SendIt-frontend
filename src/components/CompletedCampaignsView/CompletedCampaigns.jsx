@@ -3,37 +3,51 @@ import SvgLoader from "../SvgLoader";
 import HalfPieChart from "../../utils/chart/HalfPieChart";
 import PerformanceBar from "../Progress/PerformanceBar";
 import { Link } from "react-router-dom";
+import CampaignStatModal from "../../features/modal/CampaignStatModal";
+
 const CompletedCampaigns = ({ percentage, campaigns }) => {
-  console.log(campaigns);
+  const [showStat, setShowStat] = useState(false);
+  const [selectedCampaign, setSelectedCampaign] = useState(null);
+
+  const handleModal = (e) => {
+    setShowStat(true);
+  };
+
+  const handleCampaignClick = (campaign) => {
+    setShowStat(true);
+    setSelectedCampaign(campaign);
+  };
+
   return (
     <div
-      className={`relative justify-between md:flex flex-col gap-2 ml-11 hidden md:h-[548px] md:w-[350px] xl:h-[548px] xl:w-[410px] 2xl:h-[600px] 2xl:w-[400px] bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 rounded-2xl shadow-lg p-4`}
+      className={`relative justify-between md:flex flex-col gap-2 ml-11 hidden md:h-[548px] md:w-[350px] xl:h-[548px] xl:w-[410px] 2xl:h-[720px] 2xl:w-[510px] bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 rounded-2xl shadow-lg p-4`}
     >
       <div className="mb-3">
         <div className="flex flex-row">
           <div>
             <p className="text-white text-2xl text-start font-semibold">
-              Completed Campaigns and
-              <br />
-              Progress
+              Completed Campaigns
             </p>
             <p className="text-white/70 text-start mt-1">
               Your last 3 completed campaigns and account performance
             </p>
           </div>
-          <Link className="px-2 py-1 h-10 cursor-pointer bg-purpleHaze rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+          <Link
+            to={"/campaign_stats/"}
+            className="px-2 py-1 h-10 cursor-pointer bg-purpleHaze rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth={1.5}
+              stroke-width="1.5"
               stroke="currentColor"
-              className="size-6 text-white"
+              class="size-6 text-white"
             >
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"
               />
             </svg>
           </Link>
@@ -43,7 +57,8 @@ const CompletedCampaigns = ({ percentage, campaigns }) => {
           campaigns.map((campaign, index) => (
             <div
               key={index}
-              className="grid grid-cols-3 py-2 border-l-4 hover:bg-purple-950 cursor-pointer transition-all duration-150 border-l-purpleHaze text-white/80 mt-3 bg-mainBlue rounded-r-xl"
+              onClick={() => handleCampaignClick(campaign)}
+              className="grid grid-cols-3 text-normal 2xl:text-lg py-2 2xl:py-3 border-l-4 hover:bg-purple-950 cursor-pointer transition-all duration-150 border-l-purpleHaze text-white/80 mt-3 bg-mainBlue rounded-r-xl"
             >
               <div>{campaign.name}</div>
               <div className="flex flex-row items-center gap-1 mx-auto">
@@ -103,6 +118,11 @@ const CompletedCampaigns = ({ percentage, campaigns }) => {
           <HalfPieChart percentage={percentage} />
         </div>
       </div>
+      <CampaignStatModal
+        onClose={() => setShowStat(false)}
+        showModalCamp={showStat}
+        campaignObject={selectedCampaign}
+      />
     </div>
   );
 };

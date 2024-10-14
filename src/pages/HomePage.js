@@ -10,8 +10,9 @@ import { config } from "../constants/Constants";
 import { useRedux } from "../constants/reduxImports";
 import { createElements } from "../utils/helpers/createElements";
 import OverallStatistics from "../components/Analytics/OverallStatistics";
-import PieChart from "../utils/chart/PieChart";
+
 import formatDate from "../utils/helpers/dateFunction";
+
 import CompletedCampaigns from "../components/CompletedCampaignsView/CompletedCampaigns";
 import SvgLoader from "../components/SvgLoader";
 import {
@@ -23,7 +24,6 @@ import {
 import { cleanPackage } from "../redux/reducers/packageReducer";
 import SmsPill from "../components/SmsPill/SmsPill";
 import { MessageCard } from "../components/MessageCard/MessageCard";
-import QuickAnalytics from "../components/quickViewSms/quickAnalytics";
 
 const HomePage = () => {
   const axiosInstance = useAxiosInstance();
@@ -252,7 +252,7 @@ const HomePage = () => {
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
-            <h3 class="xl:text-3xl lg:text-2xl text-xl font-semibold text-left text-white mx-20">
+            <h3 class="2xl:text-3xl lg:text-2xl text-sm font-semibold text-left text-white mx-20">
               Overview
             </h3>
 
@@ -262,12 +262,12 @@ const HomePage = () => {
           </div>
 
           <div className="flex flex-row mx-20">
-            <div className="flex flex-col">
+            <div className="flex flex-col 2xl:w-[210%]">
               <OverallStatistics totalValues={totalValues} />
 
               {/* table content */}
               <div
-                className={`transition-width bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl mt-4`}
+                className={` bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl mt-4`}
               >
                 <div className="flex flex-row relative border-b border-gray-800">
                   <p className="text-white font-semibold text-xl xl:text-2xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">

@@ -18,6 +18,7 @@ import PasswordReset from "./utils/PasswordReset";
 import PasswordResetConfirm from "./utils/PasswordResetConfirm";
 import ReactGA from "react-ga";
 import Plans from "./components/AccountSettings/Plans";
+import CampaignsStatsPage from "./pages/CampaignsStatsPage";
 import SuccessPayment from "./pages/SuccessPayment";
 import CancelPayment from "./pages/CancelPayment";
 import AnalyticsPage from "./pages/AnalyticsPage";
@@ -73,7 +74,10 @@ function App() {
                   element={<ContactList></ContactList>}
                 />
                 <Route path="/plans/" element={<Plans></Plans>} />
-
+                <Route
+                  path="/campaign_stats/"
+                  element={<CampaignsStatsPage />}
+                />
                 <Route
                   path="/edit_message/:id"
                   element={<EditMessage></EditMessage>}

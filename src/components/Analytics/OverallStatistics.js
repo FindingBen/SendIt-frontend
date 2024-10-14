@@ -5,7 +5,7 @@ import { Tooltip } from "react-tooltip";
 const OverallStatistics = ({ totalValues }) => {
   return (
     <div className="flex w-full gap-4">
-      <div className="flex flex-row items-center lg:w-[256px] h-[120px] 2xl:w-[300px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+      <div className="flex flex-row items-center lg:w-[256px] h-[120px] 2xl:w-[352px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           {totalValues ? (
             <motion.div
@@ -49,7 +49,7 @@ const OverallStatistics = ({ totalValues }) => {
         <Tooltip id="my-tooltip" />
       </div>
 
-      <div className="flex flex-row items-center lg:w-[256px] h-[120px] 2xl:w-[300px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+      <div className="flex flex-row items-center lg:w-[256px] h-[120px] 2xl:w-[352px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           {totalValues ? (
             <motion.div
@@ -92,7 +92,7 @@ const OverallStatistics = ({ totalValues }) => {
         <Tooltip id="my-tooltip" />
       </div>
 
-      <div className="flex flex-row items-center lg:w-[256px] h-[120px] 2xl:w-[300px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+      <div className="flex flex-row items-center lg:w-[256px] h-[120px] 2xl:w-[352px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           {totalValues ? (
             <motion.div
