@@ -105,7 +105,7 @@ const OverallStatistics = ({ totalValues }) => {
               }}
               className="text-white text-5xl 2xl:text-6xl font-semibold absolute top-5 flex flex-row"
             >
-              {totalValues.average_overall_rate ?? 0}
+              {totalValues.total_spend ?? 0}
               <p className="lg:text-xl font-light">dkk</p>
             </motion.div>
           ) : (

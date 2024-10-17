@@ -333,7 +333,10 @@ const HomePage = () => {
               </div>
             </div>
             <div className="container">
-              <CompletedCampaigns percentage={20} campaigns={campaignStats} />
+              <CompletedCampaigns
+                percentage={totalValues.overall_performance}
+                campaigns={campaignStats}
+              />
             </div>
             {/* <QuickAnalytics
               analyticsOpen={analyticsOpen}
