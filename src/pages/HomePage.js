@@ -334,7 +334,7 @@ const HomePage = () => {
             </div>
             <div className="container">
               <CompletedCampaigns
-                percentage={totalValues.overall_performance}
+                percentage={totalValues.overall_rate}
                 campaigns={campaignStats}
               />
             </div>
