@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
+import useAxiosInstance from "../../utils/axiosInstance";
 import { useRedux } from "../../constants/reduxImports";
 import PerformanceBar from "../../components/Progress/PerformanceBar";
 
 const CampaignStatModal = ({ showModalCamp, onClose, campaignObject }) => {
   const [show, setShowModal] = useState(showModalCamp);
-
+  const axiosInstance = useAxiosInstance();
   useEffect(() => {
     setShowModal(showModalCamp);
   }, [showModalCamp]);
@@ -15,6 +16,45 @@ const CampaignStatModal = ({ showModalCamp, onClose, campaignObject }) => {
   const closeModal = () => {
     onClose();
   };
+
+  const handleExport = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `/api/export_analytics/${campaignObject.id}`,
+        {
+          responseType: "blob", // Important: Specify the response type as 'blob'
+        }
+      );
+      const contentType = response.headers["content-type"];
+      if (contentType !== "application/pdf") {
+        const errorMsg = await response.data.text(); // or response.data for JSON
+        console.error("Expected a PDF file, but got:", errorMsg);
+        return; // Exit if the response is not a PDF
+      }
+      console.log(response);
+      // Create a URL for the blob response
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+
+      // Create a link element to download the file
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute(
+        "download",
+        `Analytics_report_for_campaign_${campaignObject.id}.pdf`
+      ); // Name of the file
+
+      // Append to the body and trigger download
+      document.body.appendChild(link);
+      link.click();
+
+      // Clean up and remove the link
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url); // Release the blob URL
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+    }
+  };
+
   return (
     <>
       {show ? (
@@ -31,7 +71,11 @@ const CampaignStatModal = ({ showModalCamp, onClose, campaignObject }) => {
                 {/*header*/}
                 <div className="p-4">
                   <p className="text-sm lg:text-2xl text-white">
-                    Statistics for {campaignObject.name}
+                    Analytics for {campaignObject.name}
+                  </p>
+                  <p className="text-sm lg:text-normal text-white/70 mt-2">
+                    See more in depth analytics for this campaign and how it
+                    performed by exporting it.
                   </p>
                 </div>
                 {/*body*/}
@@ -87,7 +131,7 @@ const CampaignStatModal = ({ showModalCamp, onClose, campaignObject }) => {
                 </div>
 
                 {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                <div className="flex items-center gap-2 justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
                     type="button"
@@ -98,7 +142,7 @@ const CampaignStatModal = ({ showModalCamp, onClose, campaignObject }) => {
                   <button
                     className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
                     type="button"
-                    //onClick={addContact}
+                    onClick={handleExport}
                   >
                     Export
                   </button>

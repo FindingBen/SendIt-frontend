@@ -86,7 +86,7 @@ const Header = () => {
     <div
       className={`flex flex-column items-center relative p-1 text-white bg-navBlue border-r-2 border-gray-800`}
     >
-      <div className="bg-slate-800 border-2 border-gray-600 rounded-xl">
+      <div>
         <img
           src={require("../assets/noBgLogo.png")}
           width={65}
