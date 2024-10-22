@@ -48,7 +48,7 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
       console.log(error);
     }
   }, [text, color, container]);
-  console.log("LEED", buttonId);
+
   useEffect(() => {
     setIsMounted(true);
 

@@ -25,7 +25,7 @@ const ActivationEmailSuccess = () => {
   };
 
   return (
-    <div className="min-h-screen flex-d w-100 items-center justify-center bg-darkBlue">
+    <div className="min-h-screen flex-d w-100 items-center text-center justify-center bg-darkBlue">
       <div className="p-10 flex-1">
         <div className="mt-10">
           <p className="text-white font-normal text-2xl">

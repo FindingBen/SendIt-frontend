@@ -172,6 +172,10 @@ const EditMessage = () => {
             formData.append("text", elementContext.text);
             formData.append("alignment", elementContext.alignment);
           } else if (elementContext.element_type === "Button") {
+            formData.append(
+              "unique_button_id",
+              elementContext.unique_button_id
+            );
             formData.append("button_title", elementContext.button_title);
             formData.append("button_link", elementContext.button_link);
             formData.append("button_color", elementContext.button_color);
