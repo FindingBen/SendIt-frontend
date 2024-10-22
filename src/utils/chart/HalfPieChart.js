@@ -25,21 +25,34 @@ const HalfPieChart = ({ percentage }) => {
         className="w-[250px] h-[130px] 2xl:h-[180px] 2xl:w-[300px]"
         viewBox="5 -10 140 90"
       >
-        {/* Background half-circle (gray) */}
         <path
           d={describeArc(180)} // Full half-circle as the background
           fill="none"
           className="stroke-gray-300"
           strokeWidth="17"
         />
-        {/* Foreground progress arc (purple) */}
-        <path
-          d={describeArc(angle)} // Arc based on the percentage
-          fill="none"
-          className="stroke-purple-600"
-          strokeWidth="18"
-          strokeLinecap="round"
-        />
+        {percentage > 0 && (
+          <>
+            {/* Glow effect arc */}
+            <path
+              d={describeArc(angle)}
+              fill="none"
+              className="stroke-purple-600 blur"
+              strokeWidth="20"
+              strokeOpacity="0.7"
+              strokeLinecap="round"
+            />
+
+            {/* Foreground progress arc */}
+            <path
+              d={describeArc(angle)}
+              fill="none"
+              className="stroke-purple-600"
+              strokeWidth="18"
+              strokeLinecap="round"
+            />
+          </>
+        )}
       </svg>
       <span className="absolute mt-2 text-xl 2xl:text-2xl font-semibold text-white">{`${
         percentage ?? 0
