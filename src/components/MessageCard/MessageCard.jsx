@@ -118,7 +118,7 @@ export const MessageCard = ({
             </svg>
           </Link>
         </div>
-        <div className="border-gray-800 rounded-md mx-auto my-auto p-0.5  hover:bg-purpleHaze cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+        <div className="relative border-gray-800 rounded-md mx-auto my-auto p-0.5  hover:bg-purpleHaze cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
           <button
             id="dropdownDefaultButton"
             data-dropdown-toggle="dropdown"
@@ -144,7 +144,7 @@ export const MessageCard = ({
           {isDropdownOpen && (
             <div
               id="dropdown"
-              className="absolute z-15 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 border-gray-800 border-2 mx-auto my-auto p-0.5"
+              className="absolute right-3 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 border-gray-800 border-2 mx-auto my-auto p-0.5"
             >
               <ul
                 className="py-2 text-sm text-gray-700 dark:text-gray-200"
