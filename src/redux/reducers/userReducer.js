@@ -12,13 +12,20 @@ const userSlice = createSlice({
   },
   reducers: {
     setUserInfo: (state, action) => {
-      const { first_name, last_name, user_type, custom_email, archived_state } =
-        action.payload;
+      const {
+        first_name,
+        last_name,
+        user_type,
+        custom_email,
+        archived_state,
+        username,
+      } = action.payload;
       console.log(state);
       if (first_name !== undefined) state.first_name = first_name;
       if (last_name !== undefined) state.last_name = last_name;
       if (user_type !== undefined) state.user_type = user_type;
       if (custom_email !== undefined) state.custom_email = custom_email;
+      if (username !== undefined) state.username = username;
       if (archived_state !== undefined) state.archived_state = archived_state;
     },
 
