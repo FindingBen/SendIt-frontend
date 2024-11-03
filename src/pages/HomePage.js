@@ -58,7 +58,7 @@ const HomePage = () => {
   yesterday.setDate(today.getDate() - 1);
   const formattedStartDate = formatDate(yesterday);
   const formattedEndDate = formatDate(today);
-
+  console.log(currentUser);
   useEffect(() => {
     // Fetch data only on initial load and when user is logged in
     if (!currentMessages?.length) {
@@ -69,14 +69,18 @@ const HomePage = () => {
       dispatch(setOperation(false));
     } else if (sortOrder) {
       getNotes();
-    } else if (currentArchivedState) {
-      getNotes();
-      dispatch(setArchiveState({ archived: false }));
-    }
+    } 
     getCampaignStats();
     refreshAnalytics();
     setInitialLoad(false);
   }, [loading, listUpdated, sortOrder]);
+
+  useEffect(() => {
+    if (totalValues?.archived_state) {
+      console.log("HEREE");
+      getNotes();
+    }
+  }, [totalValues]);
 
   const itemsPerPage = 4;
   const totalPages = Math.ceil(currentMessages?.length / itemsPerPage);

@@ -47,7 +47,7 @@ const UserAccount = () => {
     );
 
     if (response.status === 200) {
-      dispatch(setUserInfo({ ...formData }));
+      dispatch(setUserInfo(formData));
       setIsLoading(false);
       setIsEditing(false);
       setMsg("Successfully updated!");
@@ -95,7 +95,7 @@ const UserAccount = () => {
               />
             ) : (
               <p className="block text-white absolute 2xl:text-xl right-2 top-0">
-                {currentUserState.first_name}
+                {currentUserState?.first_name}
               </p>
             )}
           </div>
@@ -111,12 +111,12 @@ const UserAccount = () => {
                 type="text"
                 id="last_name"
                 className="block bg-gray-500 hover:bg-gray-400 text-light 2xl:text-xl font-light py-1 px-4 duration-200 xl:text-sm text-xs rounded-lg"
-                defaultValue={currentUserState.last_name}
+                defaultValue={currentUserState?.last_name}
                 onChange={(e) => setNewLastName(e.target.value)}
               />
             ) : (
               <p className="block text-white absolute 2xl:text-xl right-2 top-0">
-                {currentUserState.last_name}
+                {currentUserState?.last_name}
               </p>
             )}
           </div>
@@ -130,7 +130,7 @@ const UserAccount = () => {
             </label>
 
             <p className="block text-white absolute 2xl:text-xl right-2 top-0">
-              {currentUserState.username}
+              {currentUserState?.username}
             </p>
           </div>
           <div className="flex flex-row gap-4 mt-3 relative">
@@ -141,10 +141,10 @@ const UserAccount = () => {
               Email address
             </label>
             <p className="block text-white absolute right-2 top-0">
-              {currentUserState.custom_email &&
-                `${currentUserState.custom_email.substring(
+              {currentUserState?.custom_email &&
+                `${currentUserState?.custom_email.substring(
                   0,
-                  currentUserState.custom_email.indexOf("@") + 1
+                  currentUserState?.custom_email.indexOf("@") + 1
                 )}`}
             </p>
           </div>
@@ -156,7 +156,7 @@ const UserAccount = () => {
               Account type
             </label>
             <p className="block text-white absolute 2xl:text-xl right-2 top-0">
-              {currentUserState.user_type}
+              {currentUserState?.user_type}
             </p>
           </div>
           <div className="flex flex-row gap-4 mt-3 relative">
