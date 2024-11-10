@@ -29,11 +29,9 @@ const UserPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getUser();
-    if (purchases?.length < 2) {
-      purchase_history();
-    }
-  }, [msg, purchases]);
+    //getUser();
+    purchase_history();
+  }, [msg]);
 
   useEffect(() => {
     setTimeout(() => setErrorMsg(), 3000);

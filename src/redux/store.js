@@ -3,7 +3,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "./reducers/authSlice";
 import userReducer from "./reducers/userReducer";
-
+import completedCampaignsReducer from "./reducers/completedCampaignsReducer";
 import formReducer from "./reducers/formReducer";
 import modalReducer from "./reducers/modalReducer";
 import elementReducer from "./reducers/elementReducer";
@@ -29,6 +29,7 @@ const rootReducer = combineReducers({
   contactLists: contactListReducer,
   user: userReducer,
   archiveState: archiveReducer,
+  completedCampaigns: completedCampaignsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

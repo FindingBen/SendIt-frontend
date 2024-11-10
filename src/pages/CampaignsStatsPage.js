@@ -23,7 +23,7 @@ const CampaignsStatsPage = () => {
 
   let getCampaigns = async () => {
     try {
-      let response = await axiosInstance.get("sms/campaign-stats");
+      let response = await axiosInstance.get("sms/campaign-stats/?all=true");
       if (response.status === 200) {
         setCampaigns(response.data);
       }

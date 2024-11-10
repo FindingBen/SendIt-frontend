@@ -5,12 +5,14 @@ const packageSlice = createSlice({
   initialState: { package: null },
   reducers: {
     setPackage: (state, action) => {
-      const { package_plan, sms_count } = action.payload;
+      // const { package_plan, sms_count } = action.payload;
 
       return {
         ...state,
         package: action.payload.package_plan,
         sms_count: action.payload.sms_count,
+        list_limit: action.payload.list_limit,
+        recipients_limit: action.payload.recipients_limit,
       };
     },
 

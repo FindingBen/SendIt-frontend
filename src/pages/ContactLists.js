@@ -17,8 +17,10 @@ const ContactList = () => {
   const [contactListsPercentage, setContactListsPercentage] = useState();
   const [recipientsPercentage, setRecipientsPercentage] = useState();
   const [limits, setLimits] = useState({});
+  let trial_max_list_allowed = 1;
   let basic_max_list_allowed = 5;
   let silver_max_list_allowed = 10;
+  let gold_max_list_allowed = 20;
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [listId, setListId] = useState();
@@ -34,7 +36,7 @@ const ContactList = () => {
     ) {
       getContactLists();
     }
-  }, [currentContactList.contactLists, currentContactList.listChange]);
+  }, []);
 
   useEffect(() => {
     setContactListsPercentage(contactListsPercentage);
@@ -76,13 +78,13 @@ const ContactList = () => {
       console.log(error);
     }
   };
-
+  console.log(currentPackageState);
   const handleModal = (e) => {
     setShow(true);
   };
 
   const canAddNewList = () => {
-    if (contactList.length >= basic_max_list_allowed) {
+    if (contactList.length >= currentPackageState.list_limit) {
       return false;
     }
     return true;

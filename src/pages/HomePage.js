@@ -22,6 +22,7 @@ import {
   setOperation,
 } from "../redux/reducers/messageReducer";
 import { cleanPackage } from "../redux/reducers/packageReducer";
+import { setCampaigns } from "../redux/reducers/completedCampaignsReducer";
 import SmsPill from "../components/SmsPill/SmsPill";
 import { MessageCard } from "../components/MessageCard/MessageCard";
 
@@ -34,6 +35,7 @@ const HomePage = () => {
     currentMessages,
     currentOperationState,
     currentArchivedState,
+    currentCampaignsState,
   } = useRedux();
 
   let [notes, setNotes] = useState([]);
@@ -69,7 +71,7 @@ const HomePage = () => {
       dispatch(setOperation(false));
     } else if (sortOrder) {
       getNotes();
-    } 
+    }
     getCampaignStats();
     refreshAnalytics();
     setInitialLoad(false);
@@ -152,8 +154,8 @@ const HomePage = () => {
     try {
       let response = await axiosInstance.get("sms/campaign-stats");
       console.log(response.data);
-      if (response.status == 200) {
-        setCampaignStats(response.data);
+      if (response.status === 200) {
+        dispatch(setCampaigns(response.data));
       }
     } catch (error) {}
   };
@@ -339,7 +341,7 @@ const HomePage = () => {
             <div className="container">
               <CompletedCampaigns
                 percentage={totalValues?.overall_rate}
-                campaigns={campaignStats}
+                campaigns={currentCampaignsState}
               />
             </div>
             {/* <QuickAnalytics

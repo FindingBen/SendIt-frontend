@@ -179,10 +179,10 @@ const Text = ({
         delay: 0.1,
         ease: [0, 0.41, 0.1, 1.01],
       }}
-      className="max-w-[400px] h-[100%]"
+      className="max-w-[400px] 2xl:max-w-[550px] h-[200px]"
     >
       <ReactQuill
-        className="editor-input h-[100%] overflow-auto bg-white rounded-lg"
+        className="editor-input h-[100%] lg:h-[300px] overflow-auto bg-white rounded-lg"
         theme="snow"
         value={text}
         onChange={handleTextFunc}

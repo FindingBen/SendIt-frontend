@@ -9,7 +9,7 @@ import { useRedux } from "../constants/reduxImports";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentContactList, dispatch } = useRedux();
+  const { currentContactList, dispatch, currentPackageState } = useRedux();
   const [contacts, setContacts] = useState([]);
   const [contact, setContact] = useState({});
   const [showCsv, setShowCsv] = useState(false);
@@ -28,7 +28,10 @@ const ContactList = () => {
   const [openContact, setOpenContact] = useState(false);
   const [sortOrder, setSortOrder] = useState("first_name");
   const params = useParams();
-
+  const trial_recipient_allowed = 10;
+  const basic_recipient_allowed = 100;
+  const silver_recipient_allowed = 1000;
+  const gold_recipient_allowed = 100000;
   const rowsPerPage = 7;
   const totalPages = Math.ceil(contacts?.length / rowsPerPage);
 
@@ -61,6 +64,13 @@ const ContactList = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  let canAddNewrecipients = () => {
+    if (contacts.length >= currentPackageState.recipients_limit) {
+      return false;
+    }
+    return true;
   };
 
   let getContact = async (id) => {
@@ -161,9 +171,19 @@ const ContactList = () => {
             </h3>
             <div class="items-start w-24 h-10 shadow-md mx-20">
               <div className="inline-flex mx-auto mt-1 gap-2">
-                <div
+                {!canAddNewrecipients() ? (
+                  <p className="text-xs text-white/60">Limit reached!</p>
+                ) : (
+                  <></>
+                )}
+                <button
+                  disabled={!canAddNewrecipients()}
                   onClick={handleModal}
-                  class="text-white rounded-md hover:text-white/50 smooth-hover cursor-pointer"
+                  className={`${
+                    canAddNewrecipients()
+                      ? "text-white hover:text-white/50 smooth-hover cursor-pointer"
+                      : "text-gray-500"
+                  } rounded-md `}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -179,10 +199,15 @@ const ContactList = () => {
                       d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
                     />
                   </svg>
-                </div>
+                </button>
 
-                <div
-                  class="text-white rounded-md hover:text-white/50 smooth-hover cursor-pointer"
+                <button
+                  disabled={!canAddNewrecipients()}
+                  className={`${
+                    canAddNewrecipients()
+                      ? "text-white hover:text-white/50 smooth-hover cursor-pointer"
+                      : "text-gray-500"
+                  } rounded-md `}
                   onClick={handleCsvModal}
                 >
                   <svg
@@ -199,7 +224,7 @@ const ContactList = () => {
                       d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15"
                     />
                   </svg>
-                </div>
+                </button>
               </div>
             </div>
           </div>

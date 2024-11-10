@@ -10,6 +10,7 @@ import { useRedux } from "../constants/reduxImports";
 import { clearMessages } from "../redux/reducers/messageReducer";
 import { cleanContactLists } from "../redux/reducers/contactListReducer";
 import { cleanUser } from "../redux/reducers/userReducer";
+import { clearCampaigns } from "../redux/reducers/completedCampaignsReducer";
 const Header = () => {
   const { currentModalState, dispatch, currentUser, currentFormState } =
     useRedux();
@@ -51,6 +52,7 @@ const Header = () => {
     dispatch(cleanContactLists());
     dispatch(clearMessages());
     dispatch(cleanUser());
+    dispatch(clearCampaigns());
     localStorage.removeItem("refreshToken");
   };
 

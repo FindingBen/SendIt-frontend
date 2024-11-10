@@ -19,6 +19,9 @@ import {
 import { selectOperationState } from "../redux/reducers/messageReducer";
 import { selectCurrentUserState } from "../redux/reducers/userReducer";
 import { selectArchiveStateState } from "../redux/reducers/archiveReducer";
+import { setCampaigns } from "../redux/reducers/completedCampaignsReducer";
+import { selectCampaigns } from "../redux/reducers/completedCampaignsReducer";
+import { clearCampaigns } from "../redux/reducers/completedCampaignsReducer";
 
 export const useRedux = () => {
   const dispatch = useDispatch();
@@ -36,6 +39,7 @@ export const useRedux = () => {
   const currentUserState = useSelector(selectCurrentUserState);
   const currentSmsPackCount = useSelector(selectCurrentSmsCount);
   const currentArchivedState = useSelector(selectArchiveStateState);
+  const currentCampaignsState = useSelector(selectCampaigns);
 
   return {
     dispatch,
@@ -53,5 +57,6 @@ export const useRedux = () => {
     currentUserState,
     currentSmsPackCount,
     currentArchivedState,
+    currentCampaignsState,
   };
 };
