@@ -83,37 +83,25 @@ const PasswordChange = ({ user_obj }) => {
   };
 
   return (
-    <div className=" bg-mainBlue shadow-md border-gray-800 border-2 rounded-2xl p-4 mt-3 w-[50%] 2xl:w-[65%]">
+    <div className="bg-gradient-to-b from-lighterMainBlue to-mainBlue shadow-md border-gray-800 border-2 rounded-2xl p-4 xs:mt-2 lg:mt-0 xs:w-[330px] lg:w-[400px] 2xl:w-[450px] lg:mr-2 lg:h-[240px] 2xl:h-[270px]">
       <div className="flex flex-col">
-        <h3 class="flex flex-row text-xl 2xl:text-3xl text-left font-semibold text-white relative">
+        <h3 class="flex flex-row xs:text-normal lg:text-xl 2xl:text-2xl text-left font-semibold text-white relative">
           Change password
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            onClick={() => setIsEditing(true)}
-            class="w-8 h-8 absolute right-0 cursor-pointer hover:bg-gray-500 p-1 rounded-xl"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-            />
-          </svg>
+          <div className="px-2 py-2 flex flex-row gap-1 bg-blue-700 text-white xs:text-xs lg:text-normal border-gray-800 rounded-md absolute right-0 top-0 hover:bg-blue-500 cursor-pointer">
+            <p className="lg:text-normal xs:text-xs 2xl:text-normal">Change</p>
+          </div>
         </h3>
 
         {isEditing ? (
           <div>
-            <div className="flex flex-row mt-5 relative">
+            <div className="flex flex-row mt-2 relative">
               <label className="block mb-2 text-ss xl:text-normal 2xl:text-lg text-left font-normal text-gray-300 dark:text-white">
                 Enter old password
               </label>
 
               <input
                 type="password"
-                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-normal 2xl:text-lg text-ss rounded-lg py-1 px-4 absolute right-0"
+                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-normal 2xl:text-lg text-ss rounded-md py-1 px-4 absolute right-0 lg:w-[170px]"
                 placeholder="Enter your old password"
                 onChange={handleOldPass}
               ></input>
@@ -125,7 +113,7 @@ const PasswordChange = ({ user_obj }) => {
 
               <input
                 type="password"
-                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-normal 2xl:text-lg text-ss rounded-lg py-1 px-4 absolute right-0"
+                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-normal 2xl:text-lg text-ss rounded-lg py-1 px-4 absolute right-0 lg:w-[170px]"
                 placeholder="Enter your new password"
                 onChange={handleNewPass}
               ></input>
@@ -136,7 +124,7 @@ const PasswordChange = ({ user_obj }) => {
               </label>
               <input
                 type="password"
-                className="block bg-gray-500 hover:bg-gray-400 duration-200 2xl:text-lg text-light font-light xl:text-normal text-ss rounded-lg py-1 px-4 absolute right-0"
+                className="block bg-gray-500 hover:bg-gray-400 duration-200 2xl:text-lg text-light font-light xl:text-normal text-ss rounded-lg py-1 px-4 absolute right-0 lg:w-[170px]"
                 placeholder="Re-enter your new password"
                 onChange={handleReNewPass}
               ></input>

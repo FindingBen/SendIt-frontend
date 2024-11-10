@@ -57,25 +57,13 @@ const UserAccount = () => {
   };
 
   return (
-    <div className="flex gap-3 mr-5">
-      <div className="flex flex-col rounded-2xl p-4 mt-4 bg-mainBlue border-gray-800 border-2 w-80 2xl:w-[450px] h-[540px] 2xl:h-[650px]">
-        <h3 class="flex flex-row text-xl xl:text-2xl 2xl:text-3xl text-left font-semibold text-white relative">
+    <div className="flex gap-3">
+      <div className="flex flex-col rounded-2xl p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 border-2 lg:w-[500px] xs:w-[330px] 2xl:w-[450px] h-[440px] xl:h-[540px] 2xl:h-[650px]">
+        <h3 class="flex flex-row text-normal lg:text-xl 2xl:text-2xl text-left font-semibold text-white relative">
           General settings
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            onClick={() => setIsEditing(true)}
-            class="w-8 h-8 2xl:w-10 2xl:h-10 absolute right-0 cursor-pointer hover:bg-gray-500 p-1 rounded-xl"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-            />
-          </svg>
+          <div className="px-2 py-2 flex flex-row gap-1 bg-blue-700 text-white xs:text-xs lg:text-normal border-gray-800 rounded-md absolute right-0 top-0 hover:bg-blue-500 cursor-pointer">
+            <p className="lg:text-normal xs:text-xs 2xl:text-normal">Change</p>
+          </div>
         </h3>
         <div className="flex flex-col mt-5">
           <div className="flex flex-row gap-3 relative">

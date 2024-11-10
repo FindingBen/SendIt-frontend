@@ -34,7 +34,7 @@ const PurchaseHistory = () => {
   return (
     <div className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col">
-        <div className="flex flex-row items-center mb-4 h-20 xs:mx-3 lg:mx-20 relative">
+        <div className="flex flex-row items-center mb-4 h-20 xs:mx-5 lg:mx-20 relative">
           <h3 className="text-lg lg:text-xl 2xl:text-2xl font-semibold text-white">
             Purchase history
           </h3>
@@ -101,7 +101,7 @@ const PurchaseHistory = () => {
                     </div>
                     <div className="hidden lg:block">Card</div>
                     <div>{rowData.created_at}</div>
-                    <div className="bg-green-400 text-green-900 xs:font-bold lg:font-semibold mx-5 rounded-md">
+                    <div className="bg-green-400 text-green-900 xs:font-bold lg:font-semibold xs:mx-5 lg:mx-5 rounded-md">
                       Success
                     </div>
                   </div>
