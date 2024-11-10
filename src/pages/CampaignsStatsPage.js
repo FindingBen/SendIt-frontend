@@ -36,13 +36,14 @@ const CampaignsStatsPage = () => {
     <section className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:flex-row">
         <div className="flex-1 sm:px-0">
-          <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
-            <h3 class="text-lg lg:text-xl 2xl:text-2xl font-semibold text-left text-white mx-20">
+          <div className="flex justify-between items-center h-20 bg-navBlue mx-20">
+            <h3 class="text-lg lg:text-xl 2xl:text-2xl font-semibold text-left text-white">
               Completed Campaigns
             </h3>
-            <div class="items-start w-32 h-10 mx-20">
+
+            <div class="items-start w-32 h-10">
               <div className="inline-flex mx-auto mt-1 gap-2">
-                {/* <div class="text-white rounded-md hover:text-white/50 smooth-hover cursor-pointer">
+                <div class="text-white flex flex-row gap-1 rounded-md hover:bg-purpleHaze smooth-hover cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 border-gray-500 border-2 p-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -57,7 +58,8 @@ const CampaignsStatsPage = () => {
                       d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
                     />
                   </svg>
-                </div> */}
+                  <p>Export</p>
+                </div>
 
                 {/* <div class="text-white rounded-md hover:text-white/50 smooth-hover cursor-pointer">
                   <svg
@@ -78,6 +80,11 @@ const CampaignsStatsPage = () => {
               </div>
             </div>
           </div>
+          <p className="text-white/60 text-start text-sm xl:text-normal my-3 mx-20">
+            Your completed campaigns and their individual performance. You can
+            export the campaigns to analyze the data. If you wish to see your
+            overall performance go to your <u>profile dashboard.</u>
+          </p>
 
           <div className="mx-20">
             <div className="w-full mainContainer">

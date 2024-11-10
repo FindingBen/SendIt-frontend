@@ -231,11 +231,6 @@ const HomePage = () => {
     getdataAnalytics(id);
   };
 
-  const closeAnalyticsDrawer = () => {
-    setAnalyticsOpen(false);
-    setSmsId();
-  };
-
   const msgArchive = async (msgId) => {
     const body = {
       status: "archived",
@@ -257,7 +252,7 @@ const HomePage = () => {
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1">
-          <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
+          <div className="flex justify-between items-center mb-4 h-20 bg-navBlue ">
             <h3 class="2xl:text-3xl lg:text-2xl text-sm font-semibold text-left text-white mx-20">
               Overview
             </h3>
@@ -276,9 +271,15 @@ const HomePage = () => {
                 className={` bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl mt-4`}
               >
                 <div className="flex flex-row relative border-b border-gray-800">
-                  <p className="text-white font-semibold text-xl xl:text-2xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
-                    Your latest messages
-                  </p>
+                  <div className="flex flex-col">
+                    <p className="text-white font-semibold text-xl xl:text-2xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
+                      Your latest messages
+                    </p>
+                    <p className="text-white/60 text-normal my-3 mt-1 ml-5">
+                      Your draft messages containing the content ready to be
+                      sent out.
+                    </p>
+                  </div>
                   <button
                     onClick={handleSortButtonClick}
                     className="px-2 py-1 2xl:px-4 2xl:py-2 mr-5 text-white font-normal text-sm 2xl:text-lg cursor-pointer bg-purpleHaze rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4"

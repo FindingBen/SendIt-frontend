@@ -3,6 +3,7 @@ import CreateIcon from "./iconComponents/CreateIcon";
 import ContactLists from "./iconComponents/ContactLists";
 import AccountIcon from "./iconComponents/AccountIcon";
 import ArchiveIcon from "./iconComponents/ArchiveIcon";
+import PurchaseIcon from "./iconComponents/PurchaseIcon";
 
 export const menu = [
   {
@@ -31,6 +32,12 @@ export const menu = [
   },
   {
     id: 5,
+    element: <PurchaseIcon />,
+    title: "Purchase",
+    location: "/purchase_history",
+  },
+  {
+    id: 6,
     element: <ArchiveIcon />,
     title: "Archives",
     location: "/archive/",
