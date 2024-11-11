@@ -13,7 +13,7 @@ const SmsPill = () => {
   };
   const smsCount = currentSmsPackCount?.sms_count || 0;
   return (
-    <div className="flex flex-row h-10 w-52 rounded-md relative shadow-lg bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800">
+    <div className="flex flex-row h-10 w-52 rounded-lg relative shadow-xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800">
       <div className="rounded-2xl text-white my-auto ml-2">
         Credits: {formatNumberWithSeparators(smsCount)}
       </div>

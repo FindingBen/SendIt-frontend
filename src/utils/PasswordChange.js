@@ -88,7 +88,12 @@ const PasswordChange = ({ user_obj }) => {
         <h3 class="flex flex-row xs:text-normal lg:text-xl 2xl:text-2xl text-left font-semibold text-white relative">
           Change password
           <div className="px-2 py-2 flex flex-row gap-1 bg-blue-700 text-white xs:text-xs lg:text-normal border-gray-800 rounded-md absolute right-0 top-0 hover:bg-blue-500 cursor-pointer">
-            <p className="lg:text-normal xs:text-xs 2xl:text-normal">Change</p>
+            <p
+              className="lg:text-normal xs:text-xs 2xl:text-normal"
+              onClick={() => setIsEditing(true)}
+            >
+              Change
+            </p>
           </div>
         </h3>
 
