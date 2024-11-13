@@ -72,7 +72,7 @@ const UserPage = () => {
     <section className="min-h-screen w-100 items-center justify-center relative">
       <div className="flex-1 flex flex-col xs:mx-3 lg:mx-20">
         <div className="flex justify-between items-center mb-4 h-20">
-          <h3 class="xl:text-3xl text-2xl text-left font-semibold text-white">
+          <h3 class="xl:text-2xl lg:text-2xl  text-lg text-left font-semibold text-white">
             User page
           </h3>
           <div class="flex flex-row items-center">
@@ -80,7 +80,7 @@ const UserPage = () => {
           </div>
         </div>
 
-        <div className="flex xl:flex-row xs:flex-col lg:gap-2 mt-2 xs:items-center items-start xs:mx-5">
+        <div className="flex lg:flex-row xs:flex-col lg:gap-2 mt-2 xs:items-center items-start xs:mx-5">
           <div>
             <UserAccount />
           </div>

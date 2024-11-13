@@ -58,7 +58,7 @@ const UserAccount = () => {
 
   return (
     <div className="flex gap-3">
-      <div className="flex flex-col rounded-2xl p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 border-2 lg:w-[500px] xs:w-[330px] 2xl:w-[450px] h-[440px] xl:h-[540px] 2xl:h-[650px]">
+      <div className="flex flex-col rounded-2xl p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 border-2 lg:w-[420px] lg:h-[535px] xl:w-[500px] xs:w-[330px] 2xl:w-[450px] h-[440px] xl:h-[540px] 2xl:h-[650px]">
         <h3 class="flex flex-row text-normal lg:text-xl 2xl:text-2xl text-left font-semibold text-white relative">
           General settings
           <div className="px-2 py-2 flex flex-row gap-1 bg-blue-700 text-white xs:text-xs lg:text-normal border-gray-800 rounded-md absolute right-0 top-0 hover:bg-blue-500 cursor-pointer">
@@ -150,17 +150,6 @@ const UserAccount = () => {
             </label>
             <p className="block text-white absolute 2xl:text-xl right-2 top-0">
               {currentUserState?.user_type}
-            </p>
-          </div>
-          <div className="flex flex-row gap-4 mt-3 relative">
-            <label
-              for="email"
-              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-normal text-gray-300 dark:text-white"
-            >
-              Package Plan
-            </label>
-            <p className="block text-white 2xl:text-xl absolute right-2 top-0">
-              {currentPackageState?.package}
             </p>
           </div>
 
