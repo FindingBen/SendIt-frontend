@@ -121,7 +121,7 @@ const Plans = () => {
   return (
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 items-center justify-center">
-        <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
+        <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
           <h3 class="xl:text-3xl lg:text-2xl text-xl font-semibold text-left text-white mx-20">
             Package plans
           </h3>

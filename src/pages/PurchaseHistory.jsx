@@ -67,42 +67,48 @@ const PurchaseHistory = () => {
                 Sort by Date Created
               </button>
             </div>
-            <div class="grid grid-cols-3 lg:grid-cols-6 text-xs lg:text-lg 2xl:text-xl gap-4 grid-headers text-white/50 font-normalborder-b-2 p-2 border-gray-800">
+            <div class="grid grid-cols-3 lg:grid-cols-5 text-xs lg:text-lg 2xl:text-xl gap-4 grid-headers text-white/50 font-normalborder-b-2 p-2 border-gray-800">
               <div>Payment ID</div>
               <div className="hidden lg:block">Ammount</div>
-              <div className="hidden lg:block">Package Name</div>
+              {/* <div className="hidden lg:block">Package Name</div> */}
               <div className="hidden lg:block">Payment Type</div>
               <div>Date</div>
               <div>Status</div>
             </div>
             {paginatedData?.map((rowData, index) => {
-              const isLastItem = index === paginatedData.length - 1;
+              const isLastItem = index === paginatedData?.length - 1;
               const evenRow = index % 2 === 0;
               return (
                 <div
-                  key={rowData.id}
+                  key={rowData?.id}
                   className={`${
                     evenRow
-                      ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue text-white"
-                      : "bg-mainBlue text-white"
+                      ? "bg-gradient-to-b font-semibold from-lighterMainBlue to-mainBlue text-white/90"
+                      : "bg-mainBlue font-semibold text-white/90"
                   } ${
                     isLastItem ? "rounded-b-2xl border-none" : ""
                   } font-light`}
                 >
                   <div
-                    className={`grid grid-cols-3 lg:grid-cols-6 text-xs lg:text-lg 2xl:text-xl gap-4 p-2 border-b-2 border-gray-800 ${
+                    className={`grid grid-cols-3 lg:grid-cols-5 text-xs lg:text-lg 2xl:text-xl gap-4 p-2 border-b-2 border-gray-800 ${
                       isLastItem ? "rounded-b-2xl 2xl:text-lg border-none" : ""
                     }`}
                   >
-                    <div>{rowData.payment_id}</div>
-                    <div className="hidden lg:block">{rowData.price}</div>
-                    <div className="hidden lg:block">
-                      {rowData.package_name}
-                    </div>
-                    <div className="hidden lg:block">Card</div>
-                    <div>{rowData.created_at}</div>
-                    <div className="bg-green-400 text-green-900 xs:font-bold lg:font-semibold xs:mx-5 lg:mx-5 rounded-md">
-                      Success
+                    <div>{rowData?.payment_id}</div>
+                    <div className="hidden lg:block">{rowData?.price}</div>
+                    {/* <div className="hidden lg:block">
+                      {rowData?.package_name}
+                    </div> */}
+                    <div className="hidden lg:block">{rowData?.type}</div>
+                    <div>{rowData?.created_at}</div>
+                    <div
+                      className={`${
+                        rowData?.status === "succeeded"
+                          ? "bg-green-400 text-green-900"
+                          : "bg-red-400 text-red-900"
+                      } xs:font-bold lg:font-semibold xs:mx-5 lg:mx-5 rounded-md`}
+                    >
+                      {rowData?.status === "succeeded" ? "Success" : "Error"}
                     </div>
                   </div>
                 </div>
