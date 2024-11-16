@@ -92,6 +92,7 @@ const Header = () => {
         <img
           src={require("../assets/noBgLogo.png")}
           width={65}
+          alt="logo"
           className="mt-2"
         />
       </div>

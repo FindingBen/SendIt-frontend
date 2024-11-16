@@ -215,7 +215,7 @@ const CreateNote = () => {
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
             <div className="flex flex-row">
-              <span className="text-3xl text-white font-semibold mx-20">
+              <span className="lg:text-xl 2xl:text-2xl text-white font-semibold mx-20">
                 Create Content
               </span>
             </div>
@@ -246,7 +246,7 @@ const CreateNote = () => {
               )}
             </div>
           </div>
-          <div className="flex flex-col lg:flex-row rounded-2xl lg:mx-20">
+          <div className="flex flex-col lg:flex-row rounded-2xl lg:mx-10">
             <div className="flex flex-col p-10">
               <div className="flex flex-col lg:w-96 gap-2 rounded-2xl p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800">
                 {errorMsg && (

@@ -11,7 +11,7 @@ import PackageInformation from "../components/AccountSettings/PackageInformation
 
 const UserPage = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentUser } = useRedux();
+  const { currentUser, currentPackageState } = useRedux();
   const [username, setUsername] = useState();
   const [packagePlans, setPackage] = useState([]);
   const location = useLocation();
@@ -70,9 +70,9 @@ const UserPage = () => {
 
   return (
     <section className="min-h-screen w-100 items-center justify-center relative">
-      <div className="flex-1 flex flex-col xs:mx-3 lg:mx-20">
+      <div className="flex flex-col xs:mx-3 lg:mx-20">
         <div className="flex justify-between items-center mb-4 h-20">
-          <h3 class="xl:text-2xl lg:text-2xl  text-lg text-left font-semibold text-white">
+          <h3 class="xl:text-2xl lg:text-3xl text-left font-semibold text-white">
             User page
           </h3>
           <div class="flex flex-row items-center">
@@ -85,7 +85,7 @@ const UserPage = () => {
             <UserAccount />
           </div>
           <div className="flex flex-col gap-2">
-            <PackageInformation />
+            <PackageInformation package={currentPackageState} />
             <div className="flex lg:flex-row xs:flex-col">
               <PasswordChange user_obj={user} />
 

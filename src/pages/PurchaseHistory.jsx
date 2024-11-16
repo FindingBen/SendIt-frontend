@@ -60,11 +60,11 @@ const PurchaseHistory = () => {
           <div className="items-center justify-center rounded-2xl mb-3 w-full bg-mainBlue border-gray-800 border-2 shadow-md">
             <div className="flex flex-row space-x-2 p-2">
               <button
-                className={`px-2 text-xs lg:text-lg 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray
+                className={`px-2 text-xs lg:text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-slate-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
                   `}
                 //onClick={handleSortByDateCreated}
               >
-                Sort by Date Created
+                Sort by Date
               </button>
             </div>
             <div class="grid grid-cols-3 lg:grid-cols-5 text-xs lg:text-lg 2xl:text-xl gap-4 grid-headers text-white/50 font-normalborder-b-2 p-2 border-gray-800">
@@ -83,15 +83,17 @@ const PurchaseHistory = () => {
                   key={rowData?.id}
                   className={`${
                     evenRow
-                      ? "bg-gradient-to-b font-semibold from-lighterMainBlue to-mainBlue text-white/90"
-                      : "bg-mainBlue font-semibold text-white/90"
+                      ? "bg-gradient-to-b font-normal from-lighterMainBlue to-mainBlue text-white/90"
+                      : "bg-mainBlue font-normal text-white/90"
                   } ${
                     isLastItem ? "rounded-b-2xl border-none" : ""
                   } font-light`}
                 >
                   <div
-                    className={`grid grid-cols-3 lg:grid-cols-5 text-xs lg:text-lg 2xl:text-xl gap-4 p-2 border-b-2 border-gray-800 ${
-                      isLastItem ? "rounded-b-2xl 2xl:text-lg border-none" : ""
+                    className={`grid grid-cols-3 lg:grid-cols-5 text-xs lg:text-normal 2xl:text-xl gap-4 p-2 border-b-2 border-gray-800 ${
+                      isLastItem
+                        ? "rounded-b-2xl 2xl:text-normal border-none"
+                        : ""
                     }`}
                   >
                     <div>{rowData?.payment_id}</div>
@@ -106,7 +108,7 @@ const PurchaseHistory = () => {
                         rowData?.status === "succeeded"
                           ? "bg-green-400 text-green-900"
                           : "bg-red-400 text-red-900"
-                      } xs:font-bold lg:font-semibold xs:mx-5 lg:mx-5 rounded-md`}
+                      } xs:font-bold lg:font-semibold xs:mx-5 lg:mx-8 rounded-md`}
                     >
                       {rowData?.status === "succeeded" ? "Success" : "Error"}
                     </div>

@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useRedux } from "../../constants/reduxImports";
 
 const PackageInformation = () => {
+  const { currentPackageState } = useRedux();
+  console.log(currentPackageState);
   return (
     <div className="flex flex-col rounded-2xl p-4 xs:mt-2 lg:mt-0 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 border-2 lg:w-[400px] xs:w-[330px] 2xl:w-[450px] h-[290px] lg:h-[290px] 2xl:h-[360px]">
       <h3 class="flex flex-row xs:text-normal lg:text-xl 2xl:text-2xl text-left mb-4 font-semibold text-white relative">
@@ -31,14 +34,26 @@ const PackageInformation = () => {
         <p className="text-white/60 xs:text-sm lg:text-normal text-start">
           Your current package information is displayed here.
         </p>
-        <p className="text-amber-200 xs:text-sm lg:text-normal 2xl:text-lg font-bold">
-          Basic Plan
+        <p
+          className={`${
+            currentPackageState?.package === "Trial Plan"
+              ? "text-white"
+              : currentPackageState?.package === "Basic plan"
+              ? "text-amber-600"
+              : currentPackageState?.package === "Silver plan"
+              ? "text-gray-400"
+              : currentPackageState?.package === "Gold plan"
+              ? "text-yellow-500"
+              : "" // Default case
+          } xs:text-sm lg:text-lg 2xl:text-xl font-bold`}
+        >
+          {currentPackageState?.package}
         </p>
         <p className="text-white xs:text-sm lg:text-normal 2xl:text-lg font-semibold">
-          Contact list limit: 5
+          Contact list limit: {currentPackageState?.list_limit}
         </p>
         <p className="text-white xs:text-sm lg:text-normal 2xl:text-lg font-semibold">
-          Recipients limit: 500
+          Recipients limit: {currentPackageState?.recipients_limit}
         </p>
         <p className="text-white flex flex-row gap-2 xs:text-sm lg:text-normal 2xl:text-lg font-semibold">
           Use of AI: <p className="text-red-500">No</p>

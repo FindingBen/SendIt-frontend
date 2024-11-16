@@ -72,18 +72,17 @@ const HomePage = () => {
     } else if (sortOrder) {
       getNotes();
     }
-    getCampaignStats();
+    //getCampaignStats();
     refreshAnalytics();
     setInitialLoad(false);
   }, [loading, listUpdated, sortOrder]);
 
   useEffect(() => {
     if (totalValues?.archived_state) {
-      console.log("HEREE");
       getNotes();
     }
   }, [totalValues]);
-
+  console.log("VALLL", totalValues);
   const itemsPerPage = 4;
   const totalPages = Math.ceil(currentMessages?.length / itemsPerPage);
 
@@ -302,7 +301,7 @@ const HomePage = () => {
                         const evenRow = index % 2 === 0;
                         return (
                           <motion.div
-                            className={`text-white font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
+                            className={`text-white font-semibold text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
                               evenRow
                                 ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
                                 : "bg-mainBlue"
@@ -342,7 +341,7 @@ const HomePage = () => {
             <div className="container">
               <CompletedCampaigns
                 percentage={totalValues?.overall_rate}
-                campaigns={currentCampaignsState}
+                total_values={totalValues}
               />
             </div>
             {/* <QuickAnalytics
