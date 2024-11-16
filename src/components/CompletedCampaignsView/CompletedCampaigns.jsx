@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SvgLoader from "../SvgLoader";
 import HalfPieChart from "../../utils/chart/HalfPieChart";
-import PerformanceBar from "../Progress/PerformanceBar";
+import AnalyticsBarProgress from "../Progress/AnalyticsBarProgress";
 import { Link } from "react-router-dom";
 import CampaignStatModal from "../../features/modal/CampaignStatModal";
 
@@ -28,31 +28,27 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
             <p className="text-white text-2xl text-start font-semibold">
               Account Analytics
             </p>
-            {/* <p className="text-white/70 text-start mt-1">
-              Your last 3 completed campaigns and account performance
-            </p> */}
           </div>
-          {/* <Link
-            to={"/campaign_stats/"}
-            className="px-2 py-1 h-10 cursor-pointer bg-purpleHaze rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105"
-          >
+          <div class="text-white flex flex-row gap-1 rounded-md hover:bg-purpleHaze smooth-hover cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 border-gray-500 border-2 p-1 lg:p-2 absolute right-5 top-5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="size-6 text-white"
+              class="size-6"
             >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"
+                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
               />
             </svg>
-          </Link> */}
+            <p>Export</p>
+          </div>
         </div>
-        <div className="flex flex-row gap-4 mt-4 rounded-lg">
+        <div>
+          <div className="flex flex-row gap-4 mt-4 rounded-lg">
           <div className="justify-center h-16 w-16 p-1 bg-mainBlue border-2 border-gray-800 rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -69,22 +65,10 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
               />
             </svg>
           </div>
-          <div className="flex flex-col w-[70%]">
-            <p className="text-white/80 text-lg text-start">
-              Sms deliveribility
-            </p>
-
-            <div class="w-[100%] relative bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2">
-              <div
-                className={`bg-green-600 h-3 rounded-full dark:bg-green-500`}
-                style={{ width: total_values?.deliveribility + "%" }}
-              ></div>
-              <p
-                className={`absolute inset-0 bg-green-600 blur`}
-                style={{ width: total_values?.deliveribility + "%" }}
-              ></p>
-            </div>
-          </div>
+          <AnalyticsBarProgress
+            total_values={total_values?.deliveribility}
+            metric={"Sms Deliveribility"}
+          />
         </div>
         <div className="flex flex-row mt-2 gap-4 rounded-lg">
           <div className="cursor-pointer justify-center h-16 w-16 p-1 bg-mainBlue border-2 border-gray-800 rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
@@ -103,20 +87,10 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
               />
             </svg>
           </div>
-          <div className="flex flex-col w-[70%]">
-            <p className="text-white/80 text-lg text-start">Click rate</p>
-
-            <div class="w-[100%] relative bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2">
-              <div
-                className={`bg-green-600 h-3 rounded-full dark:bg-green-500`}
-                style={{ width: total_values?.clicks_rate + "%" }}
-              ></div>
-              <p
-                className={`absolute inset-0 bg-green-600 blur`}
-                style={{ width: total_values?.clicks_rate + "%" }}
-              ></p>
-            </div>
-          </div>
+          <AnalyticsBarProgress
+            total_values={total_values?.clicks_rate}
+            metric={"Click Rate"}
+          />
         </div>
         <div className="flex flex-row gap-4 mt-2 w-full rounded-lg">
           <div className="justify-center h-16 w-16 p-1 bg-mainBlue border-2 border-gray-800 rounded-lg">
@@ -135,20 +109,8 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
               />
             </svg>
           </div>
-          <div className="flex flex-col w-[70%]">
-            <p className="text-white/80 text-lg text-start">Bounce rate</p>
-
-            <div class="w-[100%] relative bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2">
-              <div
-                className={`bg-green-600 h-3 rounded-full dark:bg-green-500`}
-                style={{ width: contactListsPercentages + "%" }}
-              ></div>
-              <p
-                className={`absolute inset-0 bg-green-600 blur`}
-                style={{ width: contactListsPercentages + "%" }}
-              ></p>
-            </div>
-          </div>
+          <AnalyticsBarProgress total_values={20} metric={"Bounce Rate"} />
+        </div>
         </div>
       </div>
       <div className="bg-mainBlue rounded-lg border-gray-800 border-2 mt-2">
