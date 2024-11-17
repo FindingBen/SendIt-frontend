@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import useAxiosInstance from "../utils/axiosInstance";
 import axios from "axios";
 import { useRedux } from "../constants/reduxImports";
 import { setContactLists } from "../redux/reducers/contactListReducer";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
-import SvgLoader from "../components/SvgLoader";
 
 const QRsignUpPage = () => {
-  const axiosInstance = useAxiosInstance();
   const { dispatch } = useRedux();
   const [errMsg, setErrMsg] = useState(false);
   const [success, setSuccess] = useState(false);
