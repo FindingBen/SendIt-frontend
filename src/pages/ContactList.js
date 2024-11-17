@@ -6,6 +6,7 @@ import AddContactModal from "../features/modal/AddContactModal";
 import "../css/ContactList.css";
 import { setContactLists } from "../redux/reducers/contactListReducer";
 import { useRedux } from "../constants/reduxImports";
+import ShowQrModal from "../features/modal/ShowQrModal";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
@@ -14,6 +15,7 @@ const ContactList = () => {
   const [contact, setContact] = useState({});
   const [showCsv, setShowCsv] = useState(false);
   const [show, setShow] = useState(false);
+  const [showqr, setShowQr] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
@@ -120,6 +122,10 @@ const ContactList = () => {
     setShow(true);
   };
 
+  const handleQrModal = (e) => {
+    setShowQr(true);
+  };
+
   const handleNewContact = (contact) => {
     setContacts(contact);
   };
@@ -169,8 +175,38 @@ const ContactList = () => {
             <h3 class="xl:text-3xl text-2xl font-semibold text-left text-white mx-20">
               Contacts
             </h3>
-            <div class="items-start w-24 h-10 shadow-md mx-20">
-              <div className="inline-flex mx-auto mt-1 gap-2">
+            <div class="items-start shadow-md mx-20">
+              <div className="inline-flex mt-1 gap-2">
+                <button
+                  disabled={!canAddNewrecipients()}
+                  className={`${
+                    canAddNewrecipients()
+                      ? "text-white hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer"
+                      : "text-gray-500"
+                  } rounded-md flex flex-row gap-2 border-2 border-gray-800 p-2`}
+                  onClick={handleQrModal}
+                >
+                  <p>Show code</p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="size-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z"
+                    />
+                  </svg>
+                </button>
                 {!canAddNewrecipients() ? (
                   <p className="text-xs text-white/60">Limit reached!</p>
                 ) : (
@@ -181,9 +217,9 @@ const ContactList = () => {
                   onClick={handleModal}
                   className={`${
                     canAddNewrecipients()
-                      ? "text-white hover:text-white/50 smooth-hover cursor-pointer"
+                      ? "text-white hover:text-white/50 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer"
                       : "text-gray-500"
-                  } rounded-md `}
+                  } rounded-md border-2 border-gray-800 p-2`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -205,9 +241,9 @@ const ContactList = () => {
                   disabled={!canAddNewrecipients()}
                   className={`${
                     canAddNewrecipients()
-                      ? "text-white hover:text-white/50 smooth-hover cursor-pointer"
+                      ? "text-white hover:text-white/50 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer"
                       : "text-gray-500"
-                  } rounded-md `}
+                  } rounded-md border-2 border-gray-800 p-2`}
                   onClick={handleCsvModal}
                 >
                   <svg
@@ -238,7 +274,7 @@ const ContactList = () => {
               <div class="items-center justify-center rounded-2xl mb-3 w-full bg-mainBlue border-gray-800 border-2 shadow-md">
                 <div className="flex flex-row space-x-2 p-2">
                   <button
-                    className={`px-2 py-1 2xl:px-4 2xl:py-2 text-white font-light 2xl:text-lg hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
+                    className={`px-2 py-1 2xl:px-4 2xl:py-2 text-white font-semibold 2xl:text-lg hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
                       sortOrder === "first_name" ? "bg-purpleHaze" : ""
                     }`}
                     onClick={handleSortByName}
@@ -246,12 +282,12 @@ const ContactList = () => {
                     Sort by Name
                   </button>
                   <button
-                    className={`px-2 py-1 2xl:px-4 2xl:py-2 2xl:text-lg text-white font-light hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
+                    className={`px-2 py-1 2xl:px-4 2xl:py-2 2xl:text-lg text-white font-semibold hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
                       sortOrder === "created_at" ? "bg-purpleHaze" : ""
                     }`}
                     onClick={handleSortByDateCreated}
                   >
-                    Sort by Date Created
+                    Sort by Date
                   </button>
                 </div>
 
@@ -514,6 +550,7 @@ const ContactList = () => {
             showModal={show}
             onClose={() => setShow(false)}
           />
+          <ShowQrModal showModalQr={showqr} onClose={() => setShowQr(false)} />
         </div>
       </div>
     </section>

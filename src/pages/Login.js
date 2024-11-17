@@ -204,7 +204,7 @@ const Login = () => {
         </p>
       </div>
       <p className="text-white opacity-60 font-light text-sm">
-        © 2023 by Sendperplane
+        © 2024 by Sendperplane
       </p>
     </section>
   );
