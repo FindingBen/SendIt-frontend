@@ -5,6 +5,7 @@ import { useRedux } from "../constants/reduxImports";
 import { setContactLists } from "../redux/reducers/contactListReducer";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
+import { config } from "../constants/Constants";
 
 const QRsignUpPage = () => {
   const { dispatch } = useRedux();
@@ -12,7 +13,7 @@ const QRsignUpPage = () => {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [number, setNumber] = useState("");
-
+  const baseURL = config.url.BASE_URL;
   const params = useParams();
   const [contact, setContact] = useState({
     firstName: "",
@@ -39,11 +40,14 @@ const QRsignUpPage = () => {
     setLoading(true); // Show loader
     setErrMsg(null); // Reset error message
     try {
-      let response = await axios.post(`/api/create_contact_qr/${params.id}`, {
-        first_name: contact?.firstName,
-        last_name: contact?.lastName,
-        phone_number: number,
-      });
+      let response = await axios.post(
+        `${baseURL}/api/create_contact_qr/${params.id}`,
+        {
+          first_name: contact?.firstName,
+          last_name: contact?.lastName,
+          phone_number: number,
+        }
+      );
       if (response.status === 200 || 201) {
         setSuccess(true);
         dispatch(
