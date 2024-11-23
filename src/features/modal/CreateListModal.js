@@ -26,7 +26,7 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
   useEffect(() => {
     setShowModal(showModal);
   }, [showModal]);
-  console.log('"ADSADS');
+
   const addList = async (e) => {
     try {
       e.preventDefault();

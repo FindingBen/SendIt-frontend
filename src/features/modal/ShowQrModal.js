@@ -54,7 +54,7 @@ const ShowQrModal = ({ showModalQr, onClose }) => {
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <img
-                    src={`${baseURL}${qrImg.qr_image}`}
+                    src={`${baseURL}${qrImg?.qr_image}`}
                     alt="QR Code"
                     width={150}
                     className="block mx-auto mb-4"
