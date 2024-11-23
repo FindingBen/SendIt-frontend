@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
-import Billings from "../components/AccountSettings/Billings";
 import UserAccount from "../components/AccountSettings/UserAccount";
 import SmsPill from "../components/SmsPill/SmsPill";
 import PasswordChange from "../utils/PasswordChange";
 import { useRedux } from "../constants/reduxImports";
-import AccountClose from "../components/AccountSettings/AccountClose";
 import PackageInformation from "../components/AccountSettings/PackageInformation";
+import CloseAccountModal from "../features/modal/CloseAccountModal";
 
 const UserPage = () => {
   const axiosInstance = useAxiosInstance();
@@ -17,6 +16,7 @@ const UserPage = () => {
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const [msg, setMsg] = useState();
+  const [showModal, setShowModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
   const [newName, setNewName] = useState();
   const [newLastName, setNewLastName] = useState();
@@ -89,16 +89,29 @@ const UserPage = () => {
             <div className="flex lg:flex-row xs:flex-col">
               <PasswordChange user_obj={user} />
 
-              <AccountClose />
+              <div className="flex flex-col rounded-2xl p-4 xs:mt-2 lg:mt-0 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 border-2 xs:w-[330px] lg:w-[370px] 2xl:w-[450px] lg:h-[240px] 2xl:h-[270px]">
+                <h3 class="flex flex-row xs:text-normal lg:text-xl 2xl:text-2xl text-left mb-4 font-semibold text-white relative">
+                  Account Deletion
+                  <div
+                    onClick={(e) => setShowModal(e)}
+                    className="px-2 py-2 bg-red-700 text-white xs:text-xs lg:text-normal border-gray-800 rounded-md absolute right-0 top-0 hover:bg-red-500 cursor-pointer"
+                  >
+                    Close Account
+                  </div>
+                </h3>
+                <p className="text-white/60 xs:text-sm lg:text-normal text-start">
+                  If you wish to close your account press the button and we will
+                  do the rest.{" "}
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* <div className="flex xl:flex-row xs:flex-col lg:gap-2 mt-2 xs:items-center items-start">
-          <UserAccount />
-          <PasswordChange user_obj={user} />
-          <AccountClose />
-        </div> */}
+        <CloseAccountModal
+          showModal={showModal}
+          onClose={(e) => setShowModal(false)}
+        />
       </div>
     </section>
   );
