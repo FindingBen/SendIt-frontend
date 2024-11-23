@@ -79,7 +79,7 @@ const Login = () => {
   };
 
   return (
-    <section class="flex flex-col justify-center antialiased bg-gradient-to-b from-lighterMainBlue to-mainBlue text-gray-200 min-h-screen p-4 w-100">
+    <section class="flex flex-col items-center antialiased bg-gradient-to-b from-lighterMainBlue to-mainBlue text-gray-200 min-h-screen p-4 w-100">
       <div class="flex-1">
         <div class="max-w-[360px] mx-auto mt-10 mb-5">
           <div class="bg-navBlue border-2 border-gray-800 h-[420px] rounded-lg mt-3">
@@ -203,9 +203,12 @@ const Login = () => {
           </Link>
         </p>
       </div>
-      <p className="text-white opacity-60 font-light text-sm">
-        © 2024 by Sendperplane
-      </p>
+      <div className="flex flex-row gap-2 text-center">
+        <p className="text-white opacity-60 font-light text-sm">
+          © 2024 by Sendperplane
+        </p>
+        <Link to={"/privacy-policy"}>Privacy</Link>
+      </div>
     </section>
   );
 };

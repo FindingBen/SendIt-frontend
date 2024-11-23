@@ -28,6 +28,7 @@ import PurchaseHistory from "./pages/PurchaseHistory";
 import UnsubscribePage from "./pages/UnsubscribePage";
 import ActivationEmailSuccess from "./pages/ActivationEmailSuccess";
 import QRsignUpPage from "./pages/QRsignUpPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const TRACKING_ID = "G-FPHE42LL46";
 ReactGA.initialize(TRACKING_ID);
@@ -40,6 +41,10 @@ function App() {
         <Route
           path="/register/qrr/:id"
           element={<QRsignUpPage></QRsignUpPage>}
+        ></Route>
+        <Route
+          path="/privacy-policy"
+          element={<PrivacyPolicy></PrivacyPolicy>}
         ></Route>
         <Route path="/view/:id" element={<MessageView></MessageView>}></Route>
         <Route
