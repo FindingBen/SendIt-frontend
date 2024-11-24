@@ -17,7 +17,7 @@ const TooltipContent = () => (
 
 const AvgDataStats = ({ avgData }) => {
   return (
-    <div className="flex flex-col w-[50%] p-4 gap-3 items-start bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 rounded-xl relative">
+    <div className="flex flex-col w-[45%] p-4 gap-3 items-start bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 rounded-xl relative">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

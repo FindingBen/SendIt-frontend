@@ -37,7 +37,7 @@ const HalfPieChart = ({ percentage }) => {
             <path
               d={describeArc(angle)}
               fill="none"
-              className="stroke-purple-600 blur"
+              className="stroke-cyan-600 blur"
               strokeWidth="20"
               strokeOpacity="0.7"
               strokeLinecap="round"
@@ -47,7 +47,7 @@ const HalfPieChart = ({ percentage }) => {
             <path
               d={describeArc(angle)}
               fill="none"
-              className="stroke-purple-600"
+              className="stroke-cyan-600"
               strokeWidth="18"
               strokeLinecap="round"
             />

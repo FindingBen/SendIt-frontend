@@ -14,7 +14,7 @@ const TooltipContentStat = () => (
 
 const ButtonAnalytics = ({ sms }) => {
   return (
-    <div className="p-2 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 w-[92%] 2xl:w-[95%] h-full flex-1 rounded-2xl relative">
+    <div className="p-2 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 w-full 2xl:w-[95%] h-full flex-1 rounded-2xl relative">
       {sms?.has_button ? (
         <div className="grid grid-cols-2 grid-rows-2 mt-4">
           <div className="flex flex-col p-1 relative">

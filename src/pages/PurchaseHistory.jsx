@@ -38,7 +38,7 @@ const PurchaseHistory = () => {
           <h3 className="text-lg lg:text-xl 2xl:text-2xl font-semibold text-white">
             Purchase history
           </h3>
-          <div class="text-white flex flex-row gap-1 rounded-md hover:bg-purpleHaze smooth-hover cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 border-gray-500 border-2 p-1 lg:p-2 absolute right-0 top-5">
+          <div class="text-white flex flex-row gap-1 rounded-md hover:bg-cyan-600 smooth-hover cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 border-gray-500 border-2 p-1 lg:p-2 absolute right-0 top-5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -67,7 +67,7 @@ const PurchaseHistory = () => {
                 Sort by Date
               </button>
             </div>
-            <div class="grid grid-cols-3 lg:grid-cols-5 text-xs lg:text-lg 2xl:text-xl gap-4 grid-headers text-white/50 font-normalborder-b-2 p-2 border-gray-800">
+            <div class="grid grid-cols-3 lg:grid-cols-5 text-normal 2xl:text-xl gap-4 grid-headers text-white/50 font-normalborder-b-2 p-2 border-gray-800">
               <div>Payment ID</div>
               <div className="hidden lg:block">Ammount</div>
               {/* <div className="hidden lg:block">Package Name</div> */}
@@ -83,14 +83,14 @@ const PurchaseHistory = () => {
                   key={rowData?.id}
                   className={`${
                     evenRow
-                      ? "bg-gradient-to-b font-normal from-lighterMainBlue to-mainBlue text-white/90"
+                      ? "bg-gradient-to-b font-normal p-2 from-lighterMainBlue to-mainBlue text-white/90"
                       : "bg-mainBlue font-normal text-white/90"
                   } ${
                     isLastItem ? "rounded-b-2xl border-none" : ""
                   } font-light`}
                 >
                   <div
-                    className={`grid grid-cols-3 lg:grid-cols-5 text-xs lg:text-normal 2xl:text-xl gap-4 p-2 border-b-2 border-gray-800 ${
+                    className={`grid grid-cols-3 lg:grid-cols-5 text-normal 2xl:text-xl gap-4 p-2 border-b-2 border-gray-800 ${
                       isLastItem
                         ? "rounded-b-2xl 2xl:text-normal border-none"
                         : ""

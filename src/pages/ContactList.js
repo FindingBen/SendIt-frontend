@@ -274,16 +274,16 @@ const ContactList = () => {
               <div class="items-center justify-center rounded-2xl mb-3 w-full bg-mainBlue border-gray-800 border-2 shadow-md">
                 <div className="flex flex-row space-x-2 p-2">
                   <button
-                    className={`px-2 py-1 2xl:px-4 2xl:py-2 text-white font-semibold 2xl:text-lg hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
-                      sortOrder === "first_name" ? "bg-purpleHaze" : ""
+                    className={`px-2 py-1 2xl:px-4 2xl:py-2 text-white font-semibold 2xl:text-lg hover:bg-cyan-500 duration-200 rounded-lg bg-darkestGray ${
+                      sortOrder === "first_name" ? "bg-cyan-600" : ""
                     }`}
                     onClick={handleSortByName}
                   >
                     Sort by Name
                   </button>
                   <button
-                    className={`px-2 py-1 2xl:px-4 2xl:py-2 2xl:text-lg text-white font-semibold hover:bg-slate-500 duration-200 rounded-lg bg-darkestGray ${
-                      sortOrder === "created_at" ? "bg-purpleHaze" : ""
+                    className={`px-2 py-1 2xl:px-4 2xl:py-2 2xl:text-lg text-white font-semibold hover:bg-cyan-500 duration-200 rounded-lg bg-darkestGray ${
+                      sortOrder === "created_at" ? "bg-cyan-600" : ""
                     }`}
                     onClick={handleSortByDateCreated}
                   >
@@ -307,7 +307,7 @@ const ContactList = () => {
                         key={rowData.id}
                         className={`${
                           contactId === rowData.id
-                            ? "bg-purpleHaze text-white font-normal transition duration-300"
+                            ? "bg-cyan-700 text-white font-normal transition duration-300"
                             : evenRow
                             ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue text-white"
                             : "bg-mainBlue text-white"
