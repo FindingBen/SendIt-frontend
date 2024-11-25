@@ -88,7 +88,7 @@ const AnalyticsPage = () => {
         <div className="flex flex-col">
           <div class="flex-1">
             <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
-              <h3 class="xl:text-3xl text-2xl font-semibold text-left text-white mx-20">
+              <h3 class="xl:text-2xl text-xl font-semibold text-left text-white mx-20">
                 Analytics dashboard
               </h3>
               <div class="text-white flex flex-row gap-1 rounded-md mx-20 hover:bg-cyan-600 smooth-hover cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 border-gray-500 border-2 p-1 lg:p-2 absolute right-0 top-5">

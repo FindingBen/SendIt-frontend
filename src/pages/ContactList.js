@@ -274,25 +274,48 @@ const ContactList = () => {
               <div class="items-center justify-center rounded-2xl mb-3 w-full bg-mainBlue border-gray-800 border-2 shadow-md">
                 <div className="flex flex-row space-x-2 p-2">
                   <button
-                    className={`px-2 py-1 2xl:px-4 2xl:py-2 text-white font-semibold 2xl:text-lg hover:bg-cyan-500 duration-200 rounded-lg bg-darkestGray ${
-                      sortOrder === "first_name" ? "bg-cyan-600" : ""
-                    }`}
+                    className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
+                  `}
                     onClick={handleSortByName}
                   >
-                    Sort by Name
+                    Sort by Date
                   </button>
                   <button
-                    className={`px-2 py-1 2xl:px-4 2xl:py-2 2xl:text-lg text-white font-semibold hover:bg-cyan-500 duration-200 rounded-lg bg-darkestGray ${
-                      sortOrder === "created_at" ? "bg-cyan-600" : ""
-                    }`}
+                    className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
+                      `}
                     onClick={handleSortByDateCreated}
                   >
                     Sort by Date
                   </button>
+                  <div class="relative w-[20%]">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
+                      <svg
+                        class="w-4 h-4 text-gray-500 ml-2 dark:text-gray-400"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      type="search"
+                      id="default-search"
+                      class="block w-full p-1.5 ps-10 text-sm text-gray-900 border-2 rounded-lg focus:border-gray-700 dark:bg-darkestGray border-gray-800 dark:placeholder-gray-400 dark:text-white"
+                      placeholder="Search by name..."
+                    />
+                  </div>
                 </div>
 
                 <div>
-                  <div class="grid grid-cols-5 gap-4 grid-headers text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
+                  <div class="grid grid-cols-5 gap-4 grid-headers text-white/50 font-semibold text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
                     <div>First Name</div>
                     <div>Last Name</div>
                     <div>Email</div>
@@ -307,7 +330,7 @@ const ContactList = () => {
                         key={rowData.id}
                         className={`${
                           contactId === rowData.id
-                            ? "bg-cyan-700 text-white font-normal transition duration-300"
+                            ? "bg-cyan-700 text-white font-semibold transition duration-300"
                             : evenRow
                             ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue text-white"
                             : "bg-mainBlue text-white"

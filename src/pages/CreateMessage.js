@@ -223,7 +223,7 @@ const CreateNote = () => {
               {!isLoading ? (
                 <button
                   onClick={handleSubmit}
-                  className="text-white bg-purpleHaze p-1 rounded-lg  hover:text-white smooth-hover flex flex-row transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105"
+                  className="text-white bg-cyan-600 p-1 rounded-lg  hover:bg-cyan-400 smooth-hover flex flex-row transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105"
                 >
                   <h2 className="text-lg mx-2">Create</h2>
                   <svg

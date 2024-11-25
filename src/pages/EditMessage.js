@@ -309,7 +309,7 @@ const EditMessage = () => {
               {!isLoading ? (
                 <button
                   onClick={editMessage}
-                  className="text-white bg-purpleHaze p-1 rounded-lg hover:text-white flex flex-row transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105"
+                  className="text-white bg-cyan-600  hover:bg-cyan-400 p-1 rounded-lg hover:text-white flex flex-row transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105"
                 >
                   <h2 className="text-lg mx-2">Edit</h2>
                   <svg
