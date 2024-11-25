@@ -195,8 +195,8 @@ const SmsEditor = () => {
     <section className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
         <div className="flex-1 sm:px-0">
-          <div className="flex justify-between items-center mb-4 h-20 bg-navBlue border-gray-800 border-b-2">
-            <h3 class="xl:text-3xl lg:text-2xl text-xl text-left font-semibold text-white mx-20">
+          <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
+            <h3 class="xl:text-2xl lg:text-xl text-xl text-left font-semibold text-white mx-20">
               Sms sending flow
             </h3>
             <div class="flex flex-row items-center mx-20">
@@ -271,7 +271,7 @@ const SmsEditor = () => {
                         }}
                         type="submit"
                         color="dark"
-                        className="bg-purpleHaze hover:bg-purple-700 text-white font-normal py-2 px-3 rounded text-sm xl:text-base mt-4"
+                        className="bg-cyan-600 hover:bg-cyan-400 hover:cursor-pointer text-white font-normal py-2 px-3 rounded text-sm xl:text-base mt-4"
                         disabled={
                           recipients.contact_lenght === 0 ||
                           !recipients ||
