@@ -19,6 +19,7 @@ import PreviewPanel from "../components/PreviewComponent/PreviewPanel";
 import { setMessages } from "../redux/reducers/messageReducer";
 
 const CreateNote = () => {
+  const Package_gold = process.env.GOLD_PLAN;
   const { deleteElement } = useContext(ElementContext);
   const {
     currentUser,
@@ -252,23 +253,24 @@ const CreateNote = () => {
                 {errorMsg && (
                   <p className="text-red-600 font-light ml-2">{errorMsg}</p>
                 )}
-                <span className="text-left text-white font-semibold">
+                {/* <span className="text-left text-white font-semibold">
                   Campaign name
-                </span>
+                </span> */}
                 <input
                   onChange={handleMessageName}
-                  className="flex-1 bg-white rounded-lg p-2"
+                  className="flex-1 bg-mainBlue text-white border-2 border-gray-800 rounded-lg p-2 focus:bg-slate-700"
+                  placeholder="Enter the name for campaign.."
                 />
                 {showSaveButton && (
                   <button
                     onClick={handleSave}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg duration-200"
+                    className="bg-cyan-600 text-white px-4 py-2 rounded-lg duration-200"
                   >
                     Save
                   </button>
                 )}
               </div>
-              <div className="flex lg:h-[60%] gap-2 lg:flex-col p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 mt-4 rounded-2xl">
+              <div className="flex lg:h-[70%] gap-2 lg:flex-col p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 mt-4 rounded-2xl">
                 <span className="text-left text-white text-normal lg:text-lg font-semibold ml-4 lg:ml-0">
                   Content elements
                 </span>
@@ -280,7 +282,7 @@ const CreateNote = () => {
                   <div
                     onClick={imageStateVal ? null : () => handleClick("image")}
                     name="liClick"
-                    className="mb-3 flex flex-row rounded-md bg-white lg:px-2 lg:py-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                    className="mb-3 flex flex-row rounded-md bg-mainBlue border-2 border-gray-800 lg:px-2 lg:py-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-500 duration-300 cursor-pointer"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -288,7 +290,7 @@ const CreateNote = () => {
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
                       stroke="currentColor"
-                      class="h-5 w-5 lg:h-8 lg:w-8 text-black"
+                      class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
                     >
                       <path
                         stroke-linecap="round"
@@ -297,14 +299,14 @@ const CreateNote = () => {
                       />
                     </svg>
 
-                    <p className="text-black font-normal text-base text-justify my-auto">
+                    <p className="text-white/70 font-normal text-base text-justify my-auto">
                       Add Image
                     </p>
                   </div>
                   <div
                     onClick={imageStateVal ? null : () => handleClick("button")}
                     name="liClick"
-                    className="mb-3 flex flex-row rounded-md bg-white p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                    className="mb-3 flex flex-row rounded-md bg-mainBlue border-2 border-gray-800 p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -312,7 +314,7 @@ const CreateNote = () => {
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
                       stroke="currentColor"
-                      class="h-5 w-5 lg:h-8 lg:w-8 text-black"
+                      class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
                     >
                       <path
                         stroke-linecap="round"
@@ -321,7 +323,7 @@ const CreateNote = () => {
                       />
                     </svg>
 
-                    <p className="text-black font-normal text-base text-justify my-auto">
+                    <p className="text-white/70 font-normal text-base text-justify my-auto">
                       Add CTA
                     </p>
                   </div>
@@ -330,7 +332,7 @@ const CreateNote = () => {
                   <div
                     onClick={imageStateVal ? null : () => handleClick("text")}
                     name="liClick"
-                    className="mb-3 flex flex-row rounded-md bg-white p-2 lg:px-2 lg:py-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                    className="mb-3 flex flex-row rounded-md bg-mainBlue border-2 border-gray-800 p-2 lg:px-2 lg:py-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -338,7 +340,7 @@ const CreateNote = () => {
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
                       stroke="currentColor"
-                      class="h-5 w-5 lg:h-8 lg:w-8 text-black"
+                      class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
                     >
                       <path
                         stroke-linecap="round"
@@ -347,14 +349,14 @@ const CreateNote = () => {
                       />
                     </svg>
 
-                    <p className="text-black font-normal text-base text-justify my-auto">
+                    <p className="text-white/70 font-normal text-base text-justify my-auto">
                       Add Text
                     </p>
                   </div>
                   <div
                     onClick={imageStateVal ? null : () => handleClick("survey")}
                     name="liClick"
-                    className="mb-3 flex flex-row rounded transition bg-white p-2 ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                    className="mb-3 flex flex-row rounded transition bg-mainBlue border-2 border-gray-800 p-2 ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -362,7 +364,7 @@ const CreateNote = () => {
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
                       stroke="currentColor"
-                      class="h-5 w-5 lg:h-8 lg:w-8 text-black"
+                      class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
                     >
                       <path
                         stroke-linecap="round"
@@ -371,19 +373,19 @@ const CreateNote = () => {
                       />
                     </svg>
 
-                    <p className="text-black font-normal text-normal text-justify my-auto">
+                    <p className="text-white/70 font-normal text-normal text-justify my-auto">
                       Add Survey
                     </p>
                   </div>
                 </div>
                 <div className="flex flex-row justify-between">
-                  {currentPackageState?.package === "Gold package" ? (
+                  {currentPackageState?.package === Package_gold ? (
                     <div
                       onClick={
                         imageStateVal ? null : () => handleClick("aiContent")
                       }
                       name="liClick"
-                      className="mb-2 flex flex-row rounded-md p-2 bg-white transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                      className="mb-2 flex flex-row rounded-md p-2 bg-mainBlue border-2 border-gray-800 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -391,7 +393,7 @@ const CreateNote = () => {
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="h-5 w-5 lg:h-8 lg:w-8 text-black"
+                        class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
                       >
                         <path
                           stroke-linecap="round"
@@ -400,7 +402,7 @@ const CreateNote = () => {
                         />
                       </svg>
 
-                      <p className="text-black font-base text-normal text-justify my-auto">
+                      <p className="text-white/70 font-base text-normal text-justify my-auto">
                         Use AI
                       </p>
                     </div>

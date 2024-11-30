@@ -6,7 +6,7 @@ const StatCards = ({ views, sms }) => {
   return (
     <div className="flex flex-row gap-2 w-full">
       <div className="flex flex-col gap-2">
-        <div className="p-2 flex flex-row items-center h-[125px] lg:w-[188px] xl:w-[240px] 2xl:h-[170px] 2xl:w-[313px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+        <div className="p-2 flex flex-row items-center h-[125px] lg:w-[201px] xl:w-[240px] 2xl:h-[170px] 2xl:w-[313px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
           <div className="flex items-start p-2">
             {views ? (
               <motion.div
@@ -48,7 +48,7 @@ const StatCards = ({ views, sms }) => {
           </svg>
           <Tooltip id="my-tooltip" />
         </div>
-        <div className="p-2 flex flex-row items-center h-[125px] lg:w-[188px] xl:w-[240px] 2xl:h-[170px] 2xl:w-[313px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+        <div className="p-2 flex flex-row items-center h-[125px] lg:w-[201px] xl:w-[240px] 2xl:h-[170px] 2xl:w-[313px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
           {sms?.has_button ? (
             <div>
               <div className="flex items-start p-2">
@@ -99,7 +99,7 @@ const StatCards = ({ views, sms }) => {
       </div>
 
       <div className="flex flex-col">
-        <div className="p-2 flex flex-row items-center h-[125px] lg:w-[188px] xl:w-[240px] 2xl:h-[170px] 2xl:w-[313px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+        <div className="p-2 flex flex-row items-center h-[125px] lg:w-[201px] xl:w-[240px] 2xl:h-[170px] 2xl:w-[313px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
           <div className="flex items-start p-2">
             {views ? (
               <motion.div
@@ -141,7 +141,7 @@ const StatCards = ({ views, sms }) => {
           </svg>
           <Tooltip id="my-tooltip" />
         </div>
-        <div className="p-2 mt-2 flex flex-row items-center h-[125px] lg:w-[188px] xl:w-[240px] 2xl:h-[170px] 2xl:w-[313px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+        <div className="p-2 mt-2 flex flex-row items-center h-[125px] lg:w-[201px] xl:w-[240px] 2xl:h-[170px] 2xl:w-[313px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
           <div className="flex items-start p-2">
             {views ? (
               <motion.div

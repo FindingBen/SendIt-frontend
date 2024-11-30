@@ -89,18 +89,24 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                strokeWidth="1.5"
+                stroke-width="1.5"
                 stroke="currentColor"
-                className="size-10 text-white mx-auto mt-1"
+                class="size-10 text-white mx-auto mt-1"
               >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
                 />
               </svg>
             </div>
-            <AnalyticsBarProgress total_values={20} metric={"Bounce Rate"} />
+            <div className="flex flex-col gap-2 items-start">
+              <p className="text-white text-2xl">0</p>
+              <p className="text-white/60 text-xs">
+                Users gained in total via signup
+              </p>
+            </div>
+            {/* <AnalyticsBarProgress total_values={20} metric={"Bounce Rate"} /> */}
           </div>
         </div>
       </div>
@@ -110,11 +116,11 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
           <HalfPieChart percentage={percentage} />
         </div>
       </div>
-      <CampaignStatModal
+      {/* <CampaignStatModal
         onClose={() => setShowStat(false)}
         showModalCamp={showStat}
         campaignObject={selectedCampaign}
-      />
+      /> */}
     </div>
   );
 };

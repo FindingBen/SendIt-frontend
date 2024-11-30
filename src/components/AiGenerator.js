@@ -101,6 +101,7 @@ const AiGenerator = ({
       "https://api.openai.com/v1/chat/completions",
       options
     );
+
     if (response.status === 200) {
       const data = await response.json();
 
@@ -371,7 +372,7 @@ const AiGenerator = ({
           <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700 mt-4">
             <div
               style={{ width: `${progress}%` }}
-              className={`bg-green-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full transition-all duration-500 ease-in-out`}
+              className={`bg-cyan-600 hover:bg-cyan-400 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full transition-all duration-500 ease-in-out`}
             >
               {" "}
               {progress}%
@@ -391,7 +392,7 @@ const AiGenerator = ({
             <button
               type="button"
               className={`${
-                !file ? "bg-gray-600" : "bg-green-800 hover:bg-green-400"
+                !file ? "bg-gray-600" : "bg-cyan-600 hover:bg-cyan-400"
               }  text-white font-bold py-2 px-4 border border-blue-700 rounded mt-3`}
               value={false}
               onClick={saveAIContent}

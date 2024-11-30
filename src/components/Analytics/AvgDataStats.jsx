@@ -37,28 +37,28 @@ const AvgDataStats = ({ avgData }) => {
         <TooltipContent />
       </Tooltip>
       <div className="items-justify">
-        <p className="text-lg 2xl:text-xl text-justify text-white font-semibold">
-          {avgData?.average_engagement_rate}
-        </p>
         <p className="text-white/50 font-light text-justify text-sm 2xl:text-xl">
           Avg. Session
         </p>
+        <p className="text-lg 2xl:text-xl text-justify text-white font-semibold">
+          {avgData?.average_engagement_rate ?? 0}
+        </p>
       </div>
       <div className="flex flex-col">
-        <p className="text-lg 2xl:text-xl text-white  text-justify font-semibold">
-          {avgData?.average_user_engagement} secs
-        </p>
         <p className="text-white/50 items-start text-justifyfont-light text-sm 2xl:text-xl">
           Avg. Session Duration
         </p>
+        <p className="text-lg 2xl:text-xl text-white  text-justify font-semibold">
+          {avgData?.average_user_engagement ?? 0 + " secs"}
+        </p>
       </div>
       <div className="items-start">
-        <p className="text-lg 2xl:text-xl text-white text-justify font-semibold">
-          {avgData?.average_scrolled_users.toFixed(2)}
-        </p>
         <div className="text-white/50 items-start text-sm 2xl:text-xl">
           Avg. Scrolled users
         </div>
+        <p className="text-lg 2xl:text-xl text-white text-justify font-semibold">
+          {avgData?.average_scrolled_users.toFixed(2) ?? 0}
+        </p>
       </div>
     </div>
   );

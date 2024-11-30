@@ -186,7 +186,7 @@ const Survey = ({ setComponentState, contextList, elementList, listEl }) => {
             className={`${
               !question || !questionType
                 ? "bg-gray-600"
-                : "bg-green-800 hover:bg-green-400"
+                : "bg-cyan-600 hover:bg-cyan-400"
             }  text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded-lg`}
             value={false}
             disabled={!question || !questionType}

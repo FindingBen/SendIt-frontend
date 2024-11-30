@@ -191,7 +191,7 @@ const Text = ({
       <div className="mt-3">
         <button
           type="button"
-          className="bg-green-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+          className="bg-cyan-600 hover:bg-cyan-400 text-white font-bold py-2 px-4 border rounded"
           value={false}
           onClick={saveTxt}
           style={{ marginRight: "10px" }}
@@ -201,7 +201,7 @@ const Text = ({
         </button>
         <button
           type="button"
-          className="bg-red-800 hover:bg-red-400 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+          className="bg-red-800 hover:bg-red-400 text-white font-bold py-2 px-4 border rounded"
           id="cancel"
           value={false}
           onClick={handleCancel}

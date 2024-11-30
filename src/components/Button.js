@@ -179,7 +179,7 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
         <div className="mt-3 flex flex-row relative">
           <button
             type="button"
-            className="bg-green-800 hover:bg-green-400 text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded"
+            className="bg-cyan-600 hover:bg-cyan-400 text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded"
             value={false}
             onClick={saveBtn}
             style={{ marginRight: "10px" }}
@@ -196,7 +196,7 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
           >
             Cancel
           </button>
-          <div className="absolute top-0 right-0">
+          <div className="absolute top-0 right-0 border-2 border-gray-800 rounded-lg">
             <ColorPircker colorValue={handleColor} />
           </div>
         </div>

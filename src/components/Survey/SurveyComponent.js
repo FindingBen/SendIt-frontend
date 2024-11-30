@@ -71,7 +71,7 @@ const SurveyComponent = ({
   return (
     <div className="flex flex-col items-center bg-slate-300/50 mx-2 rounded-md shadow-md">
       <div className="flex-1 p-4">
-        <p className="text-black font-sans text-xl">{question}</p>
+        <p className="text-black text-xl">{question}</p>
         {questionType === "Like/Dislike" && !response && (
           <div className="flex gap-2 mt-4">
             <button
@@ -97,7 +97,7 @@ const SurveyComponent = ({
             />
             <button
               onClick={handleNumericSubmit}
-              className="bg-blue-500 text-white px-4 py-2 mx-5 mt-2 rounded"
+              className="bg-cyan-600 hover:bg-cyan-400 text-white px-4 py-2 mx-5 mt-2 rounded"
             >
               Submit
             </button>
