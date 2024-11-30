@@ -29,11 +29,8 @@ const ContactList = () => {
   const [phone_number, setPhoneNumber] = useState();
   const [openContact, setOpenContact] = useState(false);
   const [sortOrder, setSortOrder] = useState("first_name");
+  const [search_name, setSearchName] = useState("");
   const params = useParams();
-  const trial_recipient_allowed = 10;
-  const basic_recipient_allowed = 100;
-  const silver_recipient_allowed = 1000;
-  const gold_recipient_allowed = 100000;
   const rowsPerPage = 7;
   const totalPages = Math.ceil(contacts?.length / rowsPerPage);
 
@@ -44,19 +41,34 @@ const ContactList = () => {
   useEffect(() => {
     getContacts();
     setIsLoading(true);
-  }, [sortOrder, contactId, first_name, last_name, email, phone_number]);
+  }, [
+    sortOrder,
+    contactId,
+    first_name,
+    last_name,
+    email,
+    phone_number,
+    search_name,
+  ]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  let getContacts = async (sortParam) => {
+  let getContacts = async () => {
     try {
       let url = `/api/contact_list/${params.id}`;
-
+      const queryParts = [];
       // Check if a sorting parameter is present, then include it in the URL
-      if (sortParam) {
-        url += `/?sort_by=${sortOrder}`;
+      // Add sorting parameter if set
+      if (sortOrder) queryParts.push(`sort_by=${sortOrder}`);
+
+      // Add search parameter if set
+      if (search_name) queryParts.push(`search=${search_name}`);
+
+      // Join query parameters and append to URL
+      if (queryParts.length > 0) {
+        url += `?${queryParts.join("&")}`;
       }
       let response = await axiosInstance.get(url);
       if (response.status === 200) {
@@ -86,15 +98,15 @@ const ContactList = () => {
 
   const handleSortByName = () => {
     setSortOrder(sortOrder === "first_name" ? "-first_name" : "first_name");
-    const sort = `?sort_by=${sortOrder}`;
-    getContacts(sort);
+
+    getContacts();
   };
 
   // Function to handle sorting by date created
   const handleSortByDateCreated = () => {
     setSortOrder(sortOrder === "created_at" ? "-created_at" : "created_at");
-    const sort = `?sort_by=${sortOrder}`;
-    getContacts(sort);
+
+    getContacts();
   };
 
   let deleteContact = async (id) => {
@@ -167,6 +179,12 @@ const ContactList = () => {
       console.error(error);
     }
   };
+
+  const handleSearchChange = (e) => {
+    console.log(e.target.value);
+    setSearchName(e.target?.value);
+  };
+
   return (
     <section className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:flex-row">
@@ -278,7 +296,7 @@ const ContactList = () => {
                   `}
                     onClick={handleSortByName}
                   >
-                    Sort by Date
+                    Sort by Name
                   </button>
                   <button
                     className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
@@ -310,6 +328,8 @@ const ContactList = () => {
                       id="default-search"
                       class="block w-full p-1.5 ps-10 text-sm text-gray-900 border-2 rounded-lg focus:border-gray-700 dark:bg-darkestGray border-gray-800 dark:placeholder-gray-400 dark:text-white"
                       placeholder="Search by name..."
+                      value={search_name}
+                      onChange={handleSearchChange}
                     />
                   </div>
                 </div>

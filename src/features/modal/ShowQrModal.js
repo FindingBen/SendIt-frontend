@@ -29,7 +29,7 @@ const ShowQrModal = ({ showModalQr, onClose }) => {
       console.log(response);
       if (response.status === 200) {
         console.log(response);
-        setQrImage(response.data);
+        setQrImage(response?.data);
       }
     } catch (error) {}
   };

@@ -11,24 +11,42 @@ const PurchaseHistory = () => {
 
   const rowsPerPage = 7;
   const totalPages = Math.ceil(purchases?.length / rowsPerPage);
-
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [searchId, setSearchId] = useState("");
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const paginatedData = purchases?.slice(startIndex, endIndex);
   useEffect(() => {
     //getUser();
     purchase_history();
-  }, []);
+  }, [sortOrder, searchId]);
 
   let purchase_history = async (e) => {
     try {
-      let response = await axiosInstance.get(`stripe/purchases/${currentUser}`);
+      let url = `stripe/purchases/${currentUser}`;
+      const queryParts = [];
+      if (sortOrder) queryParts.push(`sort_order=${sortOrder}`);
+      if (searchId) queryParts.push(`search=${searchId}`);
+      if (queryParts.length > 0) {
+        url += `?${queryParts.join("&")}`;
+      }
+      let response = await axiosInstance.get(url);
       if (response.status === 200) {
         setPurchases(response.data);
       }
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const handleSortByDate = () => {
+    // Toggle between 'asc' and 'desc' when the user clicks the sort button
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    purchase_history(); // Call the function to fetch sorted data
+  };
+
+  const handleSearchTerm = (e) => {
+    setSearchId(e.target?.value);
   };
 
   return (
@@ -38,7 +56,7 @@ const PurchaseHistory = () => {
           <h3 className="text-lg lg:text-xl 2xl:text-2xl font-semibold text-white">
             Purchase history
           </h3>
-          <div class="text-white flex flex-row gap-1 rounded-md hover:bg-cyan-600 smooth-hover cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 border-gray-500 border-2 p-1 lg:p-2 absolute right-0 top-5">
+          {/* <div class="text-white flex flex-row gap-1 rounded-md hover:bg-cyan-600 smooth-hover cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 border-gray-500 border-2 p-1 lg:p-2 absolute right-0 top-5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -54,7 +72,7 @@ const PurchaseHistory = () => {
               />
             </svg>
             <p>Export</p>
-          </div>
+          </div> */}
         </div>
         <div className="mainContainer xs:mx-5 lg:mx-20">
           <div className="items-center justify-center rounded-2xl mb-3 w-full bg-mainBlue border-gray-800 border-2 shadow-md">
@@ -62,7 +80,7 @@ const PurchaseHistory = () => {
               <button
                 className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-slate-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
                   `}
-                //onClick={handleSortByDateCreated}
+                onClick={handleSortByDate}
               >
                 Sort by Date
               </button>
@@ -90,6 +108,8 @@ const PurchaseHistory = () => {
                   class="block w-full p-1.5 ps-10 text-sm text-gray-900 border-2 rounded-lg focus:border-gray-700 dark:bg-darkestGray border-gray-800 dark:placeholder-gray-400 dark:text-white"
                   placeholder="Search by payment id..."
                   required
+                  value={searchId}
+                  onChange={handleSearchTerm}
                 />
               </div>
             </div>
