@@ -70,6 +70,7 @@ const Plans = () => {
         setPackages(filteredPackages);
       }
     } catch (error) {
+      setIsLoading(true);
       console.error(error);
     }
   };
@@ -109,9 +110,6 @@ const Plans = () => {
     }
   };
 
-  const toggleDrawer = () => {
-    setIsDrawerOpen(!isDrawerOpen);
-  };
 
   const elementsArray = Array.from(
     { length: packagePlan.length },
@@ -122,7 +120,7 @@ const Plans = () => {
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 items-center justify-center">
         <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
-          <h3 class="xl:text-3xl lg:text-2xl text-xl font-semibold text-left text-white mx-20">
+          <h3 class="xl:text-2xl lg:text-xl text-normal font-semibold text-left text-white mx-20">
             Package plans
           </h3>
         </div>
@@ -345,40 +343,9 @@ const Plans = () => {
               </ul>
             </div>
           ))}
-          <button
-            className={`absolute ${
-              isDrawerOpen ? "right-[260px]" : "right-[4px]"
-            } top-[44%]`}
-            onClick={toggleDrawer}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              className={`w-8 h-8 text-white ${
-                isDrawerOpen ? "rotate-180" : "rotate-0"
-              }`}
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-              />
-            </svg>
-          </button>
-          <p
-            className={`text-white text-justify absolute right-[80px] top-[220px] ${
-              isDrawerOpen && "hidden"
-            }`}
-          >
-            Need help choosing<br></br> the right plan?
-          </p>
+
           <div
-            className={`absolute top-10 -right-6 h-[428px] w-[260px] bg-slate-800 rounded-3xl transition-transform transform ${
-              isDrawerOpen ? "translate-x-0" : "translate-x-full"
-            }`}
+            className={`absolute top-10 -right-6 h-[428px] w-[260px] bg-slate-800 rounded-3xl`}
           >
             <div className="flex flex-col p-4">
               <label
@@ -420,13 +387,14 @@ const Plans = () => {
               />
               <button
                 onClick={calculatePackage}
-                className="bg-sky-800 hover:bg-sky-400 duration-300 text-white font-normal mt-2 py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
+                className="bg-cyan-600 hover:bg-cyan-400 duration-300 text-white font-normal mt-2 py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
               >
                 {loadingState ? "Calculate" : "Calculating.."}
               </button>
               {calculatedPackage && (
                 <p className="text-white font-light">
-                  Best package for you is {calculatedPackage}
+                  Best package for you is <br />
+                  <b>{calculatedPackage}</b>
                 </p>
               )}
             </div>

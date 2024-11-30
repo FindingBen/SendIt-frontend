@@ -30,11 +30,13 @@ export const MessageCard = ({
 
   return (
     <div
-      className={`grid grid-cols-5 gap-3 mb-3 2xl:text-lg h-10 items-center`}
+      className={`grid grid-cols-4 lg:grid-cols-5 gap-3 mb-3 2xl:text-lg h-10 items-center`}
       ref={dropdownRef}
     >
       <div className="text-white/90">{message.message_name}</div>
-      <div className="text-white/50">{message.created_at}</div>
+      <div className="text-white/50 md:hidden lg:block">
+        {message.created_at}
+      </div>
       <div>
         {message.status === "Draft" ? (
           <p>Unavailabe</p>
@@ -78,7 +80,7 @@ export const MessageCard = ({
           </span>
         )}
       </div>
-      <div className="flex flex-row mx-12 mt-2">
+      <div className="flex flex-row mt-2">
         <div className=" border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-purpleHaze cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
           <Link type="button" to={`/edit_message/${message.id}`}>
             <svg
@@ -87,7 +89,7 @@ export const MessageCard = ({
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-5 h-5 2xl:w-7 2xl:h-8 fill-gray-200"
+              class="lg:w-5 lg:h-5 w-4 h-4 2xl:w-7 2xl:h-8 fill-gray-200"
             >
               <path
                 stroke-linecap="round"

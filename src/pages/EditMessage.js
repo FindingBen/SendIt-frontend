@@ -300,7 +300,7 @@ const EditMessage = () => {
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
             <div className="flex flex-row">
-              <span className="xl:text-3xl lg:text-xl text-white font-semibold mx-20">
+              <span className="xl:text-2xl lg:text-xl text-normal text-white font-semibold mx-20">
                 Edit Content
               </span>
             </div>
@@ -337,11 +337,10 @@ const EditMessage = () => {
           <div className="flex flex-col lg:flex-row rounded-2xl lg:mx-10">
             <div className="flex flex-col p-10">
               <div className="flex flex-col lg:w-96 gap-2 rounded-2xl p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800">
-                <span className="text-left text-white">Campaign name</span>
                 <input
                   defaultValue={message?.message_name}
                   onChange={handleMessageName}
-                  className="flex-1 bg-white rounded-lg p-2"
+                  className="flex-1 bg-mainBlue text-white border-2 border-gray-800 rounded-lg p-2"
                 />
                 {showSaveButton && (
                   <button
@@ -361,7 +360,7 @@ const EditMessage = () => {
                   <div
                     onClick={imageStateVal ? null : () => handleClick("image")}
                     name="liClick"
-                    className="mb-3 flex flex-row rounded-md bg-white lg:px-2 lg:py-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                    className="mb-3 flex flex-row rounded-md bg-mainBlue border-2 border-gray-800 lg:px-2 lg:py-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -369,7 +368,7 @@ const EditMessage = () => {
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
                       stroke="currentColor"
-                      class="h-5 w-5 lg:h-8 lg:w-8 text-black"
+                      class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
                     >
                       <path
                         stroke-linecap="round"
@@ -377,14 +376,14 @@ const EditMessage = () => {
                         d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
                       />
                     </svg>
-                    <p className="text-black font-normal text-base text-justify my-auto">
+                    <p className="text-white/70 font-normal text-base text-justify my-auto">
                       Add Image
                     </p>
                   </div>
                   <div
                     onClick={imageStateVal ? null : () => handleClick("button")}
                     name="liClick"
-                    className="mb-3 flex flex-row rounded-md bg-white p-2 lg:px-2 lg:py-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                    className="mb-3 flex flex-row rounded-md bg-mainBlue border-2 border-gray-800 p-2 lg:px-2 lg:py-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -392,7 +391,7 @@ const EditMessage = () => {
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
                       stroke="currentColor"
-                      class="h-5 w-5 lg:h-8 lg:w-8 text-black"
+                      class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
                     >
                       <path
                         stroke-linecap="round"
@@ -400,7 +399,7 @@ const EditMessage = () => {
                         d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
                       />
                     </svg>
-                    <p className="text-black font-normal text-base text-justify my-auto">
+                    <p className="text-white/70 font-normal text-base text-justify my-auto">
                       Add CTA
                     </p>
                   </div>
@@ -409,7 +408,7 @@ const EditMessage = () => {
                   <div
                     onClick={imageStateVal ? null : () => handleClick("text")}
                     name="liClick"
-                    className="mb-3 flex flex-row rounded transition bg-white p-2 ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                    className="mb-3 flex flex-row rounded transition bg-mainBlue border-2 border-gray-800 p-2 ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -417,7 +416,7 @@ const EditMessage = () => {
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
                       stroke="currentColor"
-                      class="h-5 w-5 lg:h-8 lg:w-8 text-black"
+                      class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
                     >
                       <path
                         stroke-linecap="round"
@@ -425,14 +424,14 @@ const EditMessage = () => {
                         d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
                       />
                     </svg>
-                    <p className="text-black font-normal text-base text-justify my-auto">
+                    <p className="text-white/70 font-normal text-base text-justify my-auto">
                       Add Text
                     </p>
                   </div>
                   <div
                     onClick={imageStateVal ? null : () => handleClick("survey")}
                     name="liClick"
-                    className="mb-3 flex flex-row rounded transition bg-white p-2 ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                    className="mb-3 flex flex-row rounded transition bg-mainBlue border-2 border-gray-800 p-2 ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -440,7 +439,7 @@ const EditMessage = () => {
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
                       stroke="currentColor"
-                      class="h-5 w-5 lg:h-8 lg:w-8 text-black"
+                      class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
                     >
                       <path
                         stroke-linecap="round"
@@ -448,7 +447,7 @@ const EditMessage = () => {
                         d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"
                       />
                     </svg>
-                    <p className="text-black font-normal text-normal text-justify my-auto">
+                    <p className="text-white/70 font-normal text-normal text-justify my-auto">
                       Add Survey
                     </p>
                   </div>

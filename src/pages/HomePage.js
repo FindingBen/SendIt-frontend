@@ -252,7 +252,7 @@ const HomePage = () => {
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue ">
-            <h3 class="2xl:text-3xl lg:text-2xl text-sm font-semibold text-left text-white mx-20">
+            <h3 class="2xl:text-3xl lg:text-2xl text-normal font-semibold text-left text-white mx-20">
               Overview
             </h3>
 
@@ -262,7 +262,7 @@ const HomePage = () => {
           </div>
 
           <div className="flex flex-row mx-20">
-            <div className="flex flex-col 2xl:w-[210%]">
+            <div className="flex flex-col">
               <OverallStatistics totalValues={totalValues} />
 
               {/* table content */}
@@ -287,9 +287,9 @@ const HomePage = () => {
                   </button>
                 </div>
                 <div class="flex flex-col">
-                  <div class="grid grid-cols-5 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
-                    <div className="">NAME</div>
-                    <div>CREATED AT</div>
+                  <div class="grid grid-cols-4 lg:grid-cols-5 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
+                    <div>NAME</div>
+                    <div className="md:hidden lg:block">CREATED AT</div>
                     <div>ANALYTICS</div>
                     <div>STATUS</div>
                     <div>ACTION</div>
@@ -338,7 +338,7 @@ const HomePage = () => {
                 <ModalComponent modalType={"copy"} showModal={showCopy} />
               </div>
             </div>
-            <div className="container">
+            <div className="flex-1 items-center">
               <CompletedCampaigns
                 percentage={totalValues?.overall_rate}
                 total_values={totalValues}
