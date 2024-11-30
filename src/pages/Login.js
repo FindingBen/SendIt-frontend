@@ -181,7 +181,7 @@ const Login = () => {
                 ) : (
                   <button
                     type="submit"
-                    class="font-semibold text-sm inline-flex items-center justify-center px-3 py-2 rounded-xl leading-5 shadow-lg transition duration-150 ease-in-out w-full bg-purpleHaze hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
+                    class="font-semibold text-sm inline-flex items-center justify-center px-3 py-2 rounded-xl leading-5 shadow-lg transition duration-150 ease-in-out w-full bg-cyan-600 hover:bg-cyan-400 text-white focus:outline-none focus-visible:ring-2"
                   >
                     Login
                   </button>
@@ -207,7 +207,9 @@ const Login = () => {
         <p className="text-white opacity-60 font-light text-sm">
           © 2024 by Sendperplane
         </p>
-        <Link to={"/privacy-policy"}>Privacy</Link>
+        <Link className="mt-1 text-xs underline" to={"/privacy-policy"}>
+          Privacy
+        </Link>
       </div>
     </section>
   );

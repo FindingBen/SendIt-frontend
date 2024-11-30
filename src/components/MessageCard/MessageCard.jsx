@@ -81,7 +81,7 @@ export const MessageCard = ({
         )}
       </div>
       <div className="flex flex-row mt-2">
-        <div className=" border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-purpleHaze cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+        <div className=" border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-500 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
           <Link type="button" to={`/edit_message/${message.id}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +99,7 @@ export const MessageCard = ({
             </svg>
           </Link>
         </div>
-        <div className="border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-purpleHaze hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+        <div className="border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-500  cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
           <Link
             type="button"
             className=""
@@ -110,7 +110,7 @@ export const MessageCard = ({
               viewBox="0 0 24 24"
               strokeWidth="0.5"
               stroke="currentColor"
-              className="lg:w-5 lg:h-5 w-4 h-4 2xl:w-7 2xl:h-8 hover:fill-red-700"
+              className="lg:w-5 lg:h-5 w-4 h-4 2xl:w-7 2xl:h-8"
             >
               <path
                 strokeLinecap="round"
@@ -120,7 +120,7 @@ export const MessageCard = ({
             </svg>
           </Link>
         </div>
-        <div className="relative border-gray-800 rounded-md mx-auto my-auto p-0.5  hover:bg-purpleHaze cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+        <div className="relative border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-500 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
           <button
             id="dropdownDefaultButton"
             data-dropdown-toggle="dropdown"

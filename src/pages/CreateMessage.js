@@ -213,7 +213,7 @@ const CreateNote = () => {
   return (
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 flex flex-col">
-        <div className="flex-1 sm:px-0">
+        <div className="flex-1">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
             <div className="flex flex-row">
               <span className="lg:text-xl 2xl:text-2xl text-white font-semibold mx-20">
@@ -270,7 +270,7 @@ const CreateNote = () => {
                   </button>
                 )}
               </div>
-              <div className="flex lg:h-[70%] gap-2 lg:flex-col p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 mt-4 rounded-2xl">
+              <div className="flex lg:h-[68%] gap-2 lg:flex-col p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 mt-4 rounded-2xl">
                 <span className="text-left text-white text-normal lg:text-lg font-semibold ml-4 lg:ml-0">
                   Content elements
                 </span>
@@ -412,7 +412,7 @@ const CreateNote = () => {
                 </div>
               </div>
             </div>
-            <div className="w-[100%] h-[124px] mx-10">
+            <div className="w-[100%] h-[124px] mx-4">
               <div className="max-w-[90%] h-36 lg:mt-20">
                 {selectedComponent && componentsMap[selectedComponent]}
               </div>

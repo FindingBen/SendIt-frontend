@@ -251,7 +251,7 @@ const HomePage = () => {
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1">
-          <div className="flex justify-between items-center mb-4 h-20 bg-navBlue ">
+          <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
             <h3 class="2xl:text-3xl lg:text-2xl text-normal font-semibold text-left text-white mx-20">
               Overview
             </h3>
@@ -288,11 +288,11 @@ const HomePage = () => {
                 </div>
                 <div class="flex flex-col">
                   <div class="grid grid-cols-4 lg:grid-cols-5 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
-                    <div>NAME</div>
-                    <div className="md:hidden lg:block">CREATED AT</div>
-                    <div>ANALYTICS</div>
-                    <div>STATUS</div>
-                    <div>ACTION</div>
+                    <div>Name</div>
+                    <div className="md:hidden lg:block">Create at</div>
+                    <div>Analytics</div>
+                    <div>Status</div>
+                    <div>Action</div>
                   </div>
                   {currentMessages?.length > 0 && displayedItems ? (
                     <div>

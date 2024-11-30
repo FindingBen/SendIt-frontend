@@ -76,7 +76,7 @@ const PurchaseHistory = () => {
         </div>
         <div className="mainContainer xs:mx-5 lg:mx-20">
           <div className="items-center justify-center rounded-2xl mb-3 w-full bg-mainBlue border-gray-800 border-2 shadow-md">
-            <div className="flex flex-row space-x-2 p-2">
+            <div className="flex flex-row space-x-2 p-2 border-b border-gray-800">
               <button
                 className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-slate-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
                   `}
@@ -113,7 +113,7 @@ const PurchaseHistory = () => {
                 />
               </div>
             </div>
-            <div class="grid grid-cols-3 lg:grid-cols-5 text-normal 2xl:text-xl gap-4 grid-headers text-white/50 font-normalborder-b-2 p-2 border-gray-800">
+            <div class="grid grid-cols-3 lg:grid-cols-5 text-normal 2xl:text-xl gap-4 grid-headers text-white/50 font-normal border-b-2 p-2 border-gray-800">
               <div>Payment ID</div>
               <div className="hidden lg:block">Ammount</div>
               {/* <div className="hidden lg:block">Package Name</div> */}

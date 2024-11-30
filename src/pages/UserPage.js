@@ -70,18 +70,18 @@ const UserPage = () => {
 
   return (
     <section className="min-h-screen w-100 items-center justify-center relative">
-      <div className="flex flex-col xs:mx-3 lg:mx-20">
+      <div className="flex flex-col xs:mx-3">
         <div className="flex justify-between items-center mb-4 h-20">
-          <h3 class="xl:text-2xl lg:text-3xl text-left font-semibold text-white">
+          <h3 class="xl:text-2xl lg:text-3xl text-left font-semibold text-white mx-20">
             User page
           </h3>
-          <div class="flex flex-row items-center">
+          <div class="flex flex-row items-center mx-20">
             <SmsPill />
           </div>
         </div>
 
         <div className="flex lg:flex-row xs:flex-col lg:gap-2 mt-2 xs:items-center items-start xs:mx-5">
-          <div>
+          <div className="ml-16">
             <UserAccount />
           </div>
           <div className="flex flex-col gap-2">
