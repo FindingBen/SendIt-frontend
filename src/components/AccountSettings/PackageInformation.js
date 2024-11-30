@@ -39,7 +39,7 @@ const PackageInformation = () => {
             currentPackageState?.package === "Trial Plan"
               ? "text-white"
               : currentPackageState?.package === "Basic plan"
-              ? "text-amber-600"
+              ? "text-white"
               : currentPackageState?.package === "Silver plan"
               ? "text-gray-400"
               : currentPackageState?.package === "Gold plan"

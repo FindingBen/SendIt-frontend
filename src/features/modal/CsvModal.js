@@ -3,20 +3,23 @@ import { selectCurrentToken } from "../../redux/reducers/authSlice";
 import useAxiosInstance from "../../utils/axiosInstance";
 import Modal from "react-bootstrap/Modal";
 import { useSelector } from "react-redux";
+import { useRedux } from "../../constants/reduxImports";
 import Papa from "papaparse";
 import { useNavigate, useParams } from "react-router-dom";
 
 const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
   const [show, setShowModal] = useState(showModalCsv);
+  const { currentPackageState } = useRedux();
   const allowedExtensions = ["csv", "xlsx"];
   const [file, setFile] = useState("");
   const [error, setError] = useState("");
+  const [contacts, setContacts] = useState([]);
   const params = useParams();
   const axiosInstance = useAxiosInstance();
   const token = useSelector(selectCurrentToken);
   useEffect(() => {
     setShowModal(showModalCsv);
-  }, [showModalCsv]);
+  }, [showModalCsv, contacts]);
 
   const handleCsvFile = async (e) => {
     setError("");
@@ -40,6 +43,18 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
     }
   };
 
+  const getContacts = async () => {
+    try {
+      let response = axiosInstance.get(`/api/contact_list/${params.id}`);
+      if (response.status === 200) {
+        console.log(response.data);
+        setContacts(response.data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const handleParse = async () => {
     // If user clicks the parse button without
     // a file we show a error
@@ -57,14 +72,35 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
         skipEmptyLines: true,
       });
       const parsedData = csv?.data;
+      console.log("CSV", parsedData.length);
+      let response = await axiosInstance.get(`/api/contact_list/${params.id}`);
+      if (response.status === 200) {
+        const totalContacts = response.data.contact_list_recipients_nr;
+        //console.log(response.data);
+        console.log(totalContacts);
+        if (
+          parsedData.length + totalContacts >
+          currentPackageState.recipients_limit
+        ) {
+          console.log("SS");
+          setError(
+            "You cannot upload more contacts than your recipient limit."
+          );
+          return;
+        } else {
+          await createContact(parsedData);
+        }
 
-      await createContact(parsedData);
-      closeModal()
+        closeModal();
+      }
+
+      closeModal();
     };
     reader.readAsText(file);
   };
 
   const createContact = async (parsedData) => {
+    console.log("pass");
     for (const contact of parsedData) {
       try {
         let response = await axiosInstance.post(
@@ -85,12 +121,9 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
         );
 
         if (response.status === 200 || 201) {
-
           newContacts((prevContacts) => [...prevContacts, response.data]);
         }
-
       } catch (error) {
-
         setError(error.response.data);
       }
     }
@@ -151,7 +184,7 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
                     type="button"
                     onClick={handleParse}
                   >
-                    Save Changes
+                    Upload
                   </button>
                 </div>
               </div>

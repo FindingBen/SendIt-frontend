@@ -359,7 +359,7 @@ const ContactList = () => {
                         } font-light`}
                       >
                         <div
-                          className={`grid grid-cols-5 2xl:text-lg gap-4 p-2 border-b-2 border-gray-800 ${
+                          className={`grid grid-cols-5 font-semibold 2xl:text-lg gap-4 p-2 border-b-2 border-gray-800 ${
                             isLastItem
                               ? "rounded-b-2xl 2xl:text-lg border-none"
                               : ""

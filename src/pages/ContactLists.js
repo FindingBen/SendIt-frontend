@@ -131,11 +131,11 @@ const ContactList = () => {
                 </button>
               </div>
               <div class="grid grid-cols-4 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
-                <div className="">NAME</div>
-                <div>CREATED AT</div>
-                <div>RECIPIENTS</div>
+                <div className="">Name</div>
+                <div>Created at</div>
+                <div>Recipients</div>
 
-                <div>ACTION</div>
+                <div>Action</div>
               </div>
               {currentContactList.contactLists?.map((conList, index) => {
                 const isLastItem =
@@ -143,7 +143,7 @@ const ContactList = () => {
                 const evenRow = index % 2 === 0;
                 return (
                   <div
-                    className={` font-light ${
+                    className={`font-light ${
                       evenRow
                         ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
                         : "bg-mainBlue"
@@ -151,7 +151,7 @@ const ContactList = () => {
                     key={conList.id}
                   >
                     <motion.div
-                      className={`grid grid-cols-4 gap-4 p-2 text-white border-gray-800 ${
+                      className={`grid grid-cols-4 font-semibold gap-4 p-2 text-white border-gray-800 ${
                         isLastItem ? "rounded-b-2xl" : "border-b-2"
                       }`}
                       key={conList.id}
@@ -223,7 +223,7 @@ const ContactList = () => {
                 down below:
               </p>
               <div className="flex flex-col mt-5">
-                <div className="flex flex-row">
+                <div className="flex flex-row font-semibold">
                   <p className="text-start text-white 2xl:text-lg">
                     Contact Lists
                   </p>
@@ -244,7 +244,7 @@ const ContactList = () => {
                   </div>
                 </div>
                 <div className="flex flex-row mt-4">
-                  <p className="text-start text-white 2xl:text-lg">
+                  <p className="text-start font-semibold text-white 2xl:text-lg">
                     Recipients
                   </p>
                   <div class="w-[50%] bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3 relative">
