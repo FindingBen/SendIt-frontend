@@ -181,7 +181,7 @@ const SmsEditor = () => {
   };
 
   const canScheduleSms = () => {
-    if (currentPackageState === "Basic package") {
+    if (currentPackageState === "Basic package" || "Trial Plan") {
       return false;
     }
     return true;
@@ -206,13 +206,13 @@ const SmsEditor = () => {
           <div className="grid grid-cols-2 gap-4 rounded-md mx-20">
             <div className="grid gap-2 bg-mainBlue border-gray-800 border-2 rounded-2xl relative">
               <div class="rounded p-10">
-                <h3 class="text-2xl text-left font-extralight text-white mb-4">
+                <h3 class="text-2xl text-left font-semibold text-white mb-4">
                   Sms send
                 </h3>
                 <div>
                   <label
                     for="first_name"
-                    className="block mb-2 text-sm text-left font-light text-gray-300 dark:text-white"
+                    className="block mb-2 text-sm text-left font-semibold text-gray-300 dark:text-white"
                   >
                     From:
                   </label>
@@ -222,17 +222,17 @@ const SmsEditor = () => {
                     name="from"
                     disabled
                     value={"(+1) 2012550867"}
-                    className="block bg-gray-600 mt-1 text-light font-light py-2 px-4 rounded w-50"
+                    className="block bg-mainBlue text-white border-2 border-gray-800 mt-1 text-semibold font-light py-2 px-4 rounded w-50"
                   />
                 </div>
 
                 <div>
-                  <label className="block mb-2 mt-4 text-sm text-left font-light text-gray-300 dark:text-white">
+                  <label className="block mb-2 mt-4 text-sm text-left font-semibold text-gray-300 dark:text-white">
                     Select contact list:
                   </label>
 
                   <select
-                    className="block bg-gray-300 w-50 text-gray-700 divide-y p-2 divide-gray-100 rounded-lg"
+                    className="block bg-mainBlue text-white border-2 border-gray-800 w-50 divide-y p-2 divide-gray-100 rounded-lg"
                     onChange={handleChoice}
                   >
                     <option value={"Choose"}>Choose your list</option>
@@ -240,7 +240,7 @@ const SmsEditor = () => {
                       <option
                         key={item.id}
                         value={JSON.stringify(item)}
-                        className="text-gray-700"
+                        className="text-white font-semibold"
                       >
                         {item.list_name}
                       </option>
@@ -249,7 +249,7 @@ const SmsEditor = () => {
                 </div>
                 <br></br>
                 <div className="form-group purple-border text-gray-100 rounded-lg">
-                  <label className="block mb-2 text-sm text-left font-light text-gray-300 dark:text-white">
+                  <label className="block mb-2 text-sm text-left font-semibol dtext-white">
                     Sms text:
                   </label>
 
@@ -257,7 +257,7 @@ const SmsEditor = () => {
                     <textarea
                       id="smsTextArea"
                       maxLength={maxCharacters}
-                      className="block p-2.5 h-2/4 w-[65%] text-sm text-gray-50 bg-gray-400 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                      className="block p-2.5 h-2/4 w-[65%] text-sm text-gray-800 font-semibold bg-gray-400 rounded-lg border border-gray-300"
                       placeholder="Write your sms here..."
                       onChange={handleSms}
                       value={smsText}
@@ -271,7 +271,13 @@ const SmsEditor = () => {
                         }}
                         type="submit"
                         color="dark"
-                        className="bg-cyan-600 hover:bg-cyan-400 hover:cursor-pointer text-white font-normal py-2 px-3 rounded text-sm xl:text-base mt-4"
+                        className={`text-white font-normal py-2 px-3 rounded text-sm xl:text-base mt-4 ${
+                          recipients.contact_lenght === 0 ||
+                          !recipients ||
+                          smsText.length === 0
+                            ? "bg-gray-600 cursor-not-allowed" // Disabled state styling
+                            : "bg-cyan-600 hover:bg-cyan-400 cursor-pointer" // Default state styling
+                        }`}
                         disabled={
                           recipients.contact_lenght === 0 ||
                           !recipients ||

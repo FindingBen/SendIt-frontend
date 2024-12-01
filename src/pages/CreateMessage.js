@@ -216,7 +216,7 @@ const CreateNote = () => {
         <div className="flex-1">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
             <div className="flex flex-row">
-              <span className="lg:text-xl 2xl:text-2xl text-white font-semibold mx-20">
+              <span className="lg:text-xl 2xl:text-2xl text-lg text-white font-semibold mx-20">
                 Create Content
               </span>
             </div>

@@ -149,15 +149,15 @@ const HomePage = () => {
     }
   };
 
-  const getCampaignStats = async () => {
-    try {
-      let response = await axiosInstance.get("sms/campaign-stats");
-      console.log(response.data);
-      if (response.status === 200) {
-        dispatch(setCampaigns(response.data));
-      }
-    } catch (error) {}
-  };
+  // const getCampaignStats = async () => {
+  //   try {
+  //     let response = await axiosInstance.get("sms/campaign-stats");
+  //     console.log(response.data);
+  //     if (response.status === 200) {
+  //       dispatch(setCampaigns(response.data));
+  //     }
+  //   } catch (error) {}
+  // };
 
   const deleteMessage = (id) => {
     setMessageId(id);
@@ -252,7 +252,7 @@ const HomePage = () => {
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
-            <h3 class="2xl:text-3xl lg:text-2xl text-normal font-semibold text-left text-white mx-20">
+            <h3 class="2xl:text-3xl lg:text-2xl text-lg font-semibold text-left text-white mx-20">
               Overview
             </h3>
 

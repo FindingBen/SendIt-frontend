@@ -42,20 +42,6 @@ const UserPage = () => {
     setTimeout(() => setMsg(), 3000);
   }, [errorMsg, msg]);
 
-  let getUser = async () => {
-    try {
-      let response = await axiosInstance.get(`/api/user_account/${params.id}/`);
-
-      if (response.status === 200) {
-        setUser(response.data);
-      } else {
-        localStorage.removeItem("refreshToken");
-        navigate("/login");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   let purchase_history = async (e) => {
     try {

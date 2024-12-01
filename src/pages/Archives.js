@@ -22,15 +22,16 @@ const Archives = () => {
   const [openCont, setOpenCont] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [show, setShow] = useState(false);
+  const [search_name, setSearchName] = useState("");
   const [showReDraft, setShowReDraft] = useState(false);
   const [messageId, setMessageId] = useState();
   const [listUpdated, setListUpdated] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
-  const [sortOrder, setSortOrder] = useState("");
+  const [sortOrder, setSortOrder] = useState("created_at");
 
   useEffect(() => {
     getArchives();
-  }, [listUpdated, isUpdated]);
+  }, [listUpdated, isUpdated, search_name, sortOrder]);
 
   const itemsPerPage = 9;
   const totalPages = Math.ceil(archives?.length / itemsPerPage);
@@ -39,7 +40,7 @@ const Archives = () => {
     setCurrentPage(page);
     setInitialLoad(false);
   };
-
+  console.log(archives);
   const deleteMessage = (id) => {
     setMessageId(id);
     setShow(true);
@@ -55,9 +56,17 @@ const Archives = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedItems = archives?.slice(startIndex, endIndex);
+
   const getArchives = async () => {
     try {
-      let response = await axiosInstance.get(`/api/notes/?archive=true`);
+      let url = "/api/notes/?archive=true";
+      const queryParts = [];
+      //if (sortOrder) queryParts.push(`sort_by=${sortOrder}`);
+      if (search_name) queryParts.push(`search=${search_name}`);
+      if (queryParts.length > 0) {
+        url += `?${queryParts.join("&")}`;
+      }
+      let response = await axiosInstance.get(url);
       if (response.status === 200) {
         setArchives(response?.data.messages);
       }
@@ -84,12 +93,21 @@ const Archives = () => {
     setListUpdated(!listUpdated);
   };
 
+  const handleSortByDate = () => {
+    setSortOrder(sortOrder === "-created_at" ? "created_at" : "-created_at");
+  };
+
+  const handleSearchChange = (e) => {
+    console.log(e.target.value);
+    setSearchName(e.target?.value);
+  };
+
   return (
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
-            <h3 class="xl:text-3xl lg:text-2xl text-xl font-semibold text-left text-white mx-20">
+            <h3 class="xl:text-2xl lg:text-xl text-lg font-semibold text-left text-white mx-20">
               Archives
             </h3>
 
@@ -98,23 +116,47 @@ const Archives = () => {
             </div>
           </div>
           <div className="w-full">
-            <div className="flex flex-row relative mx-20">
-              <p className="text-white font-semibold text-xl xl:text-2xl flex items-start my-3 mt-3">
-                Archived messages
-              </p>
-              <button
-                //onClick={handleSortButtonClick}
-                className="px-3 py-2 text-white font-light text-sm rounded-lg cursor-pointer bg-navBlue border-2 border-gray-800 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-3"
-              >
-                Sort by date
-              </button>
-            </div>
             <div
-              class={`bg-navBlue border-2 border-gray-800 rounded-2xl shadow-lg mx-20 ${
+              class={`bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl mx-20 ${
                 openCont ? "w-[60%]" : ""
               }`}
             >
-              <div class="grid grid-cols-5 gap-4 grid-headers border-b-2 p-2 border-gray-800 text-white/50 font-normal text-sm xl:text-md py-2 px-4 mb-2">
+              <div className="flex flex-row space-x-2 p-2 border-b border-gray-800">
+                <button
+                  onClick={handleSortByDate}
+                  className="px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray"
+                >
+                  Sort by date
+                </button>
+                <div class="relative w-[20%]">
+                  <div class="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
+                    <svg
+                      class="w-4 h-4 text-gray-500 ml-2 dark:text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="search"
+                    id="default-search"
+                    class="block w-full p-1.5 ps-10 text-sm text-gray-900 border-2 rounded-lg focus:border-gray-700 bg-darkestGray border-gray-800 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Search by campaign name..."
+                    value={search_name}
+                    onChange={handleSearchChange}
+                  />
+                </div>
+              </div>
+              <div class="grid grid-cols-5 gap-4 font-semibold grid-headers border-b-2 p-2 border-gray-800 text-white/50 text-sm xl:text-md py-2 px-4">
                 <div>Name</div>
                 <div>Archived</div>
                 <div>View</div>
@@ -125,16 +167,28 @@ const Archives = () => {
                 <div>
                   {displayedItems?.map((message, index) => {
                     const isEvenRow = index % 2 === 0; // Check if the row is even
-                    const rowClassName = isEvenRow
-                      ? "border-b border-white/50"
-                      : "";
+
+                    const isLastItem = index === displayedItems.length - 1;
+
                     return (
-                      <motion.div
-                        className={` text-white font-normal text-xs lg:text-sm`}
+                      <div
                         key={message.id}
+                        className={`${
+                          messageId === message.id
+                            ? "bg-cyan-700 text-white font-semibold transition duration-300"
+                            : isEvenRow
+                            ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue text-white"
+                            : "bg-mainBlue text-white"
+                        } ${
+                          isLastItem ? "rounded-b-2xl border-none" : ""
+                        } font-light`}
                       >
                         <div
-                          className={`grid grid-cols-5 gap-3 mb-2 py-2 px-4`}
+                          className={`grid grid-cols-5 font-semibold 2xl:text-lg gap-4 p-2 border-b-2 border-gray-800 ${
+                            isLastItem
+                              ? "rounded-b-2xl 2xl:text-lg border-none"
+                              : ""
+                          }`}
                         >
                           <p>{message.message_name}</p>
                           <div>{message.created_at}</div>
@@ -191,21 +245,7 @@ const Archives = () => {
                             </div>
                           </div>
                         </div>
-                        <DeleteMessageModal
-                          messageId={messageId}
-                          showModalDelete={show}
-                          onClose={() => setShow(false)}
-                          setUpdated={handleListUpdate}
-                          listUpdated={listUpdated}
-                        />
-                        <ReDraftModal
-                          messageId={messageId}
-                          showReDraft={showReDraft}
-                          onClose={() => setShowReDraft(false)}
-                          setUpdated={handleListUpdate}
-                          listUpdated={isUpdated}
-                        />
-                      </motion.div>
+                      </div>
                     );
                   })}
                 </div>
@@ -277,6 +317,20 @@ const Archives = () => {
             )}
           </div>
         </div>
+        <DeleteMessageModal
+          messageId={messageId}
+          showModalDelete={show}
+          onClose={() => setShow(false)}
+          setUpdated={handleListUpdate}
+          listUpdated={listUpdated}
+        />
+        <ReDraftModal
+          messageId={messageId}
+          showReDraft={showReDraft}
+          onClose={() => setShowReDraft(false)}
+          setUpdated={handleListUpdate}
+          listUpdated={isUpdated}
+        />
       </div>
     </section>
   );
