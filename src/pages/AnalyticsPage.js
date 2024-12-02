@@ -91,7 +91,7 @@ const AnalyticsPage = () => {
               <h3 class="xl:text-2xl text-xl font-semibold text-left text-white mx-20">
                 Analytics dashboard
               </h3>
-              <div class="text-white flex flex-row gap-1 rounded-md mx-20 hover:bg-cyan-600 smooth-hover cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 border-gray-500 border-2 p-1 lg:p-2 absolute right-0 top-5">
+              {/* <div class="text-white flex flex-row gap-1 rounded-md mx-20 hover:bg-cyan-600 smooth-hover cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 border-gray-500 border-2 p-1 lg:p-2 absolute right-0 top-5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -107,7 +107,7 @@ const AnalyticsPage = () => {
                   />
                 </svg>
                 <p>Export</p>
-              </div>
+              </div> */}
             </div>
 
             <div className="grid grid-cols-3 grid-rows-1 gap-2 mx-20">

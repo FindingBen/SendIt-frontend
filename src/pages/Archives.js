@@ -59,9 +59,9 @@ const Archives = () => {
 
   const getArchives = async () => {
     try {
-      let url = "/api/notes/?archive=true";
+      let url = "/api/view_archives/";
       const queryParts = [];
-      //if (sortOrder) queryParts.push(`sort_by=${sortOrder}`);
+      if (sortOrder) queryParts.push(`sort_by=${sortOrder}`);
       if (search_name) queryParts.push(`search=${search_name}`);
       if (queryParts.length > 0) {
         url += `?${queryParts.join("&")}`;

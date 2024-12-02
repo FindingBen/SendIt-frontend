@@ -20,7 +20,7 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
               Account Analytics
             </p>
           </div>
-          <div class="text-white flex flex-row gap-1 rounded-md hover:bg-cyan-600 smooth-hover cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 border-gray-500 border-2 p-1 lg:p-2 absolute right-5 top-5">
+          {/* <div class="text-white flex flex-row gap-1 rounded-md hover:bg-cyan-600 smooth-hover cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 border-gray-500 border-2 p-1 lg:p-2 absolute right-5 top-5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -36,7 +36,7 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
               />
             </svg>
             <p>Export</p>
-          </div>
+          </div> */}
         </div>
         <div>
           <div className="flex flex-row gap-4 mt-4 rounded-lg">
