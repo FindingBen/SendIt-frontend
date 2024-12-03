@@ -6,7 +6,7 @@ const StatCards = ({ views, sms }) => {
   return (
     <div className="flex flex-row gap-2 w-full">
       <div className="flex flex-col gap-2">
-        <div className="p-2 flex flex-row items-center h-[125px] lg:w-[220px] xl:w-[240px] 2xl:h-[170px] 2xl:w-[313px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+        <div className="analytics-cards">
           <div className="flex items-start p-2">
             {views ? (
               <motion.div
@@ -48,7 +48,7 @@ const StatCards = ({ views, sms }) => {
           </svg>
           <Tooltip id="my-tooltip" />
         </div>
-        <div className="p-2 flex flex-row items-center h-[125px] lg:w-[220px] xl:w-[240px] 2xl:h-[170px] 2xl:w-[313px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+        <div className="analytics-cards">
           {sms?.has_button ? (
             <div>
               <div className="flex items-start p-2">
@@ -76,7 +76,9 @@ const StatCards = ({ views, sms }) => {
               </p>
             </div>
           ) : (
-            <></>
+            <p className="text-white/70 font-semibold items-center mx-auto">
+              No Button
+            </p>
           )}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +101,7 @@ const StatCards = ({ views, sms }) => {
       </div>
 
       <div className="flex flex-col">
-        <div className="p-2 flex flex-row items-center h-[125px] lg:w-[220px] xl:w-[240px] 2xl:h-[170px] 2xl:w-[313px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+        <div className="analytics-cards">
           <div className="flex items-start p-2">
             {views ? (
               <motion.div
@@ -141,7 +143,7 @@ const StatCards = ({ views, sms }) => {
           </svg>
           <Tooltip id="my-tooltip" />
         </div>
-        <div className="p-2 mt-2 flex flex-row items-center h-[125px] lg:w-[220px] xl:w-[240px] 2xl:h-[170px] 2xl:w-[313px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+        <div className="analytics-cards mt-2">
           <div className="flex items-start p-2">
             {views ? (
               <motion.div

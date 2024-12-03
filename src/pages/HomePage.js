@@ -60,7 +60,7 @@ const HomePage = () => {
   yesterday.setDate(today.getDate() - 1);
   const formattedStartDate = formatDate(yesterday);
   const formattedEndDate = formatDate(today);
-  console.log(currentUser);
+
   useEffect(() => {
     // Fetch data only on initial load and when user is logged in
     if (!currentMessages?.length) {

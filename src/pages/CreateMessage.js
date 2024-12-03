@@ -247,9 +247,9 @@ const CreateNote = () => {
               )}
             </div>
           </div>
-          <div className="flex flex-col lg:flex-row rounded-2xl lg:mx-10">
+          <div className="flex flex-col md:flex-row rounded-2xl md:mx-10">
             <div className="flex flex-col p-10">
-              <div className="flex flex-col lg:w-96 gap-2 rounded-2xl p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800">
+              <div className="flex flex-col md:w-80 gap-2 rounded-2xl p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800">
                 {errorMsg && (
                   <p className="text-red-600 font-light ml-2">{errorMsg}</p>
                 )}
@@ -270,8 +270,8 @@ const CreateNote = () => {
                   </button>
                 )}
               </div>
-              <div className="flex lg:h-[68%] gap-2 lg:flex-col p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 mt-4 rounded-2xl">
-                <span className="text-left text-white text-normal lg:text-lg font-semibold ml-4 lg:ml-0">
+              <div className="flex lg:h-[68%] gap-2 md:flex-col p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 mt-4 rounded-2xl">
+                <span className="text-left text-white text-normal lg:text-lg font-semibold ml-4 md:ml-0">
                   Content elements
                 </span>
                 <p className="text-white/70 text-start text-sm">
@@ -282,7 +282,7 @@ const CreateNote = () => {
                   <div
                     onClick={imageStateVal ? null : () => handleClick("image")}
                     name="liClick"
-                    className="mb-3 flex flex-row rounded-md bg-mainBlue border-2 border-gray-800 lg:px-2 lg:py-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-500 duration-300 cursor-pointer"
+                    className="component-button-create-content"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -306,7 +306,7 @@ const CreateNote = () => {
                   <div
                     onClick={imageStateVal ? null : () => handleClick("button")}
                     name="liClick"
-                    className="mb-3 flex flex-row rounded-md bg-mainBlue border-2 border-gray-800 p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                    className="component-button-create-content"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -332,7 +332,7 @@ const CreateNote = () => {
                   <div
                     onClick={imageStateVal ? null : () => handleClick("text")}
                     name="liClick"
-                    className="mb-3 flex flex-row rounded-md bg-mainBlue border-2 border-gray-800 p-2 lg:px-2 lg:py-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                    className="component-button-create-content"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -356,7 +356,7 @@ const CreateNote = () => {
                   <div
                     onClick={imageStateVal ? null : () => handleClick("survey")}
                     name="liClick"
-                    className="mb-3 flex flex-row rounded transition bg-mainBlue border-2 border-gray-800 p-2 ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                    className="component-button-create-content"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -385,7 +385,7 @@ const CreateNote = () => {
                         imageStateVal ? null : () => handleClick("aiContent")
                       }
                       name="liClick"
-                      className="mb-2 flex flex-row rounded-md p-2 bg-mainBlue border-2 border-gray-800 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 hover:bg-gray-700 duration-300 cursor-pointer"
+                      className="component-button-create-content"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -417,7 +417,7 @@ const CreateNote = () => {
                 {selectedComponent && componentsMap[selectedComponent]}
               </div>
             </div>
-            <div className="p-10 mt-20 lg:mt-0">
+            <div className="p-10 mt-20 md:mt-0">
               <PreviewPanel
                 device={device}
                 handleClicked={handleClicked}

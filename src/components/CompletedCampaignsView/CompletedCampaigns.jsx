@@ -16,7 +16,7 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
       <div className="mb-3">
         <div className="flex flex-row mb-2">
           <div>
-            <p className="text-white text-2xl text-start font-semibold">
+            <p className="text-white text-xl lg:text-2xl text-start font-semibold">
               Account Analytics
             </p>
           </div>
@@ -40,14 +40,14 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
         </div>
         <div>
           <div className="flex flex-row gap-4 mt-4 rounded-lg">
-            <div className="justify-center h-16 w-16 p-1 bg-mainBlue border-2 border-gray-800 rounded-lg">
+            <div className="account-analytics-card">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="size-10 text-white mx-auto mt-1"
+                className="lg:size-10 size-8 text-white mx-auto mt-1"
               >
                 <path
                   stroke-linecap="round"
@@ -62,14 +62,14 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
             />
           </div>
           <div className="flex flex-row mt-2 gap-4 rounded-lg">
-            <div className="justify-center h-16 w-16 p-1 bg-mainBlue border-2 border-gray-800 rounded-lg">
+            <div className="account-analytics-card">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                className="size-10 text-white mx-auto mt-1"
+                className="lg:size-10 size-8 text-white mx-auto mt-1"
               >
                 <path
                   stroke-linecap="round"
@@ -84,14 +84,14 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
             />
           </div>
           <div className="flex flex-row gap-4 mt-2 w-full rounded-lg">
-            <div className="justify-center h-16 w-16 p-1 bg-mainBlue border-2 border-gray-800 rounded-lg">
+            <div className="account-analytics-card">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="size-10 text-white mx-auto mt-1"
+                class="lg:size-10 size-8 text-white mx-auto mt-1"
               >
                 <path
                   stroke-linecap="round"

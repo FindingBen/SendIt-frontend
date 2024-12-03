@@ -5,7 +5,7 @@ import { Tooltip } from "react-tooltip";
 const OverallStatistics = ({ totalValues }) => {
   return (
     <div className="flex w-full gap-4">
-      <div className="flex flex-row items-center md:w-[230px] lg:w-[256px] h-[120px] 2xl:w-[352px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+      <div className="total-analytics-cards">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           {totalValues ? (
             <motion.div
@@ -16,7 +16,7 @@ const OverallStatistics = ({ totalValues }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white text-5xl 2xl:text-6xl font-normal absolute top-5"
+              className="total-analytics-text"
             >
               {totalValues.total_sends ?? 0}
             </motion.div>
@@ -49,7 +49,7 @@ const OverallStatistics = ({ totalValues }) => {
         <Tooltip id="my-tooltip" />
       </div>
 
-      <div className="flex flex-row items-center md:w-[230px] lg:w-[256px] h-[120px] 2xl:w-[352px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+      <div className="total-analytics-cards">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           {totalValues ? (
             <motion.div
@@ -60,7 +60,7 @@ const OverallStatistics = ({ totalValues }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white text-5xl 2xl:text-6xl font-semibold absolute top-5"
+              className="total-analytics-text"
             >
               {totalValues.total_views ?? 0}
             </motion.div>
@@ -92,7 +92,7 @@ const OverallStatistics = ({ totalValues }) => {
         <Tooltip id="my-tooltip" />
       </div>
 
-      <div className="flex flex-row items-center md:w-[230px] lg:w-[256px] h-[120px] 2xl:w-[352px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+      <div className="total-analytics-cards">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
           {totalValues ? (
             <motion.div
@@ -103,10 +103,10 @@ const OverallStatistics = ({ totalValues }) => {
                 delay: 0.1,
                 ease: [0, 0.41, 0.1, 1.01],
               }}
-              className="text-white text-5xl 2xl:text-6xl font-semibold absolute top-5 flex flex-row"
+              className="total-analytics-text flex flex-row gap-2"
             >
               {totalValues.total_spend ?? 0}
-              <p className="lg:text-xl font-light">dkk</p>
+              <p className="text-lg lg:text-xl font-light">dkk</p>
             </motion.div>
           ) : (
             <p className="text-white font-semibold lg:text-2xl ml-2">
