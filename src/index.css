@@ -294,3 +294,9 @@
     @apply p-2 flex flex-row items-center h-[125px] w-[192px] lg:w-[220px] xl:w-[240px] 2xl:h-[170px] 2xl:w-[313px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative;
   }
 }
+
+@layer components {
+  .password-change-inputs {
+    @apply block bg-mainBlue border-2 border-gray-800 hover:bg-gray-600 duration-200 font-light 2xl:text-lg text-base rounded-md py-1 px-4 md:w-[230px] text-center;
+  }
+}

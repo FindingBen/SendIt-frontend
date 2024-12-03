@@ -6,7 +6,7 @@ const PackageInformation = () => {
   const { currentPackageState } = useRedux();
   console.log(currentPackageState);
   return (
-    <div className="flex flex-col rounded-2xl p-4 xs:mt-2 lg:mt-0 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 border-2 lg:w-[400px] xs:w-[330px] 2xl:w-[450px] h-[290px] lg:h-[290px] 2xl:h-[360px]">
+    <div className="flex flex-col rounded-2xl p-4 xs:mt-2 md:mt-0 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 border-2 lg:w-[400px] xs:w-[330px] 2xl:w-[450px] h-[290px] lg:h-[290px] 2xl:h-[360px]">
       <h3 class="flex flex-row xs:text-normal lg:text-xl 2xl:text-2xl text-left mb-4 font-semibold text-white relative">
         Package Information
         <Link

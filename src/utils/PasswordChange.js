@@ -83,66 +83,59 @@ const PasswordChange = ({ user_obj }) => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-lighterMainBlue to-mainBlue shadow-md border-gray-800 border-2 rounded-2xl p-4 xs:mt-2 lg:mt-0 xs:w-[330px] lg:w-[400px] 2xl:w-[450px] lg:mr-2 lg:h-[240px] 2xl:h-[270px]">
+    <div className="bg-gradient-to-b from-lighterMainBlue to-mainBlue shadow-md border-gray-800 border-2 rounded-2xl p-4 xs:mt-2 md:mt-0 xs:w-[330px] lg:w-[400px] 2xl:w-[450px] md:mr-2 md:h-[240px] 2xl:h-[270px]">
       <div className="flex flex-col">
-        <h3 class="flex flex-row xs:text-normal lg:text-xl 2xl:text-2xl text-left font-semibold text-white relative">
-          Change password
-          <div className="px-2 py-2 flex flex-row gap-1 bg-blue-700 text-white xs:text-xs lg:text-normal border-gray-800 rounded-md absolute right-0 top-0 hover:bg-blue-500 cursor-pointer">
-            <p
-              className="lg:text-normal xs:text-xs 2xl:text-normal"
-              onClick={() => setIsEditing(true)}
-            >
-              Change
-            </p>
-          </div>
-        </h3>
+        {!isEditing ? (
+          <h3 class="flex flex-row xs:text-normal lg:text-xl 2xl:text-2xl text-left font-semibold text-white relative">
+            Change password
+            <div className="px-2 py-2 flex flex-row gap-1 bg-cyan-700 text-white xs:text-xs lg:text-normal border-gray-800 rounded-md absolute right-0 top-0 hover:bg-blue-500 cursor-pointer">
+              <p
+                className="lg:text-normal xs:text-xs 2xl:text-normal"
+                onClick={() => setIsEditing(true)}
+              >
+                Change
+              </p>
+            </div>
+          </h3>
+        ) : (
+          <></>
+        )}
 
         {isEditing ? (
-          <div>
-            <div className="flex flex-row mt-2 relative">
-              <label className="block mb-2 text-ss xl:text-normal 2xl:text-lg text-left font-normal text-gray-300 dark:text-white">
-                Enter old password
-              </label>
-
+          <div className="flex flex-col items-center">
+            <div className="flex flex-row mt-2 gap-2 relative">
               <input
                 type="password"
-                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-normal 2xl:text-lg text-ss rounded-md py-1 px-4 absolute right-0 lg:w-[170px]"
-                placeholder="Enter your old password"
+                className="password-change-inputs"
                 onChange={handleOldPass}
+                placeholder="Enter your old password.."
               ></input>
             </div>
             <div className="flex flex-row mt-2 relative">
-              <label className="block text-ss xl:text-normal text-left 2xl:text-lg font-normal text-gray-300 dark:text-white">
-                Enter new password
-              </label>
-
               <input
                 type="password"
-                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-normal 2xl:text-lg text-ss rounded-lg py-1 px-4 absolute right-0 lg:w-[170px]"
+                className="password-change-inputs"
                 placeholder="Enter your new password"
                 onChange={handleNewPass}
               ></input>
             </div>
             <div className="flex flex-row mt-3 relative">
-              <label className="block text-ss xl:text-normal text-left 2xl:text-lg font-normal text-gray-300 dark:text-white">
-                Repeat new password
-              </label>
               <input
                 type="password"
-                className="block bg-gray-500 hover:bg-gray-400 duration-200 2xl:text-lg text-light font-light xl:text-normal text-ss rounded-lg py-1 px-4 absolute right-0 lg:w-[170px]"
+                className="password-change-inputs"
                 placeholder="Re-enter your new password"
                 onChange={handleReNewPass}
               ></input>
             </div>
             <div className="flex flex-row gap-2">
               <button
-                className="flex items-start bg-sky-800 hover:bg-sky-400 duration-300 text-white xl:text-normal text-ss font-light py-1 px-2 xl:py-2 xl:px-4 rounded w-20 mt-4"
+                className="flex items-start bg-cyan-800 hover:bg-cyan-400 duration-300 text-white xl:text-normal text-normal md:text-sm font-normal py-1 px-2 xl:py-2 xl:px-4 rounded w-20 mt-4"
                 onClick={passChange}
               >
                 {isLoading ? (
                   <svg
                     aria-hidden="true"
-                    class="w-6 h-6 mx-auto text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    class="w-6 h-6 mx-auto text-gray-200 animate-spin dark:text-gray-600 fill-cyan-600"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -157,17 +150,17 @@ const PasswordChange = ({ user_obj }) => {
                     />
                   </svg>
                 ) : (
-                  <p className="ml-1">Change</p>
+                  <p className="mx-auto">Change</p>
                 )}
               </button>
               <button
-                className="flex items-start bg-red-800 hover:bg-sky-400 duration-300 text-white xl:text-normal text-ss font-light py-1 px-2 xl:py-2 xl:px-4 rounded w-20 mt-4"
+                className="flex items-center bg-red-800 hover:bg-red-400 duration-300 text-white xl:text-normal md:text-sm font-normal py-1 px-2 xl:py-2 xl:px-4 rounded w-20 mt-4"
                 onClick={() => setIsEditing(false)}
               >
                 {isLoading ? (
                   <svg
                     aria-hidden="true"
-                    class="w-6 h-6 mx-auto text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                    class="w-6 h-6 mx-auto text-gray-200 animate-spin dark:text-gray-600 fill-cyan-600"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -182,7 +175,7 @@ const PasswordChange = ({ user_obj }) => {
                     />
                   </svg>
                 ) : (
-                  <p className="ml-1">Cancel</p>
+                  <p className="mx-auto">Cancel</p>
                 )}
               </button>
             </div>
