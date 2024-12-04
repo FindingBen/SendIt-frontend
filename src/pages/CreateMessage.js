@@ -56,6 +56,15 @@ const CreateNote = () => {
     dispatch(setOpenModal({ open: false }));
   }, [elementContextList, elementsList, currentModalState, isLoading]);
 
+  useEffect(() => {
+    if (errorMsg) {
+      // Only run the timer if there's an error message
+      const timer = setTimeout(() => setErrorMsg(""), 3000);
+
+      return () => clearTimeout(timer); // Clear the timer when the component unmounts or `errorMsg` changes
+    }
+  }, [errorMsg]);
+
   const handleClick = (componentKey) => {
     setSelectedComponent((prevSelectedComponent) =>
       prevSelectedComponent === componentKey ? null : componentKey
@@ -120,6 +129,7 @@ const CreateNote = () => {
         setIsLoading(false);
         navigate("/home");
       } else {
+        setErrorMsg("SS");
         setIsLoading(false);
       }
     } catch (error) {

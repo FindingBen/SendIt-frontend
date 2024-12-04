@@ -33,6 +33,7 @@ const EditMessage = () => {
   const [isDirty, setIsDirty] = useState(false);
   const [toDelete, setToDelete] = useState([]);
   const [isCreate, setIsCreate] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const axiosInstance = useAxiosInstance();
   const [messageName, setMessageName] = useState(message?.message_name);
@@ -43,7 +44,6 @@ const EditMessage = () => {
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [imageStateVal, setImageStateVal] = useState(false);
   const [showSaveButton, setShowSaveButton] = useState(false);
-  const [device, setDevice] = useState("tablet");
 
   useEffect(() => {
     setIsLoaded(true);
@@ -57,7 +57,14 @@ const EditMessage = () => {
   }, [currentModalCall, currentPageState, isLoading]);
 
   useEffect(() => {}, [elements]);
+  // useEffect(() => {
+  //   if (errorMsg) {
+  //     // Only run the timer if there's an error message
+  //     const timer = setTimeout(() => setErrorMsg(""), 3000);
 
+  //     return () => clearTimeout(timer); // Clear the timer when the component unmounts or `errorMsg` changes
+  //   }
+  // }, [errorMsg]);
   useEffect(() => {
     updateElementsOrder();
   }, [createdEl]);
