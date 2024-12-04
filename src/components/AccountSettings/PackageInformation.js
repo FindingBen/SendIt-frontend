@@ -4,7 +4,12 @@ import { useRedux } from "../../constants/reduxImports";
 
 const PackageInformation = () => {
   const { currentPackageState } = useRedux();
-  console.log(currentPackageState);
+
+  const basic_package = process.env.BASIC_PLAN;
+  const trial_plan = process.env.TRIAL_PLAN;
+  const gold_package = process.env.GOLD_PLAN;
+  const silver_plan = process.env.SILVER_PLAN;
+
   return (
     <div className="flex flex-col rounded-2xl p-4 xs:mt-2 md:mt-0 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 border-2 lg:w-[400px] xs:w-[330px] 2xl:w-[450px] h-[290px] lg:h-[290px] 2xl:h-[360px]">
       <h3 class="flex flex-row xs:text-normal lg:text-xl 2xl:text-2xl text-left mb-4 font-semibold text-white relative">
@@ -36,13 +41,13 @@ const PackageInformation = () => {
         </p>
         <p
           className={`${
-            currentPackageState?.package === "Trial Plan"
+            currentPackageState?.package === trial_plan
               ? "text-white"
-              : currentPackageState?.package === "Basic plan"
+              : currentPackageState?.package === basic_package
               ? "text-white"
-              : currentPackageState?.package === "Silver plan"
+              : currentPackageState?.package === silver_plan
               ? "text-gray-400"
-              : currentPackageState?.package === "Gold plan"
+              : currentPackageState?.package === gold_package
               ? "text-yellow-500"
               : "" // Default case
           } xs:text-sm lg:text-lg 2xl:text-xl font-bold`}

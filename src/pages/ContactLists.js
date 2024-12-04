@@ -17,10 +17,6 @@ const ContactList = () => {
   const [contactListsPercentage, setContactListsPercentage] = useState();
   const [recipientsPercentage, setRecipientsPercentage] = useState();
   const [limits, setLimits] = useState({});
-  let trial_max_list_allowed = 1;
-  let basic_max_list_allowed = 5;
-  let silver_max_list_allowed = 10;
-  let gold_max_list_allowed = 20;
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [listId, setListId] = useState();

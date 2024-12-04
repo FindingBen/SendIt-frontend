@@ -26,6 +26,8 @@ const SmsEditor = () => {
   const [isName, setIsname] = useState(false);
   const [isLink, setIslink] = useState(false);
   const [recipients, setRecipients] = useState([]);
+  const basic_package = process.env.BASIC_PLAN;
+  const trial_plan = process.env.TRIAL_PLAN;
   const BASE = "https://spp.up.railway.app";
   const BASE_URL = "https://spplane.app";
   const linkURLBase = `${BASE_URL}/view/${params.id}`;
@@ -181,7 +183,7 @@ const SmsEditor = () => {
   };
 
   const canScheduleSms = () => {
-    if (currentPackageState === "Basic package" || "Trial Plan") {
+    if (currentPackageState === basic_package || trial_plan) {
       return false;
     }
     return true;
