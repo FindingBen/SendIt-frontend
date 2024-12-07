@@ -58,13 +58,14 @@
     "recharts": "^2.8.0",
     "redux-persist": "^6.0.0",
     "reduxjs-toolkit-persist": "^7.2.1",
+    "respinner": "^4.0.3",
     "stream-browserify": "^3.0.0",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "build": "set \"GENERATE_SOURCEMAP=false\" &&  react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

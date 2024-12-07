@@ -10,4 +10,8 @@ const dev = {
   },
 };
 
+const TRUE = "True";
+const FALSE = "False";
+
+export const statements = { TRUE, FALSE };
 export const config = process.env.REACT_APP_ENV === "development" ? dev : prod;
