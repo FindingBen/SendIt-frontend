@@ -82,7 +82,7 @@ const HomePage = () => {
       getNotes();
     }
   }, [totalValues]);
-  console.log("VALLL", totalValues);
+
   const itemsPerPage = 4;
   const totalPages = Math.ceil(currentMessages?.length / itemsPerPage);
 
@@ -106,11 +106,14 @@ const HomePage = () => {
         setMessageCount(response?.data.messages_count);
         dispatch(setMessages(response.data.messages));
         dispatch(setMessagesCount(response.data.messages_count));
+        setInitialLoad(false);
       } else if (response.statusText === "Unauthorized") {
         dispatch(logOut());
+        setInitialLoad(false);
       }
     } catch (error) {
       console.error(error);
+      setInitialLoad(false);
     }
   };
 
@@ -128,11 +131,13 @@ const HomePage = () => {
       );
       if (response.status === 200) {
         setTotalValues(response?.data);
+        setInitialLoad(false);
       }
     } catch (error) {
       dispatch(cleanPackage());
       dispatch(clearMessages());
       dispatch(logOut());
+      setInitialLoad(false);
     }
   };
 
@@ -263,7 +268,10 @@ const HomePage = () => {
 
           <div className="flex flex-row mx-20">
             <div className="flex flex-col">
-              <OverallStatistics totalValues={totalValues} />
+              <OverallStatistics
+                totalValues={totalValues}
+                loaded={initialLoad}
+              />
 
               {/* table content */}
               <div

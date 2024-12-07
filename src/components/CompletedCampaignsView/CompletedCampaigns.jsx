@@ -47,7 +47,7 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                className="lg:size-10 size-8 text-white mx-auto mt-1"
+                className="lg:size-8 size-8 text-white mx-auto mt-1"
               >
                 <path
                   stroke-linecap="round"
@@ -69,7 +69,7 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                className="lg:size-10 size-8 text-white mx-auto mt-1"
+                className="lg:size-8 size-8 text-white mx-auto mt-1"
               >
                 <path
                   stroke-linecap="round"
@@ -91,7 +91,7 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
                 viewBox="0 0 24 24"
                 stroke-width="1.5"
                 stroke="currentColor"
-                class="lg:size-10 size-8 text-white mx-auto mt-1"
+                class="lg:size-8 size-8 text-white mx-auto mt-1"
               >
                 <path
                   stroke-linecap="round"
@@ -100,10 +100,35 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
                 />
               </svg>
             </div>
-            <div className="flex flex-col gap-2 items-start">
+            <div className="flex flex-col gap-1 items-start">
               <p className="text-white text-2xl">0</p>
               <p className="text-white/60 text-xs">
                 Users gained in total via signup
+              </p>
+            </div>
+            {/* <AnalyticsBarProgress total_values={20} metric={"Bounce Rate"} /> */}
+          </div>
+          <div className="flex flex-row gap-4 mt-2 w-full rounded-lg">
+            <div className="account-analytics-card">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="lg:size-8 size-8 text-white mx-auto mt-1"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM4 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 10.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
+                />
+              </svg>
+            </div>
+            <div className="flex flex-col gap-1 items-start">
+              <p className="text-white text-2xl">0</p>
+              <p className="text-white/60 text-xs">
+                Users lost via unsubscribe
               </p>
             </div>
             {/* <AnalyticsBarProgress total_values={20} metric={"Bounce Rate"} /> */}

@@ -2,13 +2,14 @@ import "../css/ContactList.css";
 import React, { useEffect, useState } from "react";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useRedux } from "../constants/reduxImports";
+import LoaderSkeleton from "../components/LoaderSkeleton/LoaderSkeleton";
 
 const PurchaseHistory = () => {
   const axiosInstance = useAxiosInstance();
   const { currentUser } = useRedux();
   const [purchases, setPurchases] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [loading, setIsLoading] = useState(true);
   const rowsPerPage = 7;
   const totalPages = Math.ceil(purchases?.length / rowsPerPage);
   const [sortOrder, setSortOrder] = useState("asc");
@@ -16,12 +17,12 @@ const PurchaseHistory = () => {
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const paginatedData = purchases?.slice(startIndex, endIndex);
+
   useEffect(() => {
-    //getUser();
-    purchase_history();
+    purchaseHistory();
   }, [sortOrder, searchId]);
 
-  let purchase_history = async (e) => {
+  let purchaseHistory = async (e) => {
     try {
       let url = `stripe/purchases/${currentUser}`;
       const queryParts = [];
@@ -33,8 +34,10 @@ const PurchaseHistory = () => {
       let response = await axiosInstance.get(url);
       if (response.status === 200) {
         setPurchases(response.data);
+        setIsLoading(false);
       }
     } catch (e) {
+      setIsLoading(false);
       console.log(e);
     }
   };
@@ -42,7 +45,7 @@ const PurchaseHistory = () => {
   const handleSortByDate = () => {
     // Toggle between 'asc' and 'desc' when the user clicks the sort button
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-    purchase_history(); // Call the function to fetch sorted data
+    purchaseHistory(); // Call the function to fetch sorted data
   };
 
   const handleSearchTerm = (e) => {
@@ -52,7 +55,7 @@ const PurchaseHistory = () => {
   return (
     <div className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col">
-        <div className="flex flex-row items-center mb-4 h-20 xs:mx-5 lg:mx-20 relative">
+        <div className="flex flex-row items-center mb-4 h-20 xs:mx-5 md:mx-20 relative">
           <h3 className="text-lg lg:text-xl 2xl:text-2xl font-semibold text-white">
             Purchase history
           </h3>
@@ -78,7 +81,7 @@ const PurchaseHistory = () => {
           <div className="items-center justify-center rounded-2xl mb-3 w-full bg-mainBlue border-gray-800 border-2 shadow-md">
             <div className="flex flex-row space-x-2 p-2 border-b border-gray-800">
               <button
-                className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-slate-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
+                className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
                   `}
                 onClick={handleSortByDate}
               >
@@ -105,7 +108,7 @@ const PurchaseHistory = () => {
                 <input
                   type="search"
                   id="default-search"
-                  class="block w-full p-1.5 ps-10 text-sm text-gray-900 border-2 rounded-lg focus:border-gray-700 dark:bg-darkestGray border-gray-800 dark:placeholder-gray-400 dark:text-white"
+                  class="block w-full p-1.5 ps-10 text-sm text-white border-2 rounded-lg focus:border-gray-700 bg-darkestGray border-gray-800"
                   placeholder="Search by payment id..."
                   required
                   value={searchId}
@@ -121,47 +124,55 @@ const PurchaseHistory = () => {
               <div>Date</div>
               <div>Status</div>
             </div>
-            {paginatedData?.map((rowData, index) => {
-              const isLastItem = index === paginatedData?.length - 1;
-              const evenRow = index % 2 === 0;
-              return (
-                <div
-                  key={rowData?.id}
-                  className={`${
-                    evenRow
-                      ? "bg-gradient-to-b font-normal p-2 from-lighterMainBlue to-mainBlue text-white/90"
-                      : "bg-mainBlue font-normal text-white/90"
-                  } ${
-                    isLastItem ? "rounded-b-2xl border-none" : ""
-                  } font-light`}
-                >
-                  <div
-                    className={`grid grid-cols-3 lg:grid-cols-5 text-normal 2xl:text-xl gap-4 p-2 border-b-2 border-gray-800 ${
-                      isLastItem
-                        ? "rounded-b-2xl 2xl:text-normal border-none"
-                        : ""
-                    }`}
-                  >
-                    <div>{rowData?.payment_id}</div>
-                    <div className="hidden lg:block">{rowData?.price}</div>
-                    {/* <div className="hidden lg:block">
+            {!loading ? (
+              <>
+                {paginatedData?.map((rowData, index) => {
+                  const isLastItem = index === paginatedData?.length - 1;
+                  const evenRow = index % 2 === 0;
+                  return (
+                    <div
+                      key={rowData?.id}
+                      className={`${
+                        evenRow
+                          ? "bg-gradient-to-b font-normal p-2 from-lighterMainBlue to-mainBlue text-white/90"
+                          : "bg-mainBlue font-normal text-white/90"
+                      } ${
+                        isLastItem ? "rounded-b-2xl border-none" : ""
+                      } font-light`}
+                    >
+                      <div
+                        className={`grid grid-cols-3 lg:grid-cols-5 text-normal 2xl:text-xl gap-4 p-2 border-b-2 border-gray-800 ${
+                          isLastItem
+                            ? "rounded-b-2xl 2xl:text-normal border-none"
+                            : ""
+                        }`}
+                      >
+                        <div>{rowData?.payment_id}</div>
+                        <div className="hidden lg:block">{rowData?.price}</div>
+                        {/* <div className="hidden lg:block">
                       {rowData?.package_name}
                     </div> */}
-                    <div className="hidden lg:block">{rowData?.type}</div>
-                    <div>{rowData?.created_at}</div>
-                    <div
-                      className={`${
-                        rowData?.status === "succeeded"
-                          ? "bg-green-400 text-green-900"
-                          : "bg-red-400 text-red-900"
-                      } xs:font-bold lg:font-semibold xs:mx-5 lg:mx-8 rounded-md`}
-                    >
-                      {rowData?.status === "succeeded" ? "Success" : "Error"}
+                        <div className="hidden lg:block">{rowData?.type}</div>
+                        <div>{rowData?.created_at}</div>
+                        <div
+                          className={`${
+                            rowData?.status === "succeeded"
+                              ? "bg-green-400 text-green-900"
+                              : "bg-red-400 text-red-900"
+                          } xs:font-bold lg:font-semibold xs:mx-5 lg:mx-8 rounded-md`}
+                        >
+                          {rowData?.status === "succeeded"
+                            ? "Success"
+                            : "Error"}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              );
-            })}
+                  );
+                })}
+              </>
+            ) : (
+              <LoaderSkeleton div_size={3} />
+            )}
           </div>
         </div>
       </div>

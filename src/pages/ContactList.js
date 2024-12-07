@@ -9,7 +9,7 @@ import { setContactLists } from "../redux/reducers/contactListReducer";
 import { useRedux } from "../constants/reduxImports";
 import ShowQrModal from "../features/modal/ShowQrModal";
 import SvgLoader from "../components/SvgLoader";
-import LoaderComponent from "../components/LoaderComponent";
+import LoaderSkeleton from "../components/LoaderSkeleton/LoaderSkeleton";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
@@ -313,7 +313,7 @@ const ContactList = () => {
                     <input
                       type="search"
                       id="default-search"
-                      class="block w-full p-1.5 ps-10 text-sm text-gray-900 border-2 rounded-lg focus:border-gray-700 bg-darkestGray border-gray-800 dark:placeholder-gray-400 dark:text-white"
+                      class="block w-full p-1.5 ps-10 text-sm border-2 rounded-lg focus:border-gray-700 bg-darkestGray border-gray-800 text-white"
                       placeholder="Search by name..."
                       value={search_name}
                       onChange={handleSearchChange}
@@ -474,44 +474,7 @@ const ContactList = () => {
                       })}
                     </>
                   ) : (
-                    <div
-                      role="status"
-                      class="max-w p-4 space-y-4 divide-y animate-pulse divide-gray-700 md:p-6"
-                    >
-                      <div class="flex items-center justify-between">
-                        <div>
-                          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-
-                          <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                        </div>
-                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
-                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
-                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                      </div>
-                      <div class="flex items-center justify-between pt-4">
-                        <div>
-                          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-
-                          <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                        </div>
-                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
-                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
-                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                      </div>
-                      <div class="flex items-center justify-between pt-4">
-                        <div>
-                          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-
-                          <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                        </div>
-                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
-                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
-                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                      </div>
-                    </div>
+                    <LoaderSkeleton div_size={3} />
                   )}
                 </div>
               </div>

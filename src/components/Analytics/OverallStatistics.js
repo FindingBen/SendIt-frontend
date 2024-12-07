@@ -2,12 +2,14 @@ import React from "react";
 import SvgLoader from "../SvgLoader";
 import { motion } from "framer-motion";
 import { Tooltip } from "react-tooltip";
-const OverallStatistics = ({ totalValues }) => {
+import { CircularLoading, SpinLoading } from "respinner";
+
+const OverallStatistics = ({ totalValues, loaded = true }) => {
   return (
     <div className="flex w-full gap-4">
       <div className="total-analytics-cards">
         <div className="p-2 flex items-start flex-col rounded-md mx-2 my-auto">
-          {totalValues ? (
+          {!loaded ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.0 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -18,11 +20,11 @@ const OverallStatistics = ({ totalValues }) => {
               }}
               className="total-analytics-text"
             >
-              {totalValues.total_sends ?? 0}
+              {totalValues?.total_sends ?? 0}
             </motion.div>
           ) : (
             <p className="text-white font-semibold lg:text-2xl ml-2">
-              <SvgLoader width={"w-8"} height={"h-8"} />
+              <SpinLoading size={40} duration={1} fill="#2d889d" />
             </p>
           )}
 

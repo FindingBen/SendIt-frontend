@@ -8,6 +8,8 @@ import { motion } from "framer-motion";
 import { useRedux } from "../constants/reduxImports";
 import { setContactLists } from "../redux/reducers/contactListReducer";
 import SmsPill from "../components/SmsPill/SmsPill";
+import LoaderSkeleton from "../components/LoaderSkeleton/LoaderSkeleton";
+
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
   const { currentPackageState, currentContactList, dispatch } = useRedux();
@@ -215,38 +217,7 @@ const ContactList = () => {
                   })}
                 </>
               ) : (
-                <div
-                  role="status"
-                  class="max-w p-4 space-y-4 divide-y animate-pulse divide-gray-700 md:p-6 mx-4"
-                >
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                      <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                    </div>
-                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mr-5"></div>
-                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mr-5"></div>
-                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mr-5"></div>
-                  </div>
-                  <div class="flex items-center justify-between pt-4">
-                    <div>
-                      <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                      <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                    </div>
-                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
-                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mr-5"></div>
-                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mr-5"></div>
-                  </div>
-                  <div class="flex items-center justify-between pt-4">
-                    <div>
-                      <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
-                      <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-                    </div>
-                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
-                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mr-5"></div>
-                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mr-5"></div>
-                  </div>
-                </div>
+                <LoaderSkeleton contact_list={true} div_size={3} />
               )}
             </div>
             <div className="bg-mainBlue w-[30%] 2xl:w-[35%] h-[75%] 2xl:h-[85%] p-4 border-gray-800 border-2 rounded-2xl mt-4 mr-20">
