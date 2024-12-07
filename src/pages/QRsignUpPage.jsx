@@ -146,6 +146,7 @@ const QRsignUpPage = () => {
                         />
                       </div>
                     </div>
+
                     {!loading ? (
                       <button
                         onClick={signUpCustomer}
@@ -159,7 +160,9 @@ const QRsignUpPage = () => {
                         Sign me up
                       </button>
                     ) : (
-                      <LoaderComponent></LoaderComponent>
+                      <div className="mx-28">
+                        <LoaderComponent></LoaderComponent>
+                      </div>
                     )}
                   </div>
                 </>

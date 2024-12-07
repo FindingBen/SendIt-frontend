@@ -9,6 +9,7 @@ import { setContactLists } from "../redux/reducers/contactListReducer";
 import { useRedux } from "../constants/reduxImports";
 import ShowQrModal from "../features/modal/ShowQrModal";
 import SvgLoader from "../components/SvgLoader";
+import LoaderComponent from "../components/LoaderComponent";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
@@ -21,6 +22,7 @@ const ContactList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
+  const [loader, setLoader] = useState(true);
   const [contactId, setContactId] = useState();
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
@@ -65,10 +67,13 @@ const ContactList = () => {
       let response = await axiosInstance.get(url);
       if (response.status === 200) {
         setContacts(response.data.contacts);
+        setLoader(false);
         setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
+      setLoader(false);
+      setIsLoading(false);
     }
   };
 
@@ -324,143 +329,190 @@ const ContactList = () => {
                     <div>Phone number</div>
                     <div>Action</div>
                   </div>
-                  {paginatedData?.map((rowData, index) => {
-                    const isLastItem = index === paginatedData.length - 1;
-                    const evenRow = index % 2 === 0;
-                    const isEditing = editableRowId === rowData.id;
-                    return (
-                      <div
-                        key={rowData.id}
-                        className={`${
-                          contactId === rowData.id
-                            ? "bg-cyan-700 text-white font-semibold transition duration-300"
-                            : evenRow
-                            ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue text-white"
-                            : "bg-mainBlue text-white"
-                        } ${
-                          isLastItem ? "rounded-b-2xl border-none" : ""
-                        } font-light`}
-                      >
-                        <div
-                          className={`grid grid-cols-5 font-semibold 2xl:text-lg gap-4 p-2 border-b-2 border-gray-800 ${
-                            isLastItem
-                              ? "rounded-b-2xl 2xl:text-lg border-none"
-                              : ""
-                          }`}
-                        >
-                          <div>
-                            {isEditing ? (
-                              <input
-                                value={editData.first_name}
-                                onChange={(e) => handleChange(e, "first_name")}
-                                className="input-class rounded-lg bg-white text-black"
-                              />
-                            ) : (
-                              rowData.first_name
-                            )}
-                          </div>
-                          <div>
-                            {isEditing ? (
-                              <input
-                                value={editData.last_name}
-                                onChange={(e) => handleChange(e, "last_name")}
-                                className="input-class rounded-lg bg-white text-black"
-                              />
-                            ) : (
-                              rowData.last_name
-                            )}
-                          </div>
-                          <div>
-                            {isEditing ? (
-                              <input
-                                value={editData.email}
-                                onChange={(e) => handleChange(e, "email")}
-                                className="input-class rounded-lg bg-white text-black"
-                              />
-                            ) : (
-                              rowData.email
-                            )}
-                          </div>
-                          <div>
-                            {isEditing ? (
-                              <input
-                                value={editData.phone_number}
-                                onChange={(e) =>
-                                  handleChange(e, "phone_number")
-                                }
-                                className="input-class rounded-lg bg-white text-black"
-                              />
-                            ) : (
-                              rowData.phone_number
-                            )}
-                          </div>
+                  {!loader ? (
+                    <>
+                      {paginatedData?.map((rowData, index) => {
+                        const isLastItem = index === paginatedData.length - 1;
+                        const evenRow = index % 2 === 0;
+                        const isEditing = editableRowId === rowData.id;
+                        return (
+                          <div
+                            key={rowData.id}
+                            className={`${
+                              contactId === rowData.id
+                                ? "bg-cyan-700 text-white font-semibold transition duration-300"
+                                : evenRow
+                                ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue text-white"
+                                : "bg-mainBlue text-white"
+                            } ${
+                              isLastItem ? "rounded-b-2xl border-none" : ""
+                            } font-light`}
+                          >
+                            <div
+                              className={`grid grid-cols-5 font-semibold 2xl:text-lg gap-4 p-2 border-b-2 border-gray-800 ${
+                                isLastItem
+                                  ? "rounded-b-2xl 2xl:text-lg border-none"
+                                  : ""
+                              }`}
+                            >
+                              <div>
+                                {isEditing ? (
+                                  <input
+                                    value={editData.first_name}
+                                    onChange={(e) =>
+                                      handleChange(e, "first_name")
+                                    }
+                                    className="input-class rounded-lg bg-white text-black"
+                                  />
+                                ) : (
+                                  rowData.first_name
+                                )}
+                              </div>
+                              <div>
+                                {isEditing ? (
+                                  <input
+                                    value={editData.last_name}
+                                    onChange={(e) =>
+                                      handleChange(e, "last_name")
+                                    }
+                                    className="input-class rounded-lg bg-white text-black"
+                                  />
+                                ) : (
+                                  rowData.last_name
+                                )}
+                              </div>
+                              <div>
+                                {isEditing ? (
+                                  <input
+                                    value={editData.email}
+                                    onChange={(e) => handleChange(e, "email")}
+                                    className="input-class rounded-lg bg-white text-black"
+                                  />
+                                ) : (
+                                  rowData.email
+                                )}
+                              </div>
+                              <div>
+                                {isEditing ? (
+                                  <input
+                                    value={editData.phone_number}
+                                    onChange={(e) =>
+                                      handleChange(e, "phone_number")
+                                    }
+                                    className="input-class rounded-lg bg-white text-black"
+                                  />
+                                ) : (
+                                  rowData.phone_number
+                                )}
+                              </div>
 
-                          {isEditing ? (
-                            <div className="flex flex-row mx-16 mt-1">
-                              {!isLoading ? (
-                                <button
-                                  onClick={(e) => updateContact(rowData.id)}
-                                  className="text-green-500 hover:text-green-700 mx-auto p-0.5"
-                                >
-                                  Save
-                                </button>
+                              {isEditing ? (
+                                <div className="flex flex-row mx-16 mt-1">
+                                  {!isLoading ? (
+                                    <button
+                                      onClick={(e) => updateContact(rowData.id)}
+                                      className="text-green-500 hover:text-green-700 mx-auto p-0.5"
+                                    >
+                                      Save
+                                    </button>
+                                  ) : (
+                                    <div className="mx-auto p-0.5">
+                                      <SvgLoader width={5} height={5} />
+                                    </div>
+                                  )}
+                                </div>
                               ) : (
-                                <div className="mx-auto p-0.5">
-                                  <SvgLoader width={5} height={5} />
+                                <div className="flex flex-row mx-16 mt-1">
+                                  <div className="mx-auto my-auto p-0.5">
+                                    <button
+                                      type="button"
+                                      onClick={() => handleEditClick(rowData)}
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="1.5"
+                                        stroke="currentColor"
+                                        class="w-5 h-5 2xl:w-7 2xl:h-7 hover:bg-cyan-400 duration-150 rounded-md"
+                                      >
+                                        <path
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+                                        />
+                                      </svg>
+                                    </button>
+                                  </div>
+                                  <div className="mx-auto my-auto p-0.5">
+                                    <button
+                                      type="button"
+                                      onClick={() => deleteContact(rowData.id)}
+                                    >
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="0.5"
+                                        stroke="currentColor"
+                                        class="h-5 w-5 2xl:w-7 2xl:h-7 hover:bg-red-500/95 duration-150 rounded-md"
+                                        x-tooltip="tooltip"
+                                      >
+                                        <path
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                        />
+                                      </svg>
+                                    </button>
+                                  </div>
                                 </div>
                               )}
                             </div>
-                          ) : (
-                            <div className="flex flex-row mx-16 mt-1">
-                              <div className="mx-auto my-auto p-0.5">
-                                <button
-                                  type="button"
-                                  onClick={() => handleEditClick(rowData)}
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="w-5 h-5 2xl:w-7 2xl:h-7 hover:bg-cyan-400 duration-150 rounded-md"
-                                  >
-                                    <path
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                                    />
-                                  </svg>
-                                </button>
-                              </div>
-                              <div className="mx-auto my-auto p-0.5">
-                                <button
-                                  type="button"
-                                  onClick={() => deleteContact(rowData.id)}
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="0.5"
-                                    stroke="currentColor"
-                                    class="h-5 w-5 2xl:w-7 2xl:h-7 hover:bg-red-500/95 duration-150 rounded-md"
-                                    x-tooltip="tooltip"
-                                  >
-                                    <path
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                    />
-                                  </svg>
-                                </button>
-                              </div>
-                            </div>
-                          )}
+                          </div>
+                        );
+                      })}
+                    </>
+                  ) : (
+                    <div
+                      role="status"
+                      class="max-w p-4 space-y-4 divide-y animate-pulse divide-gray-700 md:p-6"
+                    >
+                      <div class="flex items-center justify-between">
+                        <div>
+                          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+
+                          <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
                         </div>
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
                       </div>
-                    );
-                  })}
+                      <div class="flex items-center justify-between pt-4">
+                        <div>
+                          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+
+                          <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                      </div>
+                      <div class="flex items-center justify-between pt-4">
+                        <div>
+                          <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+
+                          <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                        </div>
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

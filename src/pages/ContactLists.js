@@ -14,6 +14,7 @@ const ContactList = () => {
   const [contactList, setContactList] = useState([]);
   const [recipients, setRecipients] = useState([]);
   const [listUpdated, setListUpdated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [contactListsPercentage, setContactListsPercentage] = useState();
   const [recipientsPercentage, setRecipientsPercentage] = useState();
   const [limits, setLimits] = useState({});
@@ -52,7 +53,7 @@ const ContactList = () => {
         setContactList(response.data.data);
         setLimits(response.data.limits);
         setRecipients(response.data.recipients);
-
+        setIsLoading(false);
         dispatch(
           setContactLists({
             contactLists: response.data.data,
@@ -72,6 +73,7 @@ const ContactList = () => {
       }
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
   console.log(currentPackageState);
@@ -133,82 +135,119 @@ const ContactList = () => {
 
                 <div>Action</div>
               </div>
-              {currentContactList.contactLists?.map((conList, index) => {
-                const isLastItem =
-                  index === currentContactList.contactLists?.length - 1;
-                const evenRow = index % 2 === 0;
-                return (
-                  <div
-                    className={`font-light ${
-                      evenRow
-                        ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
-                        : "bg-mainBlue"
-                    }`}
-                    key={conList.id}
-                  >
-                    <motion.div
-                      className={`grid grid-cols-4 font-semibold gap-4 p-2 text-white border-gray-800 ${
-                        isLastItem ? "rounded-b-2xl" : "border-b-2"
-                      }`}
-                      key={conList.id}
-                    >
-                      <div>{conList.list_name}</div>
-                      <div>{conList.created_at}</div>
-                      <div>{conList.contact_lenght}</div>
-                      <div className="flex flex-row mx-16 gap-3">
-                        <div className="rounded-md mx-auto my-auto p-0.5  hover:bg-cyan-600 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
-                          <Link
-                            type="button"
-                            to={`/contact_list/${conList.id}`}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.0"
-                              stroke="currentColor"
-                              class="w-5 h-5 2xl:w-7 2xl:h-7"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                              />
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                              />
-                            </svg>
-                          </Link>
-                        </div>
-                        <div className="rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-600 hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
-                          <button
-                            type="button"
-                            onClick={() => deleteList(conList.id)}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="0.5"
-                              stroke="currentColor"
-                              class="h-5 w-5 2xl:h-7 2xl:w-7"
-                              x-tooltip="tooltip"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                              />
-                            </svg>
-                          </button>
-                        </div>
+              {!isLoading ? (
+                <>
+                  {currentContactList.contactLists?.map((conList, index) => {
+                    const isLastItem =
+                      index === currentContactList.contactLists?.length - 1;
+                    const evenRow = index % 2 === 0;
+                    return (
+                      <div
+                        className={`font-light ${
+                          evenRow
+                            ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
+                            : "bg-mainBlue"
+                        }`}
+                        key={conList.id}
+                      >
+                        <motion.div
+                          className={`grid grid-cols-4 font-semibold gap-4 p-2 text-white border-gray-800 ${
+                            isLastItem ? "rounded-b-2xl" : "border-b-2"
+                          }`}
+                          key={conList.id}
+                        >
+                          <div>{conList.list_name}</div>
+                          <div>{conList.created_at}</div>
+                          <div>{conList.contact_lenght}</div>
+                          <div className="flex flex-row mx-16 gap-3">
+                            <div className="rounded-md mx-auto my-auto p-0.5  hover:bg-cyan-600 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+                              <Link
+                                type="button"
+                                to={`/contact_list/${conList.id}`}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke-width="1.0"
+                                  stroke="currentColor"
+                                  class="w-5 h-5 2xl:w-7 2xl:h-7"
+                                >
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                                  />
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                                  />
+                                </svg>
+                              </Link>
+                            </div>
+                            <div className="rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-600 hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+                              <button
+                                type="button"
+                                onClick={() => deleteList(conList.id)}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke-width="0.5"
+                                  stroke="currentColor"
+                                  class="h-5 w-5 2xl:h-7 2xl:w-7"
+                                  x-tooltip="tooltip"
+                                >
+                                  <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                  />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </motion.div>
                       </div>
-                    </motion.div>
+                    );
+                  })}
+                </>
+              ) : (
+                <div
+                  role="status"
+                  class="max-w p-4 space-y-4 divide-y animate-pulse divide-gray-700 md:p-6 mx-4"
+                >
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                      <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                    </div>
+                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mr-5"></div>
+                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mr-5"></div>
+                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mr-5"></div>
                   </div>
-                );
-              })}
+                  <div class="flex items-center justify-between pt-4">
+                    <div>
+                      <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                      <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                    </div>
+                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mr-5"></div>
+                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mr-5"></div>
+                  </div>
+                  <div class="flex items-center justify-between pt-4">
+                    <div>
+                      <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                      <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                    </div>
+                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mr-5"></div>
+                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12 mr-5"></div>
+                  </div>
+                </div>
+              )}
             </div>
             <div className="bg-mainBlue w-[30%] 2xl:w-[35%] h-[75%] 2xl:h-[85%] p-4 border-gray-800 border-2 rounded-2xl mt-4 mr-20">
               <p className="text-white text-justify text-xl 2xl:text-2xl font-semibold mb-3">
