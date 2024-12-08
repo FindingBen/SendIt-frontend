@@ -101,7 +101,9 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
               </svg>
             </div>
             <div className="flex flex-col gap-1 items-start">
-              <p className="text-white text-2xl">0</p>
+              <p className="text-white text-2xl">
+                {total_values?.total_subscribed}
+              </p>
               <p className="text-white/60 text-xs">
                 Users gained in total via signup
               </p>
@@ -126,7 +128,9 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
               </svg>
             </div>
             <div className="flex flex-col gap-1 items-start">
-              <p className="text-white text-2xl">0</p>
+              <p className="text-white text-2xl">
+                {total_values?.total_unsubscribed}
+              </p>
               <p className="text-white/60 text-xs">
                 Users lost via unsubscribe
               </p>
