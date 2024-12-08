@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import { useParams } from "react-router-dom";
-import { useRedux } from "../../constants/reduxImports";
 import useAxiosInstance from "../../utils/axiosInstance";
 import { config } from "../../constants/Constants";
+import LoaderComponent from "../../components/LoaderComponent";
 
 const ShowQrModal = ({ showModalQr, onClose }) => {
   const axiosInstance = useAxiosInstance();
-  const { currentUser } = useRedux();
+  const [loading, setloading] = useState(true);
   const params = useParams();
   const [qrImg, setQrImage] = useState();
   const [show, setShowModal] = useState(showModalQr);
@@ -28,10 +27,13 @@ const ShowQrModal = ({ showModalQr, onClose }) => {
       let response = await axiosInstance.get(`/api/qr_code/${params.id}`);
       console.log(response);
       if (response.status === 200) {
+        setloading(false);
         console.log(response);
         setQrImage(response?.data);
       }
-    } catch (error) {}
+    } catch (error) {
+      setloading(false);
+    }
   };
 
   return (
@@ -53,12 +55,18 @@ const ShowQrModal = ({ showModalQr, onClose }) => {
                 </Modal.Header>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <img
-                    src={`${baseURL}${qrImg?.qr_image}`}
-                    alt="QR Code"
-                    width={150}
-                    className="block mx-auto mb-4"
-                  />
+                  {!loading ? (
+                    <img
+                      src={`${baseURL}${qrImg?.qr_image}`}
+                      alt="QR Code"
+                      width={150}
+                      className="block mx-auto mb-4"
+                    />
+                  ) : (
+                    <div className="block mx-auto mb-2">
+                      <LoaderComponent />
+                    </div>
+                  )}
                   <p className="my-4 text-slate-500 text-normal leading-relaxed">
                     Simply copy the QR code and share this with people, print it
                     out on your guest cards or put it in your shop or place of
