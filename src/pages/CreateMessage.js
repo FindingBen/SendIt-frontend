@@ -20,6 +20,7 @@ import { setMessages } from "../redux/reducers/messageReducer";
 
 const CreateNote = () => {
   const Package_gold = process.env.GOLD_PLAN;
+  const Package_basic = process.env.BASIC_PLAN;
   const { deleteElement } = useContext(ElementContext);
   const {
     currentUser,
@@ -389,7 +390,8 @@ const CreateNote = () => {
                   </div>
                 </div>
                 <div className="flex flex-row justify-between">
-                  {currentPackageState?.package === Package_gold ? (
+                  {currentPackageState?.package === Package_gold ||
+                  Package_basic ? (
                     <div
                       onClick={
                         imageStateVal ? null : () => handleClick("aiContent")
