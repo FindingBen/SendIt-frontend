@@ -390,8 +390,7 @@ const CreateNote = () => {
                   </div>
                 </div>
                 <div className="flex flex-row justify-between">
-                  {currentPackageState?.package === Package_gold ||
-                  Package_basic ? (
+                  {currentPackageState?.package === Package_basic ? (
                     <div
                       onClick={
                         imageStateVal ? null : () => handleClick("aiContent")
