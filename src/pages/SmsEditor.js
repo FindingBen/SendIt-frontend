@@ -19,6 +19,7 @@ const SmsEditor = () => {
   const [user, setUser] = useState();
   const [dateSchedule, setDateSchedule] = useState();
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const [smsText, setSmsText] = useState([]);
   const [contactLists, setContactList] = useState([]);
   const [islist, setIslist] = useState(false);
@@ -299,7 +300,13 @@ const SmsEditor = () => {
                             smsText.length === 0
                           }
                           color="dark"
-                          className="bg-blue-700 hover:bg-blue-400 text-white font-normal py-2 px-3 rounded text-sm xl:text-base mt-4 ml-3"
+                          className={` text-white font-normal py-2 ${
+                            recipients.contact_lenght === 0 ||
+                            !recipients ||
+                            smsText.length === 0
+                              ? "bg-gray-600 cursor-not-allowed" // Disabled state styling
+                              : "bg-cyan-600 hover:bg-cyan-400 cursor-pointer" // Default state styling
+                          } px-3 rounded text-sm xl:text-base mt-4 ml-3`}
                         >
                           Schedule
                         </button>

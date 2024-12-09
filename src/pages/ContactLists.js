@@ -270,12 +270,12 @@ const ContactList = () => {
                   </div>
                 </div>
                 <div className="flex flex-row items-start mt-3">
-                  <Link
+                  {/* <Link
                     to={"/plans"}
                     className="py-1 px-2 2xl:py-2 2xl:px-4 bg-cyan-600 rounded-lg text-white cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105"
                   >
                     Upgrade
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             </div>

@@ -59,8 +59,8 @@ function App() {
       <div className="App">
         <ElementProvider>
           <Routes>
-            <Route path="register" element={<DemoPage />} />
-            {/* <Route path="register" element={<RegisterPage />} /> */}
+            {/* <Route path="register" element={<DemoPage />} /> */}
+            <Route path="register" element={<RegisterPage />} />
             <Route path="login" element={<Login></Login>} />
             <Route
               path="reset_password"
@@ -85,7 +85,7 @@ function App() {
                   path="/contact_list/:id"
                   element={<ContactList></ContactList>}
                 />
-                <Route path="/plans/" element={<Plans></Plans>} />
+                {/* <Route path="/plans/" element={<Plans></Plans>} /> */}
                 <Route
                   path="/campaign_stats/"
                   element={<CampaignsStatsPage />}
