@@ -47,7 +47,7 @@ const CreateNote = () => {
 
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [device, setDevice] = useState("phone");
-
+  console.log("AAAAA", Package_basic);
   useEffect(() => {
     if (elementContextList.length > 0) {
       dispatch(setState({ isDirty: true }));
