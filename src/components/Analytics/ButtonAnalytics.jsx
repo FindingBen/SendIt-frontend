@@ -19,7 +19,7 @@ const ButtonAnalytics = ({ sms }) => {
         <div className="grid grid-cols-2 grid-rows-2 mt-4">
           <div className="flex flex-col p-1 relative">
             {sms?.button_1_name ? (
-              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[180px] 2xl:w-[220px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[155px] 2xl:w-[220px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
                 <div className="flex items-start p-2">
                   {sms ? (
                     <motion.div
@@ -52,7 +52,7 @@ const ButtonAnalytics = ({ sms }) => {
           </div>
           <div className="flex flex-col p-1 relative">
             {sms?.button_2_name ? (
-              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[180px] 2xl:w-[220px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[155px] 2xl:w-[220px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
                 <div className="flex items-start p-2">
                   {sms ? (
                     <motion.div
@@ -85,7 +85,7 @@ const ButtonAnalytics = ({ sms }) => {
           </div>
           <div className="flex flex-col p-1 relative">
             {sms?.button_3_name ? (
-              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[180px] 2xl:w-[220px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[155px] 2xl:w-[220px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
                 <div className="flex items-start p-2">
                   {sms ? (
                     <motion.div
@@ -118,7 +118,7 @@ const ButtonAnalytics = ({ sms }) => {
           </div>
           <div className="flex flex-col p-1 relative">
             {sms?.button_4_name != null ? (
-              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[180px] 2xl:w-[220px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[155px] 2xl:w-[220px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
                 <div className="flex items-start p-2">
                   {sms ? (
                     <motion.div
