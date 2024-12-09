@@ -5,10 +5,10 @@ import { useRedux } from "../../constants/reduxImports";
 const PackageInformation = () => {
   const { currentPackageState } = useRedux();
 
-  const basic_package = process.env.BASIC_PLAN;
-  const trial_plan = process.env.TRIAL_PLAN;
-  const gold_package = process.env.GOLD_PLAN;
-  const silver_plan = process.env.SILVER_PLAN;
+  const basic_package = process.env.REACT_APP_BASIC_PLAN;
+  const trial_plan = process.env.REACT_APP_TRIAL_PLAN;
+  const gold_package = process.env.REACT_APP_GOLD_PLAN;
+  const silver_plan = process.env.REACT_APP_SILVER_PLAN;
 
   return (
     <div className="flex flex-col rounded-2xl p-4 xs:mt-2 md:mt-0 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 border-2 lg:w-[400px] xs:w-[330px] 2xl:w-[450px] h-[290px] lg:h-[290px] 2xl:h-[360px]">

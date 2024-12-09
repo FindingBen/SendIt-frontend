@@ -19,8 +19,8 @@ import PreviewPanel from "../components/PreviewComponent/PreviewPanel";
 import { setMessages } from "../redux/reducers/messageReducer";
 
 const CreateNote = () => {
-  const Package_gold = process.env.GOLD_PLAN;
-  const Package_basic = process.env.BASIC_PLAN;
+  const Package_gold = process.env.REACT_APP_GOLD_PLAN;
+  const Package_basic = process.env.REACT_APP_BASIC_PLAN;
   const { deleteElement } = useContext(ElementContext);
   const {
     currentUser,
