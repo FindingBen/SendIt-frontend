@@ -27,7 +27,7 @@ const SmsEditor = () => {
   const [isName, setIsname] = useState(false);
   const [isLink, setIslink] = useState(false);
   const [recipients, setRecipients] = useState([]);
-  const basic_package = process.env.BASIC_PLAN;
+  const gold_package = process.env.GOLD_PLAN;
   const trial_plan = process.env.TRIAL_PLAN;
   const BASE = "https://spp.up.railway.app";
   const BASE_URL = "https://spplane.app";
@@ -39,7 +39,7 @@ const SmsEditor = () => {
     getContactLists();
     getUser();
   }, []);
-  console.log(recipients);
+
   useEffect(() => {
     if (!smsText.includes("#Link")) {
       setIslink(false);
@@ -101,6 +101,15 @@ const SmsEditor = () => {
     }
   };
 
+  useEffect(() => {
+    if (errorMessage) {
+      // Only run the timer if there's an error message
+      const timer = setTimeout(() => setErrorMessage(""), 3000);
+
+      return () => clearTimeout(timer); // Clear the timer when the component unmounts or `errorMsg` changes
+    }
+  }, [errorMessage]);
+
   const handleSms = (e) => {
     setSmsText(e.target.value);
     if (smsText.length > 5) {
@@ -152,6 +161,7 @@ const SmsEditor = () => {
         navigate(`/home`);
       }
     } catch (e) {
+      setErrorMessage(e.response.data.error);
       console.log(e);
     }
   };
@@ -184,7 +194,7 @@ const SmsEditor = () => {
   };
 
   const canScheduleSms = () => {
-    if (currentPackageState === basic_package || trial_plan) {
+    if (currentPackageState === gold_package) {
       return false;
     }
     return true;
@@ -428,6 +438,7 @@ const SmsEditor = () => {
               onClose={() => setShow(false)}
             ></SmsConfirmModal>
             <ScheduleSmsModal
+              errorMsg={errorMessage}
               sendConfirm={scheduleSms}
               showModal={showSchedule}
               dateSchedule={handleDate}

@@ -5,16 +5,19 @@ import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
 import moment from "moment/moment";
 import Modal from "react-bootstrap/Modal";
+import LoaderComponent from "../../components/LoaderComponent";
 
 const ScheduleSmsModal = ({
   showModal,
   onClose,
   sendConfirm,
   dateSchedule,
+  errorMsg,
 }) => {
   const today = new Date();
   const [show, setShowModal] = useState(showModal);
   const axiosInstance = useAxiosInstance();
+  const [error, setError] = useState(errorMsg);
   const [dateValue, setDateValue] = useState();
 
   useEffect(() => {
@@ -30,6 +33,7 @@ const ScheduleSmsModal = ({
 
   const closeModal = () => {
     onClose();
+    setError("");
   };
 
   return (
@@ -101,6 +105,11 @@ const ScheduleSmsModal = ({
                     It will be scheduled for{" "}
                     <p className="font-bold">{dateValue?.toLocaleString()}</p>
                   </p>
+                  {errorMsg ? (
+                    <p className="text-red-700 font-semibold">{error}</p>
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
