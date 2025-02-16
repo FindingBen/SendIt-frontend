@@ -18,6 +18,7 @@ import PasswordReset from "./utils/PasswordReset";
 import PasswordResetConfirm from "./utils/PasswordResetConfirm";
 import ReactGA from "react-ga";
 import Plans from "./components/AccountSettings/Plans";
+import ErrorPage from "./pages/ErrorPage";
 import CampaignsStatsPage from "./pages/CampaignsStatsPage";
 import SuccessPayment from "./pages/SuccessPayment";
 import CancelPayment from "./pages/CancelPayment";
@@ -55,6 +56,7 @@ function App() {
           path="/activate_email/:token_id/:user_id/"
           element={<ActivationEmailSuccess></ActivationEmailSuccess>}
         ></Route>
+        <Route path="/err/spp" element={<ErrorPage></ErrorPage>}></Route>
       </Routes>
       <div className="App">
         <ElementProvider>
