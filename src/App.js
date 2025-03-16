@@ -87,7 +87,7 @@ function App() {
                   path="/contact_list/:id"
                   element={<ContactList></ContactList>}
                 />
-                {/* <Route path="/plans/" element={<Plans></Plans>} /> */}
+                <Route path="/plans/" element={<Plans></Plans>} />
                 <Route
                   path="/campaign_stats/"
                   element={<CampaignsStatsPage />}
