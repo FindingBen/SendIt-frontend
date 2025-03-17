@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-const ReceiptComponent = ({ purchase_obj }) => {
+const ReceiptComponent = ({ purchase_obj, packageObj }) => {
   const [purchase, setPurchase] = useState(purchase_obj);
+  const createdAt = new Date(purchase?.created * 1000).toLocaleString();
 
   const copyPurchaseId = (id) => {
     const input = document.createElement("input");
+
     input.value = id;
     document.body.appendChild(input);
 
@@ -43,28 +45,31 @@ const ReceiptComponent = ({ purchase_obj }) => {
 
           <div className="flex flex-col text-justify ml-2">
             <p className="text-normal text-white">
-              Paid <span className="font-bold">{purchase.price} Kr.</span>
+              Paid{" "}
+              <span className="font-bold">{purchase?.amount / 100} Kr.</span>
             </p>
             <p className="text-normal text-white">
-              Date: <span className="font-bold">{purchase.created_at}</span>
+              Date: <span className="font-bold">{createdAt}</span>
             </p>
           </div>
         </div>
         <div className="text-start p-2">
           <p className="text-normal text-white">
-            Item: <span className="font-bold">{purchase.package_name}</span>
+            Item: <span className="font-bold">{packageObj?.package_plan}</span>
           </p>
           <p className="text-normal text-white">
             payment_method:{" "}
-            <span className="font-bold">{purchase.payment_method}</span>
+            <span className="font-bold">
+              {purchase?.payment_method_types[0]}
+            </span>
           </p>
           <p className="text-normal text-white">
-            Order ID: <span className="font-bold">{purchase.payment_id}</span>
+            Order ID: <span className="font-bold">{purchase?.id}</span>
           </p>
         </div>
       </div>
       <div
-        onClick={() => copyPurchaseId(purchase.payment_id)}
+        onClick={() => copyPurchaseId(purchase?.id)}
         className="px-2 py-2 bg-purpleHaze text-white font-normal rounded-2xl mx-5 mt-2 cursor-pointer"
       >
         Copy ID

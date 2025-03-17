@@ -14,6 +14,7 @@ const SuccessPayment = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [showModal, setShow] = useState(false);
   const [purchase, setPurchase] = useState({});
+  const [packageObj, setPackageObj] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [errMessage, setErrMessage] = useState("");
 
@@ -39,14 +40,16 @@ const SuccessPayment = () => {
       );
       if (response.status === 200) {
         setTimeout(() => setShow(false), 2000);
-
+        console.log(response);
         const package_payload = {
           package_plan: response?.data.user.package_plan.plan_type,
           sms_count:
             response?.data.user.sms_count +
             response?.data.user.package_plan.sms_count_pack,
         };
+        console.log(package_payload);
         dispatch(setPackage(package_payload));
+        setPackageObj(package_payload);
         setPurchase(response?.data.purchase);
         setLoaded(true);
         if (showModal === false) {
@@ -82,7 +85,12 @@ const SuccessPayment = () => {
               </span>
               <br></br>
               <div className="flex justify-center mt-5 text-normal">
-                {loaded && <ReceiptComponent purchase_obj={purchase} />}
+                {loaded && (
+                  <ReceiptComponent
+                    purchase_obj={purchase}
+                    packageObj={packageObj}
+                  />
+                )}
               </div>
             </motion.div>
           ) : isSuccess === false ? (
