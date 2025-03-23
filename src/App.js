@@ -1,6 +1,6 @@
 import "flowbite";
 import { Route, Routes } from "react-router-dom";
-import { AppProvider } from "@shopify/app-bridge-react";
+import { AppProvider, useAppBridge } from "@shopify/app-bridge-react";
 import { getSessionToken } from "@shopify/app-bridge-utils";
 import React from "react";
 import ContactLists from "./pages/ContactLists";
@@ -27,7 +27,6 @@ import CancelPayment from "./pages/CancelPayment";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import Archives from "./pages/Archives";
 import DemoPage from "./pages/DemoPage";
-import createApp from "@shopify/app-bridge";
 import PurchaseHistory from "./pages/PurchaseHistory";
 import UnsubscribePage from "./pages/UnsubscribePage";
 import ActivationEmailSuccess from "./pages/ActivationEmailSuccess";
@@ -44,17 +43,18 @@ function App() {
     forceRedirect: true, // Ensures redirection to Shopify
   };
 
-  const app = createApp(shopifyConfig);
+  function useFetchSessionToken() {
+    const app = useAppBridge();
 
-  async function fetchSessionToken() {
-    const token = await getSessionToken(app);
-    console.log("Session Token:", token);
-    return token;
+    return async () => {
+      const token = await getSessionToken(app);
+      console.log("Session Token:", token);
+      return token;
+    };
   }
 
   console.log("AppProvider:", AppProvider);
   console.log("Routes:", Routes);
-  console.log("createApp:", createApp);
   console.log("getSessionToken:", getSessionToken);
   console.log("Login:", Login);
   console.log("HomePage:", HomePage);
