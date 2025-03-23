@@ -3,7 +3,7 @@ import { logOut } from "../redux/reducers/authSlice";
 import { cleanPackage } from "../redux/reducers/packageReducer";
 import { setModalState } from "../redux/reducers/modalReducer";
 import { setEditPage } from "../redux/reducers/editPageReducer";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
 import { menu } from "../assets/menuAssets/menuIcons";
 import { useRedux } from "../constants/reduxImports";
@@ -11,14 +11,17 @@ import { clearMessages } from "../redux/reducers/messageReducer";
 import { cleanContactLists } from "../redux/reducers/contactListReducer";
 import { cleanUser } from "../redux/reducers/userReducer";
 import { clearCampaigns } from "../redux/reducers/completedCampaignsReducer";
+import { Redirect } from "@shopify/app-bridge/actions";
+import { useAppBridge } from "@shopify/app-bridge-react";
+
 const Header = () => {
   const { currentModalState, dispatch, currentUser, currentFormState } =
     useRedux();
   const [clickedPath, setClickedPath] = useState();
-
+  const app = useAppBridge();
   const [activeNav, setActiveNav] = useState("Home");
   const isDirtyRef = useRef(false);
-  const navigate = useNavigate();
+  const navigate = Redirect();
 
   useEffect(() => {}, [activeNav]);
 
@@ -67,7 +70,8 @@ const Header = () => {
       e.preventDefault(); // Prevent navigation
     } else {
       dispatch(setModalState({ show: false }));
-      handleConfirmNavigation(path);
+      const redirect = Redirect.create(app);
+      redirect.dispatch(Redirect.Action.APP, path);
       // Pass the clicked path
     }
   };
