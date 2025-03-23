@@ -21,7 +21,6 @@ const Header = () => {
   const app = useAppBridge();
   const [activeNav, setActiveNav] = useState("Home");
   const isDirtyRef = useRef(false);
-  const navigate = Redirect();
 
   useEffect(() => {}, [activeNav]);
 
@@ -79,7 +78,6 @@ const Header = () => {
   const handleConfirmNavigation = () => {
     dispatch(setModalState({ show: false }));
 
-    navigate(clickedPath);
     setClickedPath("");
     dispatch(setEditPage({ isEditFormDirty: false }));
   };
