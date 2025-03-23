@@ -12,7 +12,7 @@ import { getSessionToken } from "@shopify/app-bridge-utils";
 import createApp from "@shopify/app-bridge";
 
 const shopifyConfig = {
-  apiKey: "YOUR_SHOPIFY_API_KEY",
+  apiKey: "537514fd5c87b791b2959cfe452a10ea",
   host: new URLSearchParams(window.location.search).get("host"),
   forceRedirect: true,
 };

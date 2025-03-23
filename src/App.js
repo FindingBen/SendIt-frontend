@@ -1,7 +1,5 @@
 import "flowbite";
 import { Route, Routes } from "react-router-dom";
-import { AppProvider, useAppBridge } from "@shopify/app-bridge-react";
-import { getSessionToken } from "@shopify/app-bridge-utils";
 import React from "react";
 import ContactLists from "./pages/ContactLists";
 import ContactList from "./pages/ContactList";
@@ -37,118 +35,91 @@ const TRACKING_ID = "G-FPHE42LL46";
 ReactGA.initialize(TRACKING_ID);
 
 function App() {
-  const shopifyConfig = {
-    apiKey: "537514fd5c87b791b2959cfe452a10ea",
-    host: new URLSearchParams(window.location.search).get("host"), // Get shop info from URL
-    forceRedirect: true, // Ensures redirection to Shopify
-  };
-
-  function useFetchSessionToken() {
-    const app = useAppBridge();
-
-    return async () => {
-      const token = await getSessionToken(app);
-      console.log("Session Token:", token);
-      return token;
-    };
-  }
-
-  console.log("AppProvider:", AppProvider);
-  console.log("Routes:", Routes);
-  console.log("getSessionToken:", getSessionToken);
-  console.log("Login:", Login);
-  console.log("HomePage:", HomePage);
-
   return (
-    <AppProvider config={shopifyConfig}>
-      <section>
-        <div className="main"></div>
-        <Routes>
-          <Route
-            path="/register/qrr/:id"
-            element={<QRsignUpPage></QRsignUpPage>}
-          ></Route>
-          <Route
-            path="/privacy-policy"
-            element={<PrivacyPolicy></PrivacyPolicy>}
-          ></Route>
-          <Route path="/view/:id" element={<MessageView></MessageView>}></Route>
-          <Route
-            path="/opt-out/:id"
-            element={<UnsubscribePage></UnsubscribePage>}
-          ></Route>
-          <Route
-            path="/activate_email/:token_id/:user_id/"
-            element={<ActivationEmailSuccess></ActivationEmailSuccess>}
-          ></Route>
-          <Route path="/err/spp" element={<ErrorPage></ErrorPage>}></Route>
-        </Routes>
-        <div className="App">
-          <ElementProvider>
-            <Routes>
-              <Route path="register" element={<DemoPage />} />
-              {/* <Route path="register" element={<RegisterPage />} /> */}
-              <Route path="login" element={<Login></Login>} />
-              <Route
-                path="reset_password"
-                element={<PasswordReset></PasswordReset>}
-              />
+    <section>
+      <div className="main"></div>
+      <Routes>
+        <Route
+          path="/register/qrr/:id"
+          element={<QRsignUpPage></QRsignUpPage>}
+        ></Route>
+        <Route
+          path="/privacy-policy"
+          element={<PrivacyPolicy></PrivacyPolicy>}
+        ></Route>
+        <Route path="/view/:id" element={<MessageView></MessageView>}></Route>
+        <Route
+          path="/opt-out/:id"
+          element={<UnsubscribePage></UnsubscribePage>}
+        ></Route>
+        <Route
+          path="/activate_email/:token_id/:user_id/"
+          element={<ActivationEmailSuccess></ActivationEmailSuccess>}
+        ></Route>
+        <Route path="/err/spp" element={<ErrorPage></ErrorPage>}></Route>
+      </Routes>
+      <div className="App">
+        <ElementProvider>
+          <Routes>
+            <Route path="register" element={<DemoPage />} />
+            {/* <Route path="register" element={<RegisterPage />} /> */}
+            <Route path="login" element={<Login></Login>} />
+            <Route
+              path="reset_password"
+              element={<PasswordReset></PasswordReset>}
+            />
 
-              <Route
-                path="reset_password_confirm/:uid/:token"
-                element={<PasswordResetConfirm></PasswordResetConfirm>}
-              />
-              <Route path="/" element={<Layout />}>
-                <Route element={<PrivateRoute />}>
-                  <Route path="analytics/:id" element={<AnalyticsPage />} />
-                  <Route path="home" element={<HomePage />} />
-                  <Route path="create_note" element={<CreateMessage />} />
-                  <Route
-                    path="purchase_history"
-                    element={<PurchaseHistory />}
-                  />
-                  <Route
-                    path="/contact_lists"
-                    element={<ContactLists></ContactLists>}
-                  />
-                  <Route
-                    path="/contact_list/:id"
-                    element={<ContactList></ContactList>}
-                  />
-                  <Route path="/plans/" element={<Plans></Plans>} />
-                  <Route
-                    path="/campaign_stats/"
-                    element={<CampaignsStatsPage />}
-                  />
-                  <Route
-                    path="/edit_message/:id"
-                    element={<EditMessage></EditMessage>}
-                  />
+            <Route
+              path="reset_password_confirm/:uid/:token"
+              element={<PasswordResetConfirm></PasswordResetConfirm>}
+            />
+            <Route path="/" element={<Layout />}>
+              <Route element={<PrivateRoute />}>
+                <Route path="analytics/:id" element={<AnalyticsPage />} />
+                <Route path="home" element={<HomePage />} />
+                <Route path="create_note" element={<CreateMessage />} />
+                <Route path="purchase_history" element={<PurchaseHistory />} />
+                <Route
+                  path="/contact_lists"
+                  element={<ContactLists></ContactLists>}
+                />
+                <Route
+                  path="/contact_list/:id"
+                  element={<ContactList></ContactList>}
+                />
+                <Route path="/plans/" element={<Plans></Plans>} />
+                <Route
+                  path="/campaign_stats/"
+                  element={<CampaignsStatsPage />}
+                />
+                <Route
+                  path="/edit_message/:id"
+                  element={<EditMessage></EditMessage>}
+                />
 
-                  <Route
-                    path="/sms_editor/:id"
-                    element={<SmsEditor></SmsEditor>}
-                  />
-                  <Route
-                    path="/account_settings/:id"
-                    element={<UserPage></UserPage>}
-                  />
-                  <Route path="/archive/" element={<Archives></Archives>} />
-                  <Route
-                    path="/stripe/"
-                    element={<SuccessPayment></SuccessPayment>}
-                  ></Route>
-                  <Route
-                    path="/stripe_cancel/"
-                    element={<CancelPayment></CancelPayment>}
-                  ></Route>
-                </Route>
+                <Route
+                  path="/sms_editor/:id"
+                  element={<SmsEditor></SmsEditor>}
+                />
+                <Route
+                  path="/account_settings/:id"
+                  element={<UserPage></UserPage>}
+                />
+                <Route path="/archive/" element={<Archives></Archives>} />
+                <Route
+                  path="/stripe/"
+                  element={<SuccessPayment></SuccessPayment>}
+                ></Route>
+                <Route
+                  path="/stripe_cancel/"
+                  element={<CancelPayment></CancelPayment>}
+                ></Route>
               </Route>
-            </Routes>
-          </ElementProvider>
-        </div>
-      </section>
-    </AppProvider>
+            </Route>
+          </Routes>
+        </ElementProvider>
+      </div>
+    </section>
   );
 }
 
