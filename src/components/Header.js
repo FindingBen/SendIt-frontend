@@ -102,7 +102,7 @@ const Header = () => {
         {menu?.map((Menu, index) => (
           <Link
             key={index}
-            onClick={(e) => handleNavigate(e) || detectActiveNav(Menu.title)}
+            onClick={handleNavigate || detectActiveNav(Menu.title)}
             to={`${
               Menu.title === "Account"
                 ? Menu.location + currentUser
