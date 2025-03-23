@@ -38,7 +38,7 @@ const useAxiosInstance = () => {
 
   const setupAxios = async () => {
     try {
-      const token = await getSessionToken(app); // Fetch Shopify session token
+      const token = "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"; // Fetch Shopify session token
       axiosInstanceRef.current = createAxiosInstance(token);
     } catch (error) {
       dispatch(logOut());
@@ -54,7 +54,7 @@ const useAxiosInstance = () => {
 
   axiosInstanceRef.current?.interceptors.request.use(async (req) => {
     try {
-      const token = await getSessionToken(app);
+      const token = "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";
       req.headers.Authorization = `Bearer ${token}`;
     } catch (error) {
       dispatch(logOut());
