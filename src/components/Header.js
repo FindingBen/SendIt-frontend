@@ -3,7 +3,7 @@ import { logOut } from "../redux/reducers/authSlice";
 import { cleanPackage } from "../redux/reducers/packageReducer";
 import { setModalState } from "../redux/reducers/modalReducer";
 import { setEditPage } from "../redux/reducers/editPageReducer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
 import { menu } from "../assets/menuAssets/menuIcons";
 import { useRedux } from "../constants/reduxImports";
@@ -11,16 +11,14 @@ import { clearMessages } from "../redux/reducers/messageReducer";
 import { cleanContactLists } from "../redux/reducers/contactListReducer";
 import { cleanUser } from "../redux/reducers/userReducer";
 import { clearCampaigns } from "../redux/reducers/completedCampaignsReducer";
-import { Redirect } from "@shopify/app-bridge/actions";
-import { useAppBridge } from "@shopify/app-bridge-react";
-
 const Header = () => {
   const { currentModalState, dispatch, currentUser, currentFormState } =
     useRedux();
   const [clickedPath, setClickedPath] = useState();
-  const app = useAppBridge();
+
   const [activeNav, setActiveNav] = useState("Home");
   const isDirtyRef = useRef(false);
+  const navigate = useNavigate();
 
   useEffect(() => {}, [activeNav]);
 
@@ -69,8 +67,7 @@ const Header = () => {
       e.preventDefault(); // Prevent navigation
     } else {
       dispatch(setModalState({ show: false }));
-      const redirect = Redirect.create(app);
-      redirect.dispatch(Redirect.Action.APP, path);
+      handleConfirmNavigation(path);
       // Pass the clicked path
     }
   };
@@ -78,6 +75,7 @@ const Header = () => {
   const handleConfirmNavigation = () => {
     dispatch(setModalState({ show: false }));
 
+    navigate(clickedPath);
     setClickedPath("");
     dispatch(setEditPage({ isEditFormDirty: false }));
   };
@@ -102,7 +100,7 @@ const Header = () => {
         {menu?.map((Menu, index) => (
           <Link
             key={index}
-            onClick={handleNavigate || detectActiveNav(Menu.title)}
+            onClick={(e) => handleNavigate(e) || detectActiveNav(Menu.title)}
             to={`${
               Menu.title === "Account"
                 ? Menu.location + currentUser
