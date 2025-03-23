@@ -2,7 +2,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import dayjs from "dayjs";
 import { setCredentials, logOut } from "../redux/reducers/authSlice";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { config } from "../constants/Constants";
 import { useRedux } from "../constants/reduxImports";
 import { cleanContactLists } from "../redux/reducers/contactListReducer";
@@ -22,48 +22,54 @@ const app = createApp(shopifyConfig);
 const useAxiosInstance = () => {
   const { dispatch } = useRedux();
   const baseURL = config.url.BASE_URL;
-
+  const axiosInstanceRef = useRef(null);
+  const [axiosReady, setAxiosReady] = useState(false);
   const createAxiosInstance = (token) => {
-    const instance = axios.create({
+    return axios.create({
       baseURL: baseURL,
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-
-    return instance;
   };
-
-  const axiosInstanceRef = useRef(null);
-
-  const setupAxios = async () => {
+  const fetchShopifyToken = async () => {
     try {
-      const token = "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"; // Fetch Shopify session token
-      axiosInstanceRef.current = createAxiosInstance(token);
+      return await getSessionToken(app);
     } catch (error) {
-      dispatch(logOut());
-      dispatch(cleanContactLists());
-      dispatch(cleanPackage());
-      dispatch(clearMessages());
+      console.error("Error fetching session token:", error);
+      return null;
     }
   };
 
-  if (!axiosInstanceRef.current) {
+  useEffect(() => {
+    const setupAxios = async () => {
+      const token = await fetchShopifyToken();
+      if (token) {
+        axiosInstanceRef.current = createAxiosInstance(token);
+        setAxiosReady(true);
+      } else {
+        dispatch(logOut());
+        dispatch(cleanContactLists());
+        dispatch(cleanPackage());
+        dispatch(clearMessages());
+      }
+    };
+
     setupAxios();
-  }
+  }, []);
 
-  axiosInstanceRef.current?.interceptors.request.use(async (req) => {
-    try {
-      const token = "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";
-      req.headers.Authorization = `Bearer ${token}`;
-    } catch (error) {
-      dispatch(logOut());
-      dispatch(cleanContactLists());
-      dispatch(cleanPackage());
-      dispatch(clearMessages());
-    }
-    return req;
-  });
+
+  useEffect(() => {
+    if (!axiosInstanceRef.current) return;
+
+    axiosInstanceRef.current.interceptors.request.use(async (req) => {
+      const token = await fetchShopifyToken();
+      if (token) {
+        req.headers.Authorization = `Bearer ${token}`;
+      }
+      return req;
+    });
+  }, [axiosReady]);
 
   return axiosInstanceRef.current;
 };
