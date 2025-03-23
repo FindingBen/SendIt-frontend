@@ -8,77 +8,60 @@ import { useRedux } from "../constants/reduxImports";
 import { cleanContactLists } from "../redux/reducers/contactListReducer";
 import { cleanPackage } from "../redux/reducers/packageReducer";
 import { clearMessages } from "../redux/reducers/messageReducer";
+import { getSessionToken } from "@shopify/app-bridge-utils";
+import createApp from "@shopify/app-bridge";
+
+const shopifyConfig = {
+  apiKey: "YOUR_SHOPIFY_API_KEY",
+  host: new URLSearchParams(window.location.search).get("host"),
+  forceRedirect: true,
+};
+
+const app = createApp(shopifyConfig);
 
 const useAxiosInstance = () => {
-  const { currentToken, currentUser, dispatch } = useRedux();
+  const { dispatch } = useRedux();
   const baseURL = config.url.BASE_URL;
 
   const createAxiosInstance = (token) => {
     const instance = axios.create({
       baseURL: baseURL,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
-    try {
-      if (token) {
-        instance.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${currentToken}`;
-      }
+    return instance;
+  };
 
-      return instance;
+  const axiosInstanceRef = useRef(null);
+
+  const setupAxios = async () => {
+    try {
+      const token = await getSessionToken(app); // Fetch Shopify session token
+      axiosInstanceRef.current = createAxiosInstance(token);
     } catch (error) {
       dispatch(logOut());
+      dispatch(cleanContactLists());
       dispatch(cleanPackage());
       dispatch(clearMessages());
-      dispatch(cleanContactLists());
     }
   };
 
-  const axiosInstanceRef = useRef(createAxiosInstance(currentToken));
-  const tokenExpiration = dayjs.unix(jwt_decode(currentToken).exp);
+  if (!axiosInstanceRef.current) {
+    setupAxios();
+  }
 
-  axiosInstanceRef.current.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${currentToken}`;
-
-  axiosInstanceRef.current.interceptors.request.use(async (req) => {
-    const now = dayjs();
-    const timeUntilExpiration = tokenExpiration.diff(now, "seconds");
-
-    if (timeUntilExpiration < 1 && !req.isTokenRefresh) {
-      // Refresh the token if it's about to expire in 5 minutes or less
-      const getRefreshToken = localStorage.getItem("refreshToken");
-
-      try {
-        const response = await axios.post(`${baseURL}/api/token/refresh/`, {
-          refresh: getRefreshToken,
-        });
-
-        const newToken = response.data.access;
-        localStorage.setItem("refreshToken", response.data.refresh);
-
-        dispatch(setCredentials({ ...response.data, currentUser }));
-
-        const newAxiosInstance = createAxiosInstance(newToken);
-        axiosInstanceRef.current = newAxiosInstance;
-
-        axiosInstanceRef.current.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${newToken}`;
-        //dispatch(setCredentials({ user, access: newToken }));
-
-        req.headers.Authorization = `Bearer ${newToken}`;
-        req.isTokenRefresh = true;
-      } catch (error) {
-        localStorage.removeItem("refreshToken");
-        dispatch(logOut());
-        dispatch(cleanContactLists());
-        dispatch(cleanPackage());
-        dispatch(clearMessages());
-        throw error;
-      }
+  axiosInstanceRef.current?.interceptors.request.use(async (req) => {
+    try {
+      const token = await getSessionToken(app);
+      req.headers.Authorization = `Bearer ${token}`;
+    } catch (error) {
+      dispatch(logOut());
+      dispatch(cleanContactLists());
+      dispatch(cleanPackage());
+      dispatch(clearMessages());
     }
-
     return req;
   });
 
