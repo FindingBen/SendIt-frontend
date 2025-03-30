@@ -11,11 +11,10 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (state, action) => {
       const { user, access, tokenType } = action.payload;
-      console.log("setCredentials called with:", action.payload);
+
       return { ...state, user: user, token: access, tokenType: tokenType };
     },
     setShopifyCredentials: (state, action) => {
-      console.log(action.payload);
       const { token, tokenType, shopifyDomain, user } = action.payload;
       return {
         ...state,

@@ -37,7 +37,7 @@ const ContactList = () => {
       getContactLists();
     }
   }, []);
-  console.log("SSSSSSSS", currentDomain);
+
   useEffect(() => {
     setContactListsPercentage(contactListsPercentage);
     setRecipientsPercentage(recipientsPercentages);
@@ -79,7 +79,7 @@ const ContactList = () => {
       setIsLoading(false);
     }
   };
-  console.log(currentPackageState);
+
   const handleModal = (e) => {
     setShow(true);
   };

@@ -15,9 +15,10 @@ const useAxiosInstance = () => {
     currentUser,
     currentTokenType,
     dispatch,
+    currentDomain,
   } = useRedux();
   const baseURL = config.url.BASE_URL;
-  console.log("TYPE", currentTokenType);
+
   const createAxiosInstance = (token, currentTokenType) => {
     const instance = axios.create({
       baseURL: baseURL,
@@ -78,8 +79,9 @@ const useAxiosInstance = () => {
         }
       }
     } else if (currentTokenType === "Shopify") {
-      console.log("SSS");
+
       req.headers.Authorization = `Shopify ${currentToken}`;
+      req.headers["shopify-domain"] = currentDomain;
     }
 
     return req;

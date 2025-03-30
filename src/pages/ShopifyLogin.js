@@ -52,7 +52,7 @@ const ShopifyLogin = () => {
       //   const user_info = jwt_decode(responseData?.access);
       const tokenType = "Shopify";
       dispatch(setShopifyCredentials({ ...responseData, tokenType }));
-      //dispatch(setPackage(packageValue));
+      dispatch(setUserInfo({ ...responseData.user }));
       //console.log(user_info);
 
       //localStorage.setItem("refreshToken", responseData?.refresh);

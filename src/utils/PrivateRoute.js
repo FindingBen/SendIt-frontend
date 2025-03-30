@@ -3,7 +3,7 @@ import { useRedux } from "../constants/reduxImports";
 
 const PrivateRoute = () => {
   const { currentToken } = useRedux();
-  console.log("PRIVATE ROUTE", currentToken);
+
   const location = useLocation();
 
   return currentToken ? (

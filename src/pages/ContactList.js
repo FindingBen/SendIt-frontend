@@ -13,7 +13,7 @@ import LoaderSkeleton from "../components/LoaderSkeleton/LoaderSkeleton";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentDomain, dispatch, currentPackageState } = useRedux();
+  const { currentTokenType, dispatch, currentPackageState } = useRedux();
   const [contacts, setContacts] = useState([]);
   const [contact, setContact] = useState({});
   const [showCsv, setShowCsv] = useState(false);
@@ -43,23 +43,10 @@ const ContactList = () => {
 
   useEffect(() => {
     getContacts();
-    testData();
   }, [errorMsg, successMsg]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-  };
-
-  let testData = async () => {
-    try {
-      const response = await axiosInstance.get(`/api/shopify_customers`);
-
-      console.log("Shopify Customers:", response.data.customers);
-      return response.data.customers;
-    } catch (error) {
-      console.error("Error fetching Shopify customers:", error);
-      throw error;
-    }
   };
 
   let getContacts = async () => {
@@ -79,7 +66,7 @@ const ContactList = () => {
       }
       let response = await axiosInstance.get(url);
       if (response.status === 200) {
-        setContacts(response.data.contacts);
+        setContacts(response.data.customers);
         setLoader(false);
         setIsLoading(false);
       }
@@ -89,9 +76,9 @@ const ContactList = () => {
       setIsLoading(false);
     }
   };
-
+  console.log("ss", contacts);
   let canAddNewrecipients = () => {
-    if (contacts.length >= currentPackageState.recipients_limit) {
+    if (contacts?.length >= currentPackageState.recipients_limit) {
       return false;
     }
     return true;
@@ -106,6 +93,14 @@ const ContactList = () => {
   // Function to handle sorting by date created
   const handleSortByDateCreated = () => {
     setSortOrder(sortOrder === "created_at" ? "-created_at" : "created_at");
+
+    getContacts();
+  };
+
+  const handleSortByDateCreatedShopify = () => {
+    setSortOrder(
+      sortOrder === "created_at desc" ? "created_at asc" : "created_at desc"
+    );
 
     getContacts();
   };
@@ -291,17 +286,24 @@ const ContactList = () => {
             <div className={`mainContainer w-full`}>
               <div class="items-center justify-center rounded-2xl mb-3 w-full bg-mainBlue border-gray-800 border-2 shadow-md">
                 <div className="flex flex-row space-x-2 p-2 border-b border-gray-800">
-                  <button
-                    className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
+                  {currentTokenType === "Shopify" ? (
+                    <></>
+                  ) : (
+                    <button
+                      className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
                   `}
-                    onClick={handleSortByName}
-                  >
-                    Sort by Name
-                  </button>
+                      onClick={handleSortByName}
+                    >
+                      Sort by Name
+                    </button>
+                  )}
                   <button
-                    className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
-                      `}
-                    onClick={handleSortByDateCreated}
+                    className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray`}
+                    onClick={
+                      currentTokenType === "Shopify"
+                        ? handleSortByDateCreatedShopify
+                        : handleSortByDateCreated
+                    }
                   >
                     Sort by Date
                   </button>
@@ -408,14 +410,14 @@ const ContactList = () => {
                               <div>
                                 {isEditing ? (
                                   <input
-                                    value={editData.phone_number}
+                                    value={editData.phone}
                                     onChange={(e) =>
                                       handleChange(e, "phone_number")
                                     }
                                     className="input-class rounded-lg bg-white text-black"
                                   />
                                 ) : (
-                                  rowData.phone_number
+                                  rowData.phone
                                 )}
                               </div>
 
