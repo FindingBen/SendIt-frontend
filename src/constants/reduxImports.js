@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
+  selectCurrentDomain,
   selectCurrentToken,
   selectCurrentUser,
 } from "../redux/reducers/authSlice";
@@ -18,8 +19,8 @@ import {
 } from "../redux/reducers/messageReducer";
 import { selectOperationState } from "../redux/reducers/messageReducer";
 import { selectCurrentUserState } from "../redux/reducers/userReducer";
+import { selectTokenType } from "../redux/reducers/authSlice";
 import { selectArchiveStateState } from "../redux/reducers/archiveReducer";
-import { setCampaigns } from "../redux/reducers/completedCampaignsReducer";
 import { selectCampaigns } from "../redux/reducers/completedCampaignsReducer";
 import { clearCampaigns } from "../redux/reducers/completedCampaignsReducer";
 
@@ -40,6 +41,8 @@ export const useRedux = () => {
   const currentSmsPackCount = useSelector(selectCurrentSmsCount);
   const currentArchivedState = useSelector(selectArchiveStateState);
   const currentCampaignsState = useSelector(selectCampaigns);
+  const currentTokenType = useSelector(selectTokenType);
+  const currentDomain = useSelector(selectCurrentDomain);
 
   return {
     dispatch,
@@ -58,5 +61,7 @@ export const useRedux = () => {
     currentSmsPackCount,
     currentArchivedState,
     currentCampaignsState,
+    currentTokenType,
+    currentDomain,
   };
 };

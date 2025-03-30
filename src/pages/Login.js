@@ -64,14 +64,16 @@ const Login = () => {
       const user = jwt_decode(responseData?.access).user_id;
       const packageValue = jwt_decode(responseData?.access).package_plan;
       const user_info = jwt_decode(responseData?.access);
-
-      dispatch(setCredentials({ ...responseData, user }));
+      const tokenType = "JWT";
+      console.log(responseData);
+      dispatch(setCredentials({ ...responseData, user, tokenType }));
       dispatch(setPackage(packageValue));
       console.log(user_info);
       dispatch(setUserInfo({ ...user_info }));
       setUser("");
       setPwd("");
       localStorage.setItem("refreshToken", responseData?.refresh);
+      console.log("HERE");
       navigate("/home");
     } catch (err) {
       console.log(err);

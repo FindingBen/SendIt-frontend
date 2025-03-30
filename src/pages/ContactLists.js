@@ -12,7 +12,8 @@ import LoaderSkeleton from "../components/LoaderSkeleton/LoaderSkeleton";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentPackageState, currentContactList, dispatch } = useRedux();
+  const { currentPackageState, currentContactList, dispatch, currentDomain } =
+    useRedux();
   const [contactList, setContactList] = useState([]);
   const [recipients, setRecipients] = useState([]);
   const [listUpdated, setListUpdated] = useState(false);
@@ -36,7 +37,7 @@ const ContactList = () => {
       getContactLists();
     }
   }, []);
-
+  console.log("SSSSSSSS", currentDomain);
   useEffect(() => {
     setContactListsPercentage(contactListsPercentage);
     setRecipientsPercentage(recipientsPercentages);

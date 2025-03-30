@@ -13,7 +13,7 @@ import LoaderSkeleton from "../components/LoaderSkeleton/LoaderSkeleton";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentContactList, dispatch, currentPackageState } = useRedux();
+  const { currentDomain, dispatch, currentPackageState } = useRedux();
   const [contacts, setContacts] = useState([]);
   const [contact, setContact] = useState({});
   const [showCsv, setShowCsv] = useState(false);
@@ -43,10 +43,23 @@ const ContactList = () => {
 
   useEffect(() => {
     getContacts();
+    testData();
   }, [errorMsg, successMsg]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+  };
+
+  let testData = async () => {
+    try {
+      const response = await axiosInstance.get(`/api/shopify_customers`);
+
+      console.log("Shopify Customers:", response.data.customers);
+      return response.data.customers;
+    } catch (error) {
+      console.error("Error fetching Shopify customers:", error);
+      throw error;
+    }
   };
 
   let getContacts = async () => {

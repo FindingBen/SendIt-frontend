@@ -10,73 +10,76 @@ import { cleanPackage } from "../redux/reducers/packageReducer";
 import { clearMessages } from "../redux/reducers/messageReducer";
 
 const useAxiosInstance = () => {
-  const { currentToken, currentUser, dispatch } = useRedux();
+  const {
+    currentToken,
+    currentUser,
+    currentTokenType,
+    dispatch,
+  } = useRedux();
   const baseURL = config.url.BASE_URL;
-
-  const createAxiosInstance = (token) => {
+  console.log("TYPE", currentTokenType);
+  const createAxiosInstance = (token, currentTokenType) => {
     const instance = axios.create({
       baseURL: baseURL,
     });
 
-    try {
-      if (token) {
-        instance.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${currentToken}`;
-      }
-
-      return instance;
-    } catch (error) {
-      dispatch(logOut());
-      dispatch(cleanPackage());
-      dispatch(clearMessages());
-      dispatch(cleanContactLists());
+    if (token) {
+      instance.defaults.headers.common["Authorization"] =
+        currentTokenType === "JWT" ? `Bearer ${token}` : `Shopify ${token}`;
     }
+
+    return instance;
   };
 
-  const axiosInstanceRef = useRef(createAxiosInstance(currentToken));
-  const tokenExpiration = dayjs.unix(jwt_decode(currentToken).exp);
-
-  axiosInstanceRef.current.defaults.headers.common[
-    "Authorization"
-  ] = `Bearer ${currentToken}`;
+  const axiosInstanceRef = useRef(
+    createAxiosInstance(currentToken, currentTokenType)
+  );
+  //const tokenExpiration = dayjs.unix(jwt_decode(currentToken).exp);
 
   axiosInstanceRef.current.interceptors.request.use(async (req) => {
-    const now = dayjs();
-    const timeUntilExpiration = tokenExpiration.diff(now, "seconds");
+    if (currentTokenType === "JWT") {
+      console.log("SDDD");
+      const tokenExpiration = dayjs.unix(jwt_decode(currentToken).exp);
+      const now = dayjs();
+      const timeUntilExpiration = tokenExpiration.diff(now, "seconds");
 
-    if (timeUntilExpiration < 1 && !req.isTokenRefresh) {
-      // Refresh the token if it's about to expire in 5 minutes or less
-      const getRefreshToken = localStorage.getItem("refreshToken");
+      if (timeUntilExpiration < 300 && !req.isTokenRefresh) {
+        // Refresh JWT token if it's about to expire in 5 minutes
+        const getRefreshToken = localStorage.getItem("refreshToken");
 
-      try {
-        const response = await axios.post(`${baseURL}/api/token/refresh/`, {
-          refresh: getRefreshToken,
-        });
+        try {
+          const response = await axios.post(`${baseURL}/api/token/refresh/`, {
+            refresh: getRefreshToken,
+          });
 
-        const newToken = response.data.access;
-        localStorage.setItem("refreshToken", response.data.refresh);
+          const newToken = response.data.access;
+          localStorage.setItem("refreshToken", response.data.refresh);
 
-        dispatch(setCredentials({ ...response.data, currentUser }));
+          dispatch(
+            setCredentials({
+              user: currentUser,
+              token: newToken,
+              tokenType: "JWT",
+            })
+          );
 
-        const newAxiosInstance = createAxiosInstance(newToken);
-        axiosInstanceRef.current = newAxiosInstance;
+          const newAxiosInstance = createAxiosInstance(newToken, "JWT");
+          axiosInstanceRef.current = newAxiosInstance;
 
-        axiosInstanceRef.current.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${newToken}`;
-        //dispatch(setCredentials({ user, access: newToken }));
-
-        req.headers.Authorization = `Bearer ${newToken}`;
-        req.isTokenRefresh = true;
-      } catch (error) {
-        localStorage.removeItem("refreshToken");
-        dispatch(logOut());
-        dispatch(cleanContactLists());
-        dispatch(cleanPackage());
-        dispatch(clearMessages());
-        throw error;
+          req.headers.Authorization = `Bearer ${newToken}`;
+          req.isTokenRefresh = true;
+        } catch (error) {
+          localStorage.removeItem("refreshToken");
+          dispatch(logOut());
+          dispatch(cleanContactLists());
+          dispatch(cleanPackage());
+          dispatch(clearMessages());
+          throw error;
+        }
       }
+    } else if (currentTokenType === "Shopify") {
+      console.log("SSS");
+      req.headers.Authorization = `Shopify ${currentToken}`;
     }
 
     return req;
