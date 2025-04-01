@@ -43,18 +43,6 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
     }
   };
 
-  const getContacts = async () => {
-    try {
-      let response = axiosInstance.get(`/api/contact_list/${params.id}`);
-      if (response.status === 200) {
-        console.log(response.data);
-        setContacts(response.data);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   const handleParse = async () => {
     // If user clicks the parse button without
     // a file we show a error
@@ -72,7 +60,7 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
         skipEmptyLines: true,
       });
       const parsedData = csv?.data;
-      console.log("CSV", parsedData.length);
+
       let response = await axiosInstance.get(`/api/contact_list/${params.id}`);
       if (response.status === 200) {
         const totalContacts = response.data.contact_list_recipients_nr;
@@ -106,17 +94,11 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
         let response = await axiosInstance.post(
           `/api/create_contact/${params.id}/`,
           {
-            first_name: contact.first_name,
-            last_name: contact.last_name,
-            phone_number: contact.phone_number,
+            firstName: contact.first_name,
+            lastName: contact.last_name,
+            phone: contact.phone,
             email: contact.email,
             contact_list: params.id,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + String(token),
-            },
           }
         );
 
@@ -124,7 +106,7 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
           newContacts((prevContacts) => [...prevContacts, response.data]);
         }
       } catch (error) {
-        setError(error.response.data);
+        setError(error.response.data.detail);
       }
     }
   };

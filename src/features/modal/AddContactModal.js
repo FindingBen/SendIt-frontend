@@ -10,7 +10,7 @@ import { useRedux } from "../../constants/reduxImports";
 import { setContactLists } from "../../redux/reducers/contactListReducer";
 
 const AddContactModal = ({ showModal, onClose, newContacts }) => {
-  const { currentContactList, dispatch } = useRedux();
+  const { currentTokenType, dispatch } = useRedux();
   const [show, setShowModal] = useState(showModal);
   const token = useSelector(selectCurrentToken);
   const [number, setNumber] = useState("");
@@ -20,7 +20,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
     firstName: "",
     lastName: "",
     email: "",
-    phoneNumber: "",
+    phone: "",
   });
 
   const axiosInstance = useAxiosInstance();
@@ -36,23 +36,23 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
   const addContact = async (e) => {
     e.preventDefault();
     try {
+      const payload = {
+        firstName: contact.firstName,
+        lastName: contact.lastName,
+        phone: number,
+        email: contact.email,
+      };
+
+      // Add `contact_list` only if `currentTokenType` is not Shopify
+      if (currentTokenType !== "Shopify") {
+        payload.contact_list = params.id;
+      }
+
       let response = await axiosInstance.post(
         `/api/create_contact/${params.id}/`,
-        {
-          first_name: contact.firstName,
-          last_name: contact.lastName,
-          phone_number: number,
-          email: contact.email,
-          contact_list: params.id,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(token),
-          },
-        }
+        payload
       );
-
+      console.log("DDD", response.status);
       if (response.status === 200 || 201) {
         newContacts((prevContacts) => [...prevContacts, response.data]);
         dispatch(
@@ -65,7 +65,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
       }
     } catch (error) {
       console.error(error);
-      setErrMsg(error.response.data);
+      setErrMsg(error.response.data.detail);
     }
   };
 

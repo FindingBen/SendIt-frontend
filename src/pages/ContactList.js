@@ -66,7 +66,19 @@ const ContactList = () => {
       }
       let response = await axiosInstance.get(url);
       if (response.status === 200) {
-        setContacts(response.data.customers);
+        if (currentTokenType === "Shopify") {
+          const contactsData = response.data.edges.map((edge) => ({
+            id: edge.node.id, // Extract the ID
+            firstName: edge.node.firstName, // Map firstName to first_name
+            lastName: edge.node.lastName, // Map lastName to last_name
+            email: edge.node.email,
+            phone: edge.node.phone,
+            created_at: edge.node.createdAt, // Map createdAt to created_at
+          }));
+          setContacts(contactsData);
+        } else {
+          setContacts(response.data.customers);
+        }
         setLoader(false);
         setIsLoading(false);
       }
@@ -373,27 +385,27 @@ const ContactList = () => {
                               <div>
                                 {isEditing ? (
                                   <input
-                                    value={editData.first_name}
+                                    value={editData.firstName}
                                     onChange={(e) =>
-                                      handleChange(e, "first_name")
+                                      handleChange(e, "firstName")
                                     }
                                     className="input-class rounded-lg bg-white text-black"
                                   />
                                 ) : (
-                                  rowData.first_name
+                                  rowData.firstName
                                 )}
                               </div>
                               <div>
                                 {isEditing ? (
                                   <input
-                                    value={editData.last_name}
+                                    value={editData.lastName}
                                     onChange={(e) =>
-                                      handleChange(e, "last_name")
+                                      handleChange(e, "lastName")
                                     }
                                     className="input-class rounded-lg bg-white text-black"
                                   />
                                 ) : (
-                                  rowData.last_name
+                                  rowData.lastName
                                 )}
                               </div>
                               <div>
