@@ -14,32 +14,35 @@ const useAxiosInstance = () => {
     currentToken,
     currentUser,
     currentTokenType,
+    currentShopifyToken,
     dispatch,
     currentDomain,
   } = useRedux();
   const baseURL = config.url.BASE_URL;
 
-  const createAxiosInstance = (token, currentTokenType) => {
+  const createAxiosInstance = (token, currentShopifyToken) => {
     const instance = axios.create({
       baseURL: baseURL,
     });
 
-    if (token) {
-      instance.defaults.headers.common["Authorization"] =
-        currentTokenType === "JWT" ? `Bearer ${token}` : `Shopify ${token}`;
+    if (currentShopifyToken && currentShopifyToken !== "None") {
+      instance.defaults.headers.common[
+        "Authorization"
+      ] = `Shopify ${currentShopifyToken}`;
+      instance.defaults.headers.common["shopify-domain"] = currentDomain;
+    } else if (token) {
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     }
-
     return instance;
   };
 
   const axiosInstanceRef = useRef(
-    createAxiosInstance(currentToken, currentTokenType)
+    createAxiosInstance(currentToken, currentShopifyToken)
   );
   //const tokenExpiration = dayjs.unix(jwt_decode(currentToken).exp);
 
   axiosInstanceRef.current.interceptors.request.use(async (req) => {
-    if (currentTokenType === "JWT") {
-      console.log("SDDD");
+    if (currentShopifyToken === "None") {
       const tokenExpiration = dayjs.unix(jwt_decode(currentToken).exp);
       const now = dayjs();
       const timeUntilExpiration = tokenExpiration.diff(now, "seconds");
@@ -78,9 +81,9 @@ const useAxiosInstance = () => {
           throw error;
         }
       }
-    } else if (currentTokenType === "Shopify") {
-
-      req.headers.Authorization = `Shopify ${currentToken}`;
+    } else if (currentShopifyToken !== "None") {
+      console.log("AAA", currentToken);
+      req.headers.Authorization = `Shopify ${currentShopifyToken}`;
       req.headers["shopify-domain"] = currentDomain;
     }
 

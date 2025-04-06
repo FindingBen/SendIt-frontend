@@ -10,9 +10,8 @@ import { useRedux } from "../../constants/reduxImports";
 import { setContactLists } from "../../redux/reducers/contactListReducer";
 
 const AddContactModal = ({ showModal, onClose, newContacts }) => {
-  const { currentTokenType, dispatch } = useRedux();
+  const { currentTokenType, dispatch, currentShopifyToken } = useRedux();
   const [show, setShowModal] = useState(showModal);
-  const token = useSelector(selectCurrentToken);
   const [number, setNumber] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const params = useParams();
@@ -44,7 +43,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
       };
 
       // Add `contact_list` only if `currentTokenType` is not Shopify
-      if (currentTokenType !== "Shopify") {
+      if (currentShopifyToken === "None") {
         payload.contact_list = params.id;
       }
 
@@ -52,7 +51,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
         `/api/create_contact/${params.id}/`,
         payload
       );
-      console.log("DDD", response.status);
+
       if (response.status === 200 || 201) {
         newContacts((prevContacts) => [...prevContacts, response.data]);
         dispatch(

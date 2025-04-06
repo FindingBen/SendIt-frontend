@@ -12,8 +12,12 @@ import LoaderSkeleton from "../components/LoaderSkeleton/LoaderSkeleton";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentPackageState, currentContactList, dispatch, currentDomain } =
-    useRedux();
+  const {
+    currentPackageState,
+    currentContactList,
+    dispatch,
+    currentShopifyToken,
+  } = useRedux();
   const [contactList, setContactList] = useState([]);
   const [recipients, setRecipients] = useState([]);
   const [listUpdated, setListUpdated] = useState(false);

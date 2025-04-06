@@ -13,7 +13,12 @@ import LoaderSkeleton from "../components/LoaderSkeleton/LoaderSkeleton";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentTokenType, dispatch, currentPackageState } = useRedux();
+  const {
+    currentTokenType,
+    dispatch,
+    currentPackageState,
+    currentShopifyToken,
+  } = useRedux();
   const [contacts, setContacts] = useState([]);
   const [contact, setContact] = useState({});
   const [showCsv, setShowCsv] = useState(false);
@@ -48,6 +53,7 @@ const ContactList = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+  console.log(currentShopifyToken);
 
   let getContacts = async () => {
     try {
@@ -66,7 +72,7 @@ const ContactList = () => {
       }
       let response = await axiosInstance.get(url);
       if (response.status === 200) {
-        if (currentTokenType === "Shopify") {
+        if (currentShopifyToken !== "None") {
           const contactsData = response.data.edges.map((edge) => ({
             id: edge.node.id, // Extract the ID
             firstName: edge.node.firstName, // Map firstName to first_name
@@ -119,8 +125,21 @@ const ContactList = () => {
 
   let deleteContact = async (id) => {
     setIsDelete(true);
+
     try {
-      let response = await axiosInstance.delete(`/api/delete_recipient/${id}/`);
+      const data = {
+        id: id,
+      };
+
+      let url = "";
+      //const url = "/api/delete_recipient/<str:id>/";
+      if (currentShopifyToken !== "None") {
+        url = "/api/delete_recipient_shopify/";
+      } else {
+        url = `/api/delete_recipient/<str:id>/`;
+      }
+      let response = await axiosInstance.post(url, data);
+
       if (response.status === 200) {
         setContacts(contacts.filter((contact) => contact.id !== id));
         setIsDelete(false);
@@ -131,7 +150,13 @@ const ContactList = () => {
           })
         );
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      setErrorMsg(error.response.data.error[0]["message"]);
+      setTimeout(() => {
+        setErrorMsg();
+      }, 3000);
+    }
   };
 
   const handleCsvModal = (e) => {
@@ -151,13 +176,17 @@ const ContactList = () => {
   };
 
   const updateContact = async (contact_id) => {
-    console.log(editData);
     setIsLoading(true);
+
     try {
-      let response = await axiosInstance.put(
-        `/api/contact_detail/${contact_id}`,
-        editData
-      );
+      let url = "";
+      if (currentShopifyToken !== "None") {
+        url = "/api/contact_detail/";
+        editData["id"] = contact_id;
+      } else {
+        url = `/api/contact_detail/${contact_id}`;
+      }
+      let response = await axiosInstance.put(url, editData);
 
       if (response.status === 200) {
         // Assuming the API returns the updated contact object

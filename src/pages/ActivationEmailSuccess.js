@@ -40,7 +40,7 @@ const ActivationEmailSuccess = () => {
         </div>
       </div>
       <p className="text-white opacity-60 font-light text-sm">
-        © 2023 by Sendperplane
+        © 2025 by Sendperplane
       </p>
     </div>
   );

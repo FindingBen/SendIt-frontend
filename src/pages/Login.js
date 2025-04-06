@@ -39,7 +39,7 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
       });
       const responseData = await response.json();
-
+      console.log(responseData);
       if (!response.ok) {
         if (
           response.status === 400 &&
@@ -64,9 +64,12 @@ const Login = () => {
       const user = jwt_decode(responseData?.access).user_id;
       const packageValue = jwt_decode(responseData?.access).package_plan;
       const user_info = jwt_decode(responseData?.access);
+      const shopify_token = user_info.shopify_token;
       const tokenType = "JWT";
       console.log(responseData);
-      dispatch(setCredentials({ ...responseData, user, tokenType }));
+      dispatch(
+        setCredentials({ ...responseData, user, tokenType, shopify_token })
+      );
       dispatch(setPackage(packageValue));
       console.log(user_info);
       dispatch(setUserInfo({ ...user_info }));
@@ -192,7 +195,7 @@ const Login = () => {
       </div>
       <div className="flex flex-row gap-2 text-center">
         <p className="text-white opacity-60 font-light text-sm">
-          © 2024 by Sendperplane
+          © 2025 by Sendperplane
         </p>
         <Link className="mt-1 text-xs underline" to={"/privacy-policy"}>
           Privacy

@@ -22,7 +22,7 @@ import { selectCurrentUserState } from "../redux/reducers/userReducer";
 import { selectTokenType } from "../redux/reducers/authSlice";
 import { selectArchiveStateState } from "../redux/reducers/archiveReducer";
 import { selectCampaigns } from "../redux/reducers/completedCampaignsReducer";
-import { clearCampaigns } from "../redux/reducers/completedCampaignsReducer";
+import { selectShopifyToken } from "../redux/reducers/authSlice";
 
 export const useRedux = () => {
   const dispatch = useDispatch();
@@ -43,6 +43,7 @@ export const useRedux = () => {
   const currentCampaignsState = useSelector(selectCampaigns);
   const currentTokenType = useSelector(selectTokenType);
   const currentDomain = useSelector(selectCurrentDomain);
+  const currentShopifyToken = useSelector(selectShopifyToken);
 
   return {
     dispatch,
@@ -63,5 +64,6 @@ export const useRedux = () => {
     currentCampaignsState,
     currentTokenType,
     currentDomain,
+    currentShopifyToken,
   };
 };
