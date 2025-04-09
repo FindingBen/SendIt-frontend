@@ -11,7 +11,7 @@ import { useRedux } from "../../constants/reduxImports";
 
 const CreateListModal = ({ showModal, onClose, newList }) => {
   const axiosInstance = useAxiosInstance();
-  const { dispatch, currentContactList } = useRedux();
+  const { dispatch, currentContactList, currentUser } = useRedux();
   const [show, setShowModal] = useState(showModal);
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
@@ -26,12 +26,12 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
   useEffect(() => {
     setShowModal(showModal);
   }, [showModal]);
-
+  console.log(user, currentUser);
   const addList = async (e) => {
     try {
       e.preventDefault();
       let response = await axiosInstance.post(
-        `/api/create_list/${user}`,
+        `/api/create_list/${currentUser}`,
         {
           list_name: listName,
         },

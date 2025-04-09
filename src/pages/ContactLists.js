@@ -9,6 +9,7 @@ import { useRedux } from "../constants/reduxImports";
 import { setContactLists } from "../redux/reducers/contactListReducer";
 import SmsPill from "../components/SmsPill/SmsPill";
 import LoaderSkeleton from "../components/LoaderSkeleton/LoaderSkeleton";
+import { faBullseye } from "@fortawesome/free-solid-svg-icons";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
@@ -16,6 +17,8 @@ const ContactList = () => {
     currentPackageState,
     currentContactList,
     dispatch,
+    currentUser,
+    currentDomain,
     currentShopifyToken,
   } = useRedux();
   const [contactList, setContactList] = useState([]);
@@ -24,6 +27,7 @@ const ContactList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [contactListsPercentage, setContactListsPercentage] = useState();
   const [recipientsPercentage, setRecipientsPercentage] = useState();
+  const [shopifyFetching, setShopifyFetching] = useState(false);
   const [limits, setLimits] = useState({});
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -94,6 +98,30 @@ const ContactList = () => {
     }
     return true;
   };
+  console.log(currentUser);
+  const createShopifyList = async (e) => {
+    try {
+      setIsLoading(true);
+      e.preventDefault();
+      let response = await axiosInstance.post(
+        `/api/create_list/${currentUser}`,
+        {
+          list_name: `${currentDomain}`,
+        }
+      );
+      if (response.status === 201) {
+        console.log(response.data);
+        const newListData = [...currentContactList.contactLists, response.data];
+        dispatch(
+          setContactLists({ contactLists: newListData, listChange: true })
+        );
+        setTimeout(() => setIsLoading(false), 2000);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
 
   const deleteList = (id) => {
     setListId(id);
@@ -129,7 +157,7 @@ const ContactList = () => {
                   disabled={!canAddNewList()}
                   onClick={handleModal}
                   className={`px-2 py-1 2xl:px-3 2xl:py-2 mr-5 text-white font-normal text-sm 2xl:text-lg cursor-pointer ${
-                    canAddNewList() ? "bg-cyan-600" : "bg-gray-500"
+                    canAddNewList() ? "bg-cyan-700" : "bg-gray-500"
                   } rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4`}
                 >
                   Create list
@@ -144,82 +172,103 @@ const ContactList = () => {
               </div>
               {!isLoading ? (
                 <>
-                  {currentContactList.contactLists?.map((conList, index) => {
-                    const isLastItem =
-                      index === currentContactList.contactLists?.length - 1;
-                    const evenRow = index % 2 === 0;
-                    return (
-                      <div
-                        className={`font-light ${
-                          evenRow
-                            ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
-                            : "bg-mainBlue"
-                        }`}
-                        key={conList.id}
+                  {currentShopifyToken !== "None" &&
+                  currentContactList.contactLists?.length === 0 ? (
+                    <div className="flex flex-col mx-10 mt-4">
+                      <img
+                        src={require("../assets/shopify (1).png")}
+                        width={65}
+                        alt="logo"
+                        className="mt-2 mx-auto"
+                      />
+                      <p className="text-white/50 text-xl">
+                        Connect your shopify customers
+                      </p>
+                      <button
+                        onClick={(e) => createShopifyList(e)}
+                        className="px-2 py-1 bg-cyan-700 mx-auto mt-2 rounded-xl text-white"
                       >
-                        <motion.div
-                          className={`grid grid-cols-4 font-semibold gap-4 p-2 text-white border-gray-800 ${
-                            isLastItem ? "rounded-b-2xl" : "border-b-2"
+                        Connect
+                      </button>
+                    </div>
+                  ) : (
+                    currentContactList.contactLists?.map((conList, index) => {
+                      const isLastItem =
+                        index === currentContactList.contactLists?.length - 1;
+                      const evenRow = index % 2 === 0;
+                      return (
+                        <div
+                          className={`font-light ${
+                            evenRow
+                              ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
+                              : "bg-mainBlue"
                           }`}
                           key={conList.id}
                         >
-                          <div>{conList.list_name}</div>
-                          <div>{conList.created_at}</div>
-                          <div>{conList.contact_lenght}</div>
-                          <div className="flex flex-row mx-16 gap-3">
-                            <div className="rounded-md mx-auto my-auto p-0.5  hover:bg-cyan-600 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
-                              <Link
-                                type="button"
-                                to={`/contact_list/${conList.id}`}
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke-width="1.0"
-                                  stroke="currentColor"
-                                  class="w-5 h-5 2xl:w-7 2xl:h-7"
+                          <motion.div
+                            className={`grid grid-cols-4 font-semibold gap-4 p-2 text-white border-gray-800 ${
+                              isLastItem ? "rounded-b-2xl" : "border-b-2"
+                            }`}
+                            key={conList.id}
+                          >
+                            <div>{conList.list_name}</div>
+                            <div>{conList.created_at}</div>
+                            <div>{conList.contact_lenght}</div>
+                            <div className="flex flex-row mx-16 gap-3">
+                              <div className="rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-600 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+                                <Link
+                                  type="button"
+                                  to={`/contact_list/${conList.id}`}
                                 >
-                                  <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                                  />
-                                  <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                                  />
-                                </svg>
-                              </Link>
-                            </div>
-                            <div className="rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-600 hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
-                              <button
-                                type="button"
-                                onClick={() => deleteList(conList.id)}
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke-width="0.5"
-                                  stroke="currentColor"
-                                  class="h-5 w-5 2xl:h-7 2xl:w-7"
-                                  x-tooltip="tooltip"
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.0"
+                                    stroke="currentColor"
+                                    class="w-5 h-5 2xl:w-7 2xl:h-7"
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                                    />
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                                    />
+                                  </svg>
+                                </Link>
+                              </div>
+                              <div className="rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-600 hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+                                <button
+                                  type="button"
+                                  onClick={() => deleteList(conList.id)}
                                 >
-                                  <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                  />
-                                </svg>
-                              </button>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="0.5"
+                                    stroke="currentColor"
+                                    class="h-5 w-5 2xl:h-7 2xl:w-7"
+                                    x-tooltip="tooltip"
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                    />
+                                  </svg>
+                                </button>
+                              </div>
                             </div>
-                          </div>
-                        </motion.div>
-                      </div>
-                    );
-                  })}
+                          </motion.div>
+                        </div>
+                      );
+                    })
+                  )}
                 </>
               ) : (
                 <LoaderSkeleton contact_list={true} div_size={3} />
