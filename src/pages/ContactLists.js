@@ -57,7 +57,7 @@ const ContactList = () => {
     setRecipientsPercentage(recipientsPercentages);
     setListUpdated(false);
   }
-  console.log(recipients);
+
   let getContactLists = async () => {
     try {
       let response = await axiosInstance.get("/api/contact_lists/");
@@ -177,7 +177,7 @@ const ContactList = () => {
               </div>
               {!isLoading ? (
                 <>
-                  {currentShopifyToken !== "None" &&
+                  {currentShopifyToken &&
                   currentContactList.contactLists?.length === 0 ? (
                     <div className="flex flex-col mx-10 mt-4">
                       <img

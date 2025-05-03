@@ -42,9 +42,7 @@ const useAxiosInstance = () => {
   //const tokenExpiration = dayjs.unix(jwt_decode(currentToken).exp);
 
   axiosInstanceRef.current.interceptors.request.use(async (req) => {
-    console.log("AAAAAAAAA", currentShopifyToken);
     if (!currentShopifyToken) {
-      console.log("BBBBBBBBBBB");
       const tokenExpiration = dayjs.unix(jwt_decode(currentToken).exp);
       const now = dayjs();
       const timeUntilExpiration = tokenExpiration.diff(now, "seconds");
@@ -83,7 +81,7 @@ const useAxiosInstance = () => {
           throw error;
         }
       }
-    } else if (currentShopifyToken !== "None") {
+    } else if (currentShopifyToken) {
       console.log("AAA", currentToken);
       req.headers.Authorization = `Shopify ${currentShopifyToken}`;
       req.headers["shopify-domain"] = currentDomain;
