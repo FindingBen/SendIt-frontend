@@ -21,7 +21,7 @@ const PurchaseHistory = () => {
   useEffect(() => {
     purchaseHistory();
   }, [sortOrder, searchId]);
-
+  console.log(currentUser);
   let purchaseHistory = async (e) => {
     try {
       let url = `stripe/purchases/${currentUser}`;

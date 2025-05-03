@@ -42,7 +42,9 @@ const useAxiosInstance = () => {
   //const tokenExpiration = dayjs.unix(jwt_decode(currentToken).exp);
 
   axiosInstanceRef.current.interceptors.request.use(async (req) => {
-    if (currentShopifyToken === "None") {
+    console.log("AAAAAAAAA", currentShopifyToken);
+    if (!currentShopifyToken) {
+      console.log("BBBBBBBBBBB");
       const tokenExpiration = dayjs.unix(jwt_decode(currentToken).exp);
       const now = dayjs();
       const timeUntilExpiration = tokenExpiration.diff(now, "seconds");
