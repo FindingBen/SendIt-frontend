@@ -53,7 +53,6 @@ const ContactList = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  console.log(currentShopifyToken);
 
   let getContacts = async () => {
     try {
@@ -89,12 +88,11 @@ const ContactList = () => {
         setIsLoading(false);
       }
     } catch (error) {
-      console.error(error);
       setLoader(false);
       setIsLoading(false);
     }
   };
-  console.log("ss", contacts);
+
   let canAddNewrecipients = () => {
     if (contacts?.length >= currentPackageState.recipients_limit) {
       return false;
@@ -151,7 +149,6 @@ const ContactList = () => {
         );
       }
     } catch (error) {
-      console.log(error);
       setErrorMsg(error.response.data.error[0]["message"]);
       setTimeout(() => {
         setErrorMsg();
@@ -174,7 +171,7 @@ const ContactList = () => {
   const handleNewContact = (contact) => {
     setContacts(contact);
   };
-  console.log(currentPackageState);
+
   const updateContact = async (contact_id) => {
     setIsLoading(true);
 
