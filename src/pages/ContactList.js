@@ -174,7 +174,7 @@ const ContactList = () => {
   const handleNewContact = (contact) => {
     setContacts(contact);
   };
-
+  console.log(currentPackageState);
   const updateContact = async (contact_id) => {
     setIsLoading(true);
 
@@ -225,7 +225,7 @@ const ContactList = () => {
   const handleChange = (e, field) => {
     setEditData({ ...editData, [field]: e.target.value });
   };
-
+  console.log();
   return (
     <section className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:flex-row">
@@ -327,27 +327,30 @@ const ContactList = () => {
             <div className={`mainContainer w-full`}>
               <div class="items-center justify-center rounded-2xl mb-3 w-full bg-mainBlue border-gray-800 border-2 shadow-md">
                 <div className="flex flex-row space-x-2 p-2 border-b border-gray-800">
-                  {currentTokenType === "Shopify" ? (
+                  {currentShopifyToken ? (
                     <></>
                   ) : (
-                    <button
-                      className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
+                    <>
+                      <button
+                        className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
                   `}
-                      onClick={handleSortByName}
-                    >
-                      Sort by Name
-                    </button>
+                        onClick={handleSortByName}
+                      >
+                        Sort by Name
+                      </button>
+                      <button
+                        className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray`}
+                        onClick={
+                          currentTokenType === "Shopify"
+                            ? handleSortByDateCreatedShopify
+                            : handleSortByDateCreated
+                        }
+                      >
+                        Sort by Date
+                      </button>
+                    </>
                   )}
-                  <button
-                    className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray`}
-                    onClick={
-                      currentTokenType === "Shopify"
-                        ? handleSortByDateCreatedShopify
-                        : handleSortByDateCreated
-                    }
-                  >
-                    Sort by Date
-                  </button>
+
                   <div class="relative w-[20%]">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
                       <svg

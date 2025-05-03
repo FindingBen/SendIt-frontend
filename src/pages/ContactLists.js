@@ -32,7 +32,7 @@ const ContactList = () => {
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [listId, setListId] = useState();
-  const recipientsPercentages = (recipients.length / limits.recipients) * 100;
+  const recipientsPercentages = (recipients / limits.recipients) * 100;
   const contactListsPercentages =
     (currentContactList.contactLists?.length / limits.contact_lists) * 100;
 
@@ -57,12 +57,14 @@ const ContactList = () => {
     setRecipientsPercentage(recipientsPercentages);
     setListUpdated(false);
   }
+  console.log(recipients);
   let getContactLists = async () => {
     try {
       let response = await axiosInstance.get("/api/contact_lists/");
       if (response.status === 200) {
         setContactList(response.data.data);
         setLimits(response.data.limits);
+        //set Shopify based limit for recipient
         setRecipients(response.data.recipients);
         setIsLoading(false);
         dispatch(
@@ -73,8 +75,7 @@ const ContactList = () => {
         );
         setListId();
         const recipientsPercentages =
-          (response.data.recipients.length / response.data.limits.recipients) *
-          100;
+          (response.data.recipients / response.data.limits.recipients) * 100;
         const contactListsPercentage =
           (response.data.data.length / response.data.limits.contact_lists) *
           100;
@@ -153,15 +154,19 @@ const ContactList = () => {
                 <p className="text-white font-semibold text-xl xl:text-2xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
                   Your contact lists
                 </p>
-                <button
-                  disabled={!canAddNewList()}
-                  onClick={handleModal}
-                  className={`px-2 py-1 2xl:px-3 2xl:py-2 mr-5 text-white font-normal text-sm 2xl:text-lg cursor-pointer ${
-                    canAddNewList() ? "bg-cyan-700" : "bg-gray-500"
-                  } rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4`}
-                >
-                  Create list
-                </button>
+                {!currentShopifyToken ? (
+                  <button
+                    disabled={!canAddNewList()}
+                    onClick={handleModal}
+                    className={`px-2 py-1 2xl:px-3 2xl:py-2 mr-5 text-white font-normal text-sm 2xl:text-lg cursor-pointer ${
+                      canAddNewList() ? "bg-cyan-700" : "bg-gray-500"
+                    } rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4`}
+                  >
+                    Create list
+                  </button>
+                ) : (
+                  <></>
+                )}
               </div>
               <div class="grid grid-cols-4 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
                 <div className="">Name</div>
@@ -213,7 +218,11 @@ const ContactList = () => {
                           >
                             <div>{conList.list_name}</div>
                             <div>{conList.created_at}</div>
-                            <div>{conList.contact_lenght}</div>
+                            {!currentShopifyToken ? (
+                              <div>{conList.contact_lenght}</div>
+                            ) : (
+                              <div>{recipients}</div>
+                            )}
                             <div className="flex flex-row mx-16 gap-3">
                               <div className="rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-600 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
                                 <Link
@@ -319,7 +328,7 @@ const ContactList = () => {
                   </div>
                   <div className="flex flex-row mx-auto p-1 bg-mainBlue border-2 border-gray-800 rounded-lg">
                     <p className="text-white">
-                      {recipients?.length}/{limits?.recipients}
+                      {recipients}/{limits?.recipients}
                     </p>
                   </div>
                 </div>

@@ -14,6 +14,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
   const [show, setShowModal] = useState(showModal);
   const [number, setNumber] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
   const params = useParams();
   const [contact, setContact] = useState({
     firstName: "",
@@ -64,7 +65,18 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
       }
     } catch (error) {
       console.error(error);
-      setErrMsg(error.response.data.detail);
+      if (error.response && error.response.data.details) {
+        const errors = error.response.data.details.reduce((acc, err) => {
+          const field = err.field[0]; // Get the field name
+          acc[field] = err.message; // Assign the error message to the field
+          return acc;
+        }, {});
+        setFieldErrors(errors); // Set field-specific errors
+      } else {
+        console.log(error);
+        setErrMsg(error.response.data.detail);
+        setFieldErrors();
+      }
     }
   };
 
@@ -95,35 +107,63 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
                   <p className="my-4 text-slate-500 text-lg leading-relaxed">
                     You are about to add a new contact to this current list you
                     are visiting, remember to double check email and phone
-                    records! Remember to includ calling code as well( 45 ) or
-                    which ever country to phone number is from
+                    records! Remember to include calling code as well (e.g., 45
+                    for Denmark) or whichever country the phone number is from.
                   </p>
                   <input
-                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full"
+                    className={`bg-gray-50 border ${
+                      fieldErrors?.firstName
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    } mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full`}
                     name="firstName"
                     type="text"
                     placeholder="First name"
                     onChange={handleUserInput}
                   />
+                  {fieldErrors?.firstName && (
+                    <p className="text-red-500 text-sm">
+                      {fieldErrors?.firstName}
+                    </p>
+                  )}
                   <input
-                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full"
+                    className={`bg-gray-50 border ${
+                      fieldErrors?.lastName
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    } mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full`}
                     name="lastName"
                     type="text"
                     placeholder="Last name"
                     onChange={handleUserInput}
                   />
+                  {fieldErrors?.lastName && (
+                    <p className="text-red-500 text-sm">
+                      {fieldErrors?.lastName}
+                    </p>
+                  )}
                   <PhoneInput
-                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full"
+                    className={`bg-gray-50 border ${
+                      fieldErrors?.phone ? "border-red-500" : "border-gray-300"
+                    } mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full`}
                     placeholder="Enter phone number"
                     onChange={(e) => setNumber(e)}
                     name="phoneNumber"
                   />
+                  {fieldErrors?.phone && (
+                    <p className="text-red-500 text-sm">{fieldErrors.phone}</p>
+                  )}
                   <input
-                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    className={`bg-gray-50 border ${
+                      fieldErrors?.email ? "border-red-500" : "border-gray-300"
+                    } mt-2 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
                     name="email"
                     placeholder="Email"
                     onChange={handleUserInput}
                   />
+                  {fieldErrors?.email && (
+                    <p className="text-red-500 text-sm">{fieldErrors.email}</p>
+                  )}
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
