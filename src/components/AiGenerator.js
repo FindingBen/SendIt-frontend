@@ -10,6 +10,7 @@ const AiGenerator = ({
   contextList,
   elementList,
   listEl,
+  stepList,
 }) => {
   const API_KEY = process.env.REACT_APP_OPEN_AI_KEY;
   const { currentUser } = useRedux();
@@ -136,6 +137,7 @@ const AiGenerator = ({
     createElement(imageContext);
     contextList((prevElement) => [...prevElement, imageContext]);
     elementList((prevElement) => [...prevElement, imageContext]);
+    stepList((prevElement) => [...prevElement, imageContext]);
   };
 
   let saveImgContext = (e) => {
@@ -182,6 +184,7 @@ const AiGenerator = ({
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
     elementList((prevElement) => [...prevElement, dataText]);
+    stepList((prevElement) => [...prevElement, dataText]);
   };
 
   const addTextObjContext = async (textValue) => {
@@ -197,6 +200,7 @@ const AiGenerator = ({
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
     elementList((prevElement) => [...prevElement, dataText]);
+    stepList((prevElement) => [...prevElement, dataText]);
   };
 
   const saveAIContent = () => {

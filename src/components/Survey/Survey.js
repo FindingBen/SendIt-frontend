@@ -6,7 +6,13 @@ import SurveyComponent from "./SurveyComponent";
 import { ElementContext } from "../../context/ElementContext";
 import { useRedux } from "../../constants/reduxImports";
 
-const Survey = ({ setComponentState, contextList, elementList, listEl }) => {
+const Survey = ({
+  setComponentState,
+  contextList,
+  elementList,
+  listEl,
+  stepList,
+}) => {
   const { currentUser } = useRedux();
   const { createElement, deleteElement } = useContext(ElementContext);
   const [question, setQuestion] = useState("");
@@ -98,6 +104,7 @@ const Survey = ({ setComponentState, contextList, elementList, listEl }) => {
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
     elementList((prevElement) => [...prevElement, dataText]);
+    stepList((prevElement) => [...prevElement, dataText]);
   };
 
   function saveSurvey(event) {

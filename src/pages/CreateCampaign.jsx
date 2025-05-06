@@ -8,7 +8,6 @@ const CreateCampaign = () => {
   const [completedSteps, setCompletedSteps] = useState([]);
   const [formData, setFormData] = useState({
     campaignInfo: {},
-    content: {},
     recipients: {},
   }); // Store data from all steps
   const updateFormData = (stepData) => {
@@ -17,7 +16,7 @@ const CreateCampaign = () => {
       ...stepData,
     }));
   };
-
+  console.log(formData);
   const nextStep = () => {
     // Mark the current step as completed
     setCompletedSteps((prevSteps) => {

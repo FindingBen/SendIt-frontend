@@ -4,7 +4,8 @@ const StepsComponent = ({ currentStep, completedSteps }) => {
   const steps = [
     { id: 1, label: "Campaign Info" },
     { id: 2, label: "Content" },
-    { id: 3, label: "Recipients" },
+    { id: 3, label: "Sending options" },
+    { id: 4, label: "Review & Create" },
   ];
 
   return (

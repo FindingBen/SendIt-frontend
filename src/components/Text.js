@@ -35,6 +35,7 @@ const Text = ({
   contextList,
   listEl,
   setAlignemnt,
+  stepList,
 }) => {
   const { currentUser } = useRedux();
   const { createElement } = useContext(ElementContext);
@@ -123,6 +124,7 @@ const Text = ({
     contextList((prevElement) => [...prevElement, dataText]);
     //this makes sure that newly created data is displayed together with old elements
     elementList((prevElement) => [...prevElement, dataText]);
+    stepList((prevElement) => [...prevElement, dataText]);
   };
 
   function saveTxt(event) {

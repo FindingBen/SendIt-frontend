@@ -6,7 +6,13 @@ import { motion } from "framer-motion";
 import ColorPircker from "./ColorPircker";
 import { useRedux } from "../constants/reduxImports";
 
-const Button = ({ setComponentState, contextList, elementList, listEl }) => {
+const Button = ({
+  setComponentState,
+  contextList,
+  elementList,
+  listEl,
+  stepList,
+}) => {
   const { currentUser } = useRedux();
   const { createElement, deleteElement } = useContext(ElementContext);
   const [text, setText] = useState("");
@@ -100,6 +106,7 @@ const Button = ({ setComponentState, contextList, elementList, listEl }) => {
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
     elementList((prevElement) => [...prevElement, dataText]);
+    stepList((prevElement) => [...prevElement, dataText]);
   };
 
   function saveBtn(event) {

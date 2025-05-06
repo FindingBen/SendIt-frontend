@@ -13,6 +13,7 @@ const Image = ({
   elementList,
   listEl,
   imageState,
+  stepList,
 }) => {
   const { currentUser } = useRedux();
   const { createElement } = useContext(ElementContext);
@@ -83,6 +84,7 @@ const Image = ({
     createElement(imageContext);
     contextList((prevElement) => [...prevElement, imageContext]);
     elementList((prevElement) => [...prevElement, imageContext]);
+    stepList((prevElement) => [...prevElement, imageContext]);
   };
 
   function saveImg(event) {

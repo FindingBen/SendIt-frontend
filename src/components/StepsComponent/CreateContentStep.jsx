@@ -17,9 +17,7 @@ import PreviewPanel from "../PreviewComponent/PreviewPanel";
 import { setMessages } from "../../redux/reducers/messageReducer";
 
 const CreateContentStep = ({ prevStep, nextStep, updateFormData }) => {
-  const [messageElements, setMessageElements] = useState({
-    elements: [],
-  });
+  const [messageElements, setMessageElements] = useState([]);
   const Package_basic = process.env.REACT_APP_BASIC_PLAN;
   const { deleteElement } = useContext(ElementContext);
   const {
@@ -81,12 +79,6 @@ const CreateContentStep = ({ prevStep, nextStep, updateFormData }) => {
     setSelectedComponent((prevSelectedComponent) =>
       prevSelectedComponent === componentKey ? null : componentKey
     );
-  };
-
-  const handleMessageName = (e) => {
-    setMessageName(e.target.value);
-    setIsDirty(true);
-    setShowSaveButton(e.target.value.length > 0);
   };
 
   const handleSave = (e) => {
@@ -156,6 +148,10 @@ const CreateContentStep = ({ prevStep, nextStep, updateFormData }) => {
     setElementsContextList(elementContextList);
   };
 
+  const handleStepList = (messageElements) => {
+    setMessageElements(messageElements);
+  };
+
   //For displaying images on iframe
   const handleImages = (images) => {
     setImages(images);
@@ -196,6 +192,7 @@ const CreateContentStep = ({ prevStep, nextStep, updateFormData }) => {
         contextList={handleContextEl}
         setComponentState={setComponent}
         imageState={setImageStateVal}
+        stepList={handleStepList}
       />
     ),
     text: (
@@ -204,6 +201,7 @@ const CreateContentStep = ({ prevStep, nextStep, updateFormData }) => {
         listEl={isCreate}
         contextList={handleContextEl}
         setComponentState={setComponent}
+        stepList={handleStepList}
       />
     ),
     button: (
@@ -212,6 +210,7 @@ const CreateContentStep = ({ prevStep, nextStep, updateFormData }) => {
         contextList={handleContextEl}
         elementList={displayElements}
         setComponentState={setComponent}
+        stepList={handleStepList}
       />
     ),
     survey: (
@@ -220,6 +219,7 @@ const CreateContentStep = ({ prevStep, nextStep, updateFormData }) => {
         contextList={handleContextEl}
         elementList={displayElements}
         setComponentState={setComponent}
+        stepList={handleStepList}
       />
     ),
     aiContent: (
@@ -228,6 +228,7 @@ const CreateContentStep = ({ prevStep, nextStep, updateFormData }) => {
         contextList={handleContextEl}
         elementList={displayElements}
         setComponentState={setComponent}
+        stepList={handleStepList}
       />
     ),
   };
@@ -384,9 +385,9 @@ const CreateContentStep = ({ prevStep, nextStep, updateFormData }) => {
             <button
               type="submit"
               onClick={handleNext}
-              disabled={!elementContextList} // Disable if name or type is empty
+              disabled={elementContextList.length === 0} // Disable if name or type is empty
               className={`text-white absolute bottom-10 mx-auto font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ${
-                !elementContextList
+                elementContextList.length === 0
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
               }`}
