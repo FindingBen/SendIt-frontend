@@ -203,7 +203,7 @@ const SmsEditor = () => {
   const handleDate = (date) => {
     setDateSchedule(date);
   };
-  console.log(smsText?.length);
+
   return (
     <section className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
