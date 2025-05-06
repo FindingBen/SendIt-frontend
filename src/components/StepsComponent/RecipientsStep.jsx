@@ -247,7 +247,7 @@ const RecipientsStep = ({ prevStep, updateFormData }) => {
             </div>
             <br></br>
             <div className=" gap-2">
-              <label className="block mb-2 text-sm text-left font-semibold text-gray-300 dark:text-white">
+              <label className="block text-normal text-left font-semibold text-gray-300 dark:text-white">
                 Link and personalize:
               </label>
               <div className="flex flex-row">
@@ -258,27 +258,25 @@ const RecipientsStep = ({ prevStep, updateFormData }) => {
                   className={`${
                     smsText.length === 0 || recipients.length === 0
                       ? "bg-gray-500"
-                      : "bg-blue-950 cursor-pointer"
-                  } hover:bg-blue-800 text-white font-semibold py-1 px-1 border-gray-500 rounded text-sm xl:text-normal ml-2 mt-4`}
+                      : "bg-cyan-600"
+                  } hover:bg-cyan-700 cursor-pointer text-white font-semibold py-1 px-1 border-gray-500 rounded text-sm xl:text-normal mt-1`}
                 >
                   #Link
                 </button>
-              </div>
-              <div className="flex flex-row">
                 <button
                   onClick={handleNameLink}
                   disabled={smsText.length === 0 || !recipients}
                   className={`${
                     smsText.length === 0 || !recipients
                       ? "bg-gray-500"
-                      : "bg-blue-950 cursor-pointer"
-                  } hover:bg-blue-800 text-white font-semibold py-1 px-1 border-gray-500 rounded text-sm xl:text-normal ml-2 mt-4`}
+                      : "bg-cyan-600"
+                  } hover:bg-cyan-700 cursor-pointer text-white font-semibold py-1 px-1 border-gray-500 rounded text-sm xl:text-normal mt-1 ml-2`}
                 >
                   #FirstName
                 </button>
               </div>
             </div>
-            <div className="form-group purple-border text-gray-100 rounded-lg">
+            <div className="form-group mt-3 purple-border text-gray-100 rounded-lg">
               <label className="block mb-2 text-sm text-left font-semibold dtext-white">
                 Sms text:
               </label>
