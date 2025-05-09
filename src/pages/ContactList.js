@@ -58,6 +58,7 @@ const ContactList = () => {
     try {
       let url = `/api/contact_list/${params.id}`;
       const queryParts = [];
+      console.log("HERE");
       // Check if a sorting parameter is present, then include it in the URL
       // Add sorting parameter if set
       if (sortOrder) queryParts.push(`sort_by=${sortOrder}`);
@@ -70,8 +71,11 @@ const ContactList = () => {
         url += `?${queryParts.join("&")}`;
       }
       let response = await axiosInstance.get(url);
+      console.log(response.data);
       if (response.status === 200) {
-        if (currentShopifyToken !== "None") {
+        console.log("AAA");
+        if (currentShopifyToken) {
+          console.log("SDASDASDAS");
           const contactsData = response.data.edges.map((edge) => ({
             id: edge.node.id, // Extract the ID
             firstName: edge.node.firstName, // Map firstName to first_name
@@ -82,6 +86,7 @@ const ContactList = () => {
           }));
           setContacts(contactsData);
         } else {
+          console.log(response.data);
           setContacts(response.data.customers);
         }
         setLoader(false);
@@ -92,7 +97,7 @@ const ContactList = () => {
       setIsLoading(false);
     }
   };
-
+  console.log(contacts);
   let canAddNewrecipients = () => {
     if (contacts?.length >= currentPackageState.recipients_limit) {
       return false;
@@ -222,7 +227,7 @@ const ContactList = () => {
   const handleChange = (e, field) => {
     setEditData({ ...editData, [field]: e.target.value });
   };
-  console.log();
+  console.log(paginatedData);
   return (
     <section className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:flex-row">
