@@ -13,8 +13,8 @@ const AnalyticsBarProgress = ({ total_values, metric }) => {
     if (percentage <= 70) return "bg-yellow-500 dark:bg-yellow-400";
     return "bg-green-600 dark:bg-green-500";
   };
-
-  const progressColor = getProgressColor(total_values || 0, metric);
+  const cappedValue = Math.min(total_values || 0, 100);
+  const progressColor = getProgressColor(cappedValue, metric);
 
   return (
     <div className="flex flex-col w-[70%]">
