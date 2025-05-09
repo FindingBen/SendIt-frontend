@@ -13,6 +13,7 @@ const AnalyticsBarProgress = ({ total_values, metric }) => {
     if (percentage <= 70) return "bg-yellow-500 dark:bg-yellow-400";
     return "bg-green-600 dark:bg-green-500";
   };
+  console.log(total_values);
   const cappedValue = Math.min(total_values || 0, 100);
   const progressColor = getProgressColor(cappedValue, metric);
 
@@ -23,11 +24,11 @@ const AnalyticsBarProgress = ({ total_values, metric }) => {
       <div class="w-[100%] relative bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2">
         <div
           className={`${progressColor} h-3 rounded-full`}
-          style={{ width: total_values + "%" }}
+          style={{ width: cappedValue + "%" }}
         ></div>
         <p
           className={`absolute inset-0 ${progressColor} blur`}
-          style={{ width: total_values + "%" }}
+          style={{ width: cappedValue + "%" }}
         ></p>
       </div>
     </div>
