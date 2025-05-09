@@ -281,7 +281,7 @@ const CreateNote = () => {
                   </button>
                 )}
               </div>
-              <div className="flex lg:h-[68%] gap-2 md:flex-col p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 mt-4 rounded-2xl">
+              <div className="flex lg:h-[74%] gap-2 md:flex-col p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 mt-4 rounded-2xl">
                 <span className="text-left text-white text-normal lg:text-lg font-semibold ml-4 md:ml-0">
                   Content elements
                 </span>
@@ -311,7 +311,7 @@ const CreateNote = () => {
                     </svg>
 
                     <p className="text-white/70 font-normal text-base text-justify my-auto">
-                      Add Image
+                      Image
                     </p>
                   </div>
                   <div
@@ -335,7 +335,7 @@ const CreateNote = () => {
                     </svg>
 
                     <p className="text-white/70 font-normal text-base text-justify my-auto">
-                      Add CTA
+                      CTA
                     </p>
                   </div>
                 </div>
@@ -361,7 +361,7 @@ const CreateNote = () => {
                     </svg>
 
                     <p className="text-white/70 font-normal text-base text-justify my-auto">
-                      Add Text
+                      Text
                     </p>
                   </div>
                   <div
@@ -385,41 +385,44 @@ const CreateNote = () => {
                     </svg>
 
                     <p className="text-white/70 font-normal text-normal text-justify my-auto">
-                      Add Survey
+                      Survey
                     </p>
                   </div>
                 </div>
                 <div className="flex flex-row justify-between">
-                  {currentPackageState?.package === Package_basic ? (
-                    <div
-                      onClick={
-                        imageStateVal ? null : () => handleClick("aiContent")
-                      }
-                      name="liClick"
-                      className="component-button-create-content"
+                  <div
+                    onClick={
+                      currentPackageState?.package === "Silver" &&
+                      !imageStateVal
+                        ? () => handleClick("aiContent")
+                        : null
+                    }
+                    name="liClick"
+                    className={`component-button-create-content ${
+                      currentPackageState?.package !== "Silver"
+                        ? "cursor-not-allowed opacity-50"
+                        : ""
+                    }`}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
-                        />
-                      </svg>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
+                      />
+                    </svg>
 
-                      <p className="text-white/70 font-base text-normal text-justify my-auto">
-                        Use AI
-                      </p>
-                    </div>
-                  ) : (
-                    <></>
-                  )}
+                    <p className="text-white/70 font-base text-normal text-justify my-auto">
+                      AI
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

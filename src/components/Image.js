@@ -84,7 +84,7 @@ const Image = ({
     createElement(imageContext);
     contextList((prevElement) => [...prevElement, imageContext]);
     elementList((prevElement) => [...prevElement, imageContext]);
-    stepList((prevElement) => [...prevElement, imageContext]);
+    //stepList((prevElement) => [...prevElement, imageContext]);
   };
 
   function saveImg(event) {

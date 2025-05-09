@@ -60,6 +60,7 @@ const CreateCampaign = () => {
         return (
           <RecipientsStep
             prevStep={prevStep}
+            nextStep={nextStep}
             handleSubmit={handleSubmit}
             updateFormData={updateFormData}
           />

@@ -388,7 +388,7 @@ const EditMessage = () => {
                       />
                     </svg>
                     <p className="text-white/70 font-normal text-base text-justify my-auto">
-                      Add Image
+                      Image
                     </p>
                   </div>
                   <div
@@ -411,7 +411,7 @@ const EditMessage = () => {
                       />
                     </svg>
                     <p className="text-white/70 font-normal text-base text-justify my-auto">
-                      Add CTA
+                      CTA
                     </p>
                   </div>
                 </div>
@@ -436,7 +436,7 @@ const EditMessage = () => {
                       />
                     </svg>
                     <p className="text-white/70 font-normal text-base text-justify my-auto">
-                      Add Text
+                      Text
                     </p>
                   </div>
                   <div
@@ -459,7 +459,7 @@ const EditMessage = () => {
                       />
                     </svg>
                     <p className="text-white/70 font-normal text-normal text-justify my-auto">
-                      Add Survey
+                      Survey
                     </p>
                   </div>
                 </div>

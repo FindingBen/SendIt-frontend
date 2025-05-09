@@ -3,20 +3,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRedux } from "../../constants/reduxImports";
 import Checklist from "../Checklist/Checklist";
 import useAxiosInstance from "../../utils/axiosInstance";
-const RecipientsStep = ({ prevStep, updateFormData }) => {
+const RecipientsStep = ({ prevStep, updateFormData, nextStep }) => {
   const { currentUser, currentPackageState, dispatch } = useRedux();
   const axiosInstance = useAxiosInstance();
   const [sendingOptions, setSendingOptions] = useState({
     type: "",
-    recipients: [],
+    recipients: "",
+    smsText: "",
   });
   const params = useParams();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [showSchedule, setShowSchedule] = useState(false);
   const [linkURL, setLinkURL] = useState("");
-  const [user, setUser] = useState();
-  const [dateSchedule, setDateSchedule] = useState();
+  const [sendType, setSendType] = useState("");
+  const [listId, setListId] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [smsText, setSmsText] = useState([]);
@@ -114,12 +114,24 @@ const RecipientsStep = ({ prevStep, updateFormData }) => {
       console.log(error);
     }
   };
+  console.log(sendingOptions);
+  const handleNext = () => {
+    // Example: Pass the data you want to persist
+    updateFormData({
+      recipients: {
+        type: sendingOptions.type,
+        recipients: listId,
+        smsText: smsText,
+      },
+    });
 
+    nextStep();
+  };
   const handleChoice = (e) => {
     if (e.target.value !== "Choose") {
       const recipientData = JSON.parse(e.target.value);
       setRecipients(recipientData);
-
+      setListId(recipientData.id);
       if (recipientData.contact_lenght > 0) {
         setIslist(true);
       } else if (recipientData.contact_lenght === 0) {
@@ -194,10 +206,10 @@ const RecipientsStep = ({ prevStep, updateFormData }) => {
               </label>
               <ul class="items-center w-[50%] text-sm font-medium bg-mainBlue border border-gray-200 rounded-lg sm:flex dark:text-white">
                 <li
-                  className={`border-b w-[50%] transition delay-75 sm:border-b-0 sm:border-r  ${
+                  className={`border-b w-[50%] transition delay-75 sm:border-b-0 border-r  ${
                     sendingOptions.type === "Send"
                       ? "bg-cyan-600 border-l rounded-md"
-                      : " text-white"
+                      : " text-white border-r rounded-md"
                   }`}
                 >
                   <div className="flex items-center ps-3">
@@ -367,6 +379,17 @@ const RecipientsStep = ({ prevStep, updateFormData }) => {
               </div>
             )}
           </div>
+          <button
+            type="submit"
+            onClick={handleNext}
+            // disabled={elementContextList.length === 0} // Disable if name or type is empty
+            className={`text-white absolute bottom-10 mx-auto font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center
+             
+                bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
+            `}
+          >
+            Next
+          </button>
         </div>
       </div>
     </section>

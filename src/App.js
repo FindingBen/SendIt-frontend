@@ -83,7 +83,7 @@ function App() {
               <Route element={<PrivateRoute />}>
                 <Route path="analytics/:id" element={<AnalyticsPage />} />
                 <Route path="home" element={<HomePage />} />
-                <Route path="create_campaign" element={<CreateCampaign />} />
+                {/* <Route path="create_campaign" element={<CreateCampaign />} /> */}
                 <Route path="create_note" element={<CreateMessage />} />
                 <Route path="purchase_history" element={<PurchaseHistory />} />
                 <Route

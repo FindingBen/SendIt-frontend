@@ -106,7 +106,7 @@ const Button = ({
     createElement(dataText);
     contextList((prevElement) => [...prevElement, dataText]);
     elementList((prevElement) => [...prevElement, dataText]);
-    stepList((prevElement) => [...prevElement, dataText]);
+    //stepList((prevElement) => [...prevElement, dataText]);
   };
 
   function saveBtn(event) {
