@@ -66,10 +66,10 @@ function App() {
             <Route path="register" element={<DemoPage />} />
             {/* <Route path="register" element={<RegisterPage />} /> */}
             <Route path="login" element={<Login></Login>} />
-            <Route
+            {/* <Route
               path="shopify-login"
               element={<ShopifyLogin></ShopifyLogin>}
-            />
+            /> */}
             <Route
               path="reset_password"
               element={<PasswordReset></PasswordReset>}
