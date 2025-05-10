@@ -125,7 +125,7 @@ const ContactList = () => {
 
     getContacts();
   };
-
+  console.log(currentShopifyToken);
   let deleteContact = async (id) => {
     setIsDelete(true);
 
@@ -136,13 +136,15 @@ const ContactList = () => {
 
       let url = "";
       //const url = "/api/delete_recipient/<str:id>/";
-      if (currentShopifyToken !== "None") {
+      if (currentShopifyToken) {
+        console.log("shopify");
         url = "/api/delete_recipient_shopify/";
       } else {
-        url = `/api/delete_recipient/<str:id>/`;
+        url = `/api/delete_recipient/${data.id}`;
+        console.log(data);
       }
       let response = await axiosInstance.post(url, data);
-
+      console.log(response);
       if (response.status === 200) {
         setContacts(contacts.filter((contact) => contact.id !== id));
         setIsDelete(false);
