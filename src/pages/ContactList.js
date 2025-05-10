@@ -241,9 +241,9 @@ const ContactList = () => {
             <div class="items-start shadow-md mx-20">
               <div className="inline-flex mt-1 gap-2">
                 <button
-                  className={`text-white hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer
+                  disabled={true}
+                  className={`text-white opacity-40 hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer
                   rounded-md flex flex-row gap-2 border-2 border-gray-800 p-2`}
-                  onClick={handleQrModal}
                 >
                   <p>Show code</p>
                   <svg
