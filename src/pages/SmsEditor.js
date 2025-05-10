@@ -300,7 +300,7 @@ const SmsEditor = () => {
                         Send
                       </button>
 
-                      {canScheduleSms() ? (
+                      {/* {canScheduleSms() ? (
                         <button
                           onClick={() => setShowSchedule(true)}
                           type="submit"
@@ -322,7 +322,7 @@ const SmsEditor = () => {
                         </button>
                       ) : (
                         <></>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>
@@ -437,13 +437,13 @@ const SmsEditor = () => {
               showModal={show}
               onClose={() => setShow(false)}
             ></SmsConfirmModal>
-            <ScheduleSmsModal
+            {/* <ScheduleSmsModal
               errorMsg={errorMessage}
               sendConfirm={scheduleSms}
               showModal={showSchedule}
               dateSchedule={handleDate}
               onClose={() => setShowSchedule(false)}
-            ></ScheduleSmsModal>
+            ></ScheduleSmsModal> */}
           </div>
         </div>
       </div>
