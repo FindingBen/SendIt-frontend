@@ -125,7 +125,6 @@ const ContactList = () => {
 
     getContacts();
   };
-  console.log(currentShopifyToken);
   let deleteContact = async (id) => {
     setIsDelete(true);
 
@@ -184,7 +183,7 @@ const ContactList = () => {
 
     try {
       let url = "";
-      if (currentShopifyToken !== "None") {
+      if (currentShopifyToken) {
         url = "/api/contact_detail/";
         editData["id"] = contact_id;
       } else {

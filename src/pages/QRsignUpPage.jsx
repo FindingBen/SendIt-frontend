@@ -69,18 +69,19 @@ const QRsignUpPage = () => {
       setErrMsg("First name and phone number are required.");
       return;
     }
-
+    console.log(contact);
     setLoading(true); // Show loader
     setErrMsg(null); // Reset error message
     try {
       let response = await axios.post(
         `${baseURL}/api/create_contact_qr/${params.id}`,
         {
-          first_name: contact?.firstName,
-          last_name: contact?.lastName,
-          phone_number: number,
+          firstName: contact?.firstName,
+          lastName: contact?.lastName,
+          phone: number,
         }
       );
+
       if (response.status === 200 || 201) {
         setSuccess(true);
         dispatch(
@@ -91,6 +92,7 @@ const QRsignUpPage = () => {
         );
       }
     } catch (error) {
+      console.log(error);
       setSuccess(false);
       setErrMsg("Something went wrong. Please try again.");
     } finally {
@@ -102,7 +104,7 @@ const QRsignUpPage = () => {
     <div className="min-h-screen w-100 items-center bg-mainBlue relative">
       {!success ? (
         <div className="flex flex-col items-center p-4 gap-7">
-          <p className="text-3xl text-white text-center">Welcome to Business</p>
+          <p className="text-3xl text-white text-center">Welcome to our list</p>
 
           {errMsg && (
             <p className="text-red-500 font-semibold text-center">{errMsg}</p>
