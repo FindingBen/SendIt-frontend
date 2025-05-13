@@ -69,7 +69,6 @@ const QRsignUpPage = () => {
       setErrMsg("First name and phone number are required.");
       return;
     }
-    console.log(contact);
     setLoading(true); // Show loader
     setErrMsg(null); // Reset error message
     try {
@@ -92,7 +91,6 @@ const QRsignUpPage = () => {
         );
       }
     } catch (error) {
-      console.log(error);
       setSuccess(false);
       setErrMsg("Something went wrong. Please try again.");
     } finally {
