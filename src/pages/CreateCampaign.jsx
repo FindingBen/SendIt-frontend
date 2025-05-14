@@ -3,12 +3,15 @@ import StepsComponent from "../components/StepsComponent/StepsComponent";
 import CampaignInfoStep from "../components/StepsComponent/CampaignInfoStep";
 import CreateContentStep from "../components/StepsComponent/CreateContentStep";
 import RecipientsStep from "../components/StepsComponent/RecipientsStep";
+import ReviewCreateStep from "../components/StepsComponent/ReviewCreateStep";
+
 const CreateCampaign = () => {
   const [currentStep, setCurrentStep] = useState(1); // Track the current step
   const [completedSteps, setCompletedSteps] = useState([]);
   const [formData, setFormData] = useState({
     campaignInfo: {},
-    recipients: {},
+    contentElements: [],
+    sendingOptions: {},
   }); // Store data from all steps
   const updateFormData = (stepData) => {
     setFormData((prevData) => ({
@@ -27,7 +30,7 @@ const CreateCampaign = () => {
     });
 
     // Move to the next step
-    setCurrentStep((prevStep) => Math.min(prevStep + 1, 3)); // Ensure it doesn't exceed the total steps
+    setCurrentStep((prevStep) => Math.min(prevStep + 1, 4)); // Ensure it doesn't exceed the total steps
   };
 
   const prevStep = () => {
@@ -65,6 +68,8 @@ const CreateCampaign = () => {
             updateFormData={updateFormData}
           />
         );
+      case 4:
+        return <ReviewCreateStep prevStep={prevStep} formData={formData} />;
       default:
         return null;
     }

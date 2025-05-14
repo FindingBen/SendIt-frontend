@@ -47,7 +47,7 @@ const CampaignInfoStep = ({ nextStep, updateFormData }) => {
           <ul class="items-center w-full text-sm font-medium  bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
             <li
               className={`w-full border-b transition delay-75 sm:border-b-0 sm:border-r  ${
-                campaignInfo.type === "Email"
+                campaignInfo.type === "Promotional"
                   ? "bg-cyan-600 border-l rounded-md"
                   : "text-gray-900"
               }`}
@@ -56,23 +56,23 @@ const CampaignInfoStep = ({ nextStep, updateFormData }) => {
                 <input
                   id="horizontal-list-radio-license"
                   type="radio"
-                  value="Email"
+                  value="Promotional"
                   name="list-radio"
-                  checked={campaignInfo.type === "Email"}
-                  onChange={() => handleTypeSelect("Email")}
+                  checked={campaignInfo.type === "Promotional"}
+                  onChange={() => handleTypeSelect("Promotional")}
                   className="hidden"
                 />
                 <label
                   htmlFor="horizontal-list-radio-license"
                   className="w-full py-3 ms-2 text-sm font-medium cursor-pointer"
                 >
-                  Email
+                  Promotional
                 </label>
               </div>
             </li>
             <li
               className={`w-full border-b border-gray-200 sm:border-b-0 transition delay-75 sm:border-r ${
-                campaignInfo.type === "Sms"
+                campaignInfo.type === "Notification"
                   ? "bg-cyan-600 border-r rounded-md text-white"
                   : "text-gray-900"
               }`}
@@ -81,17 +81,17 @@ const CampaignInfoStep = ({ nextStep, updateFormData }) => {
                 <input
                   id="horizontal-list-radio-id"
                   type="radio"
-                  value="Sms"
+                  value="Notification"
                   name="list-radio"
-                  checked={campaignInfo.type === "Sms"}
-                  onChange={() => handleTypeSelect("Sms")}
+                  checked={campaignInfo.type === "Notification"}
+                  onChange={() => handleTypeSelect("Notification")}
                   className="hidden"
                 />
                 <label
                   htmlFor="horizontal-list-radio-id"
                   className="w-full py-3 ms-2 text-sm font-medium cursor-pointer"
                 >
-                  Sms
+                  Notification
                 </label>
               </div>
             </li>

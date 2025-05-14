@@ -3,6 +3,7 @@ import List from "../List";
 
 const PreviewPanel = ({
   device,
+  newLook,
   elementContextList,
   handleClicked,
   updateElements,
@@ -11,7 +12,7 @@ const PreviewPanel = ({
   return (
     <div>
       <div
-        class={`h-[445px] lg:h-[450px] 2xl:h-[650px] w-[350px] 2xl:w-[450px] rounded-[1rem] overflow-auto bg-white/80`}
+        class={`h-[445px] ${newLook ? "lg:h-[500px]":"lg:h-[450px]"} 2xl:h-[650px] w-[350px] 2xl:w-[450px] rounded-[1rem] overflow-auto bg-white/80`}
       >
         <br></br>
 

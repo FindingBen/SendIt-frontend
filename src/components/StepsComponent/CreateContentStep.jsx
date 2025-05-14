@@ -64,14 +64,10 @@ const CreateContentStep = ({ prevStep, nextStep, updateFormData }) => {
     }
   }, [errorMsg]);
 
-  const handlePrev = () => {
-    updateFormData({ messageElements });
-    prevStep();
-  };
   console.log(messageElements);
   console.log("CONTEXT", elementContextList);
   const handleNext = () => {
-    updateFormData({ messageElements });
+    updateFormData({ contentElements: elementContextList }); // Explicitly update the contentElements key
     nextStep();
   };
 
@@ -382,18 +378,31 @@ const CreateContentStep = ({ prevStep, nextStep, updateFormData }) => {
             <div className="items-center mx-20 mt-5">
               {selectedComponent && componentsMap[selectedComponent]}
             </div>
-            <button
-              type="submit"
-              onClick={handleNext}
-              disabled={elementContextList.length === 0} // Disable if name or type is empty
-              className={`text-white absolute bottom-10 mx-auto font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ${
-                elementContextList.length === 0
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
-              }`}
-            >
-              Next
-            </button>
+            <div className="flex flex-row gap-2 absolute bottom-10 left-[39%]">
+              <button
+                type="submit"
+                onClick={prevStep}
+                // disabled={elementContextList.length === 0} // Disable if name or type is empty
+                className={`text-white mx-auto font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center
+             
+                bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
+            `}
+              >
+                Previous
+              </button>
+              <button
+                type="submit"
+                onClick={handleNext}
+                disabled={elementContextList.length === 0} // Disable if name or type is empty
+                className={`text-white mx-auto font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ${
+                  elementContextList.length === 0
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                }`}
+              >
+                Next
+              </button>
+            </div>
           </div>
           <div className="p-10">
             <PreviewPanel
