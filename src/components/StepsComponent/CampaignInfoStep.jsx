@@ -26,7 +26,7 @@ const CampaignInfoStep = ({ nextStep, updateFormData }) => {
   return (
     <div>
       <form class="max-w-sm mx-auto">
-        <div class="mb-5 items-start">
+        <div class="mb-5 mt-16 items-start">
           <label for="name" class="mb-2 text-lg font-medium text-white">
             Campaign name
           </label>

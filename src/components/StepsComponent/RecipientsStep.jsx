@@ -389,7 +389,7 @@ const RecipientsStep = ({ prevStep, updateFormData, nextStep }) => {
                 bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
             `}
             >
-              Previous
+              Back
             </button>
             <button
               type="submit"
