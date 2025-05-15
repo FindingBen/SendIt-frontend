@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
-const CampaignInfoStep = ({ nextStep, updateFormData }) => {
+const CampaignInfoStep = ({ nextStep, updateFormData, initialData }) => {
   const [campaignInfo, setCampaignInfo] = useState({
     name: "",
     type: "",
+    ...initialData, // Initialize with existing data if available
   });
   console.log(campaignInfo);
   const handleChange = (e) => {
@@ -33,6 +34,7 @@ const CampaignInfoStep = ({ nextStep, updateFormData }) => {
           <input
             type="text"
             name="name"
+            value={campaignInfo.name}
             onChange={handleChange}
             id="name"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:placeholder-gray-400"

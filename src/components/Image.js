@@ -73,6 +73,7 @@ const Image = ({
 
   let addImageElContext = async (e) => {
     const imageContext = {
+      id: Math.floor(Math.random() * 1000000),
       unique_button_id: uuidv4(),
       image: URL.createObjectURL(file),
       element_type: "Img",

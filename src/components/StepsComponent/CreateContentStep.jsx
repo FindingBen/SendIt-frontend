@@ -16,7 +16,12 @@ import SvgLoader from "../SvgLoader";
 import PreviewPanel from "../PreviewComponent/PreviewPanel";
 import { setMessages } from "../../redux/reducers/messageReducer";
 
-const CreateContentStep = ({ prevStep, nextStep, updateFormData }) => {
+const CreateContentStep = ({
+  prevStep,
+  nextStep,
+  updateFormData,
+  initialData,
+}) => {
   const [messageElements, setMessageElements] = useState([]);
   const Package_basic = process.env.REACT_APP_BASIC_PLAN;
   const { deleteElement } = useContext(ElementContext);
@@ -34,7 +39,9 @@ const CreateContentStep = ({ prevStep, nextStep, updateFormData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [displayElItem, setDisplayItems] = useState([]);
   const [elementsList, setElementsList] = useState([]);
-  const [elementContextList, setElementsContextList] = useState([]);
+  const [elementContextList, setElementsContextList] = useState(
+    initialData || [] // Initialize with existing data if available
+  );
   const [isDirty, setIsDirty] = useState(false);
   const [isCreate, setIsCreate] = useState(true);
   const [messageObj, setMessageObj] = useState();
@@ -75,69 +82,6 @@ const CreateContentStep = ({ prevStep, nextStep, updateFormData }) => {
     setSelectedComponent((prevSelectedComponent) =>
       prevSelectedComponent === componentKey ? null : componentKey
     );
-  };
-
-  const handleSave = (e) => {
-    setMessageName(messageName);
-    setShowSaveButton(false);
-  };
-
-  const handleSubmit = async () => {
-    dispatch(setList({ populated: true }));
-    setIsLoading(true);
-
-    let messageObject;
-    try {
-      messageObject = await createMessage();
-      const requestType = "create";
-      const createElementsData = createElements({
-        elementContextList,
-        messageObject,
-        axiosInstance,
-        requestType,
-      });
-      const createdElements = await createElementsData(); // Await the result
-
-      setElementsList((prevElement) => prevElement.concat(createdElements));
-
-      return createdElements;
-    } catch (error) {
-      console.log("Error creating elements:", error);
-      return;
-    }
-  };
-
-  const createMessage = async () => {
-    let messageObjId;
-    try {
-      const requestData = {
-        users: currentUser,
-        message_name: messageName,
-      };
-
-      let response = await axiosInstance.post(
-        "/api/create_notes/",
-        requestData
-      );
-
-      if (response.status === 200) {
-        dispatch(setState({ isDirty: false }));
-        messageObjId = response.data.note.id;
-        setMessageObj(response.data.note);
-        const newMessageList = [...currentMessages, response.data.note];
-        dispatch(setMessages(newMessageList));
-        setIsLoading(false);
-        navigate("/home");
-      } else {
-        setErrorMsg("SS");
-        setIsLoading(false);
-      }
-    } catch (error) {
-      setErrorMsg(error.response.data.message_name);
-      setIsLoading(false);
-    }
-
-    return messageObjId;
   };
 
   const handleContextEl = (elementContextList) => {

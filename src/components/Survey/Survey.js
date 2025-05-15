@@ -92,6 +92,7 @@ const Survey = ({
 
   const addSurveyObjContext = () => {
     const dataText = {
+      id: Math.floor(Math.random() * 1000000),
       unique_button_id: uuidv4(),
       survey: question,
       question_type: questionType,

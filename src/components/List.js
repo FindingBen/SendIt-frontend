@@ -11,7 +11,7 @@ import { motion } from "framer-motion-3d";
 
 const List = ({ children, alignment, clicked, updatedList }) => {
   const [itemsElements, setItems] = useState([children]);
-
+  console.log("CHILDRED", children);
   const axiosInstance = useAxiosInstance();
   useEffect(() => {
     setItems(children);

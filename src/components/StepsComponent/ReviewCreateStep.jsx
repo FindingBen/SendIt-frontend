@@ -62,14 +62,17 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
       return;
     }
   };
-
+  console.log(
+    formData.sendingOptions["recipients"]["selectedList"]["list_name"]
+  );
   const createMessage = async () => {
     let messageObjId;
     try {
       const requestData = {
         users: currentUser,
         message_name: formData.campaignInfo["name"],
-        recipient_list: formData.sendingOptions["recipients"],
+        recipient_list:
+          formData.sendingOptions["recipients"]["selectedList"]["list_name"],
         campaign_type: formData.campaignInfo["type"],
         sms_text: formData.sendingOptions["smsText"],
         sms_send: formData.sendingOptions["type"],
@@ -164,7 +167,11 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
               type="text"
               name="from"
               disabled
-              value={formData.sendingOptions["recipients"]}
+              value={
+                formData.sendingOptions["recipients"]["selectedList"][
+                  "list_name"
+                ]
+              }
               className="block bg-mainBlue text-white border-2 border-gray-800 mt-1 text-semibold font-normal py-2 px-4 rounded w-full"
             />
           </div>
@@ -205,7 +212,7 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
         <div className="flex-1 relative">
           <button
             type="submit"
-            onClick={handleSubmit}
+            onClick={prevStep}
             className={`text-white font-medium absolute bottom-36 left-20 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center align-bottom ${
               elementContextList.length === 0
                 ? "bg-gray-400 cursor-not-allowed"

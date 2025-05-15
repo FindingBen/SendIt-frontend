@@ -3,24 +3,32 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRedux } from "../../constants/reduxImports";
 import Checklist from "../Checklist/Checklist";
 import useAxiosInstance from "../../utils/axiosInstance";
-const RecipientsStep = ({ prevStep, updateFormData, nextStep }) => {
+const RecipientsStep = ({
+  prevStep,
+  updateFormData,
+  nextStep,
+  initialData,
+}) => {
   const { currentUser, currentPackageState, dispatch } = useRedux();
   const axiosInstance = useAxiosInstance();
   const [sendingOptions, setSendingOptions] = useState({
     type: "",
-    recipients: "",
+    recipients: {},
     smsText: "",
+    ...initialData,
   });
   const params = useParams();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [linkURL, setLinkURL] = useState("");
   const [sendType, setSendType] = useState("");
-  const [listId, setListId] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [smsText, setSmsText] = useState([]);
+  const [smsText, setSmsText] = useState(initialData?.smsText || "");
   const [contactLists, setContactList] = useState([]);
+  const [selectedList, setSelectedList] = useState(
+    initialData?.recipients?.selectedList || ""
+  ); // Store the selected list as a string
   const [islist, setIslist] = useState(false);
   const [istext, setIsText] = useState(false);
   const [isName, setIsname] = useState(false);
@@ -116,11 +124,18 @@ const RecipientsStep = ({ prevStep, updateFormData, nextStep }) => {
   };
   console.log(sendingOptions);
   const handleNext = () => {
+    if (!selectedList || selectedList === "Choose") {
+      // If no list is selected, set an error
+      setErrorMessage(true);
+      return; // Stop execution
+    }
+
+    setErrorMessage(false);
     // Example: Pass the data you want to persist
     updateFormData({
       sendingOptions: {
         type: sendingOptions.type,
-        recipients: listId,
+        recipients: { selectedList },
         smsText: smsText,
       },
     });
@@ -131,7 +146,8 @@ const RecipientsStep = ({ prevStep, updateFormData, nextStep }) => {
     if (e.target.value !== "Choose") {
       const recipientData = JSON.parse(e.target.value);
       setRecipients(recipientData);
-      setListId(recipientData.id);
+
+      setSelectedList(recipientData);
       if (recipientData.contact_lenght > 0) {
         setIslist(true);
       } else if (recipientData.contact_lenght === 0) {
@@ -156,7 +172,7 @@ const RecipientsStep = ({ prevStep, updateFormData, nextStep }) => {
       type: prev.type === type ? "" : type, // Toggle the type
     }));
   };
-
+  console.log(selectedList);
   return (
     <section className="min-h-screen w-100 items-center justify-center">
       <div className="grid grid-cols-2 gap-4">
@@ -184,21 +200,35 @@ const RecipientsStep = ({ prevStep, updateFormData, nextStep }) => {
                 Select contact list:
               </label>
 
-              <select
-                className="block bg-mainBlue text-white border-2 border-gray-800 w-50 divide-y p-2 divide-gray-100 rounded-lg"
-                onChange={handleChoice}
-              >
-                <option value={"Choose"}>Choose your list</option>
-                {contactLists?.map((item) => (
-                  <option
-                    key={item.id}
-                    value={JSON.stringify(item)}
-                    className="text-white font-semibold"
-                  >
-                    {item.list_name}
-                  </option>
-                ))}
-              </select>
+              <div className="flex flex-row gap-2">
+                <select
+                  className={`block bg-mainBlue text-white border-2 w-50 divide-y p-2 divide-gray-100 rounded-lg ${
+                    errorMessage ? "border-red-500" : "border-gray-800"
+                  }`}
+                  onChange={handleChoice}
+                  value={JSON.stringify(selectedList)}
+                >
+                  <option value={"Choose"}>Choose your list</option>
+                  {contactLists?.map((item) => (
+                    <option
+                      key={item.id}
+                      value={
+                        initialData.selectedList
+                          ? selectedList.listName
+                          : JSON.stringify(item)
+                      }
+                      className="text-white font-semibold"
+                    >
+                      {item.list_name}
+                    </option>
+                  ))}
+                </select>
+                {errorMessage && (
+                  <p className="text-red-500 text-sm mt-2">
+                    You need to select a contact list!
+                  </p>
+                )}
+              </div>
             </div>
             <div>
               <label className="block mb-2 mt-4 text-sm text-left font-semibold text-gray-300 dark:text-white">
@@ -307,14 +337,14 @@ const RecipientsStep = ({ prevStep, updateFormData, nextStep }) => {
             </div>
           </div>
 
-          {errorMessage && (
+          {/* {errorMessage && (
             <div
               class="mx-5 p-4 mb-4 h-20 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 mt-2"
               role="alert"
             >
               <span class="font-medium">Sms send error!</span> {errorMessage}
             </div>
-          )}
+          )} */}
         </div>
         <div className="col mt-3">
           <p className="text-3xl font-extralight text-white text-justify">

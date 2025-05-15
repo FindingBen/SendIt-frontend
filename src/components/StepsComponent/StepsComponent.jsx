@@ -4,52 +4,59 @@ const StepsComponent = ({ currentStep, completedSteps }) => {
   const steps = [
     { id: 1, label: "Campaign Info" },
     { id: 2, label: "Content" },
-    { id: 3, label: "Sending options" },
-    { id: 4, label: "Review & Create" },
+    { id: 3, label: "Sending Options" },
+    { id: 4, label: "Review" },
   ];
 
   return (
-    <ol className="flex flex-row items-center justify-between text-gray-400 mt-3">
-      {steps.map((step) => (
-        <li key={step.id} className="flex flex-col items-center mx-5">
-          <span
-            className={`flex items-center justify-center w-8 h-8 rounded-full ring-4 ring-white dark:ring-gray-900 ${
-              completedSteps.includes(step.id)
-                ? "bg-green-200 dark:bg-green-900"
-                : "bg-gray-100 dark:bg-gray-700"
+    <ol className="flex items-center w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
+      {steps.map((step, index) => {
+        const isCompleted =
+          completedSteps.includes(step.id) && step.id < currentStep;
+        const isActive = currentStep === step.id;
+        return (
+          <li
+            key={step.id}
+            className={`flex md:w-full items-center ${
+              index < steps.length - 1
+                ? "after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700"
+                : ""
             }`}
           >
-            {completedSteps.includes(step.id) ? (
-              <svg
-                className="w-3.5 h-3.5 text-green-500 dark:text-green-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 16 12"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M1 5.917 5.724 10.5 15 1.5"
-                />
-              </svg>
-            ) : (
-              <svg
-                className="w-3.5 h-3.5 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 20 16"
-              >
-                <path d="M18 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM6.5 3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3.014 13.021l.157-.625A3.427 3.427 0 0 1 6.5 9.571a3.426 3.426 0 0 1 3.322 2.805l.159.622-6.967.023ZM16 12h-3a1 1 0 0 1 0-2h3a1 1 0 0 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Zm0-3h-3a1 1 0 1 1 0-2h3a1 1 0 1 1 0 2Z" />
-              </svg>
-            )}
-          </span>
-          <h3 className="font-medium leading-tight mt-2">{step.label}</h3>
-        </li>
-      ))}
+            <span
+              className={`flex items-center ${
+                index < steps.length - 1
+                  ? "after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500"
+                  : ""
+              } ${
+                isCompleted
+                  ? "text-blue-600 dark:text-blue-500"
+                  : isActive
+                  ? "text-cyan-600 dark:text-cyan-500"
+                  : "text-gray-500 dark:text-gray-400"
+              }`}
+            >
+              {isCompleted ? (
+                <svg
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 me-2.5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                </svg>
+              ) : (
+                <span className="me-2">{step.id}</span>
+              )}
+              {step.label.split(" ")[0]}{" "}
+              <span className="hidden sm:inline-flex sm:ms-2">
+                {step.label.split(" ")[1]}
+              </span>
+            </span>
+          </li>
+        );
+      })}
     </ol>
   );
 };

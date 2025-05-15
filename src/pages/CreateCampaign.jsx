@@ -49,6 +49,7 @@ const CreateCampaign = () => {
           <CampaignInfoStep
             nextStep={nextStep}
             updateFormData={updateFormData}
+            initialData={formData.campaignInfo}
           />
         );
       case 2:
@@ -57,6 +58,7 @@ const CreateCampaign = () => {
             nextStep={nextStep}
             prevStep={prevStep}
             updateFormData={updateFormData}
+            initialData={formData.contentElements}
           />
         );
       case 3:
@@ -66,6 +68,7 @@ const CreateCampaign = () => {
             nextStep={nextStep}
             handleSubmit={handleSubmit}
             updateFormData={updateFormData}
+            initialData={formData.sendingOptions}
           />
         );
       case 4:
@@ -82,7 +85,7 @@ const CreateCampaign = () => {
             Create Campaign
           </span>
         </div>
-        <div className="ml-[12%]">
+        <div className="ml-[12%] w-full">
           <StepsComponent
             currentStep={currentStep}
             completedSteps={completedSteps}

@@ -110,6 +110,7 @@ const Text = ({
 
   const addTextObjContext = () => {
     const dataText = {
+      id: Math.floor(Math.random() * 1000000),
       unique_button_id: uuidv4(),
       text: text,
       alignment: getAlignmentclassName(),

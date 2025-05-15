@@ -93,6 +93,7 @@ const Button = ({
 
   const addButtonObjContext = () => {
     const dataText = {
+      id: Math.floor(Math.random() * 1000000),
       unique_button_id: buttonId,
       button_title: text,
       button_link: link,
