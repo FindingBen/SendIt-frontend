@@ -31,7 +31,7 @@ import UnsubscribePage from "./pages/UnsubscribePage";
 import ActivationEmailSuccess from "./pages/ActivationEmailSuccess";
 import QRsignUpPage from "./pages/QRsignUpPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import ShopifyLogin from "./pages/ShopifyLogin";
+import SmsSendingPage from "./pages/SmsSendingPage";
 
 const TRACKING_ID = "G-FPHE42LL46";
 ReactGA.initialize(TRACKING_ID);
@@ -87,6 +87,7 @@ function App() {
                   path="create_campaign_555333"
                   element={<CreateCampaign />}
                 />
+                <Route path="/sending_flow/:id" element={<SmsSendingPage />} />
                 <Route path="create_note" element={<CreateMessage />} />
                 <Route path="purchase_history" element={<PurchaseHistory />} />
                 <Route
