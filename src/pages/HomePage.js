@@ -379,7 +379,7 @@ const HomePage = () => {
                 </motion.div>
               )}
             </div>
-            <div className="flex-1 items-center">
+            <div className="flex-1 relative">
               <CompletedCampaigns
                 percentage={totalValues?.overall_rate}
                 total_values={totalValues}
