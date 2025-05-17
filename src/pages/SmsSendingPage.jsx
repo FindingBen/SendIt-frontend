@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import SmsConfirmModal from "../features/modal/SmsConfirmModal";
+import ScheduleSmsModal from "../features/modal/ScheduleSmsModal";
 import { useRedux } from "../constants/reduxImports";
 import { setOperation } from "../redux/reducers/messageReducer";
 import SmsPill from "../components/SmsPill/SmsPill";
+import CreditComponent from "../components/CreditStatus/CreditComponent";
 import Checklist from "../components/Checklist/Checklist";
+import { Tooltip } from "react-tooltip";
 
 const SmsSendingPage = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentUser, currentPackageState, dispatch } = useRedux();
+  const { currentUser, currentPackageState, currentSmsPackCount, dispatch } =
+    useRedux();
   const params = useParams();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
@@ -99,6 +103,10 @@ const SmsSendingPage = () => {
     }
   };
 
+  const handleDate = (date) => {
+    setDateSchedule(date);
+  };
+
   const handleChoice = (e) => {
     if (e.target.value !== "Choose") {
       const recipientData = JSON.parse(e.target.value);
@@ -114,6 +122,63 @@ const SmsSendingPage = () => {
       setIslist(false);
     }
   };
+
+  const sendSms = async () => {
+    try {
+      const response = await axiosInstance.post("/sms/sms-send/", {
+        user: currentUser,
+        sender: "ME",
+        sms_text: smsText,
+        content_link: uniqueLink,
+        message: params.id,
+        contact_list: recipients.id,
+        scheduled: false,
+        // is_sent: true,
+      });
+
+      if (response.status === 200 || response.status === 201) {
+        dispatch(setOperation(true));
+        navigate(`/home`);
+      } else {
+        setErrorMessage("Error sending SMS");
+      }
+    } catch (error) {
+      setErrorMessage(error.response?.data?.error || "Error sending SMS");
+    }
+  };
+
+  const scheduleSms = async () => {
+    try {
+      let response = await axiosInstance.post("/sms/sms-send-schedule/", {
+        user: currentUser,
+        sender: "ME",
+        sms_text: smsText,
+        content_link: uniqueLink,
+        message: params.id,
+        contact_list: recipients.id,
+        scheduled_time: dateSchedule,
+        scheduled: true,
+        is_sent: false,
+      });
+      if (response.status === 200 || 201) {
+        dispatch(setOperation(true));
+        navigate(`/home`);
+      }
+    } catch (e) {
+      setErrorMessage(e.response.data.error);
+      console.log(e);
+    }
+  };
+
+  const TooltipContent = () => (
+    <div>
+      <p>
+        On your right side you have two buttons. <br></br>, the second one is
+        for linking the content page you want to showcase
+      </p>
+    </div>
+  );
+
   return (
     <section className="h-screen overflow-hidden w-100 items-center justify-center">
       <div className="flex flex-col space-y-5 lg:space-y-0">
@@ -122,12 +187,12 @@ const SmsSendingPage = () => {
             Send sms
           </h3>
           <div class="flex flex-row items-center mx-20">
-            {/* <SmsPill /> */}
+            <SmsPill />
           </div>
         </div>
         <div className="grid grid-cols-2">
           <div className="gap-2 bg-mainBlue border-gray-800 border-r-2 relative w-full h-screen">
-            <div class="rounded p-10 h-[30%]">
+            <div class="rounded p-10 h-[20%]">
               {/* <div>
               <label
                 for="first_name"
@@ -145,27 +210,26 @@ const SmsSendingPage = () => {
               />
             </div> */}
 
-              <div>
-                <label className="block mb-2 mt-4 text-normal text-left font-semibold text-white ">
-                  Select contact list:
-                </label>
+              <label className="block mb-2 mt-4 text-normal text-left font-semibold text-white ">
+                Select contact list:
+              </label>
 
-                <select
-                  className="block bg-mainBlue text-white border-2 border-gray-600 w-50 divide-y p-2 divide-gray-100 rounded-lg"
-                  onChange={handleChoice}
-                >
-                  <option value={"Choose"}>Choose your list</option>
-                  {contactLists?.map((item) => (
-                    <option
-                      key={item.id}
-                      value={JSON.stringify(item)}
-                      className="text-white font-semibold"
-                    >
-                      {item.list_name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <select
+                className="block bg-mainBlue text-white border-2 border-gray-600 w-50 divide-y p-2 divide-gray-100 rounded-lg"
+                onChange={handleChoice}
+              >
+                <option value={"Choose"}>Choose your list</option>
+                {contactLists?.map((item) => (
+                  <option
+                    key={item.id}
+                    value={JSON.stringify(item)}
+                    className="text-white font-semibold"
+                  >
+                    {item.list_name}
+                  </option>
+                ))}
+              </select>
+
               <br></br>
             </div>
             <div className="flex flex-col gap-3 p-10">
@@ -178,8 +242,30 @@ const SmsSendingPage = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
+                  data-tooltip-id="my-tooltip"
                   stroke="currentColor"
-                  class="size-5 text-white hover:transition ease-in-out delay-90 rounded-md cursor-pointer duration-75 hover:-translate-y-1 hover:scale-105 absolute right-5"
+                  class="size-5 hover:cursor-pointer absolute left-20 text-gray-400"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+                  />
+                </svg>
+                <Tooltip id="my-tooltip">
+                  <TooltipContent />
+                </Tooltip>
+
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  onClick={handleAddLink}
+                  value={linkURLBase}
+                  disabled={smsText.length === 0 || recipients.length === 0}
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="size-5 text-white hover:transition ease-in-out delay-90 rounded-md cursor-pointer duration-75 hover:-translate-y-1 hover:scale-105 absolute right-0"
                 >
                   <path
                     stroke-linecap="round"
@@ -193,8 +279,10 @@ const SmsSendingPage = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke-width="1.5"
+                  onClick={handleNameLink}
+                  disabled={smsText.length === 0 || !recipients}
                   stroke="currentColor"
-                  class="size-5 text-white hover:transition ease-in-out delay-90 rounded-md cursor-pointer duration-75 hover:-translate-y-1 hover:scale-105 absolute right-12"
+                  class="size-5 text-white hover:transition ease-in-out delay-90 rounded-md cursor-pointer duration-75 hover:-translate-y-1 hover:scale-105 absolute right-8"
                 >
                   <path
                     stroke-linecap="round"
@@ -203,16 +291,23 @@ const SmsSendingPage = () => {
                   />
                 </svg>
               </div>
-              <div className="relative">
-                <textarea
-                  id="smsTextArea"
-                  maxLength={maxCharacters}
-                  className="block p-2.5 h-1/2 w-[65%] text-sm text-gray-800 font-semibold bg-gray-200 rounded-lg border border-gray-300"
-                  placeholder="Write your sms here..."
-                  onChange={handleSms}
-                  value={smsText}
-                ></textarea>
-              </div>
+
+              <textarea
+                id="smsTextArea"
+                maxLength={maxCharacters}
+                className="block p-2.5 h-[100px] w-[65%] text-sm text-gray-800 font-semibold bg-gray-200 rounded-lg border border-gray-300"
+                placeholder="Write your sms here..."
+                onChange={handleSms}
+                value={smsText}
+              ></textarea>
+            </div>
+            <div className="p-10">
+              <Checklist
+                isListSelected={islist}
+                isTextWritten={istext}
+                isLinked={isLink}
+                isPersonalized={isName}
+              />
             </div>
 
             {/* {errorMessage && (
@@ -225,71 +320,28 @@ const SmsSendingPage = () => {
           )} */}
           </div>
           <div className="flex-1 p-10">
-            <div className="flex flex-row gap-3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-10 text-green-600"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-
-              <p className="text-3xl font-normal text-white text-justify">
-                Credit status
-              </p>
-            </div>
-
-            <Checklist
-              isListSelected={islist}
-              isTextWritten={istext}
-              isLinked={isLink}
-              isPersonalized={isName}
+            <CreditComponent
+              recipientList={recipients}
+              currentCredits={currentSmsPackCount.sms_count}
+              smsText={smsText}
             />
-            {/* <div className="flex flex-col mt-5 p-2">
-              <div className="h-10">
-                {recipients?.contact_lenght === 0 ? (
-                  <p className="font-semibold text-sm text-red-500 text-justify">
-                    Make sure to select contact list with recipients!
-                  </p>
-                ) : (
-                  <p></p>
-                )}
-              </div>
-              {islist && isLink && isName && istext && (
-                <div className="flex flex-row gap-2">
-                  <p className="text-green-600 text-normal text-justify">
-                    Yout text is ready for sending!
-                  </p>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="size-6 text-green-600"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"
-                    />
-                  </svg>
-                </div>
-              )}
-            </div> */}
+
             <div className="flex-1 mt-5">
               <p className="text-3xl font-normal text-white text-justify">
                 Send or Schedule
               </p>
               <div className="flex flex-row gap-3 items-center mt-3">
-                <div className="sms-button-style">
+                <button
+                  onClick={() => {
+                    setShow(true);
+                  }}
+                  disabled={smsText.length === 0 || !recipients}
+                  className={`sms-button-style ${
+                    smsText.length === 0 || !recipients
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-slate-400/40"
+                  }`}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -305,8 +357,16 @@ const SmsSendingPage = () => {
                     />
                   </svg>
                   <label className="text-gray-200 font-semibold ">Send</label>
-                </div>
-                <div className="sms-button-style">
+                </button>
+                <button
+                  onClick={() => setShowSchedule(true)}
+                  disabled={smsText.length === 0 || recipients.length === 0}
+                  className={`sms-button-style ${
+                    smsText.length === 0 || !recipients
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-slate-400/40"
+                  }`}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -325,11 +385,24 @@ const SmsSendingPage = () => {
                   <label className="text-gray-200 font-semibold ">
                     Schedule
                   </label>
-                </div>
+                </button>
               </div>
             </div>
           </div>
         </div>
+        <SmsConfirmModal
+          // recipientNumber={}
+          sendConfirm={sendSms}
+          showModal={show}
+          onClose={() => setShow(false)}
+        ></SmsConfirmModal>
+        <ScheduleSmsModal
+          errorMsg={errorMessage}
+          sendConfirm={scheduleSms}
+          showModal={showSchedule}
+          dateSchedule={handleDate}
+          onClose={() => setShowSchedule(false)}
+        ></ScheduleSmsModal>
       </div>
     </section>
   );

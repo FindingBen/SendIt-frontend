@@ -293,7 +293,7 @@
 
 @layer components {
   .sms-button-style {
-    @apply flex flex-col gap-2 text-center p-3 border-2 rounded-md border-gray-800 hover:cursor-pointer hover:bg-slate-400 duration-100;
+    @apply flex flex-col gap-2 text-center p-3 border-2 rounded-md border-gray-800 hover:cursor-pointer hover:bg-slate-400/40 duration-100;
     width: 100px;
     height: 100px;
   }

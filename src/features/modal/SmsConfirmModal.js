@@ -34,7 +34,7 @@ const SmsConfirmModal = ({ showModal, onClose, sendConfirm }) => {
           >
             <div className="relative w-auto mx-auto max-w-3xl">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white/50">
                 {/*header*/}
                 <Modal.Header closeButton>
                   <Modal.Title>
@@ -58,8 +58,8 @@ const SmsConfirmModal = ({ showModal, onClose, sendConfirm }) => {
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                    You are about to send an sms message to multiple phone
-                    devices, are you sure?.
+                    You are about to send an sms message to recipients, click
+                    Send.
                   </p>
                 </div>
                 {/*footer*/}
