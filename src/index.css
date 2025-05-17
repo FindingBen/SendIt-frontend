@@ -285,7 +285,7 @@
 
 @layer components {
   .component-button-create-content {
-    @apply flex flex-col rounded-md bg-mainBlue border-2 border-gray-800 md:px-2 md:py-2 lg:py-3 lg:px-3 transition ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-gray-500 duration-300 cursor-pointer;
+    @apply flex flex-col items-center rounded-md bg-mainBlue border-2 border-gray-800 md:px-2 md:py-2 lg:py-3 lg:px-3 transition ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-gray-500 duration-300 cursor-pointer;
     width: 70px; /* Set a fixed width */
     height: 70px;
   }

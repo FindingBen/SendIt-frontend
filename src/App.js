@@ -83,12 +83,9 @@ function App() {
               <Route element={<PrivateRoute />}>
                 <Route path="analytics/:id" element={<AnalyticsPage />} />
                 <Route path="home" element={<HomePage />} />
-                <Route
-                  path="create_campaign_555333"
-                  element={<CreateCampaign />}
-                />
+                <Route path="/create_campaign" element={<CreateCampaign />} />
                 <Route path="/sending_flow/:id" element={<SmsSendingPage />} />
-                <Route path="create_note" element={<CreateMessage />} />
+                {/* <Route path="create_note" element={<CreateMessage />} /> */}
                 <Route path="purchase_history" element={<PurchaseHistory />} />
                 <Route
                   path="/contact_lists"

@@ -30,7 +30,7 @@ const CreateCampaign = () => {
     });
 
     // Move to the next step
-    setCurrentStep((prevStep) => Math.min(prevStep + 1, 4)); // Ensure it doesn't exceed the total steps
+    setCurrentStep((prevStep) => Math.min(prevStep + 1, 3)); // Ensure it doesn't exceed the total steps
   };
 
   const prevStep = () => {
@@ -61,17 +61,8 @@ const CreateCampaign = () => {
             initialData={formData.contentElements}
           />
         );
+
       case 3:
-        return (
-          <RecipientsStep
-            prevStep={prevStep}
-            nextStep={nextStep}
-            handleSubmit={handleSubmit}
-            updateFormData={updateFormData}
-            initialData={formData.sendingOptions}
-          />
-        );
-      case 4:
         return <ReviewCreateStep prevStep={prevStep} formData={formData} />;
       default:
         return null;
@@ -80,7 +71,7 @@ const CreateCampaign = () => {
   return (
     <section className="h-screen w-full overflow-hidden items-center justify-center">
       <div className="flex items-center mb-4 h-20 bg-navBlue">
-        <div className="flex flex-row">
+        <div className="flex flex-row text-start">
           <span className="lg:text-xl 2xl:text-2xl gap-4 text-lg text-white font-semibold ml-20">
             Create Campaign
           </span>

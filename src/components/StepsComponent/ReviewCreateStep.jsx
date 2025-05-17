@@ -62,20 +62,14 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
       return;
     }
   };
-  console.log(
-    formData.sendingOptions["recipients"]["selectedList"]["list_name"]
-  );
+
   const createMessage = async () => {
     let messageObjId;
     try {
       const requestData = {
         users: currentUser,
         message_name: formData.campaignInfo["name"],
-        recipient_list:
-          formData.sendingOptions["recipients"]["selectedList"]["list_name"],
         campaign_type: formData.campaignInfo["type"],
-        sms_text: formData.sendingOptions["smsText"],
-        sms_send: formData.sendingOptions["type"],
       };
 
       let response = await axiosInstance.post(
@@ -136,58 +130,6 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
               name="from"
               disabled
               value={formData.campaignInfo["type"]}
-              className="block bg-mainBlue text-white border-2 border-gray-800 mt-1 text-semibold font-normal py-2 px-4 rounded w-full"
-            />
-          </div>
-          <div>
-            <label
-              for="first_name"
-              className="block mb-2 text-normal text-left font-semibold text-gray-300 dark:text-white"
-            >
-              Sending type
-            </label>
-
-            <input
-              type="text"
-              name="from"
-              disabled
-              value={formData.sendingOptions["type"]}
-              className="block bg-mainBlue text-white border-2 border-gray-800 mt-1 text-semibold font-normal py-2 px-4 rounded w-full"
-            />
-          </div>
-          <div>
-            <label
-              for="first_name"
-              className="block mb-2 text-normal text-left font-semibold text-gray-300 dark:text-white"
-            >
-              Recipient list
-            </label>
-
-            <input
-              type="text"
-              name="from"
-              disabled
-              value={
-                formData.sendingOptions["recipients"]["selectedList"][
-                  "list_name"
-                ]
-              }
-              className="block bg-mainBlue text-white border-2 border-gray-800 mt-1 text-semibold font-normal py-2 px-4 rounded w-full"
-            />
-          </div>
-          <div>
-            <label
-              for="first_name"
-              className="block mb-2 text-normal text-left font-semibold text-gray-300 dark:text-white"
-            >
-              Sms text
-            </label>
-
-            <textarea
-              type="text"
-              name="from"
-              disabled
-              value={formData.sendingOptions["smsText"]}
               className="block bg-mainBlue text-white border-2 border-gray-800 mt-1 text-semibold font-normal py-2 px-4 rounded w-full"
             />
           </div>

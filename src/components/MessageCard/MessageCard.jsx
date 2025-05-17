@@ -100,7 +100,7 @@ export const MessageCard = ({
           </Link>
         </div>
         <div className="border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-500  cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
-          <Link type="button" className="" to={`/sms_editor/${message.id}`}>
+          <Link type="button" className="" to={`/sending_flow/${message.id}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

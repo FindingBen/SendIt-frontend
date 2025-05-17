@@ -16,7 +16,7 @@ export const menu = [
     id: 2,
     element: <CreateIcon />,
     title: "Create",
-    location: "/create_note/",
+    location: "/create_campaign/",
   },
   {
     id: 3,
