@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 
-const CampaignInfoStep = ({ nextStep, updateFormData, initialData }) => {
+const CampaignInfoStep = ({
+  nextStep,
+  updateFormData,
+  initialData,
+  tokenType,
+}) => {
   const [campaignInfo, setCampaignInfo] = useState({
     name: "",
+    campaignContent: "",
     type: "",
     ...initialData, // Initialize with existing data if available
   });
-  console.log(campaignInfo);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCampaignInfo({ ...campaignInfo, [name]: value });
@@ -21,6 +27,13 @@ const CampaignInfoStep = ({ nextStep, updateFormData, initialData }) => {
     setCampaignInfo((prev) => ({
       ...prev,
       type: prev.type === type ? "" : type, // Toggle the type
+    }));
+  };
+
+  const handleShopifySelect = (campaign) => {
+    setCampaignInfo((prev) => ({
+      ...prev,
+      campaignContent: prev.campaignContent === campaign ? "" : campaign, // Toggle the type
     }));
   };
 
@@ -42,6 +55,67 @@ const CampaignInfoStep = ({ nextStep, updateFormData, initialData }) => {
             required
           />
         </div>
+        {tokenType ? (
+          <div class="mb-5">
+            <label class="mb-2 text-lg font-medium text-white">
+              Campaing content
+            </label>
+            <ul class="items-center w-full text-sm font-medium  bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+              <li
+                className={`w-full border-b transition delay-75 sm:border-b-0 sm:border-r  ${
+                  campaignInfo.campaignContent === "Shopify"
+                    ? "bg-cyan-600 border-l rounded-md"
+                    : "text-gray-900"
+                }`}
+              >
+                <div className="flex items-center ps-3">
+                  <input
+                    id="campaign-content-shopify"
+                    type="radio"
+                    value="Shopify"
+                    name="list-radio-shopify"
+                    checked={campaignInfo.campaignContent === "Shopify"}
+                    onChange={() => handleShopifySelect("Shopify")}
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor="campaign-content-shopify"
+                    className="w-full py-3 ms-2 text-sm font-medium cursor-pointer"
+                  >
+                    Shopify Product
+                  </label>
+                </div>
+              </li>
+              <li
+                className={`w-full border-b border-gray-200 sm:border-b-0 transition delay-75 sm:border-r ${
+                  campaignInfo.campaignContent === "Custom"
+                    ? "bg-cyan-600 border-r rounded-md text-white"
+                    : "text-gray-900"
+                }`}
+              >
+                <div className="flex items-center ps-3">
+                  <input
+                    id="campaign-content-shopify"
+                    type="radio"
+                    value="Custom"
+                    name="list-radio-shopify"
+                    checked={campaignInfo.campaignContent === "Custom"}
+                    onChange={() => handleShopifySelect("Custom")}
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor="campaign-content-shopify"
+                    className="w-full py-3 ms-2 text-sm font-medium cursor-pointer"
+                  >
+                    Custom Campaign
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <></>
+        )}
         <div class="mb-5">
           <label class="mb-2 text-lg font-medium text-white">
             Campaing type

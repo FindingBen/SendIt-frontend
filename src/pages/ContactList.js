@@ -71,11 +71,11 @@ const ContactList = () => {
         url += `?${queryParts.join("&")}`;
       }
       let response = await axiosInstance.get(url);
-      console.log(response.data);
+
       if (response.status === 200) {
-        console.log("AAA");
+
         if (currentShopifyToken) {
-          console.log("SDASDASDAS");
+
           const contactsData = response.data.edges.map((edge) => ({
             id: edge.node.id, // Extract the ID
             firstName: edge.node.firstName, // Map firstName to first_name

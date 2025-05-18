@@ -1,21 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Image from "../Image";
 import Text from "../Text";
 import Button from "../Button";
 import Survey from "../Survey/Survey";
 import AiGenerator from "../AiGenerator";
 import { setOpenModal } from "../../redux/reducers/modalReducer";
-import { createElements } from "../../utils/helpers/createElements";
 import { setState } from "../../redux/reducers/formReducer";
-import { setList } from "../../redux/reducers/elementReducer";
 import { ElementContext } from "../../context/ElementContext";
-import useAxiosInstance from "../../utils/axiosInstance";
 import { useRedux } from "../../constants/reduxImports";
 import SvgLoader from "../SvgLoader";
 import PreviewPanel from "../PreviewComponent/PreviewPanel";
-import { setMessages } from "../../redux/reducers/messageReducer";
-
 const CreateContentStep = ({
   prevStep,
   nextStep,
@@ -23,7 +17,6 @@ const CreateContentStep = ({
   initialData,
 }) => {
   const [messageElements, setMessageElements] = useState([]);
-  const Package_basic = process.env.REACT_APP_BASIC_PLAN;
   const { deleteElement } = useContext(ElementContext);
   const {
     currentUser,
@@ -32,10 +25,8 @@ const CreateContentStep = ({
     currentPackageState,
     currentMessages,
   } = useRedux();
-  const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
-  const [messageName, setMessageName] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [displayElItem, setDisplayItems] = useState([]);
   const [elementsList, setElementsList] = useState([]);
@@ -44,12 +35,8 @@ const CreateContentStep = ({
   );
   const [isDirty, setIsDirty] = useState(false);
   const [isCreate, setIsCreate] = useState(true);
-  const [messageObj, setMessageObj] = useState();
   const [errorMsg, setErrorMsg] = useState("");
-  const axiosInstance = useAxiosInstance();
   const [imageStateVal, setImageStateVal] = useState(false);
-  const [showSaveButton, setShowSaveButton] = useState(false);
-
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [device, setDevice] = useState("phone");
 
@@ -71,8 +58,6 @@ const CreateContentStep = ({
     }
   }, [errorMsg]);
 
-  console.log(messageElements);
-  console.log("CONTEXT", elementContextList);
   const handleNext = () => {
     updateFormData({ contentElements: elementContextList }); // Explicitly update the contentElements key
     nextStep();

@@ -1,16 +1,13 @@
 import "flowbite";
 import { Route, Routes } from "react-router-dom";
-import React from "react";
 import ContactLists from "./pages/ContactLists";
 import ContactList from "./pages/ContactList";
-import CreateMessage from "./pages/CreateMessage";
 import EditMessage from "./pages/EditMessage";
 import RegisterPage from "./pages/RegisterPage";
 import PrivateRoute from "./utils/PrivateRoute";
 import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import HomePage from "./pages/HomePage";
-import SmsEditor from "./pages/SmsEditor";
 import { ElementProvider } from "./context/ElementContext";
 import MessageView from "./pages/MessageView";
 import UserPage from "./pages/UserPage";
@@ -103,11 +100,6 @@ function App() {
                 <Route
                   path="/edit_message/:id"
                   element={<EditMessage></EditMessage>}
-                />
-
-                <Route
-                  path="/sms_editor/:id"
-                  element={<SmsEditor></SmsEditor>}
                 />
                 <Route
                   path="/account_settings/:id"
