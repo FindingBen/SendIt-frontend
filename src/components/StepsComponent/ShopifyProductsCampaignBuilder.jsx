@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ShopifyTable from "../ShopifyTable/ShopifyTable";
 import PhonePreview from "../PreviewComponent/PhonePreview";
+import ProductCard from "./ChildComponents/ProductCard";
+
 const ShopifyProductsCampaignBuilder = ({
   shopifyProducts,
   nextStep,
@@ -8,15 +10,19 @@ const ShopifyProductsCampaignBuilder = ({
   initialData,
   updateFormData,
   apiCall,
+  selected,
+  onCloseCard,
+  shopifyProduct,
   onProductSelect,
 }) => {
   const [callFetch, setCallFetch] = useState(false);
+  const [cardComponent, setCardComponent] = useState(false);
 
   const handleApiCall = () => {
     apiCall(true);
     setCallFetch(true);
   };
-  console.log("call", onProductSelect);
+  console.log("call", shopifyProduct);
   return (
     <section className="max-h-screen w-full items-center justify-center">
       <div className="grid grid-cols-2 grid-rows-1 gap-4 max-h-screen">
@@ -58,7 +64,7 @@ const ShopifyProductsCampaignBuilder = ({
             </button>
           )}
         </div>
-        <div className="flex flex-col p-4">
+        <div className="flex flex-col p-4 relative">
           <p className="text-xl text-gray-50 font-semibold text-start">
             Smart insights
           </p>
@@ -70,6 +76,11 @@ const ShopifyProductsCampaignBuilder = ({
             <span className="text-lg text-gray-300">
               1. Inventory & Urgency Signals
             </span>
+          </div>
+          <div className="w-full absolute bottom-[20%] left-10">
+            {selected && (
+              <ProductCard product={shopifyProduct} onClose={onCloseCard} />
+            )}
           </div>
         </div>
       </div>

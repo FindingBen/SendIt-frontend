@@ -14,7 +14,9 @@ const CreateCampaign = () => {
   const [completedSteps, setCompletedSteps] = useState([]);
   const [shopifyProducts, setShopifyProducts] = useState([]);
   const [shopifyCampaign, setShopifyCampaign] = useState(false);
+  const [shopifyProductSingle, setShopifyProductSingle] = useState({});
   const [callShopify, setCallShopify] = useState(false);
+  const [selected, setSelected] = useState(false);
   const [formData, setFormData] = useState({
     campaignInfo: {},
     contentElements: [],
@@ -36,13 +38,14 @@ const CreateCampaign = () => {
   }, [formData]);
 
   const getInsights = async (product_id) => {
-    const product_string = String(product_id);
-    console.log(product_string); // or product_id.toString()
     try {
-      let response = await axiosInstance.get(`/api/shopify_product_insight/`);
+      let response = await axiosInstance.post(`/api/shopify_product_insight/`, {
+        id: product_id,
+      });
 
       if (response.status === 200) {
         console.log("WORKS", response);
+        setShopifyProductSingle(response.data);
       }
     } catch (error) {
       console.log(error);
@@ -61,8 +64,12 @@ const CreateCampaign = () => {
   };
 
   const handleShopifyInsights = (product_id) => {
-    console.log("CLICKED?", product_id);
     getInsights(product_id);
+    setSelected(true);
+  };
+
+  const handleCloseCard = () => {
+    setSelected(null); // Hide card
   };
 
   const nextStep = () => {
@@ -81,7 +88,7 @@ const CreateCampaign = () => {
   const prevStep = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
-  console.log(formData);
+
   const fetchShopify = async () => {
     try {
       let response = await axiosInstance.get("/api/shopify_products/");
@@ -127,7 +134,10 @@ const CreateCampaign = () => {
             prevStep={prevStep}
             initialData={formData.contentElements}
             updateFormData={updateFormData}
+            selected={selected}
+            onCloseCard={handleCloseCard}
             apiCall={handleShopifyCall}
+            shopifyProduct={shopifyProductSingle}
             onProductSelect={handleShopifyInsights}
           />
         ) : (

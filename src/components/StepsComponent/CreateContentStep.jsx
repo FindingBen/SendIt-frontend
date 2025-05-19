@@ -30,6 +30,7 @@ const CreateContentStep = ({
   const [isLoading, setIsLoading] = useState(false);
   const [displayElItem, setDisplayItems] = useState([]);
   const [elementsList, setElementsList] = useState([]);
+  const [cardComponent, setCardComponent] = useState(false);
   const [elementContextList, setElementsContextList] = useState(
     initialData || [] // Initialize with existing data if available
   );
