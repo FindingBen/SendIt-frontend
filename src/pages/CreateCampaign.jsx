@@ -6,6 +6,7 @@ import ShopifyProductsCampaignBuilder from "../components/StepsComponent/Shopify
 import ReviewCreateStep from "../components/StepsComponent/ReviewCreateStep";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useRedux } from "../constants/reduxImports";
+import { stringify } from "uuid";
 
 const CreateCampaign = () => {
   const axiosInstance = useAxiosInstance();
@@ -22,17 +23,31 @@ const CreateCampaign = () => {
   const { currentShopifyToken } = useRedux();
 
   useEffect(() => {
-    if (currentShopifyToken && setCallShopify) {
+    if (currentShopifyToken && callShopify) {
       fetchShopify();
     }
-  }, [setCallShopify]);
+  }, [callShopify]);
 
   useEffect(() => {
     if (formData.campaignInfo.campaignContent === "Shopify") {
       setShopifyCampaign(true);
-      console.log("ssss");
+      // getInsights();
     }
   }, [formData]);
+
+  const getInsights = async (product_id) => {
+    const product_string = String(product_id);
+    console.log(product_string); // or product_id.toString()
+    try {
+      let response = await axiosInstance.get(`/api/shopify_product_insight/`);
+
+      if (response.status === 200) {
+        console.log("WORKS", response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const updateFormData = (stepData) => {
     setFormData((prevData) => ({
@@ -40,9 +55,14 @@ const CreateCampaign = () => {
       ...stepData,
     }));
   };
-  console.log(shopifyCampaign);
+
   const handleShopifyCall = (value) => {
     setCallShopify(value);
+  };
+
+  const handleShopifyInsights = (product_id) => {
+    console.log("CLICKED?", product_id);
+    getInsights(product_id);
   };
 
   const nextStep = () => {
@@ -74,6 +94,10 @@ const CreateCampaign = () => {
           title: item.node.title,
           description: item.node.descriptionHtml,
           createdAt: item.node.createdAt,
+          inventoryQuantity: item.node.totalInventory,
+          hasOutofStockVariants: item.node.hasOutOfStockVariants,
+          publishedToStore: item.node.publishedAt,
+          variantsCount: item.node.variantsCount,
           image: item.node.images.edges[0],
         }));
 
@@ -104,6 +128,7 @@ const CreateCampaign = () => {
             initialData={formData.contentElements}
             updateFormData={updateFormData}
             apiCall={handleShopifyCall}
+            onProductSelect={handleShopifyInsights}
           />
         ) : (
           <CreateContentStep

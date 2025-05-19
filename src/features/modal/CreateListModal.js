@@ -26,7 +26,7 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
   useEffect(() => {
     setShowModal(showModal);
   }, [showModal]);
-  console.log(user, currentUser);
+
   const addList = async (e) => {
     try {
       e.preventDefault();
@@ -42,7 +42,7 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
           },
         }
       );
-      console.log("AAA", response);
+   
       if (response.status === 200 || 201) {
         const newListData = [...currentContactList.contactLists, response.data];
         newList(newListData);
