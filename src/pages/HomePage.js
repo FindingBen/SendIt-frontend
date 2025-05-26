@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { logOut } from "../redux/reducers/authSlice";
 import useAxiosInstance from "../utils/axiosInstance";
 import DeleteMessageModal from "../features/modal/DeleteMessageModal";

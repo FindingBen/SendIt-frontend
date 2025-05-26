@@ -6,7 +6,7 @@ const ProductCard = ({ product, onClose }) => {
     <div class="flex flex-col relative items-center border-2 border-gray-800 rounded-lg shadow-sm md:flex-row md:max-w-xl bg-gray-800">
       <img
         class="object-cover w-full h-32 md:w-40 rounded-md"
-        src={product?.images?.edges[0].node["src"]}
+        src={product?.single_image?.node["src"]}
         alt=""
       />
       <div class="flex flex-col justify-between p-2 leading-normal">

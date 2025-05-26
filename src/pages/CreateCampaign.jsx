@@ -22,7 +22,7 @@ const CreateCampaign = () => {
     contentElements: [],
     sendingOptions: {},
   }); // Store data from all steps
-  const { currentShopifyToken } = useRedux();
+  const { currentShopifyToken, currentShopId } = useRedux();
 
   useEffect(() => {
     if (currentShopifyToken && callShopify) {
@@ -61,6 +61,7 @@ const CreateCampaign = () => {
 
   const handleShopifyCall = (value) => {
     setCallShopify(value);
+    console.log(value);
   };
 
   const handleShopifyInsights = (product_id) => {
@@ -92,20 +93,18 @@ const CreateCampaign = () => {
   const fetchShopify = async () => {
     try {
       let response = await axiosInstance.get("/api/shopify_products/");
-
+      console.log(response.data);
       if (response.status === 200) {
-        console.log(response.data);
-
         const products = response.data.map((item) => ({
-          id: item.node.id,
-          title: item.node.title,
-          description: item.node.descriptionHtml,
-          createdAt: item.node.createdAt,
-          inventoryQuantity: item.node.totalInventory,
-          hasOutofStockVariants: item.node.hasOutOfStockVariants,
-          publishedToStore: item.node.publishedAt,
-          variantsCount: item.node.variantsCount,
-          image: item.node.images.edges[0],
+          id: item.id,
+          title: item.title,
+          description: item.descriptionHtml,
+          createdAt: item.createdAt,
+          inventoryQuantity: item.totalInventory,
+          hasOutofStockVariants: item.hasOutOfStockVariants,
+          publishedToStore: item.publishedAt,
+          variantsCount: item.variantsCount,
+          image: item?.image,
         }));
 
         setShopifyProducts(products);

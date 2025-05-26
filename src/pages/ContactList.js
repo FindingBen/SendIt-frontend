@@ -73,9 +73,8 @@ const ContactList = () => {
       let response = await axiosInstance.get(url);
 
       if (response.status === 200) {
-
         if (currentShopifyToken) {
-
+          console.log(response.data);
           const contactsData = response.data.edges.map((edge) => ({
             id: edge.node.id, // Extract the ID
             firstName: edge.node.firstName, // Map firstName to first_name
@@ -93,6 +92,7 @@ const ContactList = () => {
         setIsLoading(false);
       }
     } catch (error) {
+      console.log(error);
       setLoader(false);
       setIsLoading(false);
     }

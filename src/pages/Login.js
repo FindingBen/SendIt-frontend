@@ -39,7 +39,7 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
       });
       const responseData = await response.json();
-      console.log(responseData);
+      console.log("AAA", responseData);
       if (!response.ok) {
         if (
           response.status === 400 &&
@@ -65,10 +65,17 @@ const Login = () => {
       const packageValue = jwt_decode(responseData?.access).package_plan;
       const user_info = jwt_decode(responseData?.access);
       const shopify_token = user_info.shopify_token;
+      const shop_id = user_info.shopify_id;
       const tokenType = "JWT";
-      console.log(responseData);
+      console.log(user_info);
       dispatch(
-        setCredentials({ ...responseData, user, tokenType, shopify_token })
+        setCredentials({
+          ...responseData,
+          user,
+          tokenType,
+          shopify_token,
+          shop_id,
+        })
       );
       dispatch(setPackage(packageValue));
       console.log(user_info);

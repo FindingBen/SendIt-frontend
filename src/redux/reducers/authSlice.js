@@ -10,7 +10,8 @@ const authSlice = createSlice({
   },
   reducers: {
     setCredentials: (state, action) => {
-      const { user, access, tokenType, shopify_token } = action.payload;
+      const { user, access, tokenType, shopify_token, shop_id } =
+        action.payload;
       console.log(action.payload);
       return {
         ...state,
@@ -18,6 +19,7 @@ const authSlice = createSlice({
         token: access,
         tokenType: tokenType,
         shopifyToken: shopify_token,
+        shopifyId: shop_id,
       };
     },
     setShopifyCredentials: (state, action) => {
@@ -40,6 +42,7 @@ const authSlice = createSlice({
       state.token = null;
       state.tokenType = null;
       state.shopifyToken = null;
+      state.shopify_id = null;
     },
   },
 });
@@ -55,3 +58,4 @@ export const logUserOut = (initialState) => initialState;
 export const selectTokenType = (state) => state.auth.tokenType;
 export const selectShopifyToken = (state) => state.auth.shopifyToken;
 export const selectCurrentDomain = (state) => state.auth.shopifyDomain;
+export const selectCurrentShopId = (state) => state.auth.shopifyId;

@@ -1,7 +1,7 @@
 import React from "react";
 
 const ShopifyTable = ({ products, onProductSelect }) => {
-  console.log(onProductSelect);
+  console.log(products);
   return (
     <div class="relative w-full h-[50%] lg:h-[65%] overflow-y-auto sm:rounded-lg">
       <div class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -23,7 +23,7 @@ const ShopifyTable = ({ products, onProductSelect }) => {
               >
                 <div class="p-2">
                   <img
-                    src={product?.image?.node?.src}
+                    src={product?.image}
                     class="w-10 md:w-20 h-20 rounded-md"
                     alt="alt-title"
                   />
