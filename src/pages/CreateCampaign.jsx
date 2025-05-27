@@ -16,7 +16,8 @@ const CreateCampaign = () => {
   const [shopifyCampaign, setShopifyCampaign] = useState(false);
   const [shopifyProductSingle, setShopifyProductSingle] = useState({});
   const [callShopify, setCallShopify] = useState(false);
-  const [selected, setSelected] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     campaignInfo: {},
     contentElements: [],
@@ -37,18 +38,20 @@ const CreateCampaign = () => {
     }
   }, [formData]);
 
-  const getInsights = async (product_id) => {
+  const getShopifyProduct = async (product_id) => {
+    setLoading(true);
     try {
-      let response = await axiosInstance.post(`/api/shopify_product_insight/`, {
+      let response = await axiosInstance.post(`/api/shopify_product/`, {
         id: product_id,
       });
 
       if (response.status === 200) {
-        console.log("WORKS", response);
         setShopifyProductSingle(response.data);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -64,9 +67,13 @@ const CreateCampaign = () => {
     console.log(value);
   };
 
-  const handleShopifyInsights = (product_id) => {
-    getInsights(product_id);
-    setSelected(true);
+  const handleShopifyProduct = (product_id) => {
+    getShopifyProduct(product_id);
+    setSelected(product_id);
+  };
+
+  const handleProductInsights = (product_id) => {
+    getProductInsights(product_id);
   };
 
   const handleCloseCard = () => {
@@ -88,6 +95,17 @@ const CreateCampaign = () => {
 
   const prevStep = () => {
     setCurrentStep((prevStep) => prevStep - 1);
+  };
+
+  const getProductInsights = async (product_id) => {
+    try {
+      let response = await axiosInstance.post("/api/shopify_produc_insights", {
+        product_id: product_id,
+      });
+      if (response.status === 201) {
+        console.log("HERE ARE SOME INSIGHTS", response.data);
+      }
+    } catch (error) {}
   };
 
   const fetchShopify = async () => {
@@ -134,10 +152,12 @@ const CreateCampaign = () => {
             initialData={formData.contentElements}
             updateFormData={updateFormData}
             selected={selected}
+            loading={loading}
             onCloseCard={handleCloseCard}
             apiCall={handleShopifyCall}
             shopifyProduct={shopifyProductSingle}
-            onProductSelect={handleShopifyInsights}
+            getInsights={handleProductInsights}
+            onProductSelect={handleShopifyProduct}
           />
         ) : (
           <CreateContentStep

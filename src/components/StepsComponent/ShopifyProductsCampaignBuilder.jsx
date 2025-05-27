@@ -8,6 +8,8 @@ const ShopifyProductsCampaignBuilder = ({
   nextStep,
   prevStep,
   initialData,
+  loading,
+  getInsights,
   updateFormData,
   apiCall,
   selected,
@@ -17,12 +19,13 @@ const ShopifyProductsCampaignBuilder = ({
 }) => {
   const [callFetch, setCallFetch] = useState(false);
   const [cardComponent, setCardComponent] = useState(false);
-
+  const [isSelected, setIsSelected] = useState(selected);
   const handleApiCall = () => {
     apiCall(true);
     setCallFetch(true);
   };
-  console.log("call", shopifyProduct);
+  useEffect(() => {}, [isSelected]);
+  console.log(isSelected);
   return (
     <section className="max-h-screen w-full items-center justify-center">
       <div className="grid grid-cols-2 grid-rows-1 gap-4 max-h-screen">
@@ -68,18 +71,72 @@ const ShopifyProductsCampaignBuilder = ({
           <p className="text-xl text-gray-50 font-semibold text-start">
             Smart insights
           </p>
-          <span className="text-gray-200/50 text-start mt-2 fonte-semibold text-sm xl:text-normal">
-            Based on the product you picked we generated the following insights
-            which can help you in your content planning
-          </span>
-          <div className="flex flex-col mt-3 text-start">
-            <span className="text-lg text-gray-300">
-              1. Inventory & Urgency Signals
-            </span>
+          <div className="text-start">
+            {!selected ? (
+              <span className="text-gray-200/50">
+                Pick a product to get started
+              </span>
+            ) : loading ? (
+              <div className="flex items-center gap-2 py-4">
+                <svg
+                  className="animate-spin h-6 w-6 text-cyan-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8z"
+                  ></path>
+                </svg>
+                <span className="text-gray-200/70">Loading insights...</span>
+              </div>
+            ) : (
+              <div className="transition ease-in-out delay-90">
+                <span className="text-gray-200/50 text-start mt-2 fonte-semibold text-sm xl:text-normal">
+                  Based on the product you picked we generated the following
+                  insights which can help you in your content planning
+                </span>
+                <div className="flex flex-col mt-3 text-start">
+                  <button
+                    onClick={getInsights}
+                    className="flex flex-row gap-2 py-2 px-2 bg-gray-700 rounded-md text-gray-50 hover:bg-gray-600 cursor-pointer duration-150 w-[20%]"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="size-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+                      />
+                    </svg>
+                    <span>Get Insights</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
           <div className="w-full absolute bottom-[20%] left-10">
-            {selected && (
-              <ProductCard product={shopifyProduct} onClose={onCloseCard} />
+            {selected && !loading && (
+              <ProductCard
+                loading={loading}
+                product={shopifyProduct}
+                onClose={onCloseCard}
+              />
             )}
           </div>
         </div>
