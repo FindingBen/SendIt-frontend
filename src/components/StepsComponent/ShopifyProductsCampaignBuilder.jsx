@@ -10,6 +10,7 @@ const ShopifyProductsCampaignBuilder = ({
   initialData,
   loading,
   getInsights,
+  insights,
   updateFormData,
   apiCall,
   selected,
@@ -24,8 +25,8 @@ const ShopifyProductsCampaignBuilder = ({
     apiCall(true);
     setCallFetch(true);
   };
-  useEffect(() => {}, [isSelected]);
-  console.log(isSelected);
+
+  console.log("BAA", shopifyProduct);
   return (
     <section className="max-h-screen w-full items-center justify-center">
       <div className="grid grid-cols-2 grid-rows-1 gap-4 max-h-screen">
@@ -106,26 +107,39 @@ const ShopifyProductsCampaignBuilder = ({
                   insights which can help you in your content planning
                 </span>
                 <div className="flex flex-col mt-3 text-start">
-                  <button
-                    onClick={getInsights}
-                    className="flex flex-row gap-2 py-2 px-2 bg-gray-700 rounded-md text-gray-50 hover:bg-gray-600 cursor-pointer duration-150 w-[20%]"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="size-6"
+                  {insights.length > 0 ? (
+                    <div className="flex flex-col gap-2">
+                      {insights.map((text, idx) => (
+                        <span
+                          key={idx}
+                          className="text-start text-gray-200/70 border-2 border-gray-800 rounded-md p-2"
+                        >
+                          {text}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => getInsights(shopifyProduct?.id)}
+                      className="flex flex-row gap-2 py-2 px-2 bg-gray-700 rounded-md text-gray-50 hover:bg-gray-600 cursor-pointer duration-150 w-[20%]"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
-                      />
-                    </svg>
-                    <span>Get Insights</span>
-                  </button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="size-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+                        />
+                      </svg>
+                      <span>Get Insights</span>
+                    </button>
+                  )}
                 </div>
               </div>
             )}

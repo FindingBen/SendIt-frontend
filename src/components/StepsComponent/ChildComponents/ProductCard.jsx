@@ -20,11 +20,18 @@ const ProductCard = ({ product, onClose, loading }) => {
             <snap className="text-gray-50/50">Price:{product.price}</snap>
           </div> */}
             <div className="flex flex-row gap-2">
-              <snap className="text-gray-50/50">Store published:{}</snap>
+              <snap className="text-gray-50/50">
+                Store published:
+                <span className="text-gray-50 ml-2">
+                  {product["createdAt"]
+                    ? product["createdAt"].slice(0, 10)
+                    : ""}
+                </span>
+              </snap>
             </div>
-            <div className="flex flex-row gap-2">
-              <snap className="text-gray-50/50">Variants:</snap>
-            </div>
+            {/* <div className="flex flex-row gap-2">
+              <snap className="text-gray-50/50">Updated:</snap>
+            </div> */}
           </div>
         </div>
         <svg

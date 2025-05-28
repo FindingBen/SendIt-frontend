@@ -1,7 +1,6 @@
 import React from "react";
 
 const ShopifyTable = ({ products, onProductSelect }) => {
-  console.log(products);
   return (
     <div class="relative w-full h-[50%] lg:h-[65%] overflow-y-auto sm:rounded-lg">
       <div class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

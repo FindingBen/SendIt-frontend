@@ -15,6 +15,7 @@ const CreateCampaign = () => {
   const [shopifyProducts, setShopifyProducts] = useState([]);
   const [shopifyCampaign, setShopifyCampaign] = useState(false);
   const [shopifyProductSingle, setShopifyProductSingle] = useState({});
+  const [insights, setInsights] = useState([]);
   const [callShopify, setCallShopify] = useState(false);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -78,6 +79,7 @@ const CreateCampaign = () => {
 
   const handleCloseCard = () => {
     setSelected(null); // Hide card
+    setInsights([]);
   };
 
   const nextStep = () => {
@@ -99,11 +101,14 @@ const CreateCampaign = () => {
 
   const getProductInsights = async (product_id) => {
     try {
-      let response = await axiosInstance.post("/api/shopify_produc_insights", {
-        product_id: product_id,
-      });
+      let response = await axiosInstance.post(
+        "/api/shopify_product_insights/",
+        {
+          product_id: product_id,
+        }
+      );
       if (response.status === 201) {
-        console.log("HERE ARE SOME INSIGHTS", response.data);
+        setInsights(response.data.data);
       }
     } catch (error) {}
   };
@@ -154,6 +159,7 @@ const CreateCampaign = () => {
             selected={selected}
             loading={loading}
             onCloseCard={handleCloseCard}
+            insights={insights}
             apiCall={handleShopifyCall}
             shopifyProduct={shopifyProductSingle}
             getInsights={handleProductInsights}
