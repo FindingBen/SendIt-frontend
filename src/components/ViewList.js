@@ -4,6 +4,7 @@ import TextComponent from "./TextComponent";
 import ButtonComponent from "./ButtonComponent";
 import SurveyComponent from "./Survey/SurveyComponent";
 import { config } from "../constants/Constants";
+import CarouselComponent from "./Carousel/CarouselComponent";
 
 const ViewList = ({ children }) => {
   const BASE_URL = config.url.BASE_URL;
@@ -48,6 +49,11 @@ const ViewList = ({ children }) => {
                 questionValue={item.survey}
                 element_id={item.id}
               />
+            ) : (
+              <></>
+            )}
+            {item.element_type === "Carousel" ? (
+              <CarouselComponent images={item.carousel_images} />
             ) : (
               <></>
             )}

@@ -10,17 +10,24 @@ import useAxiosInstance from "../../src/utils/axiosInstance";
 import { motion } from "framer-motion-3d";
 
 const List = ({ children, alignment, clicked, updatedList }) => {
-  const [itemsElements, setItems] = useState([children]);
-  console.log("CHILDRED", children);
+  const [itemsElements, setItems] = useState(
+    Array.isArray(children) ? children : children ? [children] : []
+  );
+
   const axiosInstance = useAxiosInstance();
   useEffect(() => {
-    setItems(children);
-    if (JSON.stringify(itemsElements) !== JSON.stringify(children)) {
-      setItems(children);
+    const safeChildren = Array.isArray(children)
+      ? children
+      : children
+      ? [children]
+      : [];
+    setItems(safeChildren);
+    if (JSON.stringify(itemsElements) !== JSON.stringify(safeChildren)) {
+      setItems(safeChildren);
 
       // When children change, compute initial order values based on index
-      if (children && children.length > 0) {
-        const initialItems = children.map((item, index) => ({
+      if (safeChildren.length > 0) {
+        const initialItems = safeChildren.map((item, index) => ({
           ...item,
           order: index,
         }));
@@ -64,27 +71,29 @@ const List = ({ children, alignment, clicked, updatedList }) => {
         {/* We need components that use the useSortable hook */}
         <ul className="flex flex-column" id="myList">
           {itemsElements &&
-            itemsElements?.map((item, index) => (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{
-                  duration: 0.3,
-                  delay: 0.1,
-                  ease: [0, 0.41, 0.1, 1.01],
-                }}
-                key={item.id}
-                className="relative rounded-md mx-2"
-              >
-                <SortableItem key={item.id} id={item.id} itemObject={item} />
-                <span
-                  className="absolute top-1 right-0 cursor-pointer hover:bg-slate-400 rounded-full "
-                  onClick={() => toDelete(item.id)}
+            itemsElements
+              .filter(Boolean) // <-- filter out null/undefined
+              .map((item, index) => (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    duration: 0.3,
+                    delay: 0.1,
+                    ease: [0, 0.41, 0.1, 1.01],
+                  }}
+                  key={item.id}
+                  className="relative rounded-md mx-2"
                 >
-                  <p className="text-white">X</p>
-                </span>
-              </motion.div>
-            ))}
+                  <SortableItem key={item.id} id={item.id} itemObject={item} />
+                  <span
+                    className="absolute top-1 right-0 cursor-pointer hover:bg-slate-400 rounded-full "
+                    onClick={() => toDelete(item.id)}
+                  >
+                    <p className="text-white">X</p>
+                  </span>
+                </motion.div>
+              ))}
         </ul>
       </SortableContext>
     </DndContext>

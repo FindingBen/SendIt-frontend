@@ -10,8 +10,10 @@ import { setState } from "../../redux/reducers/formReducer";
 import { createElements } from "../../utils/helpers/createElements";
 
 const ReviewCreateStep = ({ prevStep, formData }) => {
-  console.log(formData);
-  const [elementContextList, setElementsContextList] = useState([]);
+  console.log("FINAL", formData);
+  const [elementContextList, setElementsContextList] = useState([
+    formData.contentElements,
+  ]);
   const [elementsList, setElementsList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -25,7 +27,7 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
     currentPackageState,
     currentMessages,
   } = useRedux();
-
+  console.log("FINAL", elementContextList);
   const handleClicked = (element) => {
     deleteElement(element);
 
@@ -37,7 +39,7 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
   const updateElements = (element) => {
     setElementsContextList(element);
   };
-  console.log(elementContextList);
+
   const handleSubmit = async () => {
     dispatch(setList({ populated: true }));
     setIsLoading(true);
@@ -46,8 +48,11 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
     try {
       messageObject = await createMessage();
       const requestType = "create";
+      console.log("ELELE", elementContextList);
+      let elements = elementContextList[0];
+      console.log("SSS", elements);
       const createElementsData = createElements({
-        elementContextList,
+        elementContextList: elements,
         messageObject,
         axiosInstance,
         requestType,
@@ -90,6 +95,7 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
         setIsLoading(false);
       }
     } catch (error) {
+      console.log(error);
       setErrorMsg(error.response.data.message_name);
       setIsLoading(false);
     }

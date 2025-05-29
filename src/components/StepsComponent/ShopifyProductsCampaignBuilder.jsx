@@ -19,14 +19,20 @@ const ShopifyProductsCampaignBuilder = ({
   onProductSelect,
 }) => {
   const [callFetch, setCallFetch] = useState(false);
-  const [cardComponent, setCardComponent] = useState(false);
-  const [isSelected, setIsSelected] = useState(selected);
+  const [prevData, setPrevData] = useState({ ...initialData });
+
   const handleApiCall = () => {
     apiCall(true);
     setCallFetch(true);
   };
 
-  console.log("BAA", shopifyProduct);
+  const handleNext = () => {
+    updateFormData({
+      shopifyProduct: { product: shopifyProduct, insights: insights },
+    });
+    nextStep();
+  };
+
   return (
     <section className="max-h-screen w-full items-center justify-center">
       <div className="grid grid-cols-2 grid-rows-1 gap-4 max-h-screen">
@@ -148,6 +154,7 @@ const ShopifyProductsCampaignBuilder = ({
             {selected && !loading && (
               <ProductCard
                 loading={loading}
+                nextStep={handleNext}
                 product={shopifyProduct}
                 onClose={onCloseCard}
               />

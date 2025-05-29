@@ -26,6 +26,11 @@ export const createElements =
         } else if (element.element_type === "Text") {
           formData.append("text", element.text);
           formData.append("alignment", element.alignment);
+        } else if (element.element_type === "Carousel") {
+          formData.append(
+            "carousel_images",
+            JSON.stringify(element.carousel_images[0])
+          );
         } else if (element.element_type === "Button") {
           formData.append("unique_button_id", element.unique_button_id);
           formData.append(
@@ -49,6 +54,7 @@ export const createElements =
             "/api/create_element/",
             formData
           );
+          console.log(response);
           if (response.status === 200) {
             createdElements.push(response.data);
           } else {
@@ -65,8 +71,8 @@ export const createElements =
         for (let i = 0; i < elementContextList.length; i++) {
           const elementContext = elementContextList[i];
           const formData = new FormData();
+
           if ("context" in elementContext) {
-            console.log("BUTTONID", elementContext);
             if (elementContext.element_type === "Img") {
               formData.append("image", elementContext.file);
             } else if (elementContext.element_type === "Text") {
@@ -87,7 +93,13 @@ export const createElements =
             } else if (elementContext.element_type === "Survey") {
               formData.append("survey", elementContext.survey);
               formData.append("question_type", elementContext.question_type);
+            } else if (elementContext.element_type === "Carousel") {
+              formData.append(
+                "carousel_images",
+                JSON.stringify(elementContext.carousel_images[0])
+              );
             }
+
             formData.append("element_type", elementContext.element_type);
             formData.append("users", elementContext.users);
             formData.append("order", i);

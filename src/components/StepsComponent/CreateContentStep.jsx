@@ -7,6 +7,7 @@ import AiGenerator from "../AiGenerator";
 import { setOpenModal } from "../../redux/reducers/modalReducer";
 import { setState } from "../../redux/reducers/formReducer";
 import { ElementContext } from "../../context/ElementContext";
+import Carousel from "../Carousel/Carousel";
 import { useRedux } from "../../constants/reduxImports";
 import SvgLoader from "../SvgLoader";
 import PreviewPanel from "../PreviewComponent/PreviewPanel";
@@ -22,6 +23,7 @@ const CreateContentStep = ({
     currentUser,
     dispatch,
     currentModalState,
+    currentShopifyToken,
     currentPackageState,
     currentMessages,
   } = useRedux();
@@ -32,7 +34,7 @@ const CreateContentStep = ({
   const [elementsList, setElementsList] = useState([]);
   const [cardComponent, setCardComponent] = useState(false);
   const [elementContextList, setElementsContextList] = useState(
-    initialData || [] // Initialize with existing data if available
+    [] // Initialize with existing data if available
   );
   const [isDirty, setIsDirty] = useState(false);
   const [isCreate, setIsCreate] = useState(true);
@@ -40,7 +42,7 @@ const CreateContentStep = ({
   const [imageStateVal, setImageStateVal] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [device, setDevice] = useState("phone");
-
+  console.log("DDDD", initialData?.product?.images);
   useEffect(() => {
     if (elementContextList.length > 0) {
       dispatch(setState({ isDirty: true }));
@@ -73,7 +75,7 @@ const CreateContentStep = ({
   const handleContextEl = (elementContextList) => {
     setElementsContextList(elementContextList);
   };
-
+  console.log(elementContextList);
   const handleStepList = (messageElements) => {
     setMessageElements(messageElements);
   };
@@ -155,6 +157,15 @@ const CreateContentStep = ({
         elementList={displayElements}
         setComponentState={setComponent}
         stepList={handleStepList}
+      />
+    ),
+    carousel: (
+      <Carousel
+        listEl={isCreate}
+        contextList={handleContextEl}
+        elementList={displayElements}
+        setComponentState={setComponent}
+        productImages={initialData?.product?.images}
       />
     ),
   };
@@ -268,7 +279,7 @@ const CreateContentStep = ({
                 </p>
               </div>
             </div>
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between mt-2">
               <div
                 onClick={
                   currentPackageState?.package === "Silver" && !imageStateVal
@@ -301,6 +312,34 @@ const CreateContentStep = ({
                   AI
                 </p>
               </div>
+              {currentShopifyToken ? (
+                <div
+                  onClick={imageStateVal ? null : () => handleClick("carousel")}
+                  name="liClick"
+                  className="component-button-create-content"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                    />
+                  </svg>
+
+                  <p className="text-white/70 font-normal text-base text-justify my-auto">
+                    Carousel
+                  </p>
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
 

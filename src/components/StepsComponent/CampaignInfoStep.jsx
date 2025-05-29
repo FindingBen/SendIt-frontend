@@ -17,9 +17,9 @@ const CampaignInfoStep = ({
     const { name, value } = e.target;
     setCampaignInfo({ ...campaignInfo, [name]: value });
   };
-
+  console.log(campaignInfo);
   const handleNext = () => {
-    updateFormData({ campaignInfo });
+    updateFormData({ campaignInfo: campaignInfo });
     nextStep();
   };
 
@@ -87,7 +87,7 @@ const CampaignInfoStep = ({
                 </div>
               </li>
               <li
-                className={`w-full border-b border-gray-200 sm:border-b-0 transition delay-75 sm:border-r ${
+                className={`w-full border-b border-gray-200 sm:border-b-0 transition delay-75 ${
                   campaignInfo.campaignContent === "Custom"
                     ? "bg-cyan-600 border-r rounded-md text-white"
                     : "text-gray-900"
@@ -95,7 +95,7 @@ const CampaignInfoStep = ({
               >
                 <div className="flex items-center ps-3">
                   <input
-                    id="campaign-content-shopify"
+                    id="campaign-content-custom"
                     type="radio"
                     value="Custom"
                     name="list-radio-shopify"
@@ -104,7 +104,7 @@ const CampaignInfoStep = ({
                     className="hidden"
                   />
                   <label
-                    htmlFor="campaign-content-shopify"
+                    htmlFor="campaign-content-custom"
                     className="w-full py-3 ms-2 text-sm font-medium cursor-pointer"
                   >
                     Custom Campaign
@@ -122,7 +122,7 @@ const CampaignInfoStep = ({
           </label>
           <ul class="items-center w-full text-sm font-medium  bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
             <li
-              className={`w-full border-b transition delay-75 sm:border-b-0 sm:border-r  ${
+              className={`w-full border-b transition delay-75 sm:border-b-0  ${
                 campaignInfo.type === "Promotional"
                   ? "bg-cyan-600 border-l rounded-md"
                   : "text-gray-900"

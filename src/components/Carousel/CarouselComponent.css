@@ -1,0 +1,24 @@
+.carousel-wrapper {
+  max-width: 350px; /* or your preferred width */
+  margin: 0 auto;
+}
+
+.carousel-img {
+  width: 250px;      /* smaller image width */
+  height: 180px;     /* smaller image height */
+  object-fit: cover;
+  margin: 0 32px;    /* gap between image and arrows */
+  border-radius: 8px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 40px;       /* make arrows more prominent */
+  opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-size: 2rem 2rem;
+  filter: drop-shadow(0 0 2px #000);
+}

@@ -6,7 +6,6 @@ import ShopifyProductsCampaignBuilder from "../components/StepsComponent/Shopify
 import ReviewCreateStep from "../components/StepsComponent/ReviewCreateStep";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useRedux } from "../constants/reduxImports";
-import { stringify } from "uuid";
 
 const CreateCampaign = () => {
   const axiosInstance = useAxiosInstance();
@@ -21,8 +20,8 @@ const CreateCampaign = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     campaignInfo: {},
+    shopifyProduct: {},
     contentElements: [],
-    sendingOptions: {},
   }); // Store data from all steps
   const { currentShopifyToken, currentShopId } = useRedux();
 
@@ -65,7 +64,6 @@ const CreateCampaign = () => {
 
   const handleShopifyCall = (value) => {
     setCallShopify(value);
-    console.log(value);
   };
 
   const handleShopifyProduct = (product_id) => {
@@ -92,7 +90,9 @@ const CreateCampaign = () => {
     });
 
     // Move to the next step
-    setCurrentStep((prevStep) => Math.min(prevStep + 1, 3)); // Ensure it doesn't exceed the total steps
+    setCurrentStep((prevStep) =>
+      shopifyCampaign ? Math.min(prevStep + 1, 4) : Math.min(prevStep + 1, 3)
+    ); // Ensure it doesn't exceed the total steps
   };
 
   const prevStep = () => {
@@ -116,7 +116,7 @@ const CreateCampaign = () => {
   const fetchShopify = async () => {
     try {
       let response = await axiosInstance.get("/api/shopify_products/");
-      console.log(response.data);
+
       if (response.status === 200) {
         const products = response.data.map((item) => ({
           id: item.id,
@@ -136,49 +136,78 @@ const CreateCampaign = () => {
       console.log(error);
     }
   };
-
+  console.log("FORM", formData);
   const renderStep = () => {
-    switch (currentStep) {
-      case 1:
-        return (
-          <CampaignInfoStep
-            nextStep={nextStep}
-            tokenType={currentShopifyToken}
-            updateFormData={updateFormData}
-            initialData={formData.campaignInfo}
-          />
-        );
-      case 2:
-        return shopifyCampaign ? (
-          <ShopifyProductsCampaignBuilder
-            shopifyProducts={shopifyProducts}
-            nextStep={nextStep}
-            prevStep={prevStep}
-            initialData={formData.contentElements}
-            updateFormData={updateFormData}
-            selected={selected}
-            loading={loading}
-            onCloseCard={handleCloseCard}
-            insights={insights}
-            apiCall={handleShopifyCall}
-            shopifyProduct={shopifyProductSingle}
-            getInsights={handleProductInsights}
-            onProductSelect={handleShopifyProduct}
-          />
-        ) : (
-          <CreateContentStep
-            nextStep={nextStep}
-            prevStep={prevStep}
-            shopifyProducts={shopifyProducts}
-            updateFormData={updateFormData}
-            initialData={formData.contentElements}
-          />
-        );
-
-      case 3:
-        return <ReviewCreateStep prevStep={prevStep} formData={formData} />;
-      default:
-        return null;
+    if (shopifyCampaign) {
+      switch (currentStep) {
+        case 1:
+          return (
+            <CampaignInfoStep
+              nextStep={nextStep}
+              tokenType={currentShopifyToken}
+              updateFormData={updateFormData}
+              initialData={formData.campaignInfo}
+            />
+          );
+        case 2:
+          return (
+            <ShopifyProductsCampaignBuilder
+              shopifyProducts={shopifyProducts}
+              nextStep={nextStep}
+              prevStep={prevStep}
+              initialData={formData.campaignInfo}
+              updateFormData={updateFormData}
+              selected={selected}
+              loading={loading}
+              onCloseCard={handleCloseCard}
+              insights={insights}
+              apiCall={handleShopifyCall}
+              shopifyProduct={shopifyProductSingle}
+              getInsights={handleProductInsights}
+              onProductSelect={handleShopifyProduct}
+            />
+          );
+        case 3:
+          return (
+            <CreateContentStep
+              nextStep={nextStep}
+              prevStep={prevStep}
+              shopifyProducts={shopifyProducts}
+              updateFormData={updateFormData}
+              initialData={formData.shopifyProduct}
+            />
+          );
+        case 4:
+          return <ReviewCreateStep prevStep={prevStep} formData={formData} />;
+        default:
+          return null;
+      }
+    } else {
+      switch (currentStep) {
+        case 1:
+          return (
+            <CampaignInfoStep
+              nextStep={nextStep}
+              tokenType={currentShopifyToken}
+              updateFormData={updateFormData}
+              initialData={formData.campaignInfo}
+            />
+          );
+        case 2:
+          return (
+            <CreateContentStep
+              nextStep={nextStep}
+              prevStep={prevStep}
+              shopifyProducts={shopifyProducts}
+              updateFormData={updateFormData}
+              initialData={formData.campaignInfo}
+            />
+          );
+        case 3:
+          return <ReviewCreateStep prevStep={prevStep} formData={formData} />;
+        default:
+          return null;
+      }
     }
   };
   return (
@@ -192,6 +221,7 @@ const CreateCampaign = () => {
         <div className="ml-[12%] w-full">
           <StepsComponent
             currentStep={currentStep}
+            contentType={shopifyCampaign}
             completedSteps={completedSteps}
           />
         </div>

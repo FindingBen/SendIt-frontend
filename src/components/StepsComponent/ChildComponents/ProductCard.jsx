@@ -1,16 +1,16 @@
 import React from "react";
 
-const ProductCard = ({ product, onClose, loading }) => {
+const ProductCard = ({ product, onClose, loading, nextStep }) => {
   return (
     <div class="flex flex-col relative items-center border-2 border-gray-800 rounded-lg shadow-sm md:flex-row md:max-w-xl bg-gray-800">
-      <div className="pl-3">
+      <div className="p-2">
         <img
           class="object-cover w-full h-32 md:w-40 rounded-md"
           src={product?.single_image?.node["src"]}
           alt=""
         />
       </div>
-      <div class="flex flex-col justify-between p-4 leading-normal">
+      <div class="flex flex-col justify-between p-2 leading-normal">
         <h5 class="mb-2 text-lg font-semibold tracking-tight text-white">
           {product?.title}
         </h5>
@@ -49,7 +49,10 @@ const ProductCard = ({ product, onClose, loading }) => {
             d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
           />
         </svg>
-        <button className="py-2 px-2 text-gray-100 font-medium absolute bottom-1 right-2 bg-slate-700 rounded-lg hover:cursor-pointer hover:bg-slate-400">
+        <button
+          onClick={nextStep}
+          className="py-2 px-2 text-gray-100 font-medium absolute bottom-1 right-2 bg-slate-700 rounded-lg hover:cursor-pointer hover:bg-slate-400"
+        >
           Continue
         </button>
       </div>

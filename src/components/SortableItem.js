@@ -5,6 +5,7 @@ import ImgList from "./ImgList";
 import TextComponent from "./TextComponent";
 import ButtonComponent from "./ButtonComponent";
 import SurveyComponent from "./Survey/SurveyComponent";
+import CarouselComponent from "./Carousel/CarouselComponent";
 import { config } from "../constants/Constants";
 
 export function SortableItem(props) {
@@ -12,7 +13,7 @@ export function SortableItem(props) {
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.itemObject.id });
-
+  console.log("PROSP", props.itemObject);
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -44,6 +45,11 @@ export function SortableItem(props) {
             questionValue={props.itemObject.survey}
             questionTypeValue={props.itemObject.question_type}
           />
+        ) : (
+          <></>
+        )}
+        {props.itemObject.element_type === "Carousel" ? (
+          <CarouselComponent images={props.itemObject.carousel_images} />
         ) : (
           <></>
         )}
