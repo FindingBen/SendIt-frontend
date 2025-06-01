@@ -42,7 +42,6 @@ const CreateContentStep = ({
   const [imageStateVal, setImageStateVal] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [device, setDevice] = useState("phone");
-  console.log("DDDD", initialData?.product?.images);
   useEffect(() => {
     if (elementContextList.length > 0) {
       dispatch(setState({ isDirty: true }));
@@ -65,7 +64,7 @@ const CreateContentStep = ({
     updateFormData({ contentElements: elementContextList }); // Explicitly update the contentElements key
     nextStep();
   };
-
+  console.log(elementContextList);
   const handleClick = (componentKey) => {
     setSelectedComponent((prevSelectedComponent) =>
       prevSelectedComponent === componentKey ? null : componentKey

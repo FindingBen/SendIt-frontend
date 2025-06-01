@@ -13,7 +13,6 @@ const List = ({ children, alignment, clicked, updatedList }) => {
   const [itemsElements, setItems] = useState(
     Array.isArray(children) ? children : children ? [children] : []
   );
-
   const axiosInstance = useAxiosInstance();
   useEffect(() => {
     const safeChildren = Array.isArray(children)
@@ -27,17 +26,18 @@ const List = ({ children, alignment, clicked, updatedList }) => {
 
       // When children change, compute initial order values based on index
       if (safeChildren.length > 0) {
-        const initialItems = safeChildren.map((item, index) => ({
+        const initialItems = safeChildren?.map((item, index) => ({
           ...item,
           order: index,
         }));
         updatedList(initialItems);
       }
     }
-  }, [children, itemsElements]);
+  }, [children]);
 
   const toDelete = (id) => {
-    const updatedItems = itemsElements.filter((item) => item.id !== id);
+    console.log("ID", id);
+    const updatedItems = itemsElements?.filter((item) => item?.id !== id);
 
     // Update the state with the filtered items
     setItems(updatedItems);
@@ -61,7 +61,7 @@ const List = ({ children, alignment, clicked, updatedList }) => {
       console.log("Error making the API request:", error);
     }
   };
-
+  console.log("LIST", itemsElements);
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext
@@ -74,25 +74,34 @@ const List = ({ children, alignment, clicked, updatedList }) => {
             itemsElements
               .filter(Boolean) // <-- filter out null/undefined
               .map((item, index) => (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    duration: 0.3,
-                    delay: 0.1,
-                    ease: [0, 0.41, 0.1, 1.01],
-                  }}
-                  key={item.id}
+                <div
+                  // initial={{ opacity: 0, scale: 0.5 }}
+                  // animate={{ opacity: 1, scale: 1 }}
+                  // transition={{
+                  //   duration: 0.3,
+                  //   delay: 0.1,
+                  //   ease: [0, 0.41, 0.1, 1.01],
+                  // }}
+                  key={item?.id}
                   className="relative rounded-md mx-2"
                 >
-                  <SortableItem key={item.id} id={item.id} itemObject={item} />
-                  <span
-                    className="absolute top-1 right-0 cursor-pointer hover:bg-slate-400 rounded-full "
-                    onClick={() => toDelete(item.id)}
-                  >
-                    <p className="text-white">X</p>
-                  </span>
-                </motion.div>
+                  <SortableItem
+                    key={item?.id}
+                    id={item?.id}
+                    itemObject={item}
+                    onDelete={toDelete}
+                  />
+                  
+                    <span
+                      className="absolute top-1 right-0 cursor-pointer hover:bg-slate-400 rounded-full "
+                      onClick={() => toDelete(item?.id)}
+                    >
+                      <p className="text-white bg-red-600 rounded-lg w-6 h-6">
+                        X
+                      </p>
+                    </span>
+
+                </div>
               ))}
         </ul>
       </SortableContext>
@@ -101,13 +110,23 @@ const List = ({ children, alignment, clicked, updatedList }) => {
 
   function handleDragEnd(event) {
     const { active, over } = event;
+    if (!active || !over) return;
 
     try {
-      //if (active.id !== over.id) {
       setItems((items) => {
-        const activeIndex = items.findIndex((item) => item.id === active.id);
-        const overIndex = items.findIndex((item) => item.id === over.id);
-        const newItems = arrayMove([...items], activeIndex, overIndex);
+        // Filter out null/undefined items before using findIndex
+        const filteredItems = items.filter(Boolean);
+        const activeIndex = filteredItems.findIndex(
+          (item) => item.id === active.id
+        );
+        const overIndex = filteredItems.findIndex(
+          (item) => item.id === over.id
+        );
+
+        // If either index is not found, do nothing
+        if (activeIndex === -1 || overIndex === -1) return filteredItems;
+
+        const newItems = arrayMove([...filteredItems], activeIndex, overIndex);
         const updatedItems = newItems.map((item, index) => ({
           ...item,
           order: index,
@@ -116,7 +135,6 @@ const List = ({ children, alignment, clicked, updatedList }) => {
         updatedList(updatedItems);
         return newItems;
       });
-      // }
     } catch (e) {
       console.log(e);
     }

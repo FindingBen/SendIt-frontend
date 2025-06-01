@@ -13,18 +13,18 @@ export function SortableItem(props) {
 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.itemObject.id });
-  console.log("PROSP", props.itemObject);
+
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
   };
-
+  console.log(props);
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <div
         style={{ marginBottom: "5%" }}
         id="elItem"
-        key={props.itemObject.id}
+        key={props?.itemObject?.id}
         loading="lazy"
         className=" hover:bg-blue-300 rounded-md transition-colors"
       >
@@ -49,7 +49,11 @@ export function SortableItem(props) {
           <></>
         )}
         {props.itemObject.element_type === "Carousel" ? (
-          <CarouselComponent images={props.itemObject.carousel_images} />
+          <CarouselComponent
+            images={props.itemObject.carousel_images}
+            onDelete={props.onDelete}
+            deleteId={props.itemObject.id}
+          />
         ) : (
           <></>
         )}
