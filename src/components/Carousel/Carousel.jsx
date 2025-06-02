@@ -1,73 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import ReactDOM from "react-dom";
-import { motion } from "framer-motion";
 import { ElementContext } from "../../context/ElementContext";
 import { useRedux } from "../../constants/reduxImports";
+import SortableImage from "../DragAndDropComponents/SortableImage";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
   arrayMove,
   SortableContext,
-  useSortable,
-  verticalListSortingStrategy,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import CarouselComponent from "./CarouselComponent";
-import { CSS } from "@dnd-kit/utilities";
-
-function SortableImage({ id, src, idx, onRemove, onUpload }) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id });
-  return (
-    <div
-      ref={setNodeRef}
-      style={{
-        transform: CSS.Transform.toString(transform),
-        transition,
-        opacity: isDragging ? 0.5 : 1,
-      }}
-      {...attributes}
-      {...listeners}
-      className="flex items-center justify-center relative w-24 h-24 bg-gray-800 rounded-md border-2 border-gray-700 flex-shrink-0"
-    >
-      {src ? (
-        <>
-          <img
-            src={src}
-            alt={`Shopify product ${idx + 1}`}
-            className="object-cover w-full h-full rounded"
-          />
-          <button
-            type="button"
-            onClick={() => onRemove(idx)}
-            className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center"
-          >
-            ×
-          </button>
-        </>
-      ) : (
-        <label className="flex flex-col items-center justify-center w-full h-full cursor-pointer">
-          <span className="text-gray-500 text-xs">Upload</span>
-          <input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
-                onUpload(idx, e.target.files[0]);
-              }
-            }}
-          />
-        </label>
-      )}
-    </div>
-  );
-}
 
 const MAX_IMAGES = 5;
 
@@ -96,7 +38,8 @@ const Carousel = ({
     setImages(
       Array.from({ length: MAX_IMAGES }).map((_, idx) => imageSrcArray[idx])
     );
-  }, [productImages]);
+    // eslint-disable-next-line
+  }, []);
   useEffect(() => {
     try {
       const lastListItem = container?.lastChild;
@@ -169,6 +112,7 @@ const Carousel = ({
   };
 
   const handleRemoveImage = (idx) => {
+    console.log(idx, "CLICKED");
     setImages((imgs) => {
       const newImgs = [...imgs];
       newImgs[idx] = null;
@@ -254,14 +198,28 @@ const Carousel = ({
           >
             <div className="flex flex-row gap-2 h-[120px] border-2 border-gray-800 rounded-md overflow-x-auto p-2 bg-gray-900">
               {images.map((src, idx) => (
-                <SortableImage
-                  key={idx}
-                  id={`img-${idx}`}
-                  src={src}
-                  idx={idx}
-                  onRemove={handleRemoveImage}
-                  onUpload={handleUploadImage}
-                />
+                <div className="relative">
+                  {src ? (
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveImage(idx)}
+                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center"
+                      style={{ zIndex: 10, pointerEvents: "auto" }}
+                    >
+                      ×
+                    </button>
+                  ) : (
+                    <></>
+                  )}
+                  <SortableImage
+                    key={idx}
+                    id={`img-${idx}`}
+                    src={src}
+                    idx={idx}
+                    onRemove={handleRemoveImage}
+                    onUpload={handleUploadImage}
+                  />
+                </div>
               ))}
             </div>
           </SortableContext>

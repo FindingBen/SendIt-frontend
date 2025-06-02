@@ -1,21 +1,32 @@
 import React, { useState, useEffect } from "react";
 import "./CarouselComponent.css";
 
-const CarouselComponent = ({ images, toDelete, item, interval = 3000 }) => {
+const CarouselComponent = ({
+  images,
+  toDelete,
+  item,
+  interval = 3000,
+  context,
+}) => {
   const [current, setCurrent] = useState(0);
 
   // if (!images.length) return null;
 
   const prev = () => setCurrent((c) => (c === 0 ? images.length - 1 : c - 1));
   const next = () => setCurrent((c) => (c === images.length - 1 ? 0 : c + 1));
-
+  console.log(context);
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((c) => (c === images.length - 1 ? 0 : c + 1));
     }, interval);
     return () => clearInterval(timer);
   }, [images.length, interval]);
-  console.log(images[0]);
+
+  useEffect(() => {
+    // Reset to first image if images prop changes
+    setCurrent(0);
+  }, [images]);
+
   return (
     <div
       className="relative mx-3 flex flex-col items-center justify-center w-[91%]"
@@ -26,7 +37,7 @@ const CarouselComponent = ({ images, toDelete, item, interval = 3000 }) => {
 
       {/* Image */}
       <img
-        src={images[current]}
+        src={context ? images[0][current] : images[current]}
         alt={`carousel-${current}`}
         style={{
           width: "100%",

@@ -53,6 +53,7 @@ export function SortableItem(props) {
             images={props.itemObject.carousel_images}
             onDelete={props.onDelete}
             deleteId={props.itemObject.id}
+            context={props.itemObject.context}
           />
         ) : (
           <></>
