@@ -83,7 +83,7 @@ const Login = () => {
       setUser("");
       setPwd("");
       localStorage.setItem("refreshToken", responseData?.refresh);
-      console.log("HERE");
+
       navigate("/home");
     } catch (err) {
       console.log(err);
