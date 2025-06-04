@@ -11,6 +11,7 @@ const RegisterPage = () => {
   const BASE_URL = config.url.BASE_URL;
   const userRef = useRef();
   const errRef = useRef();
+  const [emailReadOnly, setEmailReadOnly] = useState(false);
   const [email, setEmail] = useState("");
   const [username, setUser] = useState("");
   const [first_name, setFirstName] = useState("");
@@ -29,7 +30,7 @@ const RegisterPage = () => {
   const [showModal, setShow] = useState(false);
 
   useEffect(() => {
-    userRef.current?.focus();
+    getShopInfo();
   }, []);
 
   useEffect(() => {
@@ -38,6 +39,25 @@ const RegisterPage = () => {
     setMatchPassErr("");
     setErrEmail("");
   }, [username, email, first_name, last_name]);
+
+  const getShopInfo = async (e) => {
+    const params = new URLSearchParams(window.location.search);
+    const shop = params.get("shop");
+    if (shop) {
+      let response = await fetch(
+        `${BASE_URL}/api/shop_info/?shop=${encodeURIComponent(shop)}`
+      );
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        console.log(data);
+        setEmail(data?.shop?.email);
+        setFirstName(data?.shop.first_name || "");
+        setEmailReadOnly(true);
+      }
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -231,7 +251,13 @@ const RegisterPage = () => {
                         <input
                           onChange={handleEmail}
                           name="email"
-                          class={`text-sm text-gray-800 bg-white placeholder-gray-400 p-2 w-full rounded-xl border ${
+                          value={email}
+                          readOnly={emailReadOnly}
+                          className={`text-sm ${
+                            emailReadOnly
+                              ? "text-gray-800 bg-white opacity-50"
+                              : "text-gray-800 bg-white"
+                          } placeholder-gray-400 p-2 w-full rounded-xl border ${
                             errEmail ? "border-red-400" : ""
                           } `}
                           type="text"
