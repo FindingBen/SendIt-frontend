@@ -87,7 +87,7 @@ const useAxiosInstance = () => {
       console.log("---SHOPIFY HEADER----");
       console.log(req.headers);
       req.headers.Authorization = `Shopify ${currentShopifyToken}`;
-      req.headers["shopify-domain"] = currentDomain;
+      req.headers["ShopifyDomain"] = currentDomain;
     }
 
     return req;
