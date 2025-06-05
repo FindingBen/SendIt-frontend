@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import ShopifyTable from "../ShopifyTable/ShopifyTable";
 import PhonePreview from "../PreviewComponent/PhonePreview";
 import ProductCard from "./ChildComponents/ProductCard";
+import Loader from "../LoaderSkeleton/Loader";
+import LoaderSkeleton from "../LoaderSkeleton/LoaderSkeleton";
 
 const ShopifyProductsCampaignBuilder = ({
   shopifyProducts,
@@ -9,6 +11,7 @@ const ShopifyProductsCampaignBuilder = ({
   prevStep,
   initialData,
   loading,
+  productLoading,
   getInsights,
   insights,
   updateFormData,
@@ -47,10 +50,14 @@ const ShopifyProductsCampaignBuilder = ({
             />
           </div>
           {callFetch ? (
-            <ShopifyTable
-              products={shopifyProducts}
-              onProductSelect={onProductSelect}
-            />
+            loading ? (
+              <Loader loading_name="Loading products..." />
+            ) : (
+              <ShopifyTable
+                products={shopifyProducts}
+                onProductSelect={onProductSelect}
+              />
+            )
           ) : (
             <button
               onClick={handleApiCall}
@@ -84,28 +91,7 @@ const ShopifyProductsCampaignBuilder = ({
                 Pick a product to get started
               </span>
             ) : loading ? (
-              <div className="flex items-center gap-2 py-4">
-                <svg
-                  className="animate-spin h-6 w-6 text-cyan-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v8z"
-                  ></path>
-                </svg>
-                <span className="text-gray-200/70">Loading insights...</span>
-              </div>
+              <Loader loading_name={"Loading insights"} />
             ) : (
               <div className="transition ease-in-out delay-90">
                 <span className="text-gray-200/50 text-start mt-2 fonte-semibold text-sm xl:text-normal">
@@ -150,15 +136,19 @@ const ShopifyProductsCampaignBuilder = ({
               </div>
             )}
           </div>
-          <div className="w-full absolute bottom-[20%] left-10">
-            {selected && !loading && (
+          <div className="w-full absolute bottom-[20%]">
+            {selected && productLoading ? (
+              <div className="items-start mr-20">
+                <LoaderSkeleton product_card={true} div_size={3} />
+              </div>
+            ) : selected && !productLoading ? (
               <ProductCard
-                loading={loading}
+                loading={productLoading}
                 nextStep={handleNext}
                 product={shopifyProduct}
                 onClose={onCloseCard}
               />
-            )}
+            ) : null}
           </div>
         </div>
       </div>

@@ -18,6 +18,7 @@ const CreateCampaign = () => {
   const [callShopify, setCallShopify] = useState(false);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [productLoading, setProductLoading] = useState(false);
   const [formData, setFormData] = useState({
     campaignInfo: {},
     shopifyProduct: {},
@@ -39,7 +40,7 @@ const CreateCampaign = () => {
   }, [formData]);
 
   const getShopifyProduct = async (product_id) => {
-    setLoading(true);
+    setProductLoading(true);
     try {
       let response = await axiosInstance.post(`/api/shopify_product/`, {
         id: product_id,
@@ -47,11 +48,11 @@ const CreateCampaign = () => {
 
       if (response.status === 200) {
         setShopifyProductSingle(response.data);
-        setLoading(false);
+        setProductLoading(false);
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setProductLoading(false);
     }
   };
 
@@ -114,6 +115,7 @@ const CreateCampaign = () => {
   };
 
   const fetchShopify = async () => {
+    setLoading(true);
     try {
       let response = await axiosInstance.get("/api/shopify_products/");
 
@@ -129,10 +131,11 @@ const CreateCampaign = () => {
           variantsCount: item.variantsCount,
           image: item?.image,
         }));
-
+        setLoading(false);
         setShopifyProducts(products);
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -159,6 +162,7 @@ const CreateCampaign = () => {
               updateFormData={updateFormData}
               selected={selected}
               loading={loading}
+              productLoading={productLoading}
               onCloseCard={handleCloseCard}
               insights={insights}
               apiCall={handleShopifyCall}
