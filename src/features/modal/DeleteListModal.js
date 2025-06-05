@@ -12,7 +12,7 @@ const DeleteListModal = ({
   newList,
 }) => {
   const axiosInstance = useAxiosInstance();
-  const { dispatch } = useRedux();
+  const { dispatch, currentUser } = useRedux();
   const [show, setShowModal] = useState(showModal);
   const [listId, setListId] = useState();
 
@@ -23,7 +23,13 @@ const DeleteListModal = ({
 
   let deleteList = async (e) => {
     try {
-      let response = await axiosInstance.delete(`/api/delete_list/${listId}`);
+      const data = {
+        list_id: listId,
+        user_id: currentUser,
+      };
+      let response = await axiosInstance.delete(`/api/contact_lists/`, {
+        data,
+      });
       if (response.status === 200) {
         // Fetch updated contact lists after deletion
         let updatedListsResponse = await axiosInstance.get(

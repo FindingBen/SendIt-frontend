@@ -27,7 +27,7 @@ const ContactList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [contactListsPercentage, setContactListsPercentage] = useState();
   const [recipientsPercentage, setRecipientsPercentage] = useState();
-  const [shopifyFetching, setShopifyFetching] = useState(false);
+  const [shopifyList, setShopifyList] = useState(false);
   const [limits, setLimits] = useState({});
   const [show, setShow] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -99,19 +99,17 @@ const ContactList = () => {
     }
     return true;
   };
-  console.log(currentUser);
+
   const createShopifyList = async (e) => {
+    setShopifyList(true);
     try {
       setIsLoading(true);
       e.preventDefault();
-      let response = await axiosInstance.post(
-        `/api/create_list/${currentUser}`,
-        {
-          list_name: `${currentDomain}`,
-        }
-      );
+      let response = await axiosInstance.post(`/api/contact_lists/`, {
+        list_name: `${currentDomain}`,
+        user_id: currentUser,
+      });
       if (response.status === 201) {
-        console.log(response.data);
         const newListData = [...currentContactList.contactLists, response.data];
         dispatch(
           setContactLists({ contactLists: newListData, listChange: true })
@@ -120,6 +118,7 @@ const ContactList = () => {
       }
     } catch (error) {
       setIsLoading(false);
+      setShopifyList(false);
       console.log(error);
     }
   };

@@ -31,9 +31,10 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
     try {
       e.preventDefault();
       let response = await axiosInstance.post(
-        `/api/create_list/${currentUser}`,
+        `/api/contact_lists/`,
         {
           list_name: listName,
+          user_id: currentUser,
         },
         {
           headers: {
@@ -42,7 +43,7 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
           },
         }
       );
-   
+
       if (response.status === 200 || 201) {
         const newListData = [...currentContactList.contactLists, response.data];
         newList(newListData);
