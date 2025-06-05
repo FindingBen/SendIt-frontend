@@ -23,6 +23,8 @@ const useAxiosInstance = () => {
   const createAxiosInstance = (token, currentShopifyToken) => {
     const instance = axios.create({
       baseURL: baseURL,
+      withCredentials: true,
+      credentials: 'include'
     });
 
     if (currentShopifyToken && currentShopifyToken !== "None") {
