@@ -31,7 +31,7 @@ const useAxiosInstance = () => {
       instance.defaults.headers.common[
         "Authorization"
       ] = `Shopify ${currentShopifyToken}`;
-      instance.defaults.headers.common["shopify-domain"] = currentDomain;
+      instance.defaults.headers.common["ShopifyDomain"] = currentDomain;
     } else if (token) {
       instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     }
