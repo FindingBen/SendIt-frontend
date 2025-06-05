@@ -15,6 +15,7 @@ const ShopifyProductsCampaignBuilder = ({
   getInsights,
   insights,
   updateFormData,
+  search,
   apiCall,
   selected,
   onCloseCard,
@@ -46,12 +47,15 @@ const ShopifyProductsCampaignBuilder = ({
             </p>
             <input
               placeholder="Search..."
+              onChange={(e) => search(e.target.value)}
               className="flex-1 min-h-0 rounded-lg p-1 bg-gray-700 absolute right-0"
             />
           </div>
           {callFetch ? (
             loading ? (
-              <Loader loading_name="Loading products..." />
+              <div className="mx-auto">
+                <Loader loading_name="Loading products..." />
+              </div>
             ) : (
               <ShopifyTable
                 products={shopifyProducts}
@@ -82,7 +86,7 @@ const ShopifyProductsCampaignBuilder = ({
           )}
         </div>
         <div className="flex flex-col p-4 relative">
-          <p className="text-xl text-gray-50 font-semibold text-start">
+          <p className="text-xl text-gray-50 font-normal text-start">
             Smart insights
           </p>
           <div className="text-start">

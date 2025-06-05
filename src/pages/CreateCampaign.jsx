@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import StepsComponent from "../components/StepsComponent/StepsComponent";
 import CampaignInfoStep from "../components/StepsComponent/CampaignInfoStep";
 import CreateContentStep from "../components/StepsComponent/CreateContentStep";
@@ -18,6 +18,7 @@ const CreateCampaign = () => {
   const [callShopify, setCallShopify] = useState(false);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [search_name, setSearchName] = useState("");
   const [productLoading, setProductLoading] = useState(false);
   const [formData, setFormData] = useState({
     campaignInfo: {},
@@ -25,12 +26,19 @@ const CreateCampaign = () => {
     contentElements: [],
   }); // Store data from all steps
   const { currentShopifyToken, currentShopId } = useRedux();
-
+  const debounceTimeout = useRef();
   useEffect(() => {
     if (currentShopifyToken && callShopify) {
-      fetchShopify();
+      // Clear previous debounce
+      if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+
+      debounceTimeout.current = setTimeout(() => {
+        fetchShopify();
+      }, 400); // 400ms debounce
     }
-  }, [callShopify]);
+    // Cleanup on unmount
+    return () => clearTimeout(debounceTimeout.current);
+  }, [callShopify, search_name, currentShopifyToken]);
 
   useEffect(() => {
     if (formData.campaignInfo.campaignContent === "Shopify") {
@@ -114,10 +122,21 @@ const CreateCampaign = () => {
     } catch (error) {}
   };
 
+  const handleSearchChange = (search) => {
+    setSearchName(search);
+  };
+  console.log("SEARCH", search_name);
   const fetchShopify = async () => {
     setLoading(true);
     try {
-      let response = await axiosInstance.get("/api/shopify_products/");
+      const queryParts = [];
+      let url = "/api/shopify_products/";
+      if (search_name) queryParts.push(`search=${search_name}`);
+      console.log(search_name);
+      if (queryParts.length > 0) {
+        url += `?${queryParts.join("&")}`;
+      }
+      let response = await axiosInstance.get(url);
 
       if (response.status === 200) {
         const products = response.data.map((item) => ({
@@ -165,6 +184,7 @@ const CreateCampaign = () => {
               productLoading={productLoading}
               onCloseCard={handleCloseCard}
               insights={insights}
+              search={handleSearchChange}
               apiCall={handleShopifyCall}
               shopifyProduct={shopifyProductSingle}
               getInsights={handleProductInsights}
