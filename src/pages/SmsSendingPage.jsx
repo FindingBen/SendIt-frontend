@@ -41,7 +41,7 @@ const SmsSendingPage = () => {
   useEffect(() => {
     getContactLists();
   }, []);
-
+  console.log(recipients);
   const handleAddLink = () => {
     const linkEmbed = ` #Link `;
     const textarea = document.getElementById("smsTextArea");
@@ -96,6 +96,7 @@ const SmsSendingPage = () => {
     try {
       let response = await axiosInstance.get("/api/contact_lists/");
       if (response.status === 200) {
+        console.log(response.data);
         setContactList(response.data.data);
       }
     } catch (error) {

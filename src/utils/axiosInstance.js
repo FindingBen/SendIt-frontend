@@ -24,7 +24,7 @@ const useAxiosInstance = () => {
     const instance = axios.create({
       baseURL: baseURL,
       withCredentials: true,
-      credentials: 'include'
+      credentials: "include",
     });
 
     if (currentShopifyToken && currentShopifyToken !== "None") {
@@ -88,7 +88,6 @@ const useAxiosInstance = () => {
       console.log(req.headers);
       req.headers.Authorization = `Shopify ${currentShopifyToken}`;
       req.headers["shopify-domain"] = currentDomain;
-      req.headers["Shopify-Domain"] = currentDomain || "";
     }
 
     return req;

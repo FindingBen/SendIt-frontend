@@ -9,7 +9,6 @@ import { useRedux } from "../constants/reduxImports";
 import { setContactLists } from "../redux/reducers/contactListReducer";
 import SmsPill from "../components/SmsPill/SmsPill";
 import LoaderSkeleton from "../components/LoaderSkeleton/LoaderSkeleton";
-import { faBullseye } from "@fortawesome/free-solid-svg-icons";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
