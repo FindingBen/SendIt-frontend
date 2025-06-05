@@ -67,6 +67,7 @@ const Login = () => {
       const user_info = jwt_decode(responseData?.access);
       const shopify_token = user_info.shopify_token;
       const shop_id = user_info.shopify_id;
+      const shopify_domain = user_info.shopify_domain;
       const tokenType = "JWT";
       console.log(user_info);
       dispatch(
@@ -76,10 +77,11 @@ const Login = () => {
           tokenType,
           shopify_token,
           shop_id,
+          shopify_domain,
         })
       );
       dispatch(setPackage(packageValue));
-      console.log(user_info);
+
       dispatch(setUserInfo({ ...user_info }));
       setUser("");
       setPwd("");

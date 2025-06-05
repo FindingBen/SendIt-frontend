@@ -31,7 +31,7 @@ const useAxiosInstance = () => {
       instance.defaults.headers.common[
         "Authorization"
       ] = `Shopify ${currentShopifyToken}`;
-      instance.defaults.headers.common["ShopifyDomain"] = currentDomain;
+      instance.defaults.headers.common["shopify-domain"] = currentDomain;
     } else if (token) {
       instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     }
@@ -87,7 +87,7 @@ const useAxiosInstance = () => {
       console.log("---SHOPIFY HEADER----");
       console.log(req.headers);
       req.headers.Authorization = `Shopify ${currentShopifyToken}`;
-      req.headers["ShopifyDomain"] = currentDomain;
+      req.headers["shopify-domain"] = currentDomain;
     }
 
     return req;
