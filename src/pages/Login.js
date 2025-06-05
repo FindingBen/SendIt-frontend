@@ -35,6 +35,7 @@ const Login = () => {
       const response = await fetch(`${BASE_URL}/api/token/`, {
         method: "POST",
         body: JSON.stringify(bodyData),
+        withCredentials: true,
         credentials: "include",
         headers: { "Content-Type": "application/json" },
       });
