@@ -38,12 +38,7 @@ const ContactList = () => {
 
   useEffect(() => {
     // Fetch contact lists only if the Redux store is empty and not fetched yet
-    if (
-      currentContactList.contactLists?.length === 0 ||
-      !currentContactList.listChange
-    ) {
-      getContactLists();
-    }
+    getContactLists();
   }, []);
 
   useEffect(() => {

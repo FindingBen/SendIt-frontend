@@ -82,6 +82,8 @@ const useAxiosInstance = () => {
         }
       }
     } else if (currentShopifyToken) {
+      console.log("---SHOPIFY HEADER----");
+      console.log(req.headers);
       req.headers.Authorization = `Shopify ${currentShopifyToken}`;
       req.headers["shopify-domain"] = currentDomain;
     }
