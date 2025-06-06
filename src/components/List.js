@@ -36,7 +36,6 @@ const List = ({ children, alignment, clicked, updatedList }) => {
   }, [children]);
 
   const toDelete = (id) => {
-    console.log("ID", id);
     const updatedItems = itemsElements?.filter((item) => item?.id !== id);
 
     // Update the state with the filtered items

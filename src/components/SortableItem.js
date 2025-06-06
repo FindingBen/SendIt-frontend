@@ -32,7 +32,13 @@ export function SortableItem(props) {
           props.itemObject.image.startsWith("blob") ? (
             <ImgList imageUrl={props.itemObject.image} />
           ) : (
-            <ImgList imageUrl={`${BASE_URL}${props.itemObject.image}`} />
+            <ImgList
+              imageUrl={`${
+                config.environment === "DEV"
+                  ? `${BASE_URL}${props.itemObject.image}`
+                  : `${props.itemObject.image}`
+              }`}
+            />
           )
         ) : (
           <TextComponent
