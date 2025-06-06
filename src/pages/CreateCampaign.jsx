@@ -132,7 +132,7 @@ const CreateCampaign = () => {
       const queryParts = [];
       let url = "/api/shopify_products/";
       if (search_name) queryParts.push(`search=${search_name}`);
-      console.log(search_name);
+
       if (queryParts.length > 0) {
         url += `?${queryParts.join("&")}`;
       }
@@ -158,7 +158,7 @@ const CreateCampaign = () => {
       console.log(error);
     }
   };
-  console.log("FORM", formData);
+
   const renderStep = () => {
     if (shopifyCampaign) {
       switch (currentStep) {
