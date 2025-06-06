@@ -55,7 +55,7 @@ const PurchaseHistory = () => {
     <div className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col">
         <div className="flex flex-row items-center mb-4 h-20 xs:mx-5 md:mx-20 relative">
-          <h3 className="text-lg lg:text-xl 2xl:text-2xl font-semibold text-white">
+          <h3 className="text-lg lg:text-xl 2xl:text-2xl font-normal text-white">
             Purchase history
           </h3>
           {/* <div class="text-white flex flex-row gap-1 rounded-md hover:bg-cyan-600 smooth-hover cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 border-gray-500 border-2 p-1 lg:p-2 absolute right-0 top-5">
@@ -80,7 +80,7 @@ const PurchaseHistory = () => {
           <div className="items-center justify-center rounded-2xl mb-3 w-full bg-mainBlue border-gray-800 border-2 shadow-md">
             <div className="flex flex-row space-x-2 p-2 border-b border-gray-800">
               <button
-                className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
+                className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-normal duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
                   `}
                 onClick={handleSortByDate}
               >

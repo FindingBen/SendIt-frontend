@@ -97,7 +97,7 @@ const Login = () => {
   return (
     <section class="flex flex-col items-center antialiased bg-gradient-to-b from-lighterMainBlue to-mainBlue text-gray-200 min-h-screen p-4 w-100">
       <div class="flex-1">
-        <div class="max-w-[360px] mx-auto mt-10 mb-5">
+        <div class="max-w-[360px] mx-auto mt-10 mb-2">
           <div class="bg-navBlue border-2 border-gray-800 h-[420px] rounded-lg mt-3">
             <header class="text-center px-5 pb-5">
               {/* <svg
@@ -181,27 +181,29 @@ const Login = () => {
                 ) : (
                   <button
                     type="submit"
-                    class="font-semibold text-sm inline-flex items-center justify-center px-3 py-2 rounded-xl leading-5 shadow-lg transition duration-150 ease-in-out w-full bg-cyan-600 hover:bg-cyan-400 text-white focus:outline-none focus-visible:ring-2"
+                    class="font-normal text-sm inline-flex items-center justify-center px-3 py-2 rounded-xl leading-5 shadow-lg transition duration-150 ease-in-out w-full bg-purpleHaze hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
                   >
                     Login
                   </button>
                 )}
               </form>
             </div>
-            <span class="text-sm mt-3 p-2 hover:text-blue-500 cursor-pointer hover:bg-gray-300 rounded duration-300">
-              <Link to="/reset_password" className=" text-white">
-                Forgot password?
-              </Link>
-            </span>
           </div>
         </div>
 
-        <p className="small fw-bold pt-1 mb-0 mt-3">
-          Don't have an account?{" "}
-          <Link to="/register" className="link-danger">
-            Register
-          </Link>
-        </p>
+        <div className="flex flex-col gap-2">
+          <span class="text-sm p-2 cursor-pointer hover:bg-gray-500 rounded duration-300 mx-auto">
+            <Link to="/reset_password" className=" text-white">
+              Forgot password?
+            </Link>
+          </span>
+          <p className="small fw-bold pt-1 mb-0">
+            Don't have an account?{" "}
+            <Link to="/register" className="link-danger">
+              Register
+            </Link>
+          </p>
+        </div>
       </div>
       <div className="flex flex-row gap-2 text-center">
         <p className="text-white opacity-60 font-light text-sm">

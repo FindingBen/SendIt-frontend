@@ -28,7 +28,7 @@ const OverallStatistics = ({ totalValues, loaded = true }) => {
             </p>
           )}
 
-          <p className="text-white text-normal lg:text-normal 2xl:text-2xl font-semibold text-justify absolute right-2 bottom-2">
+          <p className="text-white text-normal lg:text-normal 2xl:text-2xl font-normal text-justify absolute right-2 bottom-2">
             Total Sends
           </p>
         </div>
@@ -71,7 +71,7 @@ const OverallStatistics = ({ totalValues, loaded = true }) => {
               <SvgLoader width={"w-8"} height={"h-8"} />
             </p>
           )}
-          <p className="text-white text-normal 2xl:text-2xl font-semibold text-justify absolute right-2 bottom-2">
+          <p className="text-white text-normal 2xl:text-2xl font-normal text-justify absolute right-2 bottom-2">
             Total Views
           </p>
         </div>
@@ -115,7 +115,7 @@ const OverallStatistics = ({ totalValues, loaded = true }) => {
               <SvgLoader width={"w-8"} height={"h-8"} />
             </p>
           )}
-          <p className="text-white text-normal 2xl:text-2xl font-semibold text-justify absolute right-2 bottom-2">
+          <p className="text-white text-normal 2xl:text-2xl font-normal text-justify absolute right-2 bottom-2">
             Total spend
           </p>
         </div>

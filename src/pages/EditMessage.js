@@ -14,6 +14,7 @@ import { setModalState } from "../redux/reducers/modalReducer";
 import { setEditPage } from "../redux/reducers/editPageReducer";
 import useAxiosInstance from "../utils/axiosInstance";
 import { ElementContext } from "../context/ElementContext";
+import Loader from "../components/LoaderSkeleton/Loader";
 import { useRedux } from "../constants/reduxImports";
 import SvgLoader from "../components/SvgLoader";
 import PreviewPanel from "../components/PreviewComponent/PreviewPanel";
@@ -307,7 +308,7 @@ const EditMessage = () => {
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between border-b-2 border-gray-800 items-center h-20 bg-navBlue">
             <div className="flex flex-row">
-              <span className="xl:text-2xl lg:text-xl text-normal text-white font-semibold mx-20">
+              <span className="xl:text-2xl lg:text-xl text-normal text-white font-normal mx-20">
                 Edit Content
               </span>
             </div>
@@ -315,13 +316,13 @@ const EditMessage = () => {
               {!isLoading ? (
                 <button
                   onClick={editMessage}
-                  className="text-white bg-cyan-700  hover:bg-cyan-400 p-1 rounded-lg hover:text-white flex flex-row transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105"
+                  className="text-white bg-cyan-700 hover:bg-cyan-500 w-full p-1 rounded-lg hover:text-white flex flex-row"
                 >
-                  <h2 className="text-lg mx-2">Edit</h2>
+                  <h2 className="text-lg mx-2">Save changes</h2>
                 </button>
               ) : (
-                <div role="status" className="absolute top-0 right-0">
-                  <SvgLoader height={6} width={6} />
+                <div role="status" className="flex-1">
+                  <Loader loading_name={"Saving changes..."} />
                 </div>
               )}
             </div>
@@ -329,7 +330,7 @@ const EditMessage = () => {
           <div className="flex flex-col md:flex-row rounded-2xl h-screen">
             <div className="flex p-10 max-h-screen gap-2 md:flex-col bg-gradient-to-b from-lighterMainBlue to-mainBlue border-r-2 border-gray-800">
               <div className="flex flex-col lg:w-72 gap-2 rounded-2xl text-start mb-5">
-                <span className="text-gray-200 text-normal lg:text-lg font-semibold">
+                <span className="text-gray-200 text-normal lg:text-lg font-normal">
                   Campaign name
                 </span>
                 <input
@@ -340,7 +341,7 @@ const EditMessage = () => {
                 {showSaveButton && (
                   <button
                     onClick={handleSave}
-                    className="bg-cyan-500 text-white px-4 py-2 rounded-lg duration-200 cursor-pointer"
+                    className="bg-purpleHaze text-white px-4 py-2 w-full rounded-lg duration-200 cursor-pointer"
                   >
                     Save
                   </button>

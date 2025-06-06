@@ -256,11 +256,11 @@ const HomePage = () => {
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
-            <h3 class="2xl:text-3xl lg:text-2xl text-lg font-semibold text-left text-white mx-20">
+            <h3 className="2xl:text-3xl lg:text-2xl text-lg font-normal text-left text-white mx-20">
               Overview
             </h3>
 
-            <div class="flex flex-row items-center mx-20">
+            <div className="flex flex-row items-center mx-20">
               <SmsPill />
             </div>
           </div>
@@ -278,7 +278,7 @@ const HomePage = () => {
               >
                 <div className="flex flex-row relative border-b border-gray-800">
                   <div className="flex flex-col">
-                    <p className="text-white font-semibold text-xl xl:text-2xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
+                    <p className="text-white font-normal text-xl xl:text-2xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
                       Your latest messages
                     </p>
                     <p className="text-white/60 text-normal my-3 mt-1 ml-5">
@@ -308,7 +308,7 @@ const HomePage = () => {
                         const evenRow = index % 2 === 0;
                         return (
                           <motion.div
-                            className={`text-white font-semibold text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
+                            className={`text-white font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
                               evenRow
                                 ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
                                 : "bg-mainBlue"

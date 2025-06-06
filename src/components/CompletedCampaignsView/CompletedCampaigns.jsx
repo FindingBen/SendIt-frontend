@@ -16,7 +16,7 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
       <div className="mb-3">
         <div className="flex flex-row mb-2">
           <div>
-            <p className="text-white text-xl lg:text-2xl text-start font-semibold">
+            <p className="text-white text-xl lg:text-2xl text-start font-normal">
               Account Analytics
             </p>
           </div>

@@ -57,7 +57,7 @@ const UserPage = () => {
     <section className="min-h-screen w-100 items-center justify-center relative">
       <div className="flex flex-col xs:mx-3">
         <div className="flex justify-between items-center mb-4 h-20">
-          <h3 class="xl:text-2xl lg:text-xl text-left font-semibold text-white mx-20">
+          <h3 class="xl:text-2xl lg:text-xl text-left font-normal text-white mx-20">
             User page
           </h3>
           <div class="flex flex-row items-center mx-20">
@@ -75,7 +75,7 @@ const UserPage = () => {
               <PasswordChange user_obj={user} />
 
               <div className="flex flex-col rounded-2xl p-4 xs:mt-2 md:mt-0 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 border-2 xs:w-[330px] lg:w-[370px] 2xl:w-[450px] lg:h-[240px] 2xl:h-[270px]">
-                <h3 class="flex flex-row xs:text-normal lg:text-xl 2xl:text-2xl text-left mb-4 font-semibold text-white relative">
+                <h3 class="flex flex-row xs:text-normal lg:text-xl 2xl:text-2xl text-left mb-4 font-normal text-white relative">
                   Account Deletion
                   <div
                     onClick={(e) => setShowModal(e)}

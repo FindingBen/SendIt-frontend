@@ -238,7 +238,7 @@ const CreateCampaign = () => {
     <section className="h-screen w-full overflow-hidden items-center justify-center">
       <div className="flex items-center mb-4 h-20 bg-navBlue">
         <div className="flex flex-row text-start">
-          <span className="lg:text-xl 2xl:text-2xl gap-4 text-lg text-white font-semibold ml-20">
+          <span className="lg:text-xl 2xl:text-2xl gap-4 text-lg text-white font-normal ml-20">
             Create Campaign
           </span>
         </div>

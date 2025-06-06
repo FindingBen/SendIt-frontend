@@ -234,7 +234,7 @@ const ContactList = () => {
       <div className="flex-1 flex flex-col space-y-5 lg:flex-row">
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
-            <h3 class="xl:text-2xl text-xl font-semibold text-left text-white mx-20">
+            <h3 class="xl:text-2xl text-xl font-normal text-left text-white mx-20">
               Contacts
             </h3>
             <div class="items-start shadow-md mx-20">
@@ -335,14 +335,14 @@ const ContactList = () => {
                   ) : (
                     <>
                       <button
-                        className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
+                        className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-normal duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
                   `}
                         onClick={handleSortByName}
                       >
                         Sort by Name
                       </button>
                       <button
-                        className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray`}
+                        className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-normal duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray`}
                         onClick={
                           currentTokenType === "Shopify"
                             ? handleSortByDateCreatedShopify
@@ -411,7 +411,7 @@ const ContactList = () => {
                             } font-light`}
                           >
                             <div
-                              className={`grid grid-cols-5 font-semibold 2xl:text-lg gap-4 p-2 border-b-2 border-gray-800 ${
+                              className={`grid grid-cols-5 font-normal 2xl:text-lg gap-4 p-2 border-b-2 border-gray-800 ${
                                 isLastItem
                                   ? "rounded-b-2xl 2xl:text-lg border-none"
                                   : ""

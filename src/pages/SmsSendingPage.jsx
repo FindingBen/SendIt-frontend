@@ -184,7 +184,7 @@ const SmsSendingPage = () => {
     <section className="h-screen overflow-hidden w-100 items-center justify-center">
       <div className="flex flex-col space-y-5 lg:space-y-0">
         <div className="flex justify-between border-b-2 border-gray-800 items-center h-20 bg-navBlue w-full">
-          <h3 class="xl:text-2xl lg:text-xl text-xl text-left font-semibold text-white mx-20">
+          <h3 class="xl:text-2xl lg:text-xl text-xl text-left font-normal text-white mx-20">
             Send sms
           </h3>
           <div class="flex flex-row items-center mx-20">
@@ -211,7 +211,7 @@ const SmsSendingPage = () => {
               />
             </div> */}
 
-              <label className="block mb-2 mt-4 text-normal text-left font-semibold text-white ">
+              <label className="block mb-2 mt-4 text-normal text-left font-normal text-white ">
                 Select contact list:
               </label>
 
@@ -224,7 +224,7 @@ const SmsSendingPage = () => {
                   <option
                     key={item.id}
                     value={JSON.stringify(item)}
-                    className="text-white font-semibold"
+                    className="text-white font-normal"
                   >
                     {item.list_name}
                   </option>
@@ -235,7 +235,7 @@ const SmsSendingPage = () => {
             </div>
             <div className="flex flex-col gap-3 p-10">
               <div className="flex flex-row gap-3 relative w-[65%] mb-3">
-                <label className="text-lg absolute left-0 font-semibold text-left text-white">
+                <label className="text-lg absolute left-0 font-normal text-left text-white">
                   Sms text
                 </label>
                 <svg

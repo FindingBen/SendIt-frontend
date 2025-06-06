@@ -161,7 +161,7 @@ const RegisterPage = () => {
       <div class="flex-1">
         <div class="max-w-[440px] mx-auto flex flex-col mb-5">
           {!registered ? (
-            <div class="bg-mainBlue border-2 border-gray-800 mt-9 rounded-2xl">
+            <div class="bg-navBlue border-2 border-gray-800 mt-9 rounded-2xl">
               <header class="text-center px-5 pb-5">
                 <h3 class="text-xl font-semibold text-white mb-1 mt-2">
                   Register
@@ -171,7 +171,7 @@ const RegisterPage = () => {
                 </div>
               </header>
 
-              <div class="bg-mainBlue text-center px-5 py-2 rounded-b-2xl">
+              <div class="bg-navBlue text-center px-5 py-2 rounded-b-2xl">
                 <form onSubmit={handleSubmit}>
                   <div className="flex flex-row gap-2">
                     <div class="rounded-md">
@@ -382,7 +382,7 @@ const RegisterPage = () => {
                   ) : (
                     <button
                       type="submit"
-                      class="font-semibold w-28 mb-3 text-smitems-center justify-center px-3 py-2 rounded-xl transition duration-150 ease-in-out bg-purpleHaze hover:bg-indigo-600 text-white"
+                      class="font-normal text-sm w-28 mb-3 text-smitems-center justify-center px-3 py-2 rounded-xl transition duration-150 ease-in-out bg-purpleHaze hover:bg-indigo-600 text-white"
                     >
                       Register
                     </button>

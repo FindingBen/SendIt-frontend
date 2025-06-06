@@ -107,7 +107,7 @@ const Archives = () => {
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
-            <h3 class="xl:text-2xl lg:text-xl text-lg font-semibold text-left text-white mx-20">
+            <h3 class="xl:text-2xl lg:text-xl text-lg font-normal text-left text-white mx-20">
               Archives
             </h3>
 
@@ -124,7 +124,7 @@ const Archives = () => {
               <div className="flex flex-row space-x-2 p-2 border-b border-gray-800">
                 <button
                   onClick={handleSortByDate}
-                  className="px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-semibold duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray"
+                  className="px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-normal duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray"
                 >
                   Sort by date
                 </button>
@@ -175,7 +175,7 @@ const Archives = () => {
                         key={message.id}
                         className={`${
                           messageId === message.id
-                            ? "bg-cyan-700 text-white font-semibold transition duration-300"
+                            ? "bg-gray-700 text-white font-normal transition duration-300"
                             : isEvenRow
                             ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue text-white"
                             : "bg-mainBlue text-white"
@@ -184,7 +184,7 @@ const Archives = () => {
                         } font-light`}
                       >
                         <div
-                          className={`grid grid-cols-5 font-semibold 2xl:text-lg gap-4 p-2 border-b-2 border-gray-800 ${
+                          className={`grid grid-cols-5 font-normal 2xl:text-lg gap-4 p-2 border-b-2 border-gray-800 ${
                             isLastItem
                               ? "rounded-b-2xl 2xl:text-lg border-none"
                               : ""

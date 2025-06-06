@@ -132,7 +132,7 @@ const ContactList = () => {
       <div class="flex-1 flex flex-col space-y-5 lg:flex-row">
         <div class="flex-1">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
-            <h3 class="xl:text-2xl lg:text-xl text-lg font-semibold text-left text-white mx-20">
+            <h3 class="xl:text-2xl lg:text-xl text-lg font-normal text-left text-white mx-20">
               Contact lists
             </h3>
 
@@ -144,7 +144,7 @@ const ContactList = () => {
           <div className="flex flex-row h-[100%]">
             <div className=" bg-mainBlue w-[60%] h-[80%] 2xl:h-[100%] 2xl:w-[70%] border-gray-800 shadow-md border-2 rounded-2xl mt-4 mx-20">
               <div className="flex flex-row relative border-b border-gray-800">
-                <p className="text-white font-semibold text-xl xl:text-2xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
+                <p className="text-white font-normal text-xl xl:text-2xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
                   Your contact lists
                 </p>
                 {!currentShopifyToken ? (
@@ -204,7 +204,7 @@ const ContactList = () => {
                           key={conList.id}
                         >
                           <motion.div
-                            className={`grid grid-cols-4 font-semibold gap-4 p-2 text-white border-gray-800 ${
+                            className={`grid grid-cols-4 font-normal gap-4 p-2 text-white border-gray-800 ${
                               isLastItem ? "rounded-b-2xl" : "border-b-2"
                             }`}
                             key={conList.id}
@@ -277,7 +277,7 @@ const ContactList = () => {
               )}
             </div>
             <div className="bg-mainBlue w-[30%] 2xl:w-[35%] h-[75%] 2xl:h-[85%] p-4 border-gray-800 border-2 rounded-2xl mt-4 mr-20">
-              <p className="text-white text-justify text-xl 2xl:text-2xl font-semibold mb-3">
+              <p className="text-white text-justify text-xl 2xl:text-2xl font-normal mb-3">
                 Package limitation
               </p>
               <p className="text-start text-white/50">
@@ -285,7 +285,7 @@ const ContactList = () => {
                 down below:
               </p>
               <div className="flex flex-col mt-5">
-                <div className="flex flex-row font-semibold">
+                <div className="flex flex-row font-normal">
                   <p className="text-start text-white 2xl:text-lg">
                     Contact Lists
                   </p>
@@ -306,7 +306,7 @@ const ContactList = () => {
                   </div>
                 </div>
                 <div className="flex flex-row mt-4">
-                  <p className="text-start font-semibold text-white 2xl:text-lg">
+                  <p className="text-start font-normal text-white 2xl:text-lg">
                     Recipients
                   </p>
                   <div class="w-[50%] bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3 relative">
