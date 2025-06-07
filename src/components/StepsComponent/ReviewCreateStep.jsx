@@ -8,6 +8,7 @@ import { ElementContext } from "../../context/ElementContext";
 import { setMessages } from "../../redux/reducers/messageReducer";
 import { setState } from "../../redux/reducers/formReducer";
 import { createElements } from "../../utils/helpers/createElements";
+import Loader from "../LoaderSkeleton/Loader";
 
 const ReviewCreateStep = ({ prevStep, formData }) => {
   console.log("FINAL", formData);
@@ -20,14 +21,8 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
   const axiosInstance = useAxiosInstance();
   const navigate = useNavigate();
   const { deleteElement } = useContext(ElementContext);
-  const {
-    currentUser,
-    dispatch,
-    currentModalState,
-    currentPackageState,
-    currentMessages,
-  } = useRedux();
-  console.log("FINAL", elementContextList);
+  const { currentUser, dispatch, currentMessages } = useRedux();
+
   const handleClicked = (element) => {
     deleteElement(element);
 
@@ -158,28 +153,36 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
         </div>
 
         <div className="flex-1 relative">
-          <button
-            type="submit"
-            onClick={prevStep}
-            className={`text-white font-medium absolute bottom-36 left-20 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center align-bottom ${
-              elementContextList.length === 0
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
-            }`}
-          >
-            Back
-          </button>
-          <button
-            type="submit"
-            onClick={handleSubmit}
-            className={`text-white font-medium absolute bottom-36 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center align-bottom ${
-              elementContextList.length === 0
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
-            }`}
-          >
-            Create
-          </button>
+          {isLoading ? (
+            <div className="absolute bottom-36 left-24">
+              <Loader loading_name={"Creating campaign..."} />
+            </div>
+          ) : (
+            <div>
+              <button
+                type="submit"
+                onClick={prevStep}
+                className={`text-white font-medium absolute bottom-36 left-24 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center align-bottom ${
+                  elementContextList.length === 0
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                }`}
+              >
+                Back
+              </button>
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                className={`text-white font-medium absolute bottom-36 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center align-bottom ${
+                  elementContextList.length === 0
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                }`}
+              >
+                Create
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>

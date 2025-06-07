@@ -1,6 +1,6 @@
 import React from "react";
-
-const ProductCard = ({ product, onClose, loading, nextStep }) => {
+import Loader from "../../LoaderSkeleton/Loader";
+const ProductCard = ({ product, onClose, loading, stepLoad, nextStep }) => {
   return (
     <div class="flex flex-col relative items-center border-2 border-gray-800 rounded-lg shadow-sm md:flex-row md:max-w-xl bg-gray-800">
       <div className="p-2">
@@ -49,12 +49,18 @@ const ProductCard = ({ product, onClose, loading, nextStep }) => {
             d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
           />
         </svg>
-        <button
-          onClick={nextStep}
-          className="py-2 px-2 text-gray-100 font-medium absolute bottom-1 right-2 bg-slate-700 rounded-lg hover:cursor-pointer hover:bg-slate-400"
-        >
-          Continue
-        </button>
+        <div className="absolute bottom-1 right-2">
+          {stepLoad ? (
+            <Loader loading_name={"Next step..."} />
+          ) : (
+            <button
+              onClick={nextStep}
+              className="py-2 px-2 text-gray-100 font-medium absolute bottom-1 right-2 bg-slate-700 rounded-lg hover:cursor-pointer hover:bg-slate-400"
+            >
+              Continue
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

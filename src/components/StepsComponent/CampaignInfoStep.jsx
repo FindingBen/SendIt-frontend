@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Loader from "../LoaderSkeleton/Loader";
 
 const CampaignInfoStep = ({
   nextStep,
@@ -12,15 +13,19 @@ const CampaignInfoStep = ({
     type: "",
     ...initialData, // Initialize with existing data if available
   });
-
+  const [loading, setLoading] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCampaignInfo({ ...campaignInfo, [name]: value });
   };
-  console.log(campaignInfo);
-  const handleNext = () => {
+  const handleNext = (e) => {
+    e.preventDefault();
+    setLoading(true);
     updateFormData({ campaignInfo: campaignInfo });
-    nextStep();
+    setTimeout(() => {
+      setLoading(false);
+      nextStep();
+    }, 1200); // 1.2 seconds for smoother UX
   };
 
   const handleTypeSelect = (type) => {
@@ -174,18 +179,24 @@ const CampaignInfoStep = ({
           </ul>
         </div>
 
-        <button
-          type="submit"
-          onClick={handleNext}
-          disabled={!campaignInfo.name || !campaignInfo.type} // Disable if name or type is empty
-          className={`text-white font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ${
-            !campaignInfo.name || !campaignInfo.type
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
-          }`}
-        >
-          Next
-        </button>
+        {loading ? (
+          <div className="flex items-center justify-center">
+            <Loader loading_name={"Next step..."} />
+          </div>
+        ) : (
+          <button
+            type="submit"
+            onClick={handleNext}
+            disabled={!campaignInfo.name || !campaignInfo.type} // Disable if name or type is empty
+            className={`text-white font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ${
+              !campaignInfo.name || !campaignInfo.type
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
+            }`}
+          >
+            Next
+          </button>
+        )}
       </form>
     </div>
   );

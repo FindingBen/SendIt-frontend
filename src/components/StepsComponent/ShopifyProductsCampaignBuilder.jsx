@@ -12,6 +12,7 @@ const ShopifyProductsCampaignBuilder = ({
   initialData,
   loading,
   productLoading,
+  insightsLoading,
   getInsights,
   insights,
   updateFormData,
@@ -23,8 +24,7 @@ const ShopifyProductsCampaignBuilder = ({
   onProductSelect,
 }) => {
   const [callFetch, setCallFetch] = useState(false);
-  const [prevData, setPrevData] = useState({ ...initialData });
-
+  const [loadingStep, setLoadingStep] = useState(false);
   const handleApiCall = () => {
     apiCall(true);
     setCallFetch(true);
@@ -34,7 +34,11 @@ const ShopifyProductsCampaignBuilder = ({
     updateFormData({
       shopifyProduct: { product: shopifyProduct, insights: insights },
     });
-    nextStep();
+    setLoadingStep(true);
+    setTimeout(() => {
+      setLoadingStep(false);
+      nextStep();
+    }, 1000);
   };
 
   return (
@@ -48,42 +52,15 @@ const ShopifyProductsCampaignBuilder = ({
             <input
               placeholder="Search..."
               onChange={(e) => search(e.target.value)}
-              className="flex-1 min-h-0 rounded-lg p-1 bg-gray-700 absolute right-0"
+              className="flex-1 min-h-0 rounded-lg p-1 bg-gray-700 absolute right-0 text-white"
             />
           </div>
-          {callFetch ? (
-            loading ? (
-              <div className="mx-auto">
-                <Loader loading_name="Loading products..." />
-              </div>
-            ) : (
-              <ShopifyTable
-                products={shopifyProducts}
-                onProductSelect={onProductSelect}
-              />
-            )
-          ) : (
-            <button
-              onClick={handleApiCall}
-              className="px-2 py-1 mx-auto flex flex-row gap-2 rounded-md bg-green-800 text-gray-200"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-4 my-auto"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
-                />
-              </svg>
-              <span className="text-gray-50">Fetch your products</span>
-            </button>
-          )}
+          <ShopifyTable
+            products={shopifyProducts}
+            loadingProducts={loading}
+            handleCall={apiCall}
+            onProductSelect={onProductSelect}
+          />
         </div>
         <div className="flex flex-col p-4 relative">
           <p className="text-xl text-gray-50 font-normal text-start">
@@ -115,26 +92,32 @@ const ShopifyProductsCampaignBuilder = ({
                       ))}
                     </div>
                   ) : (
-                    <button
-                      onClick={() => getInsights(shopifyProduct?.id)}
-                      className="flex flex-row gap-2 py-2 px-2 bg-gray-700 rounded-md text-gray-50 hover:bg-gray-600 cursor-pointer duration-150 w-[20%]"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="size-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
-                        />
-                      </svg>
-                      <span>Get Insights</span>
-                    </button>
+                    <div>
+                      {insightsLoading ? (
+                        <Loader loading_name={"Loading insights..."} />
+                      ) : (
+                        <button
+                          onClick={() => getInsights(shopifyProduct?.id)}
+                          className="flex flex-row gap-2 py-2 px-2 bg-gray-700 rounded-md text-gray-50 hover:bg-gray-600 cursor-pointer duration-150 w-[20%]"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="size-6"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+                            />
+                          </svg>
+                          <span>Get Insights</span>
+                        </button>
+                      )}
+                    </div>
                   )}
                 </div>
               </div>
@@ -149,10 +132,23 @@ const ShopifyProductsCampaignBuilder = ({
               <ProductCard
                 loading={productLoading}
                 nextStep={handleNext}
+                stepLoad={loadingStep}
                 product={shopifyProduct}
                 onClose={onCloseCard}
               />
-            ) : null}
+            ) : (
+              <button
+                type="submit"
+                onClick={prevStep}
+                // disabled={elementContextList.length === 0} // Disable if name or type is empty
+                className={`text-white mx-auto font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center
+             
+                bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
+            `}
+              >
+                Back
+              </button>
+            )}
           </div>
         </div>
       </div>

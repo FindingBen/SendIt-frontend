@@ -18,6 +18,7 @@ const CreateCampaign = () => {
   const [callShopify, setCallShopify] = useState(false);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [loadInsights, setLoadInsights] = useState(false);
   const [search_name, setSearchName] = useState("");
   const [productLoading, setProductLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -28,13 +29,13 @@ const CreateCampaign = () => {
   const { currentShopifyToken, currentShopId } = useRedux();
   const debounceTimeout = useRef();
   useEffect(() => {
-    if (currentShopifyToken && callShopify) {
+    if (currentShopifyToken) {
       // Clear previous debounce
       if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
 
       debounceTimeout.current = setTimeout(() => {
         fetchShopify();
-      }, 400); // 400ms debounce
+      }, 600); // 400ms debounce
     }
     // Cleanup on unmount
     return () => clearTimeout(debounceTimeout.current);
@@ -71,10 +72,6 @@ const CreateCampaign = () => {
     }));
   };
 
-  const handleShopifyCall = (value) => {
-    setCallShopify(value);
-  };
-
   const handleShopifyProduct = (product_id) => {
     getShopifyProduct(product_id);
     setSelected(product_id);
@@ -109,6 +106,7 @@ const CreateCampaign = () => {
   };
 
   const getProductInsights = async (product_id) => {
+    setLoadInsights(true);
     try {
       let response = await axiosInstance.post(
         "/api/shopify_product_insights/",
@@ -118,14 +116,21 @@ const CreateCampaign = () => {
       );
       if (response.status === 201) {
         setInsights(response.data.data);
+        setLoadInsights(false);
       }
-    } catch (error) {}
+    } catch (error) {
+      setLoadInsights(false);
+    }
   };
 
   const handleSearchChange = (search) => {
     setSearchName(search);
   };
-  console.log("SEARCH", search_name);
+
+  const handleApi = () => {
+    fetchShopify();
+  };
+
   const fetchShopify = async () => {
     setLoading(true);
     try {
@@ -182,10 +187,11 @@ const CreateCampaign = () => {
               selected={selected}
               loading={loading}
               productLoading={productLoading}
+              insightsLoading={loadInsights}
               onCloseCard={handleCloseCard}
               insights={insights}
               search={handleSearchChange}
-              apiCall={handleShopifyCall}
+              apiCall={handleApi}
               shopifyProduct={shopifyProductSingle}
               getInsights={handleProductInsights}
               onProductSelect={handleShopifyProduct}

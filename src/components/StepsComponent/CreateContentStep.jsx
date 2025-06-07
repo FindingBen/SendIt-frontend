@@ -9,7 +9,7 @@ import { setState } from "../../redux/reducers/formReducer";
 import { ElementContext } from "../../context/ElementContext";
 import Carousel from "../Carousel/Carousel";
 import { useRedux } from "../../constants/reduxImports";
-import SvgLoader from "../SvgLoader";
+import Loader from "../LoaderSkeleton/Loader";
 import PreviewPanel from "../PreviewComponent/PreviewPanel";
 const CreateContentStep = ({
   prevStep,
@@ -29,6 +29,7 @@ const CreateContentStep = ({
   } = useRedux();
   const [images, setImages] = useState([]);
   const [file, setFiles] = useState([]);
+  const [loadingStep, setLoadingStep] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [displayElItem, setDisplayItems] = useState([]);
   const [elementsList, setElementsList] = useState([]);
@@ -62,9 +63,13 @@ const CreateContentStep = ({
 
   const handleNext = () => {
     updateFormData({ contentElements: elementContextList }); // Explicitly update the contentElements key
-    nextStep();
+    setLoadingStep(true);
+    setTimeout(() => {
+      setLoadingStep(false);
+      nextStep();
+    }, 1000);
   };
-  console.log(elementContextList);
+
   const handleClick = (componentKey) => {
     setSelectedComponent((prevSelectedComponent) =>
       prevSelectedComponent === componentKey ? null : componentKey
@@ -74,7 +79,7 @@ const CreateContentStep = ({
   const handleContextEl = (elementContextList) => {
     setElementsContextList(elementContextList);
   };
-  console.log(elementContextList);
+
   const handleStepList = (messageElements) => {
     setMessageElements(messageElements);
   };
@@ -348,29 +353,37 @@ const CreateContentStep = ({
               {selectedComponent && componentsMap[selectedComponent]}
             </div>
             <div className="flex flex-row gap-2 absolute bottom-10 left-[39%]">
-              <button
-                type="submit"
-                onClick={prevStep}
-                // disabled={elementContextList.length === 0} // Disable if name or type is empty
-                className={`text-white mx-auto font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center
+              {loadingStep ? (
+                <div className="flex items-center justify-center">
+                  <Loader loading_name={"Next step..."} />
+                </div>
+              ) : (
+                <div className="flex flex-row gap-2">
+                  <button
+                    type="submit"
+                    onClick={prevStep}
+                    // disabled={elementContextList.length === 0} // Disable if name or type is empty
+                    className={`text-white mx-auto font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center
              
                 bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
             `}
-              >
-                Back
-              </button>
-              <button
-                type="submit"
-                onClick={handleNext}
-                disabled={elementContextList.length === 0} // Disable if name or type is empty
-                className={`text-white mx-auto font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ${
-                  elementContextList.length === 0
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
-                }`}
-              >
-                Next
-              </button>
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={handleNext}
+                    disabled={elementContextList.length === 0} // Disable if name or type is empty
+                    className={`text-white mx-auto font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ${
+                      elementContextList.length === 0
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                    }`}
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <div className="p-10">
