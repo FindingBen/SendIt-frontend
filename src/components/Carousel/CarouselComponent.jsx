@@ -1,6 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "./CarouselComponent.css";
 
+function getImageSrc(images, current, context) {
+  // 1. Context preview: images is an array of arrays (e.g. [[...]])
+  if (context && Array.isArray(images[0])) {
+    return images[0][current];
+  }
+  // 2. Element created: images is array of objects with image_src, external_url, or image
+  if (images[current] && typeof images[current] === "object") {
+    return (
+      images[current].image_src ||
+      images[current].external_url ||
+      images[current].image ||
+      ""
+    );
+  }
+  // 3. Preview: images is array of strings (blobs or URLs)
+  return images[current];
+}
+
 const CarouselComponent = ({
   images,
   toDelete,
@@ -10,17 +28,15 @@ const CarouselComponent = ({
 }) => {
   const [current, setCurrent] = useState(0);
 
-  // if (!images.length) return null;
+  const prev = () => setCurrent((c) => (c === 0 ? images?.length - 1 : c - 1));
+  const next = () => setCurrent((c) => (c === images?.length - 1 ? 0 : c + 1));
 
-  const prev = () => setCurrent((c) => (c === 0 ? images.length - 1 : c - 1));
-  const next = () => setCurrent((c) => (c === images.length - 1 ? 0 : c + 1));
-  console.log(context);
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrent((c) => (c === images.length - 1 ? 0 : c + 1));
+      setCurrent((c) => (c === images?.length - 1 ? 0 : c + 1));
     }, interval);
     return () => clearInterval(timer);
-  }, [images.length, interval]);
+  }, [images?.length, interval]);
 
   useEffect(() => {
     // Reset to first image if images prop changes
@@ -32,12 +48,8 @@ const CarouselComponent = ({
       className="relative mx-3 flex flex-col items-center justify-center w-[91%]"
       style={{ height: 180, borderRadius: 8 }}
     >
-      {/* X Button */}
-      {/* ... */}
-
-      {/* Image */}
       <img
-        src={context ? images[0][current] : images[current]}
+        src={getImageSrc(images, current, context)}
         alt={`carousel-${current}`}
         style={{
           width: "100%",

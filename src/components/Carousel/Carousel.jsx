@@ -17,6 +17,7 @@ const Carousel = ({
   setComponentState,
   listEl,
   contextList,
+  handleFiles,
   elementList,
   productImages,
 }) => {
@@ -24,6 +25,7 @@ const Carousel = ({
   const { createElement } = useContext(ElementContext);
   const [isCreated, setIsCreated] = useState(listEl);
   const container = document.getElementById("myList");
+  const [file, setFile] = useState();
   const [isMounted, setIsMounted] = useState(true);
 
   const { v4: uuidv4 } = require("uuid");
@@ -92,11 +94,26 @@ const Carousel = ({
   }
 
   const addCarouselObjContext = () => {
-    const imagesToSend = images.filter(Boolean);
+    const imagesToSend = images.filter(Boolean).map((src) => {
+      if (
+        typeof src === "string" &&
+        (src.startsWith("http://") || src.startsWith("https://"))
+      ) {
+        // Shopify/external image
+        return { external_url: src, image_src: src };
+      } else {
+        // File uploaded by user (local path, blob, or server path)
+        return { image: src, image_src: src, file: file };
+      }
+    });
+
+    const imagesToPreview = images.filter(Boolean);
+
     const dataText = {
       id: Math.floor(Math.random() * 1000000),
       unique_button_id: uuidv4(),
-      carousel_images: [imagesToSend],
+      carousel_images: imagesToSend,
+      images_preview: [imagesToPreview],
       element_type: "Carousel",
       users: currentUser,
       order: 0,
@@ -112,7 +129,6 @@ const Carousel = ({
   };
 
   const handleRemoveImage = (idx) => {
-    console.log(idx, "CLICKED");
     setImages((imgs) => {
       const newImgs = [...imgs];
       newImgs[idx] = null;
@@ -124,6 +140,8 @@ const Carousel = ({
     const reader = new FileReader();
     const previewUrl = URL.createObjectURL(file);
     // const displayUrl = previewUrl.replace(/^blob:/, "");
+    handleFiles(file);
+    setFile(file);
     reader.onload = (e) => {
       setImages((imgs) => {
         const newImgs = [...imgs];

@@ -18,7 +18,7 @@ export function SortableItem(props) {
     transform: CSS.Transform.toString(transform),
     transition,
   };
-  console.log(props);
+  console.log(props.itemObject.carousel_images);
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <div
@@ -56,7 +56,11 @@ export function SortableItem(props) {
         )}
         {props.itemObject.element_type === "Carousel" ? (
           <CarouselComponent
-            images={props.itemObject.carousel_images}
+            images={
+              props.itemObject.context
+                ? props.itemObject.images_preview
+                : props.itemObject.carousel_images
+            }
             onDelete={props.onDelete}
             deleteId={props.itemObject.id}
             context={props.itemObject.context}

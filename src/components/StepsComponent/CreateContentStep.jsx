@@ -163,6 +163,7 @@ const CreateContentStep = ({
         listEl={isCreate}
         contextList={handleContextEl}
         elementList={displayElements}
+        handleFiles={handleFiles}
         setComponentState={setComponent}
         productImages={initialData?.product?.images}
       />

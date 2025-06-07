@@ -27,10 +27,21 @@ export const createElements =
           formData.append("text", element.text);
           formData.append("alignment", element.alignment);
         } else if (element.element_type === "Carousel") {
-          formData.append(
-            "carousel_images",
-            JSON.stringify(element.carousel_images[0])
-          );
+          element.carousel_images.forEach((img, idx) => {
+            if (img.image) {
+              // User uploaded image
+              formData.append(`carousel_images[${idx}][image]`, img.file);
+            }
+            if (img.external_url) {
+              // Shopify/external image
+              formData.append(
+                `carousel_images[${idx}][external_url]`,
+                img.external_url
+              );
+            }
+            // Optionally, add order or other fields
+            // formData.append(`carousel_images[${idx}][order]`, idx);
+          });
         } else if (element.element_type === "Button") {
           formData.append("unique_button_id", element.unique_button_id);
           formData.append(
@@ -94,10 +105,21 @@ export const createElements =
               formData.append("survey", elementContext.survey);
               formData.append("question_type", elementContext.question_type);
             } else if (elementContext.element_type === "Carousel") {
-              formData.append(
-                "carousel_images",
-                JSON.stringify(elementContext.carousel_images[0])
-              );
+              elementContext.carousel_images.forEach((img, idx) => {
+                if (img.image) {
+                  // User uploaded image
+                  formData.append(`carousel_images[${idx}][image]`, img.file);
+                }
+                if (img.external_url) {
+                  // Shopify/external image
+                  formData.append(
+                    `carousel_images[${idx}][external_url]`,
+                    img.external_url
+                  );
+                }
+                // Optionally, add order or other fields
+                // formData.append(`carousel_images[${idx}][order]`, idx);
+              });
             }
 
             formData.append("element_type", elementContext.element_type);
@@ -105,7 +127,7 @@ export const createElements =
             formData.append("order", i);
 
             formData.append("message", messageObject);
-            console.log(formData);
+            console.log("DASDASDSD", formData);
             let response = await axiosInstance.post(
               "/api/create_element/",
               formData
