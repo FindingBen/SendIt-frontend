@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { selectCurrentToken } from "../../redux/reducers/authSlice";
-import useAxiosInstance from "../../utils/axiosInstance";
-import { useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
+import Loader from "../../components/LoaderSkeleton/Loader";
 
 const SmsConfirmModal = ({ showModal, onClose, sendConfirm }) => {
   const [show, setShowModal] = useState(showModal);
-  const axiosInstance = useAxiosInstance();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setShowModal(showModal);
@@ -64,20 +61,26 @@ const SmsConfirmModal = ({ showModal, onClose, sendConfirm }) => {
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                  <button
-                    className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                    type="button"
-                    onClick={closeModal}
-                  >
-                    Terminate
-                  </button>
-                  <button
-                    className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                    type="button"
-                    onClick={closeAfterSend}
-                  >
-                    Send
-                  </button>
+                  {loading ? (
+                    <Loader color={true} loading_name={"Loading..."} />
+                  ) : (
+                    <div>
+                      <button
+                        className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        type="button"
+                        onClick={closeModal}
+                      >
+                        Terminate
+                      </button>
+                      <button
+                        className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        type="button"
+                        onClick={closeAfterSend}
+                      >
+                        Send
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

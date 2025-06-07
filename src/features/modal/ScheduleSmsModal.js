@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
 import moment from "moment/moment";
 import Modal from "react-bootstrap/Modal";
-import LoaderComponent from "../../components/LoaderComponent";
+import Loader from "../../components/LoaderSkeleton/Loader";
 
 const ScheduleSmsModal = ({
   showModal,
@@ -18,6 +18,7 @@ const ScheduleSmsModal = ({
   const [show, setShowModal] = useState(showModal);
   const axiosInstance = useAxiosInstance();
   const [error, setError] = useState(errorMsg);
+  const [loading, setLoading] = useState(false);
   const [dateValue, setDateValue] = useState();
 
   useEffect(() => {

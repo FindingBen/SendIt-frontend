@@ -6,10 +6,12 @@ import { useSelector } from "react-redux";
 import { useRedux } from "../../constants/reduxImports";
 import Papa from "papaparse";
 import { useNavigate, useParams } from "react-router-dom";
+import Loader from "../../components/LoaderSkeleton/Loader";
 
 const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
   const [show, setShowModal] = useState(showModalCsv);
   const { currentPackageState } = useRedux();
+  const [loading, setLoading] = useState(false);
   const allowedExtensions = ["csv", "xlsx"];
   const [file, setFile] = useState("");
   const [error, setError] = useState("");
@@ -46,6 +48,7 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
   const handleParse = async () => {
     // If user clicks the parse button without
     // a file we show a error
+    setLoading(true);
     if (!file) return setError("Enter a valid file");
 
     // Initialize a reader which allows user
@@ -63,6 +66,7 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
 
       let response = await axiosInstance.get(`/api/contact_list/${params.id}`);
       if (response.status === 200) {
+        setLoading(false);
         const totalContacts = response.data.contact_list_recipients_nr;
         //console.log(response.data);
         console.log(totalContacts);
@@ -70,12 +74,12 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
           parsedData.length + totalContacts >
           currentPackageState.recipients_limit
         ) {
-          console.log("SS");
           setError(
             "You cannot upload more contacts than your recipient limit."
           );
           return;
         } else {
+          setLoading(false);
           await createContact(parsedData);
         }
 
@@ -88,7 +92,6 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
   };
 
   const createContact = async (parsedData) => {
-    console.log("pass");
     for (const contact of parsedData) {
       try {
         let response = await axiosInstance.post(
@@ -103,9 +106,12 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
         );
 
         if (response.status === 200 || 201) {
+          setLoading(false);
           newContacts((prevContacts) => [...prevContacts, response.data]);
         }
       } catch (error) {
+        console.log(error);
+        setLoading(false);
         setError(error.response.data.detail);
       }
     }
@@ -138,8 +144,8 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
                   <p className="my-4 text-slate-500 text-lg leading-relaxed">
                     Keep in mind that file needs to be in .csv format and
                     columns need to match these names: <b>first_name</b>,{" "}
-                    <b>last_name</b>, <b>phone_number</b> and <b>email</b>,
-                    otherwise it wont work!
+                    <b>last_name</b>, <b>phone</b> and <b>email</b>, otherwise
+                    it wont work!
                   </p>
                   <input
                     className="block w-full text-sm p-1 text-gray-900 border border-gray-300 rounded-xl cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
@@ -154,20 +160,26 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
                       {error}
                     </p>
                   )}
-                  <button
-                    className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                    type="button"
-                    onClick={closeModal}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                    type="button"
-                    onClick={handleParse}
-                  >
-                    Upload
-                  </button>
+                  {loading ? (
+                    <Loader color={true} loading_name={"Loading..."} />
+                  ) : (
+                    <div>
+                      <button
+                        className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        type="button"
+                        onClick={closeModal}
+                      >
+                        Close
+                      </button>
+                      <button
+                        className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        type="button"
+                        onClick={handleParse}
+                      >
+                        Upload
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

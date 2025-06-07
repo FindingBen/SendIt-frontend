@@ -6,12 +6,14 @@ import {
 import useAxiosInstance from "../../utils/axiosInstance";
 import { useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
+import Loader from "../../components/LoaderSkeleton/Loader";
 import { setContactLists } from "../../redux/reducers/contactListReducer";
 import { useRedux } from "../../constants/reduxImports";
 
 const CreateListModal = ({ showModal, onClose, newList }) => {
   const axiosInstance = useAxiosInstance();
   const { dispatch, currentContactList, currentUser } = useRedux();
+  const [loading, setLoading] = useState(false);
   const [show, setShowModal] = useState(showModal);
   const token = useSelector(selectCurrentToken);
   const user = useSelector(selectCurrentUser);
@@ -28,6 +30,7 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
   }, [showModal]);
 
   const addList = async (e) => {
+    setLoading(true);
     try {
       e.preventDefault();
       let response = await axiosInstance.post(
@@ -45,6 +48,7 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
       );
 
       if (response.status === 200 || 201) {
+        setLoading(false);
         const newListData = [...currentContactList.contactLists, response.data];
         newList(newListData);
         dispatch(
@@ -53,9 +57,11 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
         closeModal();
       }
     } catch (error) {
+      setLoading(false);
       setErrorMsg(error);
 
       if (error) {
+        setLoading(false);
         setErrorMsg("This field cannot be empty!");
       }
     }
@@ -99,20 +105,26 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                  <button
-                    className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                    type="button"
-                    onClick={closeModal}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                    type="button"
-                    onClick={addList}
-                  >
-                    Add
-                  </button>
+                  {loading ? (
+                    <Loader color={true} loading_name={"Loading..."} />
+                  ) : (
+                    <div>
+                      <button
+                        className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        type="button"
+                        onClick={closeModal}
+                      >
+                        Close
+                      </button>
+                      <button
+                        className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        type="button"
+                        onClick={addList}
+                      >
+                        Add
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

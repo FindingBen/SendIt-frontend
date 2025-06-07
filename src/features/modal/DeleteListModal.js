@@ -3,6 +3,7 @@ import useAxiosInstance from "../../utils/axiosInstance";
 import Modal from "react-bootstrap/Modal";
 import { setContactLists } from "../../redux/reducers/contactListReducer";
 import { useRedux } from "../../constants/reduxImports";
+import Loader from "../../components/LoaderSkeleton/Loader";
 
 const DeleteListModal = ({
   showModal,
@@ -15,13 +16,14 @@ const DeleteListModal = ({
   const { dispatch, currentUser } = useRedux();
   const [show, setShowModal] = useState(showModal);
   const [listId, setListId] = useState();
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     setShowModal(showModal);
     setListId(contactListId);
   }, [showModal]);
 
   let deleteList = async (e) => {
+    setLoading(true);
     try {
       const data = {
         list_id: listId,
@@ -36,6 +38,7 @@ const DeleteListModal = ({
           "/api/contact_lists/"
         );
         if (updatedListsResponse.status === 200) {
+          setLoading(false);
           // Update local state
           setUpdated();
           closeModal();
@@ -51,6 +54,7 @@ const DeleteListModal = ({
         }
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -104,21 +108,27 @@ const DeleteListModal = ({
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-3 border-t border-solid border-slate-200 rounded-b">
-                  <button
-                    className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                    type="button"
-                    onClick={closeModal}
-                  >
-                    No
-                  </button>
+                  {loading ? (
+                    <Loader color={true} loading_name={"Loading..."} />
+                  ) : (
+                    <div>
+                      <button
+                        className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        type="button"
+                        onClick={closeModal}
+                      >
+                        No
+                      </button>
 
-                  <button
-                    className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                    type="button"
-                    onClick={setFunction}
-                  >
-                    Yes
-                  </button>
+                      <button
+                        className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        type="button"
+                        onClick={setFunction}
+                      >
+                        Yes
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

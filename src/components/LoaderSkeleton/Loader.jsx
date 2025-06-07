@@ -1,10 +1,12 @@
 import React from "react";
 
-const Loader = ({ loading_name }) => {
+const Loader = ({ loading_name, color }) => {
   return (
     <div className="flex items-center gap-2 py-4">
       <svg
-        className="animate-spin h-6 w-6 text-cyan-400"
+        className={`animate-spin h-6 w-6 ${
+          color ? "text-gray-700" : "text-cyan-400"
+        }`}
         fill="none"
         viewBox="0 0 24 24"
       >
@@ -22,7 +24,9 @@ const Loader = ({ loading_name }) => {
           d="M4 12a8 8 0 018-8v8z"
         ></path>
       </svg>
-      <span className="text-gray-200/70">{loading_name}...</span>
+      <span className={`${color ? "text-gray-600" : "text-gray-200/70"}`}>
+        {loading_name}...
+      </span>
     </div>
   );
 };

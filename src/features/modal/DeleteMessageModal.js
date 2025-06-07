@@ -3,6 +3,7 @@ import useAxiosInstance from "../../utils/axiosInstance";
 import Modal from "react-bootstrap/Modal";
 import { setMessages } from "../../redux/reducers/messageReducer";
 import { useRedux } from "../../constants/reduxImports";
+import Loader from "../../components/LoaderSkeleton/Loader";
 
 const DeleteMessageModal = ({
   messageId,
@@ -12,6 +13,7 @@ const DeleteMessageModal = ({
   setUpdated,
 }) => {
   const [show, setShowModal] = useState(showModalDelete);
+  const [loading, setLoading] = useState(false);
   const { dispatch } = useRedux();
   const axiosInstance = useAxiosInstance();
 
@@ -20,19 +22,21 @@ const DeleteMessageModal = ({
   }, [showModalDelete]);
 
   let deleteMessage = async (e) => {
+    setLoading(true);
     //e.preventDefault();
     try {
       let response = await axiosInstance.delete(
         `/api/delete_message/${messageId}`
       );
       if (response.status === 200) {
+        setLoading(false);
         closeModal();
         //setListUpdate(true);
         setUpdated();
         let updatedMessageList = await axiosInstance.get("/api/notes/");
         if (updatedMessageList.status === 200) {
           // Update local state
-
+          setLoading(false);
           setUpdated();
           closeModal();
 
@@ -41,6 +45,7 @@ const DeleteMessageModal = ({
         }
       }
     } catch (error) {
+      setLoading(false);
       console.log("Error deleting message:", error);
     }
   };
@@ -63,7 +68,11 @@ const DeleteMessageModal = ({
             backdrop="static"
             keyboard={false}
           >
-            <div className="relative w-automx-auto max-w-3xl">
+            <div
+              className={`relative w-automx-auto max-w-3xl ${
+                loading ? "opacity-60" : ""
+              }`}
+            >
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
@@ -94,21 +103,27 @@ const DeleteMessageModal = ({
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-3 border-t border-solid border-slate-200 rounded-b">
-                  <button
-                    className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                    type="button"
-                    onClick={closeModal}
-                  >
-                    No
-                  </button>
+                  {loading ? (
+                    <Loader color={true} loading_name={"Deleting.."} />
+                  ) : (
+                    <div>
+                      <button
+                        className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        type="button"
+                        onClick={closeModal}
+                      >
+                        No
+                      </button>
 
-                  <button
-                    className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                    type="button"
-                    onClick={setFunction}
-                  >
-                    Yes
-                  </button>
+                      <button
+                        className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        type="button"
+                        onClick={setFunction}
+                      >
+                        Yes
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { selectCurrentToken } from "../../redux/reducers/authSlice";
-import useAxiosInstance from "../../utils/axiosInstance";
-import { useSelector } from "react-redux";
+import Loader from "../../components/LoaderSkeleton/Loader";
 import Modal from "react-bootstrap/Modal";
+import useAxiosInstance from "../../utils/axiosInstance";
 import "react-international-phone/style.css";
 import { PhoneInput } from "react-international-phone";
 import { useRedux } from "../../constants/reduxImports";
@@ -14,6 +14,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
   const [show, setShowModal] = useState(showModal);
   const [number, setNumber] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
   const params = useParams();
   const [contact, setContact] = useState({
@@ -34,6 +35,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
   }, [showModal]);
 
   const addContact = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const payload = {
@@ -54,6 +56,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
       );
 
       if (response.status === 200 || 201) {
+        setLoading(false);
         newContacts((prevContacts) => [...prevContacts, response.data]);
         dispatch(
           setContactLists({
@@ -64,7 +67,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
         closeModal();
       }
     } catch (error) {
-      console.error(error);
+      setLoading(false);
       if (error.response && error.response.data.details) {
         const errors = error.response.data.details.reduce((acc, err) => {
           const field = err.field[0]; // Get the field name
@@ -73,7 +76,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
         }, {});
         setFieldErrors(errors); // Set field-specific errors
       } else {
-        console.log(error);
+        setLoading(false);
         setErrMsg(error.response.data.detail);
         setFieldErrors();
       }
@@ -172,20 +175,26 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
                       {errMsg}
                     </p>
                   )}
-                  <button
-                    className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                    type="button"
-                    onClick={closeModal}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                    type="button"
-                    onClick={addContact}
-                  >
-                    Add
-                  </button>
+                  {loading ? (
+                    <Loader color={true} loading_name={"Loading..."} />
+                  ) : (
+                    <div>
+                      <button
+                        className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        type="button"
+                        onClick={closeModal}
+                      >
+                        Close
+                      </button>
+                      <button
+                        className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        type="button"
+                        onClick={addContact}
+                      >
+                        Add
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
