@@ -18,7 +18,7 @@ export function SortableItem(props) {
     transform: CSS.Transform.toString(transform),
     transition,
   };
-  console.log(props.itemObject.carousel_images);
+  console.log("OLEEE", props.itemObject);
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <div
@@ -29,6 +29,7 @@ export function SortableItem(props) {
         className=" hover:bg-blue-300 rounded-md transition-colors"
       >
         {props.itemObject.element_type === "Img" ? (
+          typeof props.itemObject.image === "string" &&
           props.itemObject.image.startsWith("blob") ? (
             <ImgList imageUrl={props.itemObject.image} />
           ) : (
