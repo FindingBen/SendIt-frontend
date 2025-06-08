@@ -43,10 +43,11 @@ export const createElements =
             // formData.append(`carousel_images[${idx}][order]`, idx);
           });
         } else if (element.element_type === "Button") {
-          formData.append("unique_button_id", element.unique_button_id);
+          let new_button_id = Math.floor(Math.random() * 1000000);
+          formData.append("unique_button_id", new_button_id);
           formData.append(
             "button_link_track",
-            `https://spp.up.railway.app/sms/sms/button/${element.unique_button_id}`
+            `https://spp.up.railway.app/sms/sms/button/${new_button_id}`
           );
           formData.append("button_title", element.button_title);
           formData.append("button_link", element.button_link);

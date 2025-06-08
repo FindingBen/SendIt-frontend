@@ -72,7 +72,7 @@ const HomePage = () => {
       getNotes();
     }
     //getCampaignStats();
-    refreshAnalytics();
+
     setInitialLoad(false);
   }, [loading, listUpdated, sortOrder]);
 
@@ -81,6 +81,10 @@ const HomePage = () => {
       getNotes();
     }
   }, [totalValues]);
+
+  useEffect(() => {
+    refreshAnalytics();
+  }, []);
 
   const itemsPerPage = 4;
   const totalPages = Math.ceil(currentMessages?.length / itemsPerPage);
