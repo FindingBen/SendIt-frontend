@@ -221,7 +221,7 @@ const Archives = () => {
                                 </svg>
                               </Link>
                             </div>
-                            <div className="border-gray-800 rounded-md border-2 mx-auto my-auto p-0.5 hover:bg-purpleHaze hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+                            {/* <div className="border-gray-800 rounded-md border-2 mx-auto my-auto p-0.5 hover:bg-purpleHaze hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
                               <Link
                                 type="button"
                                 className=""
@@ -242,7 +242,7 @@ const Archives = () => {
                                   />
                                 </svg>
                               </Link>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -324,13 +324,13 @@ const Archives = () => {
           setUpdated={handleListUpdate}
           listUpdated={listUpdated}
         />
-        <ReDraftModal
+        {/* <ReDraftModal
           messageId={messageId}
           showReDraft={showReDraft}
           onClose={() => setShowReDraft(false)}
           setUpdated={handleListUpdate}
           listUpdated={isUpdated}
-        />
+        /> */}
       </div>
     </section>
   );
