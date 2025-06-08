@@ -6,7 +6,7 @@ import SurveyComponent from "./Survey/SurveyComponent";
 import { config } from "../constants/Constants";
 import CarouselComponent from "./Carousel/CarouselComponent";
 
-const ViewList = ({ children }) => {
+const ViewList = ({ children, isArchive }) => {
   const environment = config;
   const BASE_URL = config.url.BASE_URL;
   const [itemsElements, setItems] = useState([children]);

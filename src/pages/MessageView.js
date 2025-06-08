@@ -1,5 +1,6 @@
 import React, { useState, useEffect, memo } from "react";
 import { useParams } from "react-router-dom";
+import List from "../components/List";
 import ViewList from "../components/ViewList";
 import { config } from "../constants/Constants";
 
@@ -31,7 +32,11 @@ const MessageView = () => {
     <section className="min-h-screen bg-white flex-d w-100 items-center justify-center">
       <div className="flex flex-col items-stretch">
         <div className="mx-2 p-2">
-          <ViewList children={elements} style={{ width: "100%" }}></ViewList>
+          <List
+            isArchive={true}
+            children={elements}
+            style={{ width: "100%" }}
+          ></List>
         </div>
       </div>
     </section>

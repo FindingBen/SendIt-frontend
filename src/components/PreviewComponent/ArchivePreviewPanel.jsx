@@ -12,7 +12,11 @@ const ArchivePreviewPanel = ({ elements }) => {
         class={`w-[245px]
          h-[420px] overflow-auto bg-white/80`}
       >
-        <ViewList children={elements} style={{ width: "100%" }}></ViewList>
+        <List
+          isArchive={true}
+          children={elements}
+          style={{ width: "100%" }}
+        ></List>
       </div>
     </div>
   );

@@ -9,7 +9,13 @@ import { SortableItem } from "./SortableItem";
 import useAxiosInstance from "../../src/utils/axiosInstance";
 import { motion } from "framer-motion-3d";
 
-const List = ({ children, alignment, clicked, updatedList }) => {
+const List = ({
+  children,
+  alignment,
+  clicked,
+  updatedList = () => {},
+  isArchive,
+}) => {
   const [itemsElements, setItems] = useState(
     Array.isArray(children) ? children : children ? [children] : []
   );
@@ -90,7 +96,10 @@ const List = ({ children, alignment, clicked, updatedList }) => {
                     itemObject={item}
                     onDelete={toDelete}
                   />
-                  
+
+                  {isArchive ? (
+                    <></>
+                  ) : (
                     <span
                       className="absolute top-1 right-0 cursor-pointer hover:bg-slate-400 rounded-full "
                       onClick={() => toDelete(item?.id)}
@@ -99,7 +108,7 @@ const List = ({ children, alignment, clicked, updatedList }) => {
                         X
                       </p>
                     </span>
-
+                  )}
                 </div>
               ))}
         </ul>
