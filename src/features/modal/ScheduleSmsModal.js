@@ -37,6 +37,18 @@ const ScheduleSmsModal = ({
     setError("");
   };
 
+  const handleSend = async () => {
+    setLoading(true);
+    try {
+      await sendConfirm(); // Make sure sendConfirm returns a Promise!
+      setLoading(false);
+      closeModal();
+    } catch (err) {
+      setLoading(false);
+      setError("Failed to schedule message.");
+    }
+  };
+
   return (
     <>
       {show ? (
@@ -98,6 +110,7 @@ const ScheduleSmsModal = ({
                       onChange={handleDate}
                       dateFormat="yyyy-MM-dd"
                       showTimeSelect
+                      timeIntervals={5}
                       placeholderText="Select date"
                       className="bg-white px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-400 duration-200"
                     ></DatePicker>
@@ -114,20 +127,26 @@ const ScheduleSmsModal = ({
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                  <button
-                    className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                    type="button"
-                    onClick={closeModal}
-                  >
-                    Terminate
-                  </button>
-                  <button
-                    className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                    type="button"
-                    onClick={() => sendConfirm()}
-                  >
-                    Send
-                  </button>
+                  {loading ? (
+                    <Loader color={true} loading_name="Scheduling..." />
+                  ) : (
+                    <div>
+                      <button
+                        className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        type="button"
+                        onClick={closeModal}
+                      >
+                        Terminate
+                      </button>
+                      <button
+                        className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        type="button"
+                        onClick={() => sendConfirm()}
+                      >
+                        Send
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
