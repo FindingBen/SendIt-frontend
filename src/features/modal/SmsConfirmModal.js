@@ -14,9 +14,15 @@ const SmsConfirmModal = ({ showModal, onClose, sendConfirm }) => {
     onClose();
   };
 
-  const closeAfterSend = () => {
-    sendConfirm();
-    onClose();
+  const handleSend = async () => {
+    setLoading(true);
+    try {
+      await sendConfirm(); // Make sure sendConfirm returns a Promise!
+      setLoading(false);
+      closeModal();
+    } catch (err) {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,7 +68,7 @@ const SmsConfirmModal = ({ showModal, onClose, sendConfirm }) => {
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   {loading ? (
-                    <Loader color={true} loading_name={"Loading..."} />
+                    <Loader color={true} loading_name={"Sending..."} />
                   ) : (
                     <div>
                       <button
@@ -75,7 +81,7 @@ const SmsConfirmModal = ({ showModal, onClose, sendConfirm }) => {
                       <button
                         className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
                         type="button"
-                        onClick={closeAfterSend}
+                        onClick={handleSend}
                       >
                         Send
                       </button>

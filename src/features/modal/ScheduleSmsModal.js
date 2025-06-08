@@ -141,7 +141,7 @@ const ScheduleSmsModal = ({
                       <button
                         className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
                         type="button"
-                        onClick={() => sendConfirm()}
+                        onClick={handleSend}
                       >
                         Send
                       </button>
