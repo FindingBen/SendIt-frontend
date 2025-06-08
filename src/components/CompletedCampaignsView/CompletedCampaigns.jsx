@@ -139,12 +139,12 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
           </div>
         </div>
       </div>
-      <div className="bg-mainBlue rounded-lg border-gray-800 border-2 mt-2">
+      {/* <div className="bg-mainBlue rounded-lg border-gray-800 border-2 mt-2">
         <p className="text-white/80 font-semibold">Overall performance</p>
         <div className="items-center justify-center overflow-hidden">
           <HalfPieChart percentage={percentage} />
         </div>
-      </div>
+      </div> */}
       {/* <CampaignStatModal
         onClose={() => setShowStat(false)}
         showModalCamp={showStat}

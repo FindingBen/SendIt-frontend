@@ -5,11 +5,11 @@ const ProgressBar = ({ progress }) => {
     <div class="w-[100%] relative bg-gray-200 rounded-full h-2 2xl:h-4 dark:bg-gray-700 mt-1 mx-1">
       <div
         className={`bg-purple-600 h-2 2xl:h-4 rounded-full dark:bg-purple-500`}
-        style={{ width: progress }}
+        style={{ width: `${progress}%` }}
       ></div>
       <p
         className={`absolute inset-0 bg-purple-600 blur`}
-        style={{ width: progress }}
+        style={{ width: `${progress}%` }}
       ></p>
     </div>
   );
