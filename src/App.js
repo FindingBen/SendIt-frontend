@@ -29,6 +29,7 @@ import ActivationEmailSuccess from "./pages/ActivationEmailSuccess";
 import QRsignUpPage from "./pages/QRsignUpPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import SmsSendingPage from "./pages/SmsSendingPage";
+import WelcomePage from "./pages/WelcomePage";
 
 const TRACKING_ID = "G-FPHE42LL46";
 ReactGA.initialize(TRACKING_ID);
@@ -80,6 +81,7 @@ function App() {
               <Route element={<PrivateRoute />}>
                 <Route path="analytics/:id" element={<AnalyticsPage />} />
                 <Route path="home" element={<HomePage />} />
+                <Route path="welcome" element={<WelcomePage></WelcomePage>} />
                 <Route path="/create_campaign" element={<CreateCampaign />} />
                 <Route path="/sending_flow/:id" element={<SmsSendingPage />} />
                 {/* <Route path="create_note" element={<CreateMessage />} /> */}

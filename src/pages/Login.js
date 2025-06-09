@@ -87,7 +87,7 @@ const Login = () => {
       setPwd("");
       localStorage.setItem("refreshToken", responseData?.refresh);
 
-      navigate("/home");
+      navigate("/welcome");
     } catch (err) {
       console.log(err);
       setLoading(false);

@@ -88,14 +88,14 @@ const Header = () => {
     <div
       className={`flex flex-column items-center relative p-1 text-white bg-navBlue border-r-2 border-gray-800`}
     >
-      <div>
+      <Link to={"/welcome"}>
         <img
           src={require("../assets/noBgLogo.png")}
           width={65}
           alt="logo"
           className="mt-2"
         />
-      </div>
+      </Link>
       <ul id="navList" className="flex flex-column my-auto">
         {menu?.map((Menu, index) => (
           <Link
