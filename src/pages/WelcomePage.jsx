@@ -45,41 +45,58 @@ const WelcomePage = () => {
   return (
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex flex-col">
-        <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
-          <h3 className="2xl:text-3xl lg:text-2xl text-lg font-normal text-left text-white mx-20">
-            Start page
-          </h3>
+        <div className="flex justify-between items-center h-10 bg-navBlue"></div>
 
-          <div className="flex flex-row items-center mx-20">
-            <SmsPill />
-          </div>
-        </div>
-        <hr className="text-white/50"></hr>
-        <div className="flex flex-col gap-3 text-start mt-3 mx-20">
+        <div className="flex flex-col gap-3 text-start mx-20">
           <span className="text-4xl text-gray-200">
             Welcome to Sendperplane
           </span>
+          <div className="flex flex-row gap-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6 text-gray-400"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+              />
+            </svg>
+            <span className="text-gray-400 text-start">
+              This is a welcome page where you can access features with quick
+              links, your notifications, top performing campaigns and related
+              articles we reccomend reading.
+            </span>
+          </div>
         </div>
 
         <div className="grid grid-cols-5 grid-rows-2 gap-4 mt-3 mx-20 h-[100%]">
           <div className="flex flex-col items-start gap-2 bg-mainBlue border-2 border-gray-800 rounded-2xl p-3">
-            <span className="text-gray-200 text-2xl mb-3 font-normal">
+            <span className="text-gray-200 text-2xl mb-3 font-medium">
               Quick links
             </span>
-            <div className="flex flex-col gap-3 items-start text-gray-50">
+            <div className="flex flex-col gap-3 items-start text-gray-50 font-thin">
               <Link to="/create_campaign">Create content</Link>
               <Link to="/contact_lists">Create contact list</Link>
               <Link to={`/account_settings/${currentUser}`}>Settings</Link>
             </div>
           </div>
           <div className="flex flex-col items-start gap-2 border-2 bg-mainBlue border-gray-800 rounded-2xl p-3 col-span-3">
-            <span className="text-gray-200 text-2xl">Notifications</span>
+            <span className="text-gray-200 text-2xl font-medium">
+              Notifications
+            </span>
             <span className="text-gray-300">
               All important notifications will be shown here..
             </span>
           </div>
           <div className="flex flex-col items-start gap-2 bg-mainBlue border-2 border-gray-800 rounded-2xl p-3 col-start-5">
-            <span className="text-gray-200 text-xl">Related Articles</span>
+            <span className="text-gray-200 text-xl font-medium">
+              Related Articles
+            </span>
             <div className="flex flex-col gap-3 items-start text-gray-50 underline">
               <Link
                 to={"https://www.shopify.com/blog/sms-marketing"}
@@ -144,7 +161,7 @@ const WelcomePage = () => {
             </div>
           </div>
           <div className="flex flex-col items-start gap-2 border-2 bg-mainBlue border-gray-800 rounded-2xl p-3 col-span-5 row-start-2">
-            <span className="text-gray-200 text-2xl">
+            <span className="text-gray-200 text-2xl font-medium">
               Top performing campaigns
             </span>
             {campaigns.length > 0 ? (
