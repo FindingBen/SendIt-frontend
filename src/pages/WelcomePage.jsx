@@ -107,13 +107,18 @@ const WelcomePage = () => {
             {loading ? (
               <Loader loading_name={"Loading notifications..."} />
             ) : (
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 w-full">
                 {notifications.map((notification, idx) => (
                   <div
                     key={idx}
-                    className="text-start text-gray-200/70 border-2 border-gray-800 rounded-md p-2"
+                    className="flex justify-between w-full items-center text-start text-gray-200/70 border-b-2 border-gray-800 p-2"
                   >
-                    {notification.message}
+                    <span>{notification?.message}</span>
+                    <span className="ml-4 text-xs text-gray-400 whitespace-nowrap">
+                      {notification?.created_at
+                        ? new Date(notification.created_at).toLocaleString()
+                        : ""}
+                    </span>
                   </div>
                 ))}
               </div>
