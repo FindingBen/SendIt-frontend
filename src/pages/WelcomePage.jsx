@@ -4,13 +4,14 @@ import SmsPill from "../components/SmsPill/SmsPill";
 import { useRedux } from "../constants/reduxImports";
 import useAxiosInstance from "../utils/axiosInstance";
 import { motion } from "framer-motion-3d";
+import Loader from "../components/LoaderSkeleton/Loader";
 import CampaignCard from "../components/MessageCard/CampaignCard";
 const WelcomePage = () => {
   const axiosInstance = useAxiosInstance();
   const [notifications, setNotifications] = useState([]);
   const [campaigns, setCampaigns] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [loading, setLoading] = useState(false);
   const rowsPerPage = 7;
   const totalPages = Math.ceil(campaigns?.length / rowsPerPage);
 
@@ -21,8 +22,22 @@ const WelcomePage = () => {
 
   useEffect(() => {
     getCampaigns();
+    getNotifications();
   }, []);
 
+  let getNotifications = async () => {
+    setLoading(true);
+    try {
+      let response = await axiosInstance.get("notifications/get_notifications");
+      if (response.status === 200) {
+        setLoading(false);
+        setNotifications(response.data);
+      }
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+  console.log(notifications);
   let getCampaigns = async () => {
     try {
       let response = await axiosInstance.get("sms/campaign-stats/?all=true");
@@ -89,9 +104,20 @@ const WelcomePage = () => {
             <span className="text-gray-200 text-2xl font-medium">
               Notifications
             </span>
-            <span className="text-gray-300">
-              All important notifications will be shown here..
-            </span>
+            {loading ? (
+              <Loader loading_name={"Loading notifications..."} />
+            ) : (
+              <div className="flex flex-col gap-2">
+                {notifications.map((notification, idx) => (
+                  <div
+                    key={idx}
+                    className="text-start text-gray-200/70 border-2 border-gray-800 rounded-md p-2"
+                  >
+                    {notification.message}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <div className="flex flex-col items-start gap-2 bg-mainBlue border-2 border-gray-800 rounded-2xl p-3 col-start-5">
             <span className="text-gray-200 text-xl font-medium">

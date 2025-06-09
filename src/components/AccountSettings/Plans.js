@@ -40,6 +40,7 @@ const Plans = () => {
           currentUser,
         }
       );
+      console.log(response);
       if (response.status === 200) {
         setLoadingStates((prevState) => ({
           ...prevState,
@@ -55,6 +56,7 @@ const Plans = () => {
         // }
       }
     } catch (error) {
+      console.log(error);
       setIsLoading(false);
       setShow(false);
     }
@@ -109,7 +111,6 @@ const Plans = () => {
       setIsLoading(false);
     }
   };
-
 
   const elementsArray = Array.from(
     { length: packagePlan.length },
