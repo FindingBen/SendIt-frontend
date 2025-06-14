@@ -13,7 +13,7 @@ const Checklist = ({
 
   return (
     <div className="border-b-2 border-gray-800">
-      <p className="text-white/50 text-sm text-justify my-2">
+      <p className="text-white/50 text-sm text-justify">
         Make sure all fields are green to utilize the full sms sending
         capabilities! The (*) indicates that fields are rquired!
       </p>

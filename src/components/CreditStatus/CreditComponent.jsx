@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRedux } from "../../constants/reduxImports";
 
-const CreditComponent = ({ smsText, recipientList, currentCredits }) => {
+const CreditComponent = ({ smsText, recipientList, currentCredits, cost }) => {
   const [credit, setNewCredit] = useState();
   const [creditCost, setCreditCost] = useState();
   const [status, setStatus] = useState(true);
@@ -16,7 +16,7 @@ const CreditComponent = ({ smsText, recipientList, currentCredits }) => {
       setStatus(false);
     }
   };
-
+  console.log("CREDIT", cost);
   const calculateCredit = () => {
     if (recipientList?.contact_lenght <= 0 || !recipientList) {
       setNewCredit(0);
@@ -76,7 +76,9 @@ const CreditComponent = ({ smsText, recipientList, currentCredits }) => {
         )}
         <p className="text-gray-200/50">
           Sending this campaign with this recipient list will result in{" "}
-          <span className="text-gray-200 font-semibold">{creditCost}</span>{" "}
+          <span className="text-gray-200 font-semibold">
+            {cost.estimated_credits}
+          </span>{" "}
           credits which will leave you with{" "}
           <span className="font-semibold text-gray-200">{credit} credits</span>{" "}
           in total.
@@ -99,9 +101,7 @@ const CreditComponent = ({ smsText, recipientList, currentCredits }) => {
             />
           </svg>
           <span className="text-normal text-gray-200/50">Recipients:</span>
-          <span className="text-normal text-gray-200">
-            {recipientList?.contact_lenght}
-          </span>
+          <span className="text-normal text-gray-200">{cost?.recipients}</span>
         </div>
         <div className="flex flex-row gap-1 text-start">
           <svg
@@ -119,7 +119,9 @@ const CreditComponent = ({ smsText, recipientList, currentCredits }) => {
             />
           </svg>
           <span className="text-normal text-gray-200/50">Credit cost:</span>
-          <span className="text-normal text-gray-200">{creditCost}</span>
+          <span className="text-normal text-gray-200">
+            {cost?.estimated_credits}
+          </span>
         </div>
         <div className="flex flex-row gap-1 text-start">
           <svg

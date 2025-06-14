@@ -181,7 +181,7 @@ const Login = () => {
                 ) : (
                   <button
                     type="submit"
-                    class="font-normal text-sm inline-flex items-center justify-center px-3 py-2 rounded-xl leading-5 shadow-lg transition duration-150 ease-in-out w-full bg-purpleHaze hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
+                    class="font-normal text-sm inline-flex items-center justify-center px-3 py-2 rounded-xl leading-5 shadow-lg transition duration-150 ease-in-out w-full bg-ngrokBlue hover:bg-indigo-600 text-white focus:outline-none focus-visible:ring-2"
                   >
                     Login
                   </button>

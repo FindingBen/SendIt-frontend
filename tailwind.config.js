@@ -40,6 +40,7 @@ module.exports = {
         lighterMainBlue: "#151530",
         shadowColor: "#06B6D4",
         purpleHaze: "#4937BA",
+        ngrokBlue: "#3e6ff4",
       },
       fontFamily: {
         sfPro: ["SF Pro"],

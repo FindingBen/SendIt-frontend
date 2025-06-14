@@ -3,7 +3,7 @@ import { BeatLoading, BounceLoading } from "respinner";
 
 const LoaderComponent = ({ className = "" }) => {
   return (
-    <BounceLoading gap={5} fill="#2d889d" size={4} className={`${className}`} />
+    <BounceLoading gap={5} fill="#3e6ff4" size={4} className={`${className}`} />
   );
 };
 

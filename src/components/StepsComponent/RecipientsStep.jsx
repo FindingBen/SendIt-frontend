@@ -33,6 +33,7 @@ const RecipientsStep = ({
   const [istext, setIsText] = useState(false);
   const [isName, setIsname] = useState(false);
   const [isLink, setIslink] = useState(false);
+
   const [recipients, setRecipients] = useState([]);
   const BASE = "https://spp.up.railway.app";
   const BASE_URL = "https://spplane.app";
@@ -43,7 +44,7 @@ const RecipientsStep = ({
   useEffect(() => {
     getContactLists();
   }, []);
-
+  console.log("LIST", selectedList);
   useEffect(() => {
     if (!smsText.includes("#Link")) {
       setIslink(false);
@@ -122,7 +123,7 @@ const RecipientsStep = ({
       console.log(error);
     }
   };
-  console.log(sendingOptions);
+
   const handleNext = () => {
     if (!selectedList || selectedList === "Choose") {
       // If no list is selected, set an error
@@ -146,7 +147,6 @@ const RecipientsStep = ({
     if (e.target.value !== "Choose") {
       const recipientData = JSON.parse(e.target.value);
       setRecipients(recipientData);
-
       setSelectedList(recipientData);
       if (recipientData.contact_lenght > 0) {
         setIslist(true);

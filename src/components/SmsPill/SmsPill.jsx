@@ -19,7 +19,7 @@ const SmsPill = () => {
       </div>
       <Link
         to={"/plans/"}
-        className="bg-cyan-700 rounded-md absolute right-2 top-1.5 text-white px-2 hover:cursor-pointer hover:bg-cyan-500"
+        className="bg-ngrokBlue hover:bg-ngrokBlue/50 rounded-md absolute right-2 top-1.5 text-white px-2 hover:cursor-pointer"
       >
         <p className="my-auto mx-auto">Top up</p>
       </Link>

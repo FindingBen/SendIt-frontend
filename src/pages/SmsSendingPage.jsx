@@ -9,6 +9,7 @@ import SmsPill from "../components/SmsPill/SmsPill";
 import CreditComponent from "../components/CreditStatus/CreditComponent";
 import Checklist from "../components/Checklist/Checklist";
 import { Tooltip } from "react-tooltip";
+import Loader from "../components/LoaderSkeleton/Loader";
 
 const SmsSendingPage = () => {
   const axiosInstance = useAxiosInstance();
@@ -30,6 +31,8 @@ const SmsSendingPage = () => {
   const [isName, setIsname] = useState(false);
   const [isLink, setIslink] = useState(false);
   const [recipients, setRecipients] = useState([]);
+  const [finished, setFinished] = useState(false);
+  const [price, setPrice] = useState({});
   const gold_package = process.env.GOLD_PLAN;
   const trial_plan = process.env.TRIAL_PLAN;
   const BASE = "https://spp.up.railway.app";
@@ -41,7 +44,7 @@ const SmsSendingPage = () => {
   useEffect(() => {
     getContactLists();
   }, []);
-  console.log(recipients);
+
   const handleAddLink = () => {
     const linkEmbed = ` #Link `;
     const textarea = document.getElementById("smsTextArea");
@@ -87,6 +90,7 @@ const SmsSendingPage = () => {
     setSmsText(e.target.value);
     if (smsText.length > 5) {
       setIsText(true);
+      setFinished(false);
     } else {
       setIsText(false);
     }
@@ -100,6 +104,24 @@ const SmsSendingPage = () => {
         setContactList(response.data.data);
       }
     } catch (error) {
+      console.log(error);
+    }
+  };
+
+  let getPricing = async () => {
+    setLoading(true);
+    try {
+      const data = { id: recipients["id"], sms_text: smsText };
+      let response = await axiosInstance.post("/sms/vonage_pricing", data);
+      if (response.status === 200) {
+        setLoading(false);
+        setFinished(true);
+        console.log(response);
+        setPrice(response.data);
+      }
+    } catch (error) {
+      setLoading(false);
+      setFinished(false);
       console.log(error);
     }
   };
@@ -140,10 +162,9 @@ const SmsSendingPage = () => {
       if (response.status === 200 || response.status === 201) {
         dispatch(setOperation(true));
         navigate(`/home`);
-      } else {
-        setErrorMessage("Error sending SMS");
       }
     } catch (error) {
+      console.log(error);
       setErrorMessage(error.response?.data?.error || "Error sending SMS");
     }
   };
@@ -211,7 +232,7 @@ const SmsSendingPage = () => {
               />
             </div> */}
 
-              <label className="block mb-2 mt-4 text-normal text-left font-normal text-white ">
+              <label className="block mb-2 mt-4 text-normal text-left font-normal text-white">
                 Select contact list:
               </label>
 
@@ -234,7 +255,11 @@ const SmsSendingPage = () => {
               <br></br>
             </div>
             <div className="flex flex-col gap-3 p-10">
-              <div className="flex flex-row gap-3 relative w-[65%] mb-3">
+              <div
+                className={`flex flex-row gap-3 relative w-[65%] mb-3 ${
+                  islist ? "" : "opacity-25"
+                }`}
+              >
                 <label className="text-lg absolute left-0 font-normal text-left text-white">
                   Sms text
                 </label>
@@ -296,11 +321,42 @@ const SmsSendingPage = () => {
               <textarea
                 id="smsTextArea"
                 maxLength={maxCharacters}
-                className="block p-2.5 h-[100px] w-[65%] text-sm text-gray-800 font-semibold bg-gray-200 rounded-lg border border-gray-300"
-                placeholder="Write your sms here..."
+                disabled={!islist}
+                className={`block p-2.5 h-[100px] w-[65%] text-sm font-semibold rounded-lg border 
+              ${
+                islist
+                  ? "bg-gray-200 text-gray-800 border-gray-300"
+                  : "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-25"
+              }`}
+                placeholder={
+                  islist
+                    ? "Write your SMS here..."
+                    : "Select a list to start typing..."
+                }
                 onChange={handleSms}
                 value={smsText}
-              ></textarea>
+              />
+              {islist && smsText.length > 5 && (
+                <div className="mt-2 w-[65%]">
+                  {loading ? (
+                    <Loader loading_name={"Calculating..."} />
+                  ) : (
+                    <>
+                      {finished ? (
+                        <></>
+                      ) : (
+                        <button
+                          style={{ backgroundColor: "#3e6ff4" }}
+                          onClick={getPricing}
+                          className="w-full px-4 py-2 hover:bg-cyan-600 text-white font-normal rounded-lg shadow"
+                        >
+                          Finish
+                        </button>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
             </div>
             <div className="p-10">
               <Checklist
@@ -310,21 +366,12 @@ const SmsSendingPage = () => {
                 isPersonalized={isName}
               />
             </div>
-
-            {/* {errorMessage && (
-            <div
-              class="mx-5 p-4 mb-4 h-20 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 mt-2"
-              role="alert"
-            >
-              <span class="font-medium">Sms send error!</span> {errorMessage}
-            </div>
-          )} */}
           </div>
           <div className="flex-1 p-10">
             <CreditComponent
-              recipientList={recipients}
               currentCredits={currentSmsPackCount.sms_count}
               smsText={smsText}
+              cost={price}
             />
 
             <div className="flex-1 mt-5">
@@ -336,9 +383,9 @@ const SmsSendingPage = () => {
                   onClick={() => {
                     setShow(true);
                   }}
-                  disabled={smsText.length === 0 || !recipients}
+                  disabled={smsText.length <= 5 || !recipients || !finished}
                   className={`sms-button-style ${
-                    smsText.length === 0 || !recipients
+                    smsText.length <= 5 || !recipients || !finished
                       ? "opacity-50 cursor-not-allowed"
                       : "hover:bg-slate-400/40"
                   }`}
@@ -349,7 +396,7 @@ const SmsSendingPage = () => {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="size-10 text-cyan-700 mx-auto"
+                    className="size-10 text-ngrokBlue mx-auto"
                   >
                     <path
                       stroke-linecap="round"
@@ -361,9 +408,9 @@ const SmsSendingPage = () => {
                 </button>
                 <button
                   onClick={() => setShowSchedule(true)}
-                  disabled={smsText.length === 0 || recipients.length === 0}
+                  disabled={smsText.length <= 5 || !recipients || !finished}
                   className={`sms-button-style ${
-                    smsText.length === 0 || !recipients
+                    smsText.length <= 5 || !recipients || !finished
                       ? "opacity-50 cursor-not-allowed"
                       : "hover:bg-slate-400/40"
                   }`}
@@ -374,7 +421,7 @@ const SmsSendingPage = () => {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="size-10 text-cyan-700 mx-auto"
+                    className="size-10 text-ngrokBlue mx-auto"
                   >
                     <path
                       stroke-linecap="round"
@@ -388,6 +435,30 @@ const SmsSendingPage = () => {
                   </label>
                 </button>
               </div>
+              {errorMessage && (
+                <div
+                  class="mx-5 p-4 mb-4 h-20 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 mt-2 relative"
+                  role="alert"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="size-6 absolute top-2 right-2 text-white hover:text-gray-400 cursor-pointer hover:bg-gray-400 rounded-lg"
+                    onClick={() => setErrorMessage()}
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
+                  <span class="font-medium">Sms send error!</span>{" "}
+                  {errorMessage}
+                </div>
+              )}
             </div>
           </div>
         </div>
