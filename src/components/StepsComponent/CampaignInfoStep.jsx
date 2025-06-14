@@ -69,7 +69,7 @@ const CampaignInfoStep = ({
               <li
                 className={`w-full border-b transition delay-75 sm:border-b-0 sm:border-r  ${
                   campaignInfo.campaignContent === "Shopify"
-                    ? "bg-cyan-600 border-l rounded-md"
+                    ? "bg-ngrokBlue border-l rounded-md"
                     : "text-gray-900"
                 }`}
               >
@@ -94,7 +94,7 @@ const CampaignInfoStep = ({
               <li
                 className={`w-full border-b border-gray-200 sm:border-b-0 transition delay-75 ${
                   campaignInfo.campaignContent === "Custom"
-                    ? "bg-cyan-600 border-r rounded-md text-white"
+                    ? "bg-ngrokBlue border-r rounded-md text-white"
                     : "text-gray-900"
                 }`}
               >
@@ -129,7 +129,7 @@ const CampaignInfoStep = ({
             <li
               className={`w-full border-b transition delay-75 sm:border-b-0  ${
                 campaignInfo.type === "Promotional"
-                  ? "bg-cyan-600 border-l rounded-md"
+                  ? "bg-ngrokBlue border-l rounded-md"
                   : "text-gray-900"
               }`}
             >
@@ -154,7 +154,7 @@ const CampaignInfoStep = ({
             <li
               className={`w-full border-b border-gray-200 sm:border-b-0 transition delay-75 sm:border-r ${
                 campaignInfo.type === "Notification"
-                  ? "bg-cyan-600 border-r rounded-md text-white"
+                  ? "bg-ngrokBlue border-r rounded-md text-white"
                   : "text-gray-900"
               }`}
             >
@@ -191,7 +191,7 @@ const CampaignInfoStep = ({
             className={`text-white font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ${
               !campaignInfo.name || !campaignInfo.type
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-cyan-700 hover:bg-cyan-400 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                : "bg-ngrokBlue hover:bg-ngrokBlue/70 focus:ring-4 focus:outline-none focus:ring-blue-300"
             }`}
           >
             Next

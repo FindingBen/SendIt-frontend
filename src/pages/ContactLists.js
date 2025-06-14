@@ -152,7 +152,7 @@ const ContactList = () => {
                     disabled={!canAddNewList()}
                     onClick={handleModal}
                     className={`px-2 py-1 2xl:px-3 2xl:py-2 mr-5 text-white font-normal text-sm 2xl:text-lg cursor-pointer ${
-                      canAddNewList() ? "bg-cyan-700" : "bg-gray-500"
+                      canAddNewList() ? "bg-ngrokBlue" : "bg-gray-500"
                     } rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4`}
                   >
                     Create list
@@ -217,7 +217,7 @@ const ContactList = () => {
                               <div>{recipients}</div>
                             )}
                             <div className="flex flex-row mx-16 gap-3">
-                              <div className="rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-600 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+                              <div className="rounded-md mx-auto my-auto p-0.5 hover:bg-ngrokBlue cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
                                 <Link
                                   type="button"
                                   to={`/contact_list/${conList.id}`}
@@ -243,7 +243,7 @@ const ContactList = () => {
                                   </svg>
                                 </Link>
                               </div>
-                              <div className="rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-600 hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+                              <div className="rounded-md mx-auto my-auto p-0.5 hover:bg-ngrokBlue hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
                                 <button
                                   type="button"
                                   onClick={() => deleteList(conList.id)}
@@ -291,11 +291,11 @@ const ContactList = () => {
                   </p>
                   <div class="w-[50%] relative bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3">
                     <div
-                      className={`bg-cyan-600 h-3 rounded-full dark:bg-cyan-500`}
+                      className={`bg-ngrokBlue h-3 rounded-full dark:bg-cyan-500`}
                       style={{ width: contactListsPercentages + "%" }}
                     ></div>
                     <p
-                      className={`absolute inset-0 bg-cyan-600 blur`}
+                      className={`absolute inset-0 bg-ngrokBlue blur`}
                       style={{ width: contactListsPercentages + "%" }}
                     ></p>
                   </div>
@@ -311,11 +311,11 @@ const ContactList = () => {
                   </p>
                   <div class="w-[50%] bg-gray-200 rounded-full h-3 dark:bg-gray-700 mt-2 ml-3 relative">
                     <div
-                      className={`bg-cyan-600 h-3 rounded-full dark:bg-cyan-500`}
+                      className={`bg-ngrokBlue h-3 rounded-full dark:bg-cyan-500`}
                       style={{ width: recipientsPercentages + "%" }}
                     ></div>
                     <p
-                      className={`absolute inset-0 bg-cyan-600 blur`}
+                      className={`absolute inset-0 bg-ngrokBlue blur`}
                       style={{ width: recipientsPercentages + "%" }}
                     ></p>
                   </div>

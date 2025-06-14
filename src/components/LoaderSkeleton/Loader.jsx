@@ -5,7 +5,7 @@ const Loader = ({ loading_name, color }) => {
     <div className="flex items-center gap-2 py-4">
       <svg
         className={`animate-spin h-6 w-6 ${
-          color ? "text-gray-700" : "text-cyan-400"
+          color ? "text-gray-700" : "text-ngrokBlue"
         }`}
         fill="none"
         viewBox="0 0 24 24"

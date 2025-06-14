@@ -382,7 +382,7 @@ const RegisterPage = () => {
                   ) : (
                     <button
                       type="submit"
-                      class="font-normal text-sm w-28 mb-3 text-smitems-center justify-center px-3 py-2 rounded-xl transition duration-150 ease-in-out bg-purpleHaze hover:bg-indigo-600 text-white"
+                      class="font-normal text-sm w-28 mb-3 text-smitems-center justify-center px-3 py-2 rounded-xl transition duration-150 ease-in-out bg-ngrokBlue hover:bg-ngrokBlue/70 text-white"
                     >
                       Register
                     </button>
