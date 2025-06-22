@@ -4,6 +4,7 @@ import ContactLists from "./iconComponents/ContactLists";
 import AccountIcon from "./iconComponents/AccountIcon";
 import ArchiveIcon from "./iconComponents/ArchiveIcon";
 import PurchaseIcon from "./iconComponents/PurchaseIcon";
+import Dashboard from "./iconComponents/Dashboard";
 
 export const menu = [
   {
@@ -14,30 +15,36 @@ export const menu = [
   },
   {
     id: 2,
+    element: <Dashboard />,
+    title: "Dashboard",
+    location: "/dashboard",
+  },
+  {
+    id: 3,
     element: <CreateIcon />,
     title: "Create",
     location: "/create_campaign/",
   },
   {
-    id: 3,
+    id: 4,
     element: <ContactLists />,
     title: "Contacts",
     location: "/contact_lists/",
   },
   {
-    id: 4,
+    id: 5,
     element: <AccountIcon />,
     title: "Account",
     location: "/account_settings/",
   },
   {
-    id: 5,
+    id: 6,
     element: <PurchaseIcon />,
     title: "Purchase",
     location: "/purchase_history",
   },
   {
-    id: 6,
+    id: 7,
     element: <ArchiveIcon />,
     title: "Archives",
     location: "/archive/",

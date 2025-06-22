@@ -41,11 +41,14 @@ module.exports = {
         shadowColor: "#06B6D4",
         purpleHaze: "#4937BA",
         ngrokBlue: "#3e6ff4",
+        ngrokGray: "#23253a",
+        ngrokDark: "#151530",
       },
       fontFamily: {
         sfPro: ["SF Pro"],
         helv: ["helvetica"],
         sans: ["Sans"],
+        euclid: ["Euclid", "ui-sans-serif", "system-ui"],
       },
       height: {
         "90vh": "90vh",

@@ -80,8 +80,8 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route element={<PrivateRoute />}>
                 <Route path="analytics/:id" element={<AnalyticsPage />} />
-                <Route path="home" element={<HomePage />} />
-                <Route path="welcome" element={<WelcomePage></WelcomePage>} />
+                <Route path="dashboard" element={<HomePage />} />
+                <Route path="home" element={<WelcomePage></WelcomePage>} />
                 <Route path="/create_campaign" element={<CreateCampaign />} />
                 <Route path="/sending_flow/:id" element={<SmsSendingPage />} />
                 {/* <Route path="create_note" element={<CreateMessage />} /> */}

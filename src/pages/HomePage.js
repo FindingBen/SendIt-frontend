@@ -9,7 +9,7 @@ import { config } from "../constants/Constants";
 import { useRedux } from "../constants/reduxImports";
 import { createElements } from "../utils/helpers/createElements";
 import OverallStatistics from "../components/Analytics/OverallStatistics";
-
+import { Link } from "react-router-dom";
 import formatDate from "../utils/helpers/dateFunction";
 
 import CompletedCampaigns from "../components/CompletedCampaignsView/CompletedCampaigns";
@@ -53,6 +53,7 @@ const HomePage = () => {
   const [smsId, setSmsId] = useState();
   const [views, setViews] = useState();
   const [sortOrder, setSortOrder] = useState("");
+  const [searchValue, setSearchValue] = useState("");
   //Date Section
   const today = new Date();
   const yesterday = new Date(today);
@@ -259,134 +260,173 @@ const HomePage = () => {
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex-1 flex flex-col lg:flex-row">
         <div className="flex-1">
-          <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
-            <h3 className="2xl:text-3xl lg:text-2xl text-lg font-normal text-left text-white mx-20">
-              Overview
+          <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-18 bg-navBlue sticky top-0 z-10">
+            <Link to={"/welcome"}>
+              <img
+                src={require("../assets/noBgLogo.png")}
+                width={65}
+                alt="logo"
+                className="mt-2"
+              />
+            </Link>
+            <h3 className="2xl:text-3xl lg:text-2xl text-lg font-normal text-left font-euclid text-white mx-5">
+              Dashboard
             </h3>
 
-            <div className="flex flex-row items-center mx-20">
+            <div class="relative">
+              {searchValue === "" && (
+                <div className="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
+                  <svg
+                    className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
+                  </svg>
+                </div>
+              )}
+              <input
+                type="search"
+                id="default-search"
+                class="block w-full p-2 ps-10 text-sm text-gray-100 border border-gray-300 rounded-lg bg-ngrokGray"
+                required
+              />
+            </div>
+
+            <div className="flex flex-row items-center ml-auto mr-20">
               <SmsPill />
             </div>
           </div>
 
-          <div className="flex flex-row mx-20">
-            <div className="flex flex-col">
-              <OverallStatistics
-                totalValues={totalValues}
-                loaded={initialLoad}
-              />
+          <div className="mx-20">
+            <div className="flex flex-row">
+              <div className="flex flex-col ml-20">
+                <OverallStatistics
+                  totalValues={totalValues}
+                  loaded={initialLoad}
+                />
 
-              {/* table content */}
-              <div
-                className={` bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl mt-4`}
-              >
-                <div className="flex flex-row relative border-b border-gray-800">
-                  <div className="flex flex-col">
-                    <p className="text-white font-normal text-xl xl:text-2xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
-                      Your latest messages
-                    </p>
-                    <p className="text-white/60 text-normal my-3 mt-1 ml-5">
-                      Your draft messages containing the content ready to be
-                      sent out.
-                    </p>
-                  </div>
-                  <button
-                    onClick={handleSortButtonClick}
-                    className="px-2 py-1 2xl:px-4 2xl:py-2 mr-5 text-white font-normal text-sm 2xl:text-lg cursor-pointer bg-ngrokBlue rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4"
-                  >
-                    Sort by date
-                  </button>
-                </div>
-                <div class="flex flex-col">
-                  <div class="grid grid-cols-4 lg:grid-cols-5 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
-                    <div>Name</div>
-                    <div className="md:hidden lg:block">Create at</div>
-                    <div>Analytics</div>
-                    <div>Status</div>
-                    <div>Action</div>
-                  </div>
-                  {currentMessages?.length > 0 && displayedItems ? (
-                    <div>
-                      {displayedItems?.map((message, index) => {
-                        const isLastItem = index === displayedItems?.length - 1;
-                        const evenRow = index % 2 === 0;
-                        return (
-                          <motion.div
-                            className={`text-white font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
-                              evenRow
-                                ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
-                                : "bg-mainBlue"
-                            } ${isLastItem ? "rounded-b-2xl" : ""}`}
-                            key={message.id}
-                          >
-                            <MessageCard
-                              message={message}
-                              archiveMsg={msgArchive}
-                              toggleAnalyticsDrawer={toggleAnalyticsDrawer}
-                              deleteMessage={deleteMessage}
-                              duplicateMessage={duplicateMessage}
-                            />
-                          </motion.div>
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    <div className="flex-1 items-center p-10">
-                      <p className="text-white/50 text-base font-poppins">
-                        Your content will appear here once you create it..
+                {/* table content */}
+                <div
+                  className={` bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl mt-4`}
+                >
+                  <div className="flex flex-row relative border-b border-gray-800">
+                    <div className="flex flex-col">
+                      <p className="text-white font-normal font-euclid text-xl xl:text-2xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
+                        Your latest messages
+                      </p>
+                      <p className="text-white/60 text-normal my-3 mt-1 ml-5">
+                        Your draft messages containing the content ready to be
+                        sent out.
                       </p>
                     </div>
-                  )}
-                </div>
-
-                <DeleteMessageModal
-                  messageId={messageId}
-                  showModalDelete={show}
-                  onClose={() => setShow(false)}
-                  setUpdated={handleListUpdate}
-                  listUpdated={listUpdated}
-                />
-                <ModalComponent modalType={"copy"} showModal={showCopy} />
-              </div>
-              {totalPages > 1 && (
-                <motion.div
-                  initial={
-                    initialLoad
-                      ? { opacity: 0, scale: 0.5 }
-                      : { opacity: 1, scale: 1 }
-                  }
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: 0.8,
-                    ease: [0, 0.41, 0.1, 1.01],
-                  }}
-                  className="bottom-0"
-                >
-                  {Array.from(
-                    { length: totalPages },
-                    (_, index) => index + 1
-                  ).map((page) => (
                     <button
-                      type="button"
-                      className="px-3 py-2 mt-2 bg-navBlue border-2 border-gray-800 hover:bg-cyan-600 ml-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 rounded-lg text-white"
-                      data-mdb-ripple-color="dark"
-                      key={page}
-                      id="paginationBtn"
-                      onClick={() => handlePageChange(page)}
+                      onClick={handleSortButtonClick}
+                      className="px-2 py-1 2xl:px-4 2xl:py-2 mr-5 text-white font-normal text-sm 2xl:text-lg cursor-pointer bg-ngrokBlue rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4"
                     >
-                      {page}
+                      Sort by date
                     </button>
-                  ))}
-                  <br></br>
-                </motion.div>
-              )}
-            </div>
-            <div className="flex-1 relative">
-              <CompletedCampaigns
-                percentage={totalValues?.overall_rate}
-                total_values={totalValues}
-              />
+                  </div>
+                  <div class="flex flex-col">
+                    <div class="grid grid-cols-4 lg:grid-cols-5 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
+                      <div>Name</div>
+                      <div className="md:hidden lg:block">Create at</div>
+                      <div>Analytics</div>
+                      <div>Status</div>
+                      <div>Action</div>
+                    </div>
+                    {currentMessages?.length > 0 && displayedItems ? (
+                      <div>
+                        {displayedItems?.map((message, index) => {
+                          const isLastItem =
+                            index === displayedItems?.length - 1;
+                          const evenRow = index % 2 === 0;
+                          return (
+                            <motion.div
+                              className={`text-white font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
+                                evenRow
+                                  ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
+                                  : "bg-mainBlue"
+                              } ${isLastItem ? "rounded-b-2xl" : ""}`}
+                              key={message.id}
+                            >
+                              <MessageCard
+                                message={message}
+                                archiveMsg={msgArchive}
+                                toggleAnalyticsDrawer={toggleAnalyticsDrawer}
+                                deleteMessage={deleteMessage}
+                                duplicateMessage={duplicateMessage}
+                              />
+                            </motion.div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <div className="flex-1 items-center p-10">
+                        <p className="text-white/50 text-base font-poppins">
+                          Your content will appear here once you create it..
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  <DeleteMessageModal
+                    messageId={messageId}
+                    showModalDelete={show}
+                    onClose={() => setShow(false)}
+                    setUpdated={handleListUpdate}
+                    listUpdated={listUpdated}
+                  />
+                  <ModalComponent modalType={"copy"} showModal={showCopy} />
+                </div>
+                {totalPages > 1 && (
+                  <motion.div
+                    initial={
+                      initialLoad
+                        ? { opacity: 0, scale: 0.5 }
+                        : { opacity: 1, scale: 1 }
+                    }
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: 0.8,
+                      ease: [0, 0.41, 0.1, 1.01],
+                    }}
+                    className="bottom-0"
+                  >
+                    {Array.from(
+                      { length: totalPages },
+                      (_, index) => index + 1
+                    ).map((page) => (
+                      <button
+                        type="button"
+                        className="px-3 py-2 mt-2 bg-navBlue border-2 border-gray-800 hover:bg-cyan-600 ml-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 rounded-lg text-white"
+                        data-mdb-ripple-color="dark"
+                        key={page}
+                        id="paginationBtn"
+                        onClick={() => handlePageChange(page)}
+                      >
+                        {page}
+                      </button>
+                    ))}
+                    <br></br>
+                  </motion.div>
+                )}
+              </div>
+              <div className="flex-1 relative">
+                <CompletedCampaigns
+                  percentage={totalValues?.overall_rate}
+                  total_values={totalValues}
+                />
+              </div>
             </div>
           </div>
         </div>

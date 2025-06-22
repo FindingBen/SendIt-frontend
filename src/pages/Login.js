@@ -40,7 +40,7 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
       });
       const responseData = await response.json();
-      console.log("AAA", responseData);
+
       if (!response.ok) {
         if (
           response.status === 400 &&
@@ -69,7 +69,7 @@ const Login = () => {
       const shop_id = user_info.shopify_id;
       const shopify_domain = user_info.shopify_domain;
       const tokenType = "JWT";
-      console.log(user_info);
+
       dispatch(
         setCredentials({
           ...responseData,
@@ -87,7 +87,7 @@ const Login = () => {
       setPwd("");
       localStorage.setItem("refreshToken", responseData?.refresh);
 
-      navigate("/welcome");
+      navigate("/home");
     } catch (err) {
       console.log(err);
       setLoading(false);

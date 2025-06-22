@@ -18,6 +18,15 @@
   scroll-behavior: smooth;
 }
 
+@font-face {
+  font-family: 'Euclid';
+  src: url('/public/fonts/euclid/EuclidCircularAMedium.ttf') format('ttf'),
+       url('/public/fonts/euclid/EuclidTriangleSemiBold.ttf') format('ttf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 .body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import SmsConfirmModal from "../features/modal/SmsConfirmModal";
 import ScheduleSmsModal from "../features/modal/ScheduleSmsModal";
@@ -204,15 +204,50 @@ const SmsSendingPage = () => {
   return (
     <section className="h-screen overflow-hidden w-100 items-center justify-center">
       <div className="flex flex-col space-y-5 lg:space-y-0">
-        <div className="flex justify-between border-b-2 border-gray-800 items-center h-20 bg-navBlue w-full">
-          <h3 class="xl:text-2xl lg:text-xl text-xl text-left font-normal text-white mx-20">
-            Send sms
+        <div className="flex flex-row items-center border-b-2 border-gray-800 h-18 bg-navBlue sticky top-0 z-10">
+          <Link to={"/welcome"}>
+            <img
+              src={require("../assets/noBgLogo.png")}
+              width={65}
+              alt="logo"
+              className="mt-2"
+            />
+          </Link>
+          <h3 className="2xl:text-3xl lg:text-2xl text-lg font-normal text-left text-white mx-5">
+            Dashboard
           </h3>
-          <div class="flex flex-row items-center mx-20">
+
+          <div class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
+              <svg
+                class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+              </svg>
+            </div>
+            <input
+              type="search"
+              id="default-search"
+              class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required
+            />
+          </div>
+
+          <div className="flex flex-row items-center ml-auto mr-20">
             <SmsPill />
           </div>
         </div>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-2 mx-20">
           <div className="gap-2 bg-mainBlue border-gray-800 border-r-2 relative w-full h-screen">
             <div class="rounded p-10 h-[20%]">
               {/* <div>
