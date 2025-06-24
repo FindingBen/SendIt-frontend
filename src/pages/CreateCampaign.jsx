@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import StepsComponent from "../components/StepsComponent/StepsComponent";
 import CampaignInfoStep from "../components/StepsComponent/CampaignInfoStep";
 import CreateContentStep from "../components/StepsComponent/CreateContentStep";
@@ -6,7 +7,7 @@ import ShopifyProductsCampaignBuilder from "../components/StepsComponent/Shopify
 import ReviewCreateStep from "../components/StepsComponent/ReviewCreateStep";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useRedux } from "../constants/reduxImports";
-
+import SmsPill from "../components/SmsPill/SmsPill";
 const CreateCampaign = () => {
   const axiosInstance = useAxiosInstance();
   const [currentStep, setCurrentStep] = useState(1); // Track the current step
@@ -242,21 +243,35 @@ const CreateCampaign = () => {
   };
   return (
     <section className="h-screen w-full overflow-hidden items-center justify-center">
-      <div className="flex items-center mb-4 h-20 bg-navBlue">
+      {/* <div className="flex items-center mb-4 h-20 bg-navBlue">
         <div className="flex flex-row text-start">
-          <span className="lg:text-xl 2xl:text-2xl gap-4 text-lg text-white font-normal ml-20">
+          <span className="lg:text-xl 2xl:text-2xl gap-2 text-lg text-white font-normal ml-10">
             Create Campaign
           </span>
         </div>
-        <div className="ml-[12%] w-full">
-          <StepsComponent
-            currentStep={currentStep}
-            contentType={shopifyCampaign}
-            completedSteps={completedSteps}
+         <StepsComponent
+          currentStep={currentStep}
+          contentType={shopifyCampaign}
+          completedSteps={completedSteps}
+        /> 
+      </div> */}
+      <div className="flex flex-row items-center border-b-2 border-gray-800 h-18 bg-navBlue sticky top-0 z-10">
+        <Link to={"/welcome"}>
+          <img
+            src={require("../assets/noBgLogo.png")}
+            width={65}
+            alt="logo"
+            className="mt-2"
           />
-        </div>
+        </Link>
+        <h3 className="2xl:text-3xl lg:text-2xl text-lg font-euclid font-normal text-left text-white mx-5"></h3>
+
+        <StepsComponent
+          currentStep={currentStep}
+          contentType={shopifyCampaign}
+          completedSteps={completedSteps}
+        />
       </div>
-      <hr className="text-white/50"></hr>
       <div>{renderStep()}</div>
     </section>
   );

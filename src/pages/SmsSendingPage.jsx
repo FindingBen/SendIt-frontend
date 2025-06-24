@@ -243,11 +243,9 @@ const SmsSendingPage = () => {
             />
           </div>
 
-          <div className="flex flex-row items-center ml-auto mr-20">
-            <SmsPill />
-          </div>
+          <SmsPill />
         </div>
-        <div className="grid grid-cols-2 mx-20">
+        <div className="grid grid-cols-2 mx-44">
           <div className="gap-2 bg-mainBlue border-gray-800 border-r-2 relative w-full h-screen">
             <div class="rounded p-10 h-[20%]">
               {/* <div>

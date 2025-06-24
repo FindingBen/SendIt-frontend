@@ -37,7 +37,6 @@ ReactGA.initialize(TRACKING_ID);
 function App() {
   return (
     <section>
-      <div className="main"></div>
       <Routes>
         <Route
           path="/register/qrr/:id"
@@ -60,65 +59,73 @@ function App() {
       </Routes>
       <div className="App">
         <ElementProvider>
-          <Routes>
-            {/* <Route path="register" element={<DemoPage />} /> */}
-            <Route path="register" element={<RegisterPage />} />
-            <Route path="login" element={<Login></Login>} />
-            {/* <Route
+          <div className="flex-1 w-22">
+            <Routes>
+              {/* <Route path="register" element={<DemoPage />} /> */}
+              <Route path="register" element={<RegisterPage />} />
+              <Route path="login" element={<Login></Login>} />
+              {/* <Route
               path="shopify-login"
               element={<ShopifyLogin></ShopifyLogin>}
             /> */}
-            <Route
-              path="reset_password"
-              element={<PasswordReset></PasswordReset>}
-            />
+              <Route
+                path="reset_password"
+                element={<PasswordReset></PasswordReset>}
+              />
 
-            <Route
-              path="reset_password_confirm/:uid/:token"
-              element={<PasswordResetConfirm></PasswordResetConfirm>}
-            />
-            <Route path="/" element={<Layout />}>
-              <Route element={<PrivateRoute />}>
-                <Route path="analytics/:id" element={<AnalyticsPage />} />
-                <Route path="dashboard" element={<HomePage />} />
-                <Route path="home" element={<WelcomePage></WelcomePage>} />
-                <Route path="/create_campaign" element={<CreateCampaign />} />
-                <Route path="/sending_flow/:id" element={<SmsSendingPage />} />
-                {/* <Route path="create_note" element={<CreateMessage />} /> */}
-                <Route path="purchase_history" element={<PurchaseHistory />} />
-                <Route
-                  path="/contact_lists"
-                  element={<ContactLists></ContactLists>}
-                />
-                <Route
-                  path="/contact_list/:id"
-                  element={<ContactList></ContactList>}
-                />
-                <Route path="/plans/" element={<Plans></Plans>} />
-                <Route
-                  path="/campaign_stats/"
-                  element={<CampaignsStatsPage />}
-                />
-                <Route
-                  path="/edit_message/:id"
-                  element={<EditMessage></EditMessage>}
-                />
-                <Route
-                  path="/account_settings/:id"
-                  element={<UserPage></UserPage>}
-                />
-                <Route path="/archive/" element={<Archives></Archives>} />
-                <Route
-                  path="/stripe/"
-                  element={<SuccessPayment></SuccessPayment>}
-                ></Route>
-                <Route
-                  path="/stripe_cancel/"
-                  element={<CancelPayment></CancelPayment>}
-                ></Route>
+              <Route
+                path="reset_password_confirm/:uid/:token"
+                element={<PasswordResetConfirm></PasswordResetConfirm>}
+              />
+              <Route path="/" element={<Layout />}>
+                <Route element={<PrivateRoute />}>
+                  <Route path="analytics/:id" element={<AnalyticsPage />} />
+                  <Route path="dashboard" element={<HomePage />} />
+                  <Route path="home" element={<WelcomePage></WelcomePage>} />
+                  <Route path="/create_campaign" element={<CreateCampaign />} />
+                  <Route
+                    path="/sending_flow/:id"
+                    element={<SmsSendingPage />}
+                  />
+                  {/* <Route path="create_note" element={<CreateMessage />} /> */}
+                  <Route
+                    path="purchase_history"
+                    element={<PurchaseHistory />}
+                  />
+                  <Route
+                    path="/contact_lists"
+                    element={<ContactLists></ContactLists>}
+                  />
+                  <Route
+                    path="/contact_list/:id"
+                    element={<ContactList></ContactList>}
+                  />
+                  <Route path="/plans/" element={<Plans></Plans>} />
+                  <Route
+                    path="/campaign_stats/"
+                    element={<CampaignsStatsPage />}
+                  />
+                  <Route
+                    path="/edit_message/:id"
+                    element={<EditMessage></EditMessage>}
+                  />
+                  <Route
+                    path="/account_settings/:id"
+                    element={<UserPage></UserPage>}
+                  />
+                  <Route path="/archive/" element={<Archives></Archives>} />
+                  <Route
+                    path="/stripe/"
+                    element={<SuccessPayment></SuccessPayment>}
+                  ></Route>
+                  <Route
+                    path="/stripe_cancel/"
+                    element={<CancelPayment></CancelPayment>}
+                  ></Route>
+                </Route>
               </Route>
-            </Route>
-          </Routes>
+            </Routes>
+          </div>
         </ElementProvider>
       </div>
     </section>

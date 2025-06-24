@@ -41,7 +41,7 @@ const PackageInformation = () => {
           Recipients limit: {currentPackageState?.recipients_limit}
         </p>
         <p className="text-white flex flex-row gap-2 xs:text-sm lg:text-normal 2xl:text-lg font-normal">
-          Use of AI: <p className="text-red-500">No</p>
+          Use of AI: <span className="text-red-500">No</span>
         </p>
         {/* <p className="text-white flex flex-row gap-2 xs:text-sm lg:text-normal 2xl:text-lg font-normal">
           Sms scheduling: <p className="text-red-500">No</p>

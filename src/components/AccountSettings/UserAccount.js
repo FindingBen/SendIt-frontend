@@ -27,7 +27,12 @@ const UserAccount = () => {
     email: "",
   });
 
-  setTimeout(() => setMsg(), 4000);
+  // useEffect(() => {
+  //   if (msg) {
+  //     const timer = setTimeout(() => setMsg(), 4000);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [msg]);
 
   let updateUser = async (e) => {
     setIsLoading(true);
@@ -59,8 +64,8 @@ const UserAccount = () => {
 
   return (
     <div className="flex gap-3">
-      <div className="flex flex-col rounded-2xl p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 border-2 lg:w-[420px] md:h-[535px] lg:h-[535px] xl:w-[500px] xs:w-[330px] 2xl:w-[450px] h-[440px] xl:h-[540px] 2xl:h-[650px]">
-        <h3 class="flex flex-row text-normal lg:text-xl 2xl:text-2xl text-left font-normal text-white relative">
+      <div className="flex flex-col rounded-2xl p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 border-2 lg:w-[320px] md:h-[535px] lg:h-[535px] xl:w-[400px] xs:w-[330px] 2xl:w-[450px] h-[440px] xl:h-[540px] 2xl:h-[650px]">
+        <h3 class="flex flex-row text-normal lg:text-xl 2xl:text-2xl text-left font-euclid text-white relative">
           General settings
           <div className="px-2 py-2 flex flex-row gap-1 bg-cyan-700 text-white xs:text-xs lg:text-normal border-gray-800 rounded-md absolute right-0 top-0 hover:bg-cyan-500 cursor-pointer">
             <p
@@ -75,7 +80,7 @@ const UserAccount = () => {
           <div className="flex flex-row gap-3 relative">
             <label
               for="first_name"
-              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-euclid text-gray-300 dark:text-white"
             >
               First name
             </label>
@@ -96,7 +101,7 @@ const UserAccount = () => {
           <div className="flex flex-row gap-3 mt-3 relative">
             <label
               for="last_name"
-              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-euclid text-gray-300 dark:text-white"
             >
               Last name
             </label>
@@ -118,7 +123,7 @@ const UserAccount = () => {
           <div className="flex flex-row gap-4 mt-3 relative">
             <label
               for="last_name"
-              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-euclid text-gray-300 dark:text-white"
             >
               Username
             </label>
@@ -130,7 +135,7 @@ const UserAccount = () => {
           <div className="flex flex-row gap-4 mt-3 relative">
             <label
               for="email"
-              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-euclid text-gray-300 dark:text-white"
             >
               Email address
             </label>
@@ -145,7 +150,7 @@ const UserAccount = () => {
           <div className="flex flex-row gap-4 mt-3 relative">
             <label
               for="email"
-              className="block mb-2 text-ss xl:text-normal text-left 2xl:text-xl font-normal text-gray-300 dark:text-white"
+              className="block mb-2 text-ss xl:text-normal text-left 2xl:text-xl font-euclid text-gray-300 dark:text-white"
             >
               Account type
             </label>

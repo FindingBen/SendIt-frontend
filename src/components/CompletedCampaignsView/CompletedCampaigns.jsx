@@ -11,12 +11,12 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
 
   return (
     <div
-      className={`absolute right-0 justify-between md:flex flex-col gap-2 ml-11 hidden md:h-[548px] md:w-[350px] xl:h-[548px] xl:w-[410px] 2xl:h-[720px] 2xl:w-[510px] bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 rounded-2xl shadow-lg p-4`}
+      className={`absolute right-0 justify-between md:flex flex-col gap-2 hidden md:h-[548px] md:w-[350px] xl:h-[448px] xl:w-[360px] 2xl:h-[720px] 2xl:w-[510px] bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 rounded-2xl shadow-lg p-4`}
     >
       <div className="mb-3">
         <div className="flex flex-row mb-2">
           <div>
-            <p className="text-white text-xl lg:text-2xl text-start font-normal">
+            <p className="text-white text-xl lg:text-2xl text-start font-euclid">
               Account Analytics
             </p>
           </div>
@@ -39,7 +39,7 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
           </div> */}
         </div>
         <div>
-          <div className="flex flex-row gap-4 mt-4 rounded-lg">
+          <div className="flex flex-row gap-4 mt-4 rounded-lg font-euclid">
             <div className="account-analytics-card">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +61,7 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
               metric={"Sms Deliveribility"}
             />
           </div>
-          <div className="flex flex-row mt-2 gap-4 rounded-lg">
+          <div className="flex flex-row mt-2 gap-4 rounded-lg font-euclid">
             <div className="account-analytics-card">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -83,7 +83,7 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
               metric={"Click Rate"}
             />
           </div>
-          <div className="flex flex-row gap-4 mt-2 w-full rounded-lg">
+          <div className="flex flex-row gap-4 mt-2 w-full rounded-lg font-euclid">
             <div className="account-analytics-card">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +110,7 @@ const CompletedCampaigns = ({ percentage, total_values }) => {
             </div>
             {/* <AnalyticsBarProgress total_values={20} metric={"Bounce Rate"} /> */}
           </div>
-          <div className="flex flex-row gap-4 mt-2 w-full rounded-lg">
+          <div className="flex flex-row gap-4 mt-2 w-full rounded-lg font-euclid">
             <div className="account-analytics-card">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

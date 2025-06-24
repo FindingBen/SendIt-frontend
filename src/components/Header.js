@@ -56,10 +56,9 @@ const Header = () => {
     localStorage.removeItem("refreshToken");
   };
 
-  const handleNavigate = (e) => {
+  const handleNavigate = (e, menuTitle) => {
     const path = e.currentTarget.getAttribute("href");
-    setActiveNav(e.target.value);
-
+    setActiveNav(menuTitle);
     setClickedPath(path);
 
     if (isDirtyRef.current) {
@@ -68,7 +67,6 @@ const Header = () => {
     } else {
       dispatch(setModalState({ show: false }));
       handleConfirmNavigation(path);
-      // Pass the clicked path
     }
   };
 
@@ -80,36 +78,26 @@ const Header = () => {
     dispatch(setEditPage({ isEditFormDirty: false }));
   };
 
-  const detectActiveNav = (title) => {
-    setActiveNav(title);
-  };
-
   return (
     <div
-      className={`flex flex-column items-center fixed top-0 left-0 p-1 text-white bg-navBlue border-r-2 border-gray-800 h-screen overflow-y-auto`}
+      className={`flex flex-column items-center w-44 fixed top-0 left-0 p-1 text-white bg-navBlue border-r-2 border-gray-800 h-screen overflow-y-auto`}
     >
       <ul id="navList" className="flex flex-column my-auto">
         {menu?.map((Menu, index) => (
           <Link
             key={index}
-            onClick={(e) => handleNavigate(e) || detectActiveNav(Menu.title)}
-            to={`${
-              Menu.title === "Account"
-                ? Menu.location + currentUser
-                : Menu.location
-            }`}
-            value={`${Menu.title}`}
+            to={Menu.location}
+            onClick={(e) => handleNavigate(e, Menu.title)}
             className={`flex flex-row rounded-md p-2 cursor-pointer `}
           >
             <div
               className={`flex flex-row gap-2 rounded-md p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 ${
                 activeNav === Menu.title ? "bg-white text-black" : ""
               } text-gray-300 xl:text-sm text-xs items-center gap-x-3 
-              ${Menu.gap ? "mt-9" : "mt-2"} ${
-                index === 0 && "bg-light-white"
-              } `}
+        ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"} `}
             >
-              {Menu.element}
+              <span>{Menu.element}</span>
+              <span>{Menu.title}</span>
             </div>
           </Link>
         ))}
@@ -119,7 +107,7 @@ const Header = () => {
         onClick={handleLogout}
         className="flex rounded-md mr-3 p-2 cursor-pointer xl:w-12 w-10 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 text-gray-300 xl:text-sm text-xs items-center gap-x-3"
       >
-        <div>
+        <div className="flex flex-row gap-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -134,6 +122,7 @@ const Header = () => {
               d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25"
             />
           </svg>
+          Logout
         </div>
       </div>
       <ModalComponent

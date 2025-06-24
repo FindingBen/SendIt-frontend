@@ -179,7 +179,7 @@ const CreateContentStep = ({
     <section className="max-h-screen w-full items-center justify-center">
       <div className="flex flex-col max-h-screen">
         <div className="flex flex-col md:flex-row rounded-2xl h-screen">
-          <div className="flex p-10 max-h-screen gap-2 md:flex-col bg-gradient-to-b from-lighterMainBlue to-mainBlue border-r-2 border-gray-800">
+          <div className="flex p-10 ml-14 max-h-screen gap-2 md:flex-col bg-gradient-to-b from-lighterMainBlue to-mainBlue border-r-2 border-gray-800">
             <span className="text-left text-white text-normal lg:text-lg font-semibold ml-4 md:ml-0">
               Content elements
             </span>

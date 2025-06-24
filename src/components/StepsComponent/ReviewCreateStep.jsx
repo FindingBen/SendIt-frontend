@@ -101,7 +101,7 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
   return (
     <section className="min-h-screen w-100 items-center justify-center">
       <div className="grid grid-cols-3 gap-4">
-        <div className="flex flex-col gap-4 p-3 bg-mainBlue border-gray-800 border-r-2 h-screen">
+        <div className="flex flex-col gap-4 p-3 ml-14 bg-mainBlue border-gray-800 border-r-2 h-screen">
           <div>
             <label
               for="first_name"
@@ -142,7 +142,6 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
           >
             Content Preview
           </label>
-          <hr></hr>
 
           <PreviewPanel
             newLook={"new"}

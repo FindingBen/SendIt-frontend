@@ -44,7 +44,7 @@ const ShopifyProductsCampaignBuilder = ({
   return (
     <section className="max-h-screen w-full items-center justify-center">
       <div className="grid grid-cols-2 grid-rows-1 gap-4 max-h-screen">
-        <div className="flex flex-col gap-5 h-screen bg-gray-900 p-4">
+        <div className="flex flex-col gap-5 h-screen bg-gray-900 p-4 ml-14">
           <div className="flex flex-row relative">
             <p className="text-lg text-gray-50 font-semibold text-start">
               Your active products

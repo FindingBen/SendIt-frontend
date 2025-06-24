@@ -288,7 +288,7 @@
 
 @layer components {
   .account-analytics-card {
-    @apply justify-center lg:h-14 lg:w-14 h-14 w-14 p-1 bg-mainBlue border-2 border-gray-800 rounded-lg;
+    @apply justify-center lg:h-14 lg:w-14 h-14 w-14 p-1 bg-mainBlue border-2 border-gray-800 rounded-lg font-euclid;
   }
 }
 

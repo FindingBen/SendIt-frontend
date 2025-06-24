@@ -71,7 +71,7 @@ const WelcomePage = () => {
             />
           </Link>
           <h3 className="2xl:text-3xl lg:text-2xl text-lg font-euclid font-normal text-left text-white mx-5">
-            Dashboard
+            Sendperplane
           </h3>
 
           <div class="relative">
@@ -104,12 +104,10 @@ const WelcomePage = () => {
             />
           </div>
 
-          <div className="flex flex-row items-center ml-auto mr-20">
-            <SmsPill />
-          </div>
+          <SmsPill />
         </div>
 
-        <div className="mx-20">
+        <div className="mx-44">
           <div className="flex flex-col gap-3 text-start mx-20">
             <span className="text-4xl text-gray-200 font-euclid">
               Welcome to Sendperplane
@@ -218,10 +216,10 @@ const WelcomePage = () => {
                   </svg>
                 </Link>
                 <Link
-                  to="https://nytlicensing.com/latest/marketing/most-effective-content-marketing-tactics/"
+                  to="https://sendperplane.com/"
                   className="flex flex-row gap-1"
                 >
-                  <span>Showcase content</span>
+                  <span>Sendperplane</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -239,7 +237,7 @@ const WelcomePage = () => {
                 </Link>
               </div>
             </div>
-            <div className="flex flex-col items-start gap-2 border-2 bg-mainBlue border-gray-800 rounded-2xl p-3 col-span-5 row-start-2">
+            <div className="flex flex-col items-start gap-2 border-2 mb-5 bg-mainBlue border-gray-800 rounded-2xl p-3 col-span-5 row-start-2">
               <span className="text-gray-200 text-2xl font-medium">
                 Top performing campaigns
               </span>

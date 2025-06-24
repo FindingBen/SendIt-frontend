@@ -33,18 +33,12 @@ export const menu = [
   },
   {
     id: 5,
-    element: <AccountIcon />,
-    title: "Account",
-    location: "/account_settings/",
-  },
-  {
-    id: 6,
     element: <PurchaseIcon />,
     title: "Purchase",
     location: "/purchase_history",
   },
   {
-    id: 7,
+    id: 6,
     element: <ArchiveIcon />,
     title: "Archives",
     location: "/archive/",

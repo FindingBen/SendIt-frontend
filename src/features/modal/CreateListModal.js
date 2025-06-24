@@ -81,13 +81,13 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
             backdrop="static"
             keyboard={false}
           >
-            <div className="relative w-auto max-w-3xl rounded-2xl">
+            <div className="relative w-auto max-w-3xl bg-ngrokGray">
               {/*content*/}
-              <div className="border-0 rounded-2xl shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="relative flex flex-col rounded-xl w-full bg-ngrokGray">
                 {/*header*/}
-                <Modal.Header closeButton>
-                  <Modal.Title>Create a new list</Modal.Title>
-                </Modal.Header>
+                <span className="text-2xl font-euclid p-6 text-slate-400">
+                  Create a new list
+                </span>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <p className="my-4 text-slate-500 text-lg leading-relaxed">
@@ -97,31 +97,31 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
                     <p className="text-sm text-red-500">{errorMsg}</p>
                   )}
                   <input
-                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-2xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-2xl block w-full p-2.5"
                     name="text"
                     placeholder="List name"
                     onChange={handleListName}
                   />
                 </div>
                 {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                <div className="flex items-center justify-end p-6 border-t border-2 border-gray-800">
                   {loading ? (
                     <Loader color={true} loading_name={"Loading..."} />
                   ) : (
-                    <div>
+                    <div className="flex flex-row gap-2">
                       <button
-                        className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        className="bg-red-700 hover:bg-gray-400 text-white font-euclid py-2 px-4 rounded-md duration-200"
                         type="button"
                         onClick={closeModal}
                       >
                         Close
                       </button>
                       <button
-                        className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        className="bg-ngrokBlue hover:bg-blue-400 text-white font-euclid py-2 px-4 rounded-md duration-200"
                         type="button"
                         onClick={addList}
                       >
-                        Add
+                        Create
                       </button>
                     </div>
                   )}

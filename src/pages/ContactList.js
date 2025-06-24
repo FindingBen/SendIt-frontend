@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import CsvModal from "../features/modal/CsvModal";
 import AddContactModal from "../features/modal/AddContactModal";
@@ -10,6 +10,7 @@ import { useRedux } from "../constants/reduxImports";
 import ShowQrModal from "../features/modal/ShowQrModal";
 import SvgLoader from "../components/SvgLoader";
 import LoaderSkeleton from "../components/LoaderSkeleton/LoaderSkeleton";
+import SmsPill from "../components/SmsPill/SmsPill";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
@@ -32,7 +33,8 @@ const ContactList = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [sortOrder, setSortOrder] = useState("first_name");
-  const [editableRowId, setEditableRowId] = useState(null); // Track the row being edited
+  const [editableRowId, setEditableRowId] = useState(null);
+  const [searchValue, setSearchValue] = useState(""); // Track the row being edited
   const [editData, setEditData] = useState({});
   const [search_name, setSearchName] = useState("");
   const params = useParams();
@@ -230,13 +232,76 @@ const ContactList = () => {
   };
   console.log(paginatedData);
   return (
-    <section className="min-h-screen w-100 items-center justify-center">
-      <div className="flex-1 flex flex-col space-y-5 lg:flex-row">
+    <section className="min-h-screen max-w-screen items-center justify-center">
+      <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-18 bg-navBlue sticky top-0 z-10">
+        <Link to={"/welcome"}>
+          <img
+            src={require("../assets/noBgLogo.png")}
+            width={65}
+            alt="logo"
+            className="mt-2"
+          />
+        </Link>
+        <h3 className="2xl:text-3xl lg:text-2xl text-lg font-euclid font-normal text-left text-white mx-5">
+          Sendperplane
+        </h3>
+
+        <div class="relative">
+          {searchValue === "" && (
+            <div className="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
+              <svg
+                className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+              </svg>
+            </div>
+          )}
+          <input
+            type="search"
+            id="default-search"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            className="block w-full p-2 ps-10 text-sm text-gray-100 border border-gray-300 rounded-lg bg-ngrokGray"
+            required
+          />
+        </div>
+
+        <SmsPill />
+      </div>
+      <div className="flex-1 flex flex-col space-y-5 lg:flex-row mx-44">
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
-            <h3 class="xl:text-2xl text-xl font-normal text-left text-white mx-20">
-              Contacts
-            </h3>
+            <div className="flex flex-row gap-2 mx-20">
+              <Link to={"/contact_lists"}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="size-6 text-white mt-2 hover:cursor-pointer"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+                  />
+                </svg>
+              </Link>
+              <h3 class="xl:text-2xl text-xl font-euclid text-left text-white">
+                Contacts
+              </h3>
+            </div>
             <div class="items-start shadow-md mx-20">
               <div className="inline-flex mt-1 gap-2">
                 <button
@@ -335,14 +400,14 @@ const ContactList = () => {
                   ) : (
                     <>
                       <button
-                        className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-normal duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
+                        className={`px-2 text-normal font-euclid 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-ngrokBlue font-normal duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
                   `}
                         onClick={handleSortByName}
                       >
                         Sort by Name
                       </button>
                       <button
-                        className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-normal duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray`}
+                        className={`px-2 text-normal font-euclid 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-ngrokBlue font-normal duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray`}
                         onClick={
                           currentTokenType === "Shopify"
                             ? handleSortByDateCreatedShopify
@@ -384,7 +449,7 @@ const ContactList = () => {
                 </div>
 
                 <div>
-                  <div class="grid grid-cols-5 gap-4 grid-headers text-white/50 font-semibold text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
+                  <div class="grid grid-cols-5 gap-4 grid-headers text-white/50 font-euclid text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
                     <div>First Name</div>
                     <div>Last Name</div>
                     <div>Email</div>
@@ -408,10 +473,10 @@ const ContactList = () => {
                                 : "bg-mainBlue text-white"
                             } ${
                               isLastItem ? "rounded-b-2xl border-none" : ""
-                            } font-light`}
+                            } font-euclid`}
                           >
                             <div
-                              className={`grid grid-cols-5 font-normal 2xl:text-lg gap-4 p-2 border-b-2 border-gray-800 ${
+                              className={`grid grid-cols-5 font-euclid 2xl:text-lg gap-4 p-2 border-b-2 border-gray-800 ${
                                 isLastItem
                                   ? "rounded-b-2xl 2xl:text-lg border-none"
                                   : ""
