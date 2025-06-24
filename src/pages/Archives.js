@@ -3,11 +3,10 @@ import SmsPill from "../components/SmsPill/SmsPill";
 import { useRedux } from "../constants/reduxImports";
 import useAxiosInstance from "../utils/axiosInstance";
 import { motion } from "framer-motion";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { config } from "../constants/Constants";
 import ArchivePreviewPanel from "../components/PreviewComponent/ArchivePreviewPanel";
 import DeleteMessageModal from "../features/modal/DeleteMessageModal";
-import { Link } from "react-router-dom";
 import ReDraftModal from "../features/modal/ReDraftModal";
 import { setArchiveState } from "../redux/reducers/archiveReducer";
 
@@ -24,6 +23,7 @@ const Archives = () => {
   const [show, setShow] = useState(false);
   const [search_name, setSearchName] = useState("");
   const [showReDraft, setShowReDraft] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const [messageId, setMessageId] = useState();
   const [listUpdated, setListUpdated] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
@@ -104,16 +104,57 @@ const Archives = () => {
 
   return (
     <section className="min-h-screen w-full items-center justify-center">
-      <div className="flex-1 flex flex-col lg:flex-row">
+      <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-18 bg-navBlue sticky top-0 z-10">
+        <Link to={"/welcome"}>
+          <img
+            src={require("../assets/noBgLogo.png")}
+            width={65}
+            alt="logo"
+            className="mt-2"
+          />
+        </Link>
+        <h3 className="2xl:text-3xl lg:text-2xl text-lg font-euclid font-normal text-left text-white mx-5">
+          Sendperplane
+        </h3>
+
+        <div class="relative">
+          {searchValue === "" && (
+            <div className="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
+              <svg
+                className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+              </svg>
+            </div>
+          )}
+          <input
+            type="search"
+            id="default-search"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            className="block w-full p-2 ps-10 text-sm text-gray-100 border-2 border-gray-700 rounded-lg bg-ngrokGray"
+            required
+          />
+        </div>
+
+        <SmsPill />
+      </div>
+      <div className="flex-1 flex flex-col lg:flex-row mx-44">
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
-            <h3 class="xl:text-2xl lg:text-xl text-lg font-normal text-left text-white mx-20">
+            <h3 class="xl:text-2xl lg:text-xl text-lg font-euclid text-left text-white mx-20">
               Archives
             </h3>
-
-            <div class="flex flex-row items-center mx-20">
-              <SmsPill />
-            </div>
           </div>
           <div className="w-full">
             <div
@@ -124,7 +165,7 @@ const Archives = () => {
               <div className="flex flex-row space-x-2 p-2 border-b border-gray-800">
                 <button
                   onClick={handleSortByDate}
-                  className="px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-cyan-500 font-normal duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray"
+                  className="px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-ngrokBlue font-normal duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray"
                 >
                   Sort by date
                 </button>

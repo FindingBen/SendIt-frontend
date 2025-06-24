@@ -168,7 +168,7 @@ const ContactList = () => {
             id="default-search"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            className="block w-full p-2 ps-10 text-sm text-gray-100 border border-gray-300 rounded-lg bg-ngrokGray"
+            className="block w-full p-2 ps-10 text-sm text-gray-100 border-2 border-gray-700 rounded-lg bg-ngrokGray"
             required
           />
         </div>

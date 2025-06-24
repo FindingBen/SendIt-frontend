@@ -295,7 +295,7 @@ const HomePage = () => {
             <input
               type="search"
               id="default-search"
-              class="block w-full p-2 ps-10 text-sm text-gray-100 border border-gray-300 rounded-lg bg-ngrokGray"
+              class="block w-full p-2 ps-10 text-sm text-gray-100 border-2 border-gray-700 rounded-lg bg-ngrokGray"
               required
             />
           </div>
