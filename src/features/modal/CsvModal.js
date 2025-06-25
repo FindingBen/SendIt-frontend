@@ -134,14 +134,14 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
           >
             <div className="relative w-auto mx-auto max-w-3xl">
               {/*content*/}
-              <div className="border-0 rounded-xl shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="relative flex flex-col w-full bg-ngrokGray outline-none focus:outline-none">
                 {/*header*/}
-                <Modal.Header closeButton>
-                  <Modal.Title>Upload a csv file</Modal.Title>
-                </Modal.Header>
+                <span className="text-2xl font-euclid p-6 text-slate-400">
+                  Upload contacts
+                </span>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                  <p className="my-4 text-slate-500 text-lg font-euclid leading-relaxed">
                     Keep in mind that file needs to be in .csv format and
                     columns need to match these names: <b>first_name</b>,{" "}
                     <b>last_name</b>, <b>phone</b> and <b>email</b>, otherwise
@@ -163,16 +163,16 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
                   {loading ? (
                     <Loader color={true} loading_name={"Loading..."} />
                   ) : (
-                    <div>
+                    <div className="flex flex-row gap-2">
                       <button
-                        className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        className="bg-red-700 hover:bg-gray-400 text-white font-euclid py-2 px-4 rounded-md duration-200"
                         type="button"
                         onClick={closeModal}
                       >
                         Close
                       </button>
                       <button
-                        className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        className="bg-ngrokBlue hover:bg-blue-400 text-white font-euclid py-2 px-4 rounded-md duration-200"
                         type="button"
                         onClick={handleParse}
                       >

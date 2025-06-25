@@ -61,30 +61,28 @@ const ScheduleSmsModal = ({
           >
             <div className="relative w-auto mx-auto max-w-3xl">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="relative flex flex-col w-full bg-ngrokGray">
                 {/*header*/}
-                <Modal.Header closeButton>
-                  <Modal.Title>
-                    <div className="flex flex-row">
-                      <p>Scheduling message confirmation!</p>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="w-6 h-6 ml-2 mt-2"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </div>
-                  </Modal.Title>
-                </Modal.Header>
+
+                <div className="flex flex-row text-2xl font-euclid p-6 text-slate-400">
+                  <p>Scheduling message confirmation!</p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-6 h-6 ml-2 mt-2"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                  <p className="my-4 text-slate-500 text-lg leading-relaxed font-euclid">
                     You are about to schedule the sms message to multiple phone
                     devices, choose date and time then press Send.
                   </p>
@@ -95,7 +93,7 @@ const ScheduleSmsModal = ({
                       viewBox="0 0 24 24"
                       stroke-width="1.5"
                       stroke="currentColor"
-                      class="w-7 h-7 mt-1.5 mr-2"
+                      class="w-7 h-7 mt-1.5 mr-2 text-white/75"
                     >
                       <path
                         stroke-linecap="round"
@@ -115,8 +113,8 @@ const ScheduleSmsModal = ({
                       className="bg-white px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-400 duration-200"
                     ></DatePicker>
                   </div>
-                  <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                    It will be scheduled for{" "}
+                  <p className="my-4 text-slate-500 text-lg leading-relaxed font-euclid">
+                    It will be scheduled for:{" "}
                     <p className="font-bold">{dateValue?.toLocaleString()}</p>
                   </p>
                   {errorMsg ? (
@@ -130,20 +128,20 @@ const ScheduleSmsModal = ({
                   {loading ? (
                     <Loader color={true} loading_name="Scheduling..." />
                   ) : (
-                    <div>
+                    <div className="flex flex-row gap-2">
                       <button
-                        className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        className="bg-red-700 hover:bg-gray-400 text-white font-euclid py-2 px-4 rounded-md duration-200"
                         type="button"
                         onClick={closeModal}
                       >
-                        Terminate
+                        Close
                       </button>
                       <button
-                        className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        className="bg-ngrokBlue hover:bg-blue-400 text-white font-euclid py-2 px-4 rounded-md duration-200"
                         type="button"
                         onClick={handleSend}
                       >
-                        Send
+                        Schedule
                       </button>
                     </div>
                   )}

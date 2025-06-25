@@ -48,11 +48,9 @@ const ShowQrModal = ({ showModalQr, onClose }) => {
           >
             <div className="relative w-auto max-w-3xl rounded-2xl">
               {/*content*/}
-              <div className="border-0 rounded-2xl shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="relative flex flex-col w-full bg-ngrokGray">
                 {/*header*/}
-                <Modal.Header closeButton>
-                  <Modal.Title>Your QR code for this contact list</Modal.Title>
-                </Modal.Header>
+
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   {!loading ? (
@@ -71,14 +69,13 @@ const ShowQrModal = ({ showModalQr, onClose }) => {
                     Simply copy the QR code and share this with people, print it
                     out on your guest cards or put it in your shop or place of
                     business where people can see it. They will use their phones
-                    to scan it which will lead them to this list to sign up. And
-                    you will have their information for promotional offers etc..
+                    to scan it which will lead them to this list to sign up.
                   </p>
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
-                    className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                    className="bg-red-700 hover:bg-gray-400 text-white font-euclid py-2 px-4 rounded-md duration-200"
                     type="button"
                     onClick={closeModal}
                   >

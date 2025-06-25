@@ -89,14 +89,14 @@ const CloseAccountModal = ({ showModal, onClose }) => {
           keyboard={false}
         >
           <div className="relative w-auto max-w-3xl rounded-2xl">
-            <div className="border-0 rounded-2xl shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-              <Modal.Header closeButton>
-                <Modal.Title>Close your account</Modal.Title>
-              </Modal.Header>
+            <div className="relative flex flex-col w-full bg-ngrokGray">
+              <span className="text-2xl font-euclid p-6 text-slate-400">
+                Close your account
+              </span>
               <div className="relative p-6 flex-auto">
                 {countdown === null ? ( // Show initial message or countdown
                   <>
-                    <p className="my-4 text-slate-500 text-lg leading-relaxed">
+                    <p className="my-4 text-slate-500 text-lg leading-relaxed font-euclid">
                       You are about to permanently close your account. This
                       action is irreversible!
                       <br />
@@ -112,7 +112,7 @@ const CloseAccountModal = ({ showModal, onClose }) => {
                       You will be logged out in {countdown} seconds...
                     </p>
                     <button
-                      className="bg-green-600 hover:bg-green-400 text-white font-bold py-2 px-4 rounded duration-200"
+                      className="bg-ngrokBlue hover:bg-blue-400 text-white font-euclid py-2 px-4 rounded duration-200"
                       onClick={cancelCountdown}
                     >
                       Cancel Logout
@@ -123,20 +123,22 @@ const CloseAccountModal = ({ showModal, onClose }) => {
               <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                 {countdown === null &&
                   !cancelClicked && ( // Show buttons only if countdown hasn't started
-                    <>
+                    <div className="flex flex-row gap-2">
                       <button
-                        className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        className="bg-red-700 hover:bg-gray-400 text-white font-euclid py-2 px-4 rounded-md duration-200"
+                        type="button"
                         onClick={closeModal}
                       >
                         No
                       </button>
                       <button
-                        className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        className="bg-ngrokBlue hover:bg-blue-400 text-white font-euclid py-2 px-4 rounded-md duration-200"
+                        type="button"
                         onClick={startCountdown}
                       >
                         Yes
                       </button>
-                    </>
+                    </div>
                   )}
               </div>
             </div>

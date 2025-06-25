@@ -98,104 +98,97 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
             backdrop="static"
             keyboard={false}
           >
-            <div className="relative w-auto mx-auto max-w-3xl">
-              {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white/50 outline-none focus:outline-none">
-                {/*header*/}
-                <Modal.Header closeButton>
-                  <Modal.Title>Add a contact</Modal.Title>
-                </Modal.Header>
-                {/*body*/}
-                <div className="relative p-6 flex-auto mx-auto">
-                  <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                    You are about to add a new contact to this current list you
-                    are visiting, remember to double check email and phone
-                    records! Remember to include calling code as well (e.g., 45
-                    for Denmark) or whichever country the phone number is from.
+            {/*content*/}
+            <div className="relative border-2 border-gray-800 flex flex-col w-full bg-ngrokGray">
+              {/*header*/}
+              <span className="text-2xl font-euclid p-6 text-slate-400">
+                Add contact
+              </span>
+              {/*body*/}
+              <div className="relative p-6 flex-auto mx-auto">
+                <p className="my-4 text-slate-500 text-lg leading-relaxed font-euclid">
+                  Remember to double check email and phone records!
+                </p>
+                <input
+                  className={`bg-gray-50 border ${
+                    fieldErrors?.firstName
+                      ? "border-red-500"
+                      : "border-gray-300"
+                  } mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full`}
+                  name="firstName"
+                  type="text"
+                  placeholder="First name"
+                  onChange={handleUserInput}
+                />
+                {fieldErrors?.firstName && (
+                  <p className="text-red-500 text-sm">
+                    {fieldErrors?.firstName}
                   </p>
-                  <input
-                    className={`bg-gray-50 border ${
-                      fieldErrors?.firstName
-                        ? "border-red-500"
-                        : "border-gray-300"
-                    } mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full`}
-                    name="firstName"
-                    type="text"
-                    placeholder="First name"
-                    onChange={handleUserInput}
-                  />
-                  {fieldErrors?.firstName && (
-                    <p className="text-red-500 text-sm">
-                      {fieldErrors?.firstName}
-                    </p>
-                  )}
-                  <input
-                    className={`bg-gray-50 border ${
-                      fieldErrors?.lastName
-                        ? "border-red-500"
-                        : "border-gray-300"
-                    } mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full`}
-                    name="lastName"
-                    type="text"
-                    placeholder="Last name"
-                    onChange={handleUserInput}
-                  />
-                  {fieldErrors?.lastName && (
-                    <p className="text-red-500 text-sm">
-                      {fieldErrors?.lastName}
-                    </p>
-                  )}
-                  <PhoneInput
-                    className={`bg-gray-50 border ${
-                      fieldErrors?.phone ? "border-red-500" : "border-gray-300"
-                    } mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full`}
-                    placeholder="Enter phone number"
-                    onChange={(e) => setNumber(e)}
-                    name="phoneNumber"
-                  />
-                  {fieldErrors?.phone && (
-                    <p className="text-red-500 text-sm">{fieldErrors.phone}</p>
-                  )}
-                  <input
-                    className={`bg-gray-50 border ${
-                      fieldErrors?.email ? "border-red-500" : "border-gray-300"
-                    } mt-2 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
-                    name="email"
-                    placeholder="Email"
-                    onChange={handleUserInput}
-                  />
-                  {fieldErrors?.email && (
-                    <p className="text-red-500 text-sm">{fieldErrors.email}</p>
-                  )}
-                </div>
-                {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                  {errMsg && (
-                    <p className="text-red-700 font-semibold text-normal">
-                      {errMsg}
-                    </p>
-                  )}
-                  {loading ? (
-                    <Loader color={true} loading_name={"Loading..."} />
-                  ) : (
-                    <div>
-                      <button
-                        className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                        type="button"
-                        onClick={closeModal}
-                      >
-                        Close
-                      </button>
-                      <button
-                        className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
-                        type="button"
-                        onClick={addContact}
-                      >
-                        Add
-                      </button>
-                    </div>
-                  )}
-                </div>
+                )}
+                <input
+                  className={`bg-gray-50 border ${
+                    fieldErrors?.lastName ? "border-red-500" : "border-gray-300"
+                  } mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full`}
+                  name="lastName"
+                  type="text"
+                  placeholder="Last name"
+                  onChange={handleUserInput}
+                />
+                {fieldErrors?.lastName && (
+                  <p className="text-red-500 text-sm">
+                    {fieldErrors?.lastName}
+                  </p>
+                )}
+                <PhoneInput
+                  className={`bg-gray-50 border ${
+                    fieldErrors?.phone ? "border-red-500" : "border-gray-300"
+                  } mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full`}
+                  placeholder="Enter phone number"
+                  onChange={(e) => setNumber(e)}
+                  name="phoneNumber"
+                />
+                {fieldErrors?.phone && (
+                  <p className="text-red-500 text-sm">{fieldErrors.phone}</p>
+                )}
+                <input
+                  className={`bg-gray-50 border ${
+                    fieldErrors?.email ? "border-red-500" : "border-gray-300"
+                  } mt-2 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
+                  name="email"
+                  placeholder="Email"
+                  onChange={handleUserInput}
+                />
+                {fieldErrors?.email && (
+                  <p className="text-red-500 text-sm">{fieldErrors.email}</p>
+                )}
+              </div>
+              {/*footer*/}
+              <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                {errMsg && (
+                  <p className="text-red-700 font-semibold text-normal">
+                    {errMsg}
+                  </p>
+                )}
+                {loading ? (
+                  <Loader color={true} loading_name={"Loading..."} />
+                ) : (
+                  <div className="flex flex-row gap-2">
+                    <button
+                      className="bg-red-700 hover:bg-gray-400 text-white font-euclid py-2 px-4 rounded-md duration-200"
+                      type="button"
+                      onClick={closeModal}
+                    >
+                      Close
+                    </button>
+                    <button
+                      className="bg-ngrokBlue hover:bg-blue-400 text-white font-euclid py-2 px-4 rounded-md duration-200"
+                      type="button"
+                      onClick={addContact}
+                    >
+                      Create
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </Modal>
