@@ -1,19 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { logOut } from "../redux/reducers/authSlice";
-import { cleanPackage } from "../redux/reducers/packageReducer";
 import { setModalState } from "../redux/reducers/modalReducer";
 import { setEditPage } from "../redux/reducers/editPageReducer";
 import { Link, useNavigate } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
 import { menu } from "../assets/menuAssets/menuIcons";
 import { useRedux } from "../constants/reduxImports";
-import { clearMessages } from "../redux/reducers/messageReducer";
-import { cleanContactLists } from "../redux/reducers/contactListReducer";
-import { cleanUser } from "../redux/reducers/userReducer";
-import { clearCampaigns } from "../redux/reducers/completedCampaignsReducer";
 const Header = () => {
-  const { currentModalState, dispatch, currentUser, currentFormState } =
-    useRedux();
+  const { currentModalState, dispatch, currentFormState } = useRedux();
   const [clickedPath, setClickedPath] = useState();
 
   const [activeNav, setActiveNav] = useState("Home");
@@ -44,17 +37,6 @@ const Header = () => {
       window.onbeforeunload = null;
     };
   }, []);
-
-  const handleLogout = () => {
-    dispatch(logOut());
-    dispatch(cleanPackage());
-    dispatch(clearMessages());
-    dispatch(cleanContactLists());
-    dispatch(clearMessages());
-    dispatch(cleanUser());
-    dispatch(clearCampaigns());
-    localStorage.removeItem("refreshToken");
-  };
 
   const handleNavigate = (e, menuTitle) => {
     const path = e.currentTarget.getAttribute("href");
@@ -103,28 +85,6 @@ const Header = () => {
         ))}
       </ul>
 
-      <div
-        onClick={handleLogout}
-        className="flex rounded-md mr-3 p-2 cursor-pointer xl:w-12 w-10 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 text-gray-300 xl:text-sm text-xs items-center gap-x-3"
-      >
-        <div className="flex flex-row gap-1">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6 rotate-90 ml-2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25"
-            />
-          </svg>
-          Logout
-        </div>
-      </div>
       <ModalComponent
         confirmLeave={handleConfirmNavigation}
         showModal={currentModalState}

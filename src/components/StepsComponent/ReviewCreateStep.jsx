@@ -99,13 +99,13 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
   };
 
   return (
-    <section className="min-h-screen w-100 items-center justify-center">
+    <section className="min-h-screen w-100 items-center justify-center ml-44">
       <div className="grid grid-cols-3 gap-4">
-        <div className="flex flex-col gap-4 p-3 ml-14 bg-mainBlue border-gray-800 border-r-2 h-screen">
+        <div className="flex flex-col gap-4 p-3 bg-mainBlue border-gray-800 border-r-2 h-screen">
           <div>
             <label
               for="first_name"
-              className="block mb-2 text-normal text-left font-semibold text-gray-300 dark:text-white"
+              className="block mb-2 text-normal text-left font-euclid text-gray-300 dark:text-white"
             >
               Campaign name
             </label>
@@ -115,13 +115,13 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
               name="from"
               disabled
               value={formData.campaignInfo["name"]}
-              className="block bg-mainBlue text-white border-2 border-gray-800 mt-1 text-semibold font-normal py-2 px-4 rounded w-full"
+              className="block bg-mainBlue text-white border-2 border-gray-800 mt-1 text-euclid font-normal py-2 px-4 rounded w-full"
             />
           </div>
           <div>
             <label
               for="first_name"
-              className="block mb-2 text-normal text-left font-semibold text-gray-300 dark:text-white"
+              className="block mb-2 text-normal text-left font-euclid text-gray-300 dark:text-white"
             >
               Campaign type
             </label>
@@ -131,14 +131,14 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
               name="from"
               disabled
               value={formData.campaignInfo["type"]}
-              className="block bg-mainBlue text-white border-2 border-gray-800 mt-1 text-semibold font-normal py-2 px-4 rounded w-full"
+              className="block bg-mainBlue text-white border-2 border-gray-800 mt-1 text-semibold font-euclid py-2 px-4 rounded w-full"
             />
           </div>
         </div>
         <div>
           <label
             for="first_name"
-            className="block mb-2  text-lg text-left font-semibold text-gray-300 dark:text-white"
+            className="block mb-2  text-lg text-left font-euclid text-gray-300 dark:text-white"
           >
             Content Preview
           </label>
@@ -153,7 +153,7 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
 
         <div className="flex-1 relative">
           {isLoading ? (
-            <div className="absolute bottom-36 left-24">
+            <div className="absolute bottom-36 left-0">
               <Loader loading_name={"Creating campaign..."} />
             </div>
           ) : (
@@ -161,7 +161,7 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
               <button
                 type="submit"
                 onClick={prevStep}
-                className={`text-white font-medium absolute bottom-36 left-24 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center align-bottom ${
+                className={`text-white font-medium absolute bottom-36 -left-2 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center align-bottom ${
                   elementContextList.length === 0
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-ngrokBlue hover:bg-ngrokBlue/70 focus:ring-4 focus:outline-none focus:ring-blue-300"
@@ -172,7 +172,7 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
               <button
                 type="submit"
                 onClick={handleSubmit}
-                className={`text-white font-medium absolute bottom-36 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center align-bottom ${
+                className={`text-white font-medium absolute bottom-36 left-32 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center align-bottom ${
                   elementContextList.length === 0
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-ngrokBlue hover:bg-ngrokBlue/70 focus:ring-4 focus:outline-none focus:ring-blue-300"

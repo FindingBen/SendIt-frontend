@@ -214,7 +214,7 @@ const SmsSendingPage = () => {
             />
           </Link>
           <h3 className="2xl:text-3xl lg:text-2xl text-lg font-normal text-left text-white mx-5">
-            Dashboard
+            Sendperplane
           </h3>
 
           <div class="relative">
@@ -238,7 +238,7 @@ const SmsSendingPage = () => {
             <input
               type="search"
               id="default-search"
-              class="block w-full p-2 ps-10 text-sm text-gray-900 border-2 border-gray-700 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="block w-full p-2 ps-10 text-sm text-gray-900 bg-ngrokGray rounded-lg border-2 border-gray-800"
               required
             />
           </div>

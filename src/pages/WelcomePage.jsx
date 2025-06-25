@@ -135,8 +135,8 @@ const WelcomePage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-5 grid-rows-2 gap-4 mt-3 mx-20 h-[100%]">
-            <div className="flex flex-col items-start gap-2 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 rounded-2xl p-3">
+          <div className="grid grid-cols-5 grid-rows-2 gap-4 mt-3 auto-rows-min mx-20">
+            <div className="flex flex-col items-start gap-2 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 rounded-2xl p-3 max-h-[350px]">
               <span className="text-gray-200 text-2xl mb-3 font-medium">
                 Quick links
               </span>
@@ -146,7 +146,7 @@ const WelcomePage = () => {
                 <Link to={`/account_settings/${currentUser}`}>Settings</Link>
               </div>
             </div>
-            <div className="flex flex-col items-start gap-2 border-2 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 rounded-2xl p-3 col-span-3">
+            <div className="flex flex-col items-start gap-2 border-2 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 rounded-2xl p-3 col-span-3 max-h-[350px] overflow-y-auto">
               <span className="text-gray-200 text-2xl font-medium">
                 Notifications
               </span>
@@ -170,7 +170,7 @@ const WelcomePage = () => {
                 </div>
               )}
             </div>
-            <div className="flex flex-col items-start gap-2 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 rounded-2xl p-3 col-start-5">
+            <div className="flex flex-col items-start gap-2 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 rounded-2xl p-3 col-start-5 max-h-[350px]">
               <span className="text-gray-200 text-xl font-medium">
                 Related Articles
               </span>
@@ -237,7 +237,7 @@ const WelcomePage = () => {
                 </Link>
               </div>
             </div>
-            <div className="flex flex-col items-start gap-2 border-2 mb-5 bg-mainBlue border-gray-800 rounded-2xl p-3 col-span-5 row-start-2">
+            <div className="flex flex-col items-start gap-2 border-2 mb-5 bg-mainBlue border-gray-800 rounded-2xl p-3 col-span-5 row-start-2 max-h-[350px]">
               <span className="text-gray-200 text-2xl font-medium">
                 Top performing campaigns
               </span>

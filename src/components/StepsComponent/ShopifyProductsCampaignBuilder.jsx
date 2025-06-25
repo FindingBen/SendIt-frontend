@@ -44,9 +44,9 @@ const ShopifyProductsCampaignBuilder = ({
   return (
     <section className="max-h-screen w-full items-center justify-center">
       <div className="grid grid-cols-2 grid-rows-1 gap-4 max-h-screen">
-        <div className="flex flex-col gap-5 h-screen bg-gray-900 p-4 ml-14">
+        <div className="flex flex-col gap-5 h-screen bg-gray-900 p-4 ml-44">
           <div className="flex flex-row relative">
-            <p className="text-lg text-gray-50 font-semibold text-start">
+            <p className="text-lg text-gray-50 font-euclid text-start">
               Your active products
             </p>
             <input
@@ -63,7 +63,7 @@ const ShopifyProductsCampaignBuilder = ({
           />
         </div>
         <div className="flex flex-col p-4 relative">
-          <p className="text-xl text-gray-50 font-normal text-start">
+          <p className="text-xl text-gray-50 font-euclid text-start">
             Smart insights
           </p>
           <div className="text-start">
@@ -75,7 +75,7 @@ const ShopifyProductsCampaignBuilder = ({
               <Loader loading_name={"Loading insights"} />
             ) : (
               <div className="transition ease-in-out delay-90">
-                <span className="text-gray-200/50 text-start mt-2 fonte-semibold text-sm xl:text-normal">
+                <span className="text-gray-200/50 text-start mt-2 fonte-euclid text-sm xl:text-normal">
                   Based on the product you picked we generated the following
                   insights which can help you in your content planning
                 </span>

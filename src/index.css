@@ -153,7 +153,9 @@
 
 /* width */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
+  border-radius: 8px;
+  background: #151530; /* fallback background */
 }
 
 /* Track */
