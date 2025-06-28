@@ -27,12 +27,12 @@ const UserAccount = () => {
     email: "",
   });
 
-  // useEffect(() => {
-  //   if (msg) {
-  //     const timer = setTimeout(() => setMsg(), 4000);
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [msg]);
+  useEffect(() => {
+    if (msg) {
+      const timer = setTimeout(() => setMsg(), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [msg]);
 
   let updateUser = async (e) => {
     setIsLoading(true);
@@ -63,17 +63,40 @@ const UserAccount = () => {
   };
 
   return (
-    <div className="flex gap-3">
-      <div className="flex flex-col rounded-2xl p-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 border-2 lg:w-[320px] md:h-[535px] lg:h-[535px] xl:w-[400px] xs:w-[330px] 2xl:w-[450px] h-[440px] xl:h-[540px] 2xl:h-[650px]">
-        <h3 class="flex flex-row text-normal lg:text-xl 2xl:text-2xl text-left font-euclid text-white relative">
+    <div className="flex-1 gap-3 mx-20">
+      <div className="flex flex-col rounded-2xl p-4">
+        <h3 className="flex flex-row text-normal border-b-2 border-gray-800 lg:text-xl 2xl:text-2xl text-left font-euclid text-white relative">
           General settings
-          <div className="px-2 py-2 flex flex-row gap-1 bg-cyan-700 text-white xs:text-xs lg:text-normal border-gray-800 rounded-md absolute right-0 top-0 hover:bg-cyan-500 cursor-pointer">
-            <p
-              className="lg:text-normal xs:text-xs 2xl:text-normal"
-              onClick={() => setIsEditing(true)}
-            >
-              Change
-            </p>
+          <div className="">
+            {isEditing ? (
+              isLoading ? (
+                <Loader loading_name={"Updating..."} />
+              ) : (
+                <div className="flex flex-row gap-2 absolute -right-2 -top-2">
+                  <button
+                    onClick={updateUser}
+                    className="bg-ngrokBlue hover:bg-blue-500 duration-300 text-white text-sm font-euclid px-1 py-1 rounded-md"
+                    type="submit"
+                  >
+                    Update
+                  </button>
+                  <button
+                    onClick={() => setIsEditing(false)}
+                    className="bg-red-500 hover:bg-red-300 duration-300 text-white font-euclid text-sm py-1 px-1 rounded-md"
+                    type="button"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              )
+            ) : (
+              <button
+                className="px-1 py-1 flex flex-row gap-1 bg-ngrokBlue 2xl:text-lg text-white text-sm border-gray-800 rounded-md absolute -right-2 -top-2 hover:bg-blue-500 cursor-pointer"
+                onClick={() => setIsEditing(true)}
+              >
+                Change
+              </button>
+            )}
           </div>
         </h3>
         <div className="flex flex-col mt-5">
@@ -159,23 +182,32 @@ const UserAccount = () => {
             </p>
           </div>
 
-          {isEditing ? (
+          {/* {isEditing ? (
             <div className="flex flex-row ">
               {isLoading ? (
                 <Loader loading_name={"Updating..."} />
               ) : (
-                <button
-                  onClick={updateUser}
-                  className="bg-sky-800 hover:bg-sky-400 duration-300 text-white font-light text-ss 2xl:text-xl xl:text-normal py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
-                  type="submit"
-                >
-                  <p>Update</p>
-                </button>
+                <div className="flex flex-row gap-2">
+                  <button
+                    onClick={updateUser}
+                    className="bg-ngrokBlue hover:bg-blue-500 duration-300 text-white font-euclid text-ss 2xl:text-xl xl:text-normal py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
+                    type="submit"
+                  >
+                    <p>Update</p>
+                  </button>
+                  <button
+                    onClick={() => setIsEditing(false)}
+                    className="bg-red-500 hover:bg-red-300 duration-300 text-white font-euclid text-ss 2xl:text-xl xl:text-normal py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
+                    type="submit"
+                  >
+                    <p>Cancel</p>
+                  </button>
+                </div>
               )}
             </div>
           ) : (
             <></>
-          )}
+          )} */}
           {msg && <p className="text-green-500 mt-5">{msg}</p>}
           {errorMsg && <p className="text-red-500 mt-5">{errorMsg}</p>}
         </div>

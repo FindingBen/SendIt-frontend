@@ -1,10 +1,9 @@
 import React, { useState, useContext, memo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { setState } from "../redux/reducers/formReducer";
 import "../css/CreationMessage.css";
 import Image from "../components/Image";
 import Text from "../components/Text";
-import List from "../components/List";
 import Button from "../components/Button";
 import Survey from "../components/Survey/Survey";
 import { setList } from "../redux/reducers/elementReducer";
@@ -16,6 +15,7 @@ import useAxiosInstance from "../utils/axiosInstance";
 import { ElementContext } from "../context/ElementContext";
 import Loader from "../components/LoaderSkeleton/Loader";
 import { useRedux } from "../constants/reduxImports";
+import SmsPill from "../components/SmsPill/SmsPill";
 import SvgLoader from "../components/SvgLoader";
 import PreviewPanel from "../components/PreviewComponent/PreviewPanel";
 
@@ -45,7 +45,7 @@ const EditMessage = () => {
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [imageStateVal, setImageStateVal] = useState(false);
   const [showSaveButton, setShowSaveButton] = useState(false);
-
+  const [searchValue, setSearchValue] = useState("");
   useEffect(() => {
     setIsLoaded(true);
     if (currentPageState) {
@@ -306,17 +306,52 @@ const EditMessage = () => {
     <section className="max-h-screen overflow-hidden w-full items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
         <div className="flex-1 sm:px-0">
-          <div className="flex justify-between border-b-2 border-gray-800 items-center h-20 bg-navBlue">
-            <div className="flex flex-row">
-              <span className="xl:text-2xl lg:text-xl text-normal text-white font-normal mx-20">
-                Edit Content
-              </span>
+          <div className="flex flex-row items-center border-b-2 border-gray-800 h-18 bg-navBlue sticky top-0 z-10">
+            <Link to={"/welcome"}>
+              <img
+                src={require("../assets/noBgLogo.png")}
+                width={65}
+                alt="logo"
+                className="mt-2"
+              />
+            </Link>
+            <h3 className="2xl:text-3xl lg:text-2xl text-lg font-normal text-left font-euclid text-white mx-5">
+              Sendperplane
+            </h3>
+
+            <div class="relative">
+              {searchValue === "" && (
+                <div className="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
+                  <svg
+                    className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                    />
+                  </svg>
+                </div>
+              )}
+              <input
+                type="search"
+                id="default-search"
+                class="block w-full p-2 ps-10 text-sm text-gray-100 border-2 border-gray-700 rounded-lg bg-ngrokGray"
+                required
+              />
             </div>
-            <div class="inline-flex items-center mx-20 relative">
+
+            <div class="w-22 items-center relative mx-auto">
               {!isLoading ? (
                 <button
                   onClick={editMessage}
-                  className="text-white bg-cyan-700 hover:bg-cyan-500 w-full p-1 rounded-lg hover:text-white flex flex-row"
+                  className="text-white bg-ngrokBlue hover:bg-blue-500 w-full p-1 rounded-lg hover:text-white flex flex-row font-euclid"
                 >
                   <h2 className="text-lg mx-2">Save changes</h2>
                 </button>
@@ -327,7 +362,8 @@ const EditMessage = () => {
               )}
             </div>
           </div>
-          <div className="flex flex-col md:flex-row rounded-2xl h-screen">
+
+          <div className="flex flex-col md:flex-row rounded-2xl h-screen ml-44">
             <div className="flex p-10 max-h-screen gap-2 md:flex-col bg-gradient-to-b from-lighterMainBlue to-mainBlue border-r-2 border-gray-800">
               <div className="flex flex-col lg:w-72 gap-2 rounded-2xl text-start mb-5">
                 <span className="text-gray-200 text-normal lg:text-lg font-normal">

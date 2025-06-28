@@ -11,10 +11,17 @@ const PackageInformation = () => {
   const silver_plan = process.env.REACT_APP_SILVER_PLAN;
 
   return (
-    <div className="flex flex-col rounded-2xl p-4 xs:mt-2 md:mt-0 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 border-2 lg:w-[400px] xs:w-[330px] 2xl:w-[450px] h-[290px] lg:h-[290px] 2xl:h-[360px]">
-      <h3 class="flex flex-row xs:text-normal lg:text-xl 2xl:text-2xl text-left mb-4 font-normal text-white relative">
-        Package Information
+    <div className="flex flex-col rounded-2xl p-4 mx-20 relative">
+      <h3 class="flex flex-row xs:text-normal border-b-2 border-gray-800 lg:text-xl 2xl:text-2xl text-left mb-4 font-normal text-white relative">
+        <span className="text-xl 2xl:text-2xl">Package Information</span>
+        <Link
+          to={"/plans"}
+          className="px-1 py-1 font-euclid absolute -right-0 -top-2 bg-ngrokBlue hover:bg-blue-500 text-white rounded-md text-sm 2xl:text-lg"
+        >
+          Upgrade
+        </Link>
       </h3>
+
       <div className="flex flex-col gap-2 items-start">
         <p className="text-white/60 xs:text-sm lg:text-normal text-start">
           Your current package information is displayed here.

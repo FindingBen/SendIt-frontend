@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useRedux } from "../../constants/reduxImports";
+import { useLocation, Link } from "react-router-dom";
 import useAxiosInstance from "../../utils/axiosInstance";
 import ModalComponent from "../ModalComponent";
+import SmsPill from "../SmsPill/SmsPill";
+
 const Plans = () => {
   const { currentUser, dispatch, currentToken } = useRedux();
   const axiosInstance = useAxiosInstance();
@@ -14,6 +17,7 @@ const Plans = () => {
   const [recipients, setRecipients] = useState("");
   const [messages, setMessages] = useState("");
   const [packagePlan, setPackages] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     getPackages();
@@ -119,9 +123,52 @@ const Plans = () => {
 
   return (
     <section className="min-h-screen w-full items-center justify-center">
-      <div className="flex-1 items-center justify-center">
+      <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-18 bg-navBlue sticky top-0 z-10">
+        <Link to={"/welcome"}>
+          <img
+            src={require("../../assets/noBgLogo.png")}
+            width={65}
+            alt="logo"
+            className="mt-2"
+          />
+        </Link>
+        <h3 className="2xl:text-3xl lg:text-2xl text-lg font-normal text-left font-euclid text-white mx-5">
+          Sendperplane
+        </h3>
+
+        <div class="relative">
+          {searchValue === "" && (
+            <div className="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
+              <svg
+                className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+              </svg>
+            </div>
+          )}
+          <input
+            type="search"
+            id="default-search"
+            class="block w-full p-2 ps-10 text-sm text-gray-100 border-2 border-gray-700 rounded-lg bg-ngrokGray"
+            required
+          />
+        </div>
+
+        <SmsPill />
+      </div>
+      <div className="flex-1 items-center justify-center mx-44">
         <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
-          <h3 class="xl:text-2xl lg:text-xl text-normal font-semibold text-left text-white mx-20">
+          <h3 class="xl:text-2xl lg:text-xl text-normal font-euclid text-left text-white mx-20">
             Package plans
           </h3>
         </div>
@@ -345,7 +392,7 @@ const Plans = () => {
             </div>
           ))}
 
-          <div
+          {/* <div
             className={`absolute top-10 -right-6 h-[428px] w-[260px] bg-slate-800 rounded-3xl`}
           >
             <div className="flex flex-col p-4">
@@ -399,7 +446,7 @@ const Plans = () => {
                 </p>
               )}
             </div>
-          </div>
+          </div> */}
         </div>
 
         <ModalComponent

@@ -6,12 +6,13 @@ const CampaignInfoStep = ({
   updateFormData,
   initialData,
   tokenType,
+  shopifyCampaignTrigger = () => {},
 }) => {
   const [campaignInfo, setCampaignInfo] = useState({
     name: "",
     campaignContent: "",
     type: "",
-    ...initialData, // Initialize with existing data if available
+    ...initialData,
   });
   const [loading, setLoading] = useState(false);
   const handleChange = (e) => {
@@ -31,14 +32,15 @@ const CampaignInfoStep = ({
   const handleTypeSelect = (type) => {
     setCampaignInfo((prev) => ({
       ...prev,
-      type: prev.type === type ? "" : type, // Toggle the type
+      type: prev.type === type ? "" : type,
     }));
   };
 
   const handleShopifySelect = (campaign) => {
+    shopifyCampaignTrigger(campaign);
     setCampaignInfo((prev) => ({
       ...prev,
-      campaignContent: prev.campaignContent === campaign ? "" : campaign, // Toggle the type
+      campaignContent: prev.campaignContent === campaign ? "" : campaign,
     }));
   };
 

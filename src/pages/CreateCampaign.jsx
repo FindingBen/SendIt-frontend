@@ -49,6 +49,8 @@ const CreateCampaign = () => {
     }
   }, [formData]);
 
+  useEffect(() => {}, [shopifyCampaign]);
+
   const getShopifyProduct = async (product_id) => {
     setProductLoading(true);
     try {
@@ -131,7 +133,13 @@ const CreateCampaign = () => {
   const handleApi = () => {
     fetchShopify();
   };
-
+  const handleShopifyTrigger = (value) => {
+    if (value === "Shopify") {
+      setShopifyCampaign(true);
+    } else {
+      setShopifyCampaign(false);
+    }
+  };
   const fetchShopify = async () => {
     setLoading(true);
     try {
@@ -164,7 +172,7 @@ const CreateCampaign = () => {
       console.log(error);
     }
   };
-
+  console.log("IS IT", shopifyCampaign);
   const renderStep = () => {
     if (shopifyCampaign) {
       switch (currentStep) {
@@ -175,6 +183,7 @@ const CreateCampaign = () => {
               tokenType={currentShopifyToken}
               updateFormData={updateFormData}
               initialData={formData.campaignInfo}
+              shopifyCampaignTrigger={handleShopifyTrigger}
             />
           );
         case 2:
