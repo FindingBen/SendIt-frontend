@@ -12,7 +12,7 @@ const ShowQrModal = ({ showModalQr, onClose }) => {
   const [qrImg, setQrImage] = useState();
   const [show, setShowModal] = useState(showModalQr);
   const BASE_URL = process.env.AWS_CUSTOM_DOMAIN;
-
+  console.log(BASE_URL);
   useEffect(() => {
     setShowModal(showModalQr);
     getQRcode();
