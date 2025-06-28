@@ -67,7 +67,7 @@ export const MessageCard = ({
       </div>
       <div>
         {message.status === "Draft" ? (
-          <span class="text-xs 2xl:text-normal font-medium leading-none text-center text-white bg-gradient-to-r from-sky-500 to-sky-800 rounded-lg px-3 lg:py-1">
+          <span class="text-xs 2xl:text-normal font-medium leading-none text-center text-white bg-ngrokBlue rounded-lg px-3 lg:py-1">
             Draft
           </span>
         ) : message.status === "Scheduled" ? (
@@ -81,7 +81,7 @@ export const MessageCard = ({
         )}
       </div>
       <div className="flex flex-row mt-2">
-        <div className=" border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-500 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+        <div className=" border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-blue-500 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
           {message.status === "Draft" ? (
             <Link type="button" to={`/edit_message/${message.id}`}>
               <svg
@@ -104,7 +104,7 @@ export const MessageCard = ({
           )}
         </div>
         {message.status === "Draft" ? (
-          <div className="border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-500  cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+          <div className="border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-blue-500  cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
             <Link type="button" className="" to={`/sending_flow/${message.id}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +125,7 @@ export const MessageCard = ({
         ) : (
           <></>
         )}
-        <div className="relative border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-cyan-500 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
+        <div className="relative border-gray-800 rounded-md mx-auto my-auto p-0.5 hover:bg-blue-500 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
           <button
             id="dropdownDefaultButton"
             data-dropdown-toggle="dropdown"
