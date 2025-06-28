@@ -11,8 +11,12 @@ const ShowQrModal = ({ showModalQr, onClose }) => {
   const params = useParams();
   const [qrImg, setQrImage] = useState();
   const [show, setShowModal] = useState(showModalQr);
-  const BASE_URL = process.env.AWS_CUSTOM_DOMAIN;
-  console.log(BASE_URL);
+  const baseURL = config.url.BASE_URL;
+  const env = process.env.REACT_APP_ENV;
+  const imgSrc =
+    env === "development"
+      ? `${baseURL}${qrImg?.qr_image}`
+      : `${qrImg?.qr_image}`;
   useEffect(() => {
     setShowModal(showModalQr);
     getQRcode();
@@ -55,7 +59,7 @@ const ShowQrModal = ({ showModalQr, onClose }) => {
                 <div className="relative p-6 flex-auto">
                   {!loading ? (
                     <img
-                      src={`${BASE_URL}${qrImg?.qr_image}`}
+                      src={imgSrc}
                       alt="QR Code"
                       width={150}
                       className="block mx-auto mb-4"
