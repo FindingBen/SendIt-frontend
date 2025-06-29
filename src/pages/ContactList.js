@@ -303,13 +303,17 @@ const ContactList = () => {
             </div>
             <div class="items-start shadow-md mx-20">
               <div className="inline-flex mt-1 gap-2">
-                <button
-                  onClick={bulkCreate}
-                  className={`text-white hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer
+                {currentShopifyToken ? (
+                  <button
+                    onClick={bulkCreate}
+                    className={`text-white hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer
                   rounded-md flex flex-row gap-2 border-2 border-gray-800 p-2`}
-                >
-                  <p>Shopify customers</p>
-                </button>
+                  >
+                    <p>Shopify customers</p>
+                  </button>
+                ) : (
+                  <></>
+                )}
                 <button
                   onClick={handleQrModal}
                   className={`text-white hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer
