@@ -75,24 +75,11 @@ const ContactList = () => {
       let response = await axiosInstance.get(url);
 
       if (response.status === 200) {
-        if (currentShopifyToken) {
-          console.log(response.data);
-          const contactsData = response.data.edges.map((edge) => ({
-            id: edge.node.id, // Extract the ID
-            firstName: edge.node.firstName, // Map firstName to first_name
-            lastName: edge.node.lastName, // Map lastName to last_name
-            email: edge.node.email,
-            phone: edge.node.phone,
-            created_at: edge.node.createdAt, // Map createdAt to created_at
-          }));
-          setContacts(contactsData);
-        } else {
-          console.log(response.data);
-          setContacts(response.data.customers);
-        }
-        setLoader(false);
-        setIsLoading(false);
+        console.log(response.data);
+        setContacts(response.data.customers);
       }
+      setLoader(false);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       setLoader(false);
@@ -137,13 +124,10 @@ const ContactList = () => {
 
       let url = "";
       //const url = "/api/delete_recipient/<str:id>/";
-      if (currentShopifyToken) {
-        console.log("shopify");
-        url = "/api/delete_recipient_shopify/";
-      } else {
-        url = `/api/delete_recipient/${data.id}`;
-        console.log(data);
-      }
+
+      url = `/api/delete_recipient/${data.id}`;
+      console.log(data);
+
       let response = await axiosInstance.post(url, data);
       console.log(response);
       if (response.status === 200) {
@@ -161,6 +145,21 @@ const ContactList = () => {
       setTimeout(() => {
         setErrorMsg();
       }, 3000);
+    }
+  };
+
+  const bulkCreate = async () => {
+    try {
+      const body = {
+        list_id: params.id,
+      };
+      let response = await axiosInstance.post(
+        "/api/create_bulk_contacts/",
+        body
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -304,6 +303,13 @@ const ContactList = () => {
             </div>
             <div class="items-start shadow-md mx-20">
               <div className="inline-flex mt-1 gap-2">
+                <button
+                  onClick={bulkCreate}
+                  className={`text-white hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer
+                  rounded-md flex flex-row gap-2 border-2 border-gray-800 p-2`}
+                >
+                  <p>Shopify customers</p>
+                </button>
                 <button
                   onClick={handleQrModal}
                   className={`text-white hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer
@@ -523,9 +529,7 @@ const ContactList = () => {
                                 {isEditing ? (
                                   <input
                                     value={editData.phone}
-                                    onChange={(e) =>
-                                      handleChange(e, "phone_number")
-                                    }
+                                    onChange={(e) => handleChange(e, "phone")}
                                     className="input-class rounded-lg bg-white text-black"
                                   />
                                 ) : (
@@ -537,7 +541,9 @@ const ContactList = () => {
                                 <div className="flex flex-row mx-16 mt-1">
                                   {!isLoading ? (
                                     <button
-                                      onClick={(e) => updateContact(rowData.id)}
+                                      onClick={(e) =>
+                                        updateContact(rowData.custom_id)
+                                      }
                                       className="text-green-500 hover:text-green-700 mx-auto p-0.5"
                                     >
                                       Save

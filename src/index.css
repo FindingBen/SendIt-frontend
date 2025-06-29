@@ -278,13 +278,13 @@
 
 @layer components {
   .total-analytics-cards {
-    @apply flex flex-row items-center md:w-[205px] lg:w-[256px] h-[120px] 2xl:w-[352px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative;
+    @apply flex flex-row items-center md:w-[205px] xl:w-[256px] lg:w-[235px] h-[120px] 2xl:w-[352px] 2xl:h-[155px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative;
   }
 }
 
 @layer components {
   .total-analytics-text {
-    @apply text-white text-4xl lg:text-5xl 2xl:text-6xl font-normal absolute top-5;
+    @apply text-white text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-normal absolute top-5;
   }
 }
 
