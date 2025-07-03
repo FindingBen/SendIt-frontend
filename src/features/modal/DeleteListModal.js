@@ -4,6 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import { setContactLists } from "../../redux/reducers/contactListReducer";
 import { useRedux } from "../../constants/reduxImports";
 import Loader from "../../components/LoaderSkeleton/Loader";
+import { setUserInfo } from "../../redux/reducers/userReducer";
 
 const DeleteListModal = ({
   showModal,
@@ -32,7 +33,12 @@ const DeleteListModal = ({
       let response = await axiosInstance.delete(`/api/contact_lists/`, {
         data,
       });
+      const variables = response.data;
+      console.log("DDD", variables);
       if (response.status === 200) {
+        if (variables.data === true) {
+          dispatch(setUserInfo({ shopify_connect: false }));
+        }
         // Fetch updated contact lists after deletion
         let updatedListsResponse = await axiosInstance.get(
           "/api/contact_lists/"

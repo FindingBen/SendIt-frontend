@@ -95,28 +95,7 @@ const ContactList = () => {
     return true;
   };
 
-  const createShopifyList = async (e) => {
-    setShopifyList(true);
-    try {
-      setIsLoading(true);
-      e.preventDefault();
-      let response = await axiosInstance.post(`/api/contact_lists/`, {
-        list_name: `${currentDomain}`,
-        user_id: currentUser,
-      });
-      if (response.status === 201) {
-        const newListData = [...currentContactList.contactLists, response.data];
-        dispatch(
-          setContactLists({ contactLists: newListData, listChange: true })
-        );
-        setTimeout(() => setIsLoading(false), 2000);
-      }
-    } catch (error) {
-      setIsLoading(false);
-      setShopifyList(false);
-      console.log(error);
-    }
-  };
+
 
   const deleteList = (id) => {
     setListId(id);
