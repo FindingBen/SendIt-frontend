@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import CsvModal from "../features/modal/CsvModal";
+import ShopifyUsersImportModal from "../features/modal/ShopifyUsersImportModal";
 import AddContactModal from "../features/modal/AddContactModal";
 import "../css/ContactList.css";
 import { Tooltip } from "react-tooltip";
@@ -18,12 +19,14 @@ const ContactList = () => {
     currentTokenType,
     dispatch,
     currentPackageState,
+    currentUserState,
     currentShopifyToken,
   } = useRedux();
   const [contacts, setContacts] = useState([]);
   const [contact, setContact] = useState({});
   const [showCsv, setShowCsv] = useState(false);
   const [show, setShow] = useState(false);
+  const [showShopify, setShowShopify] = useState(false);
   const [showqr, setShowQr] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -86,7 +89,7 @@ const ContactList = () => {
       setIsLoading(false);
     }
   };
-  console.log(contacts);
+
   let canAddNewrecipients = () => {
     if (contacts?.length >= currentPackageState.recipients_limit) {
       return false;
@@ -99,7 +102,7 @@ const ContactList = () => {
 
     getContacts();
   };
-
+  console.log("AAAAAAAAAAAA", currentUserState);
   // Function to handle sorting by date created
   const handleSortByDateCreated = () => {
     setSortOrder(sortOrder === "created_at" ? "-created_at" : "created_at");
@@ -126,10 +129,9 @@ const ContactList = () => {
       //const url = "/api/delete_recipient/<str:id>/";
 
       url = `/api/delete_recipient/${data.id}`;
-      console.log(data);
 
       let response = await axiosInstance.post(url, data);
-      console.log(response);
+
       if (response.status === 200) {
         setContacts(contacts.filter((contact) => contact.id !== id));
         setIsDelete(false);
@@ -165,6 +167,10 @@ const ContactList = () => {
 
   const handleCsvModal = (e) => {
     setShowCsv(true);
+  };
+
+  const handleShopifyModal = (e) => {
+    setShowShopify(true);
   };
 
   const handleModal = (e) => {
@@ -216,7 +222,6 @@ const ContactList = () => {
   };
 
   const handleSearchChange = (e) => {
-    console.log(e.target.value);
     setSearchName(e.target?.value);
   };
 
@@ -229,7 +234,7 @@ const ContactList = () => {
   const handleChange = (e, field) => {
     setEditData({ ...editData, [field]: e.target.value });
   };
-  console.log(paginatedData);
+
   return (
     <section className="min-h-screen max-w-screen items-center justify-center">
       <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-18 bg-navBlue sticky top-0 z-10">
@@ -279,7 +284,7 @@ const ContactList = () => {
       </div>
       <div className="flex-1 flex flex-col space-y-5 lg:flex-row mx-44">
         <div className="flex-1 sm:px-0">
-          <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
+          <div className="flex justify-between items-center mb-4 h-20">
             <div className="flex flex-row gap-2 mx-20">
               <Link to={"/contact_lists"}>
                 <svg
@@ -303,9 +308,9 @@ const ContactList = () => {
             </div>
             <div class="items-start shadow-md mx-20">
               <div className="inline-flex mt-1 gap-2">
-                {currentShopifyToken ? (
+                {currentShopifyToken && !currentUserState.shopify_connect ? (
                   <button
-                    onClick={bulkCreate}
+                    onClick={handleShopifyModal}
                     className={`text-white hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer
                   rounded-md flex flex-row gap-2 border-2 border-gray-800 p-2`}
                   >
@@ -650,6 +655,11 @@ const ContactList = () => {
             onClose={() => setShow(false)}
           />
           <ShowQrModal showModalQr={showqr} onClose={() => setShowQr(false)} />
+          <ShopifyUsersImportModal
+            showShopify={showShopify}
+            onClose={() => setShowShopify(false)}
+            bulkContacts={handleNewContact}
+          />
         </div>
       </div>
     </section>

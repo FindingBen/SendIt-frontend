@@ -1,31 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useRedux } from "../../constants/reduxImports";
 
-const CreditComponent = ({ smsText, recipientList, currentCredits, cost }) => {
+const CreditComponent = ({
+  status,
+  recipientList,
+  currentCredits,
+  cost,
+  estimated,
+}) => {
   const [credit, setNewCredit] = useState();
-  const [creditCost, setCreditCost] = useState();
-  const [status, setStatus] = useState(true);
 
-  useEffect(() => {
-    calculateCredit();
-    calculateStatus();
-  }, [smsText, recipientList]);
-
-  const calculateStatus = () => {
-    if (recipientList?.contact_lenght > currentCredits || currentCredits < 5) {
-      setStatus(false);
-    }
-  };
-  console.log("CREDIT", cost);
-  const calculateCredit = () => {
-    if (recipientList?.contact_lenght <= 0 || !recipientList) {
-      setNewCredit(0);
-    } else {
-      const newCredit = currentCredits - recipientList?.contact_lenght;
-      setCreditCost(recipientList?.contact_lenght);
-      setNewCredit(newCredit);
-    }
-  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -77,7 +61,7 @@ const CreditComponent = ({ smsText, recipientList, currentCredits, cost }) => {
         <p className="text-gray-200/50">
           Sending this campaign with this recipient list will result in{" "}
           <span className="text-gray-200 font-semibold">
-            {cost.estimated_credits}
+            {estimated.estimated_credits}
           </span>{" "}
           credits which will leave you with{" "}
           <span className="font-semibold text-gray-200">{credit} credits</span>{" "}
@@ -101,7 +85,9 @@ const CreditComponent = ({ smsText, recipientList, currentCredits, cost }) => {
             />
           </svg>
           <span className="text-normal text-gray-200/50">Recipients:</span>
-          <span className="text-normal text-gray-200">{cost?.recipients}</span>
+          <span className="text-normal text-gray-200">
+            {estimated?.recipients}
+          </span>
         </div>
         <div className="flex flex-row gap-1 text-start">
           <svg
@@ -120,7 +106,7 @@ const CreditComponent = ({ smsText, recipientList, currentCredits, cost }) => {
           </svg>
           <span className="text-normal text-gray-200/50">Credit cost:</span>
           <span className="text-normal text-gray-200">
-            {cost?.estimated_credits}
+            {estimated?.estimated_credits}
           </span>
         </div>
         <div className="flex flex-row gap-1 text-start">
@@ -141,7 +127,7 @@ const CreditComponent = ({ smsText, recipientList, currentCredits, cost }) => {
           <span className="text-normal text-gray-200/50">
             Remaining credits:
           </span>
-          <span className="text-normal text-gray-200">{credit}</span>
+          <span className="text-normal text-gray-200">{cost}</span>
         </div>
       </div>
     </div>

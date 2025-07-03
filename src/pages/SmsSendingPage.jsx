@@ -21,6 +21,9 @@ const SmsSendingPage = () => {
   const [showSchedule, setShowSchedule] = useState(false);
   const [linkURL, setLinkURL] = useState("");
   const [user, setUser] = useState();
+  const [credit, setNewCredit] = useState();
+  const [creditCost, setCreditCost] = useState();
+  const [status, setStatus] = useState(true);
   const [dateSchedule, setDateSchedule] = useState();
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,6 +34,7 @@ const SmsSendingPage = () => {
   const [isName, setIsname] = useState(false);
   const [isLink, setIslink] = useState(false);
   const [recipients, setRecipients] = useState([]);
+
   const [finished, setFinished] = useState(false);
   const [price, setPrice] = useState({});
   const gold_package = process.env.GOLD_PLAN;
@@ -43,7 +47,17 @@ const SmsSendingPage = () => {
 
   useEffect(() => {
     getContactLists();
+    if (
+      recipients?.contact_lenght > currentSmsPackCount.sms_count ||
+      currentSmsPackCount.sms_count < 5
+    ) {
+      setStatus(false);
+    }
   }, []);
+
+  useEffect(() => {
+    calculateCredit();
+  }, [price]);
 
   const handleAddLink = () => {
     const linkEmbed = ` #Link `;
@@ -189,6 +203,17 @@ const SmsSendingPage = () => {
     } catch (e) {
       setErrorMessage(e.response.data.error);
       console.log(e);
+    }
+  };
+
+  const calculateCredit = () => {
+    if (recipients?.contact_lenght <= 0 || !recipients) {
+      setNewCredit(0);
+    } else {
+      const newCredit =
+        currentSmsPackCount.sms_count - price?.estimated_credits;
+
+      setNewCredit(newCredit);
     }
   };
 
@@ -402,9 +427,10 @@ const SmsSendingPage = () => {
           </div>
           <div className="flex-1 p-10">
             <CreditComponent
+              status={status}
               currentCredits={currentSmsPackCount.sms_count}
-              smsText={smsText}
-              cost={price}
+              estimated={price}
+              cost={credit}
             />
 
             <div className="flex-1 mt-5">
