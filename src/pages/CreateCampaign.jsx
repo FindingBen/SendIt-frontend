@@ -264,8 +264,8 @@ const CreateCampaign = () => {
           completedSteps={completedSteps}
         /> 
       </div> */}
-      <div className="flex flex-row items-center border-b-2 border-gray-800 h-18 bg-navBlue sticky top-0 z-10">
-        <Link to={"/welcome"}>
+      <div className="flex flex-row items-center border-b-2 border-gray-800 h-16 bg-navBlue sticky top-0 z-10">
+        <Link className="mx-auto" to={"/welcome"}>
           <img
             src={require("../assets/noBgLogo.png")}
             width={65}

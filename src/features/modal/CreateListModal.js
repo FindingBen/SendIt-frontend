@@ -5,12 +5,13 @@ import {
 } from "../../redux/reducers/authSlice";
 import useAxiosInstance from "../../utils/axiosInstance";
 import { useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Loader from "../../components/LoaderSkeleton/Loader";
 import { setContactLists } from "../../redux/reducers/contactListReducer";
 import { useRedux } from "../../constants/reduxImports";
 
-const CreateListModal = ({ showModal, onClose, newList }) => {
+const CreateListModal = ({ showModal, onClose, newList, redirect }) => {
   const axiosInstance = useAxiosInstance();
   const { dispatch, currentContactList, currentUser } = useRedux();
   const [loading, setLoading] = useState(false);
@@ -19,6 +20,7 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
   const user = useSelector(selectCurrentUser);
   const [errorMsg, setErrorMsg] = useState("");
   const [listName, setListName] = useState();
+  const navigate = useNavigate();
 
   const handleListName = (e) => {
     setListName(e.target.value);
@@ -50,11 +52,16 @@ const CreateListModal = ({ showModal, onClose, newList }) => {
       if (response.status === 200 || 201) {
         setLoading(false);
         const newListData = [...currentContactList.contactLists, response.data];
-        newList(newListData);
+        if (!redirect) {
+          newList(newListData);
+        }
         dispatch(
           setContactLists({ contactLists: newListData, listChange: true })
         );
         closeModal();
+        if (redirect) {
+          navigate("/contact_lists");
+        }
       }
     } catch (error) {
       setLoading(false);

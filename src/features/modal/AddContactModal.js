@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Loader from "../../components/LoaderSkeleton/Loader";
 import Modal from "react-bootstrap/Modal";
 import useAxiosInstance from "../../utils/axiosInstance";
@@ -7,6 +7,7 @@ import "react-international-phone/style.css";
 import { PhoneInput } from "react-international-phone";
 import { useRedux } from "../../constants/reduxImports";
 import { setContactLists } from "../../redux/reducers/contactListReducer";
+import { setUserInfo } from "../../redux/reducers/userReducer";
 
 const AddContactModal = ({ showModal, onClose, newContacts }) => {
   const { currentTokenType, dispatch, currentShopifyToken } = useRedux();
@@ -16,6 +17,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
   const [loading, setLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
   const params = useParams();
+  const navigate = useNavigate();
   const [contact, setContact] = useState({
     firstName: "",
     lastName: "",
@@ -63,6 +65,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
             listChange: true,
           })
         );
+        // dispatch(setUserInfo({ shopify_connect: true }));
         closeModal();
       }
     } catch (error) {

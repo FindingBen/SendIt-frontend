@@ -9,6 +9,7 @@ import { useRedux } from "../constants/reduxImports";
 import { setContactLists } from "../redux/reducers/contactListReducer";
 import SmsPill from "../components/SmsPill/SmsPill";
 import LoaderSkeleton from "../components/LoaderSkeleton/LoaderSkeleton";
+import Search from "../components/SearchComponent/Search";
 
 const ContactList = () => {
   const axiosInstance = useAxiosInstance();
@@ -95,8 +96,6 @@ const ContactList = () => {
     return true;
   };
 
-
-
   const deleteList = (id) => {
     setListId(id);
     setShowDelete(true);
@@ -109,7 +108,7 @@ const ContactList = () => {
 
   return (
     <div class="min-h-screen max-w-screen items-center justify-center">
-      <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-18 bg-navBlue sticky top-0 z-10">
+      <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-16 bg-navBlue sticky top-0 z-10">
         <Link to={"/welcome"}>
           <img
             src={require("../assets/noBgLogo.png")}
@@ -118,39 +117,11 @@ const ContactList = () => {
             className="mt-2"
           />
         </Link>
-        <h3 className="2xl:text-3xl lg:text-2xl text-lg font-euclid font-normal text-left text-white mx-5">
+        <h3 className="2xl:text-3xl lg:text-xl text-lg font-euclid font-normal text-left text-white mx-5">
           Sendperplane
         </h3>
 
-        <div class="relative">
-          {searchValue === "" && (
-            <div className="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
-              <svg
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                />
-              </svg>
-            </div>
-          )}
-          <input
-            type="search"
-            id="default-search"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            className="block w-full p-2 ps-10 text-sm text-gray-100 border-2 border-gray-700 rounded-lg bg-ngrokGray"
-            required
-          />
-        </div>
+        <Search />
 
         <SmsPill />
       </div>
@@ -268,6 +239,7 @@ const ContactList = () => {
 
       <CreateListModal
         newList={handleNewList}
+        redirect={false}
         showModal={show}
         onClose={() => setShow(false)}
       ></CreateListModal>

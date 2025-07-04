@@ -15,8 +15,7 @@ import useAxiosInstance from "../utils/axiosInstance";
 import { ElementContext } from "../context/ElementContext";
 import Loader from "../components/LoaderSkeleton/Loader";
 import { useRedux } from "../constants/reduxImports";
-import SmsPill from "../components/SmsPill/SmsPill";
-import SvgLoader from "../components/SvgLoader";
+import Search from "../components/SearchComponent/Search";
 import PreviewPanel from "../components/PreviewComponent/PreviewPanel";
 
 const EditMessage = () => {
@@ -306,7 +305,7 @@ const EditMessage = () => {
     <section className="max-h-screen overflow-hidden w-full items-center justify-center">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
         <div className="flex-1 sm:px-0">
-          <div className="flex flex-row items-center border-b-2 border-gray-800 h-18 bg-navBlue sticky top-0 z-10">
+          <div className="flex flex-row items-center border-b-2 border-gray-800 h-16 bg-navBlue sticky top-0 z-10">
             <Link to={"/welcome"}>
               <img
                 src={require("../assets/noBgLogo.png")}
@@ -315,37 +314,11 @@ const EditMessage = () => {
                 className="mt-2"
               />
             </Link>
-            <h3 className="2xl:text-3xl lg:text-2xl text-lg font-normal text-left font-euclid text-white mx-5">
+            <h3 className="2xl:text-3xl lg:text-xl text-lg font-normal text-left font-euclid text-white mx-5">
               Sendperplane
             </h3>
 
-            <div class="relative">
-              {searchValue === "" && (
-                <div className="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
-                  <svg
-                    className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                    />
-                  </svg>
-                </div>
-              )}
-              <input
-                type="search"
-                id="default-search"
-                class="block w-full p-2 ps-10 text-sm text-gray-100 border-2 border-gray-700 rounded-lg bg-ngrokGray"
-                required
-              />
-            </div>
+            <Search />
 
             <div class="w-22 items-center relative mx-auto">
               {!isLoading ? (
@@ -353,7 +326,7 @@ const EditMessage = () => {
                   onClick={editMessage}
                   className="text-white bg-ngrokBlue hover:bg-blue-500 w-full p-1 rounded-lg hover:text-white flex flex-row font-euclid"
                 >
-                  <h2 className="text-lg mx-2">Save changes</h2>
+                  <h2 className="text-md mx-2">Save changes</h2>
                 </button>
               ) : (
                 <div role="status" className="flex-1">

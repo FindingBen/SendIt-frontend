@@ -49,13 +49,13 @@ const SmsPill = () => {
   const smsCount = currentSmsPackCount?.sms_count || 0;
   return (
     <div className="flex flex-row gap-3 items-center ml-auto mr-20">
-      <div className="flex flex-row h-10 w-52 rounded-lg relative shadow-xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800">
+      <div className="flex flex-row h-8 w-52 rounded-lg relative shadow-xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800">
         <div className="rounded-2xl text-white my-auto ml-2">
           Credits: {formatNumberWithSeparators(smsCount)}
         </div>
         <Link
           to={"/plans/"}
-          className="bg-ngrokBlue hover:bg-ngrokBlue/50 rounded-md absolute right-2 top-1.5 text-white px-2 hover:cursor-pointer"
+          className="bg-ngrokBlue hover:bg-ngrokBlue/50 rounded-md absolute right-2 text-white px-2 hover:cursor-pointer"
         >
           <p className="my-auto mx-auto">Top up</p>
         </Link>
@@ -63,7 +63,7 @@ const SmsPill = () => {
       <div ref={dropdownRef} className="relative">
         <div
           onClick={() => setDropdownOpen((open) => !open)}
-          className="flex flex-row gap-1 rounded-lg h-10 hover:bg-slate-500 cursor-pointer relative shadow-xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 px-2"
+          className="flex flex-row gap-1 rounded-lg h-8 hover:bg-slate-500 cursor-pointer relative shadow-xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 px-2"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
