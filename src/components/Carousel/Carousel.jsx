@@ -201,10 +201,12 @@ const Carousel = ({
       >
         Images from shopify
       </label>
-      <snap className="text-start">
+      <snap className="text-start text-white/60">
         Drag and move images into position you want them to appear on carousel.
       </snap>
-      <snap className="text-start">You can have up to 5 images!</snap>
+      <snap className="text-start text-white/60">
+        You can have up to 5 images!
+      </snap>
       <div className="mt-2">
         <DndContext
           collisionDetection={closestCenter}
@@ -244,7 +246,7 @@ const Carousel = ({
         </DndContext>
         <button
           type="button"
-          className="bg-cyan-600 hover:bg-cyan-400  text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded-lg"
+          className="bg-ngrokBlue hover:bg-blue-400  text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded-lg"
           value={false}
           onClick={saveImg}
           style={{ marginRight: "10px" }}

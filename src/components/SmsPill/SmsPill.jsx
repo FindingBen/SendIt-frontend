@@ -49,15 +49,15 @@ const SmsPill = () => {
   const smsCount = currentSmsPackCount?.sms_count || 0;
   return (
     <div className="flex flex-row gap-3 items-center ml-auto mr-20">
-      <div className="flex flex-row h-8 w-52 rounded-lg relative shadow-xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800">
+      <div className="flex flex-row h-8 w-52 rounded-lg relative shadow-xl bg-ngrokGray">
         <div className="rounded-2xl text-white my-auto ml-2">
           Credits: {formatNumberWithSeparators(smsCount)}
         </div>
         <Link
           to={"/plans/"}
-          className="bg-ngrokBlue hover:bg-ngrokBlue/50 rounded-md absolute right-2 text-white px-2 hover:cursor-pointer"
+          className="bg-ngrokBlue hover:bg-ngrokBlue/50 rounded-md absolute mt-1 right-2 text-white px-2 hover:cursor-pointer"
         >
-          <p className="my-auto mx-auto">Top up</p>
+          <p className="mx-auto">Top up</p>
         </Link>
       </div>
       <div ref={dropdownRef} className="relative">

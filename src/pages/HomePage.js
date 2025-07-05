@@ -135,7 +135,6 @@ const HomePage = () => {
       console.error(error);
     }
   };
-  console.log(currentMessages);
   return (
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex flex-col">
@@ -168,7 +167,7 @@ const HomePage = () => {
                 />
               </div>
               <div className="col-span-3 row-span-2 row-start-2">
-                <div className="flex flex-col items-start gap-2 border-2 bg-mainBlue border-gray-800 rounded-2xl p-3 col-span-5 row-start-2 h-full">
+                <div className="flex flex-col items-start gap-2 bg-ngrokGray rounded-2xl p-3 col-span-5 row-start-2 h-full">
                   <span className="text-gray-200 text-xl font-medium">
                     Recent performing campaigns
                   </span>

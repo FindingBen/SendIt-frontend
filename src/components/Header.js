@@ -74,7 +74,7 @@ const Header = () => {
           >
             <div
               className={`flex flex-row gap-2 rounded-md p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 ${
-                activeNav === Menu.title ? "bg-white text-black" : ""
+                activeNav === Menu.title ? "bg-ngrokGray text-white" : ""
               } text-gray-300 xl:text-sm text-xs items-center gap-x-3 
         ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"} `}
             >

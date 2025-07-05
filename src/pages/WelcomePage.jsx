@@ -289,7 +289,7 @@ const WelcomePage = () => {
                 </span>
                 {campaigns.length > 0 ? (
                   <>
-                    <div class="grid grid-cols-5 w-full gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
+                    <div class="grid grid-cols-5 w-full gap-4 text-white/70 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
                       <div>Name</div>
                       <div>Engagement</div>
 
@@ -303,7 +303,7 @@ const WelcomePage = () => {
                       const evenRow = index % 2 === 0;
                       return (
                         <motion.div
-                          className={` text-white w-[100%] font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
+                          className={` w-[100%] font-semibold text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
                             evenRow
                               ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
                               : "bg-mainBlue"
