@@ -11,6 +11,9 @@ import Statistics from "../components/Analytics/Statistics";
 import formatDate from "../utils/helpers/dateFunction";
 import PeriodicStats from "../components/Analytics/PeriodicStats";
 import ButtonAnalytics from "../components/Analytics/ButtonAnalytics";
+import { Link } from "react-router-dom";
+import Search from "../components/SearchComponent/Search";
+import SmsPill from "../components/SmsPill/SmsPill";
 
 const AnalyticsPage = () => {
   const axiosInstance = useAxiosInstance();
@@ -83,9 +86,26 @@ const AnalyticsPage = () => {
   };
 
   return (
-    <section className="h-screen w-[100%] items-center justify-center overflow-hidden">
+    <section className="min-h-screen w-full items-center justify-center">
       <div className="flex flex-col">
-        <div className="flex flex-col">
+        <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-16 bg-navBlue sticky top-0 z-10">
+          <Link to={"/welcome"}>
+            <img
+              src={require("../assets/noBgLogo.png")}
+              width={65}
+              alt="logo"
+              className="mt-2"
+            />
+          </Link>
+          <h3 className="2xl:text-3xl lg:text-xl text-lg font-normal text-left font-euclid text-white mx-5">
+            Sendperplane
+          </h3>
+
+          <Search />
+
+          <SmsPill />
+        </div>
+        <div className="flex flex-col ml-44">
           <div class="flex-1">
             <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
               <h3 class="xl:text-2xl text-xl font-normal text-left text-white mx-20">
@@ -117,9 +137,9 @@ const AnalyticsPage = () => {
               <div className="w-full">
                 <ButtonAnalytics sms={sms} />
               </div>
-              <div className="w-[100%]">
+              {/* <div className="w-[100%]">
                 <Statistics views={views} />
-              </div>
+              </div> */}
             </div>
             <div className="grid grid-cols-2 grid-rows-1 gap-2 mt-2 mx-20">
               <div className="flex-1 w-full">

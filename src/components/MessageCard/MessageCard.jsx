@@ -2,10 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export const MessageCard = ({
+  deleteMessage,
   message,
   duplicateMessage,
-  toggleAnalyticsDrawer,
-  deleteMessage,
   archiveMsg,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SvgLoader from "../SvgLoader";
-import HalfPieChart from "../../utils/chart/HalfPieChart";
+import HalfPieChart from "../../utils/chart/SmsActivityChart";
 import AnalyticsBarProgress from "../Progress/AnalyticsBarProgress";
 import { Link } from "react-router-dom";
 import CampaignStatModal from "../../features/modal/CampaignStatModal";
