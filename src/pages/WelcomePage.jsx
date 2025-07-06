@@ -167,18 +167,6 @@ const WelcomePage = () => {
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex flex-col">
         <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-16 bg-navBlue sticky top-0 z-10">
-          <Link to={"/welcome"}>
-            <img
-              src={require("../assets/noBgLogo.png")}
-              width={65}
-              alt="logo"
-              className="mt-2"
-            />
-          </Link>
-          <h3 className="2xl:text-3xl lg:text-xl text-lg font-euclid font-normal text-left text-white mx-5">
-            Sendperplane
-          </h3>
-
           <Search />
 
           <SmsPill />
@@ -212,7 +200,7 @@ const WelcomePage = () => {
 
           <div className="grid grid-cols-5 gap-4 mx-20 mt-4">
             <div className="col-span-5 flex flex-row items-start relative row-start-1 gap-4">
-              <div className="bg-ngrokGray rounded-xl p-2 h-[150px]">
+              <div className="bg-ngrokGray rounded-lg p-4 h-[180px]">
                 <span className="font-euclid text-xl text-gray-100 mb-2 block text-start">
                   System status
                 </span>
@@ -259,7 +247,7 @@ const WelcomePage = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col bg-ngrokGray rounded-xl p-2 h-[150px] w-[220px]">
+              <div className="flex flex-col bg-ngrokGray rounded-lg p-4 h-[180px] w-[220px]">
                 <span className="font-euclid text-xl text-gray-100 mb-2 block text-start">
                   Start building
                 </span>
@@ -283,7 +271,7 @@ const WelcomePage = () => {
               </div>
             </div>
             <div className="col-span-3 row-span-1 row-start-2">
-              <div className="flex flex-col gap-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 rounded-2xl p-6 col-span-5 row-start-2 h-[300px] overflow-hidden">
+              <div className="flex flex-col gap-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 rounded-lg p-6 col-span-5 row-start-2 h-[300px] overflow-hidden">
                 <span className="text-white text-xl font-medium font-euclid text-start">
                   Top Performing Campaigns
                 </span>
@@ -304,7 +292,7 @@ const WelcomePage = () => {
                       {campaigns.map((campaign, index) => (
                         <motion.div
                           key={campaign.id}
-                          className={`grid grid-cols-5 gap-4 text-sm text-white/90 py-2 px-1 rounded-md hover:bg-[#1C1C3A] transition-colors ${
+                          className={`grid grid-cols-5 gap-4 text-sm text-white/90 py-2 px-1 rounded-lg hover:bg-[#1C1C3A] transition-colors ${
                             index % 2 === 0 ? "bg-[#191936]" : "bg-transparent"
                           }`}
                         >
@@ -335,7 +323,7 @@ const WelcomePage = () => {
               </div>
             </div>
             <div className="col-span-2 row-span-1 col-start-4 row-start-2">
-              <div className="flex flex-col items-start gap-2 border-2 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 rounded-2xl p-3 col-span-3 h-[300px] overflow-y-auto">
+              <div className="flex flex-col items-start gap-2 border-2 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 rounded-lg p-3 col-span-3 h-[300px] overflow-y-auto">
                 <span className="text-gray-200 text-xl font-medium">
                   Recent activity
                 </span>
@@ -348,7 +336,7 @@ const WelcomePage = () => {
                     {notifications.map((notification, idx) => (
                       <div
                         key={idx}
-                        className="flex bg-ngrokGray rounded-xl justify-between w-full items-center text-start text-gray-200/70 border-b-2 border-gray-800 p-2"
+                        className="flex bg-ngrokGray rounded-lg justify-between w-full items-center text-start text-gray-200/70 border-b-2 border-gray-800 p-2"
                       >
                         {notification?.notif_type === "success" ? (
                           <span className="rounded-full bg-green-500">
@@ -398,7 +386,7 @@ const WelcomePage = () => {
 
             <div className="col-span-5 row-start-3 mb-10">
               <div
-                className={`bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 shadow-md border-2 rounded-2xl`}
+                className={`bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 shadow-md border-2 rounded-lg`}
               >
                 <div className="flex flex-row relative border-b border-gray-800">
                   <div className="flex flex-col">
@@ -437,7 +425,7 @@ const WelcomePage = () => {
                               evenRow
                                 ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
                                 : "bg-mainBlue"
-                            } ${isLastItem ? "rounded-b-2xl" : ""}`}
+                            } ${isLastItem ? "rounded-b-lg" : ""}`}
                             key={message.id}
                           >
                             <MessageCard

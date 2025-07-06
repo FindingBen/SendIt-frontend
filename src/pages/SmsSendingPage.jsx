@@ -231,18 +231,6 @@ const SmsSendingPage = () => {
     <section className="h-screen overflow-hidden w-100 items-center justify-center">
       <div className="flex flex-col space-y-5 lg:space-y-0">
         <div className="flex flex-row items-center border-b-2 border-gray-800 h-16 bg-navBlue sticky top-0 z-10">
-          <Link to={"/welcome"}>
-            <img
-              src={require("../assets/noBgLogo.png")}
-              width={65}
-              alt="logo"
-              className="mt-2"
-            />
-          </Link>
-          <h3 className="2xl:text-3xl lg:text-xl text-lg font-normal text-left text-white mx-5">
-            Sendperplane
-          </h3>
-
           <Search />
 
           <SmsPill />

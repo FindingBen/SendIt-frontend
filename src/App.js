@@ -101,10 +101,10 @@ function App() {
                     element={<ContactList></ContactList>}
                   />
                   <Route path="/plans/" element={<Plans></Plans>} />
-                  <Route
+                  {/* <Route
                     path="/campaign_stats/"
                     element={<CampaignsStatsPage />}
-                  />
+                  /> */}
                   <Route
                     path="/edit_message/:id"
                     element={<EditMessage></EditMessage>}

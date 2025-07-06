@@ -226,18 +226,6 @@ const ContactList = () => {
   return (
     <section className="min-h-screen max-w-screen items-center justify-center">
       <div className="flex flex-row items-center border-b-2 border-gray-800 h-16 bg-navBlue sticky top-0 z-10">
-        <Link to={"/welcome"}>
-          <img
-            src={require("../assets/noBgLogo.png")}
-            width={65}
-            alt="logo"
-            className="mt-2"
-          />
-        </Link>
-        <h3 className="2xl:text-3xl lg:text-xl text-lg font-euclid font-normal text-left text-white mx-5">
-          Sendperplane
-        </h3>
-
         <Search />
 
         <SmsPill />
@@ -591,7 +579,7 @@ const ContactList = () => {
                   (_, index) => index + 1
                 ).map((page) => (
                   <div
-                    className="btn btn-outline-secondary ml-2 bg-darkBlue"
+                    className="btn ml-2 bg-ngrokGray border-2 border-gray-800 text-white"
                     data-mdb-ripple-color="dark"
                     key={page}
                     id="paginationBtn"

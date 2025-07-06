@@ -57,13 +57,12 @@ const HomePage = () => {
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
-  const formattedStartDate = formatDate(yesterday);
-  const formattedEndDate = formatDate(today);
 
   useEffect(() => {
     // Fetch data only on initial load and when user is logged in
     getNotes();
     //getCampaignStats();
+    getCampaigns();
 
     setInitialLoad(false);
   }, []);
@@ -80,7 +79,7 @@ const HomePage = () => {
 
   const itemsPerPage = 2;
   const totalPages = Math.ceil(activeCampaigns?.length / itemsPerPage);
-  console.log(totalValues);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
     setInitialLoad(false);
@@ -95,7 +94,6 @@ const HomePage = () => {
       let response = await axiosInstance.get(`/api/active_campaigns/`);
 
       if (response.status === 200) {
-        console.log(response.data);
         setActiveCampaigns(response.data.messages);
         setInitialLoad(false);
       } else if (response.statusText === "Unauthorized") {
@@ -139,18 +137,6 @@ const HomePage = () => {
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex flex-col">
         <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-16 bg-navBlue sticky top-0 z-10">
-          <Link to={"/welcome"}>
-            <img
-              src={require("../assets/noBgLogo.png")}
-              width={65}
-              alt="logo"
-              className="mt-2"
-            />
-          </Link>
-          <h3 className="2xl:text-3xl lg:text-xl text-lg font-normal text-left font-euclid text-white mx-5">
-            Sendperplane
-          </h3>
-
           <Search />
 
           <SmsPill />
@@ -167,38 +153,51 @@ const HomePage = () => {
                 />
               </div>
               <div className="col-span-3 row-span-2 row-start-2">
-                <div className="flex flex-col items-start gap-2 bg-ngrokGray rounded-2xl p-3 col-span-5 row-start-2 h-full">
+                <div className="flex flex-col items-start gap-2 bg-ngrokGray rounded-lg p-3 col-span-5 row-start-2 h-full">
                   <span className="text-gray-200 text-xl font-medium">
-                    Recent performing campaigns
+                    Active campaigns
                   </span>
-                  {campaigns.length > 0 ? (
-                    <>
-                      <div class="grid grid-cols-5 w-full gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
-                        <div>Name</div>
-                        <div>Engagement</div>
 
-                        <div>Performance</div>
-                        <div>Clicks</div>
-                        <div>Audience</div>
-                      </div>
+                  <div class="grid grid-cols-5 w-full gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-700">
+                    <div>Name</div>
+                    <div>Created at</div>
 
-                      {campaigns?.map((campaign, index) => {
-                        const isLastItem = index === campaigns?.length - 1;
+                    <div>Analytics</div>
+                    <div>Status</div>
+                    <div>Action</div>
+                  </div>
+
+                  {activeCampaigns?.length > 0 && displayedItems ? (
+                    <div className="w-full">
+                      {displayedItems?.map((message, index) => {
+                        const isLastItem = index === displayedItems?.length - 1;
                         const evenRow = index % 2 === 0;
                         return (
                           <motion.div
-                            className={` text-white w-[100%] font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
-                              evenRow
-                                ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
-                                : "bg-mainBlue"
-                            } ${isLastItem ? "rounded-b-2xl" : ""}`}
-                            key={campaign.id}
+                            className={`text-white font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-700`}
+                            key={message.id}
                           >
-                            <CampaignCard campaign={campaign} />
+                            <MessageCard
+                              message={message}
+                              //archiveMsg={msgArchive}
+                              //toggleAnalyticsDrawer={toggleAnalyticsDrawer}
+                              //deleteMessage={deleteMessage}
+                              // duplicateMessage={duplicateMessage({
+                              //   messageId: message.id,
+                              //   axiosInstance,
+                              //   currentUser,
+                              //   BASE_URL,
+                              //   currentMessages,
+                              //   setShowCopy,
+                              //   setLoading,
+                              //   setMessages,
+                              //   dispatch,
+                              // })}
+                            />
                           </motion.div>
                         );
                       })}
-                    </>
+                    </div>
                   ) : (
                     <div className="flex flex-col items-center mx-auto">
                       <svg
@@ -225,18 +224,18 @@ const HomePage = () => {
               <div className="col-span-2 row-span-2 col-start-4 row-start-2">
                 <SmsActivityChart analytics_values={totalValues} />
               </div>
-              <div className="col-span-5 row-span-2 row-start-4  mb-5">
+              <div className="col-span-5 row-span-2 row-start-4 mb-5">
                 <div
-                  className={`bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 shadow-md border-2 rounded-2xl`}
+                  className={`bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 shadow-md border-2 rounded-lg`}
                 >
                   <div className="flex flex-row relative border-b border-gray-800">
                     <div className="flex flex-col">
                       <p className="text-white font-normal font-euclid text-xl xl:text-xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
-                        Active campaigns
+                        Recently completed campaigns
                       </p>
                       <p className="text-white/60 text-sm font-euclid my-3 mt-1 ml-5">
-                        Your active campaigns. Campaign runs for 5 days, then it
-                        gets archived and goes to recent performing campaigns.
+                        Your recently completed campaigns. Campaign runs for 5
+                        days, then it gets archived and goes to this table.
                       </p>
                     </div>
                     <button
@@ -249,43 +248,28 @@ const HomePage = () => {
                   <div class="flex flex-col">
                     <div class="grid grid-cols-4 lg:grid-cols-5 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
                       <div>Name</div>
-                      <div className="md:hidden lg:block">Create at</div>
-                      <div>Analytics</div>
-                      <div>Status</div>
-                      <div>Action</div>
+                      <div>Engagement</div>
+                      <div>Performance</div>
+                      <div>Clicks</div>
+                      <div>Audience</div>
                     </div>
-                    {activeCampaigns?.length > 0 && displayedItems ? (
+                    {campaigns?.length > 0 && displayedItems ? (
                       <div>
-                        {displayedItems?.map((message, index) => {
-                          const isLastItem =
-                            index === displayedItems?.length - 1;
+                        {campaigns?.map((campaign, index) => {
+                          const isLastItem = index === campaigns?.length - 1;
                           const evenRow = index % 2 === 0;
                           return (
                             <motion.div
-                              className={`text-white font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
-                                evenRow
-                                  ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
-                                  : "bg-mainBlue"
-                              } ${isLastItem ? "rounded-b-2xl" : ""}`}
-                              key={message.id}
+                              key={campaign.id}
+                              className={`grid grid-cols-5 gap-4 text-sm text-white/90 py-2 px-1 ${
+                                isLastItem ? "rounded-b-lg" : ""
+                              } hover:bg-[#1C1C3A] transition-colors ${
+                                index % 2 === 0
+                                  ? "bg-[#191936]"
+                                  : "bg-transparent"
+                              }`}
                             >
-                              <MessageCard
-                                message={message}
-                                //archiveMsg={msgArchive}
-                                //toggleAnalyticsDrawer={toggleAnalyticsDrawer}
-                                //deleteMessage={deleteMessage}
-                                // duplicateMessage={duplicateMessage({
-                                //   messageId: message.id,
-                                //   axiosInstance,
-                                //   currentUser,
-                                //   BASE_URL,
-                                //   currentMessages,
-                                //   setShowCopy,
-                                //   setLoading,
-                                //   setMessages,
-                                //   dispatch,
-                                // })}
-                              />
+                              <CampaignCard campaign={campaign} />
                             </motion.div>
                           );
                         })}

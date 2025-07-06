@@ -29,7 +29,7 @@ export const MessageCard = ({
 
   return (
     <div
-      className={`grid grid-cols-4 lg:grid-cols-5 gap-3 mb-3 2xl:text-lg h-10 items-center`}
+      className={`grid grid-cols-4 lg:grid-cols-5 gap-3 2xl:text-lg h-10 items-center`}
       ref={dropdownRef}
     >
       <div className="text-white/90">{message.message_name}</div>
@@ -74,7 +74,7 @@ export const MessageCard = ({
             Scheduled
           </span>
         ) : (
-          <span class="text-xs 2xl:text-normal font-medium leading-none text-center text-white bg-gradient-to-r from-green-500 to-green-800 rounded-lg px-3 lg:py-1">
+          <span class="text-xs 2xl:text-normal font-medium leading-none text-center text-white bg-green-700 rounded-lg px-3 lg:py-1">
             Sent
           </span>
         )}
