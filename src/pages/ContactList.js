@@ -30,9 +30,10 @@ const ContactList = () => {
   const [showqr, setShowQr] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [isDelete, setIsDelete] = useState(false);
+  const [listEmpty, setListEmpty] = useState(false);
   const [loader, setLoader] = useState(true);
   const [contactId, setContactId] = useState();
+  const [deletedContact, setDeletedContact] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [sortOrder, setSortOrder] = useState("first_name");
@@ -53,7 +54,7 @@ const ContactList = () => {
 
   useEffect(() => {
     getContacts();
-  }, [errorMsg, successMsg]);
+  }, [errorMsg, successMsg, deletedContact]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -63,7 +64,6 @@ const ContactList = () => {
     try {
       let url = `/api/contact_list/${params.id}`;
       const queryParts = [];
-      console.log("HERE");
       // Check if a sorting parameter is present, then include it in the URL
       // Add sorting parameter if set
       if (sortOrder) queryParts.push(`sort_by=${sortOrder}`);
@@ -79,6 +79,9 @@ const ContactList = () => {
 
       if (response.status === 200) {
         console.log(response.data);
+        if (response.data.contact_list_recipients_nr === 0) {
+          setListEmpty(true);
+        }
         setContacts(response.data.customers);
       }
       setLoader(false);
@@ -102,7 +105,6 @@ const ContactList = () => {
 
     getContacts();
   };
-  console.log("AAAAAAAAAAAA", currentUserState);
   // Function to handle sorting by date created
   const handleSortByDateCreated = () => {
     setSortOrder(sortOrder === "created_at" ? "-created_at" : "created_at");
@@ -118,8 +120,6 @@ const ContactList = () => {
     getContacts();
   };
   let deleteContact = async (id) => {
-    setIsDelete(true);
-
     try {
       const data = {
         id: id,
@@ -134,7 +134,7 @@ const ContactList = () => {
 
       if (response.status === 200) {
         setContacts(contacts.filter((contact) => contact.id !== id));
-        setIsDelete(false);
+        setDeletedContact(true);
         dispatch(
           setContactLists({
             contactLists: [],
@@ -143,25 +143,11 @@ const ContactList = () => {
         );
       }
     } catch (error) {
+      setDeletedContact(false);
       setErrorMsg(error.response.data.error[0]["message"]);
       setTimeout(() => {
         setErrorMsg();
       }, 3000);
-    }
-  };
-
-  const bulkCreate = async () => {
-    try {
-      const body = {
-        list_id: params.id,
-      };
-      let response = await axiosInstance.post(
-        "/api/create_bulk_contacts/",
-        body
-      );
-      console.log(response);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -182,6 +168,7 @@ const ContactList = () => {
   };
 
   const handleNewContact = (contact) => {
+    setListEmpty(false);
     setContacts(contact);
   };
 
@@ -308,7 +295,9 @@ const ContactList = () => {
             </div>
             <div class="items-start shadow-md mx-20">
               <div className="inline-flex mt-1 gap-2">
-                {currentShopifyToken && !currentUserState.shopify_connect ? (
+                {currentShopifyToken &&
+                !currentUserState.shopify_connect &&
+                listEmpty ? (
                   <button
                     onClick={handleShopifyModal}
                     className={`text-white hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer

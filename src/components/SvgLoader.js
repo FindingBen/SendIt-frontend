@@ -4,7 +4,7 @@ const SvgLoader = ({ width, height }) => {
   return (
     <svg
       aria-hidden="true"
-      class={`w-${width} h-${height} animate-spin fill-cyan-700`}
+      class={`w-${width} h-${height} animate-spin fill-ngrokBlue`}
       viewBox="0 0 100 101"
       xmlns="http://www.w3.org/2000/svg"
     >

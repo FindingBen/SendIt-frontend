@@ -14,12 +14,12 @@ const TooltipContentStat = () => (
 
 const ButtonAnalytics = ({ sms }) => {
   return (
-    <div className="p-2 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 ml-[14%] w-[86%] h-full flex-1 rounded-2xl relative">
+    <div className="p-2 bg-ngrokGray border-gray-800 h-full flex-1 rounded-lg relative">
       {sms?.has_button ? (
         <div className="grid grid-cols-2 grid-rows-2 mt-4">
           <div className="flex flex-col p-1 relative">
             {sms?.button_1_name ? (
-              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[155px] 2xl:w-[220px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+              <div className="p-2 flex flex-row items-center rounded-2xl h-[100px] 2xl:h-[140px] w-[155px] 2xl:w-[220px] border-2 border-gray-500 relative">
                 <div className="flex items-start p-2">
                   {sms ? (
                     <motion.div
@@ -30,7 +30,7 @@ const ButtonAnalytics = ({ sms }) => {
                         delay: 0.1,
                         ease: [0, 0.41, 0.1, 1.01],
                       }}
-                      className="text-white absolute top-5 text-2xl 2xl:text-3xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
+                      className="text-ngrokBlue absolute top-5 text-2xl 2xl:text-3xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
                     >
                       {sms?.button_1}
                     </motion.div>
@@ -40,7 +40,7 @@ const ButtonAnalytics = ({ sms }) => {
                     </p>
                   )}
                 </div>
-                <p className="text-white text-normal 2xl:text-lg font-semibold text-justify absolute right-2 bottom-2">
+                <p className="text-white text-normal 2xl:text-lg font-medium text-justify absolute right-2 bottom-2">
                   {sms?.button_1_name}
                 </p>
 
@@ -52,7 +52,7 @@ const ButtonAnalytics = ({ sms }) => {
           </div>
           <div className="flex flex-col p-1 relative">
             {sms?.button_2_name ? (
-              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[155px] 2xl:w-[220px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[155px] 2xl:w-[220px] rounded-2xl border-2 border-gray-500 relative">
                 <div className="flex items-start p-2">
                   {sms ? (
                     <motion.div
@@ -63,7 +63,7 @@ const ButtonAnalytics = ({ sms }) => {
                         delay: 0.1,
                         ease: [0, 0.41, 0.1, 1.01],
                       }}
-                      className="text-white absolute top-5 text-2xl 2xl:text-3xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
+                      className="text-ngrokBlue absolute top-5 text-2xl 2xl:text-3xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
                     >
                       {sms?.button_2}
                     </motion.div>
@@ -73,7 +73,7 @@ const ButtonAnalytics = ({ sms }) => {
                     </p>
                   )}
                 </div>
-                <p className="text-white text-normal 2xl:text-lg font-semibold text-justify absolute right-2 bottom-2">
+                <p className="text-white text-normal 2xl:text-lg font-medium text-justify absolute right-2 bottom-2">
                   {sms?.button_2_name}
                 </p>
 
@@ -85,7 +85,7 @@ const ButtonAnalytics = ({ sms }) => {
           </div>
           <div className="flex flex-col p-1 relative">
             {sms?.button_3_name ? (
-              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[155px] 2xl:w-[220px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[155px] 2xl:w-[220px] rounded-2xl bg-ngrokGray border-2 border-gray-500 relative">
                 <div className="flex items-start p-2">
                   {sms ? (
                     <motion.div
@@ -96,7 +96,7 @@ const ButtonAnalytics = ({ sms }) => {
                         delay: 0.1,
                         ease: [0, 0.41, 0.1, 1.01],
                       }}
-                      className="text-white absolute top-5 text-2xl 2xl:text-3xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
+                      className="text-ngrokBlue absolute top-5 text-2xl 2xl:text-3xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
                     >
                       {sms?.button_3}
                     </motion.div>
@@ -106,7 +106,7 @@ const ButtonAnalytics = ({ sms }) => {
                     </p>
                   )}
                 </div>
-                <p className="text-white text-sm 2xl:text-lg font-semibold text-justify absolute right-2 bottom-2">
+                <p className="text-white text-normal 2xl:text-lg font-medium text-justify absolute right-2 bottom-2">
                   {sms?.button_3_name}
                 </p>
 
@@ -118,7 +118,7 @@ const ButtonAnalytics = ({ sms }) => {
           </div>
           <div className="flex flex-col p-1 relative">
             {sms?.button_4_name != null ? (
-              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[155px] 2xl:w-[220px] rounded-2xl bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 relative">
+              <div className="p-2 flex flex-row items-center h-[100px] 2xl:h-[140px] w-[155px] 2xl:w-[220px] rounded-2xl bg-ngrokGray border-2 border-gray-500 relative">
                 <div className="flex items-start p-2">
                   {sms ? (
                     <motion.div
@@ -129,7 +129,7 @@ const ButtonAnalytics = ({ sms }) => {
                         delay: 0.1,
                         ease: [0, 0.41, 0.1, 1.01],
                       }}
-                      className="text-white absolute top-5 text-2xl 2xl:text-3xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
+                      className="text-ngrokBlue absolute top-5 text-2xl 2xl:text-3xl font-semibold ml-2 duration-300 opacity-100 transition-opacity"
                     >
                       {sms?.button_4}
                     </motion.div>
@@ -139,7 +139,7 @@ const ButtonAnalytics = ({ sms }) => {
                     </p>
                   )}
                 </div>
-                <p className="text-white text-sm 2xl:text-lg font-semibold text-justify absolute right-2 bottom-2">
+                <p className="text-white text-normal 2xl:text-lg font-semibold text-justify absolute right-2 bottom-2">
                   {sms?.button_4_name}
                 </p>
               </div>

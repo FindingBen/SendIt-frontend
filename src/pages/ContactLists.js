@@ -69,15 +69,6 @@ const ContactList = () => {
             listChange: false,
           })
         );
-        setListId();
-        const recipientsPercentages =
-          (response.data.recipients / response.data.limits.recipients) * 100;
-        const contactListsPercentage =
-          (response.data.data.length / response.data.limits.contact_lists) *
-          100;
-
-        setContactListsPercentage(contactListsPercentage);
-        setRecipientsPercentage(recipientsPercentages);
       }
     } catch (error) {
       console.log(error);
@@ -171,11 +162,7 @@ const ContactList = () => {
                     >
                       <div>{conList.list_name}</div>
                       <div>{conList.created_at}</div>
-                      {!currentShopifyToken ? (
-                        <div>{conList.contact_lenght}</div>
-                      ) : (
-                        <div>{recipients}</div>
-                      )}
+                      <div>{conList.contact_lenght ?? 0}</div>
                       <div className="flex flex-row mx-16 gap-3">
                         <div className="rounded-md mx-auto my-auto p-0.5 hover:bg-ngrokBlue cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
                           <Link
