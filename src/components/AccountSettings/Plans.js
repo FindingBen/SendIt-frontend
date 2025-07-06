@@ -4,6 +4,7 @@ import { useLocation, Link } from "react-router-dom";
 import useAxiosInstance from "../../utils/axiosInstance";
 import ModalComponent from "../ModalComponent";
 import SmsPill from "../SmsPill/SmsPill";
+import Search from "../SearchComponent/Search";
 
 const Plans = () => {
   const { currentUser, dispatch, currentToken } = useRedux();
@@ -81,94 +82,23 @@ const Plans = () => {
     }
   };
 
-  const handleMessagesCount = (e) => {
-    setMessages(e.target.value);
-  };
-
-  const handleRecipientsCount = (e) => {
-    setRecipients(e.target.value);
-  };
-
-  const handleBudgetValue = (e) => {
-    setBudget(e.target.value);
-  };
-
-  const calculatePackage = async (e) => {
-    setIsLoading(true);
-    e.preventDefault();
-    try {
-      const response = await axiosInstance.post("/stripe/calculate_plan/", {
-        messages_count: messages,
-        customers_count: recipients,
-        budget: budget, // You might want to add a budget input field
-      });
-
-      if (response.status === 200) {
-        setCalculatedPackage(response.data.recommended_package);
-        setIsLoading(false);
-      } else {
-        console.error("Error calculating plan usage");
-        setIsLoading(false);
-      }
-    } catch (error) {
-      console.error("Error calculating plan usage", error);
-      setIsLoading(false);
-    }
-  };
-
   const elementsArray = Array.from(
     { length: packagePlan.length },
     (_, index) => index
   );
+  console.log(packagePlan);
 
   return (
     <section className="min-h-screen w-full items-center justify-center">
-      <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-18 bg-navBlue sticky top-0 z-10">
-        <Link to={"/welcome"}>
-          <img
-            src={require("../../assets/noBgLogo.png")}
-            width={65}
-            alt="logo"
-            className="mt-2"
-          />
-        </Link>
-        <h3 className="2xl:text-3xl lg:text-2xl text-lg font-normal text-left font-euclid text-white mx-5">
-          Sendperplane
-        </h3>
-
-        <div class="relative">
-          {searchValue === "" && (
-            <div className="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
-              <svg
-                className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                />
-              </svg>
-            </div>
-          )}
-          <input
-            type="search"
-            id="default-search"
-            class="block w-full p-2 ps-10 text-sm text-gray-100 border-2 border-gray-700 rounded-lg bg-ngrokGray"
-            required
-          />
-        </div>
+      <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-16 bg-navBlue sticky top-0 z-10">
+        <Search />
 
         <SmsPill />
       </div>
+
       <div className="flex-1 items-center justify-center mx-44">
-        <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
-          <h3 class="xl:text-2xl lg:text-xl text-normal font-euclid text-left text-white mx-20">
+        <div className="flex justify-between items-center h-20 mx-20">
+          <h3 class="xl:text-2xl lg:text-xl text-normal font-euclid text-left text-white">
             Package plans
           </h3>
         </div>
@@ -188,7 +118,7 @@ const Plans = () => {
                 loadingState[packagePlan[index]?.id]
                   ? "opacity-75"
                   : "opacity-100"
-              } max-h-[428px] w-[260px] rounded-3xl p-8 transition ease-in-out delay-90 bg-gradient-to-b from-lighterMainBlue to-mainBlue hover:text-gradient hover:-translate-y-1 hover:scale-110 duration-300 cursor-pointer ${
+              } max-h-[428px] w-[260px] rounded-3xl p-8 transition ease-in-out delay-90 bg-ngrokGray hover:text-gradient hover:-translate-y-1 hover:scale-110 duration-300 cursor-pointer ${
                 packagePlan[index]?.plan_type === "Gold package"
                   ? "hover:bg-yellow-700"
                   : packagePlan[index]?.plan_type === "Silver package"
@@ -391,62 +321,6 @@ const Plans = () => {
               </ul>
             </div>
           ))}
-
-          {/* <div
-            className={`absolute top-10 -right-6 h-[428px] w-[260px] bg-slate-800 rounded-3xl`}
-          >
-            <div className="flex flex-col p-4">
-              <label
-                for="first_name"
-                className="block mb-2 text-sm text-left font-normal text-gray-300 dark:text-white"
-              >
-                How much is your budget per month?
-              </label>
-              <input
-                type="text"
-                id="first_name"
-                onChange={handleBudgetValue}
-                className="block bg-white duration-200 text-black font-light py-2 px-4 rounded-md"
-                placeholder="For ex 1000 dkk a month"
-              />
-              <label
-                for="first_name"
-                className="block mb-2 mt-2 text-sm text-left font-normal text-gray-300 dark:text-white"
-              >
-                How many recipients do you have?
-              </label>
-              <input
-                onChange={handleRecipientsCount}
-                type="text"
-                id="first_name"
-                className="block bg-white duration-200 text-black font-light py-2 px-4 rounded-md"
-              />
-              <label
-                for="first_name"
-                className="block mb-2 mt-2 text-sm text-left font-normal text-gray-300 dark:text-white"
-              >
-                How many messages per month do you excpect to send?
-              </label>
-              <input
-                onChange={handleMessagesCount}
-                type="text"
-                id="first_name"
-                className="block bg-white duration-200 text-black font-light py-2 px-4 rounded-md"
-              />
-              <button
-                onClick={calculatePackage}
-                className="bg-cyan-600 hover:bg-cyan-400 duration-300 text-white font-normal mt-2 py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
-              >
-                {loadingState ? "Calculate" : "Calculating.."}
-              </button>
-              {calculatedPackage && (
-                <p className="text-white font-light">
-                  Best package for you is <br />
-                  <b>{calculatedPackage}</b>
-                </p>
-              )}
-            </div>
-          </div> */}
         </div>
 
         <ModalComponent
