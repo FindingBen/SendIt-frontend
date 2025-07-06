@@ -283,57 +283,53 @@ const WelcomePage = () => {
               </div>
             </div>
             <div className="col-span-3 row-span-1 row-start-2">
-              <div className="flex flex-col items-start gap-2 border-2 bg-mainBlue border-gray-800 rounded-2xl p-3 col-span-5 row-start-2 h-[300px]">
-                <span className="text-gray-200 text-xl font-medium">
-                  Top performing campaigns
+              <div className="flex flex-col gap-4 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-2 border-gray-800 rounded-2xl p-6 col-span-5 row-start-2 h-[300px] overflow-hidden">
+                <span className="text-white text-xl font-medium font-euclid text-start">
+                  Top Performing Campaigns
                 </span>
+
                 {campaigns.length > 0 ? (
                   <>
-                    <div class="grid grid-cols-5 w-full gap-4 text-white/70 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
+                    {/* Table Header */}
+                    <div className="grid grid-cols-5 w-full text-sm text-white/60 font-medium border-b border-gray-800 pb-2">
                       <div>Name</div>
                       <div>Engagement</div>
-
                       <div>Performance</div>
                       <div>Clicks</div>
                       <div>Audience</div>
                     </div>
 
-                    {campaigns?.map((campaign, index) => {
-                      const isLastItem = index === campaigns?.length - 1;
-                      const evenRow = index % 2 === 0;
-                      return (
+                    {/* Table Rows */}
+                    <div className="overflow-y-auto custom-scrollbar">
+                      {campaigns.map((campaign, index) => (
                         <motion.div
-                          className={` w-[100%] font-semibold text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
-                            evenRow
-                              ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
-                              : "bg-mainBlue"
-                          } ${isLastItem ? "rounded-b-2xl" : ""}`}
                           key={campaign.id}
+                          className={`grid grid-cols-5 gap-4 text-sm text-white/90 py-2 px-1 rounded-md hover:bg-[#1C1C3A] transition-colors ${
+                            index % 2 === 0 ? "bg-[#191936]" : "bg-transparent"
+                          }`}
                         >
                           <CampaignCard campaign={campaign} />
                         </motion.div>
-                      );
-                    })}
+                      ))}
+                    </div>
                   </>
                 ) : (
-                  <div className="flex flex-col items-center mx-auto">
+                  <div className="flex flex-col items-center justify-center flex-1 text-gray-400 gap-2">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="1.5"
+                      strokeWidth={1.5}
                       stroke="currentColor"
-                      class="size-8 text-gray-300"
+                      className="w-8 h-8"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"
                       />
                     </svg>
-                    <span className="text-lg text-gray-300">
-                      No campaigns yet
-                    </span>
+                    <span className="text-lg">No campaigns yet</span>
                   </div>
                 )}
               </div>
@@ -402,7 +398,7 @@ const WelcomePage = () => {
 
             <div className="col-span-5 row-start-3 mb-10">
               <div
-                className={` bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl`}
+                className={`bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 shadow-md border-2 rounded-2xl`}
               >
                 <div className="flex flex-row relative border-b border-gray-800">
                   <div className="flex flex-col">

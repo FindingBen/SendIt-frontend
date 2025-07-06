@@ -227,7 +227,7 @@ const HomePage = () => {
               </div>
               <div className="col-span-5 row-span-2 row-start-4  mb-5">
                 <div
-                  className={` bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl`}
+                  className={`bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 shadow-md border-2 rounded-2xl`}
                 >
                   <div className="flex flex-row relative border-b border-gray-800">
                     <div className="flex flex-col">
