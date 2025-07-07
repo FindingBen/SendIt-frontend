@@ -115,7 +115,6 @@ const SmsSendingPage = () => {
     try {
       let response = await axiosInstance.get("/api/contact_lists/");
       if (response.status === 200) {
-        console.log(response.data);
         setContactList(response.data.data);
       }
     } catch (error) {
@@ -131,7 +130,7 @@ const SmsSendingPage = () => {
       if (response.status === 200) {
         setLoading(false);
         setFinished(true);
-        console.log(response);
+
         setPrice(response.data);
       }
     } catch (error) {
@@ -173,7 +172,7 @@ const SmsSendingPage = () => {
         scheduled: false,
         // is_sent: true,
       });
-
+      console.log(response);
       if (response.status === 200 || response.status === 201) {
         dispatch(setOperation(true));
         navigate(`/home`);

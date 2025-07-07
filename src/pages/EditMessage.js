@@ -183,6 +183,10 @@ const EditMessage = () => {
               "unique_button_id",
               elementContext.unique_button_id
             );
+            formData.append(
+              "button_link_track",
+              `https://spp.up.railway.app/sms/sms/button/${elementContext.unique_button_id}`
+            );
             formData.append("button_title", elementContext.button_title);
             formData.append("button_link", elementContext.button_link);
             formData.append("button_color", elementContext.button_color);

@@ -77,7 +77,7 @@ const HomePage = () => {
     refreshAnalytics();
   }, []);
 
-  const itemsPerPage = 2;
+  const itemsPerPage = 4;
   const totalPages = Math.ceil(activeCampaigns?.length / itemsPerPage);
 
   const handlePageChange = (page) => {
@@ -158,13 +158,12 @@ const HomePage = () => {
                     Active campaigns
                   </span>
 
-                  <div class="grid grid-cols-5 w-full gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-700">
+                  <div class="grid grid-cols-4 w-full gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-700">
                     <div>Name</div>
                     <div>Created at</div>
 
                     <div>Analytics</div>
                     <div>Status</div>
-                    <div>Action</div>
                   </div>
 
                   {activeCampaigns?.length > 0 && displayedItems ? (
@@ -179,6 +178,7 @@ const HomePage = () => {
                           >
                             <MessageCard
                               message={message}
+                              activeCampaigns={true}
                               //archiveMsg={msgArchive}
                               //toggleAnalyticsDrawer={toggleAnalyticsDrawer}
                               //deleteMessage={deleteMessage}
@@ -218,6 +218,39 @@ const HomePage = () => {
                         No campaigns yet
                       </span>
                     </div>
+                  )}
+                  {totalPages > 1 && (
+                    <motion.div
+                      initial={
+                        initialLoad
+                          ? { opacity: 0, scale: 0.5 }
+                          : { opacity: 1, scale: 1 }
+                      }
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        duration: 0.4,
+                        delay: 0.8,
+                        ease: [0, 0.41, 0.1, 1.01],
+                      }}
+                      className="bottom-0 mb-2 mx-auto"
+                    >
+                      {Array.from(
+                        { length: totalPages },
+                        (_, index) => index + 1
+                      ).map((page) => (
+                        <button
+                          type="button"
+                          className="px-2 py-1 mt-1 border-2 border-gray-700 hover:bg-ngrokBlue ml-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 rounded-lg text-white"
+                          data-mdb-ripple-color="dark"
+                          key={page}
+                          id="paginationBtn"
+                          onClick={() => handlePageChange(page)}
+                        >
+                          {page}
+                        </button>
+                      ))}
+                      <br></br>
+                    </motion.div>
                   )}
                 </div>
               </div>
@@ -283,39 +316,6 @@ const HomePage = () => {
                     )}
                   </div>
                 </div>
-                {totalPages > 1 && (
-                  <motion.div
-                    initial={
-                      initialLoad
-                        ? { opacity: 0, scale: 0.5 }
-                        : { opacity: 1, scale: 1 }
-                    }
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{
-                      duration: 0.4,
-                      delay: 0.8,
-                      ease: [0, 0.41, 0.1, 1.01],
-                    }}
-                    className="bottom-0 mb-2"
-                  >
-                    {Array.from(
-                      { length: totalPages },
-                      (_, index) => index + 1
-                    ).map((page) => (
-                      <button
-                        type="button"
-                        className="px-3 py-2 mt-2 bg-navBlue border-2 border-gray-800 hover:bg-ngrokBlue ml-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 rounded-lg text-white"
-                        data-mdb-ripple-color="dark"
-                        key={page}
-                        id="paginationBtn"
-                        onClick={() => handlePageChange(page)}
-                      >
-                        {page}
-                      </button>
-                    ))}
-                    <br></br>
-                  </motion.div>
-                )}
               </div>
             </div>
           </div>

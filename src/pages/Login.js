@@ -40,7 +40,7 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
       });
       const responseData = await response.json();
-
+      console.log(response);
       if (!response.ok) {
         if (
           response.status === 400 &&
@@ -59,6 +59,8 @@ const Login = () => {
         } else if (response.status === 401) {
           setErrMsg("Credentials are wrong, try again.");
           setLoading(false);
+        } else if (response.status === 401) {
+          setErrMsg(response.detail);
         }
         setLoading(false);
       }
@@ -69,7 +71,7 @@ const Login = () => {
       const shop_id = user_info.shopify_id;
       const shopify_domain = user_info.shopify_domain;
       const tokenType = "JWT";
-      console.log(user_info);
+
       dispatch(
         setCredentials({
           ...responseData,
