@@ -104,8 +104,8 @@ const ContactList = () => {
 
         <SmsPill />
       </div>
-      <div className="mx-20">
-        <div className="flex flex-row relative mx-44">
+      <div className="ml-44">
+        <div className="flex flex-row relative mx-20">
           <span className="text-xl text-white font-euclid">Contact lists</span>
           <div className="flex flex-row absolute right-0">
             <button
@@ -119,7 +119,7 @@ const ContactList = () => {
             </button>
           </div>
         </div>
-        <div className=" bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl mt-4 mx-44">
+        <div className=" bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl mt-4 mx-20">
           <div class="grid grid-cols-4 gap-4 text-white/50 font-euclid text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
             <div className="">Name</div>
             <div>Created at</div>

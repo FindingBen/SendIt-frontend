@@ -61,7 +61,7 @@ const WelcomePage = () => {
     getCampaigns();
     getNotifications();
   }, []);
-  console.log("DDADA", currentMessages);
+
   useEffect(() => {
     // Fetch data only on initial load and when user is logged in
     if (!currentMessages?.length) {
@@ -80,6 +80,10 @@ const WelcomePage = () => {
 
   const handleModal = () => {
     setShowDelete(true);
+  };
+
+  const handleModalList = () => {
+    setShow(true);
   };
 
   let getNotifications = async () => {
@@ -158,10 +162,6 @@ const WelcomePage = () => {
     setMessageId(id);
     setShowDelete(true);
   };
-  const systemStatusData = [
-    { label: "App", status: "online" },
-    { label: "SMS Provider", status: "online" },
-  ];
 
   return (
     <section className="min-h-screen w-full items-center justify-center">
@@ -261,7 +261,7 @@ const WelcomePage = () => {
 
                   <button
                     className="flex flex-col items-center p-2 justify-center w-full h-10 border-2 border-gray-600 hover:bg-gray-500 text-white font-euclid rounded-lg"
-                    onClick={handleModal}
+                    onClick={handleModalList}
                   >
                     <span className="text-sm font-semibold">
                       + Contact List
