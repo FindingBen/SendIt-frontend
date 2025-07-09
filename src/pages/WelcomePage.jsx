@@ -259,14 +259,14 @@ const WelcomePage = () => {
                     <span className="text-sm font-semibold">+ Campaign</span>
                   </Link>
 
-                  <button
+                  <Link
                     className="flex flex-col items-center p-2 justify-center w-full h-10 border-2 border-gray-600 hover:bg-gray-500 text-white font-euclid rounded-lg"
-                    onClick={handleModalList}
+                    to={"/contact_lists"}
                   >
                     <span className="text-sm font-semibold">
                       + Contact List
                     </span>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
