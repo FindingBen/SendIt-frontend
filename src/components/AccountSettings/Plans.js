@@ -118,7 +118,7 @@ const Plans = () => {
                 loadingState[packagePlan[index]?.id]
                   ? "opacity-75"
                   : "opacity-100"
-              } max-h-[428px] w-[260px] rounded-3xl p-8 transition ease-in-out delay-90 bg-ngrokGray hover:text-gradient hover:-translate-y-1 hover:scale-110 duration-300 cursor-pointer ${
+              } 2xl:max-h-[428px] 2xl:w-[260px] max-h-[350px] w-[200px] rounded-3xl p-8 transition ease-in-out delay-90 bg-ngrokGray hover:text-gradient hover:-translate-y-1 hover:scale-110 duration-300 cursor-pointer ${
                 packagePlan[index]?.plan_type === "Gold package"
                   ? "hover:bg-yellow-700"
                   : packagePlan[index]?.plan_type === "Silver package"
@@ -128,7 +128,7 @@ const Plans = () => {
                   : "bg-gray-900"
               }`}
             >
-              <h2 className="mb-5 text-xl font-poppins text-white">
+              <h2 className="mb-5 2xl:text-xl text-normal font-poppins text-white">
                 {packagePlan[index]?.plan_type}
               </h2>
               <div className="mb-3 flex flex-row text-white">
@@ -140,12 +140,12 @@ const Plans = () => {
                       packagePlan[index]?.id
                     )
                   }
-                  className="px-3 py-2 rounded-full bg-gray-900/50 hover:bg-gray-50 hover:text-black duration-300"
+                  className="2xl:px-3 2xl:py-3 px-1 py-1 rounded-full bg-gray-900/50 hover:bg-gray-50 hover:text-black duration-300"
                 >
                   {loadingState[packagePlan[index]?.id] ? (
                     <>
                       <svg
-                        className="w-5 h-5 mx-auto animate-spin"
+                        className="2xl:w-5 2xl:h-5 mx-auto animate-spin"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -161,15 +161,18 @@ const Plans = () => {
                     "Buy"
                   )}
                 </button>
-                <p className="text-5xl mx-auto font-normal">
+                <p className="2xl:text-5xl text-3xl mx-auto font-normal">
                   {packagePlan[index]?.price + "kr"}
                 </p>
               </div>
-              <ul role="list" class="mb-8 space-y-4 text-left text-white">
+              <ul
+                role="list"
+                class="mb-8 space-y-4 text-left text-white text-sm"
+              >
                 <li class="flex items-center space-x-3">
                   {packagePlan[index]?.offer1 ? (
                     <svg
-                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
+                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-3 h-3 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
@@ -188,7 +191,7 @@ const Plans = () => {
                 <li class="flex items-center space-x-3">
                   {packagePlan[index]?.offer2 ? (
                     <svg
-                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green- bg-gray-50 rounded-full"
+                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-3 h-3 text-green-500 dark:text-green- bg-gray-50 rounded-full"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
@@ -207,7 +210,7 @@ const Plans = () => {
                 <li class="flex items-center space-x-3">
                   {packagePlan[index]?.offer3 ? (
                     <svg
-                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green- bg-gray-50 rounded-full"
+                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-3 h-3 text-green-500 dark:text-green- bg-gray-50 rounded-full"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
@@ -226,7 +229,7 @@ const Plans = () => {
                 <li class="flex items-center space-x-3">
                   {packagePlan[index]?.offer4 ? (
                     <svg
-                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green- bg-gray-50 rounded-full"
+                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-3 h-3 text-green-500 dark:text-green- bg-gray-50 rounded-full"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
@@ -245,7 +248,7 @@ const Plans = () => {
                 <li class="flex items-center space-x-3">
                   {packagePlan[index]?.offer5 ? (
                     <svg
-                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
+                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-3 h-3 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
@@ -264,7 +267,7 @@ const Plans = () => {
                 <li class="flex items-center space-x-3">
                   {packagePlan[index]?.offer6 ? (
                     <svg
-                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
+                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-2 h-2 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
@@ -283,7 +286,7 @@ const Plans = () => {
                 <li class="flex items-center space-x-3">
                   {packagePlan[index]?.offer7 ? (
                     <svg
-                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
+                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-3 h-3 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
@@ -302,7 +305,7 @@ const Plans = () => {
                 <li class="flex items-center space-x-3">
                   {packagePlan[index]?.offer8 ? (
                     <svg
-                      class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
+                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-3 h-3 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
