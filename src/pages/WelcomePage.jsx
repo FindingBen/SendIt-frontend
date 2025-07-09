@@ -421,11 +421,13 @@ const WelcomePage = () => {
                         const evenRow = index % 2 === 0;
                         return (
                           <motion.div
-                            className={`text-white font-normal text-xs lg:text-sm cursor-pointer border-b-2 border-gray-800 ${
-                              evenRow
-                                ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
-                                : "bg-mainBlue"
-                            } ${isLastItem ? "rounded-b-lg" : ""}`}
+                            className={`text-white font-normal text-xs lg:text-sm cursor-pointer py-2 px-1 ${
+                              isLastItem ? "rounded-b-lg" : ""
+                            } hover:bg-[#1C1C3A] transition-colors ${
+                              index % 2 === 0
+                                ? "bg-[#191936]"
+                                : "bg-transparent"
+                            }`}
                             key={message.id}
                           >
                             <MessageCard
