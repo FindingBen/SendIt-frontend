@@ -90,7 +90,7 @@ const Plans = () => {
 
   return (
     <section className="min-h-screen w-full items-center justify-center">
-      <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-16 bg-navBlue sticky top-0 z-10">
+      <div className="flex flex-row items-center border-b-2 border-gray-800 mb-2 h-16 bg-navBlue sticky top-0 z-10">
         <Search />
 
         <SmsPill />
@@ -161,7 +161,7 @@ const Plans = () => {
                         </button>
 
                         <p className="text-3xl font-bold text-white">
-                          {currentPlan?.price} kr
+                          {currentPlan?.price} $
                         </p>
                       </div>
 
