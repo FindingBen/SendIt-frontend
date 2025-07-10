@@ -98,13 +98,13 @@ const Plans = () => {
 
       <div className="flex-1 w-full flex flex-col items-center justify-center px-6 py-10">
         <div className="w-full max-w-6xl">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-6 mx-44">
             <h3 className="xl:text-2xl lg:text-xl text-normal font-euclid text-left text-white">
               Package plans
             </h3>
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center mx-20">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
               {elementsArray?.map((plan, index) => {
                 const currentPlan = packagePlan[index];
