@@ -96,240 +96,110 @@ const Plans = () => {
         <SmsPill />
       </div>
 
-      <div className="flex-1 items-center justify-center mx-44">
-        <div className="flex justify-between items-center h-20 mx-20">
-          <h3 class="xl:text-2xl lg:text-xl text-normal font-euclid text-left text-white">
-            Package plans
-          </h3>
-        </div>
-        <div className="flex flex-row gap-8 p-10 lg:flex-row xl:flex-row relative mx-20">
-          {elementsArray?.map((plan, index) => (
-            <div
-              key={packagePlan[index]?.id}
-              value={index}
-              disabled={loadingState[packagePlan[index]?.id]}
-              onClick={() =>
-                stripeCheckout(
-                  packagePlan[index]?.plan_type,
-                  packagePlan[index]?.id
-                )
-              }
-              className={`flex flex-col ${
-                loadingState[packagePlan[index]?.id]
-                  ? "opacity-75"
-                  : "opacity-100"
-              } 2xl:max-h-[428px] 2xl:w-[260px] max-h-[350px] w-[200px] rounded-3xl p-8 transition ease-in-out delay-90 bg-ngrokGray hover:text-gradient hover:-translate-y-1 hover:scale-110 duration-300 cursor-pointer ${
-                packagePlan[index]?.plan_type === "Gold package"
-                  ? "hover:bg-yellow-700"
-                  : packagePlan[index]?.plan_type === "Silver package"
-                  ? "hover:bg-slate-600/50"
-                  : packagePlan[index]?.plan_type === "Basic package"
-                  ? "hover:bg-green-400"
-                  : "bg-gray-900"
-              }`}
-            >
-              <h2 className="mb-5 2xl:text-xl text-normal font-poppins text-white">
-                {packagePlan[index]?.plan_type}
-              </h2>
-              <div className="mb-3 flex flex-row text-white">
-                <button
-                  value={index}
-                  onClick={() =>
-                    stripeCheckout(
-                      packagePlan[index]?.plan_type,
-                      packagePlan[index]?.id
-                    )
-                  }
-                  className="2xl:px-3 2xl:py-3 px-1 py-1 rounded-full bg-gray-900/50 hover:bg-gray-50 hover:text-black duration-300"
-                >
-                  {loadingState[packagePlan[index]?.id] ? (
-                    <>
-                      <svg
-                        className="2xl:w-5 2xl:h-5 mx-auto animate-spin"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                    </>
-                  ) : (
-                    "Buy"
-                  )}
-                </button>
-                <p className="2xl:text-5xl text-3xl mx-auto font-normal">
-                  {packagePlan[index]?.price + "kr"}
-                </p>
-              </div>
-              <ul
-                role="list"
-                class="mb-8 space-y-4 text-left text-white text-sm"
-              >
-                <li class="flex items-center space-x-3">
-                  {packagePlan[index]?.offer1 ? (
-                    <svg
-                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-3 h-3 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  ) : (
-                    <p></p>
-                  )}
-                  <span> {packagePlan[index]?.offer1}</span>
-                </li>
-                <li class="flex items-center space-x-3">
-                  {packagePlan[index]?.offer2 ? (
-                    <svg
-                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-3 h-3 text-green-500 dark:text-green- bg-gray-50 rounded-full"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  ) : (
-                    <p></p>
-                  )}
-                  <span>{packagePlan[index]?.offer2}</span>
-                </li>
-                <li class="flex items-center space-x-3">
-                  {packagePlan[index]?.offer3 ? (
-                    <svg
-                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-3 h-3 text-green-500 dark:text-green- bg-gray-50 rounded-full"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  ) : (
-                    <p></p>
-                  )}
-                  <span>{packagePlan[index]?.offer3}</span>
-                </li>
-                <li class="flex items-center space-x-3">
-                  {packagePlan[index]?.offer4 ? (
-                    <svg
-                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-3 h-3 text-green-500 dark:text-green- bg-gray-50 rounded-full"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  ) : (
-                    <p></p>
-                  )}
-                  <span>{packagePlan[index]?.offer4}</span>
-                </li>
-                <li class="flex items-center space-x-3">
-                  {packagePlan[index]?.offer5 ? (
-                    <svg
-                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-3 h-3 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  ) : (
-                    <p></p>
-                  )}
-                  <span>{packagePlan[index]?.offer5}</span>
-                </li>
-                <li class="flex items-center space-x-3">
-                  {packagePlan[index]?.offer6 ? (
-                    <svg
-                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-2 h-2 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  ) : (
-                    <p></p>
-                  )}
-                  <span>{packagePlan[index]?.offer6}</span>
-                </li>
-                <li class="flex items-center space-x-3">
-                  {packagePlan[index]?.offer7 ? (
-                    <svg
-                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-3 h-3 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  ) : (
-                    <p></p>
-                  )}
-                  <span>{packagePlan[index]?.offer7}</span>
-                </li>
-                <li class="flex items-center space-x-3">
-                  {packagePlan[index]?.offer8 ? (
-                    <svg
-                      class="flex-shrink-0 2xl:w-5 2xl:h-5 w-3 h-3 text-green-500 dark:text-green-400 bg-gray-50 rounded-full"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                  ) : (
-                    <p></p>
-                  )}
-                  <span>{packagePlan[index]?.offer8}</span>
-                </li>
-              </ul>
+      <div className="flex-1 w-full flex flex-col items-center justify-center px-6 py-10">
+        <div className="w-full max-w-6xl">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="xl:text-2xl lg:text-xl text-normal font-euclid text-left text-white">
+              Package plans
+            </h3>
+          </div>
+
+          <div className="flex justify-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+              {elementsArray?.map((plan, index) => {
+                const currentPlan = packagePlan[index];
+                const isLoading = loadingState[currentPlan?.id];
+
+                return (
+                  <div
+                    key={currentPlan?.id}
+                    onClick={() =>
+                      stripeCheckout(currentPlan?.plan_type, currentPlan?.id)
+                    }
+                    className={`flex flex-col justify-between bg-ngrokGray p-6 rounded-3xl shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-2 cursor-pointer border-2 ${
+                      currentPlan?.plan_type === "Gold package"
+                        ? "border-yellow-500"
+                        : currentPlan?.plan_type === "Silver package"
+                        ? "border-gray-400"
+                        : "border-green-400"
+                    } ${isLoading ? "opacity-70" : "opacity-100"}`}
+                  >
+                    <div>
+                      <h2 className="text-white text-xl font-semibold mb-4">
+                        {currentPlan?.plan_type}
+                      </h2>
+
+                      <div className="flex items-center justify-between mb-6">
+                        <button
+                          disabled={isLoading}
+                          className="px-4 py-2 bg-purpleHaze text-white rounded-full text-sm hover:bg-ngrokBlue transition-colors"
+                        >
+                          {isLoading ? (
+                            <svg
+                              className="w-5 h-5 animate-spin mx-auto"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.372 0 0 5.373 0 12h4z"
+                              ></path>
+                            </svg>
+                          ) : (
+                            "Buy"
+                          )}
+                        </button>
+
+                        <p className="text-3xl font-bold text-white">
+                          {currentPlan?.price} kr
+                        </p>
+                      </div>
+
+                      <ul className="text-sm text-white space-y-3">
+                        {[...Array(8)].map((_, i) => {
+                          const offer = currentPlan?.[`offer${i + 1}`];
+                          return (
+                            offer && (
+                              <li
+                                key={i}
+                                className="flex items-center space-x-2"
+                              >
+                                <svg
+                                  className="w-4 h-4 text-green-400 bg-white rounded-full"
+                                  fill="currentColor"
+                                  viewBox="0 0 20 20"
+                                >
+                                  <path
+                                    fillRule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clipRule="evenodd"
+                                  ></path>
+                                </svg>
+                                <span>{offer}</span>
+                              </li>
+                            )
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          ))}
+          </div>
         </div>
 
-        <ModalComponent
-          modalType={"Redirect"}
-          showModal={show}
-        ></ModalComponent>
+        <ModalComponent modalType={"Redirect"} showModal={show} />
       </div>
     </section>
   );
