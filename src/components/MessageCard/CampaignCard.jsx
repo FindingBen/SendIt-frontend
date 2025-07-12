@@ -7,7 +7,7 @@ const CampaignCard = ({ campaign }) => {
       <div>{campaign.name}</div>
       <div>{campaign.engagement}</div>
       <div>{campaign.overall_perfromance ?? 0}%</div>
-      <div>{campaign.clicks ?? 0}</div>
+      <div>{campaign.total_clicks ?? 0}</div>
       <div>{campaign.audience}</div>
     </>
   );
