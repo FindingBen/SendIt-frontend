@@ -35,11 +35,11 @@ const RecentActivityModal = ({ showModal, onClose, activity }) => {
               {/*content*/}
               <div className="relative flex flex-col rounded-xl w-full bg-ngrokGray">
                 {/*header*/}
-                <span className="text-2xl font-euclid p-6 text-slate-400">
+                <span className="text-2xl font-euclid p-6 text-slate-200">
                   {activity?.title ?? "No title"}
                 </span>
                 {/*body*/}
-                <div className="relative p-6 flex-auto">
+                <div className="relative p-6 flex-auto text-slate-50">
                   {activity?.message ?? "No message"}
                 </div>
                 {/*footer*/}

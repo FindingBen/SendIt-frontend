@@ -14,6 +14,7 @@ import { duplicateMessage } from "../utils/helpers/duplicateMessage";
 import { config } from "../constants/Constants";
 import DeleteMessageModal from "../features/modal/DeleteMessageModal";
 import ModalComponent from "../components/ModalComponent";
+import RecentActivityModal from "../features/modal/RecentActivityModal";
 
 import {
   clearMessages,
@@ -34,11 +35,13 @@ const WelcomePage = () => {
   } = useRedux();
   const axiosInstance = useAxiosInstance();
   const [notifications, setNotifications] = useState([]);
+  const [notification, setNotification] = useState({});
   const [initialLoad, setInitialLoad] = useState(true);
   const [campaigns, setCampaigns] = useState([]);
   const [listUpdated, setListUpdated] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [show, setShow] = useState(false);
+  const [showActivity, setShowActivity] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [sortOrder, setSortOrder] = useState("");
   const [showCopy, setShowCopy] = useState(false);
@@ -82,8 +85,9 @@ const WelcomePage = () => {
     setShowDelete(true);
   };
 
-  const handleModalList = () => {
-    setShow(true);
+  const handleModalActivity = (notification) => {
+    setShowActivity(true);
+    setNotification(notification);
   };
 
   let getNotifications = async () => {
@@ -323,7 +327,7 @@ const WelcomePage = () => {
               </div>
             </div>
             <div className="col-span-2 row-span-1 col-start-4 row-start-2">
-              <div className="flex flex-col items-start gap-2 border-2 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 rounded-lg p-3 col-span-3 h-[300px] overflow-y-auto">
+              <div className="flex flex-col items-start gap-2 border-2 bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 rounded-lg p-4 col-span-3 h-[300px] overflow-y-auto">
                 <span className="text-gray-200 text-xl font-medium">
                   Recent activity
                 </span>
@@ -336,7 +340,8 @@ const WelcomePage = () => {
                     {notifications.map((notification, idx) => (
                       <div
                         key={idx}
-                        className="flex bg-ngrokGray rounded-lg justify-between w-full items-center text-start text-gray-200/70 border-b-2 border-gray-800 p-2"
+                        onClick={() => handleModalActivity(notification)}
+                        className="flex bg-ngrokGray rounded-lg hover:cursor-pointer hover:bg-slate-600 justify-between w-full items-center text-start text-gray-200/70 border-b-2 border-gray-800 p-2"
                       >
                         {notification?.notif_type === "success" ? (
                           <span className="rounded-full bg-green-500">
@@ -371,7 +376,7 @@ const WelcomePage = () => {
                             </svg>
                           </span>
                         )}
-                        <span>{notification?.message}</span>
+                        <span>{notification?.title}</span>
                         <span className="ml-4 text-xs text-gray-400 whitespace-nowrap">
                           {notification?.created_at
                             ? new Date(notification.created_at).toLocaleString()
@@ -510,6 +515,11 @@ const WelcomePage = () => {
           redirect={true}
           onClose={() => setShow(false)}
         ></CreateListModal>
+        <RecentActivityModal
+          showModal={showActivity}
+          onClose={() => setShowActivity(false)}
+          activity={notification}
+        />
       </div>
     </section>
   );
