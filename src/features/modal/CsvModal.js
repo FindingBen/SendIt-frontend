@@ -92,28 +92,22 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
   };
 
   const createContact = async (parsedData) => {
-    for (const contact of parsedData) {
-      try {
-        let response = await axiosInstance.post(
-          `/api/create_contact/${params.id}/`,
-          {
-            firstName: contact.first_name,
-            lastName: contact.last_name,
-            phone: contact.phone,
-            email: contact.email,
-            contact_list: params.id,
-          }
-        );
+    const data = { bulk_data: parsedData, list_id: params.id };
 
-        if (response.status === 200 || 201) {
-          setLoading(false);
-          newContacts((prevContacts) => [...prevContacts, response.data]);
-        }
-      } catch (error) {
-        console.log(error);
+    try {
+      let response = await axiosInstance.post(`/api/upload_bulk_contacts/`, {
+        data,
+      });
+
+      if (response.status === 200 || 201) {
+        console.log("AAA", response.data);
         setLoading(false);
-        setError(error.response.data.detail);
+        newContacts((prevContacts) => [...prevContacts, ...response.data.data]);
       }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setError(error.response.data.detail);
     }
   };
 
@@ -143,9 +137,14 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
                 <div className="relative p-6 flex-auto">
                   <p className="my-4 text-slate-500 text-lg font-euclid leading-relaxed">
                     Keep in mind that file needs to be in .csv format and
-                    columns need to match these names: <b>first_name</b>,{" "}
-                    <b>last_name</b>, <b>phone</b> and <b>email</b>, otherwise
-                    it wont work!
+                    columns need to match these names: <b>firstName</b>,{" "}
+                    <b>lastName</b>, <b>phone</b> and <b>email</b>, otherwise it
+                    wont work!
+                  </p>
+                  <p className="text-slate-500 font-euclid mb-2">
+                    If you do have different format and a lot of contacts,
+                    please feel free to write us on support and we will
+                    accomodate you.
                   </p>
                   <input
                     className="block w-full text-sm p-1 text-gray-900 border border-gray-300 rounded-xl cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
