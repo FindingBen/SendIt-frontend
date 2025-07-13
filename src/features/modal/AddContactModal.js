@@ -38,6 +38,16 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
   const addContact = async (e) => {
     setLoading(true);
     e.preventDefault();
+    const errors = {};
+    if (!contact.firstName.trim()) errors.firstName = "First name is required.";
+    if (!contact.lastName.trim()) errors.lastName = "Last name is required.";
+    if (!number.trim()) errors.phone = "Phone number is required.";
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setLoading(false);
+      return;
+    }
     try {
       const payload = {
         firstName: contact.firstName,
@@ -72,22 +82,24 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
       setLoading(false);
       if (error.response && error.response.data.details) {
         const errors = error.response.data.details.reduce((acc, err) => {
-          const field = err.field[0]; // Get the field name
-          acc[field] = err.message; // Assign the error message to the field
+          const field = err.field[0];
+          acc[field] = err.message;
+          setErrMsg("");
           return acc;
         }, {});
-        setFieldErrors(errors); // Set field-specific errors
+        setFieldErrors(errors);
       } else {
-        setLoading(false);
-        setErrMsg(error.response.data.detail);
-        setFieldErrors();
+        setErrMsg(error.response?.data?.detail || "Something went wrong");
       }
     }
   };
-
   const closeModal = () => {
-    onClose();
+    setContact({ firstName: "", lastName: "", email: "", phone: "" });
+    setNumber("");
+    setFieldErrors({});
     setErrMsg("");
+    setLoading(false);
+    onClose();
   };
 
   return (
@@ -147,6 +159,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
                   } mt-2 text-gray-900 text-sm rounded-xl p-2 block w-full`}
                   placeholder="Enter phone number"
                   onChange={(e) => setNumber(e)}
+                  defaultCountry={undefined}
                   name="phoneNumber"
                 />
                 {fieldErrors?.phone && (
@@ -167,7 +180,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
               {/*footer*/}
               <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                 {errMsg && (
-                  <p className="text-red-700 font-semibold text-normal">
+                  <p className="text-red-700 font-semibold text-normal text-start">
                     {errMsg}
                   </p>
                 )}

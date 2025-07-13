@@ -31,7 +31,7 @@ const ContactList = () => {
   const [showqr, setShowQr] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [listEmpty, setListEmpty] = useState(false);
+  const [listEmpty, setListEmpty] = useState(true);
   const [loader, setLoader] = useState(true);
   const [contactId, setContactId] = useState();
   const [deletedContact, setDeletedContact] = useState(false);
@@ -179,10 +179,11 @@ const ContactList = () => {
     try {
       let url = "";
       if (currentShopifyToken) {
-        url = "/api/contact_detail/";
+        url = `/api/contact_detail/${params.id}`;
         editData["id"] = contact_id;
       } else {
-        url = `/api/contact_detail/${contact_id}`;
+        url = `/api/contact_detail/${params.id}`;
+         editData["id"] = contact_id;
       }
       let response = await axiosInstance.put(url, editData);
 
@@ -208,7 +209,8 @@ const ContactList = () => {
       setEditableRowId(null);
     }
   };
-
+  console.log(currentUserState);
+  console.log("EMPTY?", listEmpty);
   const handleSearchChange = (e) => {
     setSearchName(e.target?.value);
   };

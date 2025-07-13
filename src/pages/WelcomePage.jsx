@@ -105,7 +105,9 @@ const WelcomePage = () => {
 
   let getCampaigns = async () => {
     try {
-      let response = await axiosInstance.get("sms/campaign-stats/?all=true");
+      let response = await axiosInstance.get(
+        "sms/campaign-stats/?best_perf=true"
+      );
       if (response.status === 200) {
         setCampaigns(response.data);
       }
@@ -280,7 +282,7 @@ const WelcomePage = () => {
                   Top Performing Campaigns
                 </span>
 
-                {campaigns.length > 0 ? (
+                {campaigns?.length > 0 ? (
                   <>
                     {/* Table Header */}
                     <div className="grid grid-cols-5 w-full text-sm text-white/60 font-medium border-b border-gray-800 pb-2">
@@ -293,7 +295,7 @@ const WelcomePage = () => {
 
                     {/* Table Rows */}
                     <div className="overflow-y-auto custom-scrollbar">
-                      {campaigns.map((campaign, index) => (
+                      {campaigns?.map((campaign, index) => (
                         <motion.div
                           key={campaign.id}
                           className={`grid grid-cols-5 gap-4 text-sm text-white/90 py-2 px-1 rounded-lg hover:bg-[#1C1C3A] transition-colors ${
