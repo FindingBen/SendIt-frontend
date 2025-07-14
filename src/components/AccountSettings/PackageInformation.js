@@ -47,8 +47,34 @@ const PackageInformation = () => {
         <p className="text-white xs:text-sm lg:text-normal 2xl:text-lg font-normal">
           Recipients limit: {currentPackageState?.recipients_limit}
         </p>
+        <p className="text-white xs:text-sm lg:text-normal 2xl:text-lg font-normal">
+          Sms schedule:{" "}
+          <span
+            className={
+              currentPackageState?.package === gold_package ||
+              currentPackageState?.package === silver_plan
+                ? "text-green-500"
+                : "text-red-500"
+            }
+          >
+            {currentPackageState?.package === gold_package ||
+            currentPackageState?.package === silver_plan
+              ? "Yes"
+              : "No"}
+          </span>
+        </p>
+
         <p className="text-white flex flex-row gap-2 xs:text-sm lg:text-normal 2xl:text-lg font-normal">
-          Use of AI: <span className="text-red-500">No</span>
+          Use of AI:{" "}
+          <span
+            className={
+              currentPackageState?.package === gold_package
+                ? "text-green-500"
+                : "text-red-500"
+            }
+          >
+            {currentPackageState?.package === gold_package ? "Yes" : "No"}
+          </span>
         </p>
         {/* <p className="text-white flex flex-row gap-2 xs:text-sm lg:text-normal 2xl:text-lg font-normal">
           Sms scheduling: <p className="text-red-500">No</p>

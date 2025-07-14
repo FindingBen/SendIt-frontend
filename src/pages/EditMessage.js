@@ -310,18 +310,6 @@ const EditMessage = () => {
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
         <div className="flex-1 sm:px-0">
           <div className="flex flex-row items-center border-b-2 border-gray-800 h-16 bg-navBlue sticky top-0 z-10">
-            <Link to={"/welcome"}>
-              <img
-                src={require("../assets/noBgLogo.png")}
-                width={65}
-                alt="logo"
-                className="mt-2"
-              />
-            </Link>
-            <h3 className="2xl:text-3xl lg:text-xl text-lg font-normal text-left font-euclid text-white mx-5">
-              Sendperplane
-            </h3>
-
             <Search />
 
             <div class="w-22 items-center relative mx-auto">

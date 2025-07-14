@@ -10,7 +10,6 @@ const CreditComponent = ({
 }) => {
   const [credit, setNewCredit] = useState();
 
-
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-row gap-3">
@@ -61,11 +60,8 @@ const CreditComponent = ({
         <p className="text-gray-200/50">
           Sending this campaign with this recipient list will result in{" "}
           <span className="text-gray-200 font-semibold">
-            {estimated.estimated_credits}
+            {estimated.estimated_credits ?? "NaN"}
           </span>{" "}
-          credits which will leave you with{" "}
-          <span className="font-semibold text-gray-200">{credit} credits</span>{" "}
-          in total.
         </p>
       </div>
       <div className="flex flex-row gap-4">
