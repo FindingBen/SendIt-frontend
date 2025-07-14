@@ -11,6 +11,7 @@ import { useRedux } from "../constants/reduxImports";
 import ShowQrModal from "../features/modal/ShowQrModal";
 import SvgLoader from "../components/SvgLoader";
 import LoaderSkeleton from "../components/LoaderSkeleton/LoaderSkeleton";
+import Loader from "../components/LoaderSkeleton/Loader";
 import SmsPill from "../components/SmsPill/SmsPill";
 import Search from "../components/SearchComponent/Search";
 
@@ -31,7 +32,7 @@ const ContactList = () => {
   const [showqr, setShowQr] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [listEmpty, setListEmpty] = useState(true);
+  const [listEmpty, setListEmpty] = useState(false);
   const [loader, setLoader] = useState(true);
   const [contactId, setContactId] = useState();
   const [deletedContact, setDeletedContact] = useState(false);
@@ -57,11 +58,20 @@ const ContactList = () => {
     getContacts();
   }, [errorMsg, successMsg, deletedContact]);
 
+  useEffect(() => {
+    if (contacts?.length === 0) {
+      setListEmpty(true);
+    } else {
+      setListEmpty(false);
+    }
+  }, [contacts]);
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
   let getContacts = async () => {
+    setIsLoading(true);
     try {
       let url = `/api/contact_list/${params.id}`;
       const queryParts = [];
@@ -81,7 +91,7 @@ const ContactList = () => {
       if (response.status === 200) {
         console.log(response.data);
         if (response.data.contact_list_recipients_nr === 0) {
-          setListEmpty(true);
+          setListEmpty(false);
         }
         setContacts(response.data.customers);
       }
@@ -121,6 +131,7 @@ const ContactList = () => {
     getContacts();
   };
   let deleteContact = async (id) => {
+    setIsLoading(true);
     try {
       const data = {
         id: id,
@@ -142,9 +153,11 @@ const ContactList = () => {
             listChange: true,
           })
         );
+        setIsLoading(false);
       }
     } catch (error) {
       setDeletedContact(false);
+      setIsLoading(false);
       setErrorMsg(error.response.data.error[0]["message"]);
       setTimeout(() => {
         setErrorMsg();
@@ -167,9 +180,9 @@ const ContactList = () => {
   const handleQrModal = (e) => {
     setShowQr(true);
   };
-
+  console.log("DDDD", !currentUserState.shopify_connect);
   const handleNewContact = (contact) => {
-    setListEmpty(false);
+    setListEmpty(true);
     setContacts(contact);
   };
 
@@ -183,7 +196,7 @@ const ContactList = () => {
         editData["id"] = contact_id;
       } else {
         url = `/api/contact_detail/${params.id}`;
-         editData["id"] = contact_id;
+        editData["id"] = contact_id;
       }
       let response = await axiosInstance.put(url, editData);
 
@@ -194,7 +207,7 @@ const ContactList = () => {
         setTimeout(() => {
           setSuccessMsg("");
         }, 3000);
-
+        setIsLoading(false);
         setEditableRowId(null);
 
         // Close the contact drawer after successful update
@@ -257,103 +270,107 @@ const ContactList = () => {
               </h3>
             </div>
             <div class="items-start shadow-md mx-20">
-              <div className="inline-flex mt-1 gap-2">
-                {currentShopifyToken &&
-                !currentUserState.shopify_connect &&
-                listEmpty ? (
+              {loader ? (
+                <Loader loading_name={"Loading..."} />
+              ) : (
+                <div className="inline-flex mt-1 gap-2">
+                  {currentShopifyToken &&
+                  !currentUserState.shopify_connect &&
+                  listEmpty ? (
+                    <button
+                      onClick={handleShopifyModal}
+                      className={`text-white hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer
+                  rounded-md flex flex-row gap-2 border-2 border-gray-800 p-2`}
+                    >
+                      <p>Shopify customers</p>
+                    </button>
+                  ) : (
+                    <></>
+                  )}
                   <button
-                    onClick={handleShopifyModal}
+                    onClick={handleQrModal}
                     className={`text-white hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer
                   rounded-md flex flex-row gap-2 border-2 border-gray-800 p-2`}
                   >
-                    <p>Shopify customers</p>
+                    <p>Show code</p>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="size-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z"
+                      />
+                    </svg>
                   </button>
-                ) : (
-                  <></>
-                )}
-                <button
-                  onClick={handleQrModal}
-                  className={`text-white hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer
-                  rounded-md flex flex-row gap-2 border-2 border-gray-800 p-2`}
-                >
-                  <p>Show code</p>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="size-6"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z"
-                    />
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z"
-                    />
-                  </svg>
-                </button>
 
-                <button
-                  disabled={!canAddNewrecipients()}
-                  onClick={handleModal}
-                  data-tooltip-id="my-tooltip"
-                  data-tooltip-content="Limit reached! Upgrade for more recipients!"
-                  className={`${
-                    canAddNewrecipients()
-                      ? "text-white hover:text-white/50 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer"
-                      : "text-gray-500"
-                  } rounded-md border-2 border-gray-800 p-2`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
+                  <button
+                    disabled={!canAddNewrecipients()}
+                    onClick={handleModal}
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content="Limit reached! Upgrade for more recipients!"
+                    className={`${
+                      canAddNewrecipients()
+                        ? "text-white hover:text-white/50 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer"
+                        : "text-gray-500"
+                    } rounded-md border-2 border-gray-800 p-2`}
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
-                    />
-                  </svg>
-                  {!canAddNewrecipients() && <Tooltip id="my-tooltip" />}
-                </button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-6 h-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+                      />
+                    </svg>
+                    {!canAddNewrecipients() && <Tooltip id="my-tooltip" />}
+                  </button>
 
-                <button
-                  disabled={!canAddNewrecipients()}
-                  data-tooltip-id="my-tooltip"
-                  data-tooltip-content="Limit reached! Upgrade for more recipients!"
-                  className={`${
-                    canAddNewrecipients()
-                      ? "text-white hover:text-white/50 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer"
-                      : "text-gray-500"
-                  } rounded-md border-2 border-gray-800 p-2`}
-                  onClick={handleCsvModal}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
+                  <button
+                    disabled={!canAddNewrecipients()}
+                    data-tooltip-id="my-tooltip"
+                    data-tooltip-content="Limit reached! Upgrade for more recipients!"
+                    className={`${
+                      canAddNewrecipients()
+                        ? "text-white hover:text-white/50 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer"
+                        : "text-gray-500"
+                    } rounded-md border-2 border-gray-800 p-2`}
+                    onClick={handleCsvModal}
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15"
-                    />
-                  </svg>
-                  {!canAddNewrecipients() && <Tooltip id="my-tooltip" />}
-                </button>
-              </div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-6 h-6"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15"
+                      />
+                    </svg>
+                    {!canAddNewrecipients() && <Tooltip id="my-tooltip" />}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
@@ -516,51 +533,64 @@ const ContactList = () => {
                                   )}
                                 </div>
                               ) : (
-                                <div className="flex flex-row mx-16 mt-1">
-                                  <div className="mx-auto my-auto p-0.5">
-                                    <button
-                                      type="button"
-                                      onClick={() => handleEditClick(rowData)}
-                                    >
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-5 h-5 2xl:w-7 2xl:h-7 hover:bg-cyan-400 duration-150 rounded-md"
-                                      >
-                                        <path
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                                        />
-                                      </svg>
-                                    </button>
-                                  </div>
-                                  <div className="mx-auto my-auto p-0.5">
-                                    <button
-                                      type="button"
-                                      onClick={() => deleteContact(rowData.id)}
-                                    >
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="0.5"
-                                        stroke="currentColor"
-                                        class="h-5 w-5 2xl:w-7 2xl:h-7 hover:bg-red-500/95 duration-150 rounded-md"
-                                        x-tooltip="tooltip"
-                                      >
-                                        <path
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                        />
-                                      </svg>
-                                    </button>
-                                  </div>
-                                </div>
+                                <>
+                                  {isLoading ? (
+                                    <Loader
+                                      loading_name={"Deleting..."}
+                                      no_padding={true}
+                                    />
+                                  ) : (
+                                    <div className="flex flex-row mx-16 mt-1">
+                                      <div className="mx-auto my-auto p-0.5">
+                                        <button
+                                          type="button"
+                                          onClick={() =>
+                                            handleEditClick(rowData)
+                                          }
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="1.5"
+                                            stroke="currentColor"
+                                            class="w-5 h-5 2xl:w-7 2xl:h-7 hover:bg-cyan-400 duration-150 rounded-md"
+                                          >
+                                            <path
+                                              stroke-linecap="round"
+                                              stroke-linejoin="round"
+                                              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+                                            />
+                                          </svg>
+                                        </button>
+                                      </div>
+                                      <div className="mx-auto my-auto p-0.5">
+                                        <button
+                                          type="button"
+                                          onClick={() =>
+                                            deleteContact(rowData.id)
+                                          }
+                                        >
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="0.5"
+                                            stroke="currentColor"
+                                            class="h-5 w-5 2xl:w-7 2xl:h-7 hover:bg-red-500/95 duration-150 rounded-md"
+                                            x-tooltip="tooltip"
+                                          >
+                                            <path
+                                              stroke-linecap="round"
+                                              stroke-linejoin="round"
+                                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                            />
+                                          </svg>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  )}
+                                </>
                               )}
                             </div>
                           </div>

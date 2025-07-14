@@ -1,8 +1,8 @@
 import React from "react";
 
-const Loader = ({ loading_name, color }) => {
+const Loader = ({ loading_name, color, no_padding }) => {
   return (
-    <div className="flex items-center gap-2 py-4">
+    <div className={`flex items-center gap-2 ${no_padding ? "py-1" : "py-4"}`}>
       <svg
         className={`animate-spin h-6 w-6 ${
           color ? "text-gray-700" : "text-ngrokBlue"

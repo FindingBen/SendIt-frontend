@@ -33,14 +33,14 @@ const Archives = () => {
     getArchives();
   }, [listUpdated, isUpdated, search_name, sortOrder]);
 
-  const itemsPerPage = 9;
+  const itemsPerPage = 7;
   const totalPages = Math.ceil(archives?.length / itemsPerPage);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
     setInitialLoad(false);
   };
-  console.log(archives);
+
   const deleteMessage = (id) => {
     setMessageId(id);
     setShow(true);
@@ -109,7 +109,7 @@ const Archives = () => {
 
         <SmsPill />
       </div>
-      <div className="flex-1 flex flex-col lg:flex-row mx-44">
+      <div className="flex-1 flex flex-col lg:flex-row ml-44">
         <div className="flex-1 sm:px-0">
           <div className="flex justify-between items-center mb-4 h-20 bg-navBlue">
             <h3 class="xl:text-2xl lg:text-xl text-lg font-euclid text-left text-white mx-20">

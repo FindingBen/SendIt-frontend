@@ -39,6 +39,7 @@ const SmsSendingPage = () => {
   const [finished, setFinished] = useState(false);
   const [price, setPrice] = useState({});
   const gold_package = process.env.GOLD_PLAN;
+  const silver_package = process.env.SILVER_PLAN;
   const trial_plan = process.env.TRIAL_PLAN;
   const BASE = "https://spp.up.railway.app";
   const BASE_URL = "https://spplane.app";
@@ -203,6 +204,17 @@ const SmsSendingPage = () => {
     } catch (e) {
       setErrorMessage(e.response.data.error);
       console.log(e);
+    }
+  };
+  console.log("PACKAGE", currentPackageState);
+  const canSchedule = () => {
+    console.log("PACKAGE");
+    if (currentPackageState?.package === gold_package) {
+      return true;
+    } else if (currentPackageState?.package === silver_package) {
+      return true;
+    } else {
+      return false;
     }
   };
 
@@ -429,34 +441,38 @@ const SmsSendingPage = () => {
                   </svg>
                   <label className="text-gray-200 font-semibold ">Send</label>
                 </button>
-                <button
-                  onClick={() => setShowSchedule(true)}
-                  disabled={smsText.length <= 5 || !recipients || !finished}
-                  className={`sms-button-style ${
-                    smsText.length <= 5 || !recipients || !finished
-                      ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-slate-400/40"
-                  }`}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    className="size-10 text-ngrokBlue mx-auto"
+                {canSchedule() ? (
+                  <button
+                    onClick={() => setShowSchedule(true)}
+                    disabled={smsText.length <= 5 || !recipients || !finished}
+                    className={`sms-button-style ${
+                      smsText.length <= 5 || !recipients || !finished
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-slate-400/40"
+                    }`}
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                    />
-                  </svg>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="size-10 text-ngrokBlue mx-auto"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      />
+                    </svg>
 
-                  <label className="text-gray-200 font-semibold ">
-                    Schedule
-                  </label>
-                </button>
+                    <label className="text-gray-200 font-semibold ">
+                      Schedule
+                    </label>
+                  </button>
+                ) : (
+                  <></>
+                )}
               </div>
               {errorMessage && (
                 <div
