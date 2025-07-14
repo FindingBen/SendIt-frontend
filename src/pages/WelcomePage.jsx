@@ -38,31 +38,51 @@ const WelcomePage = () => {
   const [notification, setNotification] = useState({});
   const [initialLoad, setInitialLoad] = useState(true);
   const [campaigns, setCampaigns] = useState([]);
+  const [scheduledCampaigns, setScheduledCampaigns] = useState([]);
+  const [draft, setDrafts] = useState([]);
   const [listUpdated, setListUpdated] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentPageScheduled, setCurrentPageScheduled] = useState(1);
   const [show, setShow] = useState(false);
   const [showActivity, setShowActivity] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-  const [sortOrder, setSortOrder] = useState("");
+  const [sortOrder, setSortOrder] = useState("created_at");
   const [showCopy, setShowCopy] = useState(false);
   const [loading, setLoading] = useState(false);
   const [messageId, setMessageId] = useState();
   const BASE_URL = config.url.BASE_URL;
   //Pagination logic
   const itemsPerPage = 4;
-  const totalPages = Math.ceil(currentMessages?.length / itemsPerPage);
+  const totalPages = Math.ceil(draft?.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const displayedItems = currentMessages?.slice(startIndex, endIndex);
+  const displayedItems = draft?.slice(startIndex, endIndex);
+
+  const scheduledPerPage = 2;
+  const totalScheduledPages = Math.ceil(
+    scheduledCampaigns?.length / scheduledPerPage
+  );
+  const startIndexScheduled = (currentPageScheduled - 1) * scheduledPerPage;
+  const endIndexScheduled = startIndexScheduled + scheduledPerPage;
+  const displayedItemsScheduled = scheduledCampaigns?.slice(
+    startIndexScheduled,
+    endIndexScheduled
+  );
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
     setInitialLoad(false);
   };
 
+  const handlePageChangeScheduled = (page) => {
+    setCurrentPageScheduled(page);
+    setInitialLoad(false);
+  };
+
   useEffect(() => {
     getCampaigns();
     getNotifications();
+    getScheduledCampaigns();
   }, []);
 
   useEffect(() => {
@@ -102,7 +122,7 @@ const WelcomePage = () => {
       setLoading(false);
     }
   };
-
+  console.log("DRAFT", draft);
   let getCampaigns = async () => {
     try {
       let response = await axiosInstance.get(
@@ -116,6 +136,25 @@ const WelcomePage = () => {
     }
   };
 
+  let getScheduledCampaigns = async () => {
+    try {
+      let response = await axiosInstance.get(`/api/scheduled_campaigns/`);
+
+      if (response.status === 200) {
+        dispatch(setMessages(response.data.messages));
+        // dispatch(setMessagesCount(response.data.messages_count));
+        setScheduledCampaigns(response.data.messages);
+        setInitialLoad(false);
+      } else if (response.statusText === "Unauthorized") {
+        dispatch(logOut());
+        setInitialLoad(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setInitialLoad(false);
+    }
+  };
+
   let getNotes = async () => {
     try {
       let response = await axiosInstance.get(
@@ -123,8 +162,7 @@ const WelcomePage = () => {
       );
 
       if (response.status === 200) {
-        dispatch(setMessages(response.data.messages));
-        dispatch(setMessagesCount(response.data.messages_count));
+        setDrafts(response.data.messages);
         setInitialLoad(false);
       } else if (response.statusText === "Unauthorized") {
         dispatch(logOut());
@@ -390,8 +428,128 @@ const WelcomePage = () => {
                 )}
               </div>
             </div>
+            <div className="col-span-5 row-start-3">
+              <div
+                className={`bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 shadow-md border-2 rounded-lg`}
+              >
+                <div className="flex flex-row relative border-b border-gray-800">
+                  <div className="flex flex-col">
+                    <p className="text-white font-normal font-euclid text-xl xl:text-xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
+                      Scheduled campaigns
+                    </p>
+                    <p className="text-white/60 text-sm font-euclid my-3 mt-1 ml-5">
+                      Your campaigns that are scheduled will appear here. You
+                      can choose to cancel them from here. If you do so, they
+                      will be back to Draft campaigns.
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleSortButtonClick}
+                    className="px-2 py-1 2xl:px-4 2xl:py-2 mr-5 text-white font-normal text-sm 2xl:text-lg cursor-pointer bg-ngrokBlue rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4"
+                  >
+                    Sort by date
+                  </button>
+                </div>
+                <div class="flex flex-col">
+                  <div class="grid grid-cols-4 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
+                    <div>Name</div>
+                    <div className="md:hidden lg:block">Create at</div>
 
-            <div className="col-span-5 row-start-3 mb-10">
+                    <div>Status</div>
+                    <div>Action</div>
+                  </div>
+                  {scheduledCampaigns?.length > 0 && displayedItemsScheduled ? (
+                    <div>
+                      {displayedItemsScheduled?.map((message, index) => {
+                        const isLastItem =
+                          index === displayedItemsScheduled?.length - 1;
+                        const evenRow = index % 2 === 0;
+                        return (
+                          <motion.div
+                            className={`text-white font-normal text-xs lg:text-sm cursor-pointer py-2 px-1 ${
+                              isLastItem ? "rounded-b-lg" : ""
+                            } hover:bg-[#1C1C3A] transition-colors ${
+                              index % 2 === 0
+                                ? "bg-[#191936]"
+                                : "bg-transparent"
+                            }`}
+                            key={message.id}
+                          >
+                            <MessageCard
+                              message={message}
+                              archiveMsg={msgArchive}
+                              //toggleAnalyticsDrawer={toggleAnalyticsDrawer}
+                              deleteMessage={deleteMessage}
+                              duplicateMessage={duplicateMessage({
+                                messageId: message.id,
+                                axiosInstance,
+                                currentUser,
+                                BASE_URL,
+                                currentMessages,
+                                setShowCopy,
+                                setLoading,
+                                setMessages,
+                                dispatch,
+                              })}
+                            />
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="flex-1 items-center p-10">
+                      <p className="text-white/50 text-base font-poppins">
+                        Your scheduled content will appear here ..
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <DeleteMessageModal
+                  messageId={messageId}
+                  scheduledCampaigns={true}
+                  showModalDelete={showDelete}
+                  onClose={() => setShowDelete(false)}
+                  setUpdated={handleListUpdate}
+                  listUpdated={listUpdated}
+                />
+              </div>
+              {totalScheduledPages > 1 && (
+                <motion.div
+                  initial={
+                    initialLoad
+                      ? { opacity: 0, scale: 0.5 }
+                      : { opacity: 1, scale: 1 }
+                  }
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: 0.8,
+                    ease: [0, 0.41, 0.1, 1.01],
+                  }}
+                  className="bottom-0"
+                >
+                  {Array.from(
+                    { length: totalScheduledPages },
+                    (_, index) => index + 1
+                  ).map((page) => (
+                    <button
+                      type="button"
+                      className="px-3 py-2 mt-2 bg-navBlue border-2 border-gray-800 hover:bg-cyan-600 ml-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 rounded-lg text-white"
+                      data-mdb-ripple-color="dark"
+                      key={page}
+                      id="paginationBtn"
+                      onClick={() => handlePageChangeScheduled(page)}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                  <br></br>
+                </motion.div>
+              )}
+            </div>
+
+            <div className="col-span-5 row-start-4 mb-10">
               <div
                 className={`bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 shadow-md border-2 rounded-lg`}
               >
@@ -421,7 +579,7 @@ const WelcomePage = () => {
                     <div>Status</div>
                     <div>Action</div>
                   </div>
-                  {currentMessages?.length > 0 && displayedItems ? (
+                  {draft?.length > 0 && displayedItems ? (
                     <div>
                       {displayedItems?.map((message, index) => {
                         const isLastItem = index === displayedItems?.length - 1;

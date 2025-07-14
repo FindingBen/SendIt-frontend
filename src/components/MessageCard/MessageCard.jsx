@@ -7,6 +7,7 @@ export const MessageCard = ({
   duplicateMessage,
   archiveMsg,
   activeCampaigns,
+  scheduledCampaigns,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -31,7 +32,9 @@ export const MessageCard = ({
   return (
     <div
       className={`${
-        activeCampaigns ? "grid grid-cols-4" : "grid grid-cols-5"
+        activeCampaigns || scheduledCampaigns
+          ? "grid grid-cols-4"
+          : "grid grid-cols-5"
       }  gap-3 2xl:text-lg h-10 items-center`}
       ref={dropdownRef}
     >
@@ -45,26 +48,32 @@ export const MessageCard = ({
         ) : message.status === "Scheduled" ? (
           <p>Unavailabe</p>
         ) : (
-          <Link
-            type="button"
-            className="hover:bg-purple-400 rounded cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105"
-            to={`/analytics/${message.id}`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="lg:w-6 lg:h-6 w-4 h-4 2xl:w-8 2xl:h-8"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"
-              />
-            </svg>
-          </Link>
+          <>
+            {scheduledCampaigns ? (
+              <></>
+            ) : (
+              <Link
+                type="button"
+                className="hover:bg-purple-400 rounded cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105"
+                to={`/analytics/${message.id}`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="lg:w-6 lg:h-6 w-4 h-4 2xl:w-8 2xl:h-8"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"
+                  />
+                </svg>
+              </Link>
+            )}
+          </>
         )}
       </div>
       <div>

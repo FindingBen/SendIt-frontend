@@ -43,9 +43,9 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
     try {
       messageObject = await createMessage();
       const requestType = "create";
-      console.log("ELELE", elementContextList);
+
       let elements = elementContextList[0];
-      console.log("SSS", elements);
+
       const createElementsData = createElements({
         elementContextList: elements,
         messageObject,
