@@ -43,6 +43,7 @@ const CreateContentStep = ({
   const [imageStateVal, setImageStateVal] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [device, setDevice] = useState("phone");
+  const gold_package = process.env.REACT_APP_GOLD_PLAN;
   useEffect(() => {
     if (elementContextList.length > 0) {
       dispatch(setState({ isDirty: true }));
@@ -174,7 +175,7 @@ const CreateContentStep = ({
       />
     ),
   };
-
+  console.log(currentPackageState);
   return (
     <section className="max-h-screen w-full items-center justify-center">
       <div className="flex flex-col max-h-screen">
@@ -287,13 +288,14 @@ const CreateContentStep = ({
             <div className="flex flex-row justify-between mt-2">
               <div
                 onClick={
-                  currentPackageState?.package === "Silver" && !imageStateVal
+                  currentPackageState?.package === gold_package &&
+                  !imageStateVal
                     ? () => handleClick("aiContent")
                     : null
                 }
                 name="liClick"
                 className={`component-button-create-content ${
-                  currentPackageState?.package !== "Silver"
+                  currentPackageState?.package !== gold_package
                     ? "cursor-not-allowed opacity-50"
                     : ""
                 }`}

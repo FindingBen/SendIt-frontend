@@ -38,8 +38,8 @@ const SmsSendingPage = () => {
 
   const [finished, setFinished] = useState(false);
   const [price, setPrice] = useState({});
-  const gold_package = process.env.GOLD_PLAN;
-  const silver_package = process.env.SILVER_PLAN;
+  const gold_package = process.env.REACT_APP_GOLD_PLAN;
+  const silver_package = process.env.REACT_APP_SILVER_PLAN;
   const trial_plan = process.env.TRIAL_PLAN;
   const BASE = "https://spp.up.railway.app";
   const BASE_URL = "https://spplane.app";
