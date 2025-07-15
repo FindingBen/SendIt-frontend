@@ -85,6 +85,10 @@ export const MessageCard = ({
           <span class="text-xs 2xl:text-normal font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-lg animate-pulse px-3 lg:py-1">
             Scheduled
           </span>
+        ) : message.status === "error" ? (
+          <span class="text-xs 2xl:text-normal font-medium leading-none text-center text-red-800 bg-blue-200 rounded-lg animate-pulse px-3 lg:py-1">
+            Error
+          </span>
         ) : (
           <span class="text-xs 2xl:text-normal font-medium leading-none text-center text-white bg-ngrokBlue rounded-lg px-3 lg:py-1">
             Sent
