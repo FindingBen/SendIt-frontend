@@ -22,6 +22,7 @@ import {
   setMessagesCount,
   setOperation,
 } from "../redux/reducers/messageReducer";
+import CancelScheduleModal from "../features/modal/CancelScheduleModal";
 
 const WelcomePage = () => {
   const {
@@ -49,6 +50,7 @@ const WelcomePage = () => {
   const [sortOrder, setSortOrder] = useState("created_at");
   const [showCopy, setShowCopy] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showCancel, setShowCancel] = useState(false);
   const [messageId, setMessageId] = useState();
   const BASE_URL = config.url.BASE_URL;
   //Pagination logic
@@ -57,7 +59,8 @@ const WelcomePage = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedItems = draft?.slice(startIndex, endIndex);
-
+  const [selectedMessageId, setSelectedMessageId] = useState(null);
+  const scheduledCampaignsVariable = true;
   const scheduledPerPage = 2;
   const totalScheduledPages = Math.ceil(
     scheduledCampaigns?.length / scheduledPerPage
@@ -101,8 +104,9 @@ const WelcomePage = () => {
     setInitialLoad(false);
   }, [loading, listUpdated, sortOrder]);
 
-  const handleModal = () => {
-    setShowDelete(true);
+  const handleModalCancel = (message_id) => {
+    setSelectedMessageId(message_id);
+    setShowCancel(true);
   };
 
   const handleModalActivity = (notification) => {
@@ -478,6 +482,8 @@ const WelcomePage = () => {
                             <MessageCard
                               message={message}
                               archiveMsg={msgArchive}
+                              sceduledCampaigns={true}
+                              callmodal={() => handleModalCancel(message.id)}
                               //toggleAnalyticsDrawer={toggleAnalyticsDrawer}
                               deleteMessage={deleteMessage}
                               duplicateMessage={duplicateMessage({
@@ -572,10 +578,10 @@ const WelcomePage = () => {
                   </button>
                 </div>
                 <div class="flex flex-col">
-                  <div class="grid grid-cols-4 lg:grid-cols-5 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
+                  <div class="grid grid-cols-4 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
                     <div>Name</div>
-                    <div className="md:hidden lg:block">Create at</div>
-                    <div>Analytics</div>
+                    <div>Create at</div>
+
                     <div>Status</div>
                     <div>Action</div>
                   </div>
@@ -598,6 +604,7 @@ const WelcomePage = () => {
                             <MessageCard
                               message={message}
                               archiveMsg={msgArchive}
+                              draftCampaigns={true}
                               //toggleAnalyticsDrawer={toggleAnalyticsDrawer}
                               deleteMessage={deleteMessage}
                               duplicateMessage={duplicateMessage({
@@ -624,7 +631,11 @@ const WelcomePage = () => {
                     </div>
                   )}
                 </div>
-
+                <CancelScheduleModal
+                  showModal={showCancel}
+                  onClose={() => setShowCancel(false)}
+                  message_obj={selectedMessageId}
+                />
                 <DeleteMessageModal
                   messageId={messageId}
                   showModalDelete={showDelete}

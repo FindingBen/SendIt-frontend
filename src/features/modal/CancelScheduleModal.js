@@ -11,62 +11,42 @@ import Loader from "../../components/LoaderSkeleton/Loader";
 import { setContactLists } from "../../redux/reducers/contactListReducer";
 import { useRedux } from "../../constants/reduxImports";
 
-const CreateListModal = ({ showModal, onClose, newList, redirect }) => {
+const CancelScheduleModal = ({ showModal, onClose, message_obj }) => {
   const axiosInstance = useAxiosInstance();
   const { dispatch, currentContactList, currentUser } = useRedux();
   const [loading, setLoading] = useState(false);
   const [show, setShowModal] = useState(showModal);
   const [errorMsg, setErrorMsg] = useState("");
-  const [listName, setListName] = useState();
-  const navigate = useNavigate();
-
-  const handleListName = (e) => {
-    setListName(e.target.value);
-    setErrorMsg("");
-  };
 
   useEffect(() => {
     setShowModal(showModal);
   }, [showModal]);
 
-  const addList = async (e) => {
-    setLoading(true);
-    try {
-      e.preventDefault();
-      let response = await axiosInstance.post(`/api/contact_lists/`, {
-        list_name: listName,
-        user_id: currentUser,
-      });
-
-      if (response.status === 200 || 201) {
-        setLoading(false);
-        const newListData = [...currentContactList.contactLists, response.data];
-        if (!redirect) {
-          newList(newListData);
-        }
-        dispatch(
-          setContactLists({ contactLists: newListData, listChange: true })
-        );
-        closeModal();
-        if (redirect) {
-          navigate("/contact_lists");
-        }
-      }
-    } catch (error) {
-      setLoading(false);
-      setErrorMsg(error);
-
-      if (error) {
-        setLoading(false);
-        setErrorMsg("This field cannot be empty!");
-      }
-    }
-  };
-
   const closeModal = () => {
     onClose();
     setErrorMsg("");
   };
+  const cancelSchedule = async (e) => {
+    setLoading(true);
+    try {
+      e.preventDefault();
+      let response = await axiosInstance.post(`/sms/cancel-schedule-sms/`, {
+        message_obj: message_obj,
+      });
+
+      if (response.status === 200 || 201) {
+        setLoading(false);
+
+        closeModal();
+      }
+    } catch (error) {
+      setLoading(false);
+      setErrorMsg(
+        error.message || "An error occurred while cancelling the schedule."
+      );
+    }
+  };
+
   return (
     <>
       {show ? (
@@ -82,22 +62,16 @@ const CreateListModal = ({ showModal, onClose, newList, redirect }) => {
               <div className="relative flex flex-col rounded-xl w-full bg-ngrokGray">
                 {/*header*/}
                 <span className="text-2xl font-euclid p-6 text-slate-400">
-                  Create a new list
+                  Cancel Scheduled SMS
                 </span>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                    Simply enter the name for the list and click create.
+                    Are you sure you want to cancel this scheduled SMS?
                   </p>
                   {errorMsg && (
                     <p className="text-sm text-red-500">{errorMsg}</p>
                   )}
-                  <input
-                    className="bg-gray-50 border border-gray-300 mt-2 text-gray-900 text-sm rounded-2xl block w-full p-2.5"
-                    name="text"
-                    placeholder="List name"
-                    onChange={handleListName}
-                  />
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-2 border-gray-800">
@@ -115,9 +89,9 @@ const CreateListModal = ({ showModal, onClose, newList, redirect }) => {
                       <button
                         className="bg-ngrokBlue hover:bg-blue-400 text-white font-euclid py-2 px-4 rounded-md duration-200"
                         type="button"
-                        onClick={addList}
+                        onClick={cancelSchedule}
                       >
-                        Create
+                        Cancel
                       </button>
                     </div>
                   )}
@@ -131,4 +105,4 @@ const CreateListModal = ({ showModal, onClose, newList, redirect }) => {
   );
 };
 
-export default CreateListModal;
+export default CancelScheduleModal;

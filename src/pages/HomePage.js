@@ -267,7 +267,7 @@ const HomePage = () => {
                         Recently completed campaigns
                       </p>
                       <p className="text-white/60 text-sm font-euclid my-3 mt-1 ml-5">
-                        Your recently completed campaigns. Campaign runs for 5
+                        Your recently completed campaigns. Campaign runs for 3
                         days, then it gets archived and goes to this table.
                       </p>
                     </div>
