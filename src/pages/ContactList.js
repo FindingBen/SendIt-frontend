@@ -275,7 +275,7 @@ const ContactList = () => {
               ) : (
                 <div className="inline-flex mt-1 gap-2">
                   {currentShopifyToken &&
-                  !currentUserState.shopify_connect &&
+                  currentUserState.shopify_connect === false &&
                   listEmpty ? (
                     <button
                       onClick={handleShopifyModal}
