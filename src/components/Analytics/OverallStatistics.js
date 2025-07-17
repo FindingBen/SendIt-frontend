@@ -9,7 +9,7 @@ const stats = [
   { key: "total_views", label: "Total views" },
   { key: "total_clicks", label: "Total clicks" },
   { key: "clicks_rate", label: "Clicks rate %" },
-  { key: "total_spend", label: "Total spend" },
+  { key: "total_spend", label: "Total spend $" },
 ];
 
 const OverallStatistics = ({ totalValues, loaded = true }) => {
