@@ -12,7 +12,10 @@ export function SortableItem(props) {
   const BASE_URL = config.url.BASE_URL;
 
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: props.itemObject.id });
+    useSortable({
+      id: props.itemObject.id,
+      disabled: props.itemObject.element_type === "Survey",
+    });
 
   const style = {
     transform: CSS.Transform.toString(transform),

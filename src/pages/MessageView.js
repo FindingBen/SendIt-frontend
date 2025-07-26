@@ -32,11 +32,11 @@ const MessageView = () => {
     <section className="min-h-screen bg-white flex-d w-100 items-center justify-center">
       <div className="flex flex-col items-stretch">
         <div className="mx-2 p-2">
-          <List
+          <ViewList
             isArchive={true}
             children={elements}
             style={{ width: "100%" }}
-          ></List>
+          ></ViewList>
         </div>
       </div>
     </section>
