@@ -30,6 +30,7 @@ import QRsignUpPage from "./pages/QRsignUpPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import SmsSendingPage from "./pages/SmsSendingPage";
 import WelcomePage from "./pages/WelcomePage";
+import ShopifyChargeConfPage from "./pages/ShopifyChargeConfPage";
 
 const TRACKING_ID = "G-FPHE42LL46";
 ReactGA.initialize(TRACKING_ID);
@@ -112,6 +113,10 @@ function App() {
                   <Route
                     path="/account_settings/:id"
                     element={<UserPage></UserPage>}
+                  />
+                  <Route
+                    path="/shopify/charge/confirmation"
+                    element={<ShopifyChargeConfPage />}
                   />
                   <Route path="/archive/" element={<Archives></Archives>} />
                   <Route

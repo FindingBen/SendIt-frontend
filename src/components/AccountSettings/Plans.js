@@ -7,7 +7,7 @@ import SmsPill from "../SmsPill/SmsPill";
 import Search from "../SearchComponent/Search";
 
 const Plans = () => {
-  const { currentUser, dispatch, currentToken } = useRedux();
+  const { currentUser, currentDomain, currentToken } = useRedux();
   const axiosInstance = useAxiosInstance();
   const [isLoading, setIsLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -19,10 +19,21 @@ const Plans = () => {
   const [messages, setMessages] = useState("");
   const [packagePlan, setPackages] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [isShopifyUser, setIsShopifyUser] = useState(false);
 
   useEffect(() => {
     getPackages();
+    checkShopifyUser();
   }, []);
+  console.log("isShopifyUser", currentDomain);
+  const checkShopifyUser = async () => {
+    try {
+      const response = await axiosInstance.get("/stripe/shopify_status/");
+      setIsShopifyUser(response.data.is_shopify);
+    } catch (error) {
+      console.error("Error checking shopify user", error);
+    }
+  };
 
   let stripeCheckout = async (name_product, id) => {
     try {
@@ -86,7 +97,40 @@ const Plans = () => {
     { length: packagePlan.length },
     (_, index) => index
   );
-  console.log(packagePlan);
+
+  const handlePurchase = async (planType, planId) => {
+    if (isShopifyUser) {
+      await shopifyCheckout(planType, planId);
+    } else {
+      await stripeCheckout(planType, planId);
+    }
+  };
+
+  const shopifyCheckout = async (name_product, id) => {
+    try {
+      setShow(true);
+      setLoadingStates((prev) => ({ ...prev, [id]: true }));
+      setIsLoading(true);
+
+      const response = await axiosInstance.post("/stripe/shopify_charge/", {
+        plan: name_product,
+        shop: currentDomain,
+      });
+      console.log(response.data);
+      if (response.status === 200 && response.data.url) {
+        console.log("Shopify Checkout URL:", response.data.url);
+        window.location.replace(response.data.url);
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+        throw new Error("No confirmation URL from Shopify charge API.");
+      }
+    } catch (error) {
+      console.error("Shopify Checkout Error:", error);
+      setIsLoading(false);
+      setShow(false);
+    }
+  };
 
   return (
     <section className="min-h-screen w-full items-center justify-center">
@@ -114,7 +158,7 @@ const Plans = () => {
                   <div
                     key={currentPlan?.id}
                     onClick={() =>
-                      stripeCheckout(currentPlan?.plan_type, currentPlan?.id)
+                      handlePurchase(currentPlan?.plan_type, currentPlan?.id)
                     }
                     className={`flex flex-col justify-between bg-ngrokGray p-6 rounded-3xl shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-2 cursor-pointer border-2 ${
                       currentPlan?.plan_type === "Gold package"
