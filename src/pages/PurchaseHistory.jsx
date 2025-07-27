@@ -14,6 +14,7 @@ const PurchaseHistory = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setIsLoading] = useState(true);
   const [searchValue, setSearchValue] = useState("");
+  const [shopifyBillingData, setShopifyBillingData] = useState([]);
   const rowsPerPage = 6;
   const totalPages = Math.ceil(purchases?.length / rowsPerPage);
   const [sortOrder, setSortOrder] = useState("asc");
@@ -21,10 +22,46 @@ const PurchaseHistory = () => {
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const paginatedData = purchases?.slice(startIndex, endIndex);
+  // let shopifyBillingData = [
+  //   {
+  //     charge_id: "1234567890",
+  //     plan_name: "Gold Package",
+  //     price: "49.99",
+  //     billing_date: "2025-07-01",
+  //     status: "paid",
+  //   },
+  //   {
+  //     charge_id: "2345678901",
+  //     plan_name: "Silver Package",
+  //     price: "29.99",
+  //     billing_date: "2025-07-15",
+  //     status: "active",
+  //   },
+  //   {
+  //     charge_id: "3456789012",
+  //     plan_name: "Basic Package",
+  //     price: "9.99",
+  //     billing_date: "2025-07-20",
+  //     status: "pending",
+  //   },
+  // ];
 
   useEffect(() => {
     purchaseHistory();
+    billingsHistory();
   }, [sortOrder, searchId]);
+
+  let billingsHistory = async (e) => {
+    try {
+      let response = await axiosInstance.get(`/stripe/user_billings/`);
+      console.log(response);
+      if (response.status === 200) {
+        setShopifyBillingData(response.data.billings);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   let purchaseHistory = async (e) => {
     try {
@@ -54,62 +91,46 @@ const PurchaseHistory = () => {
   const handleSearchTerm = (e) => {
     setSearchId(e.target?.value);
   };
-
+  console.log(shopifyBillingData);
   return (
     <div className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col">
         <div className="flex flex-row items-center border-b-2 border-gray-800 h-16 bg-navBlue sticky top-0 z-10">
           <Search />
-
           <SmsPill />
         </div>
+
         <div className="mx-20">
+          {/* PURCHASE HISTORY HEADER */}
           <div className="flex flex-row items-center h-20 xs:mx-5 md:mx-44 relative">
             <h3 className="text-lg lg:text-xl 2xl:text-2xl font-euclid text-white">
               Purchase history
             </h3>
-            {/* <div class="text-white flex flex-row gap-1 rounded-md hover:bg-cyan-600 smooth-hover cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 border-gray-500 border-2 p-1 lg:p-2 absolute right-0 top-5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
-              />
-            </svg>
-            <p>Export</p>
-          </div> */}
           </div>
+
           <div className="mainContainer xs:ml-5 lg:ml-44">
+            {/* PURCHASE HISTORY TABLE */}
             <div className="items-center justify-center rounded-lg w-full bg-mainBlue border-gray-800 border-2 shadow-md">
               <div className="flex flex-row space-x-2 p-2 border-b border-gray-800">
                 <button
-                  className={`px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-ngrokBlue font-euclid duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
-                  `}
+                  className="px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-ngrokBlue font-euclid duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray"
                   onClick={handleSortByDate}
                 >
                   Sort by Date
                 </button>
-                <div class="relative w-[20%]">
-                  <div class="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
+                <div className="relative w-[20%]">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
                     <svg
-                      class="w-4 h-4 text-gray-500 ml-2 dark:text-gray-400"
-                      aria-hidden="true"
+                      className="w-4 h-4 text-gray-500 ml-2 dark:text-gray-400"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 20 20"
                     >
                       <path
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                       />
                     </svg>
@@ -117,22 +138,24 @@ const PurchaseHistory = () => {
                   <input
                     type="search"
                     id="default-search"
-                    class="block w-full p-1.5 ps-10 text-sm text-white border-2 rounded-lg focus:border-gray-700 bg-darkestGray border-gray-800"
+                    className="block w-full p-1.5 ps-10 text-sm text-white border-2 rounded-lg focus:border-gray-700 bg-darkestGray border-gray-800"
                     placeholder="Search by payment id..."
-                    required
                     value={searchId}
                     onChange={handleSearchTerm}
                   />
                 </div>
               </div>
-              <div class="grid grid-cols-3 lg:grid-cols-5 text-normal 2xl:text-xl gap-4 grid-headers text-white/50 font-normal border-b-2 p-2 border-gray-800">
+
+              {/* TABLE HEADERS */}
+              <div className="grid grid-cols-3 lg:grid-cols-5 text-normal 2xl:text-xl gap-4 grid-headers text-white/50 font-normal border-b-2 p-2 border-gray-800">
                 <div>Payment ID</div>
                 <div className="hidden lg:block">Ammount</div>
-                {/* <div className="hidden lg:block">Package Name</div> */}
                 <div className="hidden lg:block">Payment Type</div>
                 <div>Date</div>
                 <div>Status</div>
               </div>
+
+              {/* TABLE ROWS */}
               {!loading ? (
                 <>
                   {paginatedData?.map((rowData, index) => {
@@ -160,9 +183,6 @@ const PurchaseHistory = () => {
                           <div className="hidden lg:block">
                             {rowData?.price}
                           </div>
-                          {/* <div className="hidden lg:block">
-                      {rowData?.package_name}
-                    </div> */}
                           <div className="hidden lg:block">{rowData?.type}</div>
                           <div>{rowData?.created_at}</div>
                           <div
@@ -170,7 +190,7 @@ const PurchaseHistory = () => {
                               rowData?.status === "succeeded"
                                 ? "bg-green-400 text-green-900"
                                 : "bg-red-400 text-red-900"
-                            }  font-medium text-sm xs:mx-5 lg:mx-8 rounded-lg`}
+                            } font-medium text-sm xs:mx-5 lg:mx-8 rounded-lg`}
                           >
                             {rowData?.status === "succeeded"
                               ? "Success"
@@ -185,6 +205,61 @@ const PurchaseHistory = () => {
                 <LoaderSkeleton div_size={3} />
               )}
             </div>
+
+            {/* --- SHOPIFY BILLING TABLE --- */}
+            {shopifyBillingData?.length > 0 && (
+              <div className="items-center justify-center rounded-lg w-full mt-10 bg-mainBlue border-gray-800 border-2 shadow-md">
+                <div className="flex flex-row items-center h-20 xs:mx-5 relative">
+                  <div className="flex flex-col gap-2 items-start">
+                    <h3 className="text-lg lg:text-xl 2xl:text-2xl font-euclid text-white">
+                      Shopify Billing Cycles
+                    </h3>
+                    <span className="text-gray-300/50">
+                      If you need a full list of billing cycles contact us.
+                    </span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 lg:grid-cols-4 text-normal 2xl:text-xl gap-4 grid-headers text-white/50 font-normal border-b-2 p-2 border-gray-800">
+                  <div>Charge ID</div>
+                  <div className="hidden lg:block">Plan Name</div>
+                  <div className="hidden lg:block">Price</div>
+                  <div>Billing Date</div>
+                </div>
+
+                {shopifyBillingData.map((billing, index) => {
+                  const isLast = index === shopifyBillingData.length - 1;
+                  const evenRow = index % 2 === 0;
+                  return (
+                    <div
+                      key={billing.shopify_charge_id}
+                      className={`${
+                        evenRow
+                          ? "bg-gradient-to-b font-normal p-2 from-lighterMainBlue to-mainBlue text-white/90"
+                          : "bg-mainBlue font-normal p-2 text-white/90"
+                      } ${isLast ? "rounded-b-lg border-none" : ""} font-light`}
+                    >
+                      <div
+                        className={`grid grid-cols-3 lg:grid-cols-4 text-normal 2xl:text-xl gap-4 p-2 border-b-2 border-gray-800 ${
+                          isLast
+                            ? "rounded-b-lg 2xl:text-normal border-none"
+                            : ""
+                        }`}
+                      >
+                        <div>{billing.shopify_charge_id}</div>
+                        <div className="hidden lg:block">
+                          {billing?.billing_plane}
+                        </div>
+                        <div className="hidden lg:block">
+                          {billing.billing_amount} {"$"}
+                        </div>
+                        <div>{billing.billing_date}</div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </div>

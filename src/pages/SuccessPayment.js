@@ -59,7 +59,7 @@ const SuccessPayment = () => {
           // setPurchase({}); // Reset purchase state
           // setIsSuccess(null);
         }
-      }
+      } 
     } catch (error) {
       setShow(false);
       setErrMessage(error);

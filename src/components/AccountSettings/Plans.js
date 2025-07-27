@@ -79,16 +79,17 @@ const Plans = () => {
   };
 
   let getPackages = async () => {
+    setIsLoading(true);
     try {
       let response = await axiosInstance.get("/api/package_plan/");
 
       if (response.status === 200) {
         let filteredPackages = response.data.filter((item) => item.id !== 1);
-
+        setIsLoading(false);
         setPackages(filteredPackages);
       }
     } catch (error) {
-      setIsLoading(true);
+      setIsLoading(false);
       console.error(error);
     }
   };
@@ -136,109 +137,142 @@ const Plans = () => {
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex flex-row items-center border-b-2 border-gray-800 mb-2 h-16 bg-navBlue sticky top-0 z-10">
         <Search />
-
         <SmsPill />
       </div>
 
       <div className="flex-1 w-full flex flex-col items-center justify-center px-6 py-10">
         <div className="w-full max-w-6xl">
-          <div className="flex justify-between items-center mb-6 mx-44">
+          <div className="flex flex-col gap-3 items-start mb-6 mx-20">
             <h3 className="xl:text-2xl lg:text-xl text-normal font-euclid text-left text-white">
               Package plans
             </h3>
+            <span className="text-sm bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full shadow-md border border-yellow-300">
+              Unused credits are replaced each month with new ones
+            </span>
+            <span className="text-sm px-3 py-1 text-gray-300 rounded-full shadow-md border border-yellow-300">
+              In case you run out of credits before billing cycle contact us at:
+              beniagic@gmail.com
+            </span>
           </div>
 
           <div className="flex justify-center mx-20">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-              {elementsArray?.map((plan, index) => {
-                const currentPlan = packagePlan[index];
-                const isLoading = loadingState[currentPlan?.id];
-
-                return (
-                  <div
-                    key={currentPlan?.id}
-                    onClick={() =>
-                      handlePurchase(currentPlan?.plan_type, currentPlan?.id)
-                    }
-                    className={`flex flex-col justify-between bg-ngrokGray p-6 rounded-3xl shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-2 cursor-pointer border-2 ${
-                      currentPlan?.plan_type === "Gold package"
-                        ? "border-yellow-500"
-                        : currentPlan?.plan_type === "Silver package"
-                        ? "border-gray-400"
-                        : "border-green-400"
-                    } ${isLoading ? "opacity-70" : "opacity-100"}`}
-                  >
-                    <div>
-                      <h2 className="text-white text-xl font-semibold mb-4">
-                        {currentPlan?.plan_type}
-                      </h2>
-
-                      <div className="flex items-center justify-between mb-6">
-                        <button
-                          disabled={isLoading}
-                          className="px-4 py-2 bg-purpleHaze text-white rounded-full text-sm hover:bg-ngrokBlue transition-colors"
-                        >
-                          {isLoading ? (
-                            <svg
-                              className="w-5 h-5 animate-spin mx-auto"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                            >
-                              <circle
-                                className="opacity-25"
-                                cx="12"
-                                cy="12"
-                                r="10"
-                                stroke="currentColor"
-                                strokeWidth="4"
-                              ></circle>
-                              <path
-                                className="opacity-75"
-                                fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.372 0 0 5.373 0 12h4z"
-                              ></path>
-                            </svg>
-                          ) : (
-                            "Buy"
-                          )}
-                        </button>
-
-                        <p className="text-3xl font-bold text-white">
-                          {currentPlan?.price} $
-                        </p>
+              {packagePlan.length === 0
+                ? // Skeleton Loader UI
+                  [...Array(3)].map((_, idx) => (
+                    <div
+                      key={idx}
+                      className="flex flex-col justify-between bg-ngrokGray p-6 rounded-3xl shadow-lg animate-pulse border-2 border-gray-700"
+                    >
+                      <div>
+                        <div className="h-6 bg-gray-700 rounded w-1/3 mb-4" />
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="px-4 py-2 bg-gray-700 rounded-full w-20 h-8" />
+                          <div className="h-6 bg-gray-700 rounded w-12" />
+                        </div>
+                        <ul className="space-y-3">
+                          {[...Array(4)].map((__, i) => (
+                            <li key={i} className="flex items-center space-x-2">
+                              <div className="w-4 h-4 bg-gray-600 rounded-full" />
+                              <div className="h-4 bg-gray-700 rounded w-3/4" />
+                            </li>
+                          ))}
+                        </ul>
                       </div>
+                    </div>
+                  ))
+                : elementsArray?.map((plan, index) => {
+                    const currentPlan = packagePlan[index];
+                    const isLoading = loadingState[currentPlan?.id];
 
-                      <ul className="text-sm text-white space-y-3">
-                        {[...Array(8)].map((_, i) => {
-                          const offer = currentPlan?.[`offer${i + 1}`];
-                          return (
-                            offer && (
-                              <li
-                                key={i}
-                                className="flex items-center space-x-2"
-                              >
+                    return (
+                      <div
+                        key={currentPlan?.id}
+                        onClick={() =>
+                          handlePurchase(
+                            currentPlan?.plan_type,
+                            currentPlan?.id
+                          )
+                        }
+                        className={`flex flex-col justify-between bg-ngrokGray p-6 rounded-3xl shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-2 cursor-pointer border-2 ${
+                          currentPlan?.plan_type === "Gold package"
+                            ? "border-yellow-500"
+                            : currentPlan?.plan_type === "Silver package"
+                            ? "border-gray-400"
+                            : "border-green-400"
+                        } ${isLoading ? "opacity-70" : "opacity-100"}`}
+                      >
+                        <div>
+                          <h2 className="text-white text-xl font-semibold mb-4">
+                            {currentPlan?.plan_type}
+                          </h2>
+
+                          <div className="flex items-center justify-between mb-6">
+                            <button
+                              disabled={isLoading}
+                              className="px-4 py-2 bg-purpleHaze text-white rounded-full text-sm hover:bg-ngrokBlue transition-colors"
+                            >
+                              {isLoading ? (
                                 <svg
-                                  className="w-4 h-4 text-green-400 bg-white rounded-full"
-                                  fill="currentColor"
-                                  viewBox="0 0 20 20"
+                                  className="w-5 h-5 animate-spin mx-auto"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
                                 >
+                                  <circle
+                                    className="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    strokeWidth="4"
+                                  ></circle>
                                   <path
-                                    fillRule="evenodd"
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                    clipRule="evenodd"
+                                    className="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.372 0 0 5.373 0 12h4z"
                                   ></path>
                                 </svg>
-                                <span>{offer}</span>
-                              </li>
-                            )
-                          );
-                        })}
-                      </ul>
-                    </div>
-                  </div>
-                );
-              })}
+                              ) : (
+                                "Buy"
+                              )}
+                            </button>
+
+                            <p className="text-3xl font-bold text-white">
+                              {currentPlan?.price} $
+                            </p>
+                          </div>
+
+                          <ul className="text-sm text-white space-y-3">
+                            {[...Array(8)].map((_, i) => {
+                              const offer = currentPlan?.[`offer${i + 1}`];
+                              return (
+                                offer && (
+                                  <li
+                                    key={i}
+                                    className="flex items-center space-x-2"
+                                  >
+                                    <svg
+                                      className="w-4 h-4 text-green-400 bg-white rounded-full"
+                                      fill="currentColor"
+                                      viewBox="0 0 20 20"
+                                    >
+                                      <path
+                                        fillRule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clipRule="evenodd"
+                                      ></path>
+                                    </svg>
+                                    <span>{offer}</span>
+                                  </li>
+                                )
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      </div>
+                    );
+                  })}
             </div>
           </div>
         </div>

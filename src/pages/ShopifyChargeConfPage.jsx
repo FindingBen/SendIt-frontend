@@ -4,11 +4,11 @@ import Search from "../components/SearchComponent/Search";
 import SmsPill from "../components/SmsPill/SmsPill";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useRedux } from "../constants/reduxImports";
-import setPackage from "../redux/reducers/packageReducer";
+import { setPackage } from "../redux/reducers/packageReducer";
 
 const ShopifyChargeConfPage = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentUser, currentDomain, currentToken } = useRedux();
+  const { dispatch } = useRedux();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const shop = params.get("shop");
@@ -22,8 +22,14 @@ const ShopifyChargeConfPage = () => {
       let response = await axiosInstance.get(`/stripe/users_charge/`);
       console.log(response);
       if (response.status === 200) {
-        console.log("User charge status:", response.data);
-        //setPackage(response.data);
+        console.log("User charge status:", response.data.package);
+        const package_payload = {
+          package_plan: response?.data.package.plan_type,
+          sms_count: response?.data.package.sms_count_pack,
+          list_limit: response.data.limits.contact_lists, // optional
+          recipients_limit: response.data.limits.recipients, // optional
+        };
+        dispatch(setPackage(package_payload));
       }
     } catch (error) {
       console.log(error);

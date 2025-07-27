@@ -9,7 +9,7 @@ const PackageInformation = () => {
   const trial_plan = process.env.REACT_APP_TRIAL_PLAN;
   const gold_package = process.env.REACT_APP_GOLD_PLAN;
   const silver_plan = process.env.REACT_APP_SILVER_PLAN;
-
+  console.log("currentPackageState", currentPackageState);
   return (
     <div className="flex flex-col rounded-2xl p-4 mx-20 relative">
       <h3 class="flex flex-row xs:text-normal border-b-2 border-gray-800 lg:text-xl 2xl:text-2xl text-left mb-4 font-normal text-white relative">
