@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParam } from "react-router-dom";
 import Search from "../components/SearchComponent/Search";
 import SmsPill from "../components/SmsPill/SmsPill";
 import useAxiosInstance from "../utils/axiosInstance";
@@ -15,6 +15,7 @@ const ShopifyChargeConfPage = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const params = new URLSearchParams(location.search);
   const shop = params.get("shop");
+  const charge_id = params.get("charge_id");
 
   useEffect(() => {
     checkUsersChargeStatus();
@@ -23,7 +24,9 @@ const ShopifyChargeConfPage = () => {
   const checkUsersChargeStatus = async () => {
     setLoading(true);
     try {
-      let response = await axiosInstance.get(`/stripe/users_charge/`);
+      let response = await axiosInstance.get(
+        `/stripe/users_charge/?charge_id=${charge_id}`
+      );
       console.log(response);
       if (response.status === 200) {
         if (response.data.package) {
@@ -37,7 +40,7 @@ const ShopifyChargeConfPage = () => {
           setTimeout(() => {
             setLoading(false);
           }, 3000);
-        } else {
+        } else if (response.data.scheduled_package) {
           setTimeout(() => {
             setLoading(false);
           }, 3000);
