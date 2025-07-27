@@ -10,6 +10,9 @@ const ShopifyChargeConfPage = () => {
   const axiosInstance = useAxiosInstance();
   const { dispatch } = useRedux();
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
+  const [errMessage, setErrMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const params = new URLSearchParams(location.search);
   const shop = params.get("shop");
 
@@ -18,20 +21,37 @@ const ShopifyChargeConfPage = () => {
   }, []);
 
   const checkUsersChargeStatus = async () => {
+    setLoading(true);
     try {
       let response = await axiosInstance.get(`/stripe/users_charge/`);
       console.log(response);
       if (response.status === 200) {
-        console.log("User charge status:", response.data.package);
-        const package_payload = {
-          package_plan: response?.data.package.plan_type,
-          sms_count: response?.data.package.sms_count_pack,
-          list_limit: response.data.limits.contact_lists, // optional
-          recipients_limit: response.data.limits.recipients, // optional
-        };
-        dispatch(setPackage(package_payload));
+        if (response.data.package) {
+          const package_payload = {
+            package_plan: response?.data.package.plan_type,
+            sms_count: response?.data.package.sms_count_pack,
+            list_limit: response.data.limits.contact_lists, // optional
+            recipients_limit: response.data.limits.recipients, // optional
+          };
+          dispatch(setPackage(package_payload));
+          setTimeout(() => {
+            setLoading(false);
+          }, 3000);
+        } else {
+          setTimeout(() => {
+            setLoading(false);
+          }, 3000);
+          setSuccessMessage(
+            `Subscription triggered! Your plan will be activated on ${response.data.scheduled_date}`
+          );
+          console.log("Subscription triggered");
+        }
+      } else if (response.data.status === 208) {
+        setSuccessMessage(`Operation already completed!`);
+        setLoading(false);
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -40,9 +60,9 @@ const ShopifyChargeConfPage = () => {
     <section className="min-h-screen w-full items-center justify-center">
       <div className="flex flex-row items-center border-b-2 border-gray-800 mb-2 h-16 bg-navBlue sticky top-0 z-10">
         <Search />
-
         <SmsPill />
       </div>
+
       <div className="flex-1 w-full flex flex-col items-center justify-center px-6 py-10">
         <div className="w-full max-w-6xl">
           <div className="flex justify-between items-center mb-6 mx-44">
@@ -51,12 +71,24 @@ const ShopifyChargeConfPage = () => {
             </h3>
           </div>
 
-          <div className="flex justify-center mx-20">
-            <p className="text-gray-50 text-xl">
-              Confirmation of plan purchase for shop:{" "}
-              <span className="text-cyan-500">{shop}</span>
-            </p>
-          </div>
+          {/* LOADING UI */}
+          {loading && (
+            <div className="flex flex-col items-center justify-center gap-4 mt-20">
+              <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
+              <p className="text-lg text-white/80 animate-pulse">
+                Checking your subscription...
+              </p>
+            </div>
+          )}
+
+          {/* SUCCESS UI */}
+          {!loading && successMessage && (
+            <div className="flex justify-center mx-20">
+              <p className="text-green-400 text-xl text-center">
+                {successMessage}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </section>
