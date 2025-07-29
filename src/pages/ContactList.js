@@ -450,7 +450,9 @@ const ContactList = () => {
                           <div
                             key={rowData.id}
                             className={`${
-                              contactId === rowData.id
+                              !rowData.allowed
+                                ? "bg-gray-700 text-gray-400 opacity-60 cursor-not-allowed"
+                                : contactId === rowData.id
                                 ? "bg-cyan-700 text-white font-semibold transition duration-300"
                                 : evenRow
                                 ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue text-white"
@@ -474,6 +476,7 @@ const ContactList = () => {
                                       handleChange(e, "firstName")
                                     }
                                     className="input-class rounded-lg bg-white text-black"
+                                    disabled={!rowData.allowed}
                                   />
                                 ) : (
                                   rowData.firstName
@@ -483,6 +486,7 @@ const ContactList = () => {
                                 {isEditing ? (
                                   <input
                                     value={editData.lastName}
+                                    disabled={!rowData.allowed}
                                     onChange={(e) =>
                                       handleChange(e, "lastName")
                                     }
@@ -496,6 +500,7 @@ const ContactList = () => {
                                 {isEditing ? (
                                   <input
                                     value={editData.email}
+                                    disabled={!rowData.allowed}
                                     onChange={(e) => handleChange(e, "email")}
                                     className="input-class rounded-lg bg-white text-black"
                                   />
@@ -507,6 +512,7 @@ const ContactList = () => {
                                 {isEditing ? (
                                   <input
                                     value={editData.phone}
+                                    disabled={!rowData.allowed}
                                     onChange={(e) => handleChange(e, "phone")}
                                     className="input-class rounded-lg bg-white text-black"
                                   />
@@ -522,6 +528,7 @@ const ContactList = () => {
                                       onClick={(e) =>
                                         updateContact(rowData.custom_id)
                                       }
+                                      disabled={!rowData.allowed}
                                       className="text-green-500 hover:text-green-700 mx-auto p-0.5"
                                     >
                                       Save
@@ -544,6 +551,12 @@ const ContactList = () => {
                                       <div className="mx-auto my-auto p-0.5">
                                         <button
                                           type="button"
+                                          disabled={!rowData.allowed}
+                                          className={
+                                            rowData.allowed
+                                              ? ""
+                                              : "cursor-not-allowed"
+                                          }
                                           onClick={() =>
                                             handleEditClick(rowData)
                                           }
