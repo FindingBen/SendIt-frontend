@@ -130,22 +130,22 @@ const ContactList = () => {
 
     getContacts();
   };
-  let deleteContact = async (id) => {
+  let deleteContact = async (user_data) => {
     setIsLoading(true);
     try {
       const data = {
-        id: id,
+        id: user_data.custom_id,
       };
 
       let url = "";
       //const url = "/api/delete_recipient/<str:id>/";
 
-      url = `/api/delete_recipient/${data.id}`;
+      url = `/api/delete_recipient/${user_data.id}`;
 
       let response = await axiosInstance.post(url, data);
 
       if (response.status === 200) {
-        setContacts(contacts.filter((contact) => contact.id !== id));
+        setContacts(contacts.filter((contact) => contact.id !== user_data.id));
         setDeletedContact(true);
         dispatch(
           setContactLists({
@@ -446,6 +446,7 @@ const ContactList = () => {
                         const isLastItem = index === paginatedData.length - 1;
                         const evenRow = index % 2 === 0;
                         const isEditing = editableRowId === rowData.id;
+                        console.log("rowData.allowed:", rowData.allowed);
                         return (
                           <div
                             key={rowData.id}
@@ -580,9 +581,7 @@ const ContactList = () => {
                                       <div className="mx-auto my-auto p-0.5">
                                         <button
                                           type="button"
-                                          onClick={() =>
-                                            deleteContact(rowData.id)
-                                          }
+                                          onClick={() => deleteContact(rowData)}
                                         >
                                           <svg
                                             xmlns="http://www.w3.org/2000/svg"

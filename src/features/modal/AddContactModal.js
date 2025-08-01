@@ -79,6 +79,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
         closeModal();
       }
     } catch (error) {
+      console.log(error);
       setLoading(false);
       if (error.response && error.response.data.details) {
         const errors = error.response.data.details.reduce((acc, err) => {

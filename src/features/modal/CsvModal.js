@@ -101,7 +101,7 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
 
       if (response.status === 200 || 201) {
         console.log("AAA", response.data);
-        setLoading(false);
+        setTimeout(() => setLoading(false), 5000);
         newContacts((prevContacts) => [...prevContacts, ...response.data.data]);
       }
     } catch (error) {
