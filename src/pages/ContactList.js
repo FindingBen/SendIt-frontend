@@ -40,7 +40,7 @@ const ContactList = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const [sortOrder, setSortOrder] = useState("first_name");
   const [editableRowId, setEditableRowId] = useState(null);
-  const [searchValue, setSearchValue] = useState(""); // Track the row being edited
+  const [shopifyList, setShopifyList] = useState(false); // Track the row being edited
   const [editData, setEditData] = useState({});
   const [search_name, setSearchName] = useState("");
   const params = useParams();
@@ -90,6 +90,7 @@ const ContactList = () => {
 
       if (response.status === 200) {
         console.log(response.data);
+        setShopifyList(response.data.shopify_list);
         if (response.data.contact_list_recipients_nr === 0) {
           setListEmpty(false);
         }
@@ -342,33 +343,37 @@ const ContactList = () => {
                     {!canAddNewrecipients() && <Tooltip id="my-tooltip" />}
                   </button>
 
-                  <button
-                    disabled={!canAddNewrecipients()}
-                    data-tooltip-id="my-tooltip"
-                    data-tooltip-content="Limit reached! Upgrade for more recipients!"
-                    className={`${
-                      canAddNewrecipients()
-                        ? "text-white hover:text-white/50 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer"
-                        : "text-gray-500"
-                    } rounded-md border-2 border-gray-800 p-2`}
-                    onClick={handleCsvModal}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="w-6 h-6"
+                  {!shopifyList ? (
+                    <button
+                      disabled={!canAddNewrecipients()}
+                      data-tooltip-id="my-tooltip"
+                      data-tooltip-content="Limit reached! Upgrade for more recipients!"
+                      className={`${
+                        canAddNewrecipients()
+                          ? "text-white hover:text-white/50 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer"
+                          : "text-gray-500"
+                      } rounded-md border-2 border-gray-800 p-2`}
+                      onClick={handleCsvModal}
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15"
-                      />
-                    </svg>
-                    {!canAddNewrecipients() && <Tooltip id="my-tooltip" />}
-                  </button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15"
+                        />
+                      </svg>
+                      {!canAddNewrecipients() && <Tooltip id="my-tooltip" />}
+                    </button>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               )}
             </div>
