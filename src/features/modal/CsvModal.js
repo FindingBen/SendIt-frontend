@@ -8,7 +8,7 @@ import Papa from "papaparse";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../components/LoaderSkeleton/Loader";
 
-const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
+const CsvModal = ({ showModalCsv, onClose, newContacts, shopifyList }) => {
   const [show, setShowModal] = useState(showModalCsv);
   const { currentPackageState } = useRedux();
   const [loading, setLoading] = useState(false);
@@ -82,11 +82,7 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
           setLoading(false);
           await createContact(parsedData);
         }
-
-        closeModal();
       }
-
-      closeModal();
     };
     reader.readAsText(file);
   };
@@ -100,18 +96,22 @@ const CsvModal = ({ showModalCsv, onClose, newContacts }) => {
       });
 
       if (response.status === 200 || 201) {
-        console.log("AAA", response.data);
-
         newContacts((prevContacts) => [...prevContacts, ...response.data.data]);
-        setTimeout(() => setLoading(false), 5000);
+        shopifyList(response.data.shopify_list);
+        setTimeout(() => setLoading(false), 10000);
+        closeModal();
       }
     } catch (error) {
-      console.log(error);
-      setLoading(false);
-      setError(error.response.data.detail);
+      if (error.response.status === 403) {
+        setError(error.response.data.error);
+        setLoading(false);
+      } else if (error.response.status === 400) {
+        setError(error.response.data.error);
+        setLoading(false);
+      }
     }
   };
-
+  console.log(error);
   const closeModal = () => {
     onClose();
     setError("");

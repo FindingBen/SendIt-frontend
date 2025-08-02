@@ -166,6 +166,10 @@ const ContactList = () => {
     }
   };
 
+  const isShopifyList = (e) => {
+    setShopifyList(e);
+  };
+
   const handleCsvModal = (e) => {
     setShowCsv(true);
   };
@@ -223,8 +227,7 @@ const ContactList = () => {
       setEditableRowId(null);
     }
   };
-  console.log(currentUserState);
-  console.log("EMPTY?", listEmpty);
+
   const handleSearchChange = (e) => {
     setSearchName(e.target?.value);
   };
@@ -646,6 +649,7 @@ const ContactList = () => {
           <CsvModal
             newContacts={handleNewContact}
             showModalCsv={showCsv}
+            shopifyList={isShopifyList}
             onClose={() => setShowCsv(false)}
           />
           <AddContactModal

@@ -85,11 +85,11 @@ const DeleteListModal = ({
           >
             <div className="relative w-automx-auto max-w-3xl">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="relative flex flex-col w-full bg-ngrokGray">
                 {/*header*/}
                 <Modal.Header closeButton>
                   <Modal.Title>
-                    <div className="flex flex-row">
+                    <div className="flex flex-row text-slate-400">
                       <p>Delete contact list</p>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -118,17 +118,16 @@ const DeleteListModal = ({
                   {loading ? (
                     <Loader color={true} loading_name={"Loading..."} />
                   ) : (
-                    <div>
+                    <div className="flex flex-row gap-2">
                       <button
-                        className="bg-red-800 hover:bg-gray-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        className="bg-red-700 hover:bg-gray-400 text-white font-euclid py-2 px-4 rounded-md duration-200"
                         type="button"
                         onClick={closeModal}
                       >
-                        No
+                        Close
                       </button>
-
                       <button
-                        className="bg-gray-800 hover:bg-green-400 text-white font-bold py-2 px-4 border border-blue-700 rounded duration-200"
+                        className="bg-ngrokBlue hover:bg-blue-400 text-white font-euclid py-2 px-4 rounded-md duration-200"
                         type="button"
                         onClick={setFunction}
                       >
