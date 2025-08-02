@@ -10,7 +10,7 @@ const ViewList = ({ children, isArchive }) => {
   const environment = config;
   const BASE_URL = config.url.BASE_URL;
   const [itemsElements, setItems] = useState([children]);
-  console.log(environment);
+
   useEffect(() => {
     setItems(children);
   }, [children]);

@@ -156,7 +156,7 @@ const EditMessage = () => {
         setIsLoading(false);
         navigate("/home");
       } else {
-        console.log("Failed to create notes:", response.data);
+
       }
     } catch (error) {
       console.log("Error creating elements and notes:", error);

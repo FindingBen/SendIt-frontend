@@ -126,7 +126,7 @@ const WelcomePage = () => {
       setLoading(false);
     }
   };
-  console.log("DRAFT", draft);
+
   let getCampaigns = async () => {
     try {
       let response = await axiosInstance.get(
@@ -187,7 +187,7 @@ const WelcomePage = () => {
         `api/message_view_edit/${msgId}/`,
         body
       );
-      console.log(response);
+
       if (response.status === 200 || 201) {
         console.log("Success");
         getNotes();

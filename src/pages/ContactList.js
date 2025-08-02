@@ -89,7 +89,7 @@ const ContactList = () => {
       let response = await axiosInstance.get(url);
 
       if (response.status === 200) {
-        console.log(response.data);
+
         setShopifyList(response.data.shopify_list);
         if (response.data.contact_list_recipients_nr === 0) {
           setListEmpty(false);
@@ -99,7 +99,7 @@ const ContactList = () => {
       setLoader(false);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+
       setLoader(false);
       setIsLoading(false);
     }
@@ -185,7 +185,7 @@ const ContactList = () => {
   const handleQrModal = (e) => {
     setShowQr(true);
   };
-  console.log("DDDD", !currentUserState.shopify_connect);
+
   const handleNewContact = (contact) => {
     setListEmpty(true);
     setContacts(contact);
@@ -218,7 +218,7 @@ const ContactList = () => {
         // Close the contact drawer after successful update
       }
     } catch (error) {
-      console.log(error);
+
       setErrorMsg(error.message);
       setIsLoading(false);
       setTimeout(() => {
@@ -454,7 +454,7 @@ const ContactList = () => {
                         const isLastItem = index === paginatedData.length - 1;
                         const evenRow = index % 2 === 0;
                         const isEditing = editableRowId === rowData.id;
-                        console.log("rowData.allowed:", rowData.allowed);
+
                         return (
                           <div
                             key={rowData.id}

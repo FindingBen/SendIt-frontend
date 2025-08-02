@@ -26,14 +26,11 @@ const ShopifyLogin = () => {
   useEffect(() => {
     handleAuth();
   }, []);
-  //     if (shop) {
-  //       navigate("/home"); // Auto redirect to home if user is already logged in via Shopify
-  //     }
-  //   }, [navigate]);
+
 
   const handleAuth = async (e) => {
     setLoading(true);
-    console.log(shop);
+
     try {
       const response = await fetch(
         `${BASE_URL}/api/shopify-auth/?shop=${shop}`,
@@ -43,19 +40,15 @@ const ShopifyLogin = () => {
         }
       );
       const responseData = await response.json();
-      console.log(responseData);
+
       if (response.status == 200) {
         setLoading(false);
       }
-      //   const user = jwt_decode(responseData?.access).user_id;
-      //   const packageValue = jwt_decode(responseData?.access).package_plan;
-      //   const user_info = jwt_decode(responseData?.access);
+
       const tokenType = "Shopify";
       dispatch(setShopifyCredentials({ ...responseData, tokenType }));
       dispatch(setUserInfo({ ...responseData.user }));
-      //console.log(user_info);
 
-      //localStorage.setItem("refreshToken", responseData?.refresh);
       navigate("/home");
     } catch (err) {
       console.log(err);

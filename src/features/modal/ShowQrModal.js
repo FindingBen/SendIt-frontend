@@ -29,10 +29,10 @@ const ShowQrModal = ({ showModalQr, onClose }) => {
   const getQRcode = async () => {
     try {
       let response = await axiosInstance.get(`/api/qr_code/${params.id}`);
-      console.log(response);
+
       if (response.status === 200) {
         setloading(false);
-        console.log(response);
+
         setQrImage(response?.data);
       }
     } catch (error) {

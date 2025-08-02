@@ -66,7 +66,7 @@ const List = ({
       console.log("Error making the API request:", error);
     }
   };
-  console.log("LIST", itemsElements);
+
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext

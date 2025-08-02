@@ -54,7 +54,7 @@ const PurchaseHistory = () => {
   let billingsHistory = async (e) => {
     try {
       let response = await axiosInstance.get(`/stripe/user_billings/`);
-      console.log(response);
+
       if (response.status === 200) {
         setShopifyBillingData(response.data.billings);
       }
@@ -91,7 +91,7 @@ const PurchaseHistory = () => {
   const handleSearchTerm = (e) => {
     setSearchId(e.target?.value);
   };
-  console.log(shopifyBillingData);
+
   return (
     <div className="min-h-screen w-100 items-center justify-center">
       <div className="flex-1 flex flex-col">

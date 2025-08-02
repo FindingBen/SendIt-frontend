@@ -173,13 +173,13 @@ const SmsSendingPage = () => {
         scheduled: false,
         // is_sent: true,
       });
-      console.log(response);
+
       if (response.status === 200 || response.status === 201) {
         dispatch(setOperation(true));
         navigate(`/home`);
       }
     } catch (error) {
-      console.log(error);
+
       setErrorMessage(error.response?.data?.error || "Error sending SMS");
     }
   };
@@ -206,9 +206,9 @@ const SmsSendingPage = () => {
       console.log(e);
     }
   };
-  console.log("PACKAGE", currentPackageState);
+
   const canSchedule = () => {
-    console.log("PACKAGE");
+
     if (currentPackageState?.package === gold_package) {
       return true;
     } else if (currentPackageState?.package === silver_package) {

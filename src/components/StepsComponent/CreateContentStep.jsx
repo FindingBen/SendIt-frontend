@@ -175,7 +175,7 @@ const CreateContentStep = ({
       />
     ),
   };
-  console.log(currentPackageState);
+
   return (
     <section className="max-h-screen w-full items-center justify-center">
       <div className="flex flex-col max-h-screen">

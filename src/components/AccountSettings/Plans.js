@@ -25,7 +25,7 @@ const Plans = () => {
     getPackages();
     checkShopifyUser();
   }, []);
-  console.log("isShopifyUser", currentDomain);
+
   const checkShopifyUser = async () => {
     try {
       const response = await axiosInstance.get("/stripe/shopify_status/");
@@ -56,7 +56,7 @@ const Plans = () => {
           currentUser,
         }
       );
-      console.log(response);
+
       if (response.status === 200) {
         setLoadingStates((prevState) => ({
           ...prevState,
@@ -72,7 +72,6 @@ const Plans = () => {
         // }
       }
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
       setShow(false);
     }
@@ -117,9 +116,8 @@ const Plans = () => {
         plan: name_product,
         shop: currentDomain,
       });
-      console.log(response.data);
+
       if (response.status === 200 && response.data.url) {
-        console.log("Shopify Checkout URL:", response.data.url);
         window.location.replace(response.data.url);
         setIsLoading(false);
       } else {

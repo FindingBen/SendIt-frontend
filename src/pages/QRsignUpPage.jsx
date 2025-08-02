@@ -18,7 +18,7 @@ const QRsignUpPage = () => {
   const [canSign, setCanSign] = useState(false);
   const baseURL = config.url.BASE_URL;
   const TRUE = statements.TRUE;
-  const FALSE = statements.FALSE;
+
   const params = useParams();
   const [contact, setContact] = useState({
     firstName: "",

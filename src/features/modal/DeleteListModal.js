@@ -34,9 +34,9 @@ const DeleteListModal = ({
         data,
       });
       const variables = response.data;
-      console.log("DDD", variables);
+
       if (response.status === 200) {
-        console.log("VARIABLES", variables);
+
         if (variables.data === true) {
           dispatch(setUserInfo({ shopify_connect: false }));
         }

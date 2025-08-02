@@ -13,7 +13,7 @@ const AnalyticsBarProgress = ({ total_values, metric }) => {
     if (percentage <= 70) return "bg-yellow-500 dark:bg-yellow-400";
     return "bg-green-600 dark:bg-green-500";
   };
-  console.log(total_values);
+
   const cappedValue = Math.min(total_values || 0, 100);
   const progressColor = getProgressColor(cappedValue, metric);
 

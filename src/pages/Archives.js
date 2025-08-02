@@ -98,7 +98,7 @@ const Archives = () => {
   };
 
   const handleSearchChange = (e) => {
-    console.log(e.target.value);
+
     setSearchName(e.target?.value);
   };
 

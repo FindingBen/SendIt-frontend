@@ -21,7 +21,7 @@ export function SortableItem(props) {
     transform: CSS.Transform.toString(transform),
     transition,
   };
-  console.log("OLEEE", props.itemObject);
+
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <div

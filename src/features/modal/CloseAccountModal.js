@@ -41,7 +41,7 @@ const CloseAccountModal = ({ showModal, onClose }) => {
         }
       );
       if (response.status === 200 || 201) {
-        console.log(response);
+
         closeModal();
         dispatch(logOut());
       }

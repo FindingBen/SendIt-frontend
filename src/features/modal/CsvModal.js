@@ -68,8 +68,7 @@ const CsvModal = ({ showModalCsv, onClose, newContacts, shopifyList }) => {
       if (response.status === 200) {
         setLoading(false);
         const totalContacts = response.data.contact_list_recipients_nr;
-        //console.log(response.data);
-        console.log(totalContacts);
+
         if (
           parsedData.length + totalContacts >
           currentPackageState.recipients_limit
@@ -111,7 +110,7 @@ const CsvModal = ({ showModalCsv, onClose, newContacts, shopifyList }) => {
       }
     }
   };
-  console.log(error);
+
   const closeModal = () => {
     onClose();
     setError("");

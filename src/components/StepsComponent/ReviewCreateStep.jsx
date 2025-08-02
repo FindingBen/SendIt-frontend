@@ -11,7 +11,7 @@ import { createElements } from "../../utils/helpers/createElements";
 import Loader from "../LoaderSkeleton/Loader";
 
 const ReviewCreateStep = ({ prevStep, formData }) => {
-  console.log("FINAL", formData);
+
   const [elementContextList, setElementsContextList] = useState([
     formData.contentElements,
   ]);
@@ -90,7 +90,7 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
         setIsLoading(false);
       }
     } catch (error) {
-      console.log(error);
+
       setErrorMsg(error.response.data.message_name);
       setIsLoading(false);
     }

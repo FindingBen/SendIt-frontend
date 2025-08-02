@@ -13,7 +13,7 @@ const StepsComponent = ({ currentStep, completedSteps, contentType }) => {
         { id: 2, label: "Content" },
         { id: 3, label: "Review" },
       ];
-  console.log(contentType);
+
   return (
     <ol className="flex items-center w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
       {steps.map((step, index) => {

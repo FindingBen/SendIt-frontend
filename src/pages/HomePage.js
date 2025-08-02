@@ -1,25 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { logOut } from "../redux/reducers/authSlice";
 import useAxiosInstance from "../utils/axiosInstance";
-import DeleteMessageModal from "../features/modal/DeleteMessageModal";
-import { setArchiveState } from "../redux/reducers/archiveReducer";
-import ModalComponent from "../components/ModalComponent";
 import { motion } from "framer-motion";
 import { config } from "../constants/Constants";
 import { useRedux } from "../constants/reduxImports";
-import { createElements } from "../utils/helpers/createElements";
+
 import OverallStatistics from "../components/Analytics/OverallStatistics";
-import { Link } from "react-router-dom";
-import formatDate from "../utils/helpers/dateFunction";
+
 import SmsActivityChart from "../utils/chart/SmsActivityChart";
 import { MessageCard } from "../components/MessageCard/MessageCard";
-import CompletedCampaigns from "../components/CompletedCampaignsView/CompletedCampaigns";
-import {
-  clearMessages,
-  setMessages,
-  setMessagesCount,
-  setOperation,
-} from "../redux/reducers/messageReducer";
+
+import { clearMessages } from "../redux/reducers/messageReducer";
 import { cleanPackage } from "../redux/reducers/packageReducer";
 import Search from "../components/SearchComponent/Search";
 import SmsPill from "../components/SmsPill/SmsPill";
@@ -27,32 +18,14 @@ import CampaignCard from "../components/MessageCard/CampaignCard";
 
 const HomePage = () => {
   const axiosInstance = useAxiosInstance();
-  const {
-    dispatch,
-    currentUser,
-    currentMessageCount,
-    currentMessages,
-    currentOperationState,
-    currentArchivedState,
-    currentCampaignsState,
-  } = useRedux();
+  const { dispatch, currentUser } = useRedux();
 
   const [initialLoad, setInitialLoad] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeCampaigns, setActiveCampaigns] = useState("");
   const [campaigns, setCampaigns] = useState([]);
   const [totalValues, setTotalValues] = useState();
-  const [listUpdated, setListUpdated] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [show, setShow] = useState(false);
-  const [showCopy, setShowCopy] = useState(false);
-  const BASE_URL = config.url.BASE_URL;
-  const [messageId, setMessageId] = useState();
-  const [analyticsOpen, setAnalyticsOpen] = useState(false);
-  const [smsId, setSmsId] = useState();
-  const [views, setViews] = useState();
-  const [sortOrder, setSortOrder] = useState("");
-  const [searchValue, setSearchValue] = useState("");
+
   //Date Section
   const today = new Date();
   const yesterday = new Date(today);

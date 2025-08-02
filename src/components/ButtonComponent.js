@@ -9,7 +9,7 @@ const ButtonComponent = ({ textValue, linkValue, colorValue }) => {
     setLink(linkValue);
     setColor(colorValue);
   }, [textValue, linkValue, colorValue]);
-  console.log("LINK", link);
+
   return (
     <div
       style={{ backgroundColor: `${color}` }}

@@ -45,7 +45,7 @@ const SmsPill = () => {
     navigate("/login");
     localStorage.removeItem("refreshToken");
   };
-  console.log("currentSmsPackCount", currentSmsPackCount);
+
   const smsCount = currentSmsPackCount || 0;
   return (
     <div className="flex flex-row gap-3 items-center ml-auto mr-20">

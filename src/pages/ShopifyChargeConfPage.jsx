@@ -27,7 +27,7 @@ const ShopifyChargeConfPage = () => {
       let response = await axiosInstance.get(
         `/stripe/users_charge/?charge_id=${charge_id}`
       );
-      console.log(response);
+
       if (response.status === 200) {
         if (response.data.package) {
           const package_payload = {
@@ -47,7 +47,7 @@ const ShopifyChargeConfPage = () => {
           setSuccessMessage(
             `Subscription triggered! Your plan will be activated on ${response.data.scheduled_date}`
           );
-          console.log("Subscription triggered");
+
         } else if (response.data.status === 208) {
           setSuccessMessage(`Operation already completed!`);
           setLoading(false);

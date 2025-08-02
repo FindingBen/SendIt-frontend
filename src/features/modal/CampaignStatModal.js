@@ -31,7 +31,7 @@ const CampaignStatModal = ({ showModalCamp, onClose, campaignObject }) => {
         console.error("Expected a PDF file, but got:", errorMsg);
         return; // Exit if the response is not a PDF
       }
-      console.log(response);
+
       // Create a URL for the blob response
       const url = window.URL.createObjectURL(new Blob([response.data]));
 

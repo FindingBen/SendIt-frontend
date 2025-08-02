@@ -20,7 +20,7 @@ const RecentActivityModal = ({ showModal, onClose, activity }) => {
   const closeModal = () => {
     onClose();
   };
-  console.log("ACTIVATED", show);
+
   return (
     <>
       {show ? (

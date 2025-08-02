@@ -42,14 +42,14 @@ const SuccessPayment = () => {
       );
       if (response.status === 200) {
         setTimeout(() => setShow(false), 2000);
-        console.log(response);
+
         const package_payload = {
           package_plan: response?.data.user.package_plan.plan_type,
           sms_count:
             response?.data.user.sms_count +
             response?.data.user.package_plan.sms_count_pack,
         };
-        console.log(package_payload);
+
         dispatch(setPackage(package_payload));
         setPackageObj(package_payload);
         setPurchase(response?.data.purchase);

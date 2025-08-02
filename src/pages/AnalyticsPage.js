@@ -65,7 +65,8 @@ const AnalyticsPage = () => {
       );
       if (response.status === 200) {
         setViews(response.data);
-        console.log(response.data.avg_data);
+
+        
         setPeriodData(response.data.period_data);
         setAvgDataValues(response.data.avg_data);
       }

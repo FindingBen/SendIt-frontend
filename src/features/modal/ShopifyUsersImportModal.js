@@ -38,7 +38,7 @@ const ShopifyUsersImportModal = ({ showShopify, onClose, bulkContacts }) => {
       );
       if (response.status === 200 || 201) {
         setLoading(false);
-        console.log(response.data.data);
+
         bulkContacts(response.data.data);
         dispatch(
           setContactLists({
@@ -49,7 +49,7 @@ const ShopifyUsersImportModal = ({ showShopify, onClose, bulkContacts }) => {
         dispatch(setUserInfo({ shopify_connect: true }));
         closeModal();
       }
-      console.log(response);
+
     } catch (error) {
       setLoading(false);
       console.log(error);
