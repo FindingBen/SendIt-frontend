@@ -47,7 +47,6 @@ const ShopifyChargeConfPage = () => {
           setSuccessMessage(
             `Subscription triggered! Your plan will be activated on ${response.data.scheduled_date}`
           );
-
         } else if (response.data.status === 208) {
           setSuccessMessage(`Operation already completed!`);
           setLoading(false);
@@ -64,37 +63,51 @@ const ShopifyChargeConfPage = () => {
   };
 
   return (
-    <section className="min-h-screen w-full items-center justify-center">
-      <div className="flex flex-row items-center border-b-2 border-gray-800 mb-2 h-16 bg-navBlue sticky top-0 z-10">
+    <section className="min-h-screen w-full bg-[#111827] items-center justify-center">
+      <div className="flex flex-row items-center border-b-2 border-gray-800 h-16 bg-navBlue sticky top-0 z-10">
         <Search />
+
         <SmsPill />
       </div>
 
       <div className="flex-1 w-full flex flex-col items-center justify-center px-6 py-10">
-        <div className="w-full max-w-6xl">
-          <div className="flex justify-between items-center mb-6 mx-44">
-            <h3 className="xl:text-2xl lg:text-xl text-normal font-euclid text-left text-white">
-              Confirmation of subscription
-            </h3>
-          </div>
+        <div className="w-full max-w-3xl">
+          <h3 className="text-2xl font-semibold text-white mb-6 text-center">
+            Confirmation of Subscription
+          </h3>
 
-          {/* LOADING UI */}
-          {loading && (
+          {loading ? (
             <div className="flex flex-col items-center justify-center gap-4 mt-20">
-              <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
+              <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#3e6ff4]"></div>
               <p className="text-lg text-white/80 animate-pulse">
                 Checking your subscription...
               </p>
             </div>
-          )}
-
-          {/* SUCCESS UI */}
-          {!loading && successMessage && (
-            <div className="flex justify-center mx-20">
-              <p className="text-green-400 text-xl text-center">
-                {successMessage}
-              </p>
-            </div>
+          ) : (
+            successMessage && (
+              <div className="bg-[#23253a] border border-[#3e6ff4] rounded-2xl p-8 text-white shadow-lg mx-auto">
+                <div className="flex flex-col items-center text-center space-y-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-12 w-12 text-green-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <h4 className="text-xl font-medium">
+                    Subscription Confirmed
+                  </h4>
+                  <p className="text-green-400 text-base">{successMessage}</p>
+                </div>
+              </div>
+            )
           )}
         </div>
       </div>
