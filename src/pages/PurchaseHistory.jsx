@@ -9,7 +9,7 @@ import Search from "../components/SearchComponent/Search";
 
 const PurchaseHistory = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentUser } = useRedux();
+  const { currentUser, currentShopifyToken } = useRedux();
   const [purchases, setPurchases] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setIsLoading] = useState(true);
@@ -104,107 +104,113 @@ const PurchaseHistory = () => {
           {/* PURCHASE HISTORY HEADER */}
           <div className="flex flex-row items-center h-20 xs:mx-5 md:mx-44 relative">
             <h3 className="text-lg lg:text-xl 2xl:text-2xl font-euclid text-white">
-              Purchase history
+              Billing history
             </h3>
           </div>
 
           <div className="mainContainer xs:ml-5 lg:ml-44">
             {/* PURCHASE HISTORY TABLE */}
-            <div className="items-center justify-center rounded-lg w-full bg-mainBlue border-gray-800 border-2 shadow-md">
-              <div className="flex flex-row space-x-2 p-2 border-b border-gray-800">
-                <button
-                  className="px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-ngrokBlue font-euclid duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray"
-                  onClick={handleSortByDate}
-                >
-                  Sort by Date
-                </button>
-                <div className="relative w-[20%]">
-                  <div className="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
-                    <svg
-                      className="w-4 h-4 text-gray-500 ml-2 dark:text-gray-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                      />
-                    </svg>
-                  </div>
-                  <input
-                    type="search"
-                    id="default-search"
-                    className="block w-full p-1.5 ps-10 text-sm text-white border-2 rounded-lg focus:border-gray-700 bg-darkestGray border-gray-800"
-                    placeholder="Search by payment id..."
-                    value={searchId}
-                    onChange={handleSearchTerm}
-                  />
-                </div>
-              </div>
-
-              {/* TABLE HEADERS */}
-              <div className="grid grid-cols-3 lg:grid-cols-5 text-normal 2xl:text-xl gap-4 grid-headers text-white/50 font-normal border-b-2 p-2 border-gray-800">
-                <div>Payment ID</div>
-                <div className="hidden lg:block">Ammount</div>
-                <div className="hidden lg:block">Payment Type</div>
-                <div>Date</div>
-                <div>Status</div>
-              </div>
-
-              {/* TABLE ROWS */}
-              {!loading ? (
-                <>
-                  {paginatedData?.map((rowData, index) => {
-                    const isLastItem = index === paginatedData?.length - 1;
-                    const evenRow = index % 2 === 0;
-                    return (
-                      <div
-                        key={rowData?.id}
-                        className={`${
-                          evenRow
-                            ? "bg-gradient-to-b font-normal p-2 from-lighterMainBlue to-mainBlue text-white/90"
-                            : "bg-mainBlue font-normal p-2 text-white/90"
-                        } ${
-                          isLastItem ? "rounded-b-lg border-none" : ""
-                        } font-light`}
+            {currentShopifyToken === null ? (
+              <div className="items-center justify-center rounded-lg w-full bg-mainBlue border-gray-800 border-2 shadow-md">
+                <div className="flex flex-row space-x-2 p-2 border-b border-gray-800">
+                  <button
+                    className="px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-ngrokBlue font-euclid duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray"
+                    onClick={handleSortByDate}
+                  >
+                    Sort by Date
+                  </button>
+                  <div className="relative w-[20%]">
+                    <div className="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
+                      <svg
+                        className="w-4 h-4 text-gray-500 ml-2 dark:text-gray-400"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 20 20"
                       >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                        />
+                      </svg>
+                    </div>
+                    <input
+                      type="search"
+                      id="default-search"
+                      className="block w-full p-1.5 ps-10 text-sm text-white border-2 rounded-lg focus:border-gray-700 bg-darkestGray border-gray-800"
+                      placeholder="Search by payment id..."
+                      value={searchId}
+                      onChange={handleSearchTerm}
+                    />
+                  </div>
+                </div>
+
+                {/* TABLE HEADERS */}
+                <div className="grid grid-cols-3 lg:grid-cols-5 text-normal 2xl:text-xl gap-4 grid-headers text-white/50 font-normal border-b-2 p-2 border-gray-800">
+                  <div>Payment ID</div>
+                  <div className="hidden lg:block">Ammount</div>
+                  <div className="hidden lg:block">Payment Type</div>
+                  <div>Date</div>
+                  <div>Status</div>
+                </div>
+
+                {/* TABLE ROWS */}
+                {!loading ? (
+                  <>
+                    {paginatedData?.map((rowData, index) => {
+                      const isLastItem = index === paginatedData?.length - 1;
+                      const evenRow = index % 2 === 0;
+                      return (
                         <div
-                          className={`grid grid-cols-3 lg:grid-cols-5 text-normal 2xl:text-xl gap-4 p-2 border-b-2 border-gray-800 ${
-                            isLastItem
-                              ? "rounded-b-lg 2xl:text-normal border-none"
-                              : ""
-                          }`}
+                          key={rowData?.id}
+                          className={`${
+                            evenRow
+                              ? "bg-gradient-to-b font-normal p-2 from-lighterMainBlue to-mainBlue text-white/90"
+                              : "bg-mainBlue font-normal p-2 text-white/90"
+                          } ${
+                            isLastItem ? "rounded-b-lg border-none" : ""
+                          } font-light`}
                         >
-                          <div>{rowData?.payment_id}</div>
-                          <div className="hidden lg:block">
-                            {rowData?.price}
-                          </div>
-                          <div className="hidden lg:block">{rowData?.type}</div>
-                          <div>{rowData?.created_at}</div>
                           <div
-                            className={`${
-                              rowData?.status === "succeeded"
-                                ? "bg-green-400 text-green-900"
-                                : "bg-red-400 text-red-900"
-                            } font-medium text-sm xs:mx-5 lg:mx-8 rounded-lg`}
+                            className={`grid grid-cols-3 lg:grid-cols-5 text-normal 2xl:text-xl gap-4 p-2 border-b-2 border-gray-800 ${
+                              isLastItem
+                                ? "rounded-b-lg 2xl:text-normal border-none"
+                                : ""
+                            }`}
                           >
-                            {rowData?.status === "succeeded"
-                              ? "Success"
-                              : "Error"}
+                            <div>{rowData?.payment_id}</div>
+                            <div className="hidden lg:block">
+                              {rowData?.price}
+                            </div>
+                            <div className="hidden lg:block">
+                              {rowData?.type}
+                            </div>
+                            <div>{rowData?.created_at}</div>
+                            <div
+                              className={`${
+                                rowData?.status === "succeeded"
+                                  ? "bg-green-400 text-green-900"
+                                  : "bg-red-400 text-red-900"
+                              } font-medium text-sm xs:mx-5 lg:mx-8 rounded-lg`}
+                            >
+                              {rowData?.status === "succeeded"
+                                ? "Success"
+                                : "Error"}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </>
-              ) : (
-                <LoaderSkeleton div_size={3} />
-              )}
-            </div>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <LoaderSkeleton div_size={3} />
+                )}
+              </div>
+            ) : (
+              <></>
+            )}
 
             {/* --- SHOPIFY BILLING TABLE --- */}
             {shopifyBillingData?.length > 0 && (

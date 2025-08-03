@@ -34,7 +34,7 @@ export const menu = [
   {
     id: 5,
     element: <PurchaseIcon />,
-    title: "Purchase",
+    title: "Billing",
     location: "/purchase_history",
   },
   {
