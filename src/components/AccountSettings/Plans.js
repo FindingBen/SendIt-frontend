@@ -149,7 +149,7 @@ const Plans = () => {
             </span>
             <span className="text-sm px-3 py-1 text-gray-300 rounded-full shadow-md border border-yellow-300">
               In case you run out of credits before billing cycle contact us at:
-              beniagic@gmail.com
+              support@sendperplane.com
             </span>
           </div>
 

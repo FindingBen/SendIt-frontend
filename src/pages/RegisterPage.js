@@ -51,7 +51,6 @@ const RegisterPage = () => {
       const data = await response.json();
 
       if (response.status === 200) {
-
         setEmail(data?.shop?.email);
         setFirstName(data?.shop.first_name || "");
         setEmailReadOnly(true);
@@ -398,7 +397,8 @@ const RegisterPage = () => {
                 </h2>
                 <p class="mb-2 text-lg text-white/50">
                   We are glad, that you’re with us! We’ve sent you a
-                  verification link to the email address{" "}
+                  verification link to the email address . Check your inbox and
+                  spam folder.
                   <span class="font-medium text-indigo-500">{email}</span>.
                 </p>
               </div>

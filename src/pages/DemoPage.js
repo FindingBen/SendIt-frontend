@@ -14,7 +14,7 @@ const DemoPage = () => {
           order to get access!
         </div>
         <p className="text-xl text-white hover:text-white/20 cursor-pointer">
-          beniagic@gmail.com
+          support@sendperplane.com
         </p>
       </div>
     </section>

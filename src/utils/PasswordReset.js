@@ -104,7 +104,7 @@ const PasswordReset = () => {
               <div className="text-sm font-light text-white m-2 mb-4">
                 <p className="m-2">
                   Email has been sent, if its valid you should recieve a message
-                  with instructions
+                  with instructions. Check your inbox and spam folder.
                 </p>
               </div>
             )}
