@@ -34,24 +34,26 @@ const UserPage = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   //getUser();
-  //   purchase_history();
-  // }, [msg]);
+  useEffect(() => {
+    getUser();
+  }, [msg]);
 
   useEffect(() => {
     setTimeout(() => setErrorMsg(), 3000);
     setTimeout(() => setMsg(), 3000);
   }, [errorMsg, msg]);
 
-  let purchase_history = async (e) => {
+  const getUser = async () => {
+    setIsLoading(true);
     try {
-      let response = await axiosInstance.get(`stripe/purchases/${params.id}`);
+      let response = await axiosInstance.get(`/api/get_user/`);
       if (response.status === 200) {
-        setPurchases(response.data);
+        setUser(response.data);
       }
-    } catch (e) {
-      console.log(e);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      setIsLoading(false);
     }
   };
 

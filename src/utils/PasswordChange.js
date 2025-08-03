@@ -82,7 +82,7 @@ const PasswordChange = ({ user_obj }) => {
       setIsLoading(false);
     }
   };
-
+  console.log(user_obj);
   return (
     <div className="flex-1 p-4 mx-20">
       <div className="flex flex-col h-52">
