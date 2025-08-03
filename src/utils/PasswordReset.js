@@ -20,18 +20,24 @@ const PasswordReset = () => {
       email: email,
     };
 
-    let response = await fetch(`${baseURL}/auth/users/reset_password/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    try {
+      let response = await fetch(`${baseURL}/auth/users/reset_password/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    if (response.status === 200 || response.status === 204) {
-      //setTimeout(() => navigate("/login"), 5);
+      if (response.status === 200 || response.status === 204) {
+        //setTimeout(() => navigate("/login"), 5);
+        setLoading(false);
+        setSent(true);
+      }
+    } catch (e) {
+      console.log(e);
+      setErrMsg("Error, contact support if it persists!");
       setLoading(false);
-      setSent(true);
     }
   };
 
