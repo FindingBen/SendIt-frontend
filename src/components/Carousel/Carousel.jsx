@@ -140,7 +140,7 @@ const Carousel = ({
     const reader = new FileReader();
     const previewUrl = URL.createObjectURL(file);
     // const displayUrl = previewUrl.replace(/^blob:/, "");
-    handleFiles(file);
+    //handleFiles(file);
     setFile(file);
     reader.onload = (e) => {
       setImages((imgs) => {

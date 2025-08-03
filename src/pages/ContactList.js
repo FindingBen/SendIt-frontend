@@ -31,6 +31,9 @@ const ContactList = () => {
   const [showShopify, setShowShopify] = useState(false);
   const [showqr, setShowQr] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [editingLoadingId, setEditingLoadingId] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
+  const [loadingRowId, setLoadingRowId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [listEmpty, setListEmpty] = useState(false);
   const [loader, setLoader] = useState(true);
@@ -52,7 +55,7 @@ const ContactList = () => {
 
   useEffect(() => {
     getContacts();
-  }, [sortOrder, contactId, editData, search_name]);
+  }, [sortOrder, search_name]);
 
   useEffect(() => {
     getContacts();
@@ -89,7 +92,6 @@ const ContactList = () => {
       let response = await axiosInstance.get(url);
 
       if (response.status === 200) {
-
         setShopifyList(response.data.shopify_list);
         if (response.data.contact_list_recipients_nr === 0) {
           setListEmpty(false);
@@ -99,7 +101,6 @@ const ContactList = () => {
       setLoader(false);
       setIsLoading(false);
     } catch (error) {
-
       setLoader(false);
       setIsLoading(false);
     }
@@ -133,6 +134,7 @@ const ContactList = () => {
   };
   let deleteContact = async (user_data) => {
     setIsLoading(true);
+    setLoadingRowId(user_data.id);
     try {
       const data = {
         id: user_data.custom_id,
@@ -155,10 +157,12 @@ const ContactList = () => {
           })
         );
         setIsLoading(false);
+        setLoadingRowId(null);
       }
     } catch (error) {
       setDeletedContact(false);
       setIsLoading(false);
+      setLoadingRowId(null);
       setErrorMsg(error.response.data.error[0]["message"]);
       setTimeout(() => {
         setErrorMsg();
@@ -191,40 +195,30 @@ const ContactList = () => {
     setContacts(contact);
   };
 
-  const updateContact = async (contact_id) => {
-    setIsLoading(true);
+  const updateContact = async (user_data) => {
+    setLoadingRowId(user_data.id);
 
     try {
-      let url = "";
-      if (currentShopifyToken) {
-        url = `/api/contact_detail/${params.id}`;
-        editData["id"] = contact_id;
-      } else {
-        url = `/api/contact_detail/${params.id}`;
-        editData["id"] = contact_id;
-      }
-      let response = await axiosInstance.put(url, editData);
+      const url = `/api/contact_detail/${params.id}`;
+      const payload = { ...editData, id: user_data.custom_id };
+
+      const response = await axiosInstance.put(url, payload);
 
       if (response.status === 200) {
-        // Assuming the API returns the updated contact object
-        setContact(response.data);
+        const updated = response.data;
+        const updatedContacts = contacts.map((contact) =>
+          contact.id === updated.id ? updated : contact
+        );
+        setContacts(updatedContacts);
         setSuccessMsg("Successfully updated!");
-        setTimeout(() => {
-          setSuccessMsg("");
-        }, 3000);
-        setIsLoading(false);
         setEditableRowId(null);
-
-        // Close the contact drawer after successful update
+        setLoadingRowId(null);
       }
     } catch (error) {
-
+      console.log(error);
       setErrorMsg(error.message);
-      setIsLoading(false);
-      setTimeout(() => {
-        setErrorMsg("");
-      }, 6000);
-      setEditableRowId(null);
+    } finally {
+      setLoadingRowId(null);
     }
   };
 
@@ -441,7 +435,7 @@ const ContactList = () => {
                 </div>
 
                 <div>
-                  <div class="grid grid-cols-5 gap-4 grid-headers text-white/50 font-euclid text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
+                  <div class="grid grid-cols-5 gap-4 grid-headers text-white/80 font-euclid text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
                     <div>First Name</div>
                     <div>Last Name</div>
                     <div>Email</div>
@@ -451,165 +445,68 @@ const ContactList = () => {
                   {!loader ? (
                     <>
                       {paginatedData?.map((rowData, index) => {
-                        const isLastItem = index === paginatedData.length - 1;
-                        const evenRow = index % 2 === 0;
                         const isEditing = editableRowId === rowData.id;
+                        const isLoadingThisRow =
+                          editingLoadingId === rowData.id;
 
                         return (
                           <div
                             key={rowData.id}
-                            className={`${
-                              !rowData.allowed
-                                ? "bg-gray-700 text-gray-400 opacity-60 cursor-not-allowed"
-                                : contactId === rowData.id
-                                ? "bg-cyan-700 text-white font-semibold transition duration-300"
-                                : evenRow
-                                ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue text-white"
-                                : "bg-mainBlue text-white"
-                            } ${
-                              isLastItem ? "rounded-b-2xl border-none" : ""
-                            } font-euclid`}
+                            className="grid grid-cols-5 p-2 border-b border-gray-700 items-center text-white/70"
                           >
-                            <div
-                              className={`grid grid-cols-5 font-euclid 2xl:text-lg gap-4 p-2 border-b-2 border-gray-800 ${
-                                isLastItem
-                                  ? "rounded-b-2xl 2xl:text-lg border-none"
-                                  : ""
-                              }`}
-                            >
-                              <div>
-                                {isEditing ? (
-                                  <input
-                                    value={editData.firstName}
-                                    onChange={(e) =>
-                                      handleChange(e, "firstName")
-                                    }
-                                    className="input-class rounded-lg bg-white text-black"
-                                    disabled={!rowData.allowed}
-                                  />
-                                ) : (
-                                  rowData.firstName
-                                )}
-                              </div>
-                              <div>
-                                {isEditing ? (
-                                  <input
-                                    value={editData.lastName}
-                                    disabled={!rowData.allowed}
-                                    onChange={(e) =>
-                                      handleChange(e, "lastName")
-                                    }
-                                    className="input-class rounded-lg bg-white text-black"
-                                  />
-                                ) : (
-                                  rowData.lastName
-                                )}
-                              </div>
-                              <div>
-                                {isEditing ? (
-                                  <input
-                                    value={editData.email}
-                                    disabled={!rowData.allowed}
-                                    onChange={(e) => handleChange(e, "email")}
-                                    className="input-class rounded-lg bg-white text-black"
-                                  />
-                                ) : (
-                                  rowData.email
-                                )}
-                              </div>
-                              <div>
-                                {isEditing ? (
-                                  <input
-                                    value={editData.phone}
-                                    disabled={!rowData.allowed}
-                                    onChange={(e) => handleChange(e, "phone")}
-                                    className="input-class rounded-lg bg-white text-black"
-                                  />
-                                ) : (
-                                  rowData.phone
-                                )}
-                              </div>
-
-                              {isEditing ? (
-                                <div className="flex flex-row mx-16 mt-1">
-                                  {!isLoading ? (
-                                    <button
-                                      onClick={(e) =>
-                                        updateContact(rowData.custom_id)
-                                      }
-                                      disabled={!rowData.allowed}
-                                      className="text-green-500 hover:text-green-700 mx-auto p-0.5"
-                                    >
-                                      Save
-                                    </button>
-                                  ) : (
-                                    <div className="mx-auto p-0.5">
-                                      <SvgLoader width={5} height={5} />
-                                    </div>
-                                  )}
-                                </div>
-                              ) : (
-                                <>
-                                  {isLoading ? (
-                                    <Loader
-                                      loading_name={"Deleting..."}
-                                      no_padding={true}
+                            {["firstName", "lastName", "email", "phone"].map(
+                              (field) => (
+                                <div key={field}>
+                                  {isEditing ? (
+                                    <input
+                                      value={editData[field]}
+                                      onChange={(e) => handleChange(e, field)}
+                                      className="border-2 border-gray-500 px-2 py-1 rounded-lg w-full bg-transparent text-white"
                                     />
                                   ) : (
-                                    <div className="flex flex-row mx-16 mt-1">
-                                      <div className="mx-auto my-auto p-0.5">
-                                        <button
-                                          type="button"
-                                          disabled={!rowData.allowed}
-                                          className={
-                                            rowData.allowed
-                                              ? ""
-                                              : "cursor-not-allowed"
-                                          }
-                                          onClick={() =>
-                                            handleEditClick(rowData)
-                                          }
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke-width="1.5"
-                                            stroke="currentColor"
-                                            class="w-5 h-5 2xl:w-7 2xl:h-7 hover:bg-cyan-400 duration-150 rounded-md"
-                                          >
-                                            <path
-                                              stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                                            />
-                                          </svg>
-                                        </button>
-                                      </div>
-                                      <div className="mx-auto my-auto p-0.5">
-                                        <button
-                                          type="button"
-                                          onClick={() => deleteContact(rowData)}
-                                        >
-                                          <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke-width="0.5"
-                                            stroke="currentColor"
-                                            class="h-5 w-5 2xl:w-7 2xl:h-7 hover:bg-red-500/95 duration-150 rounded-md"
-                                            x-tooltip="tooltip"
-                                          >
-                                            <path
-                                              stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                            />
-                                          </svg>
-                                        </button>
-                                      </div>
-                                    </div>
+                                    <span>{rowData[field]}</span>
                                   )}
+                                </div>
+                              )
+                            )}
+
+                            <div className="flex gap-2 mx-auto">
+                              {isEditing ? (
+                                <>
+                                  <button
+                                    disabled={loadingRowId === rowData.id}
+                                    onClick={() => updateContact(rowData)}
+                                    className="text-green-400 hover:text-green-500"
+                                  >
+                                    {loadingRowId === rowData.id
+                                      ? "Saving..."
+                                      : "Save"}
+                                  </button>
+                                  <button
+                                    disabled={loadingRowId === rowData.id}
+                                    onClick={() => setEditableRowId(null)}
+                                    className="text-gray-400 hover:text-white"
+                                  >
+                                    Cancel
+                                  </button>
+                                </>
+                              ) : (
+                                <>
+                                  <button
+                                    onClick={() => handleEditClick(rowData)}
+                                    className="text-blue-400 hover:text-blue-500"
+                                  >
+                                    Edit
+                                  </button>
+                                  <button
+                                    onClick={() => deleteContact(rowData)}
+                                    disabled={loadingRowId === rowData.id}
+                                    className="text-red-400 hover:text-red-500"
+                                  >
+                                    {loadingRowId === rowData.id
+                                      ? "Deleting..."
+                                      : "Delete"}
+                                  </button>
                                 </>
                               )}
                             </div>
