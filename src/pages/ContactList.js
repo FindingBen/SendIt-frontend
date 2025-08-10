@@ -448,16 +448,19 @@ const ContactList = () => {
                         const isEditing = editableRowId === rowData.id;
                         const isLoadingThisRow =
                           editingLoadingId === rowData.id;
+                        const isDisabled = rowData.allowed === false;
 
                         return (
                           <div
                             key={rowData.id}
-                            className="grid grid-cols-5 p-2 border-b border-gray-700 items-center text-white/70"
+                            className={`grid grid-cols-5 p-2 border-b border-gray-700 items-center text-white/70 ${
+                              isDisabled ? "opacity-50 pointer-events-none" : ""
+                            }`}
                           >
                             {["firstName", "lastName", "email", "phone"].map(
                               (field) => (
                                 <div key={field}>
-                                  {isEditing ? (
+                                  {isEditing && !isDisabled ? (
                                     <input
                                       value={editData[field]}
                                       onChange={(e) => handleChange(e, field)}
@@ -470,8 +473,8 @@ const ContactList = () => {
                               )
                             )}
 
-                            <div className="flex gap-2 mx-auto">
-                              {isEditing ? (
+                            <div className="flex gap-2 mx-auto pointer-events-auto">
+                              {isEditing && !isDisabled ? (
                                 <>
                                   <button
                                     disabled={loadingRowId === rowData.id}
@@ -492,12 +495,14 @@ const ContactList = () => {
                                 </>
                               ) : (
                                 <>
-                                  <button
-                                    onClick={() => handleEditClick(rowData)}
-                                    className="text-blue-400 hover:text-blue-500"
-                                  >
-                                    Edit
-                                  </button>
+                                  {!isDisabled && (
+                                    <button
+                                      onClick={() => handleEditClick(rowData)}
+                                      className="text-blue-400 hover:text-blue-500"
+                                    >
+                                      Edit
+                                    </button>
+                                  )}
                                   <button
                                     onClick={() => deleteContact(rowData)}
                                     disabled={loadingRowId === rowData.id}

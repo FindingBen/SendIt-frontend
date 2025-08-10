@@ -5,19 +5,7 @@ const ReceiptComponent = ({ purchase_obj, packageObj }) => {
   const createdAt = new Date(purchase?.created * 1000).toLocaleString();
 
   const copyPurchaseId = (id) => {
-    const input = document.createElement("input");
-
-    input.value = id;
-    document.body.appendChild(input);
-
-    // Select the text inside the input element
-    input.select();
-
-    // Copy the selected text to the clipboard
-    document.execCommand("copy");
-
-    // Remove the temporary input element
-    document.body.removeChild(input);
+    navigator.clipboard.writeText(id);
   };
 
   useEffect(() => {
@@ -25,55 +13,72 @@ const ReceiptComponent = ({ purchase_obj, packageObj }) => {
   }, [purchase_obj]);
 
   return (
-    <div className="flex flex-col p-2 bg-mainBlue border-2 border-gray-800 rounded-xl w-72 h-80">
-      <div className="flex flex-col">
-        <div className="flex flex-row p-4">
+    <div className="flex flex-col p-6 bg-darkBlue rounded-2xl shadow-lg border border-ngrokGray w-80">
+      {/* Header */}
+      <div className="flex items-center gap-4 pb-4 border-b border-gray-700">
+        <div className="flex items-center justify-center w-16 h-16 bg-green-500/10 rounded-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="1.5"
+            strokeWidth="2"
             stroke="currentColor"
-            class="w-14 h-14 text-green-500"
+            className="w-8 h-8 text-green-500"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 
+              3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 
+              1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 
+              3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 
+              0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 
+              1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 
+              12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 
+              1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
             />
           </svg>
-
-          <div className="flex flex-col text-justify ml-2">
-            <p className="text-normal text-white">
-              Paid{" "}
-              <span className="font-bold">{purchase?.amount / 100} Kr.</span>
-            </p>
-            <p className="text-normal text-white">
-              Date: <span className="font-bold">{createdAt}</span>
-            </p>
-          </div>
         </div>
-        <div className="text-start p-2">
-          <p className="text-normal text-white">
-            Item: <span className="font-bold">{packageObj?.package_plan}</span>
-          </p>
-          <p className="text-normal text-white">
-            payment_method:{" "}
-            <span className="font-bold">
-              {purchase?.payment_method_types[0]}
+        <div>
+          <p className="text-lg font-semibold text-white">
+            Paid:{" "}
+            <span className="text-ngrokBlue">
+              {purchase?.plan.amount / 100} $
             </span>
           </p>
-          <p className="text-normal text-white">
-            Order ID: <span className="font-bold">{purchase?.id}</span>
+          <p className="text-sm text-gray-400">
+            Date: <span className="text-white">{createdAt}</span>
           </p>
         </div>
       </div>
-      <div
+
+      {/* Details */}
+      <div className="py-4 space-y-2 text-sm">
+        <p className="text-gray-300">
+          Item:{" "}
+          <span className="font-medium text-white">
+            {packageObj?.package_plan}
+          </span>
+        </p>
+        <p className="text-gray-300">
+          Payment Method:{" "}
+          <span className="font-medium text-white">
+            {purchase?.payment_settings.payment_method_types[0]}
+          </span>
+        </p>
+        <p className="text-gray-300 truncate">
+          Order ID:{" "}
+          <span className="font-medium text-white">{purchase?.id}</span>
+        </p>
+      </div>
+
+      {/* Copy Button */}
+      <button
         onClick={() => copyPurchaseId(purchase?.id)}
-        className="px-2 py-2 bg-purpleHaze text-white font-normal rounded-2xl mx-5 mt-2 cursor-pointer"
+        className="mt-auto bg-ngrokBlue hover:bg-blue-500 transition-colors text-white font-medium py-2 px-4 rounded-lg shadow"
       >
         Copy ID
-      </div>
+      </button>
     </div>
   );
 };

@@ -25,7 +25,7 @@ const Plans = () => {
     getPackages();
     checkShopifyUser();
   }, []);
-
+  console.log(packagePlan);
   const checkShopifyUser = async () => {
     try {
       const response = await axiosInstance.get("/stripe/shopify_status/");
@@ -56,7 +56,7 @@ const Plans = () => {
           currentUser,
         }
       );
-
+      console.log(response);
       if (response.status === 200) {
         setLoadingStates((prevState) => ({
           ...prevState,

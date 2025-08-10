@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import ModalComponent from "../components/ModalComponent";
 import { motion } from "framer-motion-3d";
@@ -13,13 +13,15 @@ const SuccessPayment = () => {
   const { dispatch } = useRedux();
   const axiosInstance = useAxiosInstance();
   const location = useLocation();
-  const [isSuccess, setIsSuccess] = useState(false);
+
+  const [isSuccess, setIsSuccess] = useState(null); // null = loading
   const [showModal, setShow] = useState(false);
   const [purchase, setPurchase] = useState({});
   const [packageObj, setPackageObj] = useState({});
   const [loaded, setLoaded] = useState(false);
   const [errMessage, setErrMessage] = useState("");
   const [searchValue, setSearchValue] = useState("");
+
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const sessionId = params.get("session_id");
@@ -31,99 +33,106 @@ const SuccessPayment = () => {
     return () => {
       setLoaded(false);
     };
-  }, [location.search, isSuccess]);
+  }, [location.search]);
 
   const paymentSuccessfull = async (sessionId) => {
     setShow(true);
-
     try {
-      let response = await axiosInstance.get(
-        `/stripe/payment_successfull/${sessionId}`
+      const response = await axiosInstance.post(
+        `/stripe/handle_subscription/`,
+        {
+          session_id: sessionId,
+        }
       );
+
       if (response.status === 200) {
         setTimeout(() => setShow(false), 2000);
 
         const package_payload = {
           package_plan: response?.data.user.package_plan.plan_type,
-          sms_count:
-            response?.data.user.sms_count +
-            response?.data.user.package_plan.sms_count_pack,
+          sms_count: response?.data.user.package_plan.sms_count_pack,
         };
 
         dispatch(setPackage(package_payload));
         setPackageObj(package_payload);
         setPurchase(response?.data.purchase);
         setLoaded(true);
-        if (showModal === false) {
-          setIsSuccess(true);
-          // setPurchase({}); // Reset purchase state
-          // setIsSuccess(null);
-        }
-      } 
+        setIsSuccess(true);
+      }
     } catch (error) {
+      console.error("Error during payment success:", error);
       setShow(false);
       setErrMessage(error);
       setIsSuccess(false);
     }
   };
 
+  const renderContent = () => {
+    if (isSuccess === null) {
+      return (
+        <h2 className="mt-10 flex flex-col text-3xl font-light text-grayWhite">
+          Confirming the payment...
+        </h2>
+      );
+    }
+
+    if (isSuccess) {
+      return (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 0.4,
+            delay: 0.2,
+            ease: [0, 0.41, 0.1, 1.01],
+          }}
+          className="mt-10 text-center font-light text-white"
+        >
+          <span className="text-3xl font-semibold">Payment successful!</span>
+          <br />
+          <div className="flex justify-center mt-5 text-normal">
+            {loaded && (
+              <ReceiptComponent
+                purchase_obj={purchase}
+                packageObj={packageObj}
+              />
+            )}
+          </div>
+        </motion.div>
+      );
+    }
+
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          duration: 0.4,
+          delay: 0.2,
+          ease: [0, 0.41, 0.1, 1.01],
+        }}
+        className="mt-10 flex flex-col text-3xl font-light text-grayWhite"
+      >
+        Process got cancelled
+        <div className="flex flex-col justify-center mb-4 mt-5 mx-auto h-28 opacity-80 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 w-50">
+          <span className="font-medium">Error!</span> {errMessage.message}
+          <span className="font-medium">
+            Please contact support so we can assist you with this.
+          </span>
+        </div>
+      </motion.div>
+    );
+  };
+
   return (
     <section className="min-h-screen flex-d w-full items-center justify-center">
       <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-18 bg-navBlue sticky top-0 z-10">
         <Search />
-
         <SmsPill />
       </div>
       <div className="flex-1 flex flex-col mb-4 h-20">
         <div className="flex-1 px-2 sm:px-0 xl:px-0 mx-20">
-          {isSuccess ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{
-                duration: 0.4,
-                delay: 0.2,
-                ease: [0, 0.41, 0.1, 1.01],
-              }}
-              className="mt-10 text-center font-light text-white"
-            >
-              <span className="text-3xl font-semibold">
-                Payment successful!
-              </span>
-              <br></br>
-              <div className="flex justify-center mt-5 text-normal">
-                {loaded && (
-                  <ReceiptComponent
-                    purchase_obj={purchase}
-                    packageObj={packageObj}
-                  />
-                )}
-              </div>
-            </motion.div>
-          ) : isSuccess === false ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{
-                duration: 0.4,
-                delay: 0.2,
-                ease: [0, 0.41, 0.1, 1.01],
-              }}
-              className="mt-10 flex flex-col text-3xl font-light text-grayWhite"
-            >
-              Process got cancelled
-              <div class="flex flex-col justify-center mb-4 mt-5 mx-auto h-28 opacity-80 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 w-50">
-                <span class="font-medium">Error!</span> {errMessage.message}
-                <span class="font-medium">
-                  Please contact the support so we can assist you with this.
-                </span>
-              </div>
-            </motion.div>
-          ) : (
-            <h2 className="mt-10 flex flex-col text-3xl font-light text-grayWhite">
-              Confirming the payment...
-            </h2>
-          )}
+          {renderContent()}
         </div>
       </div>
       <ModalComponent

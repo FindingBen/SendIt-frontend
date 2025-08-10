@@ -9,6 +9,7 @@ const userSlice = createSlice({
     username: null,
     custom_email: null,
     shopify_connect: null,
+    scheduled_billing: null,
     archived_state: null, // Assuming archived_state is a new addition
   },
   reducers: {
@@ -20,6 +21,7 @@ const userSlice = createSlice({
         custom_email,
         archived_state,
         shopify_connect,
+        scheduled_billing,
         username,
       } = action.payload;
       console.log(action.payload);
@@ -30,6 +32,8 @@ const userSlice = createSlice({
       if (shopify_connect !== undefined)
         state.shopify_connect = shopify_connect;
       if (username !== undefined) state.username = username;
+      if (scheduled_billing !== undefined)
+        state.scheduled_billing = scheduled_billing;
       if (archived_state !== undefined) state.archived_state = archived_state;
     },
 
@@ -41,6 +45,7 @@ const userSlice = createSlice({
       state.custom_email = null;
       state.shopify_connect = null;
       state.archived_state = null;
+      state.scheduled_billing = null;
     },
   },
 });
