@@ -126,7 +126,7 @@ const RegisterPage = () => {
     } catch (err) {
       console.log(err);
       setErrMsgPass("An error occurred");
-      errRef.current.focus();
+      setLoading(false);
     }
   };
   const handleEmail = (e) => setEmail(e.target.value);
