@@ -46,6 +46,7 @@ const SuccessPayment = () => {
       );
 
       if (response.status === 200) {
+        console.log(response);
         setTimeout(() => setShow(false), 2000);
 
         const package_payload = {
