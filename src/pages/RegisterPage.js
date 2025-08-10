@@ -124,7 +124,8 @@ const RegisterPage = () => {
         setLoading(false);
       }
     } catch (err) {
-      setErrMsgPass(err);
+      console.log(err);
+      setErrMsgPass("An error occurred");
       errRef.current.focus();
     }
   };
