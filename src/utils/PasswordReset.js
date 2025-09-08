@@ -24,7 +24,7 @@ const PasswordReset = () => {
       let response = await fetch(`${baseURL}/auth/users/reset_password/`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
         body: JSON.stringify(formData),
       });
