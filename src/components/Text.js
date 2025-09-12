@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext, memo } from "react";
 import TextComponent from "../components/TextComponent";
 import ReactDOM from "react-dom";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
 import { ElementContext } from "../context/ElementContext";
-import "react-quill/dist/quill.snow.css";
+// import "react-quill/dist/quill.snow.css";
 import { motion } from "framer-motion";
 import { useRedux } from "../constants/reduxImports";
 
@@ -184,13 +184,13 @@ const Text = ({
       }}
       className="w-[400px] 2xl:max-w-[550px] h-[150px]"
     >
-      <ReactQuill
+      {/* <ReactQuill
         className="editor-input h-[100%] lg:h-[300px] overflow-auto bg-white rounded-lg"
         theme="snow"
         value={text}
         onChange={handleTextFunc}
         modules={modules}
-      />
+      /> */}
       <div className="mt-3">
         <button
           type="button"
