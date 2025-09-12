@@ -19,7 +19,7 @@ const PasswordReset = () => {
     const formData = {
       email: email,
     };
-
+//trigger
     try {
       let response = await fetch(`${baseURL}/auth/users/reset_password/`, {
         method: "POST",
