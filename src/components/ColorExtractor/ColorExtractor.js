@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Vibrant } from 'node-vibrant';
+import Vibrant from "node-vibrant";
 
 const ColorExtractor = ({
   onError = () => {},

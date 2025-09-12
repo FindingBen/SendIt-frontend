@@ -37,7 +37,7 @@
     "jwt-decode": "^3.1.2",
     "mdb-react-ui-kit": "^6.0.0",
     "moment": "^2.29.4",
-    "node-vibrant": "^4.0.3",
+    "node-vibrant": "^3.1.6",
     "papaparse": "^5.4.1",
     "primereact": "^10.5.0",
     "react": "^18.2.0",
