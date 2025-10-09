@@ -45,7 +45,7 @@ const ShopifyChargeConfPage = () => {
             setLoading(false);
           }, 3000);
           setSuccessMessage(
-            `Subscription triggered! Your plan will be activated on ${response.data.scheduled_date}`
+            `Subscription triggered! Your plan is activated and your previous subscription has been cancelled.`
           );
         } else if (response.data.status === 208) {
           setSuccessMessage(`Operation already completed!`);

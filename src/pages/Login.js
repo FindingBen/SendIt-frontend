@@ -31,6 +31,7 @@ const Login = () => {
       username: username,
       password: pwd,
     };
+
     try {
       const response = await fetch(`${BASE_URL}/api/token/`, {
         method: "POST",
@@ -40,7 +41,7 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
       });
       const responseData = await response.json();
-      console.log(responseData)
+      console.log("AAAAAAAAA",responseData)
       if (!response.ok) {
         if (
           response.status === 400 &&

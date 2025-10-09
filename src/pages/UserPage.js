@@ -12,7 +12,7 @@ import Search from "../components/SearchComponent/Search";
 
 const UserPage = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentUser, currentPackageState } = useRedux();
+  const { currentUser, currentPackageState, currentShopifyToken } = useRedux();
   const [username, setUsername] = useState();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +36,7 @@ const UserPage = () => {
   }, [msg]);
 
   useEffect(() => {
-    setTimeout(() => setErrorMsg(), 3000);
+    setTimeout(() => setErrorMsg(), 3500);
     setTimeout(() => setMsg(), 3000);
     setTimeout(() => setSuccess(), 3000);
   }, [errorMsg, msg, success]);
@@ -57,7 +57,15 @@ const UserPage = () => {
 
   const cancelSubscription = async () => {
     try {
-      let response = await axiosInstance.post("/stripe/cancel_subscription/");
+      let url = ""
+      if(currentShopifyToken){
+        url =  "cancel_shopify_subscription"
+      }
+      else{
+        url = "cancel_subscription"
+      }
+
+      let response = await axiosInstance.post(`/stripe/${url}/`);
 
       if (response.status === 200) {
         console.log("cancelled");
@@ -68,8 +76,15 @@ const UserPage = () => {
         setSuccess("Subscription already cancelled!");
       }
     } catch (error) {
-      console.log(error);
+      console.log("error", error.response.status);
+      if (error.response.status === 404) {
+        setErrorMsg(error.response?.data.error);
+      }
+      else{
+console.log(error);
       setErrorMsg("There has been an error, contact support!");
+      }
+      
     }
   };
 
@@ -96,7 +111,7 @@ const UserPage = () => {
                   Cancel Subscription
                   <button
                     onClick={() => setShowSubModal(true)}
-                    className="px-1 py-1 bg-red-700 lg:text-sm 2xl:text-2xl text-white rounded-lg hover:bg-red-600 absolute -right-2 -top-2 shadow-md"
+                    className="px-1 py-1 bg-red-700 lg:text-sm 2xl:text-xl text-white rounded-lg hover:bg-red-600 absolute -right-2 -top-2 shadow-md"
                   >
                     Cancel Subscription
                   </button>
