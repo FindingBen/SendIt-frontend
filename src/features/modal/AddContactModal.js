@@ -179,7 +179,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
                   placeholder="Email"
                   onChange={handleUserInput}
                 />
-                {currentShopifyToken ? <div className="flex flex-row gap-2">
+                <div className="flex flex-row gap-2">
                   <p className="text-slate-200">Customer sms opt in</p>
                   <input
                 id="sms_opt_in"
@@ -188,7 +188,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
                 onChange={(e) => setConsentSms(e.target.checked)}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               />
-                </div> : null}
+                </div>
                 {fieldErrors?.email && (
                   <p className="text-red-500 text-sm">{fieldErrors.email}</p>
                 )}
