@@ -54,7 +54,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
         firstName: contact.firstName,
         lastName: contact.lastName,
         phone: number,
-        email: contact.email,
+        email: contact.email
       };
 
       if (consentSms) {
