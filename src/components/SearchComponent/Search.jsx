@@ -37,7 +37,7 @@ const Search = () => {
 
   return (
     <>
-      <Link to={"/welcome"} className="ml-10">
+      <Link to={"/home"} className="ml-10">
         <img
           src={require("../../assets/noBgLogo.png")}
           width={65}

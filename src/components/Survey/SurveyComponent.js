@@ -69,27 +69,30 @@ const SurveyComponent = ({
   };
 
   return (
-    <div className="flex flex-col items-center bg-slate-300/50 mx-2 rounded-md shadow-md">
-      <div className="flex-1 p-4">
-        <p className="text-black text-xl">{question}</p>
+    <div
+  className="flex flex-col items-center mx-2 rounded-md shadow-md"
+  style={{ backgroundColor: color ? `#${color}` : "#fff" }}
+>
+      <div className="flex-1 p-4 w-48 text-center">
+        <p className="text-black text-xl break-words whitespace-normal text-center">{question}</p>
         {questionType === "Like/Dislike" && !response && (
           <div className="flex gap-2 mt-4">
             <button
               onClick={() => handleLikeDislikeClick("like")}
-              className=" bg-green-500 text-white px-4 py-2 rounded"
+              className="border-2 border-gray-400 text-white text-xl px-4 py-2 rounded"
             >
-              Like
+              👍
             </button>
             <button
               onClick={() => handleLikeDislikeClick("dislike")}
-              className="bg-red-500 text-white px-4 py-2 rounded"
+              className="border-2 border-gray-400 text-white text-xl px-4 py-2 rounded"
             >
-              Dislike
+              👎
             </button>
           </div>
         )}
         {questionType === "Question Survey" && !response && (
-          <div className="flex flex-col mt-4 mx-2">
+          <div className="flex flex-col mt-4 mx-2 bg-gray-500">
             <input
               type="number"
               placeholder="Enter numeric value"

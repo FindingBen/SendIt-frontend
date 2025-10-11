@@ -147,6 +147,10 @@ const Survey = ({
     }
   }
 
+    const handleColor = (color) => {
+    setColor(color);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
@@ -213,9 +217,9 @@ const Survey = ({
           >
             Cancel
           </button>
-          {/* <div className="absolute top-0 right-0">
+          <div className="absolute top-0 right-0">
             <ColorPircker colorValue={handleColor} />
-          </div> */}
+          </div>
         </div>
       </div>
     </motion.div>

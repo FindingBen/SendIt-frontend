@@ -2,16 +2,22 @@ import React, { useState, useEffect, useContext, memo } from "react";
 import TextComponent from "../components/TextComponent";
 import ReactDOM from "react-dom";
 import ReactQuill from "react-quill";
+import { Quill } from "react-quill";
 import { ElementContext } from "../context/ElementContext";
 import "react-quill/dist/quill.snow.css";
 import { motion } from "framer-motion";
 import { useRedux } from "../constants/reduxImports";
 
+const Font = Quill.import('formats/font');
+Font.whitelist = [
+  'sans-serif', 'serif', 'monospace', 'arial', 'times-new-roman', 'comic-sans', 'courier-new', 'georgia', 'helvetica', 'lucida'
+];
+Quill.register(Font, true);
+
 const modules = {
   toolbar: [
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    [{ size: [] }],
-    [{ font: [] }],
+    [{ 'font': Font.whitelist }],
+    [{ 'size': ['small', false, 'large', 'huge'] }],
     ["bold", "italic", "underline", "strike", "blockquote"],
     [
       { align: "" },
@@ -24,10 +30,16 @@ const modules = {
       { list: "bullet" },
       { indent: "-1" },
       { indent: "+1" },
-    ],
-    ["link", "video"],
+    ]
   ],
 };
+
+const formats = [
+  "header", "font", "size",
+  "bold", "italic", "underline", "strike", "blockquote",
+  "list", "bullet", "indent",
+  "link", "video", "align"
+];
 
 const Text = ({
   setComponentState,
@@ -173,6 +185,7 @@ const Text = ({
       }
     }
   }
+  
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
@@ -189,6 +202,7 @@ const Text = ({
         theme="snow"
         value={text}
         onChange={handleTextFunc}
+        formats={formats}
         modules={modules}
       />
       <div className="mt-3">

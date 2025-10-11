@@ -27,10 +27,10 @@ const TextComponent = ({ textValue, alignment }) => {
 
   return (
     <div className="mx-3">
-      <p
+      <div
         dangerouslySetInnerHTML={{ __html: text }}
         style={{ textAlign: align, overflowWrap: "break-word" }}
-      ></p>
+      ></div>
     </div>
   );
 };

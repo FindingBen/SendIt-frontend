@@ -72,7 +72,7 @@ const ContactList = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-
+  console.log(contacts)
   let getContacts = async () => {
     setIsLoading(true);
     try {
@@ -435,10 +435,11 @@ const ContactList = () => {
                 </div>
 
                 <div>
-                  <div class="grid grid-cols-5 gap-4 grid-headers text-white/80 font-euclid text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
+                  <div class="grid grid-cols-6 gap-4 grid-headers text-white/80 font-euclid text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
                     <div>First Name</div>
                     <div>Last Name</div>
                     <div>Email</div>
+                    <div>Sms Consent</div>
                     <div>Phone number</div>
                     <div>Action</div>
                   </div>
@@ -453,11 +454,11 @@ const ContactList = () => {
                         return (
                           <div
                             key={rowData.id}
-                            className={`grid grid-cols-5 p-2 border-b border-gray-700 items-center text-white/70 ${
+                            className={`grid grid-cols-6 p-2 border-b border-gray-700 items-center text-white/70 ${
                               isDisabled ? "opacity-50 pointer-events-none" : ""
                             }`}
                           >
-                            {["firstName", "lastName", "email", "phone"].map(
+                            {["firstName", "lastName", "email", "sms_opt_in","phone"].map(
                               (field) => (
                                 <div key={field}>
                                   {isEditing && !isDisabled ? (

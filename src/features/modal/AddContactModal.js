@@ -13,6 +13,7 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
   const { currentTokenType, dispatch, currentShopifyToken } = useRedux();
   const [show, setShowModal] = useState(showModal);
   const [number, setNumber] = useState("");
+  const [consentSms, setConsentSms] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
@@ -55,6 +56,10 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
         phone: number,
         email: contact.email,
       };
+
+      if (consentSms) {
+        payload.sms_opt_in = "SUBSCRIBED";
+      }
 
       // Add `contact_list` only if `currentTokenType` is not Shopify
       if (currentShopifyToken === "None") {
@@ -167,13 +172,23 @@ const AddContactModal = ({ showModal, onClose, newContacts }) => {
                   <p className="text-red-500 text-sm">{fieldErrors.phone}</p>
                 )}
                 <input
-                  className={`bg-gray-50 border ${
+                  className={`bg-gray-50 mb-3 border ${
                     fieldErrors?.email ? "border-red-500" : "border-gray-300"
                   } mt-2 text-gray-900 text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5`}
                   name="email"
                   placeholder="Email"
                   onChange={handleUserInput}
                 />
+                {currentShopifyToken ? <div className="flex flex-row gap-2">
+                  <p className="text-slate-200">Customer sms opt in</p>
+                  <input
+                id="sms_opt_in"
+                type="checkbox"
+                checked={consentSms}
+                onChange={(e) => setConsentSms(e.target.checked)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+              />
+                </div> : null}
                 {fieldErrors?.email && (
                   <p className="text-red-500 text-sm">{fieldErrors.email}</p>
                 )}
