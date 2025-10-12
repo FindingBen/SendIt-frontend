@@ -29,7 +29,7 @@ const ViewList = ({ children, isArchive }) => {
               item.image.startsWith("blob") ? (
                 <ImgList imageUrl={item.image} />
               ) : (
-                <ImgList imageUrl={`${BASE_URL}${item.image}`} />
+                <ImgList imageUrl={`${item.image}`} />
               )
             ) : (
               <TextComponent textValue={item.text} alignment={item.alignment} />
