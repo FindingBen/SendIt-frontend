@@ -34,6 +34,7 @@
     "framer-motion": "^12.23.12",
     "framer-motion-3d": "^10.16.4",
     "jwt-decode": "^3.1.2",
+    "lucide-react": "^0.548.0",
     "mdb-react-ui-kit": "^6.0.0",
     "moment": "^2.29.4",
     "node-vibrant": "^3.1.6",

@@ -43,7 +43,7 @@ const ContactList = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const [sortOrder, setSortOrder] = useState("first_name");
   const [editableRowId, setEditableRowId] = useState(null);
-  const [shopifyList, setShopifyList] = useState(false); // Track the row being edited
+  const [shopifyList, setShopifyList] = useState(true); // Track the row being edited
   const [editData, setEditData] = useState({});
   const [search_name, setSearchName] = useState("");
   const params = useParams();
@@ -52,6 +52,9 @@ const ContactList = () => {
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const paginatedData = contacts?.slice(startIndex, endIndex);
+  console.log("EMPT?",listEmpty)
+  console.log("TOKEN",currentShopifyToken)
+  console.log('conteact',contacts)
 
   useEffect(() => {
     getContacts();
@@ -62,7 +65,7 @@ const ContactList = () => {
   }, [errorMsg, successMsg, deletedContact]);
 
   useEffect(() => {
-    if (contacts?.length === 0) {
+    if (contacts?.length === 0 || contacts === undefined) {
       setListEmpty(true);
     } else {
       setListEmpty(false);
@@ -70,9 +73,13 @@ const ContactList = () => {
   }, [contacts]);
 
   const handlePageChange = (page) => {
+    
     setCurrentPage(page);
+  
   };
+  
   console.log(contacts)
+  
   let getContacts = async () => {
     setIsLoading(true);
     try {
@@ -136,6 +143,7 @@ const ContactList = () => {
     setIsLoading(true);
     setLoadingRowId(user_data.id);
     try {
+    
       const data = {
         id: user_data.custom_id,
       };

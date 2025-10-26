@@ -51,6 +51,11 @@ const ShopifyUsersImportModal = ({ showShopify, onClose, bulkContacts }) => {
       }
 
     } catch (error) {
+      if (error.response.status === 403) {
+        setLoading(false);
+        setErrMsg(error.response.data);
+      }
+
       setLoading(false);
       console.log(error);
     }

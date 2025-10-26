@@ -1,7 +1,7 @@
 import HomeIcon from "./iconComponents/HomeIcon";
 import CreateIcon from "./iconComponents/CreateIcon";
 import ContactLists from "./iconComponents/ContactLists";
-import AccountIcon from "./iconComponents/AccountIcon";
+import ProductsIcon from "./iconComponents/ProductsIcon";
 import ArchiveIcon from "./iconComponents/ArchiveIcon";
 import PurchaseIcon from "./iconComponents/PurchaseIcon";
 import Dashboard from "./iconComponents/Dashboard";
@@ -39,6 +39,12 @@ export const menu = [
   },
   {
     id: 6,
+    element: <ProductsIcon />,
+    title: "Products",
+    location: "/products_shopify/",
+  },
+  {
+    id: 7,
     element: <ArchiveIcon />,
     title: "Archives",
     location: "/archive/",

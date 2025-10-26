@@ -45,7 +45,7 @@ const Search = () => {
           className="mt-2"
         />
       </Link>
-      <h3 className="2xl:text-3xl lg:text-xl text-lg font-normal text-left text-white mx-5">
+      <h3 className="2xl:text-2xl lg:text-xl text-lg font-normal text-left text-white mx-5">
         Sendperplane
       </h3>
       <form className="relative" onSubmit={handleSubmit} autoComplete="off">
