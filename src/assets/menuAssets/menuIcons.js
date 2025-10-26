@@ -37,14 +37,14 @@ export const menu = [
     title: "Billing",
     location: "/purchase_history",
   },
+  // {
+  //   id: 6,
+  //   element: <ProductsIcon />,
+  //   title: "Products",
+  //   location: "/products_shopify/",
+  // },
   {
     id: 6,
-    element: <ProductsIcon />,
-    title: "Products",
-    location: "/products_shopify/",
-  },
-  {
-    id: 7,
     element: <ArchiveIcon />,
     title: "Archives",
     location: "/archive/",
