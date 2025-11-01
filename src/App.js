@@ -32,11 +32,13 @@ import SmsSendingPage from "./pages/SmsSendingPage";
 import WelcomePage from "./pages/WelcomePage";
 import ShopifyChargeConfPage from "./pages/ShopifyChargeConfPage";
 import { ShopifyProductsPage } from "./pages/ShopifyProductsPage";
+import { useRedux } from "./constants/reduxImports";
 
 const TRACKING_ID = "G-FPHE42LL46";
 ReactGA.initialize(TRACKING_ID);
 
 function App() {
+  const { currentShopifyToken } = useRedux();
   return (
     <section>
       <Routes>
@@ -102,10 +104,12 @@ function App() {
                     path="/contact_list/:id"
                     element={<ContactList></ContactList>}
                   />
-                  {/* <Route
-                    path="/products_shopify/"
-                    element={<ShopifyProductsPage />}
-                  /> */}
+                  {currentShopifyToken && (
+                    <Route
+                      path="/products_shopify"
+                      element={<ShopifyProductsPage />}
+                    />
+                  )}
                   <Route path="/plans/" element={<Plans></Plans>} />
                   {/* <Route
                     path="/campaign_stats/"

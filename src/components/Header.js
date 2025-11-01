@@ -5,8 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import ModalComponent from "../components/ModalComponent";
 import { menu } from "../assets/menuAssets/menuIcons";
 import { useRedux } from "../constants/reduxImports";
+
 const Header = () => {
-  const { currentModalState, dispatch, currentFormState } = useRedux();
+  const { currentModalState, dispatch, currentFormState, currentShopifyToken } = useRedux();
   const [clickedPath, setClickedPath] = useState();
 
   const [activeNav, setActiveNav] = useState("Home");
@@ -65,24 +66,31 @@ const Header = () => {
       className={`flex flex-column items-center w-44 fixed top-0 left-0 p-1 text-white bg-navBlue border-r-2 border-gray-800 h-screen overflow-y-auto`}
     >
       <ul id="navList" className="flex flex-column my-auto">
-        {menu?.map((Menu, index) => (
-          <Link
-            key={index}
-            to={Menu.location}
-            onClick={(e) => handleNavigate(e, Menu.title)}
-            className={`flex flex-row rounded-md p-2 cursor-pointer `}
-          >
-            <div
-              className={`flex flex-row gap-2 rounded-md p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 ${
-                activeNav === Menu.title ? "bg-ngrokGray text-white" : ""
-              } text-gray-300 xl:text-sm text-xs items-center gap-x-3 
-        ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"} `}
+        {menu?.map((Menu, index) => {
+          // skip Shopify menu item when no token
+          if (Menu.location?.includes("products_shopify") && !currentShopifyToken) {
+            return null;
+          }
+
+          return (
+            <Link
+              key={index}
+              to={Menu.location}
+              onClick={(e) => handleNavigate(e, Menu.title)}
+              className={`flex flex-row rounded-md p-2 cursor-pointer `}
             >
-              <span>{Menu.element}</span>
-              <span>{Menu.title}</span>
-            </div>
-          </Link>
-        ))}
+              <div
+                className={`flex flex-row gap-2 rounded-md p-2 transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 ${
+                  activeNav === Menu.title ? "bg-ngrokGray text-white" : ""
+                } text-gray-300 xl:text-sm text-xs items-center gap-x-3 
+          ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"} `}
+              >
+                <span>{Menu.element}</span>
+                <span>{Menu.title}</span>
+              </div>
+            </Link>
+          );
+        })}
       </ul>
 
       <ModalComponent
