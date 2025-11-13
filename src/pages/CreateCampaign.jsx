@@ -172,7 +172,7 @@ const CreateCampaign = () => {
       console.log(error);
     }
   };
-  console.log("IS IT", shopifyCampaign);
+
   const renderStep = () => {
     if (shopifyCampaign) {
       switch (currentStep) {
