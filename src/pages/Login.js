@@ -98,7 +98,7 @@ const Login = () => {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center min-h-screen w-full bg-gradient-to-b from-lighterMainBlue to-mainBlue text-gray-200 p-4">
+    <section className="flex flex-col items-center justify-center min-h-screen w-full bg-[#0A0E1A] text-gray-200 p-4">
   {/* Login Card */}
   <div className="w-full max-w-[360px]">
     <div className="bg-[#111827] border-2 border-gray-800 rounded-2xl shadow-lg overflow-hidden">
@@ -132,7 +132,7 @@ const Login = () => {
               name="username"
               placeholder="Username"
               onChange={(e) => setUser(e.target.value)}
-              className="w-full px-4 py-2 rounded-xl border border-gray-700 bg-[#1B2233] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ngrokBlue focus:border-ngrokBlue"
+              className="w-full px-4 py-2 rounded-xl bg-[#1B2233] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ngrokBlue focus:border-ngrokBlue"
             />
           </div>
 
@@ -153,7 +153,7 @@ const Login = () => {
               name="password"
               placeholder="Password"
               onChange={(e) => setPwd(e.target.value)}
-              className="w-full px-4 py-2 rounded-xl border border-gray-700 bg-[#1B2233] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ngrokBlue focus:border-ngrokBlue"
+              className="w-full px-4 py-2 rounded-xl bg-[#1B2233] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ngrokBlue focus:border-ngrokBlue"
             />
           </div>
 
