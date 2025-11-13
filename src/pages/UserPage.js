@@ -89,13 +89,12 @@ console.log(error);
   };
 
   return (
-    <section className="min-h-screen max-w-screen items-center justify-center">
+    <section className="min-h-screen max-w-screen items-center justify-center bg-[#0A0E1A]">
       <div className="flex flex-col">
-        <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-16 bg-navBlue sticky top-0 z-10">
-          <Search />
-
-          <SmsPill />
-        </div>
+        <div className="flex flex-row items-center mb-6 h-16 bg-[#111827]/70 backdrop-blur-lg sticky top-0 z-10 border-b border-[#1C2437]/40">
+      <Search />
+      <SmsPill />
+    </div>
 
         <div className="flex flex-col gap-2 mx-44">
           <UserAccount />
@@ -106,50 +105,52 @@ console.log(error);
             </div>
             {/* Cancel Subscription Section */}
             <div className="flex md:flex-row xs:flex-col">
-              <div className="mx-20 p-4 w-full">
-                <h3 className="flex flex-row items-center xs:text-normal lg:text-xl 2xl:text-2xl text-left mb-4 font-normal text-white relative border-b-2 border-gray-800">
-                  Cancel Subscription
-                  <button
-                    onClick={() => setShowSubModal(true)}
-                    className="px-1 py-1 bg-red-700 lg:text-sm 2xl:text-xl text-white rounded-lg hover:bg-red-600 absolute -right-2 -top-2 shadow-md"
-                  >
-                    Cancel Subscription
-                  </button>
-                </h3>
+  <div className="mx-20 p-6 w-full bg-[#1B2233] rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
+    {/* Header */}
+    <div className="flex justify-between items-center border-b border-gray-700 pb-3 mb-4 relative">
+      <h3 className="text-xl 2xl:text-2xl font-euclid text-white">Cancel Subscription</h3>
+      <button
+        onClick={() => setShowSubModal(true)}
+        className="px-4 py-2 bg-red-700 hover:bg-red-600 text-white rounded-lg 2xl:text-xl text-sm shadow-md transition-all"
+      >
+        Cancel Subscription
+      </button>
+    </div>
 
-                <p className="text-white/60 xs:text-sm lg:text-normal text-start mb-4">
-                  If you wish to stop your current subscription, click the
-                  button below. You’ll still have access until the end of your
-                  billing period.
-                </p>
-                {success && (
-                  <span className="text-green-500 text-sm font-euclid">
-                    {success}
-                  </span>
-                )}
-                {errorMsg && (
-                  <span className="text-red-500 text-sm font-euclid">
-                    {errorMsg}
-                  </span>
-                )}
-              </div>
-            </div>
+    {/* Content */}
+    <p className="text-white/60 xs:text-sm lg:text-normal text-start mb-4">
+      If you wish to stop your current subscription, click the button below. You’ll still have access until the end of your billing period.
+    </p>
 
-            <div className="flex flex-col rounded-2xl p-4 mx-20">
-              <h3 class="flex flex-row xs:text-normal lg:text-xl 2xl:text-2xl text-left mb-4 font-normal text-white relative border-b-2 border-gray-800">
-                Account Deletion
-                <div
-                  onClick={(e) => setShowModal(e)}
-                  className="px-1 py-1 bg-red-700 text-white xs:text-sm 2xl:text-lg border-gray-800 rounded-md absolute -right-2 -top-2 hover:bg-red-500 cursor-pointer"
-                >
-                  Close Account
-                </div>
-              </h3>
-              <p className="text-white/60 xs:text-sm lg:text-normal text-start">
-                If you wish to close your account press the button and we will
-                do the rest.{" "}
-              </p>
-            </div>
+    {/* Messages */}
+    {success && (
+      <span className="text-green-500 text-sm font-euclid">{success}</span>
+    )}
+    {errorMsg && (
+      <span className="text-red-500 text-sm font-euclid">{errorMsg}</span>
+    )}
+  </div>
+</div>
+
+
+            <div className="flex flex-col rounded-2xl p-6 mx-20 bg-[#1B2233] shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
+  {/* Header */}
+  <div className="flex justify-between items-center border-b border-gray-700 pb-3 mb-4 relative">
+    <h3 className="text-xl 2xl:text-2xl font-euclid text-white">Account Deletion</h3>
+    <div
+      onClick={(e) => setShowModal(e)}
+      className="px-4 py-2 bg-red-700 hover:bg-red-500 text-white text-sm 2xl:text-lg rounded-md cursor-pointer transition-all shadow-md"
+    >
+      Close Account
+    </div>
+  </div>
+
+  {/* Content */}
+  <p className="text-white/60 xs:text-sm lg:text-normal text-start">
+    If you wish to close your account, press the button and we will do the rest.
+  </p>
+</div>
+
           </div>
         </div>
 

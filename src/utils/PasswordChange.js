@@ -82,92 +82,78 @@ const PasswordChange = ({ user_obj }) => {
       setIsLoading(false);
     }
   };
-  console.log(user_obj);
-  return (
-    <div className="flex-1 p-4 mx-20">
-      <div className="flex flex-col h-52">
-        <h3 class="flex flex-row border-gray-800 border-b-2 font-euclid text-white text-xl 2xl:text-2xl relative">
-          Change password
-          {isEditing ? (
-            <></>
-          ) : (
-            <div className="px-1 py-1 2xl:text-xl flex flex-row gap-1 bg-ngrokBlue text-white border-gray-800 rounded-md absolute -right-2 -top-2 hover:bg-blue-500 cursor-pointer">
-              <p
-                className="lg:text-sm 2xl:text-lg"
-                onClick={() => setIsEditing(true)}
-              >
-                Change
-              </p>
-            </div>
-          )}
-        </h3>
 
-        {isEditing ? (
-          <div className="flex flex-col items-center">
-            <div className="flex flex-row mt-2 gap-2 relative">
-              <input
-                type="password"
-                className="password-change-inputs"
-                onChange={handleOldPass}
-                placeholder="Enter your old password.."
-              ></input>
-            </div>
-            <div className="flex flex-row mt-2 relative">
-              <input
-                type="password"
-                className="password-change-inputs"
-                placeholder="Enter your new password"
-                onChange={handleNewPass}
-              ></input>
-            </div>
-            <div className="flex flex-row mt-3 relative">
-              <input
-                type="password"
-                className="password-change-inputs"
-                placeholder="Re-enter your new password"
-                onChange={handleReNewPass}
-              ></input>
-            </div>
-            <div className="flex flex-col gap-2">
-              {isLoading ? (
-                <Loader loading_name={"Updating pass..."} />
-              ) : (
-                <div className="flex flex-row gap-2">
-                  <button
-                    className="flex items-start bg-ngrokBlue hover:bg-blue-500 duration-300 text-white xl:text-normal text-normal md:text-sm font-normal py-1 px-2 xl:py-2 xl:px-4 rounded w-20 mt-4"
-                    onClick={passChange}
-                  >
-                    <p className="mx-auto">Change</p>
-                  </button>
-                  <button
-                    className="flex items-center bg-red-800 hover:bg-red-400 duration-300 text-white xl:text-normal md:text-sm font-normal py-1 px-2 xl:py-2 xl:px-4 rounded w-20 mt-4"
-                    onClick={() => setIsEditing(false)}
-                  >
-                    <p className="mx-auto">Cancel</p>
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
+  return (
+    <div className="flex-1 p-6 mx-20 bg-[#1B2233] rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
+  {/* Header */}
+  <div className="flex justify-between items-center border-b border-gray-700 pb-3 mb-4 relative">
+    <h3 className="text-xl 2xl:text-2xl font-euclid text-white">Change password</h3>
+    {!isEditing && (
+      <div
+        className="px-3 py-1 bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] text-white rounded-md text-sm 2xl:text-lg cursor-pointer hover:opacity-90 transition-all absolute -right-2 -top-2"
+        onClick={() => setIsEditing(true)}
+      >
+        Change
+      </div>
+    )}
+  </div>
+
+  {/* Content */}
+  {isEditing ? (
+    <div className="flex flex-col gap-3">
+      <input
+        type="password"
+        placeholder="Enter your old password"
+        onChange={handleOldPass}
+        className="bg-[#111827] border border-gray-700 text-white rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3E6FF4]"
+      />
+      <input
+        type="password"
+        placeholder="Enter your new password"
+        onChange={handleNewPass}
+        className="bg-[#111827] border border-gray-700 text-white rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3E6FF4]"
+      />
+      <input
+        type="password"
+        placeholder="Re-enter your new password"
+        onChange={handleReNewPass}
+        className="bg-[#111827] border border-gray-700 text-white rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#3E6FF4]"
+      />
+
+      <div className="flex flex-row gap-3 mt-3">
+        {isLoading ? (
+          <Loader loading_name={"Updating pass..."} />
         ) : (
-          <div className="flex flex-col">
-            {/* <div className="flex flex-row mt-5 relative">
-              
-            </div> */}
-            <div className="flex flex-row mt-5 relative">
-              <label className="block mt-1 text-ss xl:text-normal 2xl:text-lg text-left font-normal text-gray-300 dark:text-white">
-                Last update
-              </label>
-              <p className="block text-white absolute 2xl:text-lg right-2 top-0">
-                {user_obj.last_password_change}
-              </p>
-            </div>
-          </div>
+          <>
+            <button
+              onClick={passChange}
+              className="bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] hover:opacity-90 text-white rounded-md px-4 py-2 transition-all"
+            >
+              Change
+            </button>
+            <button
+              onClick={() => setIsEditing(false)}
+              className="bg-red-600 hover:bg-red-500 text-white rounded-md px-4 py-2 transition-all"
+            >
+              Cancel
+            </button>
+          </>
         )}
-        {msg && <p className="text-green-500">{msg}</p>}
-        {errMsg && <p className="text-red-500">{errMsg}</p>}
       </div>
     </div>
+  ) : (
+    <div className="flex flex-col gap-3">
+      <div className="flex flex-row items-center justify-between">
+        <label className="text-gray-300 font-normal text-sm 2xl:text-lg">Last update</label>
+        <p className="text-white font-normal text-sm 2xl:text-lg">{user_obj.last_password_change}</p>
+      </div>
+    </div>
+  )}
+
+  {msg && <p className="text-green-500 mt-2">{msg}</p>}
+  {errMsg && <p className="text-red-500 mt-2">{errMsg}</p>}
+</div>
+
   );
 };
 

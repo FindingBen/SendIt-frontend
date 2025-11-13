@@ -64,155 +64,116 @@ const UserAccount = () => {
 
   return (
     <div className="flex-1 gap-3 mx-20">
-      <div className="flex flex-col rounded-2xl p-4">
-        <h3 className="flex flex-row text-normal border-b-2 border-gray-800 lg:text-xl 2xl:text-2xl text-left font-euclid text-white relative">
-          General settings
-          <div className="">
-            {isEditing ? (
-              isLoading ? (
-                <Loader loading_name={"Updating..."} />
-              ) : (
-                <div className="flex flex-row gap-2 absolute -right-2 -top-2">
-                  <button
-                    onClick={updateUser}
-                    className="bg-ngrokBlue hover:bg-blue-500 duration-300 text-white text-sm font-euclid px-1 py-1 rounded-md"
-                    type="submit"
-                  >
-                    Update
-                  </button>
-                  <button
-                    onClick={() => setIsEditing(false)}
-                    className="bg-red-500 hover:bg-red-300 duration-300 text-white font-euclid text-sm py-1 px-1 rounded-md"
-                    type="button"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              )
-            ) : (
-              <button
-                className="px-1 py-1 flex flex-row gap-1 bg-ngrokBlue 2xl:text-lg text-white text-sm border-gray-800 rounded-md absolute -right-2 -top-2 hover:bg-blue-500 cursor-pointer"
-                onClick={() => setIsEditing(true)}
-              >
-                Change
-              </button>
-            )}
-          </div>
-        </h3>
-        <div className="flex flex-col mt-5">
-          <div className="flex flex-row gap-3 relative">
-            <label
-              for="first_name"
-              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-euclid text-gray-300 dark:text-white"
-            >
-              First name
-            </label>
-            {isEditing ? (
-              <input
-                type="text"
-                id="first_name"
-                className="block bg-gray-500 hover:bg-gray-400 duration-200 text-light font-light xl:text-sm 2xl:text-xl text-xs rounded-lg py-1 px-4"
-                defaultValue={currentUserState.first_name}
-                onChange={(e) => setNewName(e.target.value)}
-              />
-            ) : (
-              <p className="block text-white absolute 2xl:text-xl right-2 top-0">
-                {currentUserState?.first_name}
-              </p>
-            )}
-          </div>
-          <div className="flex flex-row gap-3 mt-3 relative">
-            <label
-              for="last_name"
-              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-euclid text-gray-300 dark:text-white"
-            >
-              Last name
-            </label>
-            {isEditing ? (
-              <input
-                type="text"
-                id="last_name"
-                className="block bg-gray-500 hover:bg-gray-400 text-light 2xl:text-xl font-light py-1 px-4 duration-200 xl:text-sm text-xs rounded-lg"
-                defaultValue={currentUserState?.last_name}
-                onChange={(e) => setNewLastName(e.target.value)}
-              />
-            ) : (
-              <p className="block text-white absolute 2xl:text-xl right-2 top-0">
-                {currentUserState?.last_name}
-              </p>
-            )}
-          </div>
-
-          <div className="flex flex-row gap-4 mt-3 relative">
-            <label
-              for="last_name"
-              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-euclid text-gray-300 dark:text-white"
-            >
-              Username
-            </label>
-
-            <p className="block text-white absolute 2xl:text-xl right-2 top-0">
-              {currentUserState?.username}
-            </p>
-          </div>
-          <div className="flex flex-row gap-4 mt-3 relative">
-            <label
-              for="email"
-              className="block mb-2 text-ss xl:text-normal 2xl:text-xl text-left font-euclid text-gray-300 dark:text-white"
-            >
-              Email address
-            </label>
-            <p className="block text-white absolute right-2 top-0">
-              {currentUserState?.custom_email &&
-                `${currentUserState?.custom_email.substring(
-                  0,
-                  currentUserState?.custom_email.indexOf("@") + 1
-                )}`}
-            </p>
-          </div>
-          <div className="flex flex-row gap-4 mt-3 relative">
-            <label
-              for="email"
-              className="block mb-2 text-ss xl:text-normal text-left 2xl:text-xl font-euclid text-gray-300 dark:text-white"
-            >
-              Account type
-            </label>
-            <p className="block text-white absolute 2xl:text-xl right-2 top-0">
-              {currentUserState?.user_type}
-            </p>
-          </div>
-
-          {/* {isEditing ? (
-            <div className="flex flex-row ">
-              {isLoading ? (
-                <Loader loading_name={"Updating..."} />
-              ) : (
-                <div className="flex flex-row gap-2">
-                  <button
-                    onClick={updateUser}
-                    className="bg-ngrokBlue hover:bg-blue-500 duration-300 text-white font-euclid text-ss 2xl:text-xl xl:text-normal py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
-                    type="submit"
-                  >
-                    <p>Update</p>
-                  </button>
-                  <button
-                    onClick={() => setIsEditing(false)}
-                    className="bg-red-500 hover:bg-red-300 duration-300 text-white font-euclid text-ss 2xl:text-xl xl:text-normal py-1 px-2 xl:py-2 xl:px-4 rounded w-20"
-                    type="submit"
-                  >
-                    <p>Cancel</p>
-                  </button>
-                </div>
-              )}
-            </div>
+  <div className="flex flex-col bg-[#1B2233] rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.3)] p-6">
+    {/* Header */}
+    <div className="flex justify-between items-center border-b border-gray-700 pb-3 mb-5 relative">
+      <h3 className="text-xl 2xl:text-2xl font-euclid text-white">General Settings</h3>
+      <div className="absolute right-4 top-1">
+        {isEditing ? (
+          isLoading ? (
+            <Loader loading_name={"Updating..."} />
           ) : (
-            <></>
-          )} */}
-          {msg && <p className="text-green-500 mt-5">{msg}</p>}
-          {errorMsg && <p className="text-red-500 mt-5">{errorMsg}</p>}
-        </div>
+            <div className="flex gap-2">
+              <button
+                onClick={updateUser}
+                className="bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] hover:opacity-90 text-white font-euclid text-sm 2xl:text-base px-3 py-1 rounded-md transition-all"
+                type="submit"
+              >
+                Update
+              </button>
+              <button
+                onClick={() => setIsEditing(false)}
+                className="bg-red-500 hover:bg-red-400 text-white font-euclid text-sm 2xl:text-base px-3 py-1 rounded-md transition-all"
+                type="button"
+              >
+                Cancel
+              </button>
+            </div>
+          )
+        ) : (
+          <button
+            onClick={() => setIsEditing(true)}
+            className="bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] hover:opacity-90 text-white font-euclid text-sm 2xl:text-base px-3 py-1 rounded-md transition-all"
+          >
+            Change
+          </button>
+        )}
       </div>
     </div>
+
+    {/* Form Fields */}
+    <div className="flex flex-col gap-5 text-start">
+      {/* First Name */}
+      <div className="flex flex-col">
+        <label
+          htmlFor="first_name"
+          className="text-gray-300 text-sm xl:text-normal 2xl:text-lg font-euclid mb-1"
+        >
+          First Name
+        </label>
+        {isEditing ? (
+          <input
+            type="text"
+            id="first_name"
+            className="w-full bg-[#111827] border border-gray-700 text-white font-light text-sm xl:text-normal 2xl:text-lg rounded-lg px-4 py-2 focus:outline-none focus:border-[#3E6FF4] transition-all"
+            defaultValue={currentUserState.first_name}
+            onChange={(e) => setNewName(e.target.value)}
+          />
+        ) : (
+          <p className="text-white font-light text-sm xl:text-normal 2xl:text-lg">{currentUserState?.first_name}</p>
+        )}
+      </div>
+
+      {/* Last Name */}
+      <div className="flex flex-col">
+        <label
+          htmlFor="last_name"
+          className="text-gray-300 text-sm xl:text-normal 2xl:text-lg font-euclid mb-1"
+        >
+          Last Name
+        </label>
+        {isEditing ? (
+          <input
+            type="text"
+            id="last_name"
+            className="w-full bg-[#111827] border border-gray-700 text-white font-light text-sm xl:text-normal 2xl:text-lg rounded-lg px-4 py-2 focus:outline-none focus:border-[#3E6FF4] transition-all"
+            defaultValue={currentUserState?.last_name}
+            onChange={(e) => setNewLastName(e.target.value)}
+          />
+        ) : (
+          <p className="text-white font-light text-sm xl:text-normal 2xl:text-lg">{currentUserState?.last_name}</p>
+        )}
+      </div>
+
+      {/* Username */}
+      <div className="flex flex-col">
+        <label className="text-gray-300 text-sm xl:text-normal 2xl:text-lg font-euclid mb-1">Username</label>
+        <p className="text-white font-light text-sm xl:text-normal 2xl:text-lg">{currentUserState?.username}</p>
+      </div>
+
+      {/* Email */}
+      <div className="flex flex-col">
+        <label className="text-gray-300 text-sm xl:text-normal 2xl:text-lg font-euclid mb-1">Email Address</label>
+        <p className="text-white font-light text-sm xl:text-normal 2xl:text-lg">
+          {currentUserState?.custom_email &&
+            `${currentUserState?.custom_email.substring(0, currentUserState?.custom_email.indexOf("@") + 1)}`}
+        </p>
+      </div>
+
+      {/* Account Type */}
+      <div className="flex flex-col">
+        <label className="text-gray-300 text-sm xl:text-normal 2xl:text-lg font-euclid mb-1">Account Type</label>
+        <p className="text-white font-light text-sm xl:text-normal 2xl:text-lg">{currentUserState?.user_type}</p>
+      </div>
+
+      {/* Feedback Messages */}
+      {msg && <p className="text-green-500 mt-3">{msg}</p>}
+      {errorMsg && <p className="text-red-500 mt-3">{errorMsg}</p>}
+    </div>
+  </div>
+</div>
+
+
   );
 };
 
