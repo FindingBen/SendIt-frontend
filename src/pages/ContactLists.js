@@ -98,134 +98,132 @@ const ContactList = () => {
   };
 
   return (
-    <div class="min-h-screen max-w-screen items-center justify-center">
-      <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-16 bg-navBlue sticky top-0 z-10">
-        <Search />
+    <section className="min-h-screen w-full bg-[#0A0E1A] text-white font-inter">
+  {/* Sticky Top Bar */}
+  <div className="flex flex-row items-center h-16 bg-[#111827]/70 backdrop-blur-lg sticky top-0 z-20 border-b border-[#1C2437]/40 px-8">
+    <Search />
+    <SmsPill />
+  </div>
 
-        <SmsPill />
+  {/* Main Content */}
+  <div className="flex flex-col w-full lg:flex-row mt-6 ml-20 px-20">
+    <div className="flex-1 flex flex-col space-y-6">
+      {/* Header */}
+      <div className="flex justify-between items-center mx-20 relative">
+        <span className="text-2xl font-semibold tracking-wide text-gray-100">Contact Lists</span>
+        <button
+          disabled={!canAddNewList()}
+          onClick={handleModal}
+          className={`px-3 py-2 text-white font-normal text-sm 2xl:text-lg rounded-lg transition-all ${
+            canAddNewList()
+              ? "bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] shadow-md hover:opacity-90 hover:-translate-y-0.5 hover:scale-105"
+              : "bg-gray-800 text-gray-500 cursor-not-allowed"
+          }`}
+        >
+          Create List
+        </button>
       </div>
-      <div className="ml-44">
-        <div className="flex flex-row relative mx-20">
-          <span className="text-xl text-white font-euclid">Contact lists</span>
-          <div className="flex flex-row absolute right-0">
-            <button
-              disabled={!canAddNewList()}
-              onClick={handleModal}
-              className={`px-2 py-1 2xl:px-3 2xl:py-2 mr-5 text-white font-normal text-sm 2xl:text-lg cursor-pointer ${
-                canAddNewList() ? "bg-ngrokBlue" : "bg-gray-500"
-              } rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105`}
-            >
-              Create list
-            </button>
-          </div>
-        </div>
-        <div className=" bg-mainBlue border-gray-800 shadow-md border-2 rounded-2xl mt-4 mx-20">
-          <div class="grid grid-cols-4 gap-4 text-white/50 font-euclid text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
-            <div className="">Name</div>
-            <div>Created at</div>
-            <div>Recipients</div>
 
-            <div>Action</div>
-          </div>
-          {!isLoading ? (
-            <>
-              {currentContactList.contactLists?.map((conList, index) => {
-                const isLastItem =
-                  index === currentContactList.contactLists?.length - 1;
-                const evenRow = index % 2 === 0;
-                return (
-                  <div
-                    className={`font-light ${
-                      evenRow
-                        ? "bg-gradient-to-b from-lighterMainBlue to-mainBlue"
-                        : "bg-mainBlue rounded-2xl"
-                    }`}
-                    key={conList.id}
-                  >
-                    <motion.div
-                      className={`grid grid-cols-4 font-euclid gap-4 p-2 text-white border-gray-800 ${
-                        isLastItem ? "rounded-b-2xl" : "border-b-2"
-                      }`}
-                      key={conList.id}
+      {/* Table Container */}
+      <div className="bg-[#1B2233] rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.3)] mx-20">
+        {/* Table Header */}
+        <div className="grid grid-cols-4 gap-4 p-3 text-white/50 font-euclid text-sm 2xl:text-lg border-b border-gray-700">
+          <div>Name</div>
+          <div>Created at</div>
+          <div>Recipients</div>
+          <div>Action</div>
+        </div>
+
+        {/* Table Rows */}
+        {!isLoading ? (
+          currentContactList.contactLists?.map((conList, index) => {
+            const isLast = index === currentContactList.contactLists?.length - 1;
+            const isEven = index % 2 === 0;
+            return (
+              <div
+                key={conList.id}
+                className={`font-light bg-[#111827]`}
+              >
+                <motion.div
+                  className={`grid grid-cols-4 gap-4 p-3 items-center text-white border-gray-700 ${
+                    isLast ? "rounded-b-2xl" : "border-b border-gray-700"
+                  }`}
+                >
+                  <div>{conList.list_name}</div>
+                  <div>{conList.created_at}</div>
+                  <div>{conList.contact_lenght ?? 0}</div>
+                  <div className="flex gap-3 justify-center">
+                    <Link
+                      to={`/contact_list/${conList.id}`}
+                      className="p-1 rounded-md hover:bg-[#3E6FF4]/20 transition-all hover:-translate-y-0.5 hover:scale-105"
                     >
-                      <div>{conList.list_name}</div>
-                      <div>{conList.created_at}</div>
-                      <div>{conList.contact_lenght ?? 0}</div>
-                      <div className="flex flex-row mx-16 gap-3">
-                        <div className="rounded-md mx-auto my-auto p-0.5 hover:bg-ngrokBlue cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
-                          <Link
-                            type="button"
-                            to={`/contact_list/${conList.id}`}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.0"
-                              stroke="currentColor"
-                              class="w-5 h-5 2xl:w-7 2xl:h-7"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                              />
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                              />
-                            </svg>
-                          </Link>
-                        </div>
-                        <div className="rounded-md mx-auto my-auto p-0.5 hover:bg-ngrokBlue hover:fill-red-700 cursor-pointer transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105">
-                          <button
-                            type="button"
-                            onClick={() => deleteList(conList.id)}
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="0.5"
-                              stroke="currentColor"
-                              class="h-5 w-5 2xl:h-7 2xl:w-7"
-                              x-tooltip="tooltip"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                    </motion.div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="w-5 h-5 2xl:w-7 2xl:h-7"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                        />
+                      </svg>
+                    </Link>
+                    <button
+                      onClick={() => deleteList(conList.id)}
+                      className="p-1 rounded-md hover:bg-red-600/20 transition-all hover:-translate-y-0.5 hover:scale-105"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="0.5"
+                        stroke="currentColor"
+                        className="w-5 h-5 2xl:w-7 2xl:h-7"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                        />
+                      </svg>
+                    </button>
                   </div>
-                );
-              })}
-            </>
-          ) : (
-            <LoaderSkeleton contact_list={true} div_size={3} />
-          )}
-        </div>
+                </motion.div>
+              </div>
+            );
+          })
+        ) : (
+          <LoaderSkeleton contact_list={true} div_size={3} />
+        )}
       </div>
-
-      <CreateListModal
-        newList={handleNewList}
-        redirect={false}
-        showModal={show}
-        onClose={() => setShow(false)}
-      ></CreateListModal>
-      <DeleteListModal
-        contactListId={listId}
-        showModal={showDelete}
-        newList={handleNewList}
-        setUpdated={() => setListUpdated(true)}
-        onClose={() => setShowDelete(false)}
-      ></DeleteListModal>
     </div>
+  </div>
+
+  {/* Modals */}
+  <CreateListModal
+    newList={handleNewList}
+    redirect={false}
+    showModal={show}
+    onClose={() => setShow(false)}
+  />
+  <DeleteListModal
+    contactListId={listId}
+    showModal={showDelete}
+    newList={handleNewList}
+    setUpdated={() => setListUpdated(true)}
+    onClose={() => setShowDelete(false)}
+  />
+</section>
+
   );
 };
 

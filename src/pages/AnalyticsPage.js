@@ -87,13 +87,12 @@ const AnalyticsPage = () => {
   };
 
   return (
-    <section className="min-h-screen w-full items-center justify-center">
+    <section className="min-h-screen w-full items-center justify-center bg-[#0A0E1A]">
       <div className="flex flex-col">
-        <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-16 bg-navBlue sticky top-0 z-10">
-          <Search />
-
-          <SmsPill />
-        </div>
+        <div className="flex flex-row items-center mb-6 h-16 bg-[#111827]/70 backdrop-blur-lg sticky top-0 z-10 border-b border-[#1C2437]/40">
+      <Search />
+      <SmsPill />
+    </div>
         <div className="ml-44 mb-5">
           <div className="flex justify-between items-center h-20">
             <h3 class="xl:text-2xl text-xl font-normal text-left text-white mx-20">

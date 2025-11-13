@@ -107,13 +107,12 @@ const HomePage = () => {
     }
   };
   return (
-    <section className="min-h-screen w-full items-center justify-center">
-      <div className="flex flex-col">
-        <div className="flex flex-row items-center border-b-2 border-gray-800 mb-4 h-16 bg-navBlue sticky top-0 z-10">
-          <Search />
-
-          <SmsPill />
-        </div>
+    <section className="min-h-screen w-full items-center justify-center bg-[#0A0E1A]">
+  
+         <div className="flex flex-row mb-5 items-center h-16 bg-[#111827]/70 backdrop-blur-lg sticky top-0 z-20 border-b border-[#1C2437]/40 px-8">
+    <Search />
+    <SmsPill />
+  </div>
 
         <div className="mx-20">
           <div className="flex flex-col ml-44">
@@ -293,7 +292,7 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-      </div>
+     
     </section>
   );
 };

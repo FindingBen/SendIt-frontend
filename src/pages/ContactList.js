@@ -245,338 +245,207 @@ const ContactList = () => {
   };
 
   return (
-    <section className="min-h-screen max-w-screen items-center justify-center">
-      <div className="flex flex-row items-center border-b-2 border-gray-800 h-16 bg-navBlue sticky top-0 z-10">
-        <Search />
+    <section className="min-h-screen w-full bg-[#0A0E1A] text-white font-inter">
+  {/* Sticky Top Bar */}
+  <div className="flex flex-row items-center h-16 bg-[#111827]/70 backdrop-blur-lg sticky top-0 z-20 border-b border-[#1C2437]/40 px-8">
+    <Search />
+    <SmsPill />
+  </div>
 
-        <SmsPill />
-      </div>
-      <div className="flex-1 flex flex-col space-y-5 lg:flex-row ml-44">
-        <div className="flex-1">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex flex-row gap-2 mx-20">
-              <Link to={"/contact_lists"}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="size-4 text-white mt-2 hover:cursor-pointer"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-                  />
-                </svg>
-              </Link>
-              <h3 class="2xl:text-2xl lg:text-xl font-euclid text-left text-white">
-                Contacts
-              </h3>
-            </div>
-            <div class="items-start shadow-md mx-20">
-              {loader ? (
-                <Loader loading_name={"Loading..."} />
-              ) : (
-                <div className="inline-flex mt-1 gap-2">
-                  {currentShopifyToken &&
-                  currentUserState.shopify_connect === false &&
-                  listEmpty ? (
-                    <button
-                      onClick={handleShopifyModal}
-                      className={`text-white hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer
-                  rounded-md flex flex-row gap-2 border-2 border-gray-800 p-2`}
-                    >
-                      <p>Shopify customers</p>
-                    </button>
-                  ) : (
-                    <></>
-                  )}
-                  <button
-                    onClick={handleQrModal}
-                    className={`text-white hover:text-white/50 ml-5 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer
-                  rounded-md flex flex-row gap-2 border-2 border-gray-800 p-2`}
-                  >
-                    <p>Show code</p>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="size-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z"
-                      />
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z"
-                      />
-                    </svg>
-                  </button>
+  {/* Main Content */}
+  <div className="flex flex-col w-full lg:flex-row mt-6 ml-20 px-44">
+    <div className="flex-1 flex flex-col space-y-6">
+      {/* Header Actions */}
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-3">
+          <Link to={"/contact_lists"}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-6 h-6 text-white hover:text-[#3E6FF4]/80 cursor-pointer"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+            </svg>
+          </Link>
+          <h2 className="text-2xl font-semibold tracking-wide text-gray-100">Contacts</h2>
+        </div>
 
-                  <button
-                    disabled={!canAddNewrecipients()}
-                    onClick={handleModal}
-                    data-tooltip-id="my-tooltip"
-                    data-tooltip-content="Limit reached! Upgrade for more recipients!"
-                    className={`${
-                      canAddNewrecipients()
-                        ? "text-white hover:text-white/50 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer"
-                        : "text-gray-500"
-                    } rounded-md border-2 border-gray-800 p-2`}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="w-6 h-6"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
-                      />
-                    </svg>
-                    {!canAddNewrecipients() && <Tooltip id="my-tooltip" />}
-                  </button>
+        <div className="flex items-center gap-3">
+          {currentShopifyToken && !currentUserState.shopify_connect && listEmpty && (
+            <button
+              onClick={handleShopifyModal}
+              className="bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] px-4 py-2 rounded-lg shadow-md text-white hover:opacity-90 transition-all"
+            >
+              Shopify Customers
+            </button>
+          )}
 
-                  {!shopifyList ? (
-                    <button
-                      disabled={!canAddNewrecipients()}
-                      data-tooltip-id="my-tooltip"
-                      data-tooltip-content="Limit reached! Upgrade for more recipients!"
-                      className={`${
-                        canAddNewrecipients()
-                          ? "text-white hover:text-white/50 smooth-hover transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 cursor-pointer"
-                          : "text-gray-500"
-                      } rounded-md border-2 border-gray-800 p-2`}
-                      onClick={handleCsvModal}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-6 h-6"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15"
-                        />
-                      </svg>
-                      {!canAddNewrecipients() && <Tooltip id="my-tooltip" />}
-                    </button>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
+          <button
+            onClick={handleQrModal}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-800 hover:bg-[#242E44] transition-all"
+          >
+            Show Code
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
+            </svg>
+          </button>
 
-          <div className="mx-20">
-            {/* <p className="mx-auto text-red-600 font-semibold">Error</p> */}
-            <div className={`mainContainer w-full`}>
-              <div class="items-center justify-center rounded-2xl mb-3 w-full bg-mainBlue border-gray-800 border-2 shadow-md">
-                <div className="flex flex-row space-x-2 p-2 border-b border-gray-800">
-                  {currentShopifyToken ? (
-                    <></>
-                  ) : (
-                    <>
-                      <button
-                        className={`px-2 text-normal font-euclid 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-ngrokBlue font-normal duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray
-                  `}
-                        onClick={handleSortByName}
-                      >
-                        Sort by Name
-                      </button>
-                      <button
-                        className={`px-2 text-normal font-euclid 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-ngrokBlue font-normal duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray`}
-                        onClick={
-                          currentTokenType === "Shopify"
-                            ? handleSortByDateCreatedShopify
-                            : handleSortByDateCreated
-                        }
-                      >
-                        Sort by Date
-                      </button>
-                    </>
-                  )}
+          <button
+            disabled={!canAddNewrecipients()}
+            onClick={handleModal}
+            className={`px-4 py-2 rounded-lg ${
+              canAddNewrecipients()
+                ? "bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] text-white shadow-md hover:opacity-90 transition-all"
+                : "bg-gray-800 text-gray-500 cursor-not-allowed"
+            }`}
+          >
+            Add Contact
+          </button>
 
-                  <div class="relative w-[20%]">
-                    <div class="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
-                      <svg
-                        class="w-4 h-4 text-gray-500 ml-2 dark:text-gray-400"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                        />
-                      </svg>
-                    </div>
-                    <input
-                      type="search"
-                      id="default-search"
-                      class="block w-full p-1.5 ps-10 text-sm border-2 rounded-lg focus:border-gray-700 bg-darkestGray border-gray-800 text-white"
-                      placeholder="Search by name..."
-                      value={search_name}
-                      onChange={handleSearchChange}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <div class="grid grid-cols-6 gap-4 grid-headers text-white/80 font-euclid text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
-                    <div>First Name</div>
-                    <div>Last Name</div>
-                    <div>Email</div>
-                    <div>Sms Consent</div>
-                    <div>Phone number</div>
-                    <div>Action</div>
-                  </div>
-                  {!loader ? (
-                    <>
-                      {paginatedData?.map((rowData, index) => {
-                        const isEditing = editableRowId === rowData.id;
-                        const isLoadingThisRow =
-                          editingLoadingId === rowData.id;
-                        const isDisabled = rowData.allowed === false;
-
-                        return (
-                          <div
-                            key={rowData.id}
-                            className={`grid grid-cols-6 p-2 border-b border-gray-700 items-center text-white/70 ${
-                              isDisabled ? "opacity-50 pointer-events-none" : ""
-                            }`}
-                          >
-                            {["firstName", "lastName", "email", "sms_opt_in","phone"].map(
-                              (field) => (
-                                <div key={field}>
-                                  {isEditing && !isDisabled ? (
-                                    <input
-                                      value={editData[field]}
-                                      onChange={(e) => handleChange(e, field)}
-                                      className="border-2 border-gray-500 px-2 py-1 rounded-lg w-full bg-transparent text-white"
-                                    />
-                                  ) : (
-                                    <span>{rowData[field]}</span>
-                                  )}
-                                </div>
-                              )
-                            )}
-
-                            <div className="flex gap-2 mx-auto pointer-events-auto">
-                              {isEditing && !isDisabled ? (
-                                <>
-                                  <button
-                                    disabled={loadingRowId === rowData.id}
-                                    onClick={() => updateContact(rowData)}
-                                    className="text-green-400 hover:text-green-500"
-                                  >
-                                    {loadingRowId === rowData.id
-                                      ? "Saving..."
-                                      : "Save"}
-                                  </button>
-                                  <button
-                                    disabled={loadingRowId === rowData.id}
-                                    onClick={() => setEditableRowId(null)}
-                                    className="text-gray-400 hover:text-white"
-                                  >
-                                    Cancel
-                                  </button>
-                                </>
-                              ) : (
-                                <>
-                                  {!isDisabled && (
-                                    <button
-                                      onClick={() => handleEditClick(rowData)}
-                                      className="text-blue-400 hover:text-blue-500"
-                                    >
-                                      Edit
-                                    </button>
-                                  )}
-                                  <button
-                                    onClick={() => deleteContact(rowData)}
-                                    disabled={loadingRowId === rowData.id}
-                                    className="text-red-400 hover:text-red-500"
-                                  >
-                                    {loadingRowId === rowData.id
-                                      ? "Deleting..."
-                                      : "Delete"}
-                                  </button>
-                                </>
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </>
-                  ) : (
-                    <LoaderSkeleton div_size={3} />
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {totalPages > 1 && (
-              <div>
-                {Array.from(
-                  { length: totalPages },
-                  (_, index) => index + 1
-                ).map((page) => (
-                  <div
-                    className="btn ml-2 bg-ngrokGray border-2 border-gray-800 text-white"
-                    data-mdb-ripple-color="dark"
-                    key={page}
-                    id="paginationBtn"
-                    onClick={() => handlePageChange(page)}
-                  >
-                    {page}
-                  </div>
-                ))}
-                <br></br>
-              </div>
-            )}
-          </div>
-          <p className="mx-auto text-red-600 font-semibold">{errorMsg}</p>
-          <p className="mx-auto text-green-600 font-semibold">{successMsg}</p>
-          <CsvModal
-            newContacts={handleNewContact}
-            showModalCsv={showCsv}
-            shopifyList={isShopifyList}
-            onClose={() => setShowCsv(false)}
-          />
-          <AddContactModal
-            newContacts={handleNewContact}
-            showModal={show}
-            onClose={() => setShow(false)}
-          />
-          <ShowQrModal showModalQr={showqr} onClose={() => setShowQr(false)} />
-          <ShopifyUsersImportModal
-            showShopify={showShopify}
-            onClose={() => setShowShopify(false)}
-            bulkContacts={handleNewContact}
-          />
+          {!shopifyList && (
+            <button
+              disabled={!canAddNewrecipients()}
+              onClick={handleCsvModal}
+              className={`px-4 py-2 rounded-lg ${
+                canAddNewrecipients()
+                  ? "bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] text-white shadow-md hover:opacity-90 transition-all"
+                  : "bg-gray-800 text-gray-500 cursor-not-allowed"
+              }`}
+            >
+              Import CSV
+            </button>
+          )}
         </div>
       </div>
-    </section>
+
+      {/* Table */}
+      <div className="bg-[#1B2233] rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.3)] overflow-x-auto">
+        {/* Filters */}
+        <div className="flex justify-between items-center p-4 border-b border-gray-800 space-x-4">
+          {!currentShopifyToken && (
+            <>
+              <button
+                onClick={handleSortByName}
+                className="px-3 py-2 rounded-lg border border-gray-800 bg-[#111827] hover:bg-[#3E6FF4]/10 transition"
+              >
+                Sort by Name
+              </button>
+              <button
+                onClick={currentTokenType === "Shopify" ? handleSortByDateCreatedShopify : handleSortByDateCreated}
+                className="px-3 py-2 rounded-lg border border-gray-800 bg-[#111827] hover:bg-[#3E6FF4]/10 transition"
+              >
+                Sort by Date
+              </button>
+            </>
+          )}
+
+          <div className="relative w-1/5">
+            <input
+              type="search"
+              placeholder="Search by name..."
+              value={search_name}
+              onChange={handleSearchChange}
+              className="w-full px-3 py-2 ps-10 rounded-lg bg-[#111827] border border-gray-800 text-white focus:outline-none"
+            />
+            <svg className="absolute left-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Table Header */}
+        <div className="grid grid-cols-6 gap-4 px-4 py-2 text-gray-300 font-medium border-b border-gray-700">
+          <div>First Name</div>
+          <div>Last Name</div>
+          <div>Email</div>
+          <div>SMS Consent</div>
+          <div>Phone</div>
+          <div>Action</div>
+        </div>
+
+        {/* Table Rows */}
+        {!loader
+          ? paginatedData?.map((row) => {
+              const isEditing = editableRowId === row.id;
+              const isDisabled = row.allowed === false;
+              return (
+                <div
+                  key={row.id}
+                  className={`grid grid-cols-6 gap-4 px-4 py-3 border-b border-gray-700 items-center text-gray-200 ${
+                    isDisabled ? "opacity-50 pointer-events-none" : "hover:bg-[#3E6FF4]/10 transition-all"
+                  }`}
+                >
+                  {["firstName", "lastName", "email", "sms_opt_in", "phone"].map((field) => (
+                    <div key={field}>
+                      {isEditing && !isDisabled ? (
+                        <input
+                          value={editData[field]}
+                          onChange={(e) => handleChange(e, field)}
+                          className="w-full px-2 py-1 rounded-lg bg-[#1B2233] border border-gray-600 text-white"
+                        />
+                      ) : (
+                        <span>{row[field]}</span>
+                      )}
+                    </div>
+                  ))}
+
+                  {/* Actions */}
+                  <div className="flex gap-2">
+                    {isEditing && !isDisabled ? (
+                      <>
+                        <button onClick={() => updateContact(row)} className="text-green-400 hover:text-green-500">
+                          Save
+                        </button>
+                        <button onClick={() => setEditableRowId(null)} className="text-gray-400 hover:text-white">
+                          Cancel
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        {!isDisabled && (
+                          <button onClick={() => handleEditClick(row)} className="text-blue-400 hover:text-blue-500">
+                            Edit
+                          </button>
+                        )}
+                        <button onClick={() => deleteContact(row)} className="text-red-400 hover:text-red-500">
+                          Delete
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              );
+            })
+          : <LoaderSkeleton div_size={3} />}
+      </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center gap-2 mt-4">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+            <button
+              key={pageNum}
+              onClick={() => handlePageChange(pageNum)}
+              className="px-3 py-1 rounded-md border border-gray-700 bg-[#1B2233] hover:bg-[#3E6FF4]/20 transition"
+            >
+              {pageNum}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Modals */}
+      <CsvModal newContacts={handleNewContact} showModalCsv={showCsv} shopifyList={isShopifyList} onClose={() => setShowCsv(false)} />
+      <AddContactModal newContacts={handleNewContact} showModal={show} onClose={() => setShow(false)} />
+      <ShowQrModal showModalQr={showqr} onClose={() => setShowQr(false)} />
+      <ShopifyUsersImportModal showShopify={showShopify} onClose={() => setShowShopify(false)} bulkContacts={handleNewContact} />
+    </div>
+  </div>
+</section>
+
   );
 };
 

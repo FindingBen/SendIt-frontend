@@ -35,6 +35,15 @@ export const ShopifyProductsPage = () => {
     }
   };
 
+  const generateproduc = async () => {
+    try {
+      const response = await axiosInstance.get("/products/import_bulk_products/");
+      // setProducts(response?.data);
+    } catch (error) {
+      console.error("Error fetching Shopify products:", error);
+    }
+  };
+
   // Toggle single product selection
   const toggleProductSelection = (id) => {
     setSelectedProducts((prev) =>
@@ -60,191 +69,213 @@ export const ShopifyProductsPage = () => {
   }
 
   // Handle SKU or Barcode generation
-  const handleGenerate = async (type) => {
-    
-    const payload = {
-      products: selectedProducts,
-      sku: type === "sku",
-      barcode: type === "barcode",
-    };
+const handleGenerate = async (type) => {
+  if (selectedProducts.length === 0) return;
 
-    console.log("Generate payload:", payload);
-    try {
-      const response = await axiosInstance.put("/products/shopify_products/", payload);
-      console.log("Generate response:", response?.data);
-
-      // Remove processed products from the list
-      setProducts((prev) =>
-        prev.filter((p) => !selectedProducts.includes(p.id))
-      );
-
-      // Clear selection
-      setSelectedProducts([]);
-    } catch (error) {
-      console.error(`Error generating ${type}:`, error);
-      alert(`Failed to generate ${type.toUpperCase()} codes.`);
-    }
+  const payload = {
+    products: selectedProducts, // these are shopify_id
+    sku: type === "sku",
+    barcode: type === "barcode",
   };
 
+  console.log("Generate payload:", payload);
+
+  try {
+    const response = await axiosInstance.put("/products/shopify_products/", payload);
+    console.log("Generate response:", response?.data);
+
+    // ✅ Re-fetch fresh product data to update SKUs/barcodes
+    await getProducts();
+
+    // ✅ Clear selection
+    setSelectedProducts([]);
+  } catch (error) {
+    console.error(`Error generating ${type}:`, error);
+    alert(`Failed to generate ${type.toUpperCase()} codes.`);
+  }
+};
+
+
   return (
-    <section className="min-h-screen w-full items-center justify-center bg-[#111827] text-white">
-      <div className="flex flex-col">
-        {/* Top navigation with search and pill */}
-        <div className="flex flex-row items-center border-b-2 border-[#23253a] mb-4 h-16 bg-navBlue sticky top-0 z-10">
-          <Search />
-          <SmsPill />
-        </div>
+<section className="min-h-screen w-full bg-[#0A0E1A] text-white font-inter">
+  <div className="flex flex-col">
+    {/* Sticky top bar */}
+    <div className="flex flex-row items-center mb-6 h-16 bg-[#111827]/70 backdrop-blur-lg sticky top-0 z-10 border-b border-[#1C2437]/40">
+      <Search />
+      <SmsPill />
+    </div>
 
-        {/* Main content */}
-        <div className="ml-44">
-          <div className="bg-[#111827] border-2 border-[#23253a] text-white w-[90%] mx-auto mt-6 rounded-2xl shadow-lg">
-            <div className="p-6">
-              {/* Header */}
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-semibold text-white">
-                  Your Shopify Products
-                </h2>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleGenerateModal("sku")}
-                    disabled={selectedProducts.length === 0}
-                    className={`flex items-center px-3 py-2 rounded-lg text-sm transition ${
-                      selectedProducts.length === 0
-                        ? "bg-[#3e6ff4]/30 text-gray-400 cursor-not-allowed"
-                        : "bg-[#3e6ff4] hover:bg-[#4937BA] text-white"
-                    }`}
-                  >
-                    <Hash className="w-4 h-4 mr-1" />
-                    Auto-generate SKU
-                  </button>
-                  <button
-                    onClick={() => handleGenerateModal("barcode")}
-                    disabled={selectedProducts.length === 0}
-                    className={`flex items-center px-3 py-2 rounded-lg text-sm transition ${
-                      selectedProducts.length === 0
-                        ? "bg-[#4937BA]/30 text-gray-400 cursor-not-allowed"
-                        : "bg-[#4937BA] hover:bg-[#3e6ff4] text-white"
-                    }`}
-                  >
-                    <Barcode className="w-4 h-4 mr-1" />
-                    Auto-generate Barcode
-                  </button>
-                </div>
-              </div>
+    <div className="ml-44">
+      <div className="w-[90%] mx-auto mt-8 bg-[#1B2233] rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
+        <div className="p-8">
+          {/* Header */}
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-2xl font-semibold text-gray-100 tracking-wide">
+              Your Shopify Products
+            </h2>
 
-              {/* Table */}
-              <table className="w-full text-sm text-left border-separate border-spacing-y-3">
-                <thead>
-                  <tr className="text-gray-300 border-b border-[#23253a]">
-                    <th className="pb-3 pl-3 font-medium">
-                      <input
-                        type="checkbox"
-                        onChange={toggleSelectAll}
-                        checked={
-                          currentProducts.length > 0 &&
-                          currentProducts.every((p) =>
-                            selectedProducts.includes(p.shopify_id)
-                          )
-                        }
-                      />
-                    </th>
-                    <th className="pb-3">Image</th>
-                    <th className="pb-3">Title</th>
-                    <th className="pb-3">Quantity</th>
-                    <th className="pb-3">Price</th>
-                    <th className="pb-3">#Bar Code</th>
-                    <th className="pb-3">Sku</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentProducts?.length === 0 ? (
-                    <tr>
-                      <td
-                        colSpan="7"
-                        className="text-center text-gray-400 py-8"
-                      >
-                        No products remaining.
-                      </td>
-                    </tr>
-                  ) : (
-                    currentProducts.map((product, idx) => (
-                      <tr
-                        key={idx}
-                        className={`transition-all rounded-xl ${
-                          selectedProducts.includes(product.shopify_id)
-                            ? "bg-[#3e6ff4]/20 border border-[#3e6ff4]"
-                            : "bg-[#1f2937] hover:bg-[#23253a]"
-                        }`}
-                      >
-                        <td className="p-3">
-                          <input
-                            type="checkbox"
-                            checked={selectedProducts.includes(product.shopify_id)}
-                            onChange={() => toggleProductSelection(product.shopify_id)}
-                          />
-                        </td>
-                        <td className="p-3">
-                          <img
-                            src={product?.img_field || "/placeholder.png"}
-                            alt={product?.title}
-                            className="w-20 h-20 rounded-lg object-cover"
-                          />
-                        </td>
-                        <td className="p-3">{product?.title}</td>
-                        <td className="p-3">{product?.quantity}</td>
-                        <td className="p-3">{product?.price}</td>
-                        <td className="p-3 font-semibold text-[#3e6ff4]">
-                          {product?.barcode || "—"}
-                        </td>
-                        <td className="p-3 font-semibold text-[#3e6ff4]">
-                          {product?.sku || "—"}
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
+            <div className="flex gap-3">
+              <button
+                onClick={() => handleGenerateModal("sku")}
+                className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  selectedProducts.length === 0
+                    ? "bg-[#3E6FF4]/15 text-gray-500 cursor-not-allowed"
+                    : "bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] hover:opacity-90 text-white shadow-[0_0_12px_rgba(62,111,244,0.25)]"
+                }`}
+              >
+                <Hash className="w-4 h-4 mr-2" />
+                Auto-generate SKU
+              </button>
 
-              {/* Pagination */}
-              {products?.length > 0 && (
-                <div className="flex justify-end items-center gap-3 mt-6">
-                  <button
-                    disabled={page === 1}
-                    onClick={() => setPage((p) => Math.max(p - 1, 1))}
-                    className={`flex items-center text-sm px-3 py-2 rounded-lg transition ${
-                      page === 1
-                        ? "text-gray-600 cursor-not-allowed"
-                        : "text-gray-400 hover:text-white"
-                    }`}
-                  >
-                    <ArrowLeft className="w-4 h-4 mr-1" /> Prev
-                  </button>
-                  <span className="text-gray-400 text-sm">
-                    Page {page} of {totalPages}
-                  </span>
-                  <button
-                    disabled={page === totalPages}
-                    onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
-                    className={`flex items-center text-sm px-3 py-2 rounded-lg transition ${
-                      page === totalPages
-                        ? "text-gray-600 cursor-not-allowed"
-                        : "text-gray-400 hover:text-white"
-                    }`}
-                  >
-                    Next <ArrowRight className="w-4 h-4 ml-1" />
-                  </button>
-                </div>
-              )}
+              <button
+                onClick={() => handleGenerateModal("barcode")}
+                disabled={selectedProducts.length === 0}
+                className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  selectedProducts.length === 0
+                    ? "bg-[#4937BA]/15 text-gray-500 cursor-not-allowed"
+                    : "bg-gradient-to-r from-[#4937BA] to-[#3E6FF4] hover:opacity-90 text-white shadow-[0_0_12px_rgba(73,55,186,0.25)]"
+                }`}
+              >
+                <Barcode className="w-4 h-4 mr-2" />
+                Auto-generate Barcode
+              </button>
             </div>
           </div>
-          <GenerateModal
+
+          {/* Table */}
+          <div className="overflow-hidden">
+  {currentProducts?.length === 0 ? (
+    <div className="text-center py-16 bg-[#1F273A] rounded-2xl text-gray-400">
+      <div className="flex flex-col items-center justify-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-12 w-12 mb-3 text-[#3E6FF4]/60"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
+            d="M3 3v18h18M9 9l6 6M15 9l-6 6"
+          />
+        </svg>
+        <span className="text-lg font-medium">No products yet</span>
+      </div>
+    </div>
+  ) : (
+    <div className="flex flex-col gap-3">
+      {currentProducts.map((product, idx) => {
+        const selected = selectedProducts.includes(product.shopify_id);
+        return (
+          <div
+            key={idx}
+            onClick={() => toggleProductSelection(product.shopify_id)}
+            className={`flex items-center justify-between px-5 py-4 rounded-2xl transition-all duration-200 cursor-pointer 
+              ${
+                selected
+                  ? "bg-[#3E6FF4]/15 shadow-[0_0_12px_rgba(62,111,244,0.25)]"
+                  : "bg-[#1F273A] hover:bg-[#242E44] hover:shadow-[0_0_10px_rgba(62,111,244,0.15)]"
+              }`}
+          >
+            {/* Left side: checkbox + image + title */}
+            <div className="flex items-center gap-4">
+              <div onClick={(e) => e.stopPropagation()}>
+                <input
+                  type="checkbox"
+                  checked={selected}
+                  onChange={() => toggleProductSelection(product.shopify_id)}
+                  className="w-5 h-5 accent-[#3E6FF4] rounded-md bg-[#1C2437] cursor-pointer hover:scale-110 transition-all"
+                />
+              </div>
+
+              <div className="flex items-center gap-4">
+                <img
+                  src={product?.img_field || "/placeholder.png"}
+                  alt={product?.title}
+                  className="w-16 h-16 rounded-xl object-cover shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
+                />
+                <div>
+                  <p className="text-gray-200 font-medium">{product?.title}</p>
+                  <p className="text-sm text-gray-500">
+                    Quantity: {product?.quantity || 0}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right side: price + barcode + SKU */}
+            <div className="flex items-center gap-10">
+              <div className="flex flex-col text-right">
+                <span className="text-gray-400 text-sm">Price</span>
+                <span className="text-gray-100 font-semibold">
+                  ${product?.price || "0.00"}
+                </span>
+              </div>
+
+              <div className="flex flex-col text-right">
+                <span className="text-gray-400 text-sm">Barcode</span>
+                <span className="text-[#3E6FF4] font-semibold">
+                  {product?.barcode || "—"}
+                </span>
+              </div>
+
+              <div className="flex flex-col text-right">
+                <span className="text-gray-400 text-sm">SKU</span>
+                <span className="text-[#3E6FF4] font-semibold">
+                  {product?.sku || "—"}
+                </span>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  )}
+</div>
+<GenerateModal
             showModal={show}
             onClose={() => setShow(false)}
             option={generating}
             generateConfirm={() => handleGenerate(generating)}
           />
+
+          {/* Pagination */}
+          {products?.length > 0 && (
+            <div className="flex justify-end items-center gap-4 mt-8 text-gray-400">
+              <button
+                disabled={page === 1}
+                onClick={() => setPage((p) => Math.max(p - 1, 1))}
+                className={`flex items-center text-sm px-3 py-2 rounded-md transition ${
+                  page === 1
+                    ? "text-gray-600 cursor-not-allowed"
+                    : "hover:text-[#3E6FF4]"
+                }`}
+              >
+                <ArrowLeft className="w-4 h-4 mr-1" /> Prev
+              </button>
+              <span className="text-sm text-gray-500">
+                Page {page} of {totalPages}
+              </span>
+              <button
+                disabled={page === totalPages}
+                onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+                className={`flex items-center text-sm px-3 py-2 rounded-md transition ${
+                  page === totalPages
+                    ? "text-gray-600 cursor-not-allowed"
+                    : "hover:text-[#3E6FF4]"
+                }`}
+              >
+                Next <ArrowRight className="w-4 h-4 ml-1" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
+
   );
 };

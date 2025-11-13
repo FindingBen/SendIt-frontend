@@ -7,12 +7,11 @@ const CancelPayment = () => {
   const [searchValue, setSearchValue] = useState("");
 
   return (
-    <section className="min-h-screen flex-d w-full items-center justify-center">
-      <div className="flex flex-row items-center border-b-2 border-gray-800 mb-2 h-16 bg-navBlue sticky top-0 z-10">
-        <Search />
-
-        <SmsPill />
-      </div>
+    <section className="min-h-screen flex-d w-full items-center justify-center bg-[#0A0E1A]">
+      <div className="flex flex-row items-center mb-6 h-16 bg-[#111827]/70 backdrop-blur-lg sticky top-0 z-10 border-b border-[#1C2437]/40">
+      <Search />
+      <SmsPill />
+    </div>
       <div className="flex-1 flex flex-col mb-4 h-20 items-center">
         <div className="flex-1 px-2 sm:px-0 xl:px-0 mx-20">
           <h2 className="mt-10 mb-5 text-center text-white text-3xl font-euclid">

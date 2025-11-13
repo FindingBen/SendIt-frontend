@@ -93,183 +93,144 @@ const PurchaseHistory = () => {
   };
 
   return (
-    <div className="min-h-screen w-100 items-center justify-center">
-      <div className="flex-1 flex flex-col">
-        <div className="flex flex-row items-center border-b-2 border-gray-800 h-16 bg-navBlue sticky top-0 z-10">
-          <Search />
-          <SmsPill />
-        </div>
+    <section className="min-h-screen w-full bg-[#0A0E1A] text-white font-inter">
+  {/* Sticky Top Bar */}
+  <div className="flex items-center h-16 bg-[#111827]/70 backdrop-blur-lg sticky top-0 z-20 border-b border-[#1C2437]/40 px-8">
+    <Search />
+    <SmsPill />
+  </div>
 
-        <div className="mx-20">
-          {/* PURCHASE HISTORY HEADER */}
-          <div className="flex flex-row items-center h-20 xs:mx-5 md:mx-44 relative">
-            <h3 className="text-lg lg:text-xl 2xl:text-2xl font-euclid text-white">
-              Billing history
-            </h3>
-          </div>
-
-          <div className="mainContainer xs:ml-5 lg:ml-44">
-            {/* PURCHASE HISTORY TABLE */}
-            {currentShopifyToken === null ? (
-              <div className="items-center justify-center rounded-lg w-full bg-mainBlue border-gray-800 border-2 shadow-md">
-                <div className="flex flex-row space-x-2 p-2 border-b border-gray-800">
-                  <button
-                    className="px-2 text-normal 2xl:text-xl py-1 2xl:px-4 2xl:py-2 text-white hover:bg-ngrokBlue font-euclid duration-200 rounded-lg border-2 border-gray-800 bg-darkestGray"
-                    onClick={handleSortByDate}
-                  >
-                    Sort by Date
-                  </button>
-                  <div className="relative w-[20%]">
-                    <div className="absolute inset-y-0 start-0 flex items-center ps-1 pointer-events-none">
-                      <svg
-                        className="w-4 h-4 text-gray-500 ml-2 dark:text-gray-400"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                        />
-                      </svg>
-                    </div>
-                    <input
-                      type="search"
-                      id="default-search"
-                      className="block w-full p-1.5 ps-10 text-sm text-white border-2 rounded-lg focus:border-gray-700 bg-darkestGray border-gray-800"
-                      placeholder="Search by payment id..."
-                      value={searchId}
-                      onChange={handleSearchTerm}
-                    />
-                  </div>
-                </div>
-
-                {/* TABLE HEADERS */}
-                <div className="grid grid-cols-3 lg:grid-cols-5 text-normal 2xl:text-xl gap-4 grid-headers text-white/50 font-normal border-b-2 p-2 border-gray-800">
-                  <div>Payment ID</div>
-                  <div className="hidden lg:block">Ammount</div>
-                  <div className="hidden lg:block">Payment Type</div>
-                  <div>Date</div>
-                  <div>Status</div>
-                </div>
-
-                {/* TABLE ROWS */}
-                {!loading ? (
-                  <>
-                    {paginatedData?.map((rowData, index) => {
-                      const isLastItem = index === paginatedData?.length - 1;
-                      const evenRow = index % 2 === 0;
-                      return (
-                        <div
-                          key={rowData?.id}
-                          className={`${
-                            evenRow
-                              ? "bg-gradient-to-b font-normal p-2 from-lighterMainBlue to-mainBlue text-white/90"
-                              : "bg-mainBlue font-normal p-2 text-white/90"
-                          } ${
-                            isLastItem ? "rounded-b-lg border-none" : ""
-                          } font-light`}
-                        >
-                          <div
-                            className={`grid grid-cols-3 lg:grid-cols-5 text-normal 2xl:text-xl gap-4 p-2 border-b-2 border-gray-800 ${
-                              isLastItem
-                                ? "rounded-b-lg 2xl:text-normal border-none"
-                                : ""
-                            }`}
-                          >
-                            <div>{rowData?.payment_id}</div>
-                            <div className="hidden lg:block">
-                              {rowData?.price}
-                            </div>
-                            <div className="hidden lg:block">
-                              {rowData?.type}
-                            </div>
-                            <div>{rowData?.created_at}</div>
-                            <div
-                              className={`${
-                                rowData?.status === "succeeded"
-                                  ? "bg-green-400 text-green-900"
-                                  : "bg-red-400 text-red-900"
-                              } font-medium text-sm xs:mx-5 lg:mx-8 rounded-lg`}
-                            >
-                              {rowData?.status === "succeeded"
-                                ? "Success"
-                                : "Error"}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </>
-                ) : (
-                  <LoaderSkeleton div_size={3} />
-                )}
-              </div>
-            ) : (
-              <></>
-            )}
-
-            {/* --- SHOPIFY BILLING TABLE --- */}
-            {shopifyBillingData?.length > 0 && (
-              <div className="items-center justify-center rounded-lg w-full mt-10 bg-mainBlue border-gray-800 border-2 shadow-md">
-                <div className="flex flex-row items-center h-20 xs:mx-5 relative">
-                  <div className="flex flex-col gap-2 items-start">
-                    <h3 className="text-lg lg:text-xl 2xl:text-2xl font-euclid text-white">
-                      Shopify Billing Cycles
-                    </h3>
-                    <span className="text-gray-300/50">
-                      If you need a full list of billing cycles contact us.
-                    </span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-3 lg:grid-cols-4 text-normal 2xl:text-xl gap-4 grid-headers text-white/50 font-normal border-b-2 p-2 border-gray-800">
-                  <div>Charge ID</div>
-                  <div className="hidden lg:block">Plan Name</div>
-                  <div className="hidden lg:block">Price</div>
-                  <div>Billing Date</div>
-                </div>
-
-                {shopifyBillingData.map((billing, index) => {
-                  const isLast = index === shopifyBillingData.length - 1;
-                  const evenRow = index % 2 === 0;
-                  return (
-                    <div
-                      key={billing.shopify_charge_id}
-                      className={`${
-                        evenRow
-                          ? "bg-gradient-to-b font-normal p-2 from-lighterMainBlue to-mainBlue text-white/90"
-                          : "bg-mainBlue font-normal p-2 text-white/90"
-                      } ${isLast ? "rounded-b-lg border-none" : ""} font-light`}
-                    >
-                      <div
-                        className={`grid grid-cols-3 lg:grid-cols-4 text-normal 2xl:text-xl gap-4 p-2 border-b-2 border-gray-800 ${
-                          isLast
-                            ? "rounded-b-lg 2xl:text-normal border-none"
-                            : ""
-                        }`}
-                      >
-                        <div>{billing.shopify_charge_id}</div>
-                        <div className="hidden lg:block">
-                          {billing?.billing_plane}
-                        </div>
-                        <div className="hidden lg:block">
-                          {billing.billing_amount} {"$"}
-                        </div>
-                        <div>{billing.billing_date}</div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
+  {/* Main Content */}
+  <div className="flex flex-col w-full lg:flex-row mt-6 ml-20 px-44 space-y-6 lg:space-y-0">
+    <div className="flex-1 flex flex-col space-y-6">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-semibold tracking-wide text-gray-100">
+          Billing History
+        </h2>
+        {/* Example actions if needed */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleSortByDate}
+            className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] shadow-md text-white hover:opacity-90 transition-all"
+          >
+            Sort by Date
+          </button>
         </div>
       </div>
+
+      {/* Purchase History Table */}
+      {currentShopifyToken === null && (
+        <div className="bg-[#1B2233] rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.3)] overflow-x-auto">
+          {/* Search Filter */}
+          <div className="flex justify-between items-center p-4 border-b border-gray-800 space-x-4">
+            <div className="relative w-1/5">
+              <input
+                type="search"
+                placeholder="Search by Payment ID..."
+                value={searchId}
+                onChange={handleSearchTerm}
+                className="w-full px-3 py-2 ps-10 rounded-lg bg-[#111827] border border-gray-800 text-white focus:outline-none"
+              />
+              <svg
+                className="absolute left-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+              </svg>
+            </div>
+          </div>
+
+          {/* Table Header */}
+          <div className="grid grid-cols-3 lg:grid-cols-5 gap-4 px-4 py-2 text-gray-300 font-medium border-b border-gray-700">
+            <div>Payment ID</div>
+            <div className="hidden lg:block">Amount</div>
+            <div className="hidden lg:block">Payment Type</div>
+            <div>Date</div>
+            <div>Status</div>
+          </div>
+
+          {/* Table Rows */}
+          {!loading ? (
+            paginatedData?.map((rowData, index) => {
+              const isEven = index % 2 === 0;
+              const isLast = index === paginatedData.length - 1;
+              return (
+                <div
+                  key={rowData?.id}
+                  className={`grid grid-cols-3 lg:grid-cols-5 gap-4 px-4 py-3 border-b border-gray-700 bg-[#111827] ${isLast ? "rounded-b-2xl border-none" : ""} hover:bg-[#3E6FF4]/10 transition-all`}
+
+                >
+                  <div>{rowData?.payment_id}</div>
+                  <div className="hidden lg:block">{rowData?.price}</div>
+                  <div className="hidden lg:block">{rowData?.type}</div>
+                  <div>{rowData?.created_at}</div>
+                  <div
+                    className={`px-2 py-1 rounded-lg text-sm font-medium ${
+                      rowData?.status === "succeeded"
+                        ? "bg-green-400 text-green-900"
+                        : "bg-red-400 text-red-900"
+                    }`}
+                  >
+                    {rowData?.status === "succeeded" ? "Success" : "Error"}
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <LoaderSkeleton div_size={3} />
+          )}
+        </div>
+      )}
+
+      {/* Shopify Billing Table */}
+      {shopifyBillingData?.length > 0 && (
+        <div className="bg-[#1B2233] rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.3)] overflow-x-auto mt-6">
+          <div className="flex flex-col text-start p-4 border-b border-gray-800 gap-1">
+            <h3 className="text-xl font-semibold text-white">Shopify Billing Cycles</h3>
+            <span className="text-gray-300/50 text-sm">
+              If you need a full list of billing cycles contact us.
+            </span>
+          </div>
+
+          {/* Table Header */}
+          <div className="grid grid-cols-3 lg:grid-cols-4 gap-4 px-4 py-2 text-gray-300 font-medium border-b border-gray-700">
+            <div>Charge ID</div>
+            <div className="hidden lg:block">Plan Name</div>
+            <div className="hidden lg:block">Price</div>
+            <div>Billing Date</div>
+          </div>
+
+          {/* Table Rows */}
+          {shopifyBillingData.map((billing, index) => {
+            const isEven = index % 2 === 0;
+            const isLast = index === shopifyBillingData.length - 1;
+            return (
+              <div
+                key={billing.shopify_charge_id}
+                className={`grid grid-cols-3 lg:grid-cols-4 gap-4 px-4 py-3 border-b border-gray-700 bg-[#111827] ${isLast ? "rounded-b-2xl border-none" : ""} hover:bg-[#3E6FF4]/10 transition-all`}
+              >
+                <div>{billing.shopify_charge_id}</div>
+                <div className="hidden lg:block">{billing?.billing_plane}</div>
+                <div className="hidden lg:block">{billing.billing_amount} $</div>
+                <div>{billing.billing_date}</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
+  </div>
+</section>
+
   );
 };
 
