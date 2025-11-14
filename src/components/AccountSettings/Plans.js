@@ -132,11 +132,11 @@ const Plans = () => {
   };
 
   return (
-    <section className="min-h-screen w-full items-center justify-center">
-      <div className="flex flex-row items-center border-b-2 border-gray-800 mb-2 h-16 bg-navBlue sticky top-0 z-10">
-        <Search />
-        <SmsPill />
-      </div>
+    <section className="min-h-screen max-w-screen items-center justify-center bg-[#0A0E1A]">
+     <div className="flex flex-row items-center mb-4 h-16 bg-[#111827]/70 backdrop-blur-lg sticky top-0 z-10 border-b border-[#1C2437]/40">
+      <Search />
+      <SmsPill />
+    </div>
 
       <div className="flex-1 w-full flex flex-col items-center justify-center px-6 py-10">
         <div className="w-full max-w-6xl">

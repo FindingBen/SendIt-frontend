@@ -7,22 +7,27 @@ const PreviewPanel = ({
   elementContextList,
   handleClicked,
   updateElements,
-  elementState,
+  elementState
 }) => {
   return (
-    <div>
+    <div className="flex justify-center">
       <div
-        class={`h-[445px] ${newLook ? "lg:h-[500px]":"lg:h-[450px]"} 2xl:h-[650px] w-[350px] 2xl:w-[450px] rounded-[1rem] overflow-auto bg-white/80`}
+        className={`
+          relative w-[350px] 2xl:w-[450px] 
+          h-[445px] lg:h-${newLook ? "[500px]" : "[450px]"} 2xl:h-[650px] 
+          bg-white/80 backdrop-blur-sm 
+          rounded-2xl overflow-auto shadow-lg border border-gray-300
+        `}
       >
-        <br></br>
-
-        <List
-          id="myList"
-          className="my-scroll-list"
-          children={elementContextList}
-          clicked={handleClicked}
-          updatedList={updateElements}
-        />
+        <div className="p-4">
+          <List
+            id="myList"
+            className="my-scroll-list"
+            children={elementContextList}
+            clicked={handleClicked}
+            updatedList={updateElements}
+          />
+        </div>
       </div>
     </div>
   );

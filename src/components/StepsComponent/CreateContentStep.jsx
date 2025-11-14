@@ -11,6 +11,14 @@ import Carousel from "../Carousel/Carousel";
 import { useRedux } from "../../constants/reduxImports";
 import Loader from "../LoaderSkeleton/Loader";
 import PreviewPanel from "../PreviewComponent/PreviewPanel";
+import ContentButton from "./ChildComponents/ContentButton";
+import ImageIcon from "../../assets/menuAssets/iconComponents/ImageIcon";
+import ButtonIcon from "../../assets/menuAssets/iconComponents/ButtonIcon";
+import SurveyIcon from "../../assets/menuAssets/iconComponents/SurveyIcon";
+import TextIcon from "../../assets/menuAssets/iconComponents/TextIcon";
+import AiIcon from "../../assets/menuAssets/iconComponents/AiIcon";
+import Carouselicon from "../../assets/menuAssets/iconComponents/Carouselicon";
+
 const CreateContentStep = ({
   prevStep,
   nextStep,
@@ -177,228 +185,106 @@ const CreateContentStep = ({
   };
 
   return (
-    <section className="max-h-screen w-full items-center justify-center">
-      <div className="flex flex-col max-h-screen">
-        <div className="flex flex-col md:flex-row rounded-2xl h-screen">
-          <div className="flex p-10 max-h-screen gap-2 md:flex-col bg-gradient-to-b from-lighterMainBlue to-mainBlue border-r-2 border-gray-800 ml-44">
-            <span className="text-left text-white text-normal lg:text-lg font-semibold ml-4 md:ml-0">
-              Content elements
-            </span>
+    <section className="flex flex-col h-screen w-full overflow-hidden bg-[#0A0E1A]">
+  <div className="flex flex-col md:flex-row h-full">
+    
+    {/* Sidebar: Content Elements */}
+    <aside className="flex flex-col bg-gradient-to-b from-lighterMainBlue to-mainBlue border-r-2 border-gray-800 p-6 gap-4 w-full md:w-72">
+      <h2 className="text-white text-lg font-semibold mb-4 text-left">Content Elements</h2>
 
-            <div className="flex flex-row mt-2 gap-2">
-              <div
-                onClick={imageStateVal ? null : () => handleClick("image")}
-                name="liClick"
-                className="component-button-create-content"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-                  />
-                </svg>
-
-                <p className="text-white/70 font-normal text-base text-justify my-auto">
-                  Image
-                </p>
-              </div>
-              <div
-                onClick={imageStateVal ? null : () => handleClick("button")}
-                name="liClick"
-                className="component-button-create-content"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
-                  />
-                </svg>
-
-                <p className="text-white/70 font-normal text-base text-justify my-auto">
-                  CTA
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-row mt-2 lg:mt-0 gap-2">
-              <div
-                onClick={imageStateVal ? null : () => handleClick("text")}
-                name="liClick"
-                className="component-button-create-content"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"
-                  />
-                </svg>
-
-                <p className="text-white/70 font-normal text-base text-justify my-auto">
-                  Text
-                </p>
-              </div>
-              <div
-                onClick={imageStateVal ? null : () => handleClick("survey")}
-                name="liClick"
-                className="component-button-create-content"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"
-                  />
-                </svg>
-
-                <p className="text-white/70 font-normal text-normal text-justify my-auto">
-                  Survey
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-row justify-between mt-2">
-              <div
-                onClick={
-                  currentPackageState?.package === gold_package &&
-                  !imageStateVal
-                    ? () => handleClick("aiContent")
-                    : null
-                }
-                name="liClick"
-                className={`component-button-create-content ${
-                  currentPackageState?.package !== gold_package
-                    ? "cursor-not-allowed opacity-50"
-                    : ""
-                }`}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"
-                  />
-                </svg>
-
-                <p className="text-white/70 font-base text-normal text-justify my-auto">
-                  AI
-                </p>
-              </div>
-              {currentShopifyToken ? (
-                <div
-                  onClick={imageStateVal ? null : () => handleClick("carousel")}
-                  name="liClick"
-                  className="component-button-create-content"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="h-5 w-5 lg:h-8 lg:w-8 text-white/70"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-                    />
-                  </svg>
-
-                  <p className="text-white/70 font-normal text-base text-justify my-auto">
-                    Carousel
-                  </p>
-                </div>
-              ) : (
-                <></>
-              )}
-            </div>
-          </div>
-
-          <div className="w-[100%]">
-            <div className="items-center mx-20 mt-5">
-              {selectedComponent && componentsMap[selectedComponent]}
-            </div>
-            <div className="flex flex-row gap-2 absolute bottom-10 left-[39%]">
-              {loadingStep ? (
-                <div className="flex items-center justify-center">
-                  <Loader loading_name={"Next step..."} />
-                </div>
-              ) : (
-                <div className="flex flex-row gap-2">
-                  <button
-                    type="submit"
-                    onClick={prevStep}
-                    // disabled={elementContextList.length === 0} // Disable if name or type is empty
-                    className={`text-white mx-auto font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center
-             
-                bg-ngrokBlue hover:bg-ngrokBlue/70 focus:ring-4 focus:outline-none focus:ring-blue-300"
-            `}
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="submit"
-                    onClick={handleNext}
-                    disabled={elementContextList.length === 0} // Disable if name or type is empty
-                    className={`text-white mx-auto font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ${
-                      elementContextList.length === 0
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-ngrokBlue hover:bg-ngrokBlue/70 focus:ring-4 focus:outline-none focus:ring-blue-300"
-                    }`}
-                  >
-                    Next
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="p-10">
-            <PreviewPanel
-              device={device}
-              handleClicked={handleClicked}
-              elementContextList={elementContextList}
-              updateElements={updateElements}
-            />
-          </div>
-        </div>
+      <div className="flex flex-wrap gap-3">
+        <ContentButton
+          icon={ImageIcon}
+          label="Image"
+          onClick={() => !imageStateVal && handleClick("image")}
+          disabled={imageStateVal}
+        />
+        <ContentButton
+          icon={ButtonIcon}
+          label="CTA"
+          onClick={() => !imageStateVal && handleClick("button")}
+          disabled={imageStateVal}
+        />
+        <ContentButton
+          icon={TextIcon}
+          label="Text"
+          onClick={() => !imageStateVal && handleClick("text")}
+          disabled={imageStateVal}
+        />
+        <ContentButton
+          icon={SurveyIcon}
+          label="Survey"
+          onClick={() => !imageStateVal && handleClick("survey")}
+          disabled={imageStateVal}
+        />
+        <ContentButton
+          icon={AiIcon}
+          label="AI"
+          onClick={() =>
+            currentPackageState?.package === gold_package && !imageStateVal
+              ? handleClick("aiContent")
+              : null
+          }
+          disabled={currentPackageState?.package !== gold_package || imageStateVal}
+        />
+        {currentShopifyToken && (
+          <ContentButton
+            icon={Carouselicon}
+            label="Carousel"
+            onClick={() => !imageStateVal && handleClick("carousel")}
+            disabled={imageStateVal}
+          />
+        )}
       </div>
-    </section>
+    </aside>
+
+    {/* Builder Area */}
+    <main className="flex-1 relative flex flex-col justify-between overflow-y-auto px-10 py-6">
+      <div className="mb-6">
+        {selectedComponent && componentsMap[selectedComponent]}
+      </div>
+
+      {/* Navigation Buttons */}
+      <div className="flex gap-4 justify-center mt-auto mb-6">
+        {loadingStep ? (
+          <Loader loading_name="Next step..." />
+        ) : (
+          <>
+            <button
+              onClick={prevStep}
+              className="bg-ngrokBlue hover:bg-ngrokBlue/70 text-white font-medium py-2 px-6 rounded-lg transition"
+            >
+              Back
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={elementContextList.length === 0}
+              className={`py-2 px-6 rounded-lg font-medium text-white transition ${
+                elementContextList.length === 0
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-ngrokBlue hover:bg-ngrokBlue/70"
+              }`}
+            >
+              Next
+            </button>
+          </>
+        )}
+      </div>
+    </main>
+
+    {/* Preview Panel */}
+    <aside className="hidden md:flex md:w-96 p-6 bg-[#0A0E1A]">
+      <PreviewPanel
+        device={device}
+        handleClicked={handleClicked}
+        elementContextList={elementContextList}
+        updateElements={updateElements}
+        newLook={true}
+      />
+    </aside>
+  </div>
+</section>
+
   );
 };
 

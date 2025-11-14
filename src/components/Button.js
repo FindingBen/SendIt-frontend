@@ -153,63 +153,76 @@ const Button = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        duration: 0.4,
-        delay: 0.1,
-        ease: [0, 0.41, 0.1, 1.01],
-      }}
-    >
-      <div className="flex-1">
-        <label
-          for="first_name"
-          className="block mb-2 text-normal font-semibold text-grayWhite"
+  initial={{ opacity: 0, scale: 0.5 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{
+    duration: 0.4,
+    delay: 0.1,
+    ease: [0, 0.41, 0.1, 1.01],
+  }}
+>
+  <div className="flex-1 flex flex-col gap-4">
+    {/* Button Text */}
+    <div>
+      <label
+        htmlFor="button_text"
+        className="block mb-2 text-sm font-normal text-gray-100"
+      >
+        Button Text
+      </label>
+      <input
+        id="button_text"
+        type="text"
+        onChange={handleTextButtonFunc}
+        placeholder="Enter button text"
+        className="w-full p-2 rounded-lg bg-white/20 border-2 border-gray-600 text-gray-200 text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none transition"
+      />
+    </div>
+
+    {/* Button Link */}
+    <div>
+      <label
+        htmlFor="button_link"
+        className="block mb-2 text-sm font-normal text-gray-100"
+      >
+        Button Link
+      </label>
+      <input
+        id="button_link"
+        type="url"
+        onChange={handleLinkButtonFunc}
+        placeholder="Enter URL"
+        className="w-full p-2 rounded-lg bg-white/20 border-2 border-gray-600 text-gray-200 text-sm focus:ring-2 focus:ring-cyan-500 focus:outline-none transition"
+      />
+    </div>
+
+    {/* Actions */}
+    <div className="flex items-center justify-between gap-3 relative mt-2">
+      <div className="flex gap-2">
+        <button
+          type="button"
+          onClick={saveBtn}
+          className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold rounded-lg border border-gray-800 transition"
         >
-          Button text display
-        </label>
-        <input
-          onChange={handleTextButtonFunc}
-          type="text"
-          className="bg-white/20 border-1 border-gray-200 text-gray-200 text-sm rounded-lg w-full p-2"
-        />
-        <label
-          for="first_name"
-          className="block mb-2 text-normal font-semibold text-grayWhite"
+          Save
+        </button>
+        <button
+          type="button"
+          onClick={handleCancel}
+          className="px-4 py-2 bg-red-700 hover:bg-red-500 text-white font-semibold rounded-lg border border-gray-800 transition"
         >
-          Insert link
-        </label>
-        <input
-          onChange={handleLinkButtonFunc}
-          type="link"
-          className="bg-white/20 border-1 border-gray-200 text-gray-200 text-sm rounded-lg w-full p-2"
-        />
-        <div className="mt-3 flex flex-row relative">
-          <button
-            type="button"
-            className="bg-cyan-600 hover:bg-cyan-400 text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded"
-            value={false}
-            onClick={saveBtn}
-            style={{ marginRight: "10px" }}
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            className="bg-red-800 hover:bg-red-400 text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded"
-            id="cancel"
-            value={false}
-            onClick={handleCancel}
-            style={{ marginRight: "10px" }}
-          >
-            Cancel
-          </button>
-          <div className="absolute top-0 right-0 border-2 border-gray-800 rounded-lg">
-            <ColorPircker colorValue={handleColor} />
-          </div>
-        </div>
+          Cancel
+        </button>
       </div>
-    </motion.div>
+
+      {/* Color Picker */}
+      <div className="absolute top-0 right-0">
+        <ColorPircker colorValue={handleColor} />
+      </div>
+    </div>
+  </div>
+</motion.div>
+
   );
 };
 

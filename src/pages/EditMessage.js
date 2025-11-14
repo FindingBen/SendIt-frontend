@@ -335,13 +335,13 @@ const EditMessage = () => {
   };
 
   return (
-    <section className="max-h-screen overflow-hidden w-full items-center justify-center">
+    <section className="min-h-screen max-w-screen items-center justify-center bg-[#0A0E1A]">
       <div className="flex-1 flex flex-col space-y-5 lg:space-y-0 lg:flex-row">
         <div className="flex-1 sm:px-0">
-          <div className="flex flex-row items-center border-b-2 border-gray-800 h-16 bg-navBlue sticky top-0 z-10">
+          <div className="flex flex-row items-center h-16 bg-[#111827]/70 backdrop-blur-lg sticky top-0 z-10 border-b border-[#1C2437]/40 relative">
             <Search />
 
-            <div class="w-22 items-center relative mx-auto">
+            <div class="w-22 items-center absolute right-10">
               {!isLoading ? (
                 <button
                   onClick={editMessage}
@@ -357,7 +357,7 @@ const EditMessage = () => {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row rounded-2xl h-screen ml-44">
+          <div className="flex flex-col md:flex-row rounded-2xl h-screen ml-52">
             <div className="flex p-10 max-h-screen gap-2 md:flex-col bg-gradient-to-b from-lighterMainBlue to-mainBlue border-r-2 border-gray-800">
               <div className="flex flex-col lg:w-72 gap-2 rounded-2xl text-start mb-5">
                 <span className="text-gray-200 text-normal lg:text-lg font-normal">

@@ -99,50 +99,41 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
   };
 
   return (
-    <section className="min-h-screen w-100 items-center justify-center ml-44">
-      <div className="grid grid-cols-3 gap-4">
-        <div className="flex flex-col gap-4 p-3 bg-mainBlue border-gray-800 border-r-2 h-screen">
-          <div>
-            <label
-              for="first_name"
-              className="block mb-2 text-normal text-left font-euclid text-gray-300 dark:text-white"
-            >
-              Campaign name
-            </label>
+    <section className="flex flex-col min-h-screen bg-[#0A0E1A] text-gray-200 p-6">
+  <div className="flex-1 flex justify-center items-start mt-16 px-4">
+    <div className="w-full max-w-7xl grid grid-cols-12 gap-6">
 
-            <input
-              type="text"
-              name="from"
-              disabled
-              value={formData.campaignInfo["name"]}
-              className="block bg-mainBlue text-white border-2 border-gray-800 mt-1 text-euclid font-normal py-2 px-4 rounded w-full"
-            />
-          </div>
-          <div>
-            <label
-              for="first_name"
-              className="block mb-2 text-normal text-left font-euclid text-gray-300 dark:text-white"
-            >
-              Campaign type
-            </label>
-
-            <input
-              type="text"
-              name="from"
-              disabled
-              value={formData.campaignInfo["type"]}
-              className="block bg-mainBlue text-white border-2 border-gray-800 mt-1 text-semibold font-euclid py-2 px-4 rounded w-full"
-            />
-          </div>
+      {/* Campaign Info Card */}
+      <div className="col-span-3 flex flex-col gap-6 bg-[#111827] border-2 border-gray-800 rounded-2xl p-6">
+        <h3 className="text-white text-xl font-euclid font-semibold mb-4 border-b border-gray-800 pb-2">
+          Campaign Info
+        </h3>
+        <div className="flex flex-col gap-3">
+          <label className="text-white text-sm font-medium">Campaign Name</label>
+          <input
+            type="text"
+            value={formData.campaignInfo.name}
+            disabled
+            className="w-full p-2 rounded-xl bg-[#1F2937] text-white border-2 border-gray-800 focus:outline-none"
+          />
         </div>
-        <div>
-          <label
-            for="first_name"
-            className="block mb-2  text-lg text-left font-euclid text-gray-300 dark:text-white"
-          >
-            Content Preview
-          </label>
+        <div className="flex flex-col gap-3">
+          <label className="text-white text-sm font-medium">Campaign Type</label>
+          <input
+            type="text"
+            value={formData.campaignInfo.type}
+            disabled
+            className="w-full p-2 rounded-xl bg-[#1F2937] text-white border-2 border-gray-800 focus:outline-none"
+          />
+        </div>
+      </div>
 
+      {/* Content Preview */}
+      <div className="col-span-5 flex flex-col gap-4">
+        <div className="bg-[#111827] border-2 border-gray-800 rounded-2xl p-4 min-h-[500px]">
+          <h3 className="text-white text-xl font-euclid font-semibold mb-4 border-b border-gray-800 pb-2">
+          Campaign Preview
+        </h3>
           <PreviewPanel
             newLook={"new"}
             handleClicked={handleClicked}
@@ -150,41 +141,48 @@ const ReviewCreateStep = ({ prevStep, formData }) => {
             updateElements={updateElements}
           />
         </div>
-
-        <div className="flex-1 relative">
-          {isLoading ? (
-            <div className="absolute bottom-36 left-0">
-              <Loader loading_name={"Creating campaign..."} />
-            </div>
-          ) : (
-            <div>
-              <button
-                type="submit"
-                onClick={prevStep}
-                className={`text-white font-medium absolute bottom-36 -left-2 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center align-bottom ${
-                  elementContextList.length === 0
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-ngrokBlue hover:bg-ngrokBlue/70 focus:ring-4 focus:outline-none focus:ring-blue-300"
-                }`}
-              >
-                Back
-              </button>
-              <button
-                type="submit"
-                onClick={handleSubmit}
-                className={`text-white font-medium absolute bottom-36 left-32 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center align-bottom ${
-                  elementContextList.length === 0
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-ngrokBlue hover:bg-ngrokBlue/70 focus:ring-4 focus:outline-none focus:ring-blue-300"
-                }`}
-              >
-                Create
-              </button>
-            </div>
-          )}
-        </div>
       </div>
-    </section>
+
+      {/* Actions */}
+      <div className="col-span-4 flex flex-col justify-end relative">
+        {isLoading ? (
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
+            <Loader loading_name={"Creating campaign..."} />
+          </div>
+        ) : (
+          <div className="flex gap-4 absolute bottom-10 left-1/2 -translate-x-1/2">
+            <button
+              type="button"
+              onClick={prevStep}
+              disabled={elementContextList.length === 0}
+              className={`text-white font-medium rounded-xl px-5 py-2.5 w-32 text-center transition ${
+                elementContextList.length === 0
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-ngrokBlue hover:bg-ngrokBlue/70 focus:ring-4 focus:outline-none focus:ring-blue-300"
+              }`}
+            >
+              Back
+            </button>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={elementContextList.length === 0}
+              className={`text-white font-medium rounded-xl px-5 py-2.5 w-32 text-center transition ${
+                elementContextList.length === 0
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-ngrokBlue hover:bg-ngrokBlue/70 focus:ring-4 focus:outline-none focus:ring-blue-300"
+              }`}
+            >
+              Create
+            </button>
+          </div>
+        )}
+      </div>
+
+    </div>
+  </div>
+</section>
+
   );
 };
 

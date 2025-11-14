@@ -264,22 +264,32 @@ const CreateCampaign = () => {
           completedSteps={completedSteps}
         /> 
       </div> */}
-      <div className="flex flex-row items-center border-b-2 border-gray-800 h-16 bg-navBlue sticky top-0 z-10">
-        <Link className="mx-auto" to={"/home"}>
+      <div className="flex flex-row items-centerh-16 bg-[#111827]/70 backdrop-blur-lg sticky top-0 z-10 border-b border-[#1C2437]/40">
+        {/* <Link className="mx-auto" to={"/home"}>
           <img
             src={require("../assets/noBgLogo.png")}
             width={65}
             alt="logo"
             className="mt-2"
           />
-        </Link>
-        <h3 className="2xl:text-3xl lg:text-2xl text-lg font-euclid font-normal text-left text-white mx-5"></h3>
+        </Link> */}
+        {/* <h3 className="2xl:text-3xl lg:text-2xl text-lg font-euclid font-normal text-left text-white mx-5"></h3> */}
 
-        <StepsComponent
+        <div className="p-3 w-full">
+          <StepsComponent
           currentStep={currentStep}
           contentType={shopifyCampaign}
           completedSteps={completedSteps}
         />
+        </div>
+        {/* <Link className="mx-10" to={"/home"}>
+          <img
+            src={require("../assets/noBgLogo.png")}
+            width={65}
+            alt="logo"
+            className="mt-2"
+          />
+        </Link> */}
       </div>
       <div>{renderStep()}</div>
     </section>

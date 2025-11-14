@@ -138,46 +138,42 @@ const Image = ({
     <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        duration: 0.4,
-        delay: 0.1,
-        ease: [0, 0.41, 0.1, 1.01],
-      }}
+      transition={{ duration: 0.4, delay: 0.1, ease: [0, 0.41, 0.1, 1.01] }}
+      className="flex flex-col gap-3 w-full max-w-md mx-auto"
     >
       <label
-        className="block mb-2 text-normal font-semibold text-grayWhite"
-        for="file_input"
+        htmlFor="image"
+        className="block text-gray-100 font-semibold text-sm"
       >
-        Upload file
+        Upload Image
       </label>
+
       <input
         type="file"
         accept="image/*"
         onChange={handleImageUpload}
-        className="bg-white/20 border-1 border-gray-200 text-gray-200 text-sm rounded-lg w-full"
         id="image"
+        className="w-full p-2 bg-white/10 border-2 border-gray-600 rounded-lg text-gray-100 text-sm hover:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500"
       />
 
-      <div className="mt-2">
+      <div className="flex gap-3 mt-2">
         <button
           type="button"
-          className={`${
-            !file ? "bg-gray-600" : "bg-cyan-600 hover:bg-cyan-400"
-          }  text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded-lg`}
-          value={false}
           onClick={saveImg}
-          style={{ marginRight: "10px" }}
-          disabled={file === undefined}
+          disabled={!file}
+          className={`flex-1 py-2 rounded-lg font-normal border-2 border-gray-800 text-white transition-colors duration-200 ${
+            !file
+              ? "bg-gray-600 cursor-not-allowed"
+              : "bg-cyan-600 hover:bg-cyan-500"
+          }`}
         >
           Save
         </button>
+
         <button
           type="button"
-          id="cancel"
-          className="bg-red-800 hover:bg-red-400 text-white font-semibold py-1 px-2 border-2 border-gray-800 rounded-lg"
-          value={false}
           onClick={handleCancel}
-          style={{ marginRight: "10px" }}
+          className="flex-1 py-2 rounded-lg font-normal border-2 border-gray-800 bg-red-700 text-white hover:bg-red-600 transition-colors duration-200"
         >
           Cancel
         </button>
