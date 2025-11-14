@@ -275,13 +275,21 @@ const CreateCampaign = () => {
         </Link> */}
         {/* <h3 className="2xl:text-3xl lg:text-2xl text-lg font-euclid font-normal text-left text-white mx-5"></h3> */}
 
-        <div className="p-3 w-full">
-          <StepsComponent
-          currentStep={currentStep}
-          contentType={shopifyCampaign}
-          completedSteps={completedSteps}
-        />
-        </div>
+        <div className="flex flex-row items-center p-3 w-full">
+  <StepsComponent
+    currentStep={currentStep}
+    contentType={shopifyCampaign}
+    completedSteps={completedSteps}
+  />
+
+  <Link
+    to="/home"
+    className="bg-red-600 hover:bg-red-500 text-white font-medium px-4 py-2 rounded-lg border-2 border-gray-800 transition duration-200"
+  >
+    Cancel
+  </Link>
+</div>
+
         {/* <Link className="mx-10" to={"/home"}>
           <img
             src={require("../assets/noBgLogo.png")}

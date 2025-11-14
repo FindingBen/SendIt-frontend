@@ -230,65 +230,60 @@ const HomePage = () => {
                 <SmsActivityChart analytics_values={totalValues} />
               </div>
               <div className="col-span-5 row-span-2 row-start-4 mb-5">
-                <div
-                  className={`bg-gradient-to-b from-lighterMainBlue to-mainBlue border-gray-800 shadow-md border-2 rounded-lg`}
-                >
-                  <div className="flex flex-row relative border-b border-gray-800">
-                    <div className="flex flex-col">
-                      <p className="text-white font-normal font-euclid text-xl xl:text-xl 2xl:text-3xl flex items-start my-3 mt-3 ml-5">
-                        Recently completed campaigns
-                      </p>
-                      <p className="text-white/60 text-sm font-euclid my-3 mt-1 ml-5">
-                        Your recently completed campaigns. Campaign runs for 3
-                        days, then it gets archived and goes to this table.
-                      </p>
-                    </div>
-                    <button
-                      //onClick={handleSortButtonClick}
-                      className="px-2 py-1 2xl:px-4 2xl:py-2 mr-5 text-white font-normal text-sm 2xl:text-lg cursor-pointer bg-ngrokBlue rounded-lg transition ease-in-out delay-90 hover:-translate-y-1 hover:scale-105 absolute right-0 top-4"
-                    >
-                      Sort by date
-                    </button>
-                  </div>
-                  <div class="flex flex-col">
-                    <div class="grid grid-cols-4 lg:grid-cols-5 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b-2 p-2 border-gray-800">
-                      <div>Name</div>
-                      <div>Engagement</div>
-                      <div>Performance</div>
-                      <div>Clicks</div>
-                      <div>Audience</div>
-                    </div>
-                    {campaigns?.length > 0 && displayedItems ? (
-                      <div>
-                        {campaigns?.map((campaign, index) => {
-                          const isLastItem = index === campaigns?.length - 1;
-                          const evenRow = index % 2 === 0;
-                          return (
-                            <motion.div
-                              key={campaign.id}
-                              className={`grid grid-cols-5 gap-4 text-sm text-white/90 py-2 px-1 ${
-                                isLastItem ? "rounded-b-lg" : ""
-                              } hover:bg-[#1C1C3A] transition-colors ${
-                                index % 2 === 0
-                                  ? "bg-[#191936]"
-                                  : "bg-transparent"
-                              }`}
-                            >
-                              <CampaignCard campaign={campaign} />
-                            </motion.div>
-                          );
-                        })}
-                      </div>
-                    ) : (
-                      <div className="flex-1 items-center p-10">
-                        <p className="text-white/50 text-base font-poppins">
-                          Your content will appear here once you create it..
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+  <div className="bg-gradient-to-b from-[#3E6FF4]/10 to-[#4937BA]/10 border-2 border-[#232634] rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.35)] overflow-hidden">
+    {/* Header */}
+    <div className="flex justify-between items-start border-b border-[#232634] p-5 relative">
+      <div className="flex flex-col">
+        <h3 className="text-xl xl:text-2xl font-euclid text-start font-semibold text-white mb-1">
+          Recently completed campaigns
+        </h3>
+        <p className="text-white/60 text-sm xl:text-base font-euclid">
+          Your recently completed campaigns. Campaigns run for 3 days, then get archived and appear here.
+        </p>
+      </div>
+      <button
+        className="absolute right-5 top-5 px-3 py-2 2xl:px-4 2xl:py-2 bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] text-white font-normal text-sm 2xl:text-lg rounded-lg shadow-md hover:opacity-90 transition-transform transform hover:-translate-y-1 hover:scale-105"
+      >
+        Sort by date
+      </button>
+    </div>
+
+    {/* Table Header */}
+    <div className="grid grid-cols-4 lg:grid-cols-5 gap-4 text-white/50 font-normal text-sm 2xl:text-lg border-b border-[#232634] p-3">
+      <div>Name</div>
+      <div>Engagement</div>
+      <div>Performance</div>
+      <div>Clicks</div>
+      <div className="hidden lg:block">Audience</div>
+    </div>
+
+    {/* Table Rows */}
+    {campaigns?.length > 0 && displayedItems ? (
+      <div className="flex flex-col divide-y divide-[#232634] max-h-[400px] overflow-y-auto">
+        {campaigns.map((campaign, index) => {
+          const isLastItem = index === campaigns.length - 1;
+          return (
+            <motion.div
+              key={campaign.id}
+              className={`grid grid-cols-5 lg:grid-cols-5 gap-4 p-3 text-white/90 text-sm cursor-pointer rounded-md hover:bg-[#1C1C3A] transition-colors ${
+                index % 2 === 0 ? "bg-[#191936]" : "bg-transparent"
+              } ${isLastItem ? "rounded-b-2xl" : ""}`}
+            >
+              <CampaignCard campaign={campaign} />
+            </motion.div>
+          );
+        })}
+      </div>
+    ) : (
+      <div className="flex items-center justify-center p-10">
+        <p className="text-white/50 text-base font-poppins text-center">
+          Your content will appear here once you create it.
+        </p>
+      </div>
+    )}
+  </div>
+</div>
+
             </div>
           </div>
         </div>

@@ -128,7 +128,7 @@ const Archives = () => {
           <div className="flex flex-row gap-3">
             <button
               onClick={handleSortByDate}
-              className="px-4 py-2 text-sm font-medium text-gray-200 bg-[#242E44] hover:bg-[#2E3B59] rounded-lg border border-[#1C2437]/40 transition-all duration-200"
+              className="px-4 py-2 text-sm font-medium text-gray-200 bg-[#242E44] hover:bg-[#2E3B59] rounded-lg border-2 border-[#1C2437]/40 transition-all duration-200"
             >
               Sort by date
             </button>
