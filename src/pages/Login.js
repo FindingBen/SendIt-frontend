@@ -72,7 +72,7 @@ const Login = () => {
       const shop_id = user_info.shopify_id;
       const shopify_domain = user_info.shopify_domain;
       const tokenType = "JWT";
-      console.log("DADA", user_info);
+      console.log(user_info)
       dispatch(
         setCredentials({
           ...responseData,

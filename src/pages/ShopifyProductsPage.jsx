@@ -4,12 +4,15 @@ import Search from "../components/SearchComponent/Search";
 import { ArrowLeft, ArrowRight, Barcode, Hash } from "lucide-react";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useRedux } from "../constants/reduxImports";
+import {setUserInfo} from "../redux/reducers/userReducer"
 import GenerateModal from "../features/modal/GenerateModal";
+import ConfirmProductImport from "../features/modal/ConfirmProductImport";
 
 export const ShopifyProductsPage = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentShopifyToken, currentUserState } = useRedux();
+  const { currentUserState, dispatch } = useRedux();
   const [show, setShow] = useState(false);
+  const [showImport, setShowImport] = useState(false);
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -17,6 +20,7 @@ export const ShopifyProductsPage = () => {
   const perPage = 5;
   const totalPages = Math.ceil(products?.length / perPage);
   const currentProducts = products?.slice((page - 1) * perPage, page * perPage);
+  const importState = currentUserState.product_import
 
   useEffect(() => {
     getProducts();
@@ -30,15 +34,35 @@ export const ShopifyProductsPage = () => {
     try {
       const response = await axiosInstance.get("/products/shopify_products/");
       setProducts(response?.data);
+      console.log("Fetched products:", response?.data);
     } catch (error) {
       console.error("Error fetching Shopify products:", error);
     }
   };
 
-  const generateproduc = async () => {
+  const importBulkProducts = async () => {
     try {
       const response = await axiosInstance.get("/products/import_bulk_products/");
-      // setProducts(response?.data);
+      
+      if(response.status === 201){
+        getProducts()
+        dispatch(setUserInfo({ product_import: true }));
+
+      }
+    } catch (error) {
+      console.error("Error fetching Shopify products:", error);
+    }
+  };
+
+  const testShop = async () => {
+    try {
+      const response = await axiosInstance.get("/products/business_analysis/");
+      
+      if(response.status === 201){
+        // getProducts()
+        // dispatch(setUserInfo({ product_import: true }));
+        console.log(response)
+      }
     } catch (error) {
       console.error("Error fetching Shopify products:", error);
     }
@@ -95,6 +119,19 @@ const handleGenerate = async (type) => {
   }
 };
 
+ const formatScore = (v) => {
+    const n = parseFloat(v);
+    return isNaN(n) ? "—" : n.toFixed(2);
+  };
+
+   const scorePill = (v) => {
+    const n = parseFloat(v);
+    if (isNaN(n)) return { label: "—", classes: "bg-gray-800 text-gray-300" };
+    if (n < 40) return { label: formatScore(n), classes: "bg-red-600/15 text-red-400" };
+    if (n < 70) return { label: formatScore(n), classes: "bg-yellow-500/15 text-yellow-400" };
+    return { label: formatScore(n), classes: "bg-green-600/15 text-green-400" };
+  };
+
 
   return (
 <section className="min-h-screen w-full bg-[#0A0E1A] text-white font-inter">
@@ -110,11 +147,33 @@ const handleGenerate = async (type) => {
         <div className="p-8">
           {/* Header */}
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-2xl font-semibold text-gray-100 tracking-wide">
+            <div className="flex flex-col gap-2">
+              <h2 className="text-2xl font-semibold text-gray-100 tracking-wide">
               Your Shopify Products
             </h2>
+            {!importState && (
+  <button
+    onClick={() => setShowImport(true)}
+    className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] hover:opacity-90 shadow-[0_0_12px_rgba(62,111,244,0.25)]"
+  >
+    Import products
+  </button>
+)}
+            </div>
+
 
             <div className="flex gap-3">
+              <button
+                disabled={true}
+                className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  selectedProducts.length === 0
+                    ? "bg-[#3E6FF4]/15 text-gray-500 cursor-not-allowed"
+                    : "bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] hover:opacity-90 text-white shadow-[0_0_12px_rgba(62,111,244,0.25)]"
+                }`}
+              >
+              
+                Optimize SEO and Completness
+              </button>
               <button
                 onClick={() => handleGenerateModal("sku")}
                 className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
@@ -168,6 +227,11 @@ const handleGenerate = async (type) => {
     <div className="flex flex-col gap-3">
       {currentProducts.map((product, idx) => {
         const selected = selectedProducts.includes(product.shopify_id);
+        const seoValue = product?.score?.seo_score ?? product?.score?.seo ?? "0";
+        const completenessValue = product?.score?.completness ?? product?.score?.completeness ?? product?.score?.completeness_score ?? "0";
+
+        const seoP = scorePill(seoValue);
+        const compP = scorePill(completenessValue);
         return (
           <div
             key={idx}
@@ -190,7 +254,7 @@ const handleGenerate = async (type) => {
                 />
               </div>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 text-start">
                 <img
                   src={product?.img_field || "/placeholder.png"}
                   alt={product?.title}
@@ -208,11 +272,25 @@ const handleGenerate = async (type) => {
             {/* Right side: price + barcode + SKU */}
             <div className="flex items-center gap-10">
               <div className="flex flex-col text-right">
+                <span className="text-gray-400 text-sm">Seo Score</span>
+                <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${seoP.classes}`}>
+                  {seoP.label}
+                </span>
+              </div>
+
+              <div className="flex flex-col text-right">
+                <span className="text-gray-400 text-sm">Completness</span>
+                <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${compP.classes}`}>
+                  {compP.label}
+                </span>
+              </div>
+
+              {/* <div className="flex flex-col text-right">
                 <span className="text-gray-400 text-sm">Price</span>
                 <span className="text-gray-100 font-semibold">
                   ${product?.price || "0.00"}
                 </span>
-              </div>
+              </div> */}
 
               <div className="flex flex-col text-right">
                 <span className="text-gray-400 text-sm">Barcode</span>
@@ -240,6 +318,7 @@ const handleGenerate = async (type) => {
             option={generating}
             generateConfirm={() => handleGenerate(generating)}
           />
+          <ConfirmProductImport showModal={showImport} onClose={() => setShowImport(false)} importConfirm={importBulkProducts}/>
 
           {/* Pagination */}
           {products?.length > 0 && (

@@ -9,18 +9,23 @@ import PackageInformation from "../components/AccountSettings/PackageInformation
 import CloseAccountModal from "../features/modal/CloseAccountModal";
 import CancelSubscription from "../features/modal/CancelSubscription";
 import Search from "../components/SearchComponent/Search";
+import BusinessRulesetModal from "../features/modal/BusinessRulesetModal";
+import { setUserInfo } from "../redux/reducers/userReducer";
 
 const UserPage = () => {
   const axiosInstance = useAxiosInstance();
-  const { currentUser, currentPackageState, currentShopifyToken } = useRedux();
+  const { currentUserState, currentPackageState, currentShopifyToken, dispatch } = useRedux();
   const [username, setUsername] = useState();
-
+  const [enableBusinessRuleset, setEnableBusinessRuleset] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [msg, setMsg] = useState();
   const [showModal, setShowModal] = useState(false);
+  const [showImport, setShowImport] = useState(false);
   const [showSubModal, setShowSubModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
+  const [errorRuleMsg, setErrorRuleMsg] = useState();
   const [success, setSuccess] = useState();
+  const [successRule, setSuccessRule] = useState();
   const [newName, setNewName] = useState();
   const [newLastName, setNewLastName] = useState();
 
@@ -37,9 +42,11 @@ const UserPage = () => {
 
   useEffect(() => {
     setTimeout(() => setErrorMsg(), 3500);
+    setTimeout(() => setErrorRuleMsg(), 3500);
     setTimeout(() => setMsg(), 3000);
     setTimeout(() => setSuccess(), 3000);
-  }, [errorMsg, msg, success]);
+    setTimeout(() => setSuccessRule(), 3000);
+  }, [errorMsg, msg, success, successRule, errorRuleMsg]);
 
   const getUser = async () => {
     setIsLoading(true);
@@ -54,6 +61,21 @@ const UserPage = () => {
       setIsLoading(false);
     }
   };
+
+  const businessRuleSetEnable = async () => {
+    try {
+      let response = await axiosInstance.get("/products/business_analysis/");
+      if(response.status === 200){
+        setEnableBusinessRuleset(true);
+        dispatch(setUserInfo({ business_analysis: true }));
+        setSuccessRule("Business ruleset enabled successfully");
+      }
+      console.log("Business ruleset enabled",response);
+    } catch (error) {
+      console.log(error)
+      setErrorRuleMsg("Error enabling business ruleset");
+    }
+  }
 
   const cancelSubscription = async () => {
     try {
@@ -95,7 +117,6 @@ console.log(error);
       <Search />
       <SmsPill />
     </div>
-
         <div className="flex flex-col gap-2 mx-44">
           <UserAccount />
           <div className="flex flex-col gap-2">
@@ -103,34 +124,81 @@ console.log(error);
             <div className="flex md:flex-row xs:flex-col">
               <PasswordChange user_obj={user} />
             </div>
+            <div className="flex flex-col rounded-2xl p-6 mx-20 bg-[#1B2233] shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
+
+              <div className="flex justify-between items-center border-b border-gray-700 pb-3 mb-4 relative">
+                <h3 className="text-xl 2xl:text-2xl font-euclid text-white">Business ruleset</h3>
+                <div className="flex items-center gap-3">
+    
+                {/* Message when disabled */}
+                {!currentUserState.product_import && (
+                  <span className="text-xs text-gray-400 hidden md:block">
+                    Import Shopify products to enable ruleset
+                  </span>
+                )}
+
+                {/* Add Button */}
+                {!currentUserState.business_analysis ? <button
+                  disabled={!currentUserState.product_import}
+                  className={`
+                    px-4 py-2 text-white text-sm 2xl:text-lg rounded-md transition-all shadow-md
+                    ${currentUserState.product_import 
+                      ? "bg-blue-600 hover:bg-blue-500 cursor-pointer" 
+                      : "bg-gray-700 opacity-60 cursor-not-allowed"
+                    }
+                  `}
+                  onClick={() => {
+                    if (!currentUserState.product_import) return;
+                    setShowImport(true);
+                  }}
+                >
+                  Add
+                </button>: <></>}
+              </div>
+              
+              </div>
+<div>
+                {successRule && (
+                  <span className="text-green-500 text-sm font-euclid">{successRule}</span>
+                )}
+                {errorRuleMsg && (
+                  <span className="text-red-500 text-sm font-euclid">{errorRuleMsg}</span>
+                )}
+              </div>
+              {/* Content */}
+              <p className="text-white/60 xs:text-sm lg:text-normal text-start">
+                Rulesets are defined here. They help keep consistency between your products to ensure your brands identity and mission. <br></br>
+                See here which default rules apply to your account currently. Editing SEO rules are currently not available.
+              </p>
+            </div>
             {/* Cancel Subscription Section */}
             <div className="flex md:flex-row xs:flex-col">
-  <div className="mx-20 p-6 w-full bg-[#1B2233] rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
-    {/* Header */}
-    <div className="flex justify-between items-center border-b border-gray-700 pb-3 mb-4 relative">
-      <h3 className="text-xl 2xl:text-2xl font-euclid text-white">Cancel Subscription</h3>
-      <button
-        onClick={() => setShowSubModal(true)}
-        className="px-4 py-2 bg-red-700 hover:bg-red-600 text-white rounded-lg 2xl:text-xl text-sm shadow-md transition-all"
-      >
-        Cancel Subscription
-      </button>
-    </div>
+              <div className="mx-20 p-6 w-full bg-[#1B2233] rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
+                {/* Header */}
+                <div className="flex justify-between items-center border-b border-gray-700 pb-3 mb-4 relative">
+                  <h3 className="text-xl 2xl:text-2xl font-euclid text-white">Cancel Subscription</h3>
+                  <button
+                    onClick={() => setShowSubModal(true)}
+                    className="px-4 py-2 bg-red-700 hover:bg-red-600 text-white rounded-lg 2xl:text-xl text-sm shadow-md transition-all"
+                  >
+                    Cancel Subscription
+                  </button>
+                </div>
 
-    {/* Content */}
-    <p className="text-white/60 xs:text-sm lg:text-normal text-start mb-4">
-      If you wish to stop your current subscription, click the button below. You’ll still have access until the end of your billing period.
-    </p>
+                {/* Content */}
+                <p className="text-white/60 xs:text-sm lg:text-normal text-start mb-4">
+                  If you wish to stop your current subscription, click the button below. You’ll still have access until the end of your billing period.
+                </p>
 
-    {/* Messages */}
-    {success && (
-      <span className="text-green-500 text-sm font-euclid">{success}</span>
-    )}
-    {errorMsg && (
-      <span className="text-red-500 text-sm font-euclid">{errorMsg}</span>
-    )}
-  </div>
-</div>
+                {/* Messages */}
+                {success && (
+                  <span className="text-green-500 text-sm font-euclid">{success}</span>
+                )}
+                {errorMsg && (
+                  <span className="text-red-500 text-sm font-euclid">{errorMsg}</span>
+                )}
+              </div>
+            </div>
 
 
             <div className="flex flex-col rounded-2xl p-6 mx-20 bg-[#1B2233] shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
@@ -153,7 +221,10 @@ console.log(error);
 
           </div>
         </div>
-
+                <BusinessRulesetModal
+                showModal={showImport}
+                createRuleset={businessRuleSetEnable}
+                onClose={(e) => setShowImport(false)}/>
         <CloseAccountModal
           showModal={showModal}
           onClose={(e) => setShowModal(false)}

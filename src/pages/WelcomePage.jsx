@@ -15,6 +15,7 @@ import { config } from "../constants/Constants";
 import DeleteMessageModal from "../features/modal/DeleteMessageModal";
 import ModalComponent from "../components/ModalComponent";
 import RecentActivityModal from "../features/modal/RecentActivityModal";
+import ShopifyIntegrationStatus from "../components/IntegrationSteps/ShopifyIntegrationStatus";
 
 import {
   clearMessages,
@@ -26,11 +27,9 @@ import CancelScheduleModal from "../features/modal/CancelScheduleModal";
 
 const WelcomePage = () => {
   const {
-    currentPackageState,
-    currentContactList,
+    currentUserState,
     dispatch,
     currentUser,
-    currentDomain,
     currentOperationState,
     currentMessages,
   } = useRedux();
@@ -71,7 +70,7 @@ const WelcomePage = () => {
     startIndexScheduled,
     endIndexScheduled
   );
-
+  console.log(currentUserState)
   const handlePageChange = (page) => {
     setCurrentPage(page);
     setInitialLoad(false);
@@ -245,33 +244,13 @@ const connectedStoresCount = 0;
     </div>
 
     {/* Grid layout */}
-    <div className="max-w-6xl mx-auto w-full grid grid-cols-12 gap-6 mt-6">
+    <div className="max-w-6xl mx-auto w-full grid grid-cols-16 gap-6 mt-6">
       {/* Left column (status + quick actions + campaigns) */}
-      <div className="col-span-12 lg:col-span-8 flex flex-col gap-6">
+      <div className="col-span-16 lg:col-span-8 flex flex-col gap-6">
         {/* Top row: status + quick actions */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-[#0F1724] rounded-2xl p-5 shadow-sm">
-            <h3 className="text-lg font-medium text-gray-100">System status</h3>
-            <div className="mt-3 flex gap-6">
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-300">App</span>
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-500">
-                  <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-300">SMS Provider</span>
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-500">
-                  <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </span>
-              </div>
-            </div>
-            <p className="mt-4 text-sm text-gray-400">Everything is running smoothly. No incidents reported.</p>
-          </div>
+        <div className="grid grid-cols-3 gap-4">
+          <ShopifyIntegrationStatus hasImportedCustomers={currentUserState.shopify_connect}
+          hasImportedProducts={currentUserState.product_import}/>
 
           <div className="bg-[#0F1724] rounded-2xl p-5 shadow-sm">
             <h3 className="text-lg font-medium text-gray-100">Start building</h3>
@@ -284,6 +263,76 @@ const connectedStoresCount = 0;
               </Link>
             </div>
           </div>
+
+          <div className="bg-[#1B2233] rounded-2xl p-4 shadow-sm xl:w-full">
+          <h3 className="text-lg font-medium">Recent activity</h3>
+
+          <div className="mt-3 space-y-2 max-h-72 overflow-y-auto">
+            {loading ? (
+              <div className="flex items-center justify-center py-4">
+                <Loader loading_name={"Loading notifications..."} />
+              </div>
+            ) : notifications?.length ? (
+              notifications.map((notification, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => handleModalActivity(notification)}
+                  className="flex items-center justify-between gap-2 p-2.5 rounded-lg hover:bg-[#111428] cursor-pointer"
+                >
+                  <div className="flex items-center gap-2">
+                    <div
+                      className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                        notification?.notif_type === "success"
+                          ? "bg-green-500"
+                          : "bg-red-500"
+                      }`}
+                    >
+                  {notification?.notif_type === "success" ? (
+                    <svg
+                      className="w-3.5 h-3.5 text-white"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="w-3.5 h-3.5 text-white"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  )}
+                </div>
+
+                <div className="min-w-0">
+                  <div className="text-md text-gray-100 truncate">
+                    {notification?.title}
+                  </div>
+                  <div className="text-[10px] text-gray-400 truncate">
+                    {notification?.excerpt}
+                  </div>
+                </div>
+              </div>
+
+                    <div className="text-[10px] text-gray-500 whitespace-nowrap">
+                      {notification?.created_at
+                        ? new Date(notification.created_at).toLocaleString()
+                        : ""}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="py-4 text-gray-400 text-sm">No recent activity</div>
+              )}
+            </div>
+
+                    </div>
         </div>
 
         {/* Top performing campaigns card */}
@@ -322,14 +371,14 @@ const connectedStoresCount = 0;
         </div>
 
         {/* Scheduled campaigns */}
-        <div className="bg-[#0F1724] rounded-2xl p-5 shadow-sm">
+        <div className="bg-[#0F1724] rounded-2xl p-3 shadow-sm">
           <div className="flex items-start justify-between mb-3">
             <div>
               <h3 className="text-xl font-medium text-start">Scheduled campaigns</h3>
               <p className="text-sm text-gray-400">Scheduled campaigns appear here — you can cancel or edit them.</p>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={handleSortButtonClick} className="px-3 py-1 rounded-md bg-[#131826] text-gray-200 hover:bg-[#172033]">Sort by date</button>
+              <button onClick={handleSortButtonClick} className="px-3 py-1 rounded-md bg-[#131826] text-gray-200 border-2 border-gray-800 text-gray-200 hover:bg-[#172033]">Sort by date</button>
             </div>
           </div>
 
@@ -376,16 +425,19 @@ const connectedStoresCount = 0;
             </div>
           )}
         </div>
-        <div className="bg-[#0F1724] rounded-2xl p-5 shadow-sm">
+        <div className="bg-[#0F1724] rounded-2xl p-3 shadow-sm mb-10">
           <div className="flex items-start justify-between">
-            <h3 className="text-lg font-medium">Draft campaigns</h3>
-            <button onClick={handleSortButtonClick} className="px-3 py-1 rounded-md bg-[#131826] text-gray-200 border-2 border-gray-800 hover:bg-[#172033]">Sort</button>
+            <div className="text-start mb-2">
+              <h3 className="text-lg font-medium">Draft campaigns</h3>
+            <p className="text-sm text-gray-400">Draft campaigns that are ready for sending/scheduling will appear here.</p>
+            </div>
+            <button onClick={handleSortButtonClick} className="px-3 py-1 mb-2 rounded-lg bg-[#131826] text-gray-200 border-2 border-gray-800 hover:bg-[#172033]">Sort</button>
           </div>
 
-          <div className="mt-3 space-y-2 max-h-56 overflow-y-auto">
+          
             {draft?.length > 0 && displayedItems ? (
               displayedItems.map((message, i) => (
-                <div key={message.id} className={`p-3 rounded-md ${i % 2 === 0 ? "bg-[#0C1120]" : "bg-transparent"} hover:bg-[#111428] border-2 border-gray-800`}>
+                <div key={message.id} className={`p-3 rounded-2xl ${i % 2 === 0 ? "bg-[#0C1120]" : "bg-transparent"} hover:bg-[#111428] border-2 border-gray-800 mb-2`}>
                   <MessageCard
                     message={message}
                     archiveMsg={msgArchive}
@@ -408,84 +460,9 @@ const connectedStoresCount = 0;
             ) : (
               <div className="py-6 text-gray-400">No drafts yet.</div>
             )}
-          </div>
+          
         </div>
       </div>
-
-      {/* Right column (recent activity + notifications + stats) */}
-      <aside className="col-span-12 lg:col-span-4 flex flex-col gap-3">
-        <div className="bg-[#1B2233] rounded-2xl p-5 shadow-sm xl:w-full">
-          <h3 className="text-lg font-medium">Recent activity</h3>
-
-          <div className="mt-3 space-y-2 max-h-72 overflow-y-auto">
-  {loading ? (
-    <div className="flex items-center justify-center py-4">
-      <Loader loading_name={"Loading notifications..."} />
-    </div>
-  ) : notifications?.length ? (
-    notifications.map((notification, idx) => (
-      <div
-        key={idx}
-        onClick={() => handleModalActivity(notification)}
-        className="flex items-center justify-between gap-2 p-2.5 rounded-lg hover:bg-[#111428] cursor-pointer"
-      >
-        <div className="flex items-center gap-2">
-          <div
-            className={`w-6 h-6 rounded-full flex items-center justify-center ${
-              notification?.notif_type === "success"
-                ? "bg-green-500"
-                : "bg-red-500"
-            }`}
-          >
-            {notification?.notif_type === "success" ? (
-              <svg
-                className="w-3.5 h-3.5 text-white"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-            ) : (
-              <svg
-                className="w-3.5 h-3.5 text-white"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            )}
-          </div>
-
-          <div className="min-w-0">
-            <div className="text-xs text-gray-100 truncate">
-              {notification?.title}
-            </div>
-            <div className="text-[10px] text-gray-400 truncate">
-              {notification?.excerpt}
-            </div>
-          </div>
-        </div>
-
-        <div className="text-[10px] text-gray-500 whitespace-nowrap">
-          {notification?.created_at
-            ? new Date(notification.created_at).toLocaleString()
-            : ""}
-        </div>
-      </div>
-    ))
-  ) : (
-    <div className="py-4 text-gray-400 text-sm">No recent activity</div>
-  )}
-</div>
-
-        </div>
-
-      
-      </aside>
     </div>
 
     {/* Modals (kept at bottom) */}
