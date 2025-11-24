@@ -152,7 +152,7 @@ const handleGenerate = async (type) => {
               <h2 className="text-2xl font-semibold text-gray-100 tracking-wide">
               Your Shopify Products
             </h2>
-            {rulesetState && !importState ? (
+            {!importState ? (<>{rulesetState ? (
               <button
                 onClick={() => setShowImport(true)}
                 className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] hover:opacity-90 shadow-[0_0_12px_rgba(62,111,244,0.25)]"
@@ -167,7 +167,7 @@ const handleGenerate = async (type) => {
               >
                 Enable ruleset first to import your products
               </div>
-            )}
+            )}</>):<></>}
             </div>
 
 
