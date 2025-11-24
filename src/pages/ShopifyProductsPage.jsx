@@ -21,6 +21,7 @@ export const ShopifyProductsPage = () => {
   const totalPages = Math.ceil(products?.length / perPage);
   const currentProducts = products?.slice((page - 1) * perPage, page * perPage);
   const importState = currentUserState.product_import
+  const rulesetState = currentUserState.business_analysis
 
   useEffect(() => {
     getProducts();
@@ -151,14 +152,22 @@ const handleGenerate = async (type) => {
               <h2 className="text-2xl font-semibold text-gray-100 tracking-wide">
               Your Shopify Products
             </h2>
-            {!importState && (
-  <button
-    onClick={() => setShowImport(true)}
-    className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] hover:opacity-90 shadow-[0_0_12px_rgba(62,111,244,0.25)]"
-  >
-    Import products
-  </button>
-)}
+            {rulesetState ? (
+              <button
+                onClick={() => setShowImport(true)}
+                className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] hover:opacity-90 shadow-[0_0_12px_rgba(62,111,244,0.25)]"
+              >
+                Import products
+              </button>
+            ) : (
+              <div
+                role="status"
+                className="px-4 py-2 rounded-lg bg-[#3A3F52] text-yellow-300 text-sm font-medium"
+                title="Enable ruleset first to import your products"
+              >
+                Enable ruleset first to import your products
+              </div>
+            )}
             </div>
 
 

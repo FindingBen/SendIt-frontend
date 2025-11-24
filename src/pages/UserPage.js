@@ -77,6 +77,19 @@ const UserPage = () => {
     }
   }
 
+    const test = async () => {
+    try {
+      let response = await axiosInstance.get("/products/shopify_test/");
+      if(response.status === 200){
+        console.log("Test successful");
+      }
+      console.log("Business ruleset enabled",response);
+    } catch (error) {
+      console.log(error)
+      setErrorRuleMsg("Error enabling business ruleset");
+    }
+  }
+
   const cancelSubscription = async () => {
     try {
       let url = ""
@@ -130,25 +143,19 @@ console.log(error);
                 <h3 className="text-xl 2xl:text-2xl font-euclid text-white">Business ruleset</h3>
                 <div className="flex items-center gap-3">
     
-                {/* Message when disabled */}
-                {!currentUserState.product_import && (
-                  <span className="text-xs text-gray-400 hidden md:block">
-                    Import Shopify products to enable ruleset
-                  </span>
-                )}
-
+               
                 {/* Add Button */}
                 {!currentUserState.business_analysis ? <button
-                  disabled={!currentUserState.product_import}
+                  disabled={currentUserState.business_analysis}
                   className={`
                     px-4 py-2 text-white text-sm 2xl:text-lg rounded-md transition-all shadow-md
-                    ${currentUserState.product_import 
+                    ${!currentUserState.business_analysis 
                       ? "bg-blue-600 hover:bg-blue-500 cursor-pointer" 
                       : "bg-gray-700 opacity-60 cursor-not-allowed"
                     }
                   `}
                   onClick={() => {
-                    if (!currentUserState.product_import) return;
+                    if (currentUserState.business_analysis) return;
                     setShowImport(true);
                   }}
                 >
@@ -177,6 +184,7 @@ console.log(error);
                 {/* Header */}
                 <div className="flex justify-between items-center border-b border-gray-700 pb-3 mb-4 relative">
                   <h3 className="text-xl 2xl:text-2xl font-euclid text-white">Cancel Subscription</h3>
+                 
                   <button
                     onClick={() => setShowSubModal(true)}
                     className="px-4 py-2 bg-red-700 hover:bg-red-600 text-white rounded-lg 2xl:text-xl text-sm shadow-md transition-all"
