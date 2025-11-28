@@ -45,7 +45,7 @@ const SmsSendingPage = () => {
   const BASE_URL = "https://spplane.app";
   const linkURLBase = `${BASE_URL}/view/${params.id}`;
   const uniqueLink = `${BASE}/sms/sms/newsletter/${params.id}`;
-  const maxCharacters = 100;
+  const maxCharacters = 160;
 
   useEffect(() => {
     getContactLists();
