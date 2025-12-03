@@ -30,6 +30,7 @@ import QRsignUpPage from "./pages/QRsignUpPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import SmsSendingPage from "./pages/SmsSendingPage";
 import WelcomePage from "./pages/WelcomePage";
+import ProductOptimizationPage from "./pages/ProductOptimizationPage";
 import ShopifyChargeConfPage from "./pages/ShopifyChargeConfPage";
 import { ShopifyProductsPage } from "./pages/ShopifyProductsPage";
 import { useRedux } from "./constants/reduxImports";
@@ -90,6 +91,10 @@ function App() {
                   <Route
                     path="/sending_flow/:id"
                     element={<SmsSendingPage />}
+                  />
+                  <Route
+                    path="/product_optimize/:id"
+                    element={<ProductOptimizationPage />}
                   />
                   {/* <Route path="create_note" element={<CreateMessage />} /> */}
                   <Route

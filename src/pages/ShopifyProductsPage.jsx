@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import SmsPill from "../components/SmsPill/SmsPill";
 import Search from "../components/SearchComponent/Search";
 import { ArrowLeft, ArrowRight, Barcode, Hash } from "lucide-react";
@@ -16,6 +17,7 @@ export const ShopifyProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [selectedForOpt, setSelectedForOpt] = useState(null);
   const [generating, setGenerating] = useState(false);
   const perPage = 5;
   const totalPages = Math.ceil(products?.length / perPage);
@@ -41,6 +43,17 @@ export const ShopifyProductsPage = () => {
     }
   };
 
+  const prodOpt = async (product) => {
+    const data = {"product": product}
+    console.log("Optimizing product with ID:", product);
+    try {
+      let response = await axiosInstance.post("/products/product_optimize/", data);
+      console.log("Optimization response:", response?.data);
+    } catch (error) {
+      console.error("Error optimizing product:", error);
+    }
+  }
+
   const importBulkProducts = async () => {
     try {
       const response = await axiosInstance.get("/products/import_bulk_products/");
@@ -54,25 +67,13 @@ export const ShopifyProductsPage = () => {
       console.error("Error fetching Shopify products:", error);
     }
   };
-
-  const testShop = async () => {
-    try {
-      const response = await axiosInstance.get("/products/business_analysis/");
-      
-      if(response.status === 201){
-        // getProducts()
-        // dispatch(setUserInfo({ product_import: true }));
-        console.log(response)
-      }
-    } catch (error) {
-      console.error("Error fetching Shopify products:", error);
-    }
-  };
+  console.log('PRODUCT',selectedForOpt)
 
   // Toggle single product selection
-  const toggleProductSelection = (id) => {
+  const toggleProductSelection = (product) => {
+    setSelectedForOpt(product)
     setSelectedProducts((prev) =>
-      prev.includes(id) ? prev.filter((pid) => pid !== id) : [...prev, id]
+      prev.includes(product.shopify_id) ? prev.filter((pid) => pid !== product.shopify_id) : [...prev, product.shopify_id]
     );
   };
 
@@ -173,7 +174,7 @@ const handleGenerate = async (type) => {
 
             <div className="flex gap-3">
               <button
-                disabled={true}
+                onClick={()=>prodOpt(selectedForOpt)}
                 className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   selectedProducts.length === 0
                     ? "bg-[#3E6FF4]/15 text-gray-500 cursor-not-allowed"
@@ -183,7 +184,8 @@ const handleGenerate = async (type) => {
               
                 Optimize SEO and Completness
               </button>
-              <button
+              
+              {/* <button
                 onClick={() => handleGenerateModal("sku")}
                 className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   selectedProducts.length === 0
@@ -206,7 +208,7 @@ const handleGenerate = async (type) => {
               >
                 <Barcode className="w-4 h-4 mr-2" />
                 Auto-generate Barcode
-              </button>
+              </button> */}
             </div>
           </div>
 
@@ -244,7 +246,7 @@ const handleGenerate = async (type) => {
         return (
           <div
             key={idx}
-            onClick={() => toggleProductSelection(product.shopify_id)}
+            onClick={() => toggleProductSelection(product)}
             className={`flex items-center justify-between px-5 py-4 rounded-2xl transition-all duration-200 cursor-pointer 
               ${
                 selected
@@ -258,7 +260,7 @@ const handleGenerate = async (type) => {
                 <input
                   type="checkbox"
                   checked={selected}
-                  onChange={() => toggleProductSelection(product.shopify_id)}
+                  onChange={() => toggleProductSelection(product)}
                   className="w-5 h-5 accent-[#3E6FF4] rounded-md bg-[#1C2437] cursor-pointer hover:scale-110 transition-all"
                 />
               </div>
@@ -301,19 +303,47 @@ const handleGenerate = async (type) => {
                 </span>
               </div> */}
 
-              <div className="flex flex-col text-right">
+              {/* <div className="flex flex-col text-right">
                 <span className="text-gray-400 text-sm">Barcode</span>
                 <span className="text-[#3E6FF4] font-semibold">
                   {product?.barcode || "—"}
                 </span>
-              </div>
+              </div> */}
+              <Link
+                className="
+                  group
+                  flex items-center gap-2
+                  px-6 py-3 
+                  bg-[#3e6ff4]/20 
+                  hover:bg-[#3e6ff4]/30 
+                  border border-[#3e6ff4]/40 
+                  rounded-xl
+                  text-[#d7dbff]
+                  font-semibold
+                  transition-all
+                  shadow-md
+                "
+                to={`/product_optimize/${product?.id}`}
+              >
+                <span className="text-gray-300 text-sm">Optimize</span>
 
-              <div className="flex flex-col text-right">
+                <svg
+                  className="w-4 h-4 text-[#3e6ff4] transition-transform duration-300 group-hover:translate-x-1"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+
+              {/* <div className="flex flex-col text-right">
                 <span className="text-gray-400 text-sm">SKU</span>
                 <span className="text-[#3E6FF4] font-semibold">
                   {product?.sku || "—"}
                 </span>
-              </div>
+              </div> */}
             </div>
           </div>
         );
