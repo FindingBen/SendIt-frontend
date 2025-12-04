@@ -4,7 +4,9 @@ import Search from "../components/SearchComponent/Search";
 import { ArrowLeft, ArrowRight, Barcode, Hash } from "lucide-react";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useRedux } from "../constants/reduxImports";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import OptimizeProductModal from "../features/modal/OptimizeProductModal";
+import ProductImageCarousel from "../components/Carousel/ProductImageCarousel";
 import { useParams,useSearchParams } from "react-router-dom";
 
 const ProductOptimizationPage = () => {
@@ -18,14 +20,13 @@ const [originalProduct, setOriginalProduct] = useState(null);
     const [searchParams] = useSearchParams();
 
     const { id } = useParams();
-    console.log("Draft", draftProduct);
-    console.log("Product", originalProduct);
+
     useEffect(() => {
         if (id) {
             fetchProductDetails(id);
         }
     }, [id]);
-    console.log("SSSAAS",product)
+
     const fetchProductDetails = async (id) => {
         try {
             const response = await axiosInstance.get(`/products/shopify_products/${id}/`);
@@ -125,7 +126,6 @@ const [originalProduct, setOriginalProduct] = useState(null);
     { label: "Title", key: "title" },
     { label: "Description", key: "description" },
     { label: "Category", key: "category" },
-    { label: "Images", key: "price" },
   ].map(({ label, key }) => {
     const oldVal = originalProduct?.[key] ?? product?.[key] ?? "";
     const newVal = draftProduct?.[key] ?? null;
@@ -157,52 +157,7 @@ const [originalProduct, setOriginalProduct] = useState(null);
 {/* Images with alt_text */}
 {/* Images Section */}
 {/* Images Section */}
-{product?.media?.map((originalImg) => {
-  // Find matching draft image by shopify_media_id
-  const draftImg = draftProduct?.images?.find(
-    (i) => i.id === originalImg.shopify_media_id || i.shopify_media_id === originalImg.shopify_media_id
-  );
-
-  const oldAlt = originalImg.alt_text || "";
-  const newAlt = draftImg?.alt_text || "";
-  const changed = newAlt && newAlt !== oldAlt;
-
-  return (
-    <div key={originalImg.id} className="flex flex-col mt-4">
-      <span className="text-[#e0e3ff] font-semibold tracking-wide mb-1">
-        Image ID: {originalImg.id}
-      </span>
-
-      {/* Image preview */}
-      {originalImg.src ? (
-        <img
-          src={originalImg.src}
-          alt={newAlt || oldAlt || "Product Image"}
-          className="max-w-full max-h-48 object-contain rounded-xl mb-1"
-        />
-      ) : (
-        <div className="w-full h-48 bg-gray-700 flex items-center justify-center rounded-xl mb-1 text-gray-300">
-          No image available
-        </div>
-      )}
-
-      {/* Alt text */}
-      <div className="ml-2 text-sm flex flex-col gap-1">
-        {changed ? (
-          <>
-            {oldAlt && (
-              <span className="text-gray-500 line-through opacity-90">{oldAlt}</span>
-            )}
-            <span className="text-[#3e6ff4] font-semibold ml-1">{newAlt}</span>
-          </>
-        ) : (
-          <span className="text-gray-300">{oldAlt || "—"}</span>
-        )}
-      </div>
-    </div>
-  );
-})}
-
+<ProductImageCarousel product={product} draftProduct={draftProduct} />
 
 
 
