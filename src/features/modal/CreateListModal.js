@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  selectCurrentToken,
-  selectCurrentUser,
-} from "../../redux/reducers/authSlice";
 import useAxiosInstance from "../../utils/axiosInstance";
-import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Loader from "../../components/LoaderSkeleton/Loader";

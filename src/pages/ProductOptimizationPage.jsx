@@ -4,21 +4,28 @@ import Search from "../components/SearchComponent/Search";
 import { ArrowLeft, ArrowRight, Barcode, Hash } from "lucide-react";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useRedux } from "../constants/reduxImports";
+import OptimizeProductModal from "../features/modal/OptimizeProductModal";
 import { useParams,useSearchParams } from "react-router-dom";
 
 const ProductOptimizationPage = () => {
     const axiosInstance = useAxiosInstance();
     const [product, setProduct] = useState()
-    // const { productId } = useParams();
+    const [showModal, setShowModal] = useState(false);
+    const [draftProduct, setDraftProduct] = useState(null);
+const [originalProduct, setOriginalProduct] = useState(null);
+    const [successMsg, setSuccessMsg] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
     const [searchParams] = useSearchParams();
+
     const { id } = useParams();
-    console.log("Product", product);
+    console.log("Draft", draftProduct);
+    console.log("Product", originalProduct);
     useEffect(() => {
         if (id) {
             fetchProductDetails(id);
         }
-    }, [id]); // <-- add productId to dependencies
-    console.log("Product ID:", id);
+    }, [id]);
+    console.log("SSSAAS",product)
     const fetchProductDetails = async (id) => {
         try {
             const response = await axiosInstance.get(`/products/shopify_products/${id}/`);
@@ -30,7 +37,37 @@ const ProductOptimizationPage = () => {
             console.error("Failed to fetch product:", error);
         }
     };
-    const handleOptimize = async () => {}
+    const handleOptimize = async () => {
+      try {
+        let response = await axiosInstance.post(`/products/product_optimize/`, {
+          product_id: product,
+        });
+        if (response.status === 200) {
+          getDraftChanges()
+        }
+      } catch (error) {
+       console.log("Optimization error:", error); 
+      }
+    }
+
+    const getDraftChanges = async () => {
+  try {
+    const response = await axiosInstance.get(`/products/product_optimize/`, {
+      params: { product_id: product.parent_product_id }
+    });
+    console.log("Draft Changes Response:", response.data);
+    if (response.status === 200) {
+      const { draft, original } = response.data;
+
+      setDraftProduct(draft);
+      setOriginalProduct(original);
+    }
+
+  } catch (error) {
+    console.error(error);
+  }
+};
+
     const handleApprove = async () => {}
     const handleReject = async () => {}
   return (
@@ -45,38 +82,35 @@ const ProductOptimizationPage = () => {
 
     {/* MAIN */}
     <div className="flex flex-row gap-10 px-10 ml-52">
+<div
+  className="
+    w-[460px]
+    bg-[#151530]/80
+    border-2 border-gray-800
+    rounded-3xl
+    p-7
+  "
+>
+  {/* Section Title */}
+  <h2 className="text-lg font-semibold text-[#dbe1ff] tracking-wide mb-5">
+    Product Details
+  </h2>
 
-      {/* LEFT CARD */}
-      <div className="
-        w-[460px] 
-        bg-[#151530]/80 
-        border border-[#23253a] 
-        rounded-3xl 
-        p-7 
-        shadow-[0_0_25px_rgba(62,111,244,0.08)]
-        backdrop-blur-lg
-      ">
-        
-        {/* Section Title */}
-        <h2 className="text-lg font-semibold text-[#dbe1ff] tracking-wide mb-5">
-          Product Details
-        </h2>
-
-        {/* Product Image */}
-        <div className="
-      w-full h-72 
-      bg-[#23253a]/60 
-      border border-[#2f3146]
-      rounded-2xl 
-      flex items-center justify-center 
-      text-gray-500
-      shadow-inner
-      text-sm tracking-wide
-    ">
-  {product?.img_field ? (
-    <img 
-      src={product.img_field} 
-      alt={product.title || "Product Image"} 
+  {/* Product Image */}
+<div
+  className="
+    h-72
+    rounded-2xl
+    flex items-center justify-center
+    text-gray-500
+    shadow-inner
+    text-sm tracking-wide
+  "
+>
+  {draftProduct?.img_field || product?.img_field ? (
+    <img
+      src={draftProduct?.img_field || product.img_field}
+      alt={draftProduct?.title || product?.title || "Product Image"}
       className="max-w-full max-h-full object-contain rounded-2xl"
     />
   ) : (
@@ -84,31 +118,100 @@ const ProductOptimizationPage = () => {
   )}
 </div>
 
-        {/* Info Section */}
-        <div className="mt-8 space-y-4 text-gray-300 text-[15px] leading-relaxed">
+{/* Info Section */}
+<div className="mt-8 space-y-5 text-[15px] leading-relaxed">
+  {/* Product Fields */}
+  {[
+    { label: "Title", key: "title" },
+    { label: "Description", key: "description" },
+    { label: "Category", key: "category" },
+    { label: "Images", key: "price" },
+  ].map(({ label, key }) => {
+    const oldVal = originalProduct?.[key] ?? product?.[key] ?? "";
+    const newVal = draftProduct?.[key] ?? null;
+    const changed = newVal && newVal !== oldVal;
 
-          <p>
-            <span className="text-[#e0e3ff] font-semibold tracking-wide">Title:</span>
-            <span className="ml-2 text-gray-400">{product?.title}</span>
-          </p>
+    return (
+      <div key={key} className="flex flex-col">
+        <span className="text-[#e0e3ff] font-semibold tracking-wide mb-1">
+          {label}:
+        </span>
 
-          <p>
-            <span className="text-[#e0e3ff] font-semibold tracking-wide">Description:</span>
-            <span className="ml-2 text-gray-400">{product?.description}</span>
-          </p>
-
-          <p>
-            <span className="text-[#e0e3ff] font-semibold tracking-wide">Alt text:</span>
-            <span className="ml-2 text-gray-400">{product?.altText}</span>
-          </p>
-
-          <p>
-            <span className="text-[#e0e3ff] font-semibold tracking-wide">Category:</span>
-            <span className="ml-2 text-gray-400">{product?.category}</span>
-          </p>
-
-        </div>
+        {changed ? (
+          <div className="flex flex-col ml-2">
+            <span className="text-gray-500 line-through opacity-60 text-sm">
+              {oldVal || "—"}
+            </span>
+            <span className="text-[#3e6ff4] font-semibold tracking-wide">
+              {newVal}
+            </span>
+          </div>
+        ) : (
+          <span className="ml-2 text-gray-300">{oldVal || "—"}</span>
+        )}
       </div>
+    );
+  })}
+
+  {/* Images with alt_text */}
+{/* Images with alt_text */}
+{/* Images Section */}
+{/* Images Section */}
+{product?.media?.map((originalImg) => {
+  // Find matching draft image by shopify_media_id
+  const draftImg = draftProduct?.images?.find(
+    (i) => i.id === originalImg.shopify_media_id || i.shopify_media_id === originalImg.shopify_media_id
+  );
+
+  const oldAlt = originalImg.alt_text || "";
+  const newAlt = draftImg?.alt_text || "";
+  const changed = newAlt && newAlt !== oldAlt;
+
+  return (
+    <div key={originalImg.id} className="flex flex-col mt-4">
+      <span className="text-[#e0e3ff] font-semibold tracking-wide mb-1">
+        Image ID: {originalImg.id}
+      </span>
+
+      {/* Image preview */}
+      {originalImg.src ? (
+        <img
+          src={originalImg.src}
+          alt={newAlt || oldAlt || "Product Image"}
+          className="max-w-full max-h-48 object-contain rounded-xl mb-1"
+        />
+      ) : (
+        <div className="w-full h-48 bg-gray-700 flex items-center justify-center rounded-xl mb-1 text-gray-300">
+          No image available
+        </div>
+      )}
+
+      {/* Alt text */}
+      <div className="ml-2 text-sm flex flex-col gap-1">
+        {changed ? (
+          <>
+            {oldAlt && (
+              <span className="text-gray-500 line-through opacity-90">{oldAlt}</span>
+            )}
+            <span className="text-[#3e6ff4] font-semibold ml-1">{newAlt}</span>
+          </>
+        ) : (
+          <span className="text-gray-300">{oldAlt || "—"}</span>
+        )}
+      </div>
+    </div>
+  );
+})}
+
+
+
+
+
+
+
+</div>
+
+</div>
 
       {/* RIGHT SIDE */}
       <div className="flex flex-col gap-10 w-[550px]">
@@ -116,7 +219,7 @@ const ProductOptimizationPage = () => {
         {/* OPTIMIZATION BOX */}
         <div className="
           bg-[#151530]/80 
-          border border-[#23253a] 
+          border-2 border-[#23253a] 
           rounded-3xl 
           p-7 
           shadow-[0_0_20px_rgba(62,111,244,0.06)]
@@ -134,7 +237,7 @@ const ProductOptimizationPage = () => {
 
           {/* Optimize Button */}
           <button
-            onClick={handleOptimize}
+            onClick={() => setShowModal(true)}
             className="
               group
               px-7 py-3 
@@ -143,30 +246,39 @@ const ProductOptimizationPage = () => {
               rounded-xl 
               text-white 
               text-[15px]
-              font-semibold 
+              font-semibold
+              mx-auto
               tracking-wide
               transition-all
               flex items-center gap-2
-              shadow-[0_0_18px_rgba(62,111,244,0.35)]
+              
             "
           >
             <span>Optimize</span>
             <svg
-              className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-              fill="none" stroke="currentColor" strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
+          className="
+            w-5 h-5
+            text-white 
+            transition-all 
+            duration-500 
+            group-hover:scale-125 
+            group-hover:rotate-12
+            drop-shadow-[0_0_6px_rgba(255,255,255,0.8)]
+          "
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 2l1.8 4.5L18 8.2l-3.4 3 1 4.8-4-2-4 2 1-4.8L6 8.2l4.2-.7L12 2z" />
+        </svg>
           </button>
         </div>
 
         {/* PREVIEW BOX */}
         <div className="
           bg-[#151530]/80 
-          border border-[#23253a] 
+          border-2 border-[#23253a] 
           rounded-3xl 
-          p-7 
+          p-7
           shadow-[0_0_25px_rgba(62,111,244,0.05)]
           backdrop-blur-lg
         ">
@@ -218,6 +330,7 @@ const ProductOptimizationPage = () => {
         </div>
 
       </div>
+      <OptimizeProductModal showModal={showModal} onClose={() => setShowModal(false)} awaitOptimize={handleOptimize}/>
     </div>
   </div>
 </section>
