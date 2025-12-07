@@ -4,6 +4,7 @@ import Search from "../components/SearchComponent/Search";
 import { ArrowLeft, ArrowRight, Barcode, Hash } from "lucide-react";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useRedux } from "../constants/reduxImports";
+import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import OptimizeProductModal from "../features/modal/OptimizeProductModal";
 import ProductImageCarousel from "../components/Carousel/ProductImageCarousel";
@@ -14,11 +15,15 @@ const ProductOptimizationPage = () => {
     const [product, setProduct] = useState()
     const [showModal, setShowModal] = useState(false);
     const [draftProduct, setDraftProduct] = useState(null);
-const [originalProduct, setOriginalProduct] = useState(null);
+    const [originalProduct, setOriginalProduct] = useState(null);
+    const [optimized, setOptimized] = useState(false)
+    const [loading, setLoading] = useState(false); 
+    const [approved, setApproved] = useState()
     const [successMsg, setSuccessMsg] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [searchParams] = useSearchParams();
 
+    const navigate = useNavigate();
     const { id } = useParams();
 
     useEffect(() => {
@@ -45,8 +50,10 @@ const [originalProduct, setOriginalProduct] = useState(null);
         });
         if (response.status === 200) {
           getDraftChanges()
+          setOptimized(true)
         }
       } catch (error) {
+
        console.log("Optimization error:", error); 
       }
     }
@@ -69,7 +76,24 @@ const [originalProduct, setOriginalProduct] = useState(null);
   }
 };
 
-    const handleApprove = async () => {}
+    const handleApprove = async () => {
+      setLoading(true);
+      const body = {
+        'product':product.product_id,
+        'approval':true
+      }
+      try {
+        let response = await axiosInstance.post('/products/optimize_shopify_product/',body)
+
+        if(response.status===200){
+          setOptimized(false)
+          navigate('/products_shopify');
+        }
+      } catch (error) {
+        setLoading(false);
+        console.log(error)
+      }
+    }
     const handleReject = async () => {}
   return (
     <section className="min-h-screen w-full bg-[#0A0E1A] text-white font-inter">
@@ -111,7 +135,7 @@ const [originalProduct, setOriginalProduct] = useState(null);
   {draftProduct?.img_field || product?.img_field ? (
     <img
       src={draftProduct?.img_field || product.img_field}
-      alt={draftProduct?.title || product?.title || "Product Image"}
+      alt={draftProduct?.product.title || product?.title || "Product Image"}
       className="max-w-full max-h-full object-contain rounded-2xl"
     />
   ) : (
@@ -125,33 +149,60 @@ const [originalProduct, setOriginalProduct] = useState(null);
   {[
     { label: "Title", key: "title" },
     { label: "Description", key: "description" },
-    { label: "Category", key: "category" },
+    // { label: "Category", key: "category" },
   ].map(({ label, key }) => {
+    const isStatic = draftProduct?.product?.static === true;
     const oldVal = originalProduct?.[key] ?? product?.[key] ?? "";
-    const newVal = draftProduct?.[key] ?? null;
+    const newVal = draftProduct?.product?.[key] ?? null;
     const changed = newVal && newVal !== oldVal;
 
     return (
       <div key={key} className="flex flex-col">
-        <span className="text-[#e0e3ff] font-semibold tracking-wide mb-1">
-          {label}:
-        </span>
+      {/* Label */}
+      <span className="text-[#e0e3ff] font-semibold tracking-wide mb-1">
+        {label}:
+      </span>
 
-        {changed ? (
-          <div className="flex flex-col ml-2">
-            <span className="text-gray-500 line-through opacity-60 text-sm">
-              {oldVal || "—"}
-            </span>
+      {/* Special: Static description used */}
+      {label === "Description" && isStatic ? (
+        <span className="ml-2 text-[#3e6ff4] font-semibold tracking-wide">
+          Static description used
+        </span>
+      ) : changed ? (
+        /* Changed field view */
+        <div className="flex flex-col ml-2">
+          <span className="text-gray-500 line-through opacity-60 text-sm">
+            {oldVal || "—"}
+          </span>
+
+          <div className="flex items-center gap-2 mt-1">
             <span className="text-[#3e6ff4] font-semibold tracking-wide">
               {newVal}
             </span>
+
+            <span
+              className="
+                text-xs 
+                font-bold 
+                px-2 py-[2px] 
+                rounded-full 
+                bg-[#3e6ff4]/20 
+                text-[#3e6ff4] 
+                border border-[#3e6ff4]/40
+                animate-pulse
+              "
+            >
+              NEW
+            </span>
           </div>
-        ) : (
-          <span className="ml-2 text-gray-300">{oldVal || "—"}</span>
-        )}
-      </div>
-    );
-  })}
+        </div>
+      ) : (
+        /* Default unchanged */
+        <span className="ml-2 text-gray-300">{oldVal || "—"}</span>
+      )}
+    </div>
+  );
+})}
 
   {/* Images with alt_text */}
 {/* Images with alt_text */}
@@ -229,15 +280,18 @@ const [originalProduct, setOriginalProduct] = useState(null);
         </div>
 
         {/* PREVIEW BOX */}
-        <div className="
-          bg-[#151530]/80 
-          border-2 border-[#23253a] 
-          rounded-3xl 
-          p-7
-          shadow-[0_0_25px_rgba(62,111,244,0.05)]
-          backdrop-blur-lg
-        ">
-
+        {optimized && (
+        <div
+          className="
+            bg-[#151530]/80 
+            border-2 border-[#23253a] 
+            rounded-3xl 
+            p-7
+            shadow-[0_0_25px_rgba(62,111,244,0.05)]
+            backdrop-blur-lg
+            relative
+          "
+        >
           <h3 className="text-[17px] font-semibold text-[#dbe3ff] tracking-wide mb-4">
             Review Changes
           </h3>
@@ -246,32 +300,35 @@ const [originalProduct, setOriginalProduct] = useState(null);
             Carefully check the AI-generated changes before applying them to your Shopify store.
           </p>
 
-          <div className="flex gap-4">
-
-            {/* APPROVE */}
+          {/* Buttons */}
+          <div className="flex items-center">
             <button
               onClick={handleApprove}
+              disabled={loading} // prevent double click
               className="
                 px-7 py-3 
                 bg-green-600 hover:bg-green-500 
                 rounded-xl 
-                text-white 
+                text-white
+                mx-2
                 text-[15px]
                 font-semibold 
                 tracking-wide
                 transition-all
+                relative
               "
             >
-              Approve
+              {loading ? "Processing..." : "Approve"}
             </button>
 
-            {/* REJECT */}
             <button
               onClick={handleReject}
+              disabled={loading} // prevent actions while loading
               className="
                 px-7 py-3 
                 bg-red-600 hover:bg-red-500 
-                rounded-xl 
+                rounded-xl
+                mx-2
                 text-white 
                 text-[15px]
                 font-semibold
@@ -282,7 +339,15 @@ const [originalProduct, setOriginalProduct] = useState(null);
               Reject
             </button>
           </div>
+
+          {/* Progress Bar */}
+          {loading && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-3xl">
+              <div className="w-16 h-16 border-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"></div>
+            </div>
+          )}
         </div>
+      )}
 
       </div>
       <OptimizeProductModal showModal={showModal} onClose={() => setShowModal(false)} awaitOptimize={handleOptimize}/>

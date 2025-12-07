@@ -60,7 +60,7 @@ export const ShopifyProductsPage = () => {
       
       if(response.status === 201){
         getProducts()
-        dispatch(setUserInfo({ product_import: true }));
+        // dispatch(setUserInfo({ product_import: true }));
 
       }
     } catch (error) {
@@ -267,7 +267,7 @@ const handleGenerate = async (type) => {
 
               <div className="flex items-center gap-4 text-start">
                 <img
-                  src={product?.img_field || "/placeholder.png"}
+                  src={product?.media[0]?.src || "/placeholder.png"}
                   alt={product?.title}
                   className="w-16 h-16 rounded-xl object-cover shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
                 />
