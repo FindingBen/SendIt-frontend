@@ -1,15 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-
 const CampaignCard = ({ campaign }) => {
   return (
-    <>
-      <div>{campaign.name}</div>
+    <div className="grid grid-cols-5 gap-4 items-center text-sm">
+      <div className="font-medium truncate">{campaign.name}</div>
       <div>{campaign.engagement}</div>
       <div>{campaign.overall_perfromance ?? 0}%</div>
       <div>{campaign.total_clicks ?? 0}</div>
       <div>{campaign.audience}</div>
-    </>
+    </div>
   );
 };
 
