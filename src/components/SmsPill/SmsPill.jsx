@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import useAxiosInstance from "../../utils/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import { useRedux } from "../../constants/reduxImports";
 import { logOut } from "../../redux/reducers/authSlice";
@@ -10,15 +11,24 @@ import { cleanPackage } from "../../redux/reducers/packageReducer";
 import { setModalState } from "../../redux/reducers/modalReducer";
 
 const SmsPill = () => {
-  const { currentUser, currentSmsPackCount, currentToken, dispatch } =
+  const { currentUser, currentSmsPackCount, currentToken, dispatch , currentNotifications, currentUnreadCount} =
     useRedux();
+  const axiosInstance = useAxiosInstance();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const notifRef = useRef(null);
+  const [notifOpen, setNotifOpen] = useState(false);
   const navigate = useNavigate();
+
+
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
+      }
+      if (notifRef.current && !notifRef.current.contains(event.target)) {
+        setNotifOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -49,6 +59,109 @@ const SmsPill = () => {
   const smsCount = currentSmsPackCount || 0;
   return (
    <div className="flex flex-row gap-4 items-center ml-auto mr-20">
+  {/* Notification bell */}
+  <div ref={notifRef} className="relative">
+    <button
+      onClick={() => setNotifOpen((s) => !s)}
+      className="relative p-2 rounded-xl bg-[#1B2233] hover:bg-[#242E44] text-gray-200 transition-colors duration-150"
+      aria-label="Notifications"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0 1 18 14.158V11a6 6 0 1 0-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0a3 3 0 1 1-6 0h6z" />
+      </svg>
+      {currentUnreadCount > 0 && (
+      <span className="absolute -top-1 -right-1 w-4 h-4 text-[10px] flex items-center justify-center rounded-full bg-red-500 text-white"> {currentUnreadCount ?? 0}</span>
+    )}
+      </button>
+
+    {notifOpen && (
+      <div className="absolute right-0 mt-2 w-80 bg-[#1F273A] rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.45)] border-2 border-[#2A3148]/40 z-50 backdrop-blur-md">
+        <div className="px-4 py-3 border-b border-[#2A3148]/30">
+          <div className="flex items-center justify-between">
+            <span className="text-gray-200 font-semibold">Notifications</span>
+            <button className="text-sm text-gray-400 hover:text-white">Mark all read</button>
+          </div>
+        </div>
+        <div className="max-h-64 overflow-y-auto divide-y divide-[#2A3148]/40">
+  {currentNotifications && currentNotifications.length > 0 ? (
+    currentNotifications.map((notif) => {
+      const isUnread = !notif.read;
+      console.log("Notification:", notif);
+      return (
+        <div
+          key={notif.id}
+          className={`group px-4 py-3 transition-colors cursor-pointer
+            ${isUnread ? "bg-[#242E44]/40" : "bg-transparent"}
+            hover:bg-[#2F3A5A]/40`}
+        >
+          <div className="flex items-start gap-3">
+            {/* Status dot */}
+            <span
+              className={`mt-2 h-2 w-2 rounded-full flex-shrink-0
+                ${isUnread ? "bg-[#3E6FF4]" : "bg-transparent"}`}
+            />
+
+            <div className="flex-1">
+              {/* Message */}
+              <p className="text-sm text-gray-200 leading-snug">
+                {notif.message}
+              </p>
+
+              {/* Meta */}
+              <div className="mt-1 flex items-center gap-2 text-xs text-gray-400">
+                <span>
+                  {new Date(notif.createdAt).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </span>
+
+                {notif.type === "OPTIMIZATION_DONE" && (
+                  <span className="rounded-full bg-green-500/15 text-green-400 px-2 py-0.5">
+                    Completed
+                  </span>
+                )}
+
+                {notif.type === "OPTIMIZATION_FAILED" && (
+                  <span className="rounded-full bg-red-500/15 text-red-400 px-2 py-0.5">
+                    Failed
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Action (appears on hover) */}
+          {notif.action && (
+  <div className="mt-2 pl-5 hidden group-hover:block">
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        navigate(notif.action.to);
+      }}
+      className="text-xs text-[#3E6FF4] hover:underline"
+    >
+      {notif.action.label}
+    </button>
+  </div>
+)}
+
+        </div>
+      );
+    })
+  ) : (
+    <div className="px-4 py-6 text-center text-gray-400">
+      No notifications
+    </div>
+  )}
+</div>
+
+        <div className="px-4 py-2 border-t border-[#2A3148]/30">
+          <button className="w-full text-left text-sm text-[#3E6FF4]">View all</button>
+        </div>
+      </div>
+    )}
+  </div>
   {/* Credits Pill */}
   <div className="flex items-center justify-between px-4 py-2 w-56 rounded-xl bg-[#1B2233] shadow-[0_4px_16px_rgba(0,0,0,0.35)] text-gray-200">
     <span className="text-gray-300 font-medium">

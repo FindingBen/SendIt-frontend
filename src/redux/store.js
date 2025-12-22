@@ -12,6 +12,7 @@ import packageReducer from "./reducers/packageReducer";
 import messageReducer from "./reducers/messageReducer";
 import contactListReducer from "./reducers/contactListReducer";
 import archiveReducer from "./reducers/archiveReducer";
+import notificationReducer from "./reducers/notificationReducer";
 
 const persistConfig = {
   key: "root",
@@ -30,6 +31,8 @@ const rootReducer = combineReducers({
   user: userReducer,
   archiveState: archiveReducer,
   completedCampaigns: completedCampaignsReducer,
+  notifications: notificationReducer,
+  
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

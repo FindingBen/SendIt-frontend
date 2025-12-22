@@ -7,7 +7,7 @@ import { store, persistor } from "../src/redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
-import { registerLicense } from "@syncfusion/ej2-base";
+import NotificationBootstrap from "./NotificationBootstrap";
 import App from "./App";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 
@@ -17,6 +17,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <NotificationBootstrap />
       <BrowserRouter>
         <PersistGate loading={null} persistor={persistor}>
           <Routes>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useCallback } from "react";
 import { Link } from "react-router-dom";
 import SmsPill from "../components/SmsPill/SmsPill";
 import Search from "../components/SearchComponent/Search";
@@ -6,19 +6,27 @@ import { ArrowLeft, ArrowRight, Barcode, Hash } from "lucide-react";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useRedux } from "../constants/reduxImports";
 import {setUserInfo} from "../redux/reducers/userReducer"
+import useNotificationSocket from "../hooks/useNotificationSocket";
 import GenerateModal from "../features/modal/GenerateModal";
 import ConfirmProductImport from "../features/modal/ConfirmProductImport";
+import OptimizeProductModal from "../features/modal/OptimizeProductModal";
+import { set } from "react-ga";
 
 export const ShopifyProductsPage = () => {
   const axiosInstance = useAxiosInstance();
   const { currentUserState, dispatch } = useRedux();
   const [show, setShow] = useState(false);
   const [showImport, setShowImport] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
   const [page, setPage] = useState(1);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [selectedForOpt, setSelectedForOpt] = useState(null);
   const [generating, setGenerating] = useState(false);
+  const [startOptimize, setStartOptimize] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const perPage = 5;
   const totalPages = Math.ceil(products?.length / perPage);
   const currentProducts = products?.slice((page - 1) * perPage, page * perPage);
@@ -33,6 +41,10 @@ export const ShopifyProductsPage = () => {
     getProducts();
   }, [show]);
 
+  useEffect(() => {
+    getProducts();
+  }, [startOptimize]);
+
   const getProducts = async () => {
     try {
       const response = await axiosInstance.get("/products/shopify_products/");
@@ -45,7 +57,6 @@ export const ShopifyProductsPage = () => {
 
   const prodOpt = async (product) => {
     const data = {"product": product}
-    console.log("Optimizing product with ID:", product);
     try {
       let response = await axiosInstance.post("/products/product_optimize/", data);
       console.log("Optimization response:", response?.data);
@@ -53,7 +64,7 @@ export const ShopifyProductsPage = () => {
       console.error("Error optimizing product:", error);
     }
   }
-
+console.log('selectedForOpt',selectedForOpt)
   const importBulkProducts = async () => {
     try {
       const response = await axiosInstance.get("/products/import_bulk_products/");
@@ -67,7 +78,7 @@ export const ShopifyProductsPage = () => {
       console.error("Error fetching Shopify products:", error);
     }
   };
-  console.log('PRODUCT',selectedForOpt)
+
 
   // Toggle single product selection
   const toggleProductSelection = (product) => {
@@ -89,10 +100,47 @@ export const ShopifyProductsPage = () => {
     }
   };
 
-  const handleGenerateModal = (type) => {
-    setGenerating(type)
-    setShow(true);
-  }
+// const handleNotification = useCallback((data) => {
+//     // Accept multiple payload shapes depending on your Channels setup
+//     const payload = data.payload || data || {};
+//     const event = payload.event || payload.type || null;
+//     const jobId = payload.job_id || payload.jobId || payload.job || null;
+//     const productId = payload.product_id || payload.productId || payload.product || null;
+//     console.log("Received notification:", data);
+//     if (!event) return;
+
+//     if (event === "OPTIMIZATION_DONE" || event === "OPTIMIZATION_FAILED") {
+//       // if product matches current page product, refresh draft
+//       if (productId && selectedForOpt && selectedForOpt.product_id === productId) {
+        
+//           console.log('done')
+//       } else {
+//         // if no productId provided or different, still refresh list or ignore
+//       }
+//     }
+//   }, [selectedForOpt]);
+
+//   // connect to websocket to receive notifications (path can be adjusted)
+//   useNotificationSocket({ path: "/ws/notifications/", onMessage: handleNotification });
+
+
+  const handleOptimize = async () => {
+
+        try {
+          let response = await axiosInstance.post(`/notifications/optimize_job`, {
+            product_id: selectedForOpt.product_id,
+          });
+          if (response.status === 202) {
+            setSuccessMsg("Optimization started successfully.");
+            setStartOptimize(true);
+            // getDraftChanges()
+            // setOptimized(true)
+          }
+        } catch (error) {
+  
+         console.log("Optimization error:", error); 
+        }
+      }
 
   // Handle SKU or Barcode generation
 const handleGenerate = async (type) => {
@@ -170,46 +218,6 @@ const handleGenerate = async (type) => {
               </div>
             )}</>):<></>}
             </div>
-
-
-            <div className="flex gap-3">
-              <button
-                onClick={()=>prodOpt(selectedForOpt)}
-                className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  selectedProducts.length === 0
-                    ? "bg-[#3E6FF4]/15 text-gray-500 cursor-not-allowed"
-                    : "bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] hover:opacity-90 text-white shadow-[0_0_12px_rgba(62,111,244,0.25)]"
-                }`}
-              >
-              
-                Optimize SEO and Completness
-              </button>
-              
-              {/* <button
-                onClick={() => handleGenerateModal("sku")}
-                className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  selectedProducts.length === 0
-                    ? "bg-[#3E6FF4]/15 text-gray-500 cursor-not-allowed"
-                    : "bg-gradient-to-r from-[#3E6FF4] to-[#4937BA] hover:opacity-90 text-white shadow-[0_0_12px_rgba(62,111,244,0.25)]"
-                }`}
-              >
-                <Hash className="w-4 h-4 mr-2" />
-                Auto-generate SKU
-              </button>
-
-              <button
-                onClick={() => handleGenerateModal("barcode")}
-                disabled={selectedProducts.length === 0}
-                className={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  selectedProducts.length === 0
-                    ? "bg-[#4937BA]/15 text-gray-500 cursor-not-allowed"
-                    : "bg-gradient-to-r from-[#4937BA] to-[#3E6FF4] hover:opacity-90 text-white shadow-[0_0_12px_rgba(73,55,186,0.25)]"
-                }`}
-              >
-                <Barcode className="w-4 h-4 mr-2" />
-                Auto-generate Barcode
-              </button> */}
-            </div>
           </div>
 
           {/* Table */}
@@ -281,70 +289,98 @@ const handleGenerate = async (type) => {
             </div>
 
             {/* Right side: price + barcode + SKU */}
-            <div className="flex items-center gap-10">
-              <div className="flex flex-col text-right">
-                <span className="text-gray-400 text-sm">Seo Score</span>
-                <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${seoP.classes}`}>
-                  {seoP.label}
-                </span>
-              </div>
+            {(product?.optimization_status === "in progress") ? (
+    <div>Optimization In progress</div>
+  ) : (product?.optimization_status === "completed") ? (
+    <div className="flex items-center gap-10">
+      <div className="flex flex-col text-right">
+        <span className="text-gray-400 text-sm">Seo Score</span>
+        <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${seoP.classes}`}>
+          {seoP.label}
+        </span>
+      </div>
 
-              <div className="flex flex-col text-right">
-                <span className="text-gray-400 text-sm">Completness</span>
-                <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${compP.classes}`}>
-                  {compP.label}
-                </span>
-              </div>
+      <div className="flex flex-col text-right">
+        <span className="text-gray-400 text-sm">Completness</span>
+        <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${compP.classes}`}>
+          {compP.label}
+        </span>
+      </div>
 
-              {/* <div className="flex flex-col text-right">
-                <span className="text-gray-400 text-sm">Price</span>
-                <span className="text-gray-100 font-semibold">
-                  ${product?.price || "0.00"}
-                </span>
-              </div> */}
+      <Link
+        to={`/product_optimize/${product?.id}`}
+        className="
+          group
+          flex items-center gap-2
+          px-6 py-3 
+          bg-[#10b981] 
+          hover:bg-[#10b981]/90 
+          rounded-xl
+          text-white
+          font-semibold
+          transition-all
+          shadow-md
+        "
+      >
+        <span className="text-sm">View results</span>
+        <svg
+          className="w-4 h-4 text-white transition-transform duration-300 group-hover:translate-x-1"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </Link>
+    </div>
+  ) : (
+    // default: show Optimize option for "not started" or unknown states
+    <div className="flex items-center gap-10">
+      <div className="flex flex-col text-right">
+        <span className="text-gray-400 text-sm">Seo Score</span>
+        <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${seoP.classes}`}>
+          {seoP.label}
+        </span>
+      </div>
 
-              {/* <div className="flex flex-col text-right">
-                <span className="text-gray-400 text-sm">Barcode</span>
-                <span className="text-[#3E6FF4] font-semibold">
-                  {product?.barcode || "—"}
-                </span>
-              </div> */}
-              <Link
-                className="
-                  group
-                  flex items-center gap-2
-                  px-6 py-3 
-                  bg-[#3e6ff4]/20 
-                  hover:bg-[#3e6ff4]/30 
-                  border border-[#3e6ff4]/40 
-                  rounded-xl
-                  text-[#d7dbff]
-                  font-semibold
-                  transition-all
-                  shadow-md
-                "
-                to={`/product_optimize/${product?.id}`}
-              >
-                <span className="text-gray-300 text-sm">Optimize</span>
+      <div className="flex flex-col text-right">
+        <span className="text-gray-400 text-sm">Completness</span>
+        <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${compP.classes}`}>
+          {compP.label}
+        </span>
+      </div>
 
-                <svg
-                  className="w-4 h-4 text-[#3e6ff4] transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
+      <button
+        className="
+          group
+          flex items-center gap-2
+          px-6 py-3 
+          bg-[#3e6ff4]/20 
+          hover:bg-[#3e6ff4]/30 
+          border border-[#3e6ff4]/40 
+          rounded-xl
+          text-[#d7dbff]
+          font-semibold
+          transition-all
+          shadow-md
+        "
+        onClick={() => [setShowModal(true), setSelectedForOpt(product)]}
+      >
+        <span className="text-gray-300 text-sm">Optimize</span>
 
-              {/* <div className="flex flex-col text-right">
-                <span className="text-gray-400 text-sm">SKU</span>
-                <span className="text-[#3E6FF4] font-semibold">
-                  {product?.sku || "—"}
-                </span>
-              </div> */}
-            </div>
+        <svg
+          className="w-4 h-4 text-[#3e6ff4] transition-transform duration-300 group-hover:translate-x-1"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  )}
           </div>
         );
       })}
@@ -391,6 +427,7 @@ const handleGenerate = async (type) => {
           )}
         </div>
       </div>
+      <OptimizeProductModal showModal={showModal} onClose={() => setShowModal(false)} awaitOptimize={handleOptimize}/>
     </div>
   </div>
 </section>

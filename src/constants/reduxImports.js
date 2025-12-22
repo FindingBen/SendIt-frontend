@@ -24,6 +24,8 @@ import { selectArchiveStateState } from "../redux/reducers/archiveReducer";
 import { selectCampaigns } from "../redux/reducers/completedCampaignsReducer";
 import { selectShopifyToken } from "../redux/reducers/authSlice";
 import { selectCurrentShopId } from "../redux/reducers/authSlice";
+import { selectUnreadCount } from "../redux/reducers/notificationReducer";
+import { selectNotifications } from "../redux/reducers/notificationReducer";
 
 export const useRedux = () => {
   const dispatch = useDispatch();
@@ -46,6 +48,8 @@ export const useRedux = () => {
   const currentDomain = useSelector(selectCurrentDomain);
   const currentShopifyToken = useSelector(selectShopifyToken);
   const currentShopId = useSelector(selectCurrentShopId);
+  const currentUnreadCount = useSelector(selectUnreadCount);
+ const currentNotifications = useSelector(selectNotifications);
 
   return {
     dispatch,
@@ -68,5 +72,7 @@ export const useRedux = () => {
     currentDomain,
     currentShopifyToken,
     currentShopId,
+    currentUnreadCount,
+    currentNotifications
   };
 };
