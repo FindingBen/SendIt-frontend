@@ -9,7 +9,8 @@ import { cleanUser } from "../../redux/reducers/userReducer";
 import { clearCampaigns } from "../../redux/reducers/completedCampaignsReducer";
 import { cleanPackage } from "../../redux/reducers/packageReducer";
 import { setModalState } from "../../redux/reducers/modalReducer";
-
+import { markAllAsRead } from "../../redux/reducers/notificationReducer";
+import { markAsRead } from "../../redux/reducers/notificationReducer";
 const SmsPill = () => {
   const { currentUser, currentSmsPackCount, currentToken, dispatch , currentNotifications, currentUnreadCount} =
     useRedux();
@@ -62,10 +63,21 @@ const SmsPill = () => {
   {/* Notification bell */}
   <div ref={notifRef} className="relative">
     <button
-      onClick={() => setNotifOpen((s) => !s)}
-      className="relative p-2 rounded-xl bg-[#1B2233] hover:bg-[#242E44] text-gray-200 transition-colors duration-150"
-      aria-label="Notifications"
-    >
+  onClick={() => {
+    setNotifOpen((open) => {
+      const next = !open;
+
+      // ✅ When opening, mark all as read
+      if (!open && currentUnreadCount > 0) {
+        dispatch(markAllAsRead());
+      }
+
+      return next;
+    });
+  }}
+  className="relative p-2 rounded-xl bg-[#1B2233] hover:bg-[#242E44] text-gray-200 transition-colors duration-150"
+  aria-label="Notifications"
+>
       <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0 1 18 14.158V11a6 6 0 1 0-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0a3 3 0 1 1-6 0h6z" />
       </svg>
@@ -89,11 +101,17 @@ const SmsPill = () => {
       console.log("Notification:", notif);
       return (
         <div
-          key={notif.id}
-          className={`group px-4 py-3 transition-colors cursor-pointer
-            ${isUnread ? "bg-[#242E44]/40" : "bg-transparent"}
-            hover:bg-[#2F3A5A]/40`}
-        >
+    key={notif.id}
+    onClick={() => {
+      if (!notif.read) {
+        dispatch(markAsRead(notif.id));
+      }
+    }}
+    className={`group px-4 py-3 transition-colors cursor-pointer
+      ${isUnread ? "bg-[#242E44]/40" : "bg-transparent"}
+      hover:bg-[#2F3A5A]/40`}
+  >
+
           <div className="flex items-start gap-3">
             {/* Status dot */}
             <span
