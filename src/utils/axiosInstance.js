@@ -58,21 +58,21 @@ const useAxiosInstance = () => {
             refresh: getRefreshToken,
           });
 
-          const newToken = response.data.access;
-          localStorage.setItem("refreshToken", response.data.refresh);
+          const newAccess = response.data.access;
+          //localStorage.setItem("refreshToken", response.data.refresh);
 
           dispatch(
             setCredentials({
               user: currentUser,
-              token: newToken,
+              token: newAccess,
               tokenType: "JWT",
             })
           );
 
-          const newAxiosInstance = createAxiosInstance(newToken, "JWT");
-          axiosInstanceRef.current = newAxiosInstance;
+          // const newAxiosInstance = createAxiosInstance(newToken, "JWT");
+          // axiosInstanceRef.current = newAxiosInstance;
 
-          req.headers.Authorization = `Bearer ${newToken}`;
+          req.headers.Authorization = `Bearer ${newAccess}`;
           req.isTokenRefresh = true;
         } catch (error) {
           localStorage.removeItem("refreshToken");

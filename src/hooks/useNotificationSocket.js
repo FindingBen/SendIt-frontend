@@ -1,38 +1,60 @@
 import { useEffect, useRef } from "react";
+import jwt_decode from "jwt-decode";
 import { config } from "../constants/Constants";
 import { useRedux } from "../constants/reduxImports";
 
 const makeWsUrl = (baseUrl, path, token) => {
   const isSecure = baseUrl.startsWith("https");
   const wsProto = isSecure ? "wss" : "ws";
-  // remove http(s)://
   const host = baseUrl.replace(/^https?:\/\//, "");
   let url = `${wsProto}://${host}${path}`;
   if (token) {
     const separator = url.includes("?") ? "&" : "?";
-    url = `${url}${separator}token=${encodeURIComponent(token)}`;
+    url += `${separator}token=${encodeURIComponent(token)}`;
   }
   return url;
 };
 
-// options: { path: string, onMessage: fn }
+const isTokenValid = (token) => {
+  try {
+    const { exp } = jwt_decode(token);
+    return exp * 1000 > Date.now();
+  } catch {
+    return false;
+  }
+};
+
 export default function useNotificationSocket(options = {}) {
   const { path = "/ws/notifications/", onMessage } = options;
   const { currentToken } = useRedux();
+
   const wsRef = useRef(null);
   const reconnectRef = useRef({ attempts: 0, timeoutId: null });
-    console.log("Setting up notification socket with path:", path);
+
   useEffect(() => {
     let mounted = true;
-    console.log('connection working')
+
+    // 🔴 HARD STOP: no token or expired token → no WS
+    if (!currentToken || !isTokenValid(currentToken)) {
+      if (wsRef.current) {
+        try {
+          wsRef.current.close(4001, "Not authenticated");
+        } catch {}
+        wsRef.current = null;
+      }
+      return;
+    }
+
     const connect = () => {
       if (!mounted) return;
+      if (!currentToken || !isTokenValid(currentToken)) return;
+
       const url = makeWsUrl(config.url.BASE_URL, path, currentToken);
+
       try {
         wsRef.current = new WebSocket(url);
-      } catch (err) {
+      } catch {
         scheduleReconnect();
-        console.log("WebSocket connection error:", err);
         return;
       }
 
@@ -43,44 +65,58 @@ export default function useNotificationSocket(options = {}) {
       wsRef.current.onmessage = (ev) => {
         try {
           const data = JSON.parse(ev.data);
-          console.log("Received socket message:", data);
-          if (onMessage) onMessage(data);
-        } catch (e) {
-          console.warn("Invalid socket message", e);
+          onMessage?.(data);
+        } catch {
+          // ignore malformed payloads
         }
       };
 
-      wsRef.current.onclose = () => {
+      wsRef.current.onclose = (event) => {
+        wsRef.current = null;
+
+        // 🔒 Auth-related closes → never reconnect
+        if ([4001, 4003].includes(event.code)) {
+          return;
+        }
+
         scheduleReconnect();
       };
 
       wsRef.current.onerror = () => {
-        // error will trigger close -> reconnect
         try {
-          wsRef.current.close();
-        } catch (e) {}
+          wsRef.current?.close();
+        } catch {}
       };
     };
 
     const scheduleReconnect = () => {
-      const attempts = reconnectRef.current.attempts || 0;
-      const wait = Math.min(30000, 1000 * Math.pow(1.6, attempts));
-      reconnectRef.current.attempts = attempts + 1;
-      if (reconnectRef.current.timeoutId) clearTimeout(reconnectRef.current.timeoutId);
-      reconnectRef.current.timeoutId = setTimeout(() => connect(), wait);
+      if (!mounted) return;
+      if (!currentToken || !isTokenValid(currentToken)) return;
+
+      const attempts = reconnectRef.current.attempts;
+      const delay = Math.min(30000, 1000 * Math.pow(1.6, attempts));
+
+      reconnectRef.current.attempts += 1;
+      reconnectRef.current.timeoutId = setTimeout(connect, delay);
     };
 
     connect();
 
     return () => {
       mounted = false;
-      if (reconnectRef.current.timeoutId) clearTimeout(reconnectRef.current.timeoutId);
-      try {
-        if (wsRef.current) wsRef.current.close();
-      } catch (e) {}
+
+      if (reconnectRef.current.timeoutId) {
+        clearTimeout(reconnectRef.current.timeoutId);
+      }
+
+      if (wsRef.current) {
+        try {
+          wsRef.current.close(1000, "Component unmounted");
+        } catch {}
+        wsRef.current = null;
+      }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [path, currentToken]);
+  }, [currentToken, path, onMessage]);
 
   return wsRef;
 }

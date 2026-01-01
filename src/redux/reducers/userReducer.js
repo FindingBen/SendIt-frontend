@@ -10,6 +10,7 @@ const userSlice = createSlice({
     custom_email: null,
     shopify_connect: null,
     scheduled_billing: null,
+    business_analysis: null,
     archived_state: null,
     product_import:null
   },
