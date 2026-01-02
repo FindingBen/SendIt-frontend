@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight, Barcode, Hash } from "lucide-react";
 import useAxiosInstance from "../utils/axiosInstance";
 import { useRedux } from "../constants/reduxImports";
 import useNotificationSocket from "../hooks/useNotificationSocket";
-import { redirect, useNavigate } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import OptimizeProductModal from "../features/modal/OptimizeProductModal";
 import ProductImageCarousel from "../components/Carousel/ProductImageCarousel";
@@ -14,6 +14,7 @@ import { useParams,useSearchParams } from "react-router-dom";
 const ProductOptimizationPage = () => {
     const axiosInstance = useAxiosInstance();
     const [product, setProduct] = useState()
+    const [productLoading, setProductLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [draftProduct, setDraftProduct] = useState(null);
     const [originalProduct, setOriginalProduct] = useState(null);
@@ -40,16 +41,18 @@ const ProductOptimizationPage = () => {
     },[product]);
 
     const fetchProductDetails = async (id) => {
-        try {
-            const response = await axiosInstance.get(`/products/shopify_products/${id}/`);
-            console.log("Product Details Response:", response.data);
-            if (response.status === 200) {
-                setProduct(response.data); // assuming backend returns single product object
-              
-              }
-        } catch (error) {
-            console.error("Failed to fetch product:", error);
+      setProductLoading(true);
+      try {
+        const response = await axiosInstance.get(`/products/shopify_products/${id}/`);
+        console.log("Product Details Response:", response.data);
+        if (response.status === 200) {
+          setProduct(response.data); // assuming backend returns single product object
         }
+      } catch (error) {
+        console.error("Failed to fetch product:", error);
+      } finally {
+        setProductLoading(false);
+      }
     };
     console.log("Current Product:", product);
     const getDraftChanges = async () => {
@@ -131,6 +134,25 @@ const ProductOptimizationPage = () => {
     }
 
   // If product is already optimized, render the optimized-product view (placeholder)
+  if (productLoading) {
+    return (
+      <section className="min-h-screen w-full bg-[#0A0E1A] text-white font-inter">
+        <div className="flex flex-col">
+          <div className="flex flex-row items-center mb-5 h-16 bg-[#111827]/60 backdrop-blur-xl sticky top-0 z-10 border-b border-[#1C2437]/40">
+            <Search />
+            <SmsPill />
+          </div>
+          <div className="flex items-center justify-center py-24">
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-12 h-12 border-4 border-transparent border-t-[#3e6ff4] rounded-full animate-spin" />
+              <span className="text-gray-400">Loading product…</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   if (product?.optimized) {
     return (
       <section className="min-h-screen w-full bg-[#0A0E1A] text-white font-inter">
@@ -143,6 +165,10 @@ const ProductOptimizationPage = () => {
           <div className="bg-[#151530]/80 border-2 border-gray-800 rounded-3xl p-8">
             <h2 className="text-lg font-semibold text-[#dbe1ff] mb-2">Optimized Product</h2>
             <p className="text-gray-400">This product is already optimized. Start new optimization if you want new changes.</p>
+            <Link to="/products_shopify/" className="inline-flex items-center gap-2 text-[#3e6ff4] hover:opacity-90 mt-3">
+              <ChevronLeft className="w-4 h-4" />
+              <span>Back to Products</span>
+            </Link>
           </div>
         </div>
         </div>
