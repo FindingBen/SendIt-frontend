@@ -129,6 +129,21 @@ const ProductOptimizationPage = () => {
         console.log(error)
       }
     }
+
+  // If product is already optimized, render the optimized-product view (placeholder)
+  if (product?.optimized) {
+    return (
+      <section className="min-h-screen w-full bg-[#0A0E1A] text-white font-inter">
+        <div className="flex flex-col items-center justify-center py-20">
+          <div className="bg-[#151530]/80 border-2 border-gray-800 rounded-3xl p-8">
+            <h2 className="text-lg font-semibold text-[#dbe1ff] mb-2">Optimized Product</h2>
+            <p className="text-gray-400">This product is already optimized. Start new optimization if you want new changes.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="min-h-screen w-full bg-[#0A0E1A] text-white font-inter">
   <div className="flex flex-col">

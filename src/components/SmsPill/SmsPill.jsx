@@ -91,26 +91,26 @@ const SmsPill = () => {
         <div className="px-4 py-3 border-b border-[#2A3148]/30">
           <div className="flex items-center justify-between">
             <span className="text-gray-200 font-semibold">Notifications</span>
-            <button className="text-sm text-gray-400 hover:text-white">Mark all read</button>
+            {/* <button className="text-sm text-gray-400 hover:text-white">Mark all read</button> */}
           </div>
         </div>
         <div className="max-h-64 overflow-y-auto divide-y divide-[#2A3148]/40">
-  {currentNotifications && currentNotifications.length > 0 ? (
-    currentNotifications.map((notif) => {
-      const isUnread = !notif.read;
-      console.log("Notification:", notif);
-      return (
-        <div
-    key={notif.id}
-    onClick={() => {
-      if (!notif.read) {
-        dispatch(markAsRead(notif.id));
-      }
-    }}
-    className={`group px-4 py-3 transition-colors cursor-pointer
-      ${isUnread ? "bg-[#242E44]/40" : "bg-transparent"}
-      hover:bg-[#2F3A5A]/40`}
-  >
+        {currentNotifications && currentNotifications.length > 0 ? (
+          currentNotifications.map((notif) => {
+            const isUnread = !notif.read;
+            console.log("Notification:", notif);
+            return (
+              <div
+          key={notif.id}
+          onClick={() => {
+            if (!notif.read) {
+              dispatch(markAsRead(notif.id));
+            }
+          }}
+          className={`group px-4 py-3 transition-colors cursor-pointer
+            ${isUnread ? "bg-[#242E44]/40" : "bg-transparent"}
+            hover:bg-[#2F3A5A]/40`}
+            >
 
           <div className="flex items-start gap-3">
             {/* Status dot */}
@@ -173,10 +173,10 @@ const SmsPill = () => {
     </div>
   )}
 </div>
-
+{/* 
         <div className="px-4 py-2 border-t border-[#2A3148]/30">
           <button className="w-full text-left text-sm text-[#3E6FF4]">View all</button>
-        </div>
+        </div> */}
       </div>
     )}
   </div>
