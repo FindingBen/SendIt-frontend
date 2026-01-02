@@ -44,7 +44,7 @@ const ProductOptimizationPage = () => {
       setProductLoading(true);
       try {
         const response = await axiosInstance.get(`/products/shopify_products/${id}/`);
-        console.log("Product Details Response:", response.data);
+
         if (response.status === 200) {
           setProduct(response.data); // assuming backend returns single product object
         }
@@ -54,13 +54,13 @@ const ProductOptimizationPage = () => {
         setProductLoading(false);
       }
     };
-    console.log("Current Product:", product);
+
     const getDraftChanges = async () => {
   try {
     const response = await axiosInstance.get(`/products/product_optimize/`, {
       params: { product_id: product?.parent_product_id }
     });
-    console.log("Draft Changes Response:", response.data);
+
     if (response.status === 200) {
       const { draft, original } = response.data;
 

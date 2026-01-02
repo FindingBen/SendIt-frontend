@@ -264,14 +264,14 @@ const handleGenerate = async (type) => {
           >
             {/* Left side: checkbox + image + title */}
             <div className="flex items-center gap-4">
-              <div onClick={(e) => e.stopPropagation()}>
+              {/* <div onClick={(e) => e.stopPropagation()}>
                 <input
                   type="checkbox"
                   checked={selected}
                   onChange={() => toggleProductSelection(product)}
                   className="w-5 h-5 accent-[#3E6FF4] rounded-md bg-[#1C2437] cursor-pointer hover:scale-110 transition-all"
                 />
-              </div>
+              </div> */}
 
               <div className="flex items-center gap-4 text-start">
                 <img
@@ -358,7 +358,7 @@ const handleGenerate = async (type) => {
           px-6 py-3 
           bg-[#3e6ff4]/20 
           hover:bg-[#3e6ff4]/30 
-          border border-[#3e6ff4]/40 
+          border-2 border-[#3e6ff4]/40 
           rounded-xl
           text-[#d7dbff]
           font-semibold
@@ -368,7 +368,6 @@ const handleGenerate = async (type) => {
         onClick={() => [setShowModal(true), setSelectedForOpt(product)]}
       >
         <span className="text-gray-300 text-sm">Optimize</span>
-
         <svg
           className="w-4 h-4 text-[#3e6ff4] transition-transform duration-300 group-hover:translate-x-1"
           fill="none"
