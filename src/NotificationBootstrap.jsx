@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addNotification } from "./redux/reducers/notificationReducer";
 import useNotificationSocket from "./hooks/useNotificationSocket";

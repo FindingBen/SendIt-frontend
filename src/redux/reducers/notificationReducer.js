@@ -20,6 +20,11 @@ const notificationSlice = createSlice({
         read: false,
         createdAt: incoming.createdAt || new Date().toISOString(),
       });
+      // Keep only the most recent 20 notifications
+      const MAX_NOTIFICATIONS = 20;
+      if (state.items.length > MAX_NOTIFICATIONS) {
+        state.items = state.items.slice(0, MAX_NOTIFICATIONS);
+      }
     },
 
     markAsRead(state, action) {

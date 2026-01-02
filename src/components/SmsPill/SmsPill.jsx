@@ -96,7 +96,12 @@ const SmsPill = () => {
         </div>
         <div className="max-h-64 overflow-y-auto divide-y divide-[#2A3148]/40">
         {currentNotifications && currentNotifications.length > 0 ? (
-          currentNotifications.map((notif) => {
+          // Show only the most recent 20 notifications (sorted newest first)
+          currentNotifications
+            .slice()
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .slice(0, 20)
+            .map((notif) => {
             const isUnread = !notif.read;
             console.log("Notification:", notif);
             return (
