@@ -134,12 +134,19 @@ const ProductOptimizationPage = () => {
   if (product?.optimized) {
     return (
       <section className="min-h-screen w-full bg-[#0A0E1A] text-white font-inter">
-        <div className="flex flex-col items-center justify-center py-20">
+        <div className="flex flex-col">
+          <div className="flex flex-row items-center mb-5 h-16 bg-[#111827]/60 backdrop-blur-xl sticky top-0 z-10 border-b border-[#1C2437]/40">
+      <Search />
+      <SmsPill />
+    </div>
+          <div className="flex flex-col items-center justify-center py-20">
           <div className="bg-[#151530]/80 border-2 border-gray-800 rounded-3xl p-8">
             <h2 className="text-lg font-semibold text-[#dbe1ff] mb-2">Optimized Product</h2>
             <p className="text-gray-400">This product is already optimized. Start new optimization if you want new changes.</p>
           </div>
         </div>
+        </div>
+        
       </section>
     );
   }
