@@ -265,7 +265,7 @@ const HomePage = () => {
           return (
             <motion.div
               key={campaign.id}
-              className={`grid grid-cols-5 lg:grid-cols-5 gap-4 p-3 text-white/90 text-sm cursor-pointer rounded-md hover:bg-[#1C1C3A] transition-colors ${
+              className={`gap-4 p-3 text-white/90 text-sm cursor-pointer rounded-md hover:bg-[#1C1C3A] transition-colors ${
                 index % 2 === 0 ? "bg-[#191936]" : "bg-transparent"
               } ${isLastItem ? "rounded-b-2xl" : ""}`}
             >
