@@ -51,11 +51,11 @@ const ShopifyProductsCampaignBuilder = ({
   };
 
   return (
-   <section className="w-full max-h-screen p-4">
+   <section className="w-full h-screen p-4">
   <div className="grid grid-cols-2 gap-6 h-full">
 
     {/* LEFT SIDE — PRODUCT LIST */}
-    <div className="flex flex-col gap-5 h-full bg-[#0F1523] rounded-2xl p-6 shadow-[0_8px_25px_rgba(0,0,0,0.45)]">
+    <div className="flex flex-col gap-5 bg-[#0F1523] rounded-2xl p-6 shadow-[0_8px_25px_rgba(0,0,0,0.45)]">
 
       {/* HEADER + SEARCH */}
       <div className="flex items-center relative">
@@ -75,7 +75,7 @@ const ShopifyProductsCampaignBuilder = ({
       </div>
 
       {/* TABLE HEADERS */}
-      <div className="relative w-full h-[55%] lg:h-[65%] overflow-y-auto rounded-xl">
+      <div className="relative w-full h-100% overflow-y-auto rounded-xl">
         {/* <div className="
           text-[11px] font-euclid grid grid-cols-4 text-gray-400 uppercase
           bg-gradient-to-r from-[#161E2D] to-[#1E2538]
