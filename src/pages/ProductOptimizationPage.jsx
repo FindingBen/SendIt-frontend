@@ -11,6 +11,13 @@ import OptimizeProductModal from "../features/modal/OptimizeProductModal";
 import ProductImageCarousel from "../components/Carousel/ProductImageCarousel";
 import { useParams,useSearchParams } from "react-router-dom";
 
+const AVAILABLE_CHANGES = [
+  { key: "alt_text", label: "Alt text changes" },
+  { key: "title", label: "Title change" },
+  { key: "description", label: "Description change" },
+  { key: "seo", label: "SEO meta change" },
+];
+
 const ProductOptimizationPage = () => {
     const axiosInstance = useAxiosInstance();
     const [product, setProduct] = useState()
@@ -24,6 +31,12 @@ const ProductOptimizationPage = () => {
     const [successMsg, setSuccessMsg] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [searchParams] = useSearchParams();
+    const [selectedChanges, setSelectedChanges] = useState(
+  AVAILABLE_CHANGES.map(c => c.key)
+);
+
+
+const allSelected = selectedChanges.length === AVAILABLE_CHANGES.length;
 
     const navigate = useNavigate();
     const { id } = useParams();
@@ -56,21 +69,21 @@ const ProductOptimizationPage = () => {
     };
 
     const getDraftChanges = async () => {
-  try {
-    const response = await axiosInstance.get(`/products/product_optimize/`, {
-      params: { product_id: product?.parent_product_id }
-    });
+    try {
+      const response = await axiosInstance.get(`/products/product_optimize/`, {
+        params: { product_id: product?.parent_product_id }
+      });
 
-    if (response.status === 200) {
-      const { draft, original } = response.data;
+      if (response.status === 200) {
+        const { draft, original } = response.data;
 
-      setDraftProduct(draft);
-      setOriginalProduct(original);
-    }
+        setDraftProduct(draft);
+        setOriginalProduct(original);
+      }
 
-  } catch (error) {
-    console.error(error);
-  }
+      } catch (error) {
+        console.error(error);
+      }
 };
 
   const handleNotification = useCallback((data) => {
@@ -96,17 +109,15 @@ const ProductOptimizationPage = () => {
   // connect to websocket to receive notifications (path can be adjusted)
   useNotificationSocket({ path: "/ws/notifications/", onMessage: handleNotification });
 
-    const handleApprove = async () => {
+    const handleApprove = async (body) => {
       setLoading(true);
-      const body = {
-        'product':product.product_id,
-        'approval':true
-      }
+      console.log("APPROVE BODY:", body);
       try {
         let response = await axiosInstance.post('/products/optimize_shopify_product/',body)
 
         if(response.status===200){
           setOptimized(false)
+          //setLoading(false);
           navigate('/products_shopify');
         }
       } catch (error) {
@@ -133,6 +144,30 @@ const ProductOptimizationPage = () => {
       }
     }
 
+    const toggleChange = (key) => {
+  setSelectedChanges(prev =>
+    prev.includes(key)
+      ? prev.filter(k => k !== key)
+      : [...prev, key]
+  );
+};
+
+const toggleAll = () => {
+  setSelectedChanges(allSelected ? [] : AVAILABLE_CHANGES.map(c => c.key));
+};
+
+const handleApprovedChanges = () => {
+  if (selectedChanges.length === 0) return;
+
+  const payload = {
+     'product':product.product_id,
+     'approval':true,
+    approved_changes: selectedChanges,
+  };
+
+  handleApprove(payload);
+};
+
   // If product is already optimized, render the optimized-product view (placeholder)
   if (productLoading) {
     return (
@@ -155,9 +190,9 @@ const ProductOptimizationPage = () => {
 
   if (product?.optimized) {
     return (
-      <section className="min-h-screen w-full bg-[#0A0E1A] text-white font-inter">
+      <section className="min-h-screen w-full bg-[#0A0E1A] text-white font-inter overflow-x-hidden">
         <div className="flex flex-col">
-          <div className="flex flex-row items-center mb-5 h-16 bg-[#111827]/60 backdrop-blur-xl sticky top-0 z-10 border-b border-[#1C2437]/40">
+          <div className="flex flex-row items-center h-16 bg-[#111827]/60 backdrop-blur-xl sticky top-0 z-10 border-b border-[#1C2437]/40">
       <Search />
       <SmsPill />
     </div>
@@ -178,206 +213,166 @@ const ProductOptimizationPage = () => {
   }
 
   return (
-    <section className="min-h-screen w-full bg-[#0A0E1A] text-white font-inter">
-  <div className="flex flex-col">
+  <section className="h-screen w-full bg-[#0A0E1A] text-white font-inter overflow-hidden">
+    <div className="flex flex-col h-full">
 
-    {/* NAV BAR */}
-    <div className="flex flex-row items-center mb-5 h-16 bg-[#111827]/60 backdrop-blur-xl sticky top-0 z-10 border-b border-[#1C2437]/40">
-      <Search />
-      <SmsPill />
-    </div>
+      {/* NAV BAR */}
+      <div className="flex flex-row items-center h-16 bg-[#111827]/60 backdrop-blur-xl sticky top-0 z-10 border-b border-[#1C2437]/40">
+        <Search />
+        <SmsPill />
+      </div>
 
-    {/* MAIN */}
-    <div className="flex flex-row gap-10 px-10 ml-52">
-<div
-  className="
-    w-[460px]
-    bg-[#151530]/80
-    border-2 border-gray-800
-    rounded-3xl
-    p-7
-  "
->
-  {/* Section Title */}
-  <h2 className="text-lg font-semibold text-[#dbe1ff] tracking-wide mb-5">
-    Product Details
-  </h2>
+      {/* MAIN CONTENT */}
+      <div className="flex flex-row ml-52 h-[calc(100vh-4rem)] overflow-hidden">
 
-  {/* Product Image */}
-<div
-  className="
-    h-72
-    rounded-2xl
-    flex items-center justify-center
-    text-gray-500
-    shadow-inner
-    text-sm tracking-wide
-  "
->
-  {draftProduct?.img_field || product?.img_field ? (
-    <img
-      src={draftProduct?.img_field || product.img_field}
-      alt={draftProduct?.product.title || product?.title || "Product Image"}
-      className="max-w-full max-h-full object-contain rounded-2xl"
-    />
-  ) : (
-    <span>No image available</span>
-  )}
-</div>
-
-{/* Info Section */}
-<div className="mt-8 space-y-5 text-[15px] leading-relaxed">
-  {/* Product Fields */}
-  {[
-    { label: "Title", key: "title" },
-    { label: "Description", key: "description" },
-    // { label: "Category", key: "category" },
-  ].map(({ label, key }) => {
-    const isStatic = draftProduct?.product?.static === true;
-    const oldVal = originalProduct?.[key] ?? product?.[key] ?? "";
-    const newVal = draftProduct?.product?.[key] ?? null;
-    const changed = newVal && newVal !== oldVal;
-
-    return (
-      <div key={key} className="flex flex-col">
-      {/* Label */}
-      <span className="text-[#e0e3ff] font-semibold tracking-wide mb-1">
-        {label}:
-      </span>
-
-      {/* Special: Static description used */}
-      {label === "Description" && isStatic ? (
-        <span className="ml-2 text-[#3e6ff4] font-semibold tracking-wide">
-          Static description used
-        </span>
-      ) : changed ? (
-        /* Changed field view */
-        <div className="flex flex-col ml-2">
-          <span className="text-gray-500 line-through opacity-60 text-sm">
-            {oldVal || "—"}
-          </span>
-
-          <div className="flex items-center gap-2 mt-1">
-            <span className="text-[#3e6ff4] font-semibold tracking-wide">
-              {newVal}
-            </span>
-
-            <span
-              className="
-                text-xs 
-                font-bold 
-                px-2 py-[2px] 
-                rounded-full 
-                bg-[#3e6ff4]/20 
-                text-[#3e6ff4] 
-                border border-[#3e6ff4]/40
-                animate-pulse
-              "
-            >
-              NEW
-            </span>
-          </div>
-        </div>
-      ) : (
-        /* Default unchanged */
-        <span className="ml-2 text-gray-300">{oldVal || "—"}</span>
-      )}
-    </div>
-  );
-})}
-
-  {/* Images with alt_text */}
-{/* Images with alt_text */}
-{/* Images Section */}
-{/* Images Section */}
-<ProductImageCarousel product={product} draftProduct={draftProduct} />
-
-
-
-
-
-
-</div>
-
-</div>
-
-      {/* RIGHT SIDE */}
-      <div className="flex flex-col gap-10 w-[550px]">
-
-        {/* PREVIEW BOX */}
-      
+        {/* LEFT SIDE — SCROLLABLE */}
         <div
           className="
-            bg-[#151530]/80 
-            border-2 border-[#23253a] 
-            rounded-3xl 
-            p-7
-            shadow-[0_0_25px_rgba(62,111,244,0.05)]
-            backdrop-blur-lg
-            relative
+            w-[460px]
+            h-full
+            min-h-0
+            overflow-y-auto
+            overflow-x-hidden
+
+            pr-6
+            pl-10
+            py-8
+
+            bg-transparent
+            border-r border-[#1C2437]/40
           "
         >
-          <h3 className="text-[17px] font-semibold text-[#dbe3ff] tracking-wide mb-4">
-            Review Changes
-          </h3>
+          <h2 className="text-lg font-semibold text-[#dbe1ff] tracking-wide mb-5">
+            Product Details
+          </h2>
 
-          <p className="text-gray-400 text-sm leading-relaxed tracking-wide mb-7">
-            Carefully check the AI-generated changes before applying them to your Shopify store.
-          </p>
-
-          {/* Buttons */}
-          <div className="flex items-center">
-            <button
-              onClick={handleApprove}
-              disabled={loading} // prevent double click
-              className="
-                px-7 py-3 
-                bg-green-600 hover:bg-green-500 
-                rounded-xl 
-                text-white
-                mx-2
-                text-[15px]
-                font-semibold 
-                tracking-wide
-                transition-all
-                relative
-              "
-            >
-              {loading ? "Processing..." : "Approve"}
-            </button>
-
-            <button
-              onClick={handleReject}
-              disabled={loading} // prevent actions while loading
-              className="
-                px-7 py-3 
-                bg-red-600 hover:bg-red-500 
-                rounded-xl
-                mx-2
-                text-white 
-                text-[15px]
-                font-semibold
-                tracking-wide
-                transition-all
-              "
-            >
-              Reject
-            </button>
+          {/* Product Image */}
+          <div className="h-72 rounded-2xl flex items-center justify-center text-gray-500 shadow-inner text-sm tracking-wide">
+            {draftProduct?.img_field || product?.img_field ? (
+              <img
+                src={draftProduct?.img_field || product.img_field}
+                alt={draftProduct?.product.title || product?.title || "Product Image"}
+                className="max-w-full max-h-full object-contain rounded-2xl"
+              />
+            ) : (
+              <span>No image available</span>
+            )}
           </div>
 
-          
+          {/* Info Section */}
+          <div className="mt-8 space-y-5 text-[15px] leading-relaxed">
+            {[
+              { label: "Title", key: "title" },
+              { label: "Description", key: "description" },
+            ].map(({ label, key }) => {
+              const isStatic = draftProduct?.product?.static === true;
+              const oldVal = originalProduct?.[key] ?? product?.[key] ?? "";
+              const newVal = draftProduct?.product?.[key] ?? null;
+              const changed = newVal && newVal !== oldVal;
+
+              return (
+                <div key={key} className="flex flex-col">
+                  <span className="text-[#e0e3ff] font-semibold tracking-wide mb-1">
+                    {label}:
+                  </span>
+
+                  {label === "Description" && isStatic ? (
+                    <span className="ml-2 text-[#3e6ff4] font-semibold tracking-wide">
+                      Static description used
+                    </span>
+                  ) : changed ? (
+                    <div className="flex flex-col ml-2">
+                      <span className="text-gray-500 line-through opacity-60 text-sm">
+                        {oldVal || "—"}
+                      </span>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-[#3e6ff4] font-semibold tracking-wide">
+                          {newVal}
+                        </span>
+                        <span className="text-xs font-bold px-2 py-[2px] rounded-full bg-[#3e6ff4]/20 text-[#3e6ff4] border border-[#3e6ff4]/40 animate-pulse">
+                          NEW
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    <span className="ml-2 text-gray-300">{oldVal || "—"}</span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Images */}
+          <ProductImageCarousel product={product} draftProduct={draftProduct} />
         </div>
-      
+
+        {/* RIGHT SIDE — STATIC */}
+        <div className="flex-1 px-10 py-8 min-w-0 overflow-hidden">
+          <div className="max-w-[420px] bg-[#111827]/60 backdrop-blur-xl border-2 border-[#1C2437]/40 rounded-2xl p-6">
+            <h4 className="text-lg font-semibold text-[#dbe3ff] tracking-wide mb-4">
+              Select changes to approve
+            </h4>
+
+            <label className="flex items-center gap-3 cursor-pointer rounded-xl border-2 border-[#23253a] bg-[#0c1025] px-4 py-3 mb-3">
+              <input
+                type="checkbox"
+                checked={allSelected}
+                onChange={toggleAll}
+                className="accent-[#3e6ff4]"
+              />
+              <span className="text-sm text-gray-200">Approve all changes</span>
+            </label>
+
+            {AVAILABLE_CHANGES.map(change => {
+              const checked = selectedChanges.includes(change.key);
+
+              return (
+                <label
+                  key={change.key}
+                  className={`
+                    flex items-center gap-3 cursor-pointer rounded-xl border-2 px-4 py-3 transition mb-2
+                    ${checked
+                      ? "border-[#3e6ff4] bg-[#111428]"
+                      : "border-[#23253a] bg-[#0c1025] hover:bg-[#111428]"
+                    }
+                  `}
+                >
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={() => toggleChange(change.key)}
+                    className="accent-[#3e6ff4]"
+                  />
+                  <span className="text-sm text-gray-200">{change.label}</span>
+                </label>
+              );
+            })}
+
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={handleApprovedChanges}
+                disabled={loading || selectedChanges.length === 0}
+                className="px-6 py-3 bg-ngrokBlue hover:bg-blue-900 disabled:bg-gray-600 rounded-xl text-white text-sm font-semibold transition-all"
+              >
+                {loading ? "Processing..." : "Approve"}
+              </button>
+
+              <button
+                onClick={handleReject}
+                disabled={loading}
+                className="px-6 py-3 bg-red-800 hover:bg-red-500 rounded-xl text-white text-sm font-semibold transition-all"
+              >
+                Reject
+              </button>
+            </div>
+          </div>
+        </div>
 
       </div>
-      
     </div>
-  </div>
-</section>
+  </section>
+);
 
-
-
-  )
 }
 
 export default ProductOptimizationPage
