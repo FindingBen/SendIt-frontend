@@ -66,8 +66,8 @@ function App() {
         <ElementProvider>
           <div className="flex-1 w-22">
             <Routes>
-              {/* <Route path="register" element={<DemoPage />} /> */}
-              <Route path="register" element={<RegisterPage />} />
+              <Route path="register" element={<DemoPage />} />
+              {/* <Route path="register" element={<RegisterPage />} /> */}
               <Route path="login" element={<Login></Login>} />
               {/* <Route
               path="shopify-login"
