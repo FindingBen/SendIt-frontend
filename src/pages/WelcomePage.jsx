@@ -269,9 +269,9 @@ const connectedStoresCount = 0;
               <Link to="/contact_lists" className="block w-full text-center px-4 py-2 rounded-lg border-2 border-gray-800 bg-[#131826] text-gray-200 hover:bg-[#172033]">
                 + Contact List
               </Link>
-              {/* <button onClick={regWeb} className="block w-full text-center px-4 py-2 rounded-lg bg-gradient-to-r from-[#3e6ff4] to-[#4937BA] text-white font-medium hover:opacity-95">
+              <button onClick={regWeb} className="block w-full text-center px-4 py-2 rounded-lg bg-gradient-to-r from-[#3e6ff4] to-[#4937BA] text-white font-medium hover:opacity-95">
                 webhook
-              </button> */}
+              </button>
             </div>
           </div>
 

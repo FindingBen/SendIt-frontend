@@ -11,6 +11,8 @@ import GenerateModal from "../features/modal/GenerateModal";
 import ConfirmProductImport from "../features/modal/ConfirmProductImport";
 import OptimizeProductModal from "../features/modal/OptimizeProductModal";
 import { set } from "react-ga";
+import axios from "axios";
+import { use } from "react";
 
 export const ShopifyProductsPage = () => {
   const axiosInstance = useAxiosInstance();
@@ -25,6 +27,7 @@ export const ShopifyProductsPage = () => {
   const [selectedForOpt, setSelectedForOpt] = useState(null);
   const [generating, setGenerating] = useState(false);
   const [startOptimize, setStartOptimize] = useState(false);
+  const [optimizationNr, setOptimizationNr] = useState(0);
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const perPage = 5;
@@ -35,6 +38,7 @@ export const ShopifyProductsPage = () => {
 
   useEffect(() => {
     getProducts();
+    fetchoptimizationNr()
   }, []);
 
     useEffect(() => {
@@ -123,6 +127,17 @@ console.log('selectedForOpt',selectedForOpt)
 //   // connect to websocket to receive notifications (path can be adjusted)
 //   useNotificationSocket({ path: "/ws/notifications/", onMessage: handleNotification });
 
+const fetchoptimizationNr = async () =>{
+  try {
+    let response = await axiosInstance.get(`/notifications/optimization_numbers/`);
+    if (response.status === 200) {
+      setOptimizationNr(response.data.remaining)
+      
+    }
+  } catch (error) {
+    console.log("Fetch optimization number error:", error);
+  }
+}
 
   const handleOptimize = async () => {
 
@@ -217,6 +232,40 @@ const handleGenerate = async (type) => {
                 Enable ruleset first to import your products
               </div>
             )}</>):<></>}
+            </div>
+            <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#1B2233] border-2 border-[#2A3148]/50 shadow-[0_4px_18px_rgba(0,0,0,0.35)]">
+<div className="flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-br from-[#3E6FF4] to-[#4937BA] shadow-[0_0_10px_rgba(62,111,244,0.35)]">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-5 h-5 text-white"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 6v6l4 2m6-2a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z"
+        />
+      </svg>
+    </div>
+    <div className="flex flex-col leading-tight">
+      <span className="text-xs text-gray-400 tracking-wide">
+        Optimizations left
+      </span>
+      <span
+        className={`text-lg font-semibold ${
+          optimizationNr <= 5
+            ? "text-red-400"
+            : optimizationNr <= 15
+            ? "text-yellow-400"
+            : "text-green-400"
+        }`}
+      >
+        {optimizationNr}
+      </span>
+    </div>
             </div>
           </div>
 
