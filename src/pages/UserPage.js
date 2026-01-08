@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
 import useAxiosInstance from "../utils/axiosInstance";
 import UserAccount from "../components/AccountSettings/UserAccount";
+import RulesetEditor from "../components/AccountSettings/Ruleset";
 import SmsPill from "../components/SmsPill/SmsPill";
 import PasswordChange from "../utils/PasswordChange";
 import { useRedux } from "../constants/reduxImports";
@@ -11,6 +12,7 @@ import CancelSubscription from "../features/modal/CancelSubscription";
 import Search from "../components/SearchComponent/Search";
 import BusinessRulesetModal from "../features/modal/BusinessRulesetModal";
 import { setUserInfo } from "../redux/reducers/userReducer";
+import { use } from "react";
 
 const UserPage = () => {
   const axiosInstance = useAxiosInstance();
@@ -20,6 +22,8 @@ const UserPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [msg, setMsg] = useState();
   const [showModal, setShowModal] = useState(false);
+  const [ruleset, setRuleset] = useState({})
+  const [rulesetState, setRulesetState] = useState(currentUserState.business_ruleset || {});
   const [showImport, setShowImport] = useState(false);
   const [showSubModal, setShowSubModal] = useState(false);
   const [errorMsg, setErrorMsg] = useState();
@@ -35,10 +39,14 @@ const UserPage = () => {
     username: username,
     email: "",
   });
-
+  console.log("RULESET:", ruleset);
   useEffect(() => {
     getUser();
   }, [msg]);
+
+  useEffect(()=>{
+    rulesetFetch()
+  },[successRule])
 
   useEffect(() => {
     setTimeout(() => setErrorMsg(), 3500);
@@ -62,9 +70,21 @@ const UserPage = () => {
     }
   };
 
-  const businessRuleSetEnable = async () => {
-    try {
+  const rulesetFetch = async () => {
+    try{
       let response = await axiosInstance.get("/products/business_analysis/");
+      if(response.status === 200){
+        setRuleset(response.data);
+      }
+    }
+    catch(error){
+      console.log("Error fetching ruleset:", error);
+    }
+  }
+
+  const businessRuleSetEnable = async (payload) => {
+    try {
+      let response = await axiosInstance.post("/products/business_analysis/",{payload});
       if(response.status === 200){
         setEnableBusinessRuleset(true);
         dispatch(setUserInfo({ business_analysis: true }));
@@ -77,18 +97,32 @@ const UserPage = () => {
     }
   }
 
-    const test = async () => {
-    try {
-      let response = await axiosInstance.get("/products/shopify_test/");
-      if(response.status === 200){
-        console.log("Test successful");
-      }
-      console.log("Business ruleset enabled",response);
-    } catch (error) {
-      console.log(error)
-      setErrorRuleMsg("Error enabling business ruleset");
+  const updateRuleset = async (partialUpdate) => {
+    console.log("Updating ruleset with:", partialUpdate);
+  try {
+    const response = await axiosInstance.patch(
+      "/products/business_analysis/",
+      partialUpdate
+    );
+
+    if (response.status === 200) {
+      setSuccessRule("Business ruleset updated successfully");
     }
+  } catch (error) {
+    console.error(error);
+    setErrorRuleMsg("Error updating business ruleset");
   }
+};
+
+const handleRulesetUpdate = async (partialUpdate) => {
+  // optimistic UI update
+  setRulesetState((prev) => ({
+    ...prev,
+    ...partialUpdate,
+  }));
+
+  await updateRuleset(partialUpdate);
+};
 
   const cancelSubscription = async () => {
     try {
@@ -131,7 +165,14 @@ console.log(error);
       <SmsPill />
     </div>
         <div className="flex flex-col gap-2 mx-44">
-          <UserAccount />
+          <div className="flex flex-row gap-2">
+            <UserAccount /> 
+          <RulesetEditor rules={ruleset.ruleset || {}}
+          onUpdate={handleRulesetUpdate}
+          openRulesetModal={() => setShowImport(true)}
+    rulesEnabled={currentUserState.business_analysis}
+    />
+          </div>
           <div className="flex flex-col gap-2">
             <PackageInformation />
             <div className="flex md:flex-row xs:flex-col">
@@ -164,7 +205,7 @@ console.log(error);
               </div>
               
               </div>
-<div>
+                <div>
                 {successRule && (
                   <span className="text-green-500 text-sm font-euclid">{successRule}</span>
                 )}

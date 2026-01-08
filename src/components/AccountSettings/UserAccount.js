@@ -63,7 +63,7 @@ const UserAccount = () => {
   };
 
   return (
-    <div className="flex-1 gap-3 mx-20">
+    <div className="flex-1 gap-3 ml-20">
   <div className="flex flex-col bg-[#1B2233] rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.3)] p-6">
     {/* Header */}
     <div className="flex justify-between items-center border-b border-gray-700 pb-3 mb-5 relative">
