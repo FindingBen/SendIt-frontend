@@ -41,6 +41,10 @@ export const ShopifyProductsPage = () => {
     fetchoptimizationNr()
   }, []);
 
+  useEffect(() =>{
+fetchoptimizationNr()
+  },[successMsg])
+
     useEffect(() => {
     getProducts();
   }, [show]);
@@ -59,16 +63,6 @@ export const ShopifyProductsPage = () => {
     }
   };
 
-  const prodOpt = async (product) => {
-    const data = {"product": product}
-    try {
-      let response = await axiosInstance.post("/products/product_optimize/", data);
-      console.log("Optimization response:", response?.data);
-    } catch (error) {
-      console.error("Error optimizing product:", error);
-    }
-  }
-console.log('selectedForOpt',selectedForOpt)
   const importBulkProducts = async () => {
     try {
       const response = await axiosInstance.get("/products/import_bulk_products/");
