@@ -75,7 +75,7 @@ console.log('selectedForOpt',selectedForOpt)
       
       if(response.status === 201){
         getProducts()
-        // dispatch(setUserInfo({ product_import: true }));
+        dispatch(setUserInfo({ product_import: true }));
 
       }
     } catch (error) {
@@ -92,40 +92,7 @@ console.log('selectedForOpt',selectedForOpt)
     );
   };
 
-  // Select/Deselect all on current page
-  const toggleSelectAll = () => {
-    const currentIds = currentProducts.map((p) => p.shopify_id);
-    const allSelected = currentIds.every((id) => selectedProducts.includes(id));
-
-    if (allSelected) {
-      setSelectedProducts((prev) => prev.filter((id) => !currentIds.includes(id)));
-    } else {
-      setSelectedProducts((prev) => [...new Set([...prev, ...currentIds])]);
-    }
-  };
-
-// const handleNotification = useCallback((data) => {
-//     // Accept multiple payload shapes depending on your Channels setup
-//     const payload = data.payload || data || {};
-//     const event = payload.event || payload.type || null;
-//     const jobId = payload.job_id || payload.jobId || payload.job || null;
-//     const productId = payload.product_id || payload.productId || payload.product || null;
-//     console.log("Received notification:", data);
-//     if (!event) return;
-
-//     if (event === "OPTIMIZATION_DONE" || event === "OPTIMIZATION_FAILED") {
-//       // if product matches current page product, refresh draft
-//       if (productId && selectedForOpt && selectedForOpt.product_id === productId) {
-        
-//           console.log('done')
-//       } else {
-//         // if no productId provided or different, still refresh list or ignore
-//       }
-//     }
-//   }, [selectedForOpt]);
-
-//   // connect to websocket to receive notifications (path can be adjusted)
-//   useNotificationSocket({ path: "/ws/notifications/", onMessage: handleNotification });
+  
 
 const fetchoptimizationNr = async () =>{
   try {
