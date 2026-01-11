@@ -1,68 +1,106 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  items: [],
+  itemsById: {},
+  order: [],
 };
 
 const notificationSlice = createSlice({
   name: "notifications",
   initialState,
   reducers: {
-    addNotification(state, action) {
-      const incoming = action.payload;
+    upsertNotification(state, action) {
+  const notif = action.payload;
+  if (!notif || !notif.id) {
+    console.warn("Skipping invalid notification payload:", notif);
+    return;
+  }
 
-      // Prevent duplicates (critical for websocket reconnects)
-      const exists = state.items.some(n => n.id === incoming.id);
-      if (exists) return;
+  const id = notif.id;
+  const exists = Boolean(state.itemsById && state.itemsById[id]);
 
-      state.items.unshift({
-        ...incoming,
-        read: false,
-        createdAt: incoming.createdAt || new Date().toISOString(),
+  state.itemsById = state.itemsById || {}; // make sure itemsById exists
+
+  state.itemsById[id] = {
+    ...(state.itemsById[id] || {}), // default empty object
+    ...notif,
+  };
+
+  if (!exists) {
+    state.order = state.order || [];
+    state.order.unshift(id);
+  }
+},
+
+
+    upsertManyNotifications(state, action) {
+      action.payload.forEach(notif => {
+        const id = notif.id;
+        const exists = Boolean(state.itemsById[id]);
+
+        state.itemsById[id] = {
+          ...state.itemsById[id],
+          ...notif,
+        };
+
+        if (!exists) {
+          state.order.push(id);
+        }
       });
-      // Keep only the most recent 20 notifications
-      const MAX_NOTIFICATIONS = 20;
-      if (state.items.length > MAX_NOTIFICATIONS) {
-        state.items = state.items.slice(0, MAX_NOTIFICATIONS);
-      }
+
+      // newest first
+      state.order.sort(
+        (a, b) =>
+          new Date(state.itemsById[b].created_at) -
+          new Date(state.itemsById[a].created_at)
+      );
     },
 
     markAsRead(state, action) {
       const id = action.payload;
-      const notif = state.items.find(n => n.id === id);
-      if (notif) notif.read = true;
+      if (state.itemsById[id]) {
+        state.itemsById[id].read = true;
+      }
     },
 
     markAllAsRead(state) {
-      state.items.forEach(n => {
+      Object.values(state.itemsById).forEach(n => {
         n.read = true;
       });
     },
 
-    removeNotification(state, action) {
-      state.items = state.items.filter(n => n.id !== action.payload);
-    },
-
     clearNotifications(state) {
-      state.items = [];
+      state.itemsById = {};
+      state.order = [];
     },
   },
 });
 
 export const {
-  addNotification,
+  upsertNotification,
+  upsertManyNotifications,
   markAsRead,
   markAllAsRead,
-  removeNotification,
   clearNotifications,
 } = notificationSlice.actions;
 
 export default notificationSlice.reducer;
+export const selectNotifications = (state) => {
+  const notifications = state.notifications;
+  if (!notifications || !Array.isArray(notifications.order) || !notifications.itemsById) {
+    return [];
+  }
 
-export const selectNotifications = state => state.notifications.items;
+  return notifications.order
+    .map(id => notifications.itemsById[id])
+    .filter(Boolean);
+};
 
-export const selectUnreadNotifications = state =>
-  state.notifications.items.filter(n => !n.read);
 
-export const selectUnreadCount = state =>
-  state.notifications.items.filter(n => !n.read).length;
+export const selectUnreadNotifications = (state) =>
+  selectNotifications(state).filter(n => !n.read);
+
+export const selectUnreadCount = (state) =>
+  selectUnreadNotifications(state).length;
+
+

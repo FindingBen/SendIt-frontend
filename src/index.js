@@ -17,9 +17,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <NotificationBootstrap />
       <BrowserRouter>
         <PersistGate loading={null} persistor={persistor}>
+          <NotificationBootstrap />
           <Routes>
             <Route path="/*" element={<App />} />
           </Routes>

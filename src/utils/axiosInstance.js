@@ -9,6 +9,18 @@ import { cleanContactLists } from "../redux/reducers/contactListReducer";
 import { cleanPackage } from "../redux/reducers/packageReducer";
 import { clearMessages } from "../redux/reducers/messageReducer";
 
+const safeDecodeJwt = (token) => {
+  if (typeof token !== "string") return null;
+  if (token.split(".").length !== 3) return null;
+
+  try {
+    return jwt_decode(token);
+  } catch {
+    return null;
+  }
+};
+
+
 const useAxiosInstance = () => {
   const {
     currentToken,
@@ -19,7 +31,7 @@ const useAxiosInstance = () => {
     currentDomain,
   } = useRedux();
   const baseURL = config.url.BASE_URL;
-
+  
   const createAxiosInstance = (token, currentShopifyToken) => {
     const instance = axios.create({
       baseURL: baseURL,
@@ -44,8 +56,16 @@ const useAxiosInstance = () => {
   //const tokenExpiration = dayjs.unix(jwt_decode(currentToken).exp);
 
   axiosInstanceRef.current.interceptors.request.use(async (req) => {
+    console.log("AUTH HEADER:", req.headers.Authorization);
+console.log("URL:", req.url);
     if (!currentShopifyToken) {
-      const tokenExpiration = dayjs.unix(jwt_decode(currentToken).exp);
+      const decoded = safeDecodeJwt(currentToken);
+
+    if (!decoded) {
+      return req;
+    }
+
+    const tokenExpiration = dayjs.unix(decoded.exp);
       const now = dayjs();
       const timeUntilExpiration = tokenExpiration.diff(now, "seconds");
 

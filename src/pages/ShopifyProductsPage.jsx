@@ -30,20 +30,34 @@ export const ShopifyProductsPage = () => {
   const [optimizationNr, setOptimizationNr] = useState(0);
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [optimizingIds, setOptimizingIds] = useState(new Set());
   const perPage = 5;
   const totalPages = Math.ceil(products?.length / perPage);
   const currentProducts = products?.slice((page - 1) * perPage, page * perPage);
   const importState = currentUserState.product_import
   const rulesetState = currentUserState.business_analysis
-
+  const isOptimizing =
+    product.optimization_status === "in progress" ||
+    optimizingIds.has(product.product_id);
   useEffect(() => {
     getProducts();
     fetchoptimizationNr()
   }, []);
-
+  console.log('CCC',product)
   useEffect(() =>{
 fetchoptimizationNr()
   },[successMsg])
+
+useEffect(() => {
+  if (!errorMsg && !successMsg) return;
+
+  const timer = setTimeout(() => {
+    setErrorMsg("");
+    setSuccessMsg("");
+  }, 4000);
+
+  return () => clearTimeout(timer);
+}, [errorMsg, successMsg]);
 
     useEffect(() => {
     getProducts();
@@ -101,22 +115,36 @@ const fetchoptimizationNr = async () =>{
 }
 
   const handleOptimize = async () => {
+  try {
+    const productId = selectedForOpt.product_id;
+    console.log('PRODUCT IDDD:', productId);
+    // 1️⃣ Optimistic UI update
+    setOptimizingIds(prev => new Set(prev).add(productId));
 
-        try {
-          let response = await axiosInstance.post(`/notifications/optimize_job`, {
-            product_id: selectedForOpt.product_id,
-          });
-          if (response.status === 202) {
-            setSuccessMsg("Optimization started successfully.");
-            setStartOptimize(true);
-            // getDraftChanges()
-            // setOptimized(true)
-          }
-        } catch (error) {
-  
-         console.log("Optimization error:", error); 
-        }
-      }
+    const response = await axiosInstance.post(
+      "/notifications/optimize_job",
+      { product_id: productId }
+    );
+    console.log("Optimization response:", response);
+    if (response.status === 202) {
+      setSuccessMsg("Optimization started successfully.");
+      setStartOptimize(true);
+    }
+  } catch (error) {
+    if(error.response && error.response.status === 429){
+      setErrorMsg(error.response.data.error);
+    }
+
+    // rollback on failure
+    setOptimizingIds(prev => {
+      const next = new Set(prev);
+      next.delete(selectedForOpt.product_id);
+      return next;
+    });
+    console.error("Optimization error:", error);
+  }
+};
+
 
   // Handle SKU or Barcode generation
 const handleGenerate = async (type) => {
@@ -193,6 +221,9 @@ const handleGenerate = async (type) => {
                 Enable ruleset first to import your products
               </div>
             )}</>):<></>}
+            {errorMsg && (
+              <span className="text-red-500 text-sm font-euclid">{errorMsg}</span>
+            )}
             </div>
             <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#1B2233] border-2 border-[#2A3148]/50 shadow-[0_4px_18px_rgba(0,0,0,0.35)]">
 <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-gradient-to-br from-[#3E6FF4] to-[#4937BA] shadow-[0_0_10px_rgba(62,111,244,0.35)]">
@@ -258,7 +289,9 @@ const handleGenerate = async (type) => {
         const selected = selectedProducts.includes(product.shopify_id);
         const seoValue = product?.score?.seo_score ?? product?.score?.seo ?? "0";
         const completenessValue = product?.score?.completness ?? product?.score?.completeness ?? product?.score?.completeness_score ?? "0";
-
+        const isOptimizing =
+        product.optimization_status === "in progress" ||
+        optimizingIds.has(product.product_id);
         const seoP = scorePill(seoValue);
         const compP = scorePill(completenessValue);
         return (
@@ -299,9 +332,11 @@ const handleGenerate = async (type) => {
             </div>
 
             {/* Right side: price + barcode + SKU */}
-            {(product?.optimization_status === "in progress") ? (
-    <div>Optimization In progress</div>
-  ) : (product?.optimization_status === "completed") ? (
+            {isOptimizing ? (
+  <div className="text-blue-400 font-medium">
+    Optimization in progress
+  </div>
+): (product?.optimization_status === "completed") ? (
     <div className="flex items-center gap-10">
       <div className="flex flex-col text-right">
         <span className="text-gray-400 text-sm">Seo Score</span>

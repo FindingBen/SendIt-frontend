@@ -1,37 +1,23 @@
 import { useDispatch } from "react-redux";
-import { addNotification } from "./redux/reducers/notificationReducer";
 import useNotificationSocket from "./hooks/useNotificationSocket";
+import useAxiosInstance from "./utils/axiosInstance";
+import { upsertNotification } from "./redux/reducers/notificationReducer";
 
 const NotificationBootstrap = () => {
   const dispatch = useDispatch();
+  const axios = useAxiosInstance();
+  console.log("NotificationBootstrap mounted");
+  const handleNotification = async (data) => {
+    const notificationId = data.notification_id;
+    if (!notificationId) return;
 
-  const handleNotification = (data) => {
-    const payload = data.payload || data || {};
-    const event = payload.event || payload.type;
-    if (!event) return;
-
-    if (event === "OPTIMIZATION_DONE") {
-      dispatch(addNotification({
-        id: payload.job_id,
-        type: event,
-        productId: payload.product_id,
-        message: "Product optimization completed",
-        read: false,
-        action: {
-          label: "View result",
-          to: `/product_optimize/${payload.product_id}`
-        }
-      }));
-    }
-
-    if (event === "OPTIMIZATION_FAILED") {
-      dispatch(addNotification({
-        id: payload.job_id,
-        type: event,
-        productId: payload.product_id,
-        message: "Product optimization failed",
-        read: false,
-      }));
+    try {
+      console.log("Fetching notification with ID:", notificationId);
+      const res = await axios.get(`/notifications/get_notifications/${notificationId}/`);
+      console.log("Fetched notification data:", res.data);
+      dispatch(upsertNotification(res.data));
+    } catch (err) {
+      console.error("Failed to fetch notification", err);
     }
   };
 
@@ -40,7 +26,7 @@ const NotificationBootstrap = () => {
     onMessage: handleNotification,
   });
 
-  return null; // renders nothing
+  return null;
 };
 
 export default NotificationBootstrap;

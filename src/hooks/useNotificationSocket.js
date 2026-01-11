@@ -14,15 +14,22 @@ const makeWsUrl = (baseUrl, path, token) => {
   }
   return url;
 };
-
+ 
 const isTokenValid = (token) => {
+  console.log("Validating token:", token);
+  if (typeof token !== "string") return false;
+
+  // must look like a JWT: header.payload.signature
+  if (token.split(".").length !== 3) return false;
+
   try {
     const { exp } = jwt_decode(token);
-    return exp * 1000 > Date.now();
+    return typeof exp === "number" && exp * 1000 > Date.now();
   } catch {
     return false;
   }
 };
+;
 
 export default function useNotificationSocket(options = {}) {
   const { path = "/ws/notifications/", onMessage } = options;
@@ -108,7 +115,7 @@ export default function useNotificationSocket(options = {}) {
       if (reconnectRef.current.timeoutId) {
         clearTimeout(reconnectRef.current.timeoutId);
       }
-
+      
       if (wsRef.current) {
         try {
           wsRef.current.close(1000, "Component unmounted");
