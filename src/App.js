@@ -1,5 +1,5 @@
 import "flowbite";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import ContactLists from "./pages/ContactLists";
 import ContactList from "./pages/ContactList";
 import EditMessage from "./pages/EditMessage";
@@ -33,6 +33,7 @@ import WelcomePage from "./pages/WelcomePage";
 import ProductOptimizationPage from "./pages/ProductOptimizationPage";
 import ShopifyChargeConfPage from "./pages/ShopifyChargeConfPage";
 import { ShopifyProductsPage } from "./pages/ShopifyProductsPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import { useRedux } from "./constants/reduxImports";
 
 const TRACKING_ID = "G-FPHE42LL46";
@@ -43,6 +44,7 @@ function App() {
   return (
     <section>
       <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route
           path="/register/qrr/:id"
           element={<QRsignUpPage></QRsignUpPage>}
@@ -143,6 +145,7 @@ function App() {
                   ></Route>
                 </Route>
               </Route>
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </div>
         </ElementProvider>
