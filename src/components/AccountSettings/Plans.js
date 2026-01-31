@@ -15,7 +15,7 @@ const Plans = () => {
   const [isShopifyUser, setIsShopifyUser] = useState(false);
 
   const topUps = [
-    { name: "200 SMS", price: "5.00", description: "200 sms" },
+    { name: "200 SMS", price: "2.00", description: "200 sms" },
     { name: "1000 SMS", price: "20.00", description: "1000 sms" },
     { name: "5000 SMS", price: "80.00", description: "5000 sms" },
   ];
