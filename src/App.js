@@ -16,7 +16,7 @@ import PasswordResetConfirm from "./utils/PasswordResetConfirm";
 import ReactGA from "react-ga";
 import Plans from "./components/AccountSettings/Plans";
 import ErrorPage from "./pages/ErrorPage";
-import CampaignsStatsPage from "./pages/CampaignsStatsPage";
+import ShopifyOneTimeChargeConfPage from "./pages/ShopifyOneTimeChargeConfPage";
 import SuccessPayment from "./pages/SuccessPayment";
 import CancelPayment from "./pages/CancelPayment";
 import AnalyticsPage from "./pages/AnalyticsPage";
@@ -102,6 +102,10 @@ function App() {
                   <Route
                     path="purchase_history"
                     element={<PurchaseHistory />}
+                  />
+                  <Route
+                    path="/shopify/one_time_charge/confirmation"
+                    element={<ShopifyOneTimeChargeConfPage />}
                   />
                   <Route
                     path="/contact_lists"

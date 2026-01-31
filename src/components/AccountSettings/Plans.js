@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useRedux } from "../../constants/reduxImports";
-import { useLocation, Link } from "react-router-dom";
 import useAxiosInstance from "../../utils/axiosInstance";
 import ModalComponent from "../ModalComponent";
 import SmsPill from "../SmsPill/SmsPill";
@@ -9,273 +8,226 @@ import Search from "../SearchComponent/Search";
 const Plans = () => {
   const { currentUser, currentDomain, currentToken } = useRedux();
   const axiosInstance = useAxiosInstance();
-  const [isLoading, setIsLoading] = useState(false);
+
   const [show, setShow] = useState(false);
   const [loadingState, setLoadingStates] = useState({});
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [calculatedPackage, setCalculatedPackage] = useState(null);
-  const [budget, setBudget] = useState("");
-  const [recipients, setRecipients] = useState("");
-  const [messages, setMessages] = useState("");
   const [packagePlan, setPackages] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
   const [isShopifyUser, setIsShopifyUser] = useState(false);
+
+  const topUps = [
+    { name: "200 SMS", price: "5.00", description: "200 sms" },
+    { name: "1000 SMS", price: "20.00", description: "1000 sms" },
+    { name: "5000 SMS", price: "80.00", description: "5000 sms" },
+  ];
 
   useEffect(() => {
     getPackages();
     checkShopifyUser();
   }, []);
-  console.log(packagePlan);
+
   const checkShopifyUser = async () => {
     try {
       const response = await axiosInstance.get("/stripe/shopify_status/");
       setIsShopifyUser(response.data.is_shopify);
     } catch (error) {
-      console.error("Error checking shopify user", error);
+      console.error("Error checking Shopify user", error);
     }
   };
 
-  let stripeCheckout = async (name_product, id) => {
+  const getPackages = async () => {
     try {
-      setShow(true);
-      setLoadingStates((prevState) => ({
-        ...prevState,
-        [id]: true,
-      }));
-      setIsLoading(true);
-
-      let response = await axiosInstance.post(
-        "/stripe/stripe_checkout_session",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + String(currentToken),
-          },
-          name_product,
-          currentUser,
-        }
-      );
-      console.log(response);
+      const response = await axiosInstance.get("/api/package_plan/");
       if (response.status === 200) {
-        setLoadingStates((prevState) => ({
-          ...prevState,
-          [id]: false,
-        }));
-        setShow(false);
-        window.location.replace(response.data.url);
-        // Log the response data
-        // } else {
-        //   console.error("Error creating Stripe Checkout session");
-        //   setIsLoading(false);
-        //   setShow(false);
-        // }
+        setPackages(response.data.filter((p) => p.id !== 1));
       }
     } catch (error) {
-      setIsLoading(false);
-      setShow(false);
-    }
-  };
-
-  let getPackages = async () => {
-    setIsLoading(true);
-    try {
-      let response = await axiosInstance.get("/api/package_plan/");
-
-      if (response.status === 200) {
-        let filteredPackages = response.data.filter((item) => item.id !== 1);
-        setIsLoading(false);
-        setPackages(filteredPackages);
-      }
-    } catch (error) {
-      setIsLoading(false);
       console.error(error);
     }
   };
 
-  const elementsArray = Array.from(
-    { length: packagePlan.length },
-    (_, index) => index
-  );
+  /* ===================== PLANS ===================== */
 
-  const handlePurchase = async (planType, planId) => {
-    if (isShopifyUser) {
-      await shopifyCheckout(planType, planId);
-    } else {
-      await stripeCheckout(planType, planId);
-    }
-  };
-
-  const shopifyCheckout = async (name_product, id) => {
+  const handlePlanPurchase = async (plan) => {
+    const key = `plan-${plan.id}`;
     try {
       setShow(true);
-      setLoadingStates((prev) => ({ ...prev, [id]: true }));
-      setIsLoading(true);
+      setLoadingStates((prev) => ({ ...prev, [key]: true }));
 
-      const response = await axiosInstance.post("/stripe/shopify_charge/", {
-        plan: name_product,
-        shop: currentDomain,
-      });
-
-      if (response.status === 200 && response.data.url) {
-        window.location.replace(response.data.url);
-        setIsLoading(false);
+      if (isShopifyUser) {
+        const response = await axiosInstance.post("/stripe/shopify_charge/", {
+          plan: plan.plan_type,
+          shop: currentDomain,
+        });
+        if (response.data?.url) window.location.replace(response.data.url);
       } else {
-        setIsLoading(false);
-        throw new Error("No confirmation URL from Shopify charge API.");
+        const response = await axiosInstance.post(
+          "/stripe/stripe_checkout_session",
+          {
+            name_product: plan.plan_type,
+            currentUser,
+          }
+        );
+        if (response.data?.url) window.location.replace(response.data.url);
       }
-    } catch (error) {
-      console.error("Shopify Checkout Error:", error);
-      setIsLoading(false);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingStates((prev) => ({ ...prev, [key]: false }));
       setShow(false);
     }
   };
 
+  /* ===================== TOP UPS ===================== */
+
+  const handleTopUp = async (topUp, index) => {
+    const key = `topup-${index}`;
+    if (!isShopifyUser) {
+      alert("Top-ups are only available for Shopify users.");
+      return;
+    }
+
+    try {
+      setShow(true);
+      setLoadingStates((prev) => ({ ...prev, [key]: true }));
+
+      const response = await axiosInstance.post(
+        "/stripe/shopify_one_time_charge/",
+        {
+          shop: currentDomain,
+          amount: topUp.price,
+          description: topUp.description,
+        }
+      );
+
+      if (response.data?.url) {
+        window.location.replace(response.data.url);
+      }
+    } catch (error) {
+      console.error("Top-up error", error);
+    } finally {
+      setLoadingStates((prev) => ({ ...prev, [key]: false }));
+      setShow(false);
+    }
+  };
+
+  const sectionWrapper =
+    "bg-[#0f1324] rounded-3xl px-10 py-10 shadow-xl";
+
   return (
-    <section className="min-h-screen max-w-screen items-center justify-center bg-[#0A0E1A]">
-     <div className="flex flex-row items-center mb-4 h-16 bg-[#111827]/70 backdrop-blur-lg sticky top-0 z-10 border-b border-[#1C2437]/40">
-      <Search />
-      <SmsPill />
-    </div>
+    <section className="min-h-screen bg-[#0A0E1A]">
+      {/* HEADER */}
+      <div className="flex items-center h-16 bg-[#111827]/70 backdrop-blur-lg sticky top-0 z-10">
+        <Search />
+        <SmsPill />
+      </div>
 
-      <div className="flex-1 w-full flex flex-col items-center justify-center px-6 py-10">
-        <div className="w-full max-w-6xl">
-          <div className="flex flex-col gap-3 items-start mb-6 mx-20">
-            <h3 className="xl:text-2xl lg:text-xl text-normal font-euclid text-left text-white">
-              Package plans
-            </h3>
-            <span className="text-sm bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full shadow-md border border-yellow-300">
-              Unused credits are replaced each month with new ones
-            </span>
-            <span className="text-sm px-3 py-1 text-gray-300 rounded-full shadow-md border border-yellow-300">
-              In case you run out of credits before billing cycle contact us at:
-              support@sendperplane.com
-            </span>
-          </div>
+      <div className="max-w-6xl mx-auto px-6 py-12 space-y-16">
 
-          <div className="flex justify-center mx-20">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-              {packagePlan.length === 0
-                ? // Skeleton Loader UI
-                  [...Array(3)].map((_, idx) => (
-                    <div
-                      key={idx}
-                      className="flex flex-col justify-between bg-ngrokGray p-6 rounded-3xl shadow-lg animate-pulse border-2 border-gray-700"
+        {/* ===================== PLANS ===================== */}
+        <section className={sectionWrapper}>
+          <h3 className="text-2xl font-semibold text-white mb-3">
+            Monthly Package Plans
+          </h3>
+
+          <p className="text-sm text-white/70 max-w-2xl mb-8">
+            Plans do not include prepaid SMS credits only customer list access which allows you to use the platform.
+            Credits are not being renewed in a billing cycle.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {packagePlan.map((plan) => {
+              const isLoading = loadingState[`plan-${plan.id}`];
+              return (
+                <div
+                  key={plan.id}
+                  className={`bg-ngrokGray rounded-3xl p-7 shadow-lg
+                    transition-all hover:-translate-y-1
+                    ${isLoading ? "opacity-60 pointer-events-none" : ""}
+                  `}
+                >
+                  <h2 className="text-xl font-semibold text-white mb-4">
+                    {plan.plan_type}
+                  </h2>
+
+                  <div className="flex justify-between items-center mb-6">
+                    <button
+                      onClick={() => handlePlanPurchase(plan)}
+                      disabled={isLoading}
+                      className="px-5 py-2 rounded-full bg-purpleHaze text-white text-sm hover:bg-ngrokBlue transition"
                     >
-                      <div>
-                        <div className="h-6 bg-gray-700 rounded w-1/3 mb-4" />
-                        <div className="flex items-center justify-between mb-6">
-                          <div className="px-4 py-2 bg-gray-700 rounded-full w-20 h-8" />
-                          <div className="h-6 bg-gray-700 rounded w-12" />
-                        </div>
-                        <ul className="space-y-3">
-                          {[...Array(4)].map((__, i) => (
-                            <li key={i} className="flex items-center space-x-2">
-                              <div className="w-4 h-4 bg-gray-600 rounded-full" />
-                              <div className="h-4 bg-gray-700 rounded w-3/4" />
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  ))
-                : elementsArray?.map((plan, index) => {
-                    const currentPlan = packagePlan[index];
-                    const isLoading = loadingState[currentPlan?.id];
+                      {isLoading ? "Processing..." : "Choose plan"}
+                    </button>
 
-                    return (
-                      <div
-                        key={currentPlan?.id}
-                        onClick={() =>
-                          handlePurchase(
-                            currentPlan?.plan_type,
-                            currentPlan?.id
-                          )
-                        }
-                        className={`flex flex-col justify-between bg-ngrokGray p-6 rounded-3xl shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-2 cursor-pointer border-2 ${
-                          currentPlan?.plan_type === "Gold package"
-                            ? "border-yellow-500"
-                            : currentPlan?.plan_type === "Silver package"
-                            ? "border-gray-400"
-                            : "border-green-400"
-                        } ${isLoading ? "opacity-70" : "opacity-100"}`}
-                      >
-                        <div>
-                          <h2 className="text-white text-xl font-semibold mb-4">
-                            {currentPlan?.plan_type}
-                          </h2>
+                    <span className="text-4xl font-bold text-white">
+                      ${plan.price}
+                    </span>
+                  </div>
 
-                          <div className="flex items-center justify-between mb-6">
-                            <button
-                              disabled={isLoading}
-                              className="px-4 py-2 bg-purpleHaze text-white rounded-full text-sm hover:bg-ngrokBlue transition-colors"
-                            >
-                              {isLoading ? (
-                                <svg
-                                  className="w-5 h-5 animate-spin mx-auto"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <circle
-                                    className="opacity-25"
-                                    cx="12"
-                                    cy="12"
-                                    r="10"
-                                    stroke="currentColor"
-                                    strokeWidth="4"
-                                  ></circle>
-                                  <path
-                                    className="opacity-75"
-                                    fill="currentColor"
-                                    d="M4 12a8 8 0 018-8V0C5.372 0 0 5.373 0 12h4z"
-                                  ></path>
-                                </svg>
-                              ) : (
-                                "Buy"
-                              )}
-                            </button>
-
-                            <p className="text-3xl font-bold text-white">
-                              {currentPlan?.price} $
-                            </p>
-                          </div>
-
-                          <ul className="text-sm text-white space-y-3">
-                            {[...Array(8)].map((_, i) => {
-                              const offer = currentPlan?.[`offer${i + 1}`];
-                              return (
-                                offer && (
-                                  <li
-                                    key={i}
-                                    className="flex items-center space-x-2"
-                                  >
-                                    <svg
-                                      className="w-4 h-4 text-green-400 bg-white rounded-full"
-                                      fill="currentColor"
-                                      viewBox="0 0 20 20"
-                                    >
-                                      <path
-                                        fillRule="evenodd"
-                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                        clipRule="evenodd"
-                                      ></path>
-                                    </svg>
-                                    <span>{offer}</span>
-                                  </li>
-                                )
-                              );
-                            })}
-                          </ul>
-                        </div>
-                      </div>
-                    );
-                  })}
-            </div>
+                  <ul className="space-y-3 text-sm text-white/80">
+                    {[...Array(8)].map((_, i) => {
+                      const offer = plan[`offer${i + 1}`];
+                      return (
+                        offer && (
+                          <li key={i} className="flex gap-3">
+                            <span className="w-2 h-2 mt-2 rounded-full bg-green-400" />
+                            {offer}
+                          </li>
+                        )
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
-        </div>
+        </section>
 
-        <ModalComponent modalType={"Redirect"} showModal={show} />
+        {/* ===================== TOP UPS ===================== */}
+        <section className={sectionWrapper}>
+          <h3 className="text-2xl font-semibold text-white mb-3">
+            One-time SMS Top-ups
+          </h3>
+
+          <p className="text-sm text-white/70 max-w-2xl mb-8">
+            One-time purchases.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {topUps.map((topUp, index) => {
+              const isLoading = loadingState[`topup-${index}`];
+              return (
+                <div
+                  key={index}
+                  className="bg-[#161a34] rounded-2xl p-6 shadow-md transition hover:-translate-y-1"
+                >
+                  <h2 className="text-lg font-medium text-white mb-4">
+                    {topUp.name}
+                  </h2>
+
+                  <div className="flex justify-between items-center">
+                    <button
+                      disabled={isLoading}
+                      onClick={() => handleTopUp(topUp, index)}
+                      className={`px-5 py-2 rounded-full text-sm transition
+                        ${isLoading
+                          ? "bg-white/20 text-white/70 cursor-not-allowed"
+                          : "bg-purpleHaze text-white hover:bg-ngrokBlue"}
+                      `}
+                    >
+                      {isLoading ? "Processing..." : "Buy top-up"}
+                    </button>
+
+                    <span className="text-3xl font-bold text-white">
+                      ${topUp.price}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <ModalComponent modalType="Redirect" showModal={show} />
       </div>
     </section>
   );
