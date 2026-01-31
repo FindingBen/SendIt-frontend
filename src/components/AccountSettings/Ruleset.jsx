@@ -95,14 +95,7 @@ export default function RulesetEditor({
           Business Ruleset
         </h2>
 
-        {!rulesEnabled && (
-          <button
-            onClick={openRulesetModal}
-            className="px-4 py-2 rounded-md bg-blue-600 hover:bg-blue-500 text-sm text-white"
-          >
-            Enable
-          </button>
-        )}
+       
       </div>
 
       <div className="h-px bg-[#2A3555] mb-6" />
@@ -118,8 +111,11 @@ export default function RulesetEditor({
             <p className="text-white font-medium">
               No rules yet
             </p>
-            <p className="text-sm text-gray-400 mt-1">
+            {/* <p className="text-sm text-gray-400 mt-1">
               Enable rules to generate SEO-optimized defaults
+            </p> */}
+            <p className="text-sm text-gray-400 mt-1">
+              New feature comming soon!
             </p>
           </div>
         </div>

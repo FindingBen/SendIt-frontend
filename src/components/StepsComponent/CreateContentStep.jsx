@@ -239,13 +239,13 @@ const CreateContentStep = ({
     </aside>
 
     {/* Builder Area */}
-    <main className="flex-1 relative flex flex-col justify-between overflow-y-auto px-10 py-6">
+    <main className="flex-1 relative flex flex-col justify-between overflow-y-auto px-10 py-6 mx-10">
       <div className="mb-6">
         {selectedComponent && componentsMap[selectedComponent]}
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex gap-4 justify-center mt-auto mb-6">
+      <div className="flex gap-4 justify-center mt-auto mb-10">
         {loadingStep ? (
           <Loader loading_name="Next step..." />
         ) : (
@@ -273,7 +273,7 @@ const CreateContentStep = ({
     </main>
 
     {/* Preview Panel */}
-    <aside className="hidden md:flex md:w-96 p-6 bg-[#0A0E1A]">
+    <aside className="hidden md:flex md:w-96 p-6 bg-[#0A0E1A] mx-40">
       <PreviewPanel
         device={device}
         handleClicked={handleClicked}

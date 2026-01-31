@@ -173,7 +173,7 @@ const SmsSendingPage = () => {
         scheduled: false,
         // is_sent: true,
       });
-
+      console.log("response", response);
       if (response.status === 200 || response.status === 201) {
         dispatch(setOperation(true));
         navigate(`/home`);
@@ -223,12 +223,11 @@ const SmsSendingPage = () => {
       setNewCredit(0);
     } else {
       const newCredit =
-        currentSmsPackCount.sms_count - price?.estimated_credits;
+        currentSmsPackCount - price?.estimated_credits;
 
       setNewCredit(newCredit);
     }
   };
-
   const TooltipContent = () => (
     <div>
       <p>
