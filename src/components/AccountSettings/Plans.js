@@ -129,7 +129,7 @@ const Plans = () => {
             Monthly Package Plans
           </h3>
 
-          <p className="text-sm text-white/70 max-w-2xl mb-8">
+          <p className="text-sm mx-auto text-white/70 max-w-2xl mb-8">
             Plans do not include prepaid SMS credits only customer list access which allows you to use the platform.
             Credits are not being renewed in a billing cycle.
           </p>
@@ -188,7 +188,7 @@ const Plans = () => {
             One-time SMS Top-ups
           </h3>
 
-          <p className="text-sm text-white/70 max-w-2xl mb-8">
+          <p className="text-sm mx-auto text-white/70 max-w-2xl mb-8">
             One-time purchases.
           </p>
 
