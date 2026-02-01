@@ -18,6 +18,7 @@ import Plans from "./components/AccountSettings/Plans";
 import ErrorPage from "./pages/ErrorPage";
 import ShopifyOneTimeChargeConfPage from "./pages/ShopifyOneTimeChargeConfPage";
 import SuccessPayment from "./pages/SuccessPayment";
+import SuccessPurchasePayment from "./pages/SuccessPurchasePayment";
 import CancelPayment from "./pages/CancelPayment";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import Archives from "./pages/Archives";
@@ -142,6 +143,10 @@ function App() {
                   <Route
                     path="/stripe/"
                     element={<SuccessPayment></SuccessPayment>}
+                  ></Route>
+                  <Route
+                    path="/stripe/purchase_success/"
+                    element={<SuccessPurchasePayment></SuccessPurchasePayment>}
                   ></Route>
                   <Route
                     path="/stripe_cancel/"
