@@ -15,7 +15,7 @@ const Plans = () => {
   const [isShopifyUser, setIsShopifyUser] = useState(false);
 
   const topUps = [
-    { name: "200 SMS", price: "6.99", description: "200 sms" },
+    { name: "200 SMS", price: "6.99", description: "200 sms"},
     { name: "1000 SMS", price: "29.99", description: "1000 sms" },
     { name: "5000 SMS", price: "99.99", description: "5000 sms" },
   ];
@@ -81,6 +81,51 @@ const Plans = () => {
 
   const handleTopUp = async (topUp, index) => {
     const key = `topup-${index}`;
+    
+
+    try {
+      setShow(true);
+      setLoadingStates((prev) => ({ ...prev, [key]: true }));
+
+      if(isShopifyUser){
+        const response = await axiosInstance.post(
+        "/stripe/shopify_one_time_charge/",
+        {
+          shop: currentDomain,
+          amount: topUp.price,
+          description: topUp.description,
+        }
+      );
+
+      if (response.data?.url) {
+        window.location.replace(response.data.url);
+      }
+      
+      }
+      else{
+        console.log("NON SHOPIFY USER TOP UP",topUp);
+        const response = await axiosInstance.post(
+        "/stripe/stripe_checkout_purchase/",
+        {
+         name_product: topUp.name,
+          currentUser,
+        }
+      );
+
+      if (response.data?.url) {
+        window.location.replace(response.data.url);
+      }
+      }
+    } catch (error) {
+      console.error("Top-up error", error);
+    } finally {
+      setLoadingStates((prev) => ({ ...prev, [key]: false }));
+      setShow(false);
+    }
+  };
+
+  const handleTopUpStripe = async (topUp, index) => {
+    const key = `topup-${index}`;
     if (!isShopifyUser) {
       alert("Top-ups are only available for Shopify users.");
       return;
@@ -91,11 +136,10 @@ const Plans = () => {
       setLoadingStates((prev) => ({ ...prev, [key]: true }));
 
       const response = await axiosInstance.post(
-        "/stripe/shopify_one_time_charge/",
+        "/stripe/stripe_checkout_purchase/",
         {
-          shop: currentDomain,
-          amount: topUp.price,
-          description: topUp.description,
+         name_product: topUp.plan_type,
+          currentUser,
         }
       );
 
